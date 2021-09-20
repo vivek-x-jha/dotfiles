@@ -8,8 +8,8 @@
 P10K_INST_PROMPT="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ -r $P10K_INST_PROMPT ]] || . $P10K_INST_PROMPT
 
-export PATH=$HOME/bin:$PATH
-export ZSH=~/.oh-my-zsh
+export PATH="$HOME/bin:$PATH"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -27,7 +27,7 @@ plugins=(
     zsh-z
 )
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
 # Load utility functions: $HOME/dotfiles/utilities.zsh
 initialize_conda
