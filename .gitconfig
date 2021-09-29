@@ -1,0 +1,10 @@
+[user]
+	email = vivek.x.jha@gmail.com
+	user = Vivek Jha
+[init]
+	defaultBranch = main
+[core]
+	excludesfile = /Users/vivekjha/.gitignore_global
+[color "status"]
+	untracked = magenta
+	changed = yellow
