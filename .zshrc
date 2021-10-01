@@ -4,7 +4,6 @@
 # Author:       Vivek Jha
 #####################################################################################
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 P10K_INST_PROMPT="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ ! -r $P10K_INST_PROMPT ]] || source $P10K_INST_PROMPT
 
