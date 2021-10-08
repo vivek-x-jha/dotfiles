@@ -21,6 +21,7 @@ plugins=(
     sudo
     vscode
     vundle
+    zsh-autosuggestions
     zsh-z
 )
 
