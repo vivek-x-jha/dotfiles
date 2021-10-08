@@ -21,7 +21,6 @@ plugins=(
     sudo
     vscode
     vundle
-    zsh_reload
     zsh-z
 )
 
