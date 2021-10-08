@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-function initialize_conda {
+initialize_conda () {
     # !! Contents within this block are managed by 'conda init' !!
     __conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
@@ -15,6 +15,14 @@ function initialize_conda {
     unset __conda_setup
 }
 
-function initialize_p10k {
+initialize_p10k () {
     [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
+}
+
+list () {
+    local array=("$@")
+    for f in "${array[@]}"
+    do
+        echo $f
+    done
 }
