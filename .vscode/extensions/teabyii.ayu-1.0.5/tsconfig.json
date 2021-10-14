@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "inlineSourceMap": true,
+    "declaration": true,
+    "module": "commonjs",
+    "baseUrl": "src",
+    "target": "ES5",
+    "rootDir": "src",
+    "outDir": "dist",
+    "jsx": "react"
+  },
+  "exclude": ["node_modules", "dist"]
+}

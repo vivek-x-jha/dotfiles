@@ -1,0 +1,33 @@
+{
+	"name": "Theme-Smyck",
+	"displayName": "Smyck Theme",
+	"description": "Smyck Theme ported from the Smyck TextMate Theme",
+	"version": "0.0.5",
+	"publisher": "gerane",
+	"engines": {
+		"vscode": "^0.10.1"
+	},
+	"categories": [
+		"Themes"
+	],
+	"icon": "icon.png",
+	"homepage": "https://github.com/gerane/VSCodeThemes/blob/master/gerane.Theme-Smyck/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gerane/VSCodeThemes.git"
+	},
+	"contributes": {
+		"themes": [
+			{
+				"label": "Smyck",
+				"path": "./themes/Smyck.tmTheme",
+				"uiTheme": "vs-dark"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "a489e45d-2de8-4cae-829b-7f8ac37e865b",
+		"publisherId": "a5c25faf-bf60-4941-81b9-9a852b96c5fb",
+		"publisherDisplayName": "gerane"
+	}
+}
