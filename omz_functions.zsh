@@ -26,3 +26,9 @@ list () {
         echo $f
     done
 }
+
+lnk () {
+    local file="$1"
+    mv $file ~/dotfiles/
+    ln -s ~/dotfiles/$file ~
+}
