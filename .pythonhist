@@ -1,0 +1,57 @@
+import pandas as pd
+pd.read_csv('http://bit.ly/drinksbycountry')
+drinks = pd.read_csv('http://bit.ly/drinksbycountry')
+drinks.head()
+drinks.head()
+drinks.set_index('country', inplace=True)
+drinks.head()
+drinks.reset_index('country')
+drinks.reset_index('country', inplace=True)
+drinks.head()
+drinks.head()
+drinks.country.is_unique
+drinks.country.is_unique()
+drinks.set_index('country', inplace=True)
+drinks.head()
+drinks.index
+drinks.index.values
+drinks.index.to_list()
+list(drinks.index)
+list(drinks.index)
+drinks.index.name
+drinks.index.names
+drinks.index.name = ''
+drinks.index.name
+drinks.head()
+drinks.index
+drinks.index.name = None
+drinks.head()
+drinks.index
+drinks.index.name = 'country'
+drinks.head()
+drinks.dtypes
+drinks.beer_servings.dtypes
+drinks.beer_servings.dtype
+drinks.beer_servings.dtype.value
+drinks.dtypes['beer_servings']
+drinks.dtypes.loc['beer_servings']
+drinks.dtypes.beer_servings
+d = {1.0: None}
+d
+d[1.0]
+d = {1.0: 'kabir is g'}
+d[1.0]
+d[1.01]
+d['1.0']
+d = {(1,2): 'kabir is helllla g'}
+d
+d[(1, 2)]
+type(d.keys())
+d.keys()[0]
+for k in d:
+    print(type(k))
+    
+import pandas as pd
+drinks = pd.read_csv('http://bit.ly/drinksbycountry')
+drinks.head()
+z 3p
