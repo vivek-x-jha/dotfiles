@@ -1,0 +1,2 @@
+/usr/local/anaconda3
+/Applications/JupyterLab.app/Contents/Resources/jlab_server
