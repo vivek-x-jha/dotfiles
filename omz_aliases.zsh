@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-alias ls="ls -AHlG"
+alias ls="ls -AHhlG"
