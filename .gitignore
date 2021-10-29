@@ -1,5 +1,5 @@
 .z
 .zsh_history
-.dropbox/*
-.vscode
-.thinkorswim
+.dropbox/
+.vscode/
+.thinkorswim/
