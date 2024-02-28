@@ -1,0 +1,12 @@
+[general]
+arg_spec = True
+auto_display_list = True
+color_scheme = SourDiesel
+hist_file = ~/.cache/bpython/.pythonhist
+hist_length = 10000
+syntax = True
+tab_length = 4
+
+[keyboard]
+pastebin = F8
+save = C-s
