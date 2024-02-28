@@ -1,0 +1,65 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 10,
+      "subtext" : {
+        "size" : 14,
+        "colorSelected" : "#A0EA9CFF",
+        "font" : "System",
+        "color" : "#FEFFFE84"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#FEF097FF",
+        "font" : "System",
+        "color" : "#A1EA9DFF"
+      },
+      "backgroundSelected" : "#2F3639FF",
+      "text" : {
+        "size" : 20,
+        "colorSelected" : "#FEF88EFF",
+        "font" : "Avenir Next",
+        "color" : "#EBFFF7FF"
+      },
+      "iconPaddingHorizontal" : 4,
+      "roundness" : 0,
+      "paddingVertical" : 6,
+      "iconSize" : 40
+    },
+    "search" : {
+      "backgroundSelected" : "#BFF0BBFF",
+      "paddingHorizontal" : 8,
+      "spacing" : 8,
+      "text" : {
+        "size" : 34,
+        "colorSelected" : "#353535FF",
+        "font" : "System Light",
+        "color" : "#FFFFFFFF"
+      },
+      "background" : "#2E3638FF",
+      "roundness" : 0,
+      "paddingVertical" : 5
+    },
+    "window" : {
+      "color" : "#2E3638FF",
+      "paddingHorizontal" : 9,
+      "width" : 559,
+      "borderPadding" : 0,
+      "borderColor" : "#0000007F",
+      "blur" : 0,
+      "roundness" : 5,
+      "paddingVertical" : 8
+    },
+    "credit" : "Vivek",
+    "visualEffectMode" : 2,
+    "separator" : {
+      "color" : "#CBCBCBF3",
+      "thickness" : 0
+    },
+    "scrollbar" : {
+      "color" : "#E6EAE6FF",
+      "thickness" : 2
+    },
+    "name" : "LG Classic"
+  }
+}

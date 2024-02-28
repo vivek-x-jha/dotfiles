@@ -1,0 +1,65 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 5,
+      "subtext" : {
+        "size" : 14,
+        "colorSelected" : "#E774FFFF",
+        "font" : "System",
+        "color" : "#FEFFFE84"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#00FEECFF",
+        "font" : "System",
+        "color" : "#E376FFFF"
+      },
+      "backgroundSelected" : "#272C33FF",
+      "text" : {
+        "size" : 19,
+        "colorSelected" : "#00FFFCFF",
+        "font" : "Avenir Next",
+        "color" : "#EBFFF7FF"
+      },
+      "iconPaddingHorizontal" : 4,
+      "roundness" : 0,
+      "paddingVertical" : 3,
+      "iconSize" : 40
+    },
+    "search" : {
+      "backgroundSelected" : "#E376FEFF",
+      "paddingHorizontal" : 8,
+      "spacing" : 8,
+      "text" : {
+        "size" : 34,
+        "colorSelected" : "#353535FF",
+        "font" : "System Light",
+        "color" : "#FFFFFFFF"
+      },
+      "background" : "#272C33FF",
+      "roundness" : 0,
+      "paddingVertical" : 5
+    },
+    "window" : {
+      "color" : "#272C33FF",
+      "paddingHorizontal" : 9,
+      "width" : 559,
+      "borderPadding" : 0,
+      "borderColor" : "#0000007F",
+      "blur" : 0,
+      "roundness" : 5,
+      "paddingVertical" : 8
+    },
+    "credit" : "Mubuntu",
+    "visualEffectMode" : 2,
+    "separator" : {
+      "color" : "#CBCBCBF3",
+      "thickness" : 0
+    },
+    "scrollbar" : {
+      "color" : "#E6EAE6FF",
+      "thickness" : 2
+    },
+    "name" : "EVA DARK"
+  }
+}

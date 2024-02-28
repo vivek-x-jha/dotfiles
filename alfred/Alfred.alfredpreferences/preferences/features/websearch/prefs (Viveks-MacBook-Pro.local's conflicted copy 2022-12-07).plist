@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>0A363FAC-589A-45F0-B46B-A51A16895476</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>rg</string>
+			<key>text</key>
+			<string>Search ReelGood for '{query}'</string>
+			<key>url</key>
+			<string>https://reelgood.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>1FFBCEFD-866E-4E09-8F56-3ADCE2FF392B</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gmail</string>
+			<key>text</key>
+			<string>Search Gmail for '{query}'</string>
+			<key>url</key>
+			<string>https://mail.google.com/mail/u/0/#search/{query}</string>
+		</dict>
+		<key>456C5E46-E7A6-41E1-B4EC-F97E7EC0726D</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>rh</string>
+			<key>text</key>
+			<string>Search Robinhood for '{query}'</string>
+			<key>url</key>
+			<string>https://robinhood.com/stocks/{query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>9A5C815C-3015-4C7B-9B69-0820A9E0EB82</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gmail</string>
+			<key>text</key>
+			<string>Open Gmail</string>
+			<key>url</key>
+			<string>https://mail.google.com/mail/u/0/</string>
+		</dict>
+		<key>A25C98D1-C5E1-4C63-8E5F-1B24ACCC561B</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>yelp</string>
+			<key>text</key>
+			<string>Search Yelp for {query} in '{query}'</string>
+			<key>url</key>
+			<string>https://www.yelp.com/search?find_desc={query}&amp;find_loc=San%20Francisco%2C%20CA&amp;ns=1&amp;open_now=9596&amp;attrs=OutdoorSeating</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>E074A5FF-99EC-4DF8-8440-66C9B02F7D53</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>sa</string>
+			<key>text</key>
+			<string>Search Seeking Alpha for '{query}'</string>
+			<key>url</key>
+			<string>https://seekingalpha.com/symbol/{query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>F1B14450-0982-4FFA-AB65-F669C352F86D</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>zm</string>
+			<key>text</key>
+			<string>Launch Personal Zoom</string>
+			<key>url</key>
+			<string>https://us02web.zoom.us/j/6780714642?pwd=dzNsWitsVU9VdHMvWTFqS1pqZDlSQT09</string>
+		</dict>
+		<key>F5C6B958-9C1F-47E1-925B-5F185660790D</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>ps</string>
+			<key>text</key>
+			<string>Open Pokemon Showdown</string>
+			<key>url</key>
+			<string>https://play.pokemonshowdown.com/</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
