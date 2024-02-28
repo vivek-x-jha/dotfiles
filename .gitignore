@@ -1,10 +1,11 @@
 conda
 dropbox
 jupyter
-op
 python
 ssh
 thinkorswim
 vim
 vscode
 zsh
+
+*.sock
