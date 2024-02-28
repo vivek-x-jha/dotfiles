@@ -1,0 +1,18 @@
+# `bat` configuration
+
+## Author: Vivek Jha
+
+## Last Modified: Feb 22, 2024
+
+## To build Remember to run `bat cache --build` after any changes to `./themes/*`
+
+--theme="SourDiesel"
+--tabs=4
+--line-range=:1000
+--italic-text=always
+
+## --map-syntax "*.ino:C++"
+
+## --map-syntax ".ignore:Git Ignore"
+
+## --pager="less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse"
