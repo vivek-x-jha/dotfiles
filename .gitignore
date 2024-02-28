@@ -1,5 +1,4 @@
 conda
-dircolors
 dropbox
 fzf
 gh
@@ -12,8 +11,6 @@ macos
 neofetch
 op
 python
-raycast
-setupMacOS.zs
 ssh
 thinkorswim
 vim
