@@ -1,0 +1,11 @@
+#!/bin/env zsh
+
+# Configure theme for GNU dircolors
+
+gnubin="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
+dctheme="${0:A:h}/themes/$DIRCOLORS_THEME.theme"
+
+[[ -x "$gnubin/dircolors" ]] || brew install -q coreutils
+[[ ! -f  "$dctheme" ]] || eval "$("$gnubin/dircolors" "$dctheme")"
+
+alias ls="$gnubin/ls --color=auto"
