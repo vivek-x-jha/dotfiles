@@ -1,0 +1,7 @@
+# TODO consider making this a flag
+for i in {0..255}; do 
+    print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}
+done
+
+# Uncomment below to use
+# python3 -c "print('\t'.join(f'\u001b[1;38;5;{s}m{s.ljust(4)}' + ('\n' if not int(s) % 8 else '') for s in (str(i) for i in range(256))) + '\u001b[0m')"

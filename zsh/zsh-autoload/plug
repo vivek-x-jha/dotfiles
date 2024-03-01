@@ -1,0 +1,11 @@
+# Loads plugin and appends it to plugins array
+
+local plugin="$ZDOTDIR/zsh-plugins/$1/$1.plugin.zsh"
+
+if [[ -f $plugin ]]; then
+    source $plugin
+    declare -ag plugins
+    plugins+=( $1 )
+else
+    return 0
+fi
