@@ -7,8 +7,12 @@ EXEC 00;38;5;2
 *md 00;38;5;3
 *README 00;38;5;3
 
+*log 00;38;5;93
+*history 00;38;5;93
+*hist 00;38;5;93
+
 *DS_Store 00;38;5;8
-*dockerignore 00;38;5;8
-*gitignore 00;38;5;8
-*hushlogin 00;38;5;8
+*ignore 00;38;5;8
+.gitmodules 00;38;5;8
+.hushlogin 00;38;5;8
 *swp 00;38;5;8
