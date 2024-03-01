@@ -1,0 +1,14 @@
+if [[ -x "$( command -v gh )" ]]; then
+    
+    local owner="$1"
+    local target_dir="${2:-${0:A:h}}"
+    local repo_names="$target_dir/.repositories"
+
+    gh api "users/$owner/repos" --paginate  --jq '.[].name' | sort > "$repo_names"
+    
+    for r in $( cat "$repo_names" ); do 
+        gh repo clone "$owner/$r"
+    done
+
+    echo "✅ $( sed -n '$=' "$repo_names" ) repos successfully downloaded to '$target_dir' ✅"
+fi

@@ -5,6 +5,7 @@ jupyter
 ssh
 thinkorswim
 vscode
-zsh
+zsh/.zsh_sessions
+zsh/.zcompdump
 
 *.sock
