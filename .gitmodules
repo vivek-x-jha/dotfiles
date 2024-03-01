@@ -2,3 +2,21 @@
 	path = vim/.vim/plugged/base16-vim
 	url = https://github.com/chriskempson/base16-vim.git
 
+[submodule "zsh/zsh-plugins/z.lua"]
+	path = zsh/zsh-plugins/z.lua
+	url = https://github.com/vivek-x-jha/z.lua
+[submodule "zsh/zsh-plugins/zsh-completions"]
+	path = zsh/zsh-plugins/zsh-completions
+	url = https://github.com/vivek-x-jha/zsh-completions
+[submodule "zsh/zsh-plugins/zsh-syntax-highlighting"]
+	path = zsh/zsh-plugins/zsh-syntax-highlighting
+	url = https://github.com/vivek-x-jha/zsh-syntax-highlighting
+[submodule "zsh/zsh-plugins/zsh-history-substring-search"]
+	path = zsh/zsh-plugins/zsh-history-substring-search
+	url = https://github.com/vivek-x-jha/zsh-history-substring-search
+[submodule "zsh/zsh-plugins/zsh-you-should-use"]
+	path = zsh/zsh-plugins/zsh-you-should-use
+	url = https://github.com/vivek-x-jha/zsh-you-should-use
+[submodule "zsh/zsh-plugins/zsh-autosuggestions"]
+	path = zsh/zsh-plugins/zsh-autosuggestions
+	url = https://github.com/vivek-x-jha/zsh-autosuggestions
