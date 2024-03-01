@@ -11,5 +11,4 @@ EXEC 00;38;5;2
 *dockerignore 00;38;5;8
 *gitignore 00;38;5;8
 *hushlogin 00;38;5;8
-*log 00;38;5;8
 *swp 00;38;5;8
