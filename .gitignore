@@ -9,3 +9,4 @@ zsh/.zsh_sessions
 zsh/.zcompdump
 
 *.sock
+.DS_Store
