@@ -2,7 +2,9 @@ NORMAL 00;38;5;8
 FILE 00;38;5;7
 DIR 00;38;5;12
 LINK 00;38;5;225
+ORPHAN 00;38;5;13
 EXEC 00;38;5;2
+STICKY 00;38;5;4
 
 *md 00;38;5;3
 *README 00;38;5;3
@@ -16,3 +18,4 @@ EXEC 00;38;5;2
 .gitmodules 00;38;5;8
 .hushlogin 00;38;5;8
 *swp 00;38;5;8
+*code-workspace 00;38;5;8
