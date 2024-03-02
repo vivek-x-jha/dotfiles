@@ -6,7 +6,7 @@
 
 ## To build Remember to run `bat cache --build` after any changes to `./themes/*`
 
---theme="SourDiesel"
+--theme="sourdiesel"
 --tabs=4
 --line-range=:1000
 --italic-text=always

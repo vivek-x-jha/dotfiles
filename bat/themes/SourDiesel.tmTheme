@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist [
-  <!ENTITY white "#F4F3F2">
-]>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
     <key>name</key>
-    <string>SourDiesel</string>
+    <string>sourdiesel</string>
+    <key>author</key>
+    <string>VivekJha</string>
+    <key>colorSpaceName</key>
+    <string>sRGB</string>
+    <key>semanticClass</key>
+    <string>theme.dark.sourdiesel</string>
+    <key>uuid</key>
+    <string>4ea5a491-926d-4b3a-a750-5cecced08a38</string>
     <key>settings</key>
     <array>
       <dict>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>&white;</string>
+          <string>#F4F3F2</string>
           <key>background</key>
           <string>#282C34</string>
           <key>caret</key>
@@ -958,13 +964,5 @@
         </dict>
       </dict>
     </array>
-    <key>uuid</key>
-    <string>4ea5a491-926d-4b3a-a750-5cecced08a38</string>
-    <key>colorSpaceName</key>
-    <string>sRGB</string>
-    <key>semanticClass</key>
-    <string>theme.dark.SourDiesel</string>
-    <key>author</key>
-    <string>VivekJha</string>
   </dict>
 </plist>
