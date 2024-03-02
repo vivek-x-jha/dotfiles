@@ -30,6 +30,8 @@
 
   # The list of segments shown on the left. Fill it with the most important segments.
   declare -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    # prompt_char_beg
+    sourdiesel
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     anaconda                # conda environment (https://conda.io/)
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
@@ -185,11 +187,11 @@
 
   ################################[ prompt_char: prompt symbol ]################################
   # Green prompt symbol if the last command succeeded.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=2
+  declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=7
   # Red prompt symbol if the last command failed.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=1
+  declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=13
   # Default prompt symbol.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='>' #➜
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='>'
   # Prompt symbol in command vi mode.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
   # Prompt symbol in visual vi mode.
@@ -201,6 +203,25 @@
   declare -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
   # No line introducer if prompt_char is the first segment.
   declare -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
+
+  ################################[ prompt_char_beg: prompt symbol ]################################
+  # Green prompt symbol if the last command succeeded.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=7
+  # Red prompt symbol if the last command failed.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=13
+  # Default prompt symbol.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_{OK,ERROR}_VIINS_CONTENT_EXPANSION='[' #➜
+  # Prompt symbol in command vi mode.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
+  # Prompt symbol in visual vi mode.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'
+  # Prompt symbol in overwrite vi mode.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='▶'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_OVERWRITE_STATE=true
+  # No line terminator if prompt_char is the last segment.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+  # No line introducer if prompt_char is the first segment.
+  declare -g POWERLEVEL9K_PROMPT_CHAR_BEG_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
@@ -1589,8 +1610,59 @@
   # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS. It displays an icon and green text greeting the user.
   #
   # Type `p10k help segment` for documentation and a more sophisticated example.
-  function prompt_example() {
+  prompt_example() {
     p10k segment -f 2 -i '⭐' -t 'hello, %n'
+  }
+
+  prompt_prompt_char_beg() {
+    local saved=$_p9k__prompt_char_saved[$_p9k__prompt_side$_p9k__segment_index$((!_p9k__status))]
+    if [[ -n $saved ]]; then
+      _p9k__prompt+=$saved
+      return
+    fi
+    local -i len=$#_p9k__prompt _p9k__has_upglob
+    if (( __p9k_sh_glob )); then
+      if (( _p9k__status )); then
+        if (( _POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE )); then
+          _p9k_prompt_segment $0_ERROR_VIINS "$_p9k_color1" 196 '' 0 '${${${${${${:-$_p9k__keymap.$_p9k__zle_state}:#vicmd.*}:#vivis.*}:#vivli.*}:#*.*overwrite*}}' '['
+          _p9k_prompt_segment $0_ERROR_VIOWR "$_p9k_color1" 196 '' 0 '${${${${${${:-$_p9k__keymap.$_p9k__zle_state}:#vicmd.*}:#vivis.*}:#vivli.*}:#*.*insert*}}' '▶'
+        else
+          _p9k_prompt_segment $0_ERROR_VIINS "$_p9k_color1" 196 '' 0 '${${${${_p9k__keymap:#vicmd}:#vivis}:#vivli}}' '['
+        fi
+        _p9k_prompt_segment $0_ERROR_VICMD "$_p9k_color1" 196 '' 0 '${(M)${:-$_p9k__keymap$_p9k__region_active}:#vicmd0}' '❮'
+        _p9k_prompt_segment $0_ERROR_VIVIS "$_p9k_color1" 196 '' 0 '${$((! ${#${${${${:-$_p9k__keymap$_p9k__region_active}:#vicmd1}:#vivis?}:#vivli?}})):#0}' 'Ⅴ'
+      else
+        if (( _POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE )); then
+          _p9k_prompt_segment $0_OK_VIINS "$_p9k_color1" 76 '' 0 '${${${${${${:-$_p9k__keymap.$_p9k__zle_state}:#vicmd.*}:#vivis.*}:#vivli.*}:#*.*overwrite*}}' '['
+          _p9k_prompt_segment $0_OK_VIOWR "$_p9k_color1" 76 '' 0 '${${${${${${:-$_p9k__keymap.$_p9k__zle_state}:#vicmd.*}:#vivis.*}:#vivli.*}:#*.*insert*}}' '▶'
+        else
+          _p9k_prompt_segment $0_OK_VIINS "$_p9k_color1" 76 '' 0 '${${${${_p9k__keymap:#vicmd}:#vivis}:#vivli}}' '['
+        fi
+        _p9k_prompt_segment $0_OK_VICMD "$_p9k_color1" 76 '' 0 '${(M)${:-$_p9k__keymap$_p9k__region_active}:#vicmd0}' '❮'
+        _p9k_prompt_segment $0_OK_VIVIS "$_p9k_color1" 76 '' 0 '${$((! ${#${${${${:-$_p9k__keymap$_p9k__region_active}:#vicmd1}:#vivis?}:#vivli?}})):#0}' 'Ⅴ'
+      fi
+    else
+      if (( _p9k__status )); then
+        if (( _POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE )); then
+          _p9k_prompt_segment $0_ERROR_VIINS "$_p9k_color1" 196 '' 0 '${${:-$_p9k__keymap.$_p9k__zle_state}:#(vicmd.*|vivis.*|vivli.*|*.*overwrite*)}' '['
+          _p9k_prompt_segment $0_ERROR_VIOWR "$_p9k_color1" 196 '' 0 '${${:-$_p9k__keymap.$_p9k__zle_state}:#(vicmd.*|vivis.*|vivli.*|*.*insert*)}' '▶'
+        else
+          _p9k_prompt_segment $0_ERROR_VIINS "$_p9k_color1" 196 '' 0 '${_p9k__keymap:#(vicmd|vivis|vivli)}' '['
+        fi
+        _p9k_prompt_segment $0_ERROR_VICMD "$_p9k_color1" 196 '' 0 '${(M)${:-$_p9k__keymap$_p9k__region_active}:#vicmd0}' '❮'
+        _p9k_prompt_segment $0_ERROR_VIVIS "$_p9k_color1" 196 '' 0 '${(M)${:-$_p9k__keymap$_p9k__region_active}:#(vicmd1|vivis?|vivli?)}' 'Ⅴ'
+      else
+        if (( _POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE )); then
+          _p9k_prompt_segment $0_OK_VIINS "$_p9k_color1" 76 '' 0 '${${:-$_p9k__keymap.$_p9k__zle_state}:#(vicmd.*|vivis.*|vivli.*|*.*overwrite*)}' '['
+          _p9k_prompt_segment $0_OK_VIOWR "$_p9k_color1" 76 '' 0 '${${:-$_p9k__keymap.$_p9k__zle_state}:#(vicmd.*|vivis.*|vivli.*|*.*insert*)}' '▶'
+        else
+          _p9k_prompt_segment $0_OK_VIINS "$_p9k_color1" 76 '' 0 '${_p9k__keymap:#(vicmd|vivis|vivli)}' '['
+        fi
+        _p9k_prompt_segment $0_OK_VICMD "$_p9k_color1" 76 '' 0 '${(M)${:-$_p9k__keymap$_p9k__region_active}:#vicmd0}' '❮'
+        _p9k_prompt_segment $0_OK_VIVIS "$_p9k_color1" 76 '' 0 '${(M)${:-$_p9k__keymap$_p9k__region_active}:#(vicmd1|vivis?|vivli?)}' 'Ⅴ'
+      fi
+    fi
+    (( _p9k__has_upglob )) || _p9k__prompt_char_saved[$_p9k__prompt_side$_p9k__segment_index$((!_p9k__status))]=$_p9k__prompt[len+1,-1]
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
