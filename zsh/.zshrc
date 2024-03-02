@@ -78,7 +78,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=103"
 # --------------------------------------------------------------------------------
 # 3. Dircolors
 # --------------------------------------------------------------------------------
-export DIRCOLORS_THEME=SourDiesel
+export DIRCOLORS_THEME=sourdiesel
 source "$XDG_CONFIG_HOME/dircolors/.dircolors"
 # --------------------------------------------------------------------------------
 # 4. Grep
