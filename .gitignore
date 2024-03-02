@@ -10,3 +10,4 @@ zsh/.zcompdump
 
 *.sock
 .DS_Store
+*.code-workspace
