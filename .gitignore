@@ -2,6 +2,8 @@ conda
 dropbox
 iterm2/AppSupport
 jupyter
+npm
+redhat/.redhat/anonymousId
 ssh/id*
 ssh/known*
 thinkorswim
