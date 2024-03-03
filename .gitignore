@@ -2,7 +2,8 @@ conda
 dropbox
 iterm2/AppSupport
 jupyter
-ssh
+ssh/id*
+ssh/known*
 thinkorswim
 vscode
 zsh/.zsh_sessions
