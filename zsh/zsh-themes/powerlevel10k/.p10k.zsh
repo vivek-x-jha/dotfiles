@@ -31,7 +31,8 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   declare -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # prompt_char_beg
-    sourdiesel
+    context                 # user@hostname
+    dir                     # current directory
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     anaconda                # conda environment (https://conda.io/)
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
@@ -40,8 +41,6 @@
     nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
     nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
     # os_icon               # os identifier
-    context                 # user@hostname
-    dir                     # current directory
     vcs                     # git status
     prompt_char             # prompt symbol
   )
@@ -363,7 +362,7 @@
 
   #####################################[ vcs: git status ]######################################
   # Branch icon. Set this parameter to '\UE0A0 ' for the popular Powerline branch icon.
-  declare -g POWERLEVEL9K_VCS_BRANCH_ICON='\UE0A0 '
+  # declare -g POWERLEVEL9K_VCS_BRANCH_ICON='\UE0A0 '
 
   # Untracked files icon. It's really a question mark, your font isn't broken.
   # Change the value of this parameter to show a different icon.
@@ -925,7 +924,7 @@
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=6
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=13
 
   # Anaconda segment format. The following parameters are available within the expansion.
   #
@@ -954,7 +953,7 @@
   declare -g POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)}:-${CONDA_PREFIX:t}}'
 
   # Custom icon.
-  # declare -g POWERLEVEL9K_ANACONDA_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  declare -g POWERLEVEL9K_ANACONDA_VISUAL_IDENTIFIER_EXPANSION=''
 
   ################[ pyenv: python environment (https://github.com/pyenv/pyenv) ]################
   # Pyenv color.
