@@ -12,9 +12,6 @@ export LESSHISTFILE=$XDG_CACHE_HOME/less/.lesshst
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
 
-# Code Edit init
-# [[ "$TERM_PROGRAM" == "CodeEditApp_Terminal" ]] && . "/Applications/CodeEdit.app/Contents/Resources/codeedit_shell_integration.zsh"
-
 # Create Color Codes
 export RED="FF96A3"
 export GREEN="BEF9BE"
