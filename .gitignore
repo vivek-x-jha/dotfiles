@@ -7,7 +7,7 @@ redhat/.redhat/anonymousId
 ssh/id*
 ssh/known*
 thinkorswim
-vscode
+vscode/.vscode
 zsh/.zsh_sessions
 zsh/.zcompdump
 
