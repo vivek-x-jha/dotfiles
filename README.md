@@ -17,7 +17,7 @@ This is my perosnal development stack & configuration files - will make this nic
 - [] *iterm* symlink is being recreated each new session
 - [] *vscode* `code` does not work when renaming app
 - [] *thinkorswim* what files are essential to check in
-- [] *vscode* what files are essential to check in
+- [] *vscode* How to move .vscode to custom location?
 - [x] *less* `.lesshst` reappears in `$HOME`
 - [] *mycli* history file not populating in cache
 - [] *ysu* refactor you-should-use plugin name to remove symlink

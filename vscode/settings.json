@@ -846,10 +846,11 @@
     "workbench.editorAssociations": {
         "*.pdf": "latex-workshop-pdf-hook"
     },
-    "workbench.iconTheme": "eq-material-theme-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "workbench.panel.defaultLocation": "right",
     "workbench.tree.enableStickyScroll": false,
     "workbench.editor.showTabs": "none",
     "redhat.telemetry.enabled": true,
-    "workbench.colorTheme": "Eva Dark"
+    "workbench.colorTheme": "Eva Dark",
+    "editor.guides.bracketPairs": true
 }
