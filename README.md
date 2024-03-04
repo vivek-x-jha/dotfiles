@@ -18,7 +18,7 @@ This is my perosnal development stack & configuration files - will make this nic
 - [] *vscode* `code` does not work when renaming app
 - [] *thinkorswim* what files are essential to check in
 - [] *vscode* what files are essential to check in
-- [] *less* `.lesshst` reappears in `$HOME`
+- [x] *less* `.lesshst` reappears in `$HOME`
 - [] *mycli* history file not populating in cache
 - [] *ysu* refactor you-should-use plugin name to remove symlink
 - [] *youtube* remove promotional banner
