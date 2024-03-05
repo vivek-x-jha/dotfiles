@@ -109,9 +109,9 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
 # ================================================================================
 export VIMINIT=":set runtimepath^=~/.config/vim/.vim|:source ~/.config/vim/.vimrc"
 # ================================================================================
-# XV - Mycli
+# XV - Databases
 # ================================================================================
-# TODO check if this is useless
+export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
 # ================================================================================
 # XVI - Fuzzy Finder
