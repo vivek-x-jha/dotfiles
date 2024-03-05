@@ -19,7 +19,7 @@ This is my perosnal development stack & configuration files - will make this nic
 - [] *thinkorswim* what files are essential to check in
 - [] *vscode* How to move .vscode to custom location?
 - [x] *less* `.lesshst` reappears in `$HOME`
-- [] *mycli* history file not populating in cache
+- [x] *mycli* history file not populating in cache
 - [] *ysu* refactor you-should-use plugin name to remove symlink
 - [] *youtube* remove promotional banner
 ![image](ytbanner.png)
