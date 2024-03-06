@@ -1,5 +1,5 @@
 set number relativenumber
-set viminfofile=~/.config/vim/.viminfo
+set viminfofile=~/.cache/vim/.viminfo
 syntax on
 
 call plug#begin()
