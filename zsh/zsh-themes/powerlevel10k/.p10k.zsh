@@ -886,19 +886,15 @@
   # declare -g POWERLEVEL9K_CPU_ARCH_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   ##################################[ context: user@hostname ]##################################
-  # Context color when running with privileges.
+  # Context format when running with privileges: user@hostname.
   declare -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=3
-  # Context color in SSH without privileges.
-  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=2
-  # Default context color (no privileges, no SSH).
-  declare -g POWERLEVEL9K_CONTEXT_FOREGROUND=12
-
-  # Context format when running with privileges: bold user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n@%m'
+  declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%8F@%3F%m'
   # Context format when in SSH without privileges: user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n@%m'
+  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=2
+  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%8F@%2F%m'
   # Default context format (no privileges, no SSH): user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@%m'
+  declare -g POWERLEVEL9K_CONTEXT_FOREGROUND=12
+  declare -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%8F@%12F%m'
 
   # Don't show context unless running with privileges or in SSH.
   # Comment below to always show context.
