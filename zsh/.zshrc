@@ -45,7 +45,6 @@ autoload -Uz compinit; compinit
 autoload -Uz colors && colors
 autoload -Uz downloadRepos
 autoload -Uz condainit
-autoload -Uz list-colors
 autoload -Uz plug
 autoload -Uz take
 # ================================================================================
