@@ -11,6 +11,7 @@ alias ......="cd ../../../../.."
 alias cat='bat -p'
 alias emptytrash='rm -rf "$HOME/.Trash/*"'
 alias list-aliases='alias'
+alias list-colors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
 alias list-env-vars='env'
 alias list-fpath='print -l $fpath'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]}'
