@@ -1,5 +1,5 @@
 [user]
-	name = vivekjha
+	name = Vivek Jha
 	email = vivek.x.jha@gmail.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK5uQ9GkYPNNwckcMPr9U1bR/yy+hDO1XPAiSCNtC7G
 [core]
@@ -15,4 +15,5 @@
 [init]
 	defaultBranch = main
 [include]
-    path = ~/.config/git/themes/sourdiesel.config
+    path = ~/.config/git/themes/sourdiesel.gitconfig
+	path = ~/.config/git/aliases.gitconfig
