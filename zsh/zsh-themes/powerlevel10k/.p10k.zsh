@@ -224,7 +224,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  declare -g POWERLEVEL9K_DIR_FOREGROUND=225
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=12
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
@@ -887,14 +887,14 @@
 
   ##################################[ context: user@hostname ]##################################
   # Context format when running with privileges: user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=3
-  declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%8F@%3F%m'
+  declare -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=1
+  declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%7F@%1F%m'
   # Context format when in SSH without privileges: user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=2
-  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%8F@%2F%m'
+  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=3
+  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%7F@%3F%m'
   # Default context format (no privileges, no SSH): user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_FOREGROUND=12
-  declare -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%8F@%12F%m'
+  declare -g POWERLEVEL9K_CONTEXT_FOREGROUND=225
+  declare -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%7F@%225F%m'
 
   # Don't show context unless running with privileges or in SSH.
   # Comment below to always show context.
