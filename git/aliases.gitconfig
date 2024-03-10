@@ -1,16 +1,16 @@
 [alias]
     lg = "log --graph --date=format:'%b-%d-%Y' \
     --pretty='%C(225)%h %C(12)%an %C(3)%ad%C(auto)%d %C(7)%s %Creset'"
-    ss = 'status --short'
-    rs = 'restore'
-    rst = 'restore --staged'
-    cmsg = 'commit --message'
-    cam = 'commit --all --message'
-    cl = 'clone --recurse-submodules'
-    d = 'diff'
-    ds = 'diff --staged'
-    p = 'push'
-    l = 'pull'
-    f = 'fetch'
-    a = 'add'
-    aa = 'add --all'
+    ss = "status --short"
+    rs = "restore"
+    rst = "restore --staged"
+    cmsg = "commit --message"
+    cam = "commit --all --message"
+    cl = "clone --recurse-submodules"
+    d = "diff"
+    ds = "diff --staged"
+    p = "push"
+    l = "pull"
+    f = "fetch"
+    a = "add"
+    aa = "add --all"
