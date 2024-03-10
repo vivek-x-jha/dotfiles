@@ -10,3 +10,11 @@
     new = 2
 	frag = 225
     context = 8
+[color "decorate"]
+	HEAD = 225
+	branch = 2
+	remoteBranch = 5
+	tag = 3
+	stash = 1
+	grafted = 1
+	hash = 225
