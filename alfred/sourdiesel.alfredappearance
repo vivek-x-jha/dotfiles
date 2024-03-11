@@ -1,47 +1,47 @@
 {
   "alfredtheme" : {
     "result" : {
-      "textSpacing" : 5,
+      "textSpacing" : 10,
       "subtext" : {
         "size" : 14,
-        "colorSelected" : "#E774FFFF",
+        "colorSelected" : "#80D7FEFF",
         "font" : "System",
-        "color" : "#FEFFFE84"
+        "color" : "#9DA5B3FF"
       },
       "shortcut" : {
         "size" : 16,
-        "colorSelected" : "#00FEECFF",
+        "colorSelected" : "#FEF097FF",
         "font" : "System",
-        "color" : "#E376FFFF"
+        "color" : "#FDF9BBFF"
       },
-      "backgroundSelected" : "#272C33FF",
+      "backgroundSelected" : "#282B32FF",
       "text" : {
-        "size" : 19,
-        "colorSelected" : "#00FFFCFF",
+        "size" : 20,
+        "colorSelected" : "#F2CDF3FF",
         "font" : "Avenir Next",
         "color" : "#EBFFF7FF"
       },
       "iconPaddingHorizontal" : 4,
       "roundness" : 0,
-      "paddingVertical" : 3,
+      "paddingVertical" : 6,
       "iconSize" : 40
     },
     "search" : {
-      "backgroundSelected" : "#E376FEFF",
+      "backgroundSelected" : "#BFF0BBFF",
       "paddingHorizontal" : 8,
       "spacing" : 8,
       "text" : {
         "size" : 34,
         "colorSelected" : "#353535FF",
         "font" : "System Light",
-        "color" : "#FFFFFFFF"
+        "color" : "#BEF9BEFF"
       },
-      "background" : "#272C33FF",
+      "background" : "#272B32FF",
       "roundness" : 0,
       "paddingVertical" : 5
     },
     "window" : {
-      "color" : "#272C33FF",
+      "color" : "#282C34FF",
       "paddingHorizontal" : 9,
       "width" : 559,
       "borderPadding" : 0,
@@ -50,7 +50,7 @@
       "roundness" : 5,
       "paddingVertical" : 8
     },
-    "credit" : "Mubuntu",
+    "credit" : "Vivek Jha",
     "visualEffectMode" : 2,
     "separator" : {
       "color" : "#CBCBCBF3",
@@ -60,6 +60,6 @@
       "color" : "#E6EAE6FF",
       "thickness" : 2
     },
-    "name" : "EVA DARK"
+    "name" : "sourdiesel"
   }
 }
