@@ -10,14 +10,14 @@
       },
       "shortcut" : {
         "size" : 16,
-        "colorSelected" : "#FEF097FF",
+        "colorSelected" : "#FF87FFFF",
         "font" : "System",
-        "color" : "#FDF9BBFF"
+        "color" : "#F2CDF3FF"
       },
-      "backgroundSelected" : "#282B32FF",
+      "backgroundSelected" : "#282C34FF",
       "text" : {
         "size" : 20,
-        "colorSelected" : "#F2CDF3FF",
+        "colorSelected" : "#FDF9BBFF",
         "font" : "Avenir Next",
         "color" : "#EBFFF7FF"
       },
@@ -27,16 +27,16 @@
       "iconSize" : 40
     },
     "search" : {
-      "backgroundSelected" : "#BFF0BBFF",
+      "backgroundSelected" : "#BEF9BEFF",
       "paddingHorizontal" : 8,
       "spacing" : 8,
       "text" : {
         "size" : 34,
-        "colorSelected" : "#353535FF",
+        "colorSelected" : "#282C34FF",
         "font" : "System Light",
         "color" : "#BEF9BEFF"
       },
-      "background" : "#272B32FF",
+      "background" : "#282C34FF",
       "roundness" : 0,
       "paddingVertical" : 5
     },
