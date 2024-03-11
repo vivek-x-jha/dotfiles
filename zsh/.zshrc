@@ -91,7 +91,8 @@ ${GREEN}'%command' ${BLUE}%alias_type ${PINK}%alias ${NONE}"
 # --------------------------------------------------------------------------------
 # 6. Syntax Highlighting
 # --------------------------------------------------------------------------------
-source "$ZDOTDIR/zsh-plugins/zsh-syntax-highlighting/themes/sourdiesel.zsh"
+export ZSH_SYNTAX_THEME=sourdiesel
+source "$ZDOTDIR/zsh-plugins/zsh-syntax-highlighting/themes/$ZSH_SYNTAX_THEME.zsh"
 # ================================================================================
 # XI - Keybindings
 # ================================================================================
