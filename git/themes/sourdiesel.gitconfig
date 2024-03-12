@@ -11,7 +11,7 @@
 	frag = 225
     context = 8
 [color "decorate"]
-	HEAD = 225
+	HEAD = 14
 	branch = 2
 	remoteBranch = 5
 	tag = 3
