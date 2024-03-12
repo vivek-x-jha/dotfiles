@@ -6,14 +6,14 @@
 typeset -AHg less_termcap
 
 # bold & blinking mode
-less_termcap[mb]="${fg_bold[red]}"
-less_termcap[md]="${fg_bold[red]}"
+less_termcap[mb]="${fg[yellow]}"
+less_termcap[md]="${fg[yellow]}"
 less_termcap[me]="${reset_color}"
 # standout mode
-less_termcap[so]="${fg_bold[yellow]}${bg[blue]}"
+less_termcap[so]="${fg[blue]}${bg[red]}"
 less_termcap[se]="${reset_color}"
 # underlining
-less_termcap[us]="${fg_bold[green]}"
+less_termcap[us]="${fg[green]}"
 less_termcap[ue]="${reset_color}"
 
 # Handle $0 according to the standard:
@@ -22,9 +22,9 @@ less_termcap[ue]="${reset_color}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 
 # Absolute path to this file's directory.
-typeset -g __colored_man_pages_dir="${0:A:h}"
+declare -g __colored_man_pages_dir="${0:A:h}"
 
-function colored() {
+colored() {
   local -a environment
 
   # Convert associative array to plain array of NAME=VALUE items.
@@ -38,16 +38,12 @@ function colored() {
   environment+=( PAGER="${commands[less]:-$PAGER}" )
 
   # See ./nroff script.
-  if [[ "$OSTYPE" = solaris* ]]; then
-    environment+=( PATH="${__colored_man_pages_dir}:$PATH" )
-  fi
+  [[ ! "$OSTYPE" = solaris* ]] || environment+=( PATH="${__colored_man_pages_dir}:$PATH" )
 
   command env $environment "$@"
 }
 
 # Colorize man and dman/debman (from debian-goodies)
-function man \
-  dman \
-  debman {
-  colored $0 "$@"
-}
+man() { colored $0 "$@" }
+dman() { colored $0 "$@" }
+debman() { colored $0 "$@" }
