@@ -14,3 +14,4 @@
     f = "fetch"
     a = "add"
     aa = "add --all"
+    rv = "remote --verbose"
