@@ -10,14 +10,14 @@
       },
       "shortcut" : {
         "size" : 16,
-        "colorSelected" : "#FF87FFFF",
+        "colorSelected" : "#F2CDF3FF",
         "font" : "System",
-        "color" : "#F2CDF3FF"
+        "color" : "#BEF9BEFF"
       },
       "backgroundSelected" : "#282C34FF",
       "text" : {
         "size" : 20,
-        "colorSelected" : "#FDF9BBFF",
+        "colorSelected" : "#F2CDF3FF",
         "font" : "Avenir Next",
         "color" : "#EBFFF7FF"
       },
@@ -34,7 +34,7 @@
         "size" : 34,
         "colorSelected" : "#282C34FF",
         "font" : "System Light",
-        "color" : "#BEF9BEFF"
+        "color" : "#FDF9BBFF"
       },
       "background" : "#282C34FF",
       "roundness" : 0,
