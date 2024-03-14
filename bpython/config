@@ -1,7 +1,7 @@
 [general]
 arg_spec = True
 auto_display_list = True
-color_scheme = SourDiesel
+color_scheme = sourdiesel
 hist_file = ~/.cache/bpython/.pythonhist
 hist_length = 10000
 syntax = True
