@@ -619,7 +619,9 @@
 				<real>0.15686275064945221</real>
 			</dict>
 			<key>Background Image Location</key>
-			<string></string>
+			<string>/Users/mubuntu/BuddyAI Dropbox/Vivek Jha/media/icons/iterm-bgr-gradient.png</string>
+			<key>Background Image Mode</key>
+			<integer>2</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -633,6 +635,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Blend</key>
+			<real>0.75411005434782596</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -640,7 +644,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>44.502144281914894</real>
+			<real>49.57045378989362</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1247,7 +1251,7 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
-			<integer>40</integer>
+			<integer>45</integer>
 			<key>Screen</key>
 			<integer>-2</integer>
 			<key>Scrollback Lines</key>
@@ -1317,7 +1321,7 @@
 			<key>Title Components</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.10145445478723404</real>
+			<real>0.049020944148936166</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -1574,7 +1578,9 @@
 				<real>0.15686275064945221</real>
 			</dict>
 			<key>Background Image Location</key>
-			<string></string>
+			<string>/Users/mubuntu/BuddyAI Dropbox/Vivek Jha/media/icons/iterm-bgr-gradient.png</string>
+			<key>Background Image Mode</key>
+			<integer>2</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1589,13 +1595,13 @@
 				<real>1</real>
 			</dict>
 			<key>Blend</key>
-			<real>0.5</real>
+			<real>0.75491677989130435</real>
 			<key>Blinking Cursor</key>
 			<true/>
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>45.309881981382972</real>
+			<real>50.309881981382972</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -2264,7 +2270,7 @@
 			<key>Title Components</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.098387632978723411</real>
+			<real>0.047420212765957453</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
