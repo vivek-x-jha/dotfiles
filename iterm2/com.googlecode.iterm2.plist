@@ -610,18 +610,16 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.20392157137393951</real>
+				<real>0.20392156862745098</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.17254902422428131</real>
+				<real>0.17254901960784313</real>
 				<key>Red Component</key>
-				<real>0.15686275064945221</real>
+				<real>0.15686274509803921</real>
 			</dict>
-			<key>Background Image Location</key>
-			<string>/Users/mubuntu/BuddyAI Dropbox/Vivek Jha/media/icons/iterm-bgr-gradient.png</string>
 			<key>Background Image Mode</key>
-			<integer>2</integer>
+			<integer>1</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -636,7 +634,7 @@
 				<real>1</real>
 			</dict>
 			<key>Blend</key>
-			<real>0.75411005434782596</real>
+			<real>0.75255038496376814</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -644,7 +642,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>49.57045378989362</real>
+			<real>64</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1577,10 +1575,8 @@
 				<key>Red Component</key>
 				<real>0.15686275064945221</real>
 			</dict>
-			<key>Background Image Location</key>
-			<string>/Users/mubuntu/BuddyAI Dropbox/Vivek Jha/media/icons/iterm-bgr-gradient.png</string>
 			<key>Background Image Mode</key>
-			<integer>2</integer>
+			<integer>1</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1601,7 +1597,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>50.309881981382972</real>
+			<real>64</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Alpha Component</key>
