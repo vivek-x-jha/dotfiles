@@ -1,20 +1,22 @@
+#!/usr/bin/env zsh
+
 # Requires colors autoload.
 # See termcap(5).
 
 # Set up once, and then reuse. This way it supports user overrides after the
 # plugin is loaded.
-typeset -AHg less_termcap
+declare -AHg less_termcap
 
 # bold & blinking mode
-less_termcap[mb]="${fg[yellow]}"
-less_termcap[md]="${fg[yellow]}"
-less_termcap[me]="${reset_color}"
+less_termcap[mb]="$YELLOW"
+less_termcap[md]="$YELLOW"
+less_termcap[me]="$NONE"
 # standout mode
-less_termcap[so]="${fg[blue]}${bg[red]}"
-less_termcap[se]="${reset_color}"
+less_termcap[so]="$GREEN"
+less_termcap[se]="$NONE"
 # underlining
-less_termcap[us]="${fg[green]}"
-less_termcap[ue]="${reset_color}"
+less_termcap[us]="$BLUE_BRIGHT"
+less_termcap[ue]="$NONE"
 
 # Handle $0 according to the standard:
 # https://zdharma-continuum.github.io/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html
@@ -25,21 +27,13 @@ less_termcap[ue]="${reset_color}"
 declare -g __colored_man_pages_dir="${0:A:h}"
 
 colored() {
-  local -a environment
-
+  declare -ag environment
   # Convert associative array to plain array of NAME=VALUE items.
-  local k v
-  for k v in "${(@kv)less_termcap}"; do
-    environment+=( "LESS_TERMCAP_${k}=${v}" )
-  done
-
-  # Prefer `less` whenever available, since we specifically configured
-  # environment for it.
+  for opt color in "${(@kv)less_termcap}"; do environment+=( "LESS_TERMCAP_${opt}=${color}" ); done
+  # Prefer `less` whenever available, since we specifically configured environment for it.
   environment+=( PAGER="${commands[less]:-$PAGER}" )
-
   # See ./nroff script.
-  [[ ! "$OSTYPE" = solaris* ]] || environment+=( PATH="${__colored_man_pages_dir}:$PATH" )
-
+  [[ "$OSTYPE" != solaris* ]] || environment+=( PATH="${__colored_man_pages_dir}:$PATH" )
   command env $environment "$@"
 }
 
