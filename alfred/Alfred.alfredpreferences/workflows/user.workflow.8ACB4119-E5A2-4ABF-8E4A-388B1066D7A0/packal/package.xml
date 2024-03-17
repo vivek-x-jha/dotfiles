@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Percent Change</name>
-  <version>1.5.1</version>
-  <bundle>net.bradmontgomery.percent_change</bundle>
-  <updated>1545930019</updated>
-  <file>percent-change.alfredworkflow</file>
-</workflow>
