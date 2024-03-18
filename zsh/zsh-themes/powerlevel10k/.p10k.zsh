@@ -185,10 +185,10 @@
   # declare -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
 
   ################################[ prompt_char: prompt symbol ]################################
-  # Green prompt symbol if the last command succeeded.
+  # White prompt symbol if the last command succeeded.
   declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=7
   # Red prompt symbol if the last command failed.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=13
+  declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=1
   # Default prompt symbol.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='>'
   # Prompt symbol in command vi mode.
@@ -224,7 +224,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  declare -g POWERLEVEL9K_DIR_FOREGROUND=159
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=225
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
@@ -389,10 +389,10 @@
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local meta='%f'
-      local clean='%2F'
+      local clean='%4F'
       local modified='%3F'
-      local staged='%225F'
-      local untracked='%117F'
+      local staged='%2F'
+      local untracked='%1F'
       local conflicted='%1F'
     else
       # Styling for incomplete and stale Git status.

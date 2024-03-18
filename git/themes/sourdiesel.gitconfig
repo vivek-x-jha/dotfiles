@@ -1,20 +1,24 @@
 # Sour Diesel Theme
 [color "status"]
-	untracked = 12
-	added = 225
+	header = 8
+	untracked = 1
+	added = 2
 	changed = 3
-	branch = 2
+	branch = 4
+	nobranch = 1
+	remoteBranch = 5
+	localBranch = 6
+	unmerged = 3
 [color "diff"]
-    # meta = 225
     old = 1
     new = 2
-	frag = 225
+    frag = 225
     context = 8
 [color "decorate"]
-	HEAD = 14
-	branch = 2
+	HEAD = 2
+	branch = 4
 	remoteBranch = 5
 	tag = 3
-	stash = 1
+	stash = 6
 	grafted = 1
 	hash = 225
