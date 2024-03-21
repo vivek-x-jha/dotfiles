@@ -224,7 +224,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  declare -g POWERLEVEL9K_DIR_FOREGROUND=225
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=5
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
@@ -376,7 +376,7 @@
   #
   # VCS_STATUS_* parameters are set by gitstatus plugin. See reference:
   # https://github.com/romkatv/gitstatus/blob/master/gitstatus.plugin.zsh.
-  function my_git_formatter() {
+  my_git_formatter() {
     emulate -L zsh
 
     if [[ -n $P9K_CONTENT ]]; then
@@ -920,7 +920,7 @@
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=13
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=2
 
   # Anaconda segment format. The following parameters are available within the expansion.
   #
@@ -1672,7 +1672,7 @@
   #
   # Usually, you should either not define instant_prompt_* or simply call prompt_* from it. If
   # instant_prompt_* is not defined for a segment, the segment won't be shown in instant prompt.
-  function instant_prompt_example() {
+  instant_prompt_example() {
     # Since prompt_example always makes the same `p10k segment` calls, we can call it from
     # instant_prompt_example. This will give us the same `example` prompt segment in the instant
     # and regular prompts.
