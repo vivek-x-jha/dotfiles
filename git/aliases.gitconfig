@@ -1,6 +1,6 @@
 [alias]
     lg = "log --graph --date=format:'%b-%d-%Y' \
-    --pretty='%C(magenta)%h %C(blue)%an %C(yellow)%ad%C(auto)%d %C(white)%s %Creset'"
+    --pretty='%C(yellow)%h %C(blue)%an %C(red)%ad%C(auto)%d %C(white)%s %Creset'"
     ss = "status --short"
     rs = "restore"
     rst = "restore --staged"
