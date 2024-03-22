@@ -2,7 +2,7 @@
 
 # *******************************************************************************
 # Author: Vivek Jha
-# Last Modified: Mar 14, 2024
+# Last Modified: Mar 21, 2024
 # 
 # ================================================================================
 # I - Directory Navigation
@@ -73,7 +73,8 @@ alias lsn='ls -1'      # List files and directories in a single column
 alias rm='rm -i'                              # Remove a file with permission
 alias cp='cp -i'                              # Copy a file with permission
 alias mv='mv -i'                              # Move a file with permission
-alias zshrc='${=EDITOR} $ZDOTDIR/.zshrc'      # Quickly access the .zshrc file
+alias zshrc='vim $ZDOTDIR/.zshrc'      # Quickly access the .zshrc file
+alias zshenv='vim $ZDOTDIR/.zshenv'      # Quickly access the .zshenv file
 alias dud='du -d 1 -h'                        # Display the size of files at depth 1 in current location in human-readable form
 (( $+commands[duf] )) || alias duf='du -sh *' # Display the size of files in current location in human-readable form           
 alias t='tail -f'                             # Shorthand for tail which outputs the last part of a file
