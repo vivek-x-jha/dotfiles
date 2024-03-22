@@ -33,10 +33,13 @@ alias gf='git f'
 alias ga='git a'
 alias gaa='git aa'
 alias grv='git rv'
+alias gmv='git mv'
+alias grm='git rm -f'
 # ================================================================================
 # II - Console Output
 # ================================================================================
 alias cat='bat -p'
+alias colors16='for c in {0..7}; do b=$((c+8)); print -P - "%F{$c}$c%f -> %F{$b}$b%f"; done'
 
 alias list-aliases='alias'
 alias list-colors='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
@@ -50,7 +53,6 @@ alias list-plugins='print -l $plugins'
 # ================================================================================
 # TODO organize this
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
-alias rmdsstore='sudo find / -name ".DS_Store" -depth -exec rm {} &>/dev/null'
 alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 # =============================================================================================================================
