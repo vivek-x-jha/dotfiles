@@ -1,5 +1,5 @@
 # Create System Variables
-export EDITOR="code"
+# export EDITOR="vim"
 
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
@@ -27,40 +27,36 @@ else
     export MAGENTA=$(tput setaf 5)
     export CYAN=$(tput setaf 6)
     export WHITE=$(tput setaf 7)
-    export BLACK_BRIGHT=$(tput setaf 8)
-    export RED_BRIGHT=$(tput setaf 9)
-    export GREEN_BRIGHT=$(tput setaf 10)
-    export YELLOW_BRIGHT=$(tput setaf 11)
-    export BLUE_BRIGHT=$(tput setaf 12)
-    export MAGENTA_BRIGHT=$(tput setaf 13)
-    export CYAN_BRIGHT=$(tput setaf 14)
-    export WHITE_BRIGHT=$(tput setaf 15)
-    export PINK=$(tput setaf 225)
+    export BRIGHT_BLACK=$(tput setaf 8)
+    export BRIGHT_RED=$(tput setaf 9)
+    export BRIGHT_GREEN=$(tput setaf 10)
+    export BRIGHT_YELLOW=$(tput setaf 11)
+    export BRIGHT_BLUE=$(tput setaf 12)
+    export BRIGHT_MAGENTA=$(tput setaf 13)
+    export BRIGHT_CYAN=$(tput setaf 14)
+    export BRIGHT_WHITE=$(tput setaf 15)
 fi
 
-declare -Ag COLORS_HEX=(
-    BLACK "#000000"
-    RED "#FF96A3"
-    GREEN "#BEF9BE"
-    YELLOW "#FDF9BB"
-    BLUE "#40C4FE"
-    MAGENTA "#FF87FF"
-    CYAN "#64FCDA"
-    WHITE "#F4F3F2"
-    BLACK_BRIGHT "#B2B2B2"
-    RED_BRIGHT "#80D7FE"
-    GREEN_BRIGHT "#A7FDEB"
-    YELLOW_BRIGHT "#B9F6C9"
-    BLUE_BRIGHT "#FF80AB"
-    MAGENTA_BRIGHT "#FF96A3"
-    CYAN_BRIGHT "#F4F3F2"
-    WHITE_BRIGHT "#FFE47E"
-    PINK "#F2CDF3"
-    GREY_BACKGROUND "#282C34"
-    GREY_POPOUTMENU "#21252B"
-    GREY_SECTIONHEAD "#9DA5B3"
-    GREY_COMMENT "#676E95"
-    GREY_DIRCOLORSNORMAL "#B6B6CE"
-    GREY_SELF "#C6CFF0"
-    INACTIVE "#5C617D"
+declare -Ag color2hex=(
+    black "#cccccc"
+    red "#ffc7c7"
+    green "#c8ffc2"
+    yellow "#fff6c7"
+    blue "#c4effa"
+    magenta "#f2cdf3"
+    cyan "#c5fdf1"
+    white "#f4f3f2"
+    bright-black "#5c617d"
+    bright-red "#ff80ab"
+    bright-green "#bee883"
+    bright-yellow "#ffad6a"
+    bright-blue "#80d7fe"
+    bright-magenta "#c289f0"
+    bright-cyan "#79e1cb"
+    bright-white "#ffffff"
+    grey-background "#282C34"
+    grey-popoutmenu "#21252B"
+    grey-sectionhead "#9DA5B3"
+    grey-comment "#676E95"
+    grey-self "#C6CFF0"
 )

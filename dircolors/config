@@ -9,3 +9,4 @@ dctheme="${0:A:h}/themes/$DIRCOLORS_THEME.theme"
 [[ ! -f  "$dctheme" ]] || eval "$("$gnubin/dircolors" "$dctheme")"
 
 alias ls="$gnubin/ls --color=auto"
+
