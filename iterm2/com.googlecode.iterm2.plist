@@ -359,7 +359,7 @@
 	<key>DimBackgroundWindows</key>
 	<false/>
 	<key>DimInactiveSplitPanes</key>
-	<true/>
+	<false/>
 	<key>DimOnlyText</key>
 	<true/>
 	<key>EnableDivisionView</key>
@@ -614,13 +614,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.2254638671875</real>
+				<real>0.19215686274509805</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.17738847747841646</real>
+				<real>0.16078431372549021</real>
 				<key>Red Component</key>
-				<real>0.14315799623727798</real>
+				<real>0.12941176470588237</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
