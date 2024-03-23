@@ -40,7 +40,7 @@ fi
 declare -Ag color2hex=(
     black "#cccccc"
     red "#ffc7c7"
-    green "#c8ffc2"
+    green "#ceffc9"
     yellow "#fff6c7"
     blue "#c4effa"
     magenta "#f2cdf3"
@@ -54,9 +54,5 @@ declare -Ag color2hex=(
     bright-magenta "#c289f0"
     bright-cyan "#79e1cb"
     bright-white "#ffffff"
-    grey-background "#282C34"
-    grey-popoutmenu "#21252B"
-    grey-sectionhead "#9DA5B3"
-    grey-comment "#676E95"
-    grey-self "#C6CFF0"
+    background "#212931"
 )

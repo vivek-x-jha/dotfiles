@@ -51,6 +51,7 @@ autoload -Uz take
 # VI - Plugins
 # ================================================================================
 plug z.lua
+plug zsh-autocomplete
 plug zsh-autosuggestions
 plug zsh-colored-man-pages
 plug zsh-vscode
@@ -71,9 +72,9 @@ export ZSH_THEME=powerlevel10k
 source "$HOMEBREW_PREFIX/share/$ZSH_THEME/powerlevel10k.zsh-theme"
 source "$ZDOTDIR/zsh-themes/$ZSH_THEME/.p10k.zsh"
 # --------------------------------------------------------------------------------
-# 2. Autosuggestions
+# 2. Autocompletion
 # --------------------------------------------------------------------------------
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=8
+# TODO Configure Autocompletions
 # --------------------------------------------------------------------------------
 # 3. Dircolors
 # --------------------------------------------------------------------------------
