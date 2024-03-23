@@ -22,3 +22,6 @@
 [submodule "neofetch/themes"]
 	path = neofetch/themes
 	url = https://github.com/Chick2D/neofetch-themes
+[submodule "zsh/zsh-plugins/zsh-autocomplete"]
+	path = zsh/zsh-plugins/zsh-autocomplete
+	url = git@github.com:marlonrichert/zsh-autocomplete.git
