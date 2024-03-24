@@ -62,6 +62,7 @@ alias list-plugins='print -l $plugins'
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
+alias devtasks='vim "$XDG_CONFIG_HOME/devtasks.md"'
 # =============================================================================================================================
 # IV - LS
 # =============================================================================================================================
