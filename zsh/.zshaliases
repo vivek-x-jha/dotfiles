@@ -2,7 +2,7 @@
 
 # *******************************************************************************
 # Author: Vivek Jha
-# Last Modified: Mar 21, 2024
+# Last Modified: Mar 22, 2024
 # 
 # ================================================================================
 # I - Directory Navigation
@@ -16,7 +16,6 @@ alias ......="cd ../../../../.."
 # ================================================================================
 # II - Git
 # ================================================================================
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
 alias gst='git status'
 alias glg='git lg'
 alias gss='git ss'
@@ -34,7 +33,15 @@ alias ga='git a'
 alias gaa='git aa'
 alias grv='git rv'
 alias gmv='git mv'
-alias grm='git rm -f'
+alias grm='git rm'
+alias gco='git co'
+alias gsw='git sw'
+alias gb='git b'
+alias gba='git ba'
+alias gbd='git bd'
+alias gbm='git bm'
+alias gbc='git bc'
+alias gbl='git bl'
 # ================================================================================
 # II - Console Output
 # ================================================================================
@@ -75,8 +82,9 @@ alias lsn='ls -1'      # List files and directories in a single column
 alias rm='rm -i'                              # Remove a file with permission
 alias cp='cp -i'                              # Copy a file with permission
 alias mv='mv -i'                              # Move a file with permission
-alias zshrc='vim $ZDOTDIR/.zshrc'      # Quickly access the .zshrc file
-alias zshenv='vim $ZDOTDIR/.zshenv'      # Quickly access the .zshenv file
+alias v='vim'				      # Vim
+alias zshrc='vim $ZDOTDIR/.zshrc'      	      # Quickly access the .zshrc file
+alias zshenv='vim $ZDOTDIR/.zshenv'           # Quickly access the .zshenv file
 alias dud='du -d 1 -h'                        # Display the size of files at depth 1 in current location in human-readable form
 (( $+commands[duf] )) || alias duf='du -sh *' # Display the size of files in current location in human-readable form           
 alias t='tail -f'                             # Shorthand for tail which outputs the last part of a file
