@@ -4,8 +4,14 @@
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK5uQ9GkYPNNwckcMPr9U1bR/yy+hDO1XPAiSCNtC7G
 [core]
 	editor = code -w
+	pager = less
 [color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
 	ui = true
+	pager = true
 [gpg]
 	format = ssh
 [gpg "ssh"]
