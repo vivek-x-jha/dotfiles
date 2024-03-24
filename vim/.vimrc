@@ -1,3 +1,5 @@
+set tabstop=4
+set shiftwidth=4
 set number relativenumber
 set viminfofile=~/.cache/vim/.viminfo
 syntax on
