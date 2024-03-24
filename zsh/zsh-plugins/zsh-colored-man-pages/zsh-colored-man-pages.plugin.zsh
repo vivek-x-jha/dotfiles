@@ -8,14 +8,14 @@
 declare -AHg less_termcap
 
 # bold & blinking mode
-less_termcap[mb]="$YELLOW"
-less_termcap[md]="$YELLOW"
+less_termcap[mb]="$MAGENTA"
+less_termcap[md]="$MAGENTA"
 less_termcap[me]="$NONE"
 # standout mode
-less_termcap[so]="$GREEN"
+less_termcap[so]="$YELLOW"
 less_termcap[se]="$NONE"
 # underlining
-less_termcap[us]="$BLUE_BRIGHT"
+less_termcap[us]="$BLUE"
 less_termcap[ue]="$NONE"
 
 # Handle $0 according to the standard:
