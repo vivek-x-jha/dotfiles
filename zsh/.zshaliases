@@ -63,6 +63,11 @@ alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias devtasks='vim "$XDG_CONFIG_HOME/devtasks.md"'
+# GNU programs
+gnubin="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
+[[ -d "$gnubin" ]] || brew install -q coreutils
+alias ls="$gnubin/ls --color=auto"
+alias grep="$gnubin/grep --color=auto"
 # =============================================================================================================================
 # IV - LS
 # =============================================================================================================================
@@ -83,9 +88,10 @@ alias lsn='ls -1'      # List files and directories in a single column
 alias rm='rm -i'                              # Remove a file with permission
 alias cp='cp -i'                              # Copy a file with permission
 alias mv='mv -i'                              # Move a file with permission
-alias v='vim'				      # Vim
-alias zshrc='vim $ZDOTDIR/.zshrc'      	      # Quickly access the .zshrc file
-alias zshenv='vim $ZDOTDIR/.zshenv'           # Quickly access the .zshenv file
+alias v='vim'								  # Vim
+alias zshrc='vim "$ZDOTDIR/.zshrc"'      	      # Quickly access the .zshrc file
+alias zshenv='vim "$ZDOTDIR/.zshenv"'           # Quickly access the .zshenv file
+alias aliases='vim "$ZDOTDIR/.zshaliases"'		  # Quickly access the .zshaliases file
 alias dud='du -d 1 -h'                        # Display the size of files at depth 1 in current location in human-readable form
 (( $+commands[duf] )) || alias duf='du -sh *' # Display the size of files in current location in human-readable form           
 alias t='tail -f'                             # Shorthand for tail which outputs the last part of a file
@@ -94,6 +100,7 @@ alias t='tail -f'                             # Shorthand for tail which outputs
 # =============================================================================================================================
 (( $+commands[fd] )) || alias fd='find . -type d -name'        # Find a directory with the given name
 alias ff='find . -type f -name'                                # Find a file with the given name
+
 alias grep='grep --color=auto'                                 # Searches for a query string
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS}' # Useful for searching within files
 # =============================================================================================================================
