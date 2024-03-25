@@ -41,19 +41,20 @@ fi
 declare -Ag color2hex=(
     black "#cccccc"
     red "#ffc7c7"
-    green "#ceffc9"
+    green "#c6ff8f"
     yellow "#fff6c7"
     blue "#c4effa"
     magenta "#f2cdf3"
     cyan "#c5fdf1"
     white "#f4f3f2"
     bright-black "#5c617d"
-    bright-red "#ff80ab"
+    bright-red "#ff73a6"
     bright-green "#bee883"
     bright-yellow "#ffad6a"
     bright-blue "#80d7fe"
     bright-magenta "#c289f0"
     bright-cyan "#79e1cb"
     bright-white "#ffffff"
-    background "#212931"
+    background "#162028"
 )
+
