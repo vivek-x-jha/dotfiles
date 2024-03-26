@@ -4,7 +4,7 @@
 #
 # sudo or sudo -e (replacement for sudoedit) will be inserted before the command
 #
-# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/sudo.plugin.zsh
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo
 # ------------------------------------------------------------------------------
 # Authors
 # -------
