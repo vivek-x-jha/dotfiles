@@ -150,6 +150,11 @@ Install [Homebrew Package Manager](https://brew.sh/)
 - [ ] configure `$HOME/.vscode` -> `$XDG_CONFIG_HOME/vscode/.vscode`
 - [ ] debug `code` not working when renaming app
 
+### Alfred
+
+- [ ] configure old workflows
+- [ ] configure new colorscheme
+
 ### Think or Swim
 
 - [ ] learn fundamentals: configuration file(s) to track
