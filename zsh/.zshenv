@@ -41,7 +41,7 @@ fi
 declare -Ag color2hex=(
     black "#cccccc"
     red "#ffc7c7"
-    green "#c6ff8f"
+    green "#ceffc9"
     yellow "#fff6c7"
     blue "#c4effa"
     magenta "#f2cdf3"
@@ -49,7 +49,7 @@ declare -Ag color2hex=(
     white "#f4f3f2"
     bright-black "#5c617d"
     bright-red "#ff73a6"
-    bright-green "#bee883"
+    bright-green "#c6ff8f"
     bright-yellow "#ffad6a"
     bright-blue "#80d7fe"
     bright-magenta "#c289f0"
