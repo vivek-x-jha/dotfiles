@@ -54,11 +54,11 @@ plug z.lua
 plug zsh-autocomplete
 plug zsh-autosuggestions
 plug zsh-colored-man-pages
-plug zsh-vscode
 plug zsh-sudo
+plug zsh-vscode
 plug zsh-you-should-use
-plug zsh-syntax-highlighting
 plug zsh-history-substring-search
+plug zsh-syntax-highlighting
 # ================================================================================
 # VII - Aliases
 # ================================================================================
