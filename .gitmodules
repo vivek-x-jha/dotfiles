@@ -25,3 +25,6 @@
 [submodule "zsh/zsh-plugins/zsh-autocomplete"]
 	path = zsh/zsh-plugins/zsh-autocomplete
 	url = git@github.com:marlonrichert/zsh-autocomplete.git
+[submodule "zsh/zsh-plugins/zoxide"]
+	path = zsh/zsh-plugins/zoxide
+	url = git@github.com:ajeetdsouza/zoxide.git
