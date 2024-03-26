@@ -106,6 +106,14 @@ sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
 
 ## Shell Features & Other Tools 
 
+### Homebrew
+
+Install [Homebrew Package Manager](https://brew.sh/)
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 ### Autoload
 
 - [ ] learn fundamentals: lazy loading
@@ -122,6 +130,7 @@ sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
 
 ### Git
 
+- [x] configure [githb ssh connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 - [ ] update submodule urls to use `ssh` links
 - [ ] learn fundamentals: `git merge`
 - [ ] learn fundamentals: `git stash`
@@ -152,6 +161,10 @@ sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
 ### Stable Diffusion
 
 - [ ] debug CLI launcher not initializing
+
+### [Anaconda](https://www.anaconda.com/download#downloads)
+
+Install: `sudo bash ~/.config/conda/Anaconda3-2023.03-1-MacOSX-arm64.sh`
 
 ## Other Notes
 
