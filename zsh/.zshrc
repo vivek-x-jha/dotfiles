@@ -101,8 +101,8 @@ source "$ZDOTDIR/zsh-plugins/zsh-syntax-highlighting/themes/$ZSH_SYNTAX_THEME.zs
 # ================================================================================
 # XI - Keybindings
 # ================================================================================
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+bindkey '^[[1;2A' history-substring-search-up
+bindkey '^[[1;2B' history-substring-search-down
 # bindkey '^A' beginning-of-line
 # bindkey '^E' end-of-line
 # ================================================================================
