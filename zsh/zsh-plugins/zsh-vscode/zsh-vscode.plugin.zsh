@@ -1,9 +1,13 @@
+#!/usr/bin/env zsh
+
 # VS Code (stable / insiders) / VSCodium zsh plugin
+# Original Repo:
+#   https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/vscode/vscode.plugin.zsh
 # Authors:
 #   https://github.com/MarsiBarsi (original author)
 #   https://github.com/babakks
 #   https://github.com/SteelShot
-
+#   https://github.com/AliSajid
 # Verify if any manual user choice of VS Code exists first.
 if [[ -n "$VSCODE" ]] && ! which $VSCODE &>/dev/null; then
   echo "'$VSCODE' flavour of VS Code not detected."
@@ -23,7 +27,8 @@ if [[ -z "$VSCODE" ]]; then
   fi
 fi
 
-alias vsc="$VSCODE ."
+vsc() { if (( $# )); then $VSCODE $@; else $VSCODE .; fi }
+
 alias vsca="$VSCODE --add"
 alias vscd="$VSCODE --diff"
 alias vscg="$VSCODE --goto"
@@ -31,6 +36,7 @@ alias vscn="$VSCODE --new-window"
 alias vscr="$VSCODE --reuse-window"
 alias vscw="$VSCODE --wait"
 alias vscu="$VSCODE --user-data-dir"
+alias vscp="$VSCODE --profile"
 
 alias vsced="$VSCODE --extensions-dir"
 alias vscie="$VSCODE --install-extension"
@@ -39,3 +45,4 @@ alias vscue="$VSCODE --uninstall-extension"
 alias vscv="$VSCODE --verbose"
 alias vscl="$VSCODE --log"
 alias vscde="$VSCODE --disable-extensions"
+
