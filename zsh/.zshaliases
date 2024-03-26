@@ -62,7 +62,7 @@ alias list-plugins='print -l $plugins'
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
-alias devtasks='vim "$XDG_CONFIG_HOME/devtasks.md"'
+alias devtasks='vim "$XDG_CONFIG_HOME/README.md"'
 # GNU programs
 gnubin="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
 [[ -d "$gnubin" ]] || brew install -q coreutils
