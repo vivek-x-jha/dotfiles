@@ -48,6 +48,11 @@ zsh-syntax-highlighting
 
 ### [Autocompletion](https://github.com/marlonrichert/zsh-autocomplete)
 
+To change color, use 
+```zsh
+zstyle ':completion:*:*:descriptions' format '<prompt escape codes>'
+```
+
 - [ ] configure results color: black 
 - [ ] configure results selection color: magenta? green? try a few out...
 - [ ] configure results header color: token dependent
@@ -87,6 +92,7 @@ sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
 ### [VS Code Launcher](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/vscode)
 
 - [x] refactor `vsc()` as single-line function
+- [ ] debug vscode font looking different: configure `anti-aliasing: true`
 
 ### [You Should Use Alias Hinter](https://github.com/vivek-x-jha/zsh-you-should-use)
 
@@ -125,7 +131,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 - [x] debug `.mycli-history` not populating in cache
 - [ ] configure `.zsh_sessions` path to `$XDG_CACHE_HOME/zsh`
 - [ ] configure `.zcompdump` path to `$XDG_CACHE_HOME/zsh` ([Stack Overflow Solution](https://superuser.com/a/1785259/930403))
-- [ ] debug `.bash_history` not populating in `$XDG_CACHE_HOME/bash` (works norma    lly for `exec bash`)
+- [ ] debug `.bash_history` not populating in `$XDG_CACHE_HOME/bash` (works normally for `exec bash`)
 - [ ] debug `.lesshst` reappearing in `$HOME`
 
 ### Git
@@ -142,6 +148,9 @@ Install [Homebrew Package Manager](https://brew.sh/)
 
 - [ ] build [file explorer](https://thevaluable.dev/practical-guide-fzf-example/)
 
+### Btop
+
+- [x] configure theme: [catppuccin-mocha](https://github.com/catppuccin/btop)
 ### Mycli
 
 
