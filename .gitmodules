@@ -28,3 +28,18 @@
 [submodule "zsh/zsh-plugins/zoxide"]
 	path = zsh/zsh-plugins/zoxide
 	url = git@github.com:ajeetdsouza/zoxide.git
+[submodule "alfred/alfred-github-star"]
+	path = alfred/alfred-github-star
+	url = git@github.com:vivek-x-jha/alfred-github-star.git
+[submodule "alfred/alfred-movie-tv-search"]
+	path = alfred/alfred-movie-tv-search
+	url = git@github.com:tmcknight/Movie-and-TV-Show-Search-Alfred-Workflow.git
+[submodule "alfred/alfred-1password"]
+	path = alfred/alfred-1password
+	url = git@github.com:alfredapp/1password-workflow.git
+[submodule "alfred/alfred-reminders"]
+	path = alfred/alfred-reminders
+	url = git@github.com:surrealroad/alfred-reminders.git
+[submodule "alfred/alfred-dash"]
+	path = alfred/alfred-dash
+	url = git@github.com:Kapeli/Dash-Alfred-Workflow.git
