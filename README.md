@@ -161,7 +161,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 
 ### Alfred
 
-- [ ] configure old workflows
+- [x] configure old workflows
 - [ ] configure new colorscheme
 
 ### Think or Swim
@@ -178,7 +178,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 
 ### [Anaconda](https://www.anaconda.com/download#downloads)
 
-Install: `sudo bash ~/.config/conda/Anaconda3-2023.03-1-MacOSX-arm64.sh`
+- [ ] automate installation: `sudo bash ~/.config/conda/Anaconda3-2023.03-1-MacOSX-arm64.sh`
 
 ## Other Notes
 

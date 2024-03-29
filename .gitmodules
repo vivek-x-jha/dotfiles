@@ -37,9 +37,6 @@
 [submodule "alfred/alfred-1password"]
 	path = alfred/alfred-1password
 	url = git@github.com:alfredapp/1password-workflow.git
-[submodule "alfred/alfred-reminders"]
-	path = alfred/alfred-reminders
-	url = git@github.com:surrealroad/alfred-reminders.git
 [submodule "alfred/alfred-dash"]
 	path = alfred/alfred-dash
 	url = git@github.com:Kapeli/Dash-Alfred-Workflow.git
