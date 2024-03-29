@@ -1,13 +1,15 @@
 {
-    "debug.console.fontFamily": "SauceCodeProNFM-Light",
+    "debug.console.fontFamily": "LigaSFMonoNerdFont-Light",
     // "code-runner.runInTerminal": true,
     "editor.accessibilitySupport": "off",
-    "editor.codeLensFontFamily": "SauceCodeProNFM-Light",
-    "editor.fontSize": 14,
-    "editor.minimap.enabled": false,
+    "editor.codeLensFontFamily": "LigaSFMonoNerdFont-Light",
     "editor.cursorBlinking": "phase",
-    "editor.fontFamily": "SauceCodeProNFM-Light",
+    "editor.fontFamily": "LigaSFMonoNerdFont-Light",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.guides.bracketPairs": true,
     "editor.language.brackets": [],
+    "editor.minimap.enabled": false,
     "editor.tokenColorCustomizations": {
         "[Eva Dark]": {
             "textMateRules": [
@@ -453,6 +455,7 @@
             ]
         }
     },
+    "explorer.compactFolders": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "git.confirmSync": false,
@@ -551,9 +554,9 @@
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.cursorStyle": "underline",
     "terminal.integrated.enablePersistentSessions": false,
-    "terminal.integrated.fontFamily": "SauceCodeProNFM-Light",
+    "terminal.integrated.fontFamily": "LigaSFMonoNerdFont-Light",
     "terminal.integrated.fontSize": 14,
-    // "terminal.integrated.fontWeight": "normal",
+    "terminal.integrated.fontWeight": "normal",
     "terminal.integrated.fontWeightBold": "600",
     "terminal.integrated.inheritEnv": false,
     "window.confirmSaveUntitledWorkspace": false,
@@ -908,13 +911,14 @@
             "widget.shadow": "#000000"
         }
     },
+    "workbench.colorTheme": "Eva Dark",
+    "workbench.editor.showTabs": "none",
     "workbench.editorAssociations": {
         "*.pdf": "latex-workshop-pdf-hook"
     },
+    "workbench.fontAliasing": "antialiased",
     "workbench.iconTheme": "material-icon-theme",
     "workbench.panel.defaultLocation": "right",
     "workbench.tree.enableStickyScroll": false,
-    "workbench.editor.showTabs": "none",
-    "workbench.colorTheme": "Eva Dark",
-    "editor.guides.bracketPairs": true
+    "terminal.integrated.shellIntegration.suggestEnabled": true
 }
