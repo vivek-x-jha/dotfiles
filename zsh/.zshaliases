@@ -41,7 +41,8 @@ alias gba='git ba'
 alias gbd='git bd'
 alias gbm='git bm'
 alias gbc='git bc'
-alias gbl='git bl'
+alias gmg='git mg'
+alias gsa='git sa'
 # ================================================================================
 # II - Console Output
 # ================================================================================

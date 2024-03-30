@@ -10,15 +10,15 @@
 	localBranch = cyan
 	unmerged = yellow
 [color "diff"]
-        old = red
-        meta = black
-        new = green
-        frag = magenta
-        context = brightblack
+	old = red
+	meta = black
+	new = green
+	frag = magenta
+	context = brightblack
 [color "decorate"]
-	HEAD = green
+	HEAD = brightgreen
 	branch = blue
-	remoteBranch = magenta
+	remoteBranch = red
 	tag = brightyellow
 	stash = cyan
 	grafted = red
