@@ -56,6 +56,7 @@ alias list-fpath='print -l $fpath'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]}'
 alias list-path='print -l $path'
 alias list-plugins='print -l $plugins'
+alias list-sourdiesel-hexcodes='for k v in ${(@kv)color2hex}; do echo $k $v; done'
 # ================================================================================
 # III - Miscellaneous
 # ================================================================================

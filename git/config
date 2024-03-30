@@ -21,5 +21,6 @@
 [init]
 	defaultBranch = main
 [include]
-        path = ~/.config/git/themes/sourdiesel.gitconfig
+	path = ~/.config/git/themes/sourdiesel.gitconfig
 	path = ~/.config/git/aliases.gitconfig
+
