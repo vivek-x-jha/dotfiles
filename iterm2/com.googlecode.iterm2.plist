@@ -80,13 +80,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.94117647409439087</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.5372549295425415</real>
+				<real>0.80000001192092896</real>
 				<key>Red Component</key>
-				<real>0.7607843279838562</real>
+				<real>0.78431373834609985</real>
 			</dict>
 			<key>Ansi 14 Color</key>
 			<dict>
@@ -171,13 +171,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.9465821385383606</real>
+				<real>0.9043353796005249</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.99215686321258545</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.77441102266311646</real>
+				<real>0.659637451171875</real>
 			</dict>
 			<key>Ansi 7 Color</key>
 			<dict>
@@ -223,13 +223,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.20392157137393951</real>
+				<real>0.180755615234375</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.17254902422428131</real>
+				<real>0.13518030941486359</real>
 				<key>Red Component</key>
-				<real>0.15686275064945221</real>
+				<real>0.11734110862016678</real>
 			</dict>
 			<key>Badge Color</key>
 			<dict>
@@ -327,13 +327,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.91986083984375</real>
+				<real>0.80000001192092896</real>
 				<key>Red Component</key>
-				<real>0.79797250032424927</real>
+				<real>0.78431373834609985</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
@@ -353,7 +353,7 @@
 	<key>Default Bookmark Guid</key>
 	<string>C97AF44B-D092-4321-992C-81975E758A7F</string>
 	<key>DeleteProfile_SilenceUntil</key>
-	<real>729165599.80263495</real>
+	<real>733448567.92165303</real>
 	<key>DeleteProfile_selection</key>
 	<integer>0</integer>
 	<key>DimBackgroundWindows</key>
@@ -469,13 +469,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.94117647409439087</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.5372549295425415</real>
+				<real>0.80000001192092896</real>
 				<key>Red Component</key>
-				<real>0.7607843279838562</real>
+				<real>0.78431373834609985</real>
 			</dict>
 			<key>Ansi 14 Color</key>
 			<dict>
@@ -560,13 +560,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.9465821385383606</real>
+				<real>0.9043353796005249</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.99215686321258545</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.77441102266311646</real>
+				<real>0.659637451171875</real>
 			</dict>
 			<key>Ansi 7 Color</key>
 			<dict>
@@ -614,13 +614,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.20392157137393951</real>
+				<real>0.180755615234375</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.17254902422428131</real>
+				<real>0.13518030941486359</real>
 				<key>Red Component</key>
-				<real>0.15686275064945221</real>
+				<real>0.11734110862016678</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -1263,13 +1263,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.91986083984375</real>
+				<real>0.80000001192092896</real>
 				<key>Red Component</key>
-				<real>0.79797250032424927</real>
+				<real>0.78431373834609985</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
@@ -1323,7 +1323,7 @@
 			<key>Title Components</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.10106549202127656</real>
+			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -1428,13 +1428,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.94117647409439087</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.5372549295425415</real>
+				<real>0.80000001192092896</real>
 				<key>Red Component</key>
-				<real>0.7607843279838562</real>
+				<real>0.78431373834609985</real>
 			</dict>
 			<key>Ansi 14 Color</key>
 			<dict>
@@ -1519,13 +1519,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.9465821385383606</real>
+				<real>0.9043353796005249</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.99215686321258545</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.77441102266311646</real>
+				<real>0.659637451171875</real>
 			</dict>
 			<key>Ansi 7 Color</key>
 			<dict>
@@ -1573,13 +1573,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.20392157137393951</real>
+				<real>0.180755615234375</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.17254902422428131</real>
+				<real>0.13518030941486359</real>
 				<key>Red Component</key>
-				<real>0.15686275064945221</real>
+				<real>0.11734110862016678</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -2194,7 +2194,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>LigaSFMonoNerdFont-Light 14</string>
+			<string>LigaSFMonoNerdFont-Light 16</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
@@ -2216,13 +2216,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.0</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.91986083984375</real>
+				<real>0.80000001192092896</real>
 				<key>Red Component</key>
-				<real>0.79797250032424927</real>
+				<real>0.78431373834609985</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
@@ -2276,7 +2276,7 @@
 			<key>Title Components</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.097420212765957442</real>
+			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
