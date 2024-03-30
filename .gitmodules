@@ -40,3 +40,12 @@
 [submodule "alfred/alfred-dash"]
 	path = alfred/alfred-dash
 	url = git@github.com:Kapeli/Dash-Alfred-Workflow.git
+[submodule "alfred/alfred-reddit-browser"]
+	path = alfred/alfred-reddit-browser
+	url = git@github.com:chrisgrieser/alfred-reddit-browser.git
+[submodule "alfred/alfred-openai"]
+	path = alfred/alfred-openai
+	url = git@github.com:alfredapp/openai-workflow.git
+[submodule "alfred/alfred-reminders"]
+	path = alfred/alfred-reminders
+	url = git@github.com:surrealroad/alfred-reminders.git
