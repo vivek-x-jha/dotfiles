@@ -47,21 +47,21 @@ plug zsh-syntax-highlighting
 source "$ZDOTDIR/.zshaliases"
 
 export ZSH_THEME=powerlevel10k
-source "$HOMEBREW_PREFIX/share/$ZSH_THEME/powerlevel10k.zsh-theme"
-source "$ZDOTDIR/zsh-themes/$ZSH_THEME/.p10k.zsh"
+source "$HOMEBREW_PREFIX/share/$ZSH_THEME/$ZSH_THEME.zsh-theme"
+source "$ZDOTDIR/themes/$ZSH_THEME/p10k.conf"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 export DIRCOLORS_THEME=sourdiesel
-source "$XDG_CONFIG_HOME/dircolors/config"
+source "$XDG_CONFIG_HOME/dircolors/dircolors.conf"
 
 export GREP_COLOR='38;5;11'
 
 export YSU_MESSAGE_FORMAT="${YELLOW}[ysu reminder]${NONE}: \
 ${BLUE}%alias_type ${PINK}%alias${WHITE}=${GREEN}'%command'${NONE}"
 
-export ZSH_SYNTAX_THEME=sourdiesel
-source "$ZDOTDIR/zsh-plugins/zsh-syntax-highlighting/themes/$ZSH_SYNTAX_THEME.zsh"
+export SYNTAX_THEME=sourdiesel
+source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"
 
 source "$ZDOTDIR/zsh-completions.zsh"
 

@@ -48,13 +48,21 @@ declare -Ag color2hex=(
     cyan "#a8ffe6"
     white "#f4f3f2"
     bright-black "#5c617d"
-    bright-red "#ff73a6"
+    bright-red "#ff8fb8"
     bright-green "#c6ff8f"
     bright-yellow "#ffad6a"
     bright-blue "#80d7fe"
     bright-magenta "#c8ccff"
     bright-cyan "#79e1cb"
     bright-white "#ffffff"
-    background "#162028"
+	textfg "#f4f3f2"
+	textbg "#1d222e"
+	bold "#f4f3f2"
+	links "#ffc7c7"
+	selectfg "#a8ffe6"
+	selectbg "#233e4d"
+	badge "#bee883"
+	cursor "#f4f3f2"
+
 )
 
