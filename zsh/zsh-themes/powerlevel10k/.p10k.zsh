@@ -561,7 +561,7 @@
   # Show this many fractional digits. Zero means round to seconds.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=2
   # Execution time color.
-  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=1
+  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=2
   # Duration format: 1d 2h 3m 4s.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
