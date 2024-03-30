@@ -224,7 +224,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  declare -g POWERLEVEL9K_DIR_FOREGROUND=10
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=5
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
@@ -561,7 +561,7 @@
   # Show this many fractional digits. Zero means round to seconds.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=2
   # Execution time color.
-  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=3
+  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=1
   # Duration format: 1d 2h 3m 4s.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
