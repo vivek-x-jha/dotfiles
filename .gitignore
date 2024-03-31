@@ -9,7 +9,6 @@ ssh/id*
 ssh/known*
 thinkorswim
 vscode/.vscode
-zsh/.zsh_sessions
 zsh/.zcompdump
 
 *.sock
