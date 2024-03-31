@@ -9,6 +9,7 @@ This is obviosuly a WIP, so if you think something is dogshit, send me a PR.
 Below is a list of all the 3rd party plugins I use for my shell. I do not use the bloatware that is `oh-my-zsh`. Instead I manage the plugins with `plug`:
 
 ```zsh
+# TODO hyperlink this to the actual file in the repo
 plug() {
     # Loads plugin and appends it to plugins array
 
@@ -24,24 +25,7 @@ plug() {
 }
 ```
 
-To view active plugins in order of loading: `print -l $plugins` (also set to alias `list-plugins`)
-
-My current plugins are:
-
-```zsh
-$ list-plugins
-z.lua
-zsh-autocomplete
-zsh-autosuggestions
-zsh-colored-man-pages
-zsh-sudo
-zsh-vscode
-zsh-you-should-use
-zsh-history-substring-search
-zsh-syntax-highlighting
-```
-
-### [Fast Directory Switching - Z](https://github.com/vivek-x-jha/z.lua)
+### [Fast Directory Switching - z.lua](https://github.com/vivek-x-jha/z.lua)
 
 - [ ] optimize frecency list
 - [ ] learn fundamentals: watch `zoxide` [tutorial](https://youtu.be/aghxkpyRVDY?si=jBZuI3aLJf1nl_po)
@@ -99,10 +83,6 @@ sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
 - [ ] debug `check_alias_usage`: frequency counts are all 0
 - [ ] refactor `zsh-you-should-use.plugin.zsh`
 
-### [History Substring Search](https://github.com/vivek-x-jha/zsh-history-substring-search)
-
-- [x] configure initialization with `shift + up` and `shift + down`
-
 ### [Syntax Highlighting](https://github.com/vivek-x-jha/zsh-syntax-highlighting)
 
 - [x] refactor project
@@ -129,7 +109,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 ### Caching & History
 
 - [x] debug `.mycli-history` not populating in cache
-- [ ] configure `.zsh_sessions` path to `$XDG_CACHE_HOME/zsh`
+- [x] delete `.zsh_sessions`
 - [ ] configure `.zcompdump` path to `$XDG_CACHE_HOME/zsh` ([Stack Overflow Solution](https://superuser.com/a/1785259/930403))
 - [ ] debug `.bash_history` not populating in `$XDG_CACHE_HOME/bash` (works normally for `exec bash`)
 - [ ] debug `.lesshst` reappearing in `$HOME`
@@ -151,6 +131,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 ### Btop
 
 - [x] configure theme: [catppuccin-mocha](https://github.com/catppuccin/btop)
+
 ### Mycli
 
 
@@ -162,7 +143,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 ### Alfred
 
 - [x] configure old workflows
-- [ ] configure new colorscheme
+- [x] configure new colorscheme
 
 ### Think or Swim
 
@@ -181,5 +162,4 @@ Install [Homebrew Package Manager](https://brew.sh/)
 - [ ] automate installation: `sudo bash ~/.config/conda/Anaconda3-2023.03-1-MacOSX-arm64.sh`
 
 ## Other Notes
-
 
