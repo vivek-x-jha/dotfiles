@@ -8,15 +8,15 @@
 declare -AHg less_termcap
 
 # bold & blinking mode
-less_termcap[mb]="$MAGENTA"
-less_termcap[md]="$MAGENTA"
-less_termcap[me]="$NONE"
+less_termcap[mb]=$fg[magenta]
+less_termcap[md]=$fg[magenta]
+less_termcap[me]=$fg_reset
 # standout mode
-less_termcap[so]="$YELLOW"
-less_termcap[se]="$NONE"
+less_termcap[so]=$fg[yellow]
+less_termcap[se]=$fg_reset
 # underlining
-less_termcap[us]="$BLUE"
-less_termcap[ue]="$NONE"
+less_termcap[us]=$fg[blue]
+less_termcap[ue]=$fg_reset
 
 # Handle $0 according to the standard:
 # https://zdharma-continuum.github.io/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html

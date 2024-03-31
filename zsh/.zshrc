@@ -6,7 +6,7 @@ p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 source "$XDG_CONFIG_HOME/homebrew/brew.conf"
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
 
-HISTFILE="$XDG_CACHE_HOME/zsh/.zsh_history"
+HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=12000
 SAVEHIST=10000
 
@@ -42,7 +42,9 @@ plug zsh-vscode
 plug zsh-you-should-use
 plug zsh-syntax-highlighting
 
-source "$ZDOTDIR/aliases.conf"
+# Initialize SOURDIESEL_COLORSCHEME assoc array: attribute -> hex code
+source "$XDG_CONFIG_HOME/sourdiesel/colorscheme.zsh"
+source "$ZDOTDIR/.zaliases"
 
 export ZSH_THEME=p10k
 source "$ZDOTDIR/themes/$ZSH_THEME.conf"
@@ -54,8 +56,8 @@ source "$XDG_CONFIG_HOME/dircolors/dircolors.conf"
 
 export GREP_COLOR='38;5;11'
 
-export YSU_MESSAGE_FORMAT="${YELLOW}[ysu reminder]${NONE}: \
-${BLUE}%alias_type ${PINK}%alias${WHITE}=${GREEN}'%command'${NONE}"
+export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
+$fg[blue]%alias_type $fg[magenta]%alias$fg[white]=$fg[green]'%command'$reset_color"
 
 export SYNTAX_THEME=sourdiesel
 source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"

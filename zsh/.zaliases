@@ -56,7 +56,8 @@ alias list-fpath='print -l $fpath'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]}'
 alias list-path='print -l $path'
 alias list-plugins='print -l $plugins'
-alias list-sourdiesel-hexcodes='for k v in ${(@kv)color2hex}; do echo $k $v; done'
+alias list-sourdiesel='print -raC2 - "${(@kvq+)SOURDIESEL_COLORSCHEME}" | sort'
+alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 # ================================================================================
 # III - Miscellaneous
 # ================================================================================
