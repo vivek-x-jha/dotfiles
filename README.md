@@ -111,6 +111,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 - [x] debug `.mycli-history` not populating in cache
 - [x] delete `.zsh_sessions`
 - [ ] configure `.zcompdump` path to `$XDG_CACHE_HOME/zsh` ([Stack Overflow Solution](https://superuser.com/a/1785259/930403))
+- [x] debug `p10k-dump` and `p10k-inst-propt` not populating in `~/.cache/p10k` [[Might not be possible atm](https://github.com/romkatv/powerlevel10k/issues/1817)]
 - [ ] debug `.bash_history` not populating in `$XDG_CACHE_HOME/bash` (works normally for `exec bash`)
 - [ ] debug `.lesshst` reappearing in `$HOME`
 
