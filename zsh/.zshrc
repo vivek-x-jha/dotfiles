@@ -3,7 +3,7 @@
 p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 [[ ! -r $p10k_inst_prompt ]] || source $p10k_inst_prompt
 
-source "$XDG_CONFIG_HOME/homebrew/.brew"
+source "$XDG_CONFIG_HOME/homebrew/brew.conf"
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
 
 HISTFILE="$XDG_CACHE_HOME/zsh/.zsh_history"
