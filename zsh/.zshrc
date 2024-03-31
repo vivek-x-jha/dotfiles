@@ -23,14 +23,12 @@ setopt menu_complete
 setopt share_history
 
 fpath=(
-    "$ZDOTDIR/zsh-plugins/zsh-completions/src"
-    "$ZDOTDIR/zsh-autoload"
-    "$ZDOTDIR/zsh-functions"
+    "$ZDOTDIR/plugins/zsh-completions/src"
+    "$ZDOTDIR/functions"
     "${fpath[@]}"
 )
 autoload -Uz compinit; compinit
 autoload -Uz colors && colors
-autoload -Uz downloadRepos
 autoload -Uz condainit
 autoload -Uz plug
 autoload -Uz take
@@ -44,11 +42,10 @@ plug zsh-vscode
 plug zsh-you-should-use
 plug zsh-syntax-highlighting
 
-source "$ZDOTDIR/.zshaliases"
+source "$ZDOTDIR/aliases.conf"
 
-export ZSH_THEME=powerlevel10k
-source "$HOMEBREW_PREFIX/share/$ZSH_THEME/$ZSH_THEME.zsh-theme"
-source "$ZDOTDIR/themes/$ZSH_THEME/p10k.conf"
+export ZSH_THEME=p10k
+source "$ZDOTDIR/themes/$ZSH_THEME.conf"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
@@ -63,7 +60,7 @@ ${BLUE}%alias_type ${PINK}%alias${WHITE}=${GREEN}'%command'${NONE}"
 export SYNTAX_THEME=sourdiesel
 source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"
 
-source "$ZDOTDIR/zsh-completions.zsh"
+source "$ZDOTDIR/completions.conf"
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
 
@@ -72,4 +69,4 @@ export VIMINIT=":set runtimepath^=~/.config/vim/.vim|:source ~/.config/vim/.vimr
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
 
-source "$XDG_CONFIG_HOME/fzf/.fzf"
+source "$XDG_CONFIG_HOME/fzf/fzf.conf"
