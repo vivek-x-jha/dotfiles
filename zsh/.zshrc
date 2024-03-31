@@ -54,7 +54,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 export DIRCOLORS_THEME=sourdiesel
 source "$XDG_CONFIG_HOME/dircolors/dircolors.conf"
 
-export GREP_COLOR='38;5;11'
+export GREP_COLOR='38;5;10'
 
 export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
 $fg[blue]%alias_type $fg[magenta]%alias$fg[white]=$fg[green]'%command'$reset_color"
