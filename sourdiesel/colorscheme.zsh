@@ -20,11 +20,10 @@ declare -Ag SOURDIESEL_COLORSCHEME=(
 	textfg "#f4f3f2"
 	textbg "#1d222e"
 	bold "#f4f3f2"
-	links "#ffc7c7"
+	links "#ffad6a"
 	selectfg "#a8ffe6"
 	selectbg "#233e4d"
 	badge "#bee883"
 	cursor "#f4f3f2"
-
 )
 
