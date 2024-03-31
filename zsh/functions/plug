@@ -1,6 +1,6 @@
 # Loads plugin and appends it to plugins array
 
-local plugin="$ZDOTDIR/zsh-plugins/$1/$1.plugin.zsh"
+local plugin="$ZDOTDIR/plugins/$1/$1.plugin.zsh"
 
 if [[ -f $plugin ]]; then
     source $plugin
