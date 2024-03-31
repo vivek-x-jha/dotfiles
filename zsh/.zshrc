@@ -66,7 +66,7 @@ source "$ZDOTDIR/completions.conf"
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
 
-export VIMINIT=":set runtimepath^=~/.config/vim/.vim|:source ~/.config/vim/.vimrc"
+# export VIMINIT=":set runtimepath^=~/.config/vim/.vim|:source ~/.config/vim/.vimrc"
 
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
