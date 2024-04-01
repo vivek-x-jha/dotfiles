@@ -128,6 +128,7 @@ Install [Homebrew Package Manager](https://brew.sh/)
 ### FZF
 
 - [ ] build [file explorer](https://thevaluable.dev/practical-guide-fzf-example/)
+- [ ] configure colorscheme
 
 ### Btop
 
@@ -161,6 +162,10 @@ Install [Homebrew Package Manager](https://brew.sh/)
 ### [Anaconda](https://www.anaconda.com/download#downloads)
 
 - [ ] automate installation: `sudo bash ~/.config/conda/Anaconda3-2023.03-1-MacOSX-arm64.sh`
+
+### Neofetch
+
+- [ ] debug colorscheme: need to refactor old color env vars to using `colors` assoc arrays
 
 ## Other Notes
 
