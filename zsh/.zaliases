@@ -71,6 +71,7 @@ gnubin="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
 [[ -d "$gnubin" ]] || brew install -q coreutils
 alias ls="$gnubin/ls --color=auto"
 alias grep="$gnubin/grep --color=auto"
+alias weather='curl wttr.in'
 # =============================================================================================================================
 # IV - LS
 # =============================================================================================================================
@@ -92,7 +93,7 @@ alias rm='rm -i'                              # Remove a file with permission
 alias cp='cp -i'                              # Copy a file with permission
 alias mv='mv -i'                              # Move a file with permission
 alias vim='nvim'							  # NeoVim
-alias vf='fzf --bind "enter:become(vim {})"'  # Fuzzy find & open in vim
+alias vf='fzf --bind "enter:become(nvim {})"' # Fuzzy find & open in vim
 alias dud='du -d 1 -h'                        # Display the size of files at depth 1 in current location in human-readable form
 (( $+commands[duf] )) || alias duf='du -sh *' # Display the size of files in current location in human-readable form           
 alias t='tail -f'                             # Shorthand for tail which outputs the last part of a file

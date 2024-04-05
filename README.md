@@ -48,6 +48,7 @@ zstyle ':completion:*:*:descriptions' format '<prompt escape codes>'
 - [ ] test autosuggestions independence
 - [ ] remap history-substring keybinding
 - [ ] debug p10k truncating directory name to '~autocomplete'
+- [ ] debug crashing when navigating completions
 - [ ] learn fundamentals: [zsh completions](https://thevaluable.dev/zsh-completion-guide-examples/)
 
 ### [Autosuggestions](https://github.com/vivek-x-jha/zsh-autosuggestions)
