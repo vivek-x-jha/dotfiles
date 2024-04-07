@@ -223,13 +223,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.180755615234375</real>
+				<real>0.16470588743686676</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.13518030941486359</real>
+				<real>0.12549020349979401</real>
 				<key>Red Component</key>
-				<real>0.11734110862016678</real>
+				<real>0.12549020349979401</real>
 			</dict>
 			<key>Badge Color</key>
 			<dict>
@@ -614,13 +614,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.180755615234375</real>
+				<real>0.16470588743686676</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.13518030941486359</real>
+				<real>0.12549020349979401</real>
 				<key>Red Component</key>
-				<real>0.11734110862016678</real>
+				<real>0.12549020349979401</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -667,7 +667,7 @@
 			<key>Close Sessions On End</key>
 			<true/>
 			<key>Columns</key>
-			<integer>120</integer>
+			<integer>125</integer>
 			<key>Command</key>
 			<string>/opt/homebrew/bin/zsh</string>
 			<key>Cursor Color</key>
@@ -1253,7 +1253,7 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
-			<integer>45</integer>
+			<integer>50</integer>
 			<key>Screen</key>
 			<integer>-2</integer>
 			<key>Scrollback Lines</key>
@@ -1323,7 +1323,7 @@
 			<key>Title Components</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.1</real>
+			<real>0.10000000000000001</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -1573,13 +1573,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.180755615234375</real>
+				<real>0.16470588743686676</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.13518030941486359</real>
+				<real>0.12549020349979401</real>
 				<key>Red Component</key>
-				<real>0.11734110862016678</real>
+				<real>0.12549020349979401</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -1626,7 +1626,7 @@
 			<key>Close Sessions On End</key>
 			<true/>
 			<key>Columns</key>
-			<integer>120</integer>
+			<integer>125</integer>
 			<key>Command</key>
 			<string></string>
 			<key>Cursor Color</key>
@@ -2276,7 +2276,7 @@
 			<key>Title Components</key>
 			<integer>1</integer>
 			<key>Transparency</key>
-			<real>0.1</real>
+			<real>0.10000000000000001</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -2285,6 +2285,8 @@
 			<true/>
 			<key>Use Cursor Guide</key>
 			<false/>
+			<key>Use Custom Window Title</key>
+			<true/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
