@@ -5,6 +5,7 @@
 [core]
 	editor = code -w
 	pager = less
+	sshCommand = ssh -F ~/.config/ssh/config
 [color]
 	diff = auto
 	status = auto
