@@ -41,3 +41,4 @@ colored() {
 man() { colored $0 "$@" }
 dman() { colored $0 "$@" }
 debman() { colored $0 "$@" }
+

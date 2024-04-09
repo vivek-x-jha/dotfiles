@@ -23,52 +23,51 @@ setopt menu_complete
 setopt share_history
 
 fpath=(
-    "$ZDOTDIR/plugins/zsh-completions/src"
+    "$HOMEBREW_PREFIX/share/zsh-completions"
     "$ZDOTDIR/functions"
     "${fpath[@]}"
 )
 autoload -Uz compinit; compinit
 autoload -Uz colors && colors
 autoload -Uz condainit
-autoload -Uz plug
 autoload -Uz take
 
-plug z.lua
-plug zsh-autocomplete
-plug zsh-autosuggestions
-plug zsh-colored-man-pages
-plug zsh-sudo
-plug zsh-vscode
-plug zsh-you-should-use
-plug zsh-syntax-highlighting
+source "$ZDOTDIR/plugins/colored-man-pages.plugin.zsh"
 
-# Initialize SOURDIESEL_COLORSCHEME assoc array: attribute -> hex code
+source "$ZDOTDIR/plugins/sudo.plugin.zsh"
+
+source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
+
+source "$HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
+$fg[blue]%alias_type $fg[magenta]%alias$fg[white]=$fg[green]'%command'$reset_color"
+source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
+
+export SYNTAX_THEME=sourdiesel
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"
+
 source "$XDG_CONFIG_HOME/sourdiesel/colorscheme.zsh"
 source "$ZDOTDIR/.zaliases"
 
 export ZSH_THEME=p10k
 source "$ZDOTDIR/themes/$ZSH_THEME.conf"
 
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
-
 export DIRCOLORS_THEME=sourdiesel
 source "$XDG_CONFIG_HOME/dircolors/dircolors.conf"
 
 export GREP_COLOR='38;5;10'
 
-export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
-$fg[blue]%alias_type $fg[magenta]%alias$fg[white]=$fg[green]'%command'$reset_color"
-
-export SYNTAX_THEME=sourdiesel
-source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"
-
 source "$ZDOTDIR/completions.conf"
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
-
-# export VIMINIT=":set runtimepath^=~/.config/vim/.vim|:source ~/.config/vim/.vimrc"
 
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
 
 source "$XDG_CONFIG_HOME/fzf/fzf.conf"
+
