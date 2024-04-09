@@ -61,7 +61,6 @@ source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"
-source "$XDG_CONFIG_HOME/sourdiesel/colorscheme.zsh"
 source "$XDG_CONFIG_HOME/dircolors/dircolors.conf"
 source "$XDG_CONFIG_HOME/fzf/fzf.conf"
 

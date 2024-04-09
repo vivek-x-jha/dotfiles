@@ -55,7 +55,7 @@ alias list-env-vars='env | sort'
 alias list-fpath='print -l $fpath'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 alias list-path='print -l $path'
-alias list-sourdiesel='print -raC2 - "${(@kvq+)SOURDIESEL_COLORSCHEME}" | sort'
+alias list-sourdiesel='cat "$XDG_CONFIG_HOME/sourdiesel/colorscheme.txt"'
 alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 # ================================================================================
 # III - Miscellaneous
