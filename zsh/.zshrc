@@ -25,6 +25,7 @@ setopt share_history
 # Configure PATH
 source "$XDG_CONFIG_HOME/homebrew/brew.conf"
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
+[[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
 
 # Configure FPATH
 fpath=(
@@ -39,28 +40,43 @@ autoload -Uz colors && colors
 autoload -Uz condainit
 autoload -Uz take
 
-# Configure plugin/tool environment variables
+# Set SQL HISTORY
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
-export SYNTAX_THEME=sourdiesel
-export DIRCOLORS_THEME=sourdiesel
-export GREP_COLOR='38;5;10'
-export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
-$fg[magenta]%alias_type $fg[green]%alias$fg[white]=$fg[red]'%command'$reset_color"
 
-# Load plugins
+# PYTHON STARTUP
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
+
+# Custom COMPLETION CACHE and SSH known hosts
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.config/ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+
+# Load ALIASES
 source "$ZDOTDIR/.zaliases"
-source "$ZDOTDIR/completions.conf"
-source "$ZDOTDIR/plugins/colored-man-pages.plugin.zsh"
-source "$ZDOTDIR/plugins/sudo.plugin.zsh"
-source "$ZDOTDIR/themes/p10k.conf"
+
+# Set LSCOLORS and GREP themes
+eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/lscolors/${LS_THEME:=sourdiesel}.theme")"
+export GREP_COLOR="${GREP_THEME:=38;5;10}"
+
+# Set PROMPT
+source "$ZDOTDIR/themes/${PROMPT_THEME:=p10k}.conf"
+
+# LOAD CORE PLUGINS
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$XDG_CONFIG_HOME/syntax-highlighting/syntax-highlighting.conf"
-source "$XDG_CONFIG_HOME/dircolors/dircolors.conf"
-source "$XDG_CONFIG_HOME/fzf/fzf.conf"
+source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+
+source "$XDG_CONFIG_HOME/syntax-highlighting/themes/${SYNTAX_THEME:=sourdiesel}.theme"
+
+# LOAD 2nd Tier PLUGINS
+source "$ZDOTDIR/plugins/colored-man-pages.plugin.zsh"
+source "$ZDOTDIR/plugins/sudo.plugin.zsh"
+
+export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
+$fg[magenta]%alias_type $fg[green]%alias$fg[white]=$fg[red]'%command'$reset_color"
+source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
 
