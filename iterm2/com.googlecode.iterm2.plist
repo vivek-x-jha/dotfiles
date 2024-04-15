@@ -1241,7 +1241,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>LigaSFMonoNerdFont-Light 14</string>
+			<string>LigaSFMonoNerdFont-Light 16</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
@@ -2194,7 +2194,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>LigaSFMonoNerdFont-Light 14</string>
+			<string>LigaSFMonoNerdFont-Light 16</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
@@ -2367,7 +2367,7 @@
 	<key>TerminalVMargin</key>
 	<integer>13</integer>
 	<key>UseBorder</key>
-	<false/>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WindowNumber</key>
