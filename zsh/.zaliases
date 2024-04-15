@@ -70,10 +70,10 @@ alias ls="$gnubin/ls --color=auto"
 alias grep="$gnubin/grep --color=auto"
 
 # LS
-alias l='ls -1'
-alias lt='ls -1t'
-alias la='ls -lAh'
-alias lat='ls -lAht'
+alias l='ls -lAh'
+alias ll='ls -1A'
+alias lt='ls -1At'
+alias lta='ls -lAht'
 
 # File handling
 alias rm='rm -i'                              # Remove a file with permission
@@ -103,6 +103,8 @@ alias -g P="2>&1| pygmentize -l pytb" # Writes stderr to stdout and passes it to
 autoload -Uz is-at-least
 if is-at-least 4.2.0; then
     # Opens urls in terminal using browser specified by $BROWSER
+alias l='ls -lAh'
+alias l='ls -lAh'
     if [[ -n "$BROWSER" ]]; then
         _browser_fts=(htm html de org net com at cx nl se dk)
         for ft in $_browser_fts; do alias -s $ft='$BROWSER'; done
