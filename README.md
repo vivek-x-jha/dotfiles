@@ -4,27 +4,6 @@ Welcome to my take on a power user Terminal.
 The philosophy of this terminal should always be **Functional - Fast - Fun**. 
 This is obviosuly a WIP, so if you think something is dogshit, send me a PR.
 
-## Shell Plugins
-
-Below is a list of all the 3rd party plugins I use for my shell. I do not use the bloatware that is `oh-my-zsh`. Instead I manage the plugins with `plug`:
-
-```zsh
-# TODO hyperlink this to the actual file in the repo
-plug() {
-    # Loads plugin and appends it to plugins array
-
-    local plugin="$ZDOTDIR/zsh-plugins/$1/$1.plugin.zsh"
-
-    if [[ -f $plugin ]]; then
-        source $plugin
-        declare -ag plugins
-        plugins+=( $1 )
-    else
-        return 0
-    fi
-}
-```
-
 ### [Fast Directory Switching - z.lua](https://github.com/vivek-x-jha/z.lua)
 
 - [ ] optimize frecency list
@@ -48,19 +27,13 @@ zstyle ':completion:*:*:descriptions' format '<prompt escape codes>'
 - [ ] test autosuggestions independence
 - [ ] remap history-substring keybinding
 - [ ] debug p10k truncating directory name to '~autocomplete'
-- [ ] debug crashing when navigating completions
+- [ ] debug crashing when in
 - [ ] learn fundamentals: [zsh completions](https://thevaluable.dev/zsh-completion-guide-examples/)
 
 ### [Autosuggestions](https://github.com/vivek-x-jha/zsh-autosuggestions)
 
-- [x] configure color: black
-
 ### [Colored Man Pages](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colored-man-pages)
 
-- [x] configure bold & blinking: magenta
-- [x] configure standout: magenta
-- [x] configure underlining: blue
-- [x] refactor `zsh-colored-man-pages.plugin.zsh`
 - [ ] learn fundamentals: MANPATH
 - [ ] learn fundamentals: example of standout mode
 - [ ] debug subcommand not being recognized: i.e. `man git merge`
@@ -86,7 +59,6 @@ sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
 
 ### [Syntax Highlighting](https://github.com/vivek-x-jha/zsh-syntax-highlighting)
 
-- [x] refactor project
 - [x] update precommand color: bright green
 - [x] update current directory color: bright green
 - [x] update known token command color: magenta
