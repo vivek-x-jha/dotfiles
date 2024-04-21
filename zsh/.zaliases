@@ -63,7 +63,8 @@ alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias weather='curl wttr.in'
-
+alias update-texlive='sudo tlmgr update --self --all'
+alias touchid-sudo='sudo cp -f ~/.config/pam/sudo /etc/pam.d/sudo'
 # GNU
 gnubin="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
 alias ls="$gnubin/ls --color=auto"
