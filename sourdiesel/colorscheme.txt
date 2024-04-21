@@ -15,7 +15,7 @@ bright-magenta #c8ccff
 bright-cyan    #79e1cb
 bright-white   #ffffff
 textfg         #f4f3f2
-textbg         #20202a
+textbg         #1d1d2d
 bold           #f4f3f2
 links          #ffad6a
 selectfg       #a8ffe6
