@@ -12,6 +12,18 @@
 		<string>/System/Library/PreferencePanes</string>
 		<string>/usr/local/Cellar</string>
 		<string>~/Library/Caches/Metadata</string>
+		<string>~/Library/CloudStorage/Dropbox/content/anime</string>
+		<string>~/Library/CloudStorage/Dropbox/content/movies</string>
+		<string>~/Library/CloudStorage/Dropbox/content/shorts</string>
+		<string>~/Library/CloudStorage/Dropbox/content/shows</string>
+		<string>~/Library/CloudStorage/Dropbox/content/subtitles</string>
+		<string>~/Library/CloudStorage/Dropbox/developer</string>
+		<string>~/Library/CloudStorage/Dropbox/education</string>
+		<string>~/Library/CloudStorage/Dropbox/finances</string>
+		<string>~/Library/CloudStorage/Dropbox/icons</string>
+		<string>~/Library/CloudStorage/Dropbox/screenplays</string>
+		<string>~/Library/CloudStorage/Dropbox/screenshots</string>
+		<string>~/Library/CloudStorage/Dropbox/wallpapers</string>
 		<string>~/Library/Mobile Documents</string>
 	</array>
 </dict>
