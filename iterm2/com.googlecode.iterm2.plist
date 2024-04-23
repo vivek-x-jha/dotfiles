@@ -223,13 +223,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.17647059261798859</real>
+				<real>0.16470588743686676</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.12549020349979401</real>
 				<key>Red Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.12549020349979401</real>
 			</dict>
 			<key>Badge Color</key>
 			<dict>
@@ -375,8 +375,6 @@
 	<key>HideMenuBarInFullscreen</key>
 	<false/>
 	<key>HideScrollbar</key>
-	<true/>
-	<key>HideTab</key>
 	<true/>
 	<key>HideTabNumber</key>
 	<false/>
@@ -616,13 +614,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.17647059261798859</real>
+				<real>0.16470588743686676</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.12549020349979401</real>
 				<key>Red Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.12549020349979401</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -1575,13 +1573,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.17647059261798859</real>
+				<real>0.16470588743686676</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.12549020349979401</real>
 				<key>Red Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.12549020349979401</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -2342,8 +2340,6 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
-	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
-	<false/>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -2352,8 +2348,6 @@
 	<false/>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
-	<key>ShowNewOutputIndicator</key>
-	<true/>
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>ShowSessionRestoredBanner</key>
@@ -2362,10 +2356,6 @@
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.30103951759708741</real>
-	<key>StatusBarPosition</key>
-	<integer>1</integer>
-	<key>StretchTabsToFillBar</key>
-	<true/>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
 	<key>TabViewType</key>
