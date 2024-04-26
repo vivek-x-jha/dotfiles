@@ -899,7 +899,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND='cyan'
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND='red'
 
   # Anaconda segment format. The following parameters are available within the expansion.
   #
