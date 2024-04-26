@@ -60,7 +60,7 @@ eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/lscolors/${LS_THEME:=sourdiesel}.t
 export GREP_COLOR="${GREP_THEME:=38;5;10}"
 
 # Set PROMPT
-source "$ZDOTDIR/themes/${PROMPT_THEME:=p10k}.conf"
+source "${PROMPT_THEME:=$ZDOTDIR/themes/p10k.zsh}"
 
 # LOAD CORE PLUGINS
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
