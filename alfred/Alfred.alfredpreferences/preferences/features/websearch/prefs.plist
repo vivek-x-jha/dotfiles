@@ -127,6 +127,17 @@
 			<key>url</key>
 			<string>https://official.nbabite.com/</string>
 		</dict>
+		<key>99A67E79-99E1-4574-9DF0-EC05DE34A50A</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>amzn</string>
+			<key>text</key>
+			<string>Search Amazon for '{query}'</string>
+			<key>url</key>
+			<string>https://www.amazon.com/s?k={query}</string>
+		</dict>
 		<key>9A5C815C-3015-4C7B-9B69-0820A9E0EB82</key>
 		<dict>
 			<key>enabled</key>
@@ -174,17 +185,6 @@
 			<string>Search Youtube for '{query}'</string>
 			<key>url</key>
 			<string>https://www.youtube.com/results?search_query={query}</string>
-		</dict>
-		<key>D6188397-226B-4F42-BB0B-C03E5A0BF1ED</key>
-		<dict>
-			<key>enabled</key>
-			<true/>
-			<key>keyword</key>
-			<string>az</string>
-			<key>text</key>
-			<string>Search Amazon for '{query}'</string>
-			<key>url</key>
-			<string>https://www.amazon.com/s?k={query}</string>
 		</dict>
 		<key>E074A5FF-99EC-4DF8-8440-66C9B02F7D53</key>
 		<dict>
