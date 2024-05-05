@@ -203,7 +203,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  declare -g POWERLEVEL9K_DIR_FOREGROUND='magenta'
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=10
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
@@ -540,7 +540,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Show this many fractional digits. Zero means round to seconds.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
   # Execution time color.
-  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=12
+  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=13
   # Duration format: 1d 2h 3m 4s.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
