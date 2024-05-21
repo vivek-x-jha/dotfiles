@@ -2,8 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AiMaxTokens</key>
+	<integer>128000</integer>
+	<key>AiModel</key>
+	<string>gpt-4o</string>
 	<key>AlternateMouseScroll</key>
 	<true/>
+	<key>AutoHideTmuxClientSession</key>
+	<false/>
 	<key>Command</key>
 	<string></string>
 	<key>Custom Color Presets</key>
@@ -614,13 +620,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.17647059261798859</real>
+				<real>0.17721465229988098</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.11372549086809158</real>
+				<real>0.1134488508105278</real>
 				<key>Red Component</key>
-				<real>0.11764705926179886</real>
+				<real>0.11853333562612534</real>
 			</dict>
 			<key>Background Image Mode</key>
 			<integer>1</integer>
@@ -2366,7 +2372,13 @@
 	<integer>15</integer>
 	<key>TerminalVMargin</key>
 	<integer>13</integer>
+	<key>TmuxUsesDedicatedProfile</key>
+	<true/>
+	<key>TmuxWarnBeforePausing</key>
+	<true/>
 	<key>UseBorder</key>
+	<false/>
+	<key>UseTmuxStatusBar</key>
 	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
@@ -3324,6 +3336,6 @@
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<true/>
 	<key>kCPKUseSystemColorPicker</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
