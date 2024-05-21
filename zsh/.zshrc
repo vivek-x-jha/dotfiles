@@ -76,7 +76,6 @@ source "$XDG_CONFIG_HOME/syntax-highlighting/${SYNTAX_THEME:=sourdiesel}.theme"
 source "$ZDOTDIR/plugins/colored-man-pages.plugin.zsh"
 source "$ZDOTDIR/plugins/sudo.plugin.zsh"
 
-export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: \
-$fg[magenta]%alias_type $fg[green]%alias$fg[white]=$fg[red]'%command'$reset_color"
+export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: $fg[magenta]%alias_type $fg[green]%alias$fg[white]=$fg[red]'%command'$reset_color"
 source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
 

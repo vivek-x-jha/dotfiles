@@ -4,7 +4,7 @@
 	untracked = red
 	added = green
 	changed = yellow
-	branch = blue
+	branch = 12
 	nobranch = red
 	remoteBranch = red
 	localBranch = cyan
@@ -17,7 +17,7 @@
 	context = brightblack
 [color "decorate"]
 	HEAD = green
-	branch = blue
+	branch = 12
 	remoteBranch = red
 	tag = brightyellow
 	stash = brightmagenta

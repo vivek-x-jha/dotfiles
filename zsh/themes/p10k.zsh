@@ -368,7 +368,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local meta='%f'
-      local clean='%4F'
+      local clean='%12F'
       local modified='%3F'
       local staged='%2F'
       local untracked='%1F'
@@ -737,7 +737,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   ###########################[ vim_shell: vim shell indicator (:sh) ]###########################
   # Vim shell indicator color.
-  declare -g POWERLEVEL9K_VIM_SHELL_FOREGROUND=3
+  # declare -g POWERLEVEL9K_VIM_SHELL_FOREGROUND=3
   # Custom icon.
   # declare -g POWERLEVEL9K_VIM_SHELL_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
