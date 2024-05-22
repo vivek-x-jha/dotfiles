@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AiMaxTokens</key>
-	<integer>128000</integer>
+	<integer>4096</integer>
 	<key>AiModel</key>
 	<string>gpt-4o</string>
 	<key>AlternateMouseScroll</key>
