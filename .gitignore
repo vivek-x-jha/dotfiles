@@ -1,4 +1,7 @@
 alfred/Alfred.alfredpreferences/workflows
+chatgpt-cli/history
+chatgpt-cli/secret.yaml
+chatgpt-cli/session-history
 conda
 dropbox
 iterm2/AppSupport
