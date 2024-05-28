@@ -70,7 +70,7 @@ source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 
-source "$XDG_CONFIG_HOME/syntax-highlighting/${SYNTAX_THEME:=sourdiesel}.theme"
+source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 
 # LOAD 2nd Tier PLUGINS
 source "$ZDOTDIR/plugins/colored-man-pages.plugin.zsh"
