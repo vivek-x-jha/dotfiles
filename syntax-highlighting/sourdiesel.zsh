@@ -21,7 +21,7 @@ ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=black
 ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=blue
 ZSH_HIGHLIGHT_STYLES[path]=fg=blue
 ZSH_HIGHLIGHT_STYLES[path_pathseparator]=fg=black
-ZSH_HIGHLIGHT_STYLES[path_prefix]=fg=12
+ZSH_HIGHLIGHT_STYLES[path_prefix]=fg=white
 # ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=fg=165
 ZSH_HIGHLIGHT_STYLES[globbing]=fg=white
 ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=magenta

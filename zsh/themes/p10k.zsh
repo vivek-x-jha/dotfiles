@@ -203,7 +203,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  declare -g POWERLEVEL9K_DIR_FOREGROUND=10
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=magenta
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
@@ -368,7 +368,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local meta='%f'
-      local clean='%12F'
+      local clean='%4F'
       local modified='%3F'
       local staged='%2F'
       local untracked='%1F'
@@ -899,7 +899,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND='red'
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=green
 
   # Anaconda segment format. The following parameters are available within the expansion.
   #
