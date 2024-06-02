@@ -23,7 +23,7 @@ setopt menu_complete
 setopt share_history
 
 # Configure PATH
-source "$XDG_CONFIG_HOME/homebrew/brew.conf"
+[[ "$PATH" == */opt/homebrew/bin* ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
 [[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
 
@@ -37,8 +37,7 @@ fpath=(
 # Autoload Completions, Color, & Custom functions
 autoload -Uz compinit; compinit
 autoload -Uz colors && colors
-autoload -Uz condainit
-autoload -Uz take
+for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 
 # Set SQL HISTORY
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
@@ -56,11 +55,11 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 source "$ZDOTDIR/.zaliases"
 
 # Set LSCOLORS and GREP themes
-eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/lscolors/${LS_THEME:=sourdiesel}.theme")"
-export GREP_COLOR="${GREP_THEME:=38;5;10}"
+eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.theme")"
+export GREP_COLOR="38;5;2"
 
 # Set PROMPT
-source "${PROMPT_THEME:=$ZDOTDIR/themes/p10k.zsh}"
+source "$ZDOTDIR/themes/p10k.zsh"
 
 # LOAD CORE PLUGINS
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
