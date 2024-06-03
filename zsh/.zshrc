@@ -1,4 +1,7 @@
+# ··················································
 # Author: Vivek Jha
+# Last Modified: Jun 2, 2024
+# ··················································
 
 # Powerlevel10k Instant Prompt
 p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
