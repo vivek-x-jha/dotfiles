@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
-# ======================================================================================================
+# ······································································································
 # Author: Vivek Jha
 # Last Modified: Jun 2, 2024
 # 
 # Original: https://github.com/romkatv/powerlevel10k/blob/master/config/p10k-lean-8colors.zsh
-# ======================================================================================================
+# ······································································································
 
 # Load in main p10k-lean-8colors theme
 source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
@@ -74,9 +74,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_RULER_FOREGROUND=8
   declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
 
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html)
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # Python virtual environment color.
   declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=red
   # Don't show Python version next to the virtual environment name.
@@ -87,12 +87,10 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Separate environment name from Python version only with a space.
   declare -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
 
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT anaconda: conda environment (https://conda.io/)
-  # ----------------------------------------------------------------------------------------------------
-  # Anaconda environment color.
+  # ····································································································
   declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=cyan
-
   # Anaconda segment format. The following parameters are available within the expansion.
   #
   # - CONDA_PREFIX                 Absolute path to the active Anaconda/Miniconda environment.
@@ -118,11 +116,11 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # without the surrounding parentheses, or to the last path component of CONDA_PREFIX if the former
   # is empty.
   declare -g POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)}:-${CONDA_PREFIX:t}}'
-
-  # ----------------------------------------------------------------------------------------------------
+  declare -g POWERLEVEL9K_ANACONDA_VISUAL_IDENTIFIER_EXPANSION=''
+  
+  # ····································································································
   # PROMPT-ELEMENT pyenv: python environment (https://github.com/pyenv/pyenv)
-  # ----------------------------------------------------------------------------------------------------
-  # Pyenv color.
+  # ····································································································
   declare -g POWERLEVEL9K_PYENV_FOREGROUND=yellow
   # Hide python version if it doesn't come from one of these sources.
   declare -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
@@ -144,9 +142,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # 2. Otherwise display "$P9K_CONTENT $P9K_PYENV_PYTHON_VERSION".
   declare -g POWERLEVEL9K_PYENV_CONTENT_EXPANSION='${P9K_CONTENT}${${P9K_CONTENT:#$P9K_PYENV_PYTHON_VERSION(|/*)}:+ $P9K_PYENV_PYTHON_VERSION}'
  
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT context: user@hostname
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # Context format when running with privileges: user@hostname.
   declare -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND='red'
   declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%7F@%1F%m'
@@ -161,18 +159,18 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Comment below to always show context.
   declare -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
 
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT dir: current directory
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   declare -g POWERLEVEL9K_DIR_FOREGROUND=magenta
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
   # Enable special styling for directories
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v2 # non-writable
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3 # non-writable and non-existent
   declare -g POWERLEVEL9K_LOCK_ICON="$fg[red]∅$reset_color"
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT vcs: git status 
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # declare -g POWERLEVEL9K_VCS_BRANCH_ICON='\UE0A0 '
 
   declare -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
@@ -326,9 +324,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=green
   declare -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=yellow
 
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT prompt_char: command_execution_time: duration of the last command
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # Show duration of the last command if takes at least this many seconds.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
   # Show this many fractional digits. Zero means round to seconds.
@@ -338,9 +336,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Duration format: 1d 2h 3m 4s.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
 
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT status: exit code of the last command
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # Enable OK_PIPE, ERROR_PIPE and ERROR_SIGNAL status states to allow us to enable, disable and style them independently from the regular OK and ERROR state.
   declare -g POWERLEVEL9K_STATUS_EXTENDED_STATES=true
 
@@ -372,9 +370,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND='red'
   declare -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
   
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # PROMPT-ELEMENT prompt_char: prompt symbol
-  # ----------------------------------------------------------------------------------------------------
+  # ····································································································
   # White prompt symbol if the last command succeeded.
   declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='white'
   # Red prompt symbol if the last command failed.

@@ -19,7 +19,6 @@ textbg         #1E1D2C
 bold           #F4F3F2
 links          #FDF7CD
 selectfg       #CCCCCC
-Selectbg       #5C617D
+selectbg       #5C617D
 badge          #CEFFC9
 cursor         #F4F3F2
-
