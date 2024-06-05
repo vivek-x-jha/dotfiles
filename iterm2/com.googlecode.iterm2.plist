@@ -3137,6 +3137,8 @@
 	<false/>
 	<key>WindowNumber</key>
 	<false/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>kCPFavoritesUserDefaultsKey</key>
 	<array>
 		<data>
