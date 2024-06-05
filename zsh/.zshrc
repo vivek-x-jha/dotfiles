@@ -57,8 +57,11 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 # Load ALIASES
 source "$ZDOTDIR/.zaliases"
 
-# Set LSCOLORS and GREP themes
+# Set LS and EZA
+source "$XDG_CONFIG_HOME/eza/eza-colors.conf"
 eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.theme")"
+
+# Set GREP color 
 export GREP_COLOR="38;5;2"
 
 # Set PROMPT
