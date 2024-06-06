@@ -59,7 +59,7 @@ source "$ZDOTDIR/.zaliases"
 
 # Set LS and EZA
 source "$XDG_CONFIG_HOME/eza/eza-colors.conf"
-eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.theme")"
+eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
 
 # Set GREP color 
 export GREP_COLOR="38;5;2"
