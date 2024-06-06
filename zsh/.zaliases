@@ -60,7 +60,7 @@ alias list-sourdiesel='cat "$XDG_CONFIG_HOME/sourdiesel/colorscheme.txt"'
 alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 
 #  Miscellaneous
-alias chatgpt='chatgpt-cli --model=gpt-4o --key=$( python3.11 "$XDG_CONFIG_HOME/chatgpt-cli/auth-chatgpt-cli.py" )'
+alias chatgpt='python3 "$HOME/Dropbox/Developer/chatgpt-cli/chatgpt.py" --model=gpt-4o --key=$( python3 "$HOME/Dropbox/Developer/chatgpt-cli/auth-chatgpt-cli.py" )'
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
