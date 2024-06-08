@@ -4,8 +4,8 @@
 # ··················································
 
 # Powerlevel10k Instant Prompt
-p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
-[[ ! -r $p10k_inst_prompt ]] || source $p10k_inst_prompt
+# p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+# [[ ! -r $p10k_inst_prompt ]] || source $p10k_inst_prompt
 
 # Zsh History Management
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
@@ -65,7 +65,8 @@ eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
 export GREP_COLOR="38;5;2"
 
 # Set PROMPT
-source "$ZDOTDIR/themes/p10k.zsh"
+# source "$ZDOTDIR/themes/p10k.zsh"
+eval "$(starship init zsh)"
 
 # LOAD CORE PLUGINS
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
