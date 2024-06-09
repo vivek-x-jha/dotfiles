@@ -1,4 +1,43 @@
 add_newline = false
-format = "$directory$git_branch$git_commit$git_state$git_metrics$git_status$character"
-# palette = "catpuccin_mocha"
-right_format = """$all"""
+format = "$conda$directory$git_branch$git_commit$git_state$git_metrics$git_status$character"
+palette = "sourdiesel"
+# right_format = """$all"""
+
+[conda]
+style = 'green'
+format = '[$environment]($style) '
+ignore_base = false
+
+[directory]
+truncation_length = 1
+# format = ''
+style = 'pink'
+
+[palettes.sourdiesel]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#ECCEF0"
+mauve = "#cba6f7"
+red = "#FFC7C7"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#FDF7CD"
+green = "#CEFFC9"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#C4EFFA"
+lavender = "#C9CCFB"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#5c617d"
+mantle = "#181825"
+crust = "#11111b"
+
