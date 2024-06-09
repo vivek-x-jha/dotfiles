@@ -1,3 +1,5 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
 format = "$username$conda$directory$git_branch$git_commit$git_state$git_metrics$git_status$status$character"
 palette = "sourdiesel"
