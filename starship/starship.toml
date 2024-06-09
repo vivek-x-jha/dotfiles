@@ -8,14 +8,14 @@ success_symbol = '[>](white)'
 error_symbol = '[>](red)'
 
 [conda]
-style = 'green'
+style = 'bright-green'
 format = '[$environment]($style) '
 ignore_base = false
 
 [directory]
 truncation_length = 1
 # format = ''
-style = 'magenta'
+style = 'purple'
 
 [git_branch]
 format = '[$branch(:$remote_branch)]($style) '
@@ -41,7 +41,7 @@ modified = '!${count} '
 staged = '+${count} '
 renamed = '»${count} '
 deleted = '✘${count} '
-style = 'text'
+style = 'bright-purple'
 
 [lua]
 format = '[$symbol($version )]($style) '
@@ -54,15 +54,15 @@ red = "#FFC7C7"
 green = "#CEFFC9"
 yellow = "#FDF7CD"
 blue = "#C4EFFA"
-magenta = "#ECCEF0"
+purple = "#ECCEF0"
 cyan = "#94e2d5"
 white = "#F4F3F2"
 bright-black = "#5C617D"
 bright-red = "#F096B7"
-bright-green = "##D2FD9D"
+bright-green = "#D2FD9D"
 bright-yellow = "#F3B175"
 bright-blue= "#80D7FE"
-bight-magenta = "#C9CCFB"
+bright-purple = "#C9CCFB"
 bright-cyan = "#47E7B1"
 bright-white = "#FFFFFF"
 text = "#C9CCFB"
@@ -81,7 +81,7 @@ crust = "#11111b"
 [python]
 format = '[${symbol}${pyenv_prefix}(${version} )($virtualenv )]($style)'
 symbol = 'python '
-style = 'green'
+style = 'bright-green'
 
 [status]
 format = '[$status]($style) '
