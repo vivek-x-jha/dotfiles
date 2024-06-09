@@ -13,6 +13,10 @@ truncation_length = 1
 # format = ''
 style = 'pink'
 
+[git_branch]
+format = '[$branch(:$remote_branch)]($style) '
+style = 'blue'
+
 [palettes.sourdiesel]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
