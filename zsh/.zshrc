@@ -65,7 +65,6 @@ eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
 export GREP_COLOR="38;5;2"
 
 # Set PROMPT
-# source "$ZDOTDIR/themes/p10k.zsh"
 eval "$(starship init zsh)"
 
 # LOAD CORE PLUGINS
