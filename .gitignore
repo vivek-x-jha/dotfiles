@@ -2,7 +2,10 @@ alfred/Alfred.alfredpreferences/workflows
 chatgpt-cli/history
 chatgpt-cli/secret.yaml
 chatgpt-cli/session-history
-conda
+conda/.anaconda
+conda/.conda
+conda/.continuum
+conda/Anaconda*
 dropbox
 iterm2/AppSupport
 ipython
