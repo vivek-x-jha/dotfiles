@@ -1,7 +1,11 @@
 add_newline = false
-format = "$conda$directory$git_branch$git_commit$git_state$git_metrics$git_status$character"
+format = "$username$conda$directory$git_branch$git_commit$git_state$git_metrics$git_status$status$character"
 palette = "sourdiesel"
-# right_format = """$all"""
+right_format = "$lua$python"
+
+[character]
+success_symbol = '[>](white)'
+error_symbol = '[>](red)'
 
 [conda]
 style = 'green'
@@ -11,28 +15,57 @@ ignore_base = false
 [directory]
 truncation_length = 1
 # format = ''
-style = 'pink'
+style = 'magenta'
 
 [git_branch]
 format = '[$branch(:$remote_branch)]($style) '
 style = 'blue'
 
+[git_commit]
+format = '[$hash$tag]($style) '
+style = 'yellow'
+
+[git_state]
+style = 'yellow'
+format = '[$state $progress_current/$progress_total]($style) '
+
+[git_status]
+format = '[$all_status$ahead_behind]($style)'
+conflicted  = '=${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇕⇡${ahead_count}⇣${behind_count} '
+untracked = '?${count} '
+stashed = '$${count} '
+modified = '!${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
+style = 'text'
+
+[lua]
+format = '[$symbol($version )]($style) '
+symbol = 'lua '
+style = 'bright-blue'
+
 [palettes.sourdiesel]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#ECCEF0"
-mauve = "#cba6f7"
+black = "#CCCCCC"
 red = "#FFC7C7"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#FDF7CD"
 green = "#CEFFC9"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
+yellow = "#FDF7CD"
 blue = "#C4EFFA"
-lavender = "#C9CCFB"
-text = "#cdd6f4"
+magenta = "#ECCEF0"
+cyan = "#94e2d5"
+white = "#F4F3F2"
+bright-black = "#5C617D"
+bright-red = "#F096B7"
+bright-green = "##D2FD9D"
+bright-yellow = "#F3B175"
+bright-blue= "#80D7FE"
+bight-magenta = "#C9CCFB"
+bright-cyan = "#47E7B1"
+bright-white = "#FFFFFF"
+text = "#C9CCFB"
 subtext1 = "#bac2de"
 subtext0 = "#a6adc8"
 overlay2 = "#9399b2"
@@ -44,4 +77,19 @@ surface0 = "#313244"
 base = "#5c617d"
 mantle = "#181825"
 crust = "#11111b"
+
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )($virtualenv )]($style)'
+symbol = 'python '
+style = 'green'
+
+[status]
+format = '[$status]($style) '
+style = 'bright-red'
+disabled = false
+
+[username]
+style_root = 'red'
+style_user = 'yellow'
+format = '[$user]($style) '
 
