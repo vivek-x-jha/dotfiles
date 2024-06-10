@@ -3,6 +3,8 @@
 # *******************************************************************************
 # Author: Vivek Jha
 # Last Modified: May 31, 2024
+#
+# TODO refactor file
 # 
 # ================================================================================
 # I - Directory Navigation
@@ -82,9 +84,9 @@ alias lta='ls -lAht'
 alias rm='rm -i'                              # Remove a file with permission
 alias cp='cp -i'                              # Copy a file with permission
 alias mv='mv -i'                              # Move a file with permission
-alias vim='nvim'							                # NeoVim
+alias v='nvim'							                  # NeoVim
 
-alias grep='grep --color=auto'                                 # Searches for a query string
+alias grep='grep --color=auto'                # Searches for a query string
 alias sortnr='sort -n -r'     # Used to sort the lines of a text file
 
 # Global Aliases
