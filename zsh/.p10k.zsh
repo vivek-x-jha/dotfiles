@@ -164,10 +164,10 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   declare -g POWERLEVEL9K_DIR_FOREGROUND=magenta
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
-  # Enable special styling for directories
+  # Enable special styling for non-writable or non-existent directories
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v2 # non-writable
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3 # non-writable and non-existent
-  declare -g POWERLEVEL9K_LOCK_ICON="$fg[red]∅$reset_color"
+  declare -g POWERLEVEL9K_LOCK_ICON="∅"
   # ····································································································
   # PROMPT-ELEMENT vcs: git status 
   # ····································································································
