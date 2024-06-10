@@ -167,7 +167,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Enable special styling for non-writable or non-existent directories
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v2 # non-writable
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3 # non-writable and non-existent
-  declare -g POWERLEVEL9K_LOCK_ICON="∅"
+  declare -g POWERLEVEL9K_LOCK_ICON='%F{red}∅%f'
   # ····································································································
   # PROMPT-ELEMENT vcs: git status 
   # ····································································································

@@ -39,7 +39,7 @@ fpath=(
 
 # Initialize Completion System, Colors Array, and lazy load all user defined functions
 autoload -Uz compinit; compinit
-autoload -Uz colors && colors
+# autoload -Uz colors && colors
 for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 
 # Custom COMPLETION CACHE and SSH known hosts
