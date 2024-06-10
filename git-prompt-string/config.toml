@@ -1,0 +1,13 @@
+prompt_prefix = ''
+prompt_suffix = ''
+ahead_format = '↑[%v]'
+behind_format = '↓[%v]'
+diverged_format = '↕ ↑[%v] ↓[%v]'
+no_upstream_remote_format = ' → %v/%v'
+color_disabled = false
+color_clean = 'green'
+color_delta = 'yellow'
+color_dirty = 'red'
+color_untracked = 'red'
+color_no_upstream = 'bright-black'
+color_merging = 'blue'

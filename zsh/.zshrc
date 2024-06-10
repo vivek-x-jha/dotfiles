@@ -65,7 +65,8 @@ eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
 export GREP_COLOR="38;5;2"
 
 # Set PROMPT
-eval "$(starship init zsh)"
+source "$ZDOTDIR/.p10k.zsh"
+# eval "$(starship init zsh)"
 
 # LOAD CORE PLUGINS
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
