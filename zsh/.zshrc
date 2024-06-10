@@ -4,8 +4,8 @@
 # ··················································
 
 # Powerlevel10k Instant Prompt
-# p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
-# [[ ! -r $p10k_inst_prompt ]] || source $p10k_inst_prompt
+p10k_inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+[[ ! -r $p10k_inst_prompt ]] || source $p10k_inst_prompt
 
 # Zsh History Management
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
@@ -67,6 +67,7 @@ export GREP_COLOR="38;5;2"
 # Set PROMPT
 source "$ZDOTDIR/.p10k.zsh"
 # eval "$(starship init zsh)"
+# eval "$(oh-my-posh init zsh)"
 
 # LOAD CORE PLUGINS
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
@@ -77,11 +78,3 @@ source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 
 source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
-
-# LOAD 2nd Tier PLUGINS
-source "$ZDOTDIR/plugins/colored-man-pages.plugin.zsh"
-source "$ZDOTDIR/plugins/sudo.plugin.zsh"
-
-export YSU_MESSAGE_FORMAT="$fg[yellow][ysu reminder]$reset_color: $fg[magenta]%alias_type $fg[green]%alias$fg[white]=$fg[red]'%command'$reset_color"
-source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
-
