@@ -378,7 +378,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
   # Red prompt symbol if the last command failed.
   declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='red'
   # Default prompt symbol.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='➾'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='≫'
   # Prompt symbol in command vi mode.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
   # Prompt symbol in visual vi mode.
