@@ -30,16 +30,13 @@ setopt share_history
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
 [[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
 
-# Configure FPATH
-fpath=(
-  "$HOMEBREW_PREFIX/share/zsh-completions"
-  "$ZDOTDIR/functions"
-  "${fpath[@]}"
-)
+export BREW_DATA="$HOMEBREW_PREFIX/share"
 
-# Initialize Completion System, Colors Array, and lazy load all user defined functions
+# Configure FPATH
+fpath=("$BREW_DATA/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
+
+# Initialize completion and lazy load all user defined functions
 autoload -Uz compinit; compinit
-# autoload -Uz colors && colors
 for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 
 # Custom COMPLETION CACHE and SSH known hosts
@@ -53,10 +50,10 @@ source "$ZDOTDIR/.p10k.zsh"
 # Load Aliases and Plugins
 source "$ZDOTDIR/.zaliases"
 
-source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
-source "$HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$BREW_DATA/z.lua/z.lua.plugin.zsh"
+source "$BREW_DATA/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+source "$BREW_DATA/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$BREW_DATA/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 
