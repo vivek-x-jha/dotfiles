@@ -1,7 +1,7 @@
 [alias]
 	st ="status"
     lg = "log --graph --date=format:'%b-%d-%Y' \
-    --pretty='%C(yellow)%h %C(magenta)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset'"
+    --pretty='%C(yellow)%h %C(magenta)%an %C(black)%ad%C(auto)%d %C(white)%s %Creset'"
     ss = "status --short"
     rs = "restore"
     rst = "restore --staged"
