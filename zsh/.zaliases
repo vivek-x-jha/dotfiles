@@ -75,7 +75,7 @@ alias ls="$gnubin/ls --color=auto"
 alias grep="$gnubin/grep --color=auto"
 
 # LS
-alias l='eza --all --long --git'
+alias l='eza --all --long --git --icons=always'
 alias ll='ls -1A'
 alias lt='ls -1At'
 alias lta='ls -lAht'

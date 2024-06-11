@@ -325,7 +325,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=yellow
 
   # ····································································································
-  # PROMPT-ELEMENT prompt_char: command_execution_time: duration of the last command
+  # PROMPT-ELEMENT command_execution_time: duration of the last command
   # ····································································································
   # Show duration of the last command if takes at least this many seconds.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
@@ -378,7 +378,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
   # Red prompt symbol if the last command failed.
   declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='red'
   # Default prompt symbol.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='>'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='➾'
   # Prompt symbol in command vi mode.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
   # Prompt symbol in visual vi mode.
@@ -393,7 +393,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
 
 
   # Configurations related to transient and instant prompt and reloading
-  declare -g POWERLEVEL9K_TRANSIENT_PROMPT=off
+  declare -g POWERLEVEL9K_TRANSIENT_PROMPT=always
   declare -g POWERLEVEL9K_INSTANT_PROMPT=quiet
   declare -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
