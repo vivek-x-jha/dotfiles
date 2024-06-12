@@ -2,7 +2,7 @@
 
 # *******************************************************************************
 # Author: Vivek Jha
-# Last Modified: May 31, 2024
+# Last Modified: Jun 11, 2024
 #
 # TODO refactor file
 # 
@@ -64,42 +64,16 @@ alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 #  Miscellaneous
 alias chatgpt='python3 "$HOME/Dropbox/Developer/chatgpt-cli/chatgpt.py" --model=gpt-4o --key=$( python3 "$HOME/Dropbox/Developer/chatgpt-cli/auth-chatgpt-cli.py" )'
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
-alias stable_diffusion="cd '$HOME/BuddyAI Dropbox/Vivek Jha/Developer/Repos3P/stable-diffusion-webui; ./webui.sh --no-half"
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias weather='curl wttr.in'
 alias update-texlive='sudo tlmgr update --self --all'
 alias touchid-sudo='sudo cp -f ~/.config/pam/sudo /etc/pam.d/sudo'
-# GNU
-gnubin="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
-alias ls="$gnubin/ls --color=auto"
-alias grep="$gnubin/grep --color=auto"
-
-# LS
+alias ls='gls --color=auto'
 alias l='eza --all --long --git --icons=always'
-alias ll='ls -1A'
-alias lt='ls -1At'
-alias lta='ls -lAht'
-
-# File handling
-alias rm='rm -i'                              # Remove a file with permission
-alias cp='cp -i'                              # Copy a file with permission
-alias mv='mv -i'                              # Move a file with permission
 alias v='nvim'							                  # NeoVim
 
 alias grep='grep --color=auto'                # Searches for a query string
 alias sortnr='sort -n -r'     # Used to sort the lines of a text file
-
-# Global Aliases
-alias -g H='| head'                   # Pipes output to head which outputs the first part of a file
-alias -g T='| tail'                   # Pipes output to tail which outputs the last part of a file
-alias -g G='| grep'                   # Pipes output to grep to search for some word
-alias -g L="| less"                   # Pipes output to less, useful for paging   
-alias -g M="| most"                   # Pipes output to more, useful for paging
-alias -g LL="2>&1 | less"             # Writes stderr to stdout and passes it to less
-alias -g CA="2>&1 | cat -A"           # Writes stderr to stdout and passes it to cat
-alias -g NE="2> /dev/null"            # Silences stderr
-alias -g NUL="&> /dev/null"           # Silences both stdout and stderr
-alias -g P="2>&1| pygmentize -l pytb" # Writes stderr to stdout and passes it to pygmentize
 
 # File Extension Aliases
 # These are special aliases that are triggered when a file name is passed as the command.

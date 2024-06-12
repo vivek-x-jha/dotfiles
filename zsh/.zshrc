@@ -1,6 +1,6 @@
 # ··················································
 # Author: Vivek Jha
-# Last Modified: Jun 9, 2024
+# Last Modified: Jun 11, 2024
 # ··················································
 
 # Initialize Instant Prompt
@@ -27,10 +27,11 @@ setopt share_history
 
 # Configure PATH
 [[ "$PATH" == */opt/homebrew/bin* ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
+export BREW_DATA="$HOMEBREW_PREFIX/share"
+export BREW_OPT="$HOMEBREW_PREFIX/opt"
+[[ "$PATH" == *$BREW_OPT/coreutils/libexec/gnubin* ]] || export PATH=$PATH:$BREW_OPT/coreutils/libexec/gnubin
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
 [[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
-
-export BREW_DATA="$HOMEBREW_PREFIX/share"
 
 # Configure FPATH
 fpath=("$BREW_DATA/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
@@ -54,14 +55,14 @@ source "$BREW_DATA/z.lua/z.lua.plugin.zsh"
 source "$BREW_DATA/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$BREW_DATA/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$BREW_DATA/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
-source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+source "$BREW_OPT/fzf/shell/completion.zsh"
+source "$BREW_OPT/fzf/shell/key-bindings.zsh"
 
 source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 
 # Configure colorschemes for EZA, LS, and GREP
 source "$XDG_CONFIG_HOME/eza/eza-colors.conf"
-eval "$("$gnubin/dircolors" "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
+eval "$(dircolors "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
 export GREP_COLOR="38;5;2"
 
 # Configure SQL History
