@@ -15,6 +15,7 @@ redhat/.redhat/anonymousId
 ssh/id*
 ssh/known*
 thinkorswim
+tmux/plugins
 vscode/.vscode
 zsh/.zcompdump
 
