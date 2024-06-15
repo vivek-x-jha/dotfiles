@@ -63,7 +63,7 @@ source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 # Configure colorschemes for EZA, LS, and GREP
 source "$XDG_CONFIG_HOME/eza/eza-colors.conf"
 eval "$(dircolors "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
-export GREP_COLOR="38;5;2"
+export GREP_COLOR="38;5;5"
 
 # Configure SQL History
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
