@@ -90,7 +90,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT anaconda: conda environment (https://conda.io/)
   # ····································································································
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=cyan
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=green
   # Anaconda segment format. The following parameters are available within the expansion.
   #
   # - CONDA_PREFIX                 Absolute path to the active Anaconda/Miniconda environment.
