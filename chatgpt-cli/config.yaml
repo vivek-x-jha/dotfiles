@@ -7,7 +7,7 @@ azure_endpoint: https://xxxx.openai.azure.com/
 easy_copy: true
 json_mode: false
 markdown: true
-model: gpt-3.5-turbo
+model: gpt-4o
 non_interactive: false
 proxy: socks5://127.0.0.1:2080
 supplier: openai

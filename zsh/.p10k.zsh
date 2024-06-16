@@ -78,7 +78,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
   # PROMPT-ELEMENT virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html)
   # ····································································································
   # Python virtual environment color.
-  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=red
+  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=yellow
   # Don't show Python version next to the virtual environment name.
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   # If set to "false", won't show virtualenv if pyenv is already shown.
@@ -86,6 +86,7 @@ source "$BREW_DATA/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
   # Separate environment name from Python version only with a space.
   declare -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+  declare -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION=''
 
   # ····································································································
   # PROMPT-ELEMENT anaconda: conda environment (https://conda.io/)
