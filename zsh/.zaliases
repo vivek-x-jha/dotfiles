@@ -62,7 +62,8 @@ alias list-sourdiesel='cat "$XDG_CONFIG_HOME/sourdiesel/colorscheme.txt"'
 alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 
 #  Miscellaneous
-alias chatgpt='python3 "$HOME/Dropbox/Developer/chatgpt-cli/chatgpt.py" --model=gpt-4o --key=$( python3 "$HOME/Dropbox/Developer/chatgpt-cli/auth-chatgpt-cli.py" )'
+alias activate-venv-chatgpt-cli='source ~/Developer/chatgpt-cli/.venv/bin/activate'
+alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias weather='curl wttr.in'
