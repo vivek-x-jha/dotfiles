@@ -3,7 +3,7 @@
 	email = vivek.x.jha@gmail.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK5uQ9GkYPNNwckcMPr9U1bR/yy+hDO1XPAiSCNtC7G
 [core]
-	editor = code -w
+	editor = nvim
 	pager = less
 	sshCommand = ssh -F ~/.config/ssh/config
 [color]
@@ -23,5 +23,3 @@
 	defaultBranch = main
 [include]
 	path = ~/.config/git/themes/sourdiesel.gitconfig
-	path = ~/.config/git/aliases.gitconfig
-
