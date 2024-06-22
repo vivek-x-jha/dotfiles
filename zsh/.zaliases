@@ -72,6 +72,8 @@ alias touchid-sudo='sudo cp -f ~/.config/pam/sudo /etc/pam.d/sudo'
 alias ls='gls --color=auto'
 alias l='eza --all --long --git --icons=always'
 alias v='nvim'							                  # NeoVim
+alias vim='vim -i $XDG_STATE_HOME/vim/viminfo'
+alias vi='vim'
 
 alias grep='grep --color=auto'                # Searches for a query string
 alias sortnr='sort -n -r'     # Used to sort the lines of a text file
