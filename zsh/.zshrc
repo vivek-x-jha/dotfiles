@@ -28,17 +28,15 @@ setopt share_history
 # Configure PATH
 [[ -z $TMUX ]] || { PATH=''; eval "$(/usr/libexec/path_helper -s)" }
 [[ "$PATH" == */opt/homebrew/bin* ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
-export BREW_DATA="$HOMEBREW_PREFIX/share"
-export BREW_OPT="$HOMEBREW_PREFIX/opt"
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
 [[ "$PATH" == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH=$PATH:/Applications/iTerm.app/Contents/Resources/utilities
-# [[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
 
 # Configure FPATH
-fpath=("$BREW_DATA/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
+fpath=("$HOMEBREW_PREFIX/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
 # Initialize completion and lazy load all user defined functions/widgets
 autoload -Uz compinit; compinit
+for alias in $ZDOTDIR/aliases/*; do source $alias; done
 for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 # for widget in $ZDOTDIR/widgets/*; do autoload -Uz $(basename $widget); done
 
@@ -50,15 +48,13 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 # Configure Prompt
 source "$ZDOTDIR/.p10k.zsh"
 
-# Load Aliases and Plugins
-source "$ZDOTDIR/.zaliases"
-
-source "$BREW_DATA/z.lua/z.lua.plugin.zsh"
-source "$BREW_DATA/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-source "$BREW_DATA/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$BREW_DATA/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$BREW_OPT/fzf/shell/completion.zsh"
-source "$BREW_OPT/fzf/shell/key-bindings.zsh"
+# Load Plugins
+source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 
 source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 
