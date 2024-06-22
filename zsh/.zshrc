@@ -26,19 +26,21 @@ setopt menu_complete
 setopt share_history
 
 # Configure PATH
+[[ -z $TMUX ]] || { PATH=''; eval "$(/usr/libexec/path_helper -s)" }
 [[ "$PATH" == */opt/homebrew/bin* ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 export BREW_DATA="$HOMEBREW_PREFIX/share"
 export BREW_OPT="$HOMEBREW_PREFIX/opt"
-[[ "$PATH" == *$BREW_OPT/coreutils/libexec/gnubin* ]] || export PATH=$PATH:$BREW_OPT/coreutils/libexec/gnubin
 [[ "$PATH" == */Library/TeX/texbin* ]] || export PATH=$PATH:/Library/TeX/texbin
-[[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
+[[ "$PATH" == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH=$PATH:/Applications/iTerm.app/Contents/Resources/utilities
+# [[ "$PATH" == *$fzf/bin* ]] || export PATH="${PATH:+${PATH}:}$fzf/bin"
 
 # Configure FPATH
 fpath=("$BREW_DATA/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
-# Initialize completion and lazy load all user defined functions
+# Initialize completion and lazy load all user defined functions/widgets
 autoload -Uz compinit; compinit
 for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
+# for widget in $ZDOTDIR/widgets/*; do autoload -Uz $(basename $widget); done
 
 # Custom COMPLETION CACHE and SSH known hosts
 zstyle ':completion:*' use-cache on
@@ -62,8 +64,8 @@ source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 
 # Configure colorschemes for EZA, LS, and GREP
 source "$XDG_CONFIG_HOME/eza/eza-colors.conf"
-eval "$(dircolors "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
-export GREP_COLOR="38;5;5"
+eval "$(gdircolors "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
+export GREP_COLOR="38;5;3"
 
 # Configure SQL History
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
