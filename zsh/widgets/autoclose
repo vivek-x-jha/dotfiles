@@ -6,8 +6,8 @@ autoclose-parenthesis() { autoclose-symbol "()" }
 autoclose-bracket() { autoclose-symbol "[]" }
 autoclose-brace() { autoclose-symbol "{}" }
 autoclose-single-quote() { autoclose-symbol "''" }
-autoclose-double-quote() { autoclose-symbol "\"\"" }
-autoclose-backtick() { autoclose-symbol "\`\`" }
+autoclose-double-quote() { autoclose-symbol '""' }
+autoclose-backtick() { autoclose-symbol '``' }
 
 zle -N autoclose-parenthesis
 zle -N autoclose-bracket

@@ -45,7 +45,8 @@ for alias in $ZDOTDIR/aliases/*; do source $alias; done
 for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 for widget in $ZDOTDIR/widgets/*; do source $widget; done
 
-source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/themes/.p10k.zsh"
+source "$ZDOTDIR/themes/powerlevel10k"
+
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
