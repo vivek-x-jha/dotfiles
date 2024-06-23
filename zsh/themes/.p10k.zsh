@@ -2,9 +2,6 @@
 
 # Original: https://github.com/romkatv/powerlevel10k/blob/master/config/p10k-lean-8colors.zsh
 
-# Load in base powerlevel10k theme
-source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
-
 # Temporarily change options.
 'builtin' 'local' '-a' 'p10k_config_opts'
 [[ ! -o 'aliases'         ]] || p10k_config_opts+=('aliases')
