@@ -1,17 +1,7 @@
 # ·············································································
-# PRE-CONFIGURATION:
-# - Instant Prompt
-# - Shell History
-# ·············································································
-
-[[ ! -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] || source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
-
-HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
-HISTSIZE=12000
-SAVEHIST=10000
-
-# ·············································································
 # SHELL-CONFIGURATION:
+# - Instant Prompt
+# - History
 # - Options
 # - PATH/FPATH
 # - Completions
@@ -21,6 +11,12 @@ SAVEHIST=10000
 # - Prompt
 # - Plugins
 # ·············································································
+
+[[ ! -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] || source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+
+HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
+HISTSIZE=12000
+SAVEHIST=10000
 
 setopt always_to_end
 setopt append_history
