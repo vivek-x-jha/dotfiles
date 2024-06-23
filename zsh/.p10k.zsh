@@ -1,11 +1,6 @@
 #!/usr/bin/env zsh
 
-# ······································································································
-# Author: Vivek Jha
-# Last Modified: Jun 2, 2024
-# 
 # Original: https://github.com/romkatv/powerlevel10k/blob/master/config/p10k-lean-8colors.zsh
-# ······································································································
 
 # Load in base powerlevel10k theme
 source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
@@ -46,33 +41,23 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_ICON_PADDING=none
 
   # Define macro styling options
-  declare -g POWERLEVEL9K_BACKGROUND=                            # transparent background
-  declare -g POWERLEVEL9K_{LEFT,RIGHT}_{LEFT,RIGHT}_WHITESPACE=  # no surrounding whitespace
-  declare -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR=' '  # separate segments with a space
-  declare -g POWERLEVEL9K_{LEFT,RIGHT}_SEGMENT_SEPARATOR=        # no end-of-line symbol
+  declare -g POWERLEVEL9K_BACKGROUND=''                            # transparent background
+  declare -g POWERLEVEL9K_{LEFT,RIGHT}_{LEFT,RIGHT}_WHITESPACE=''  # no surrounding whitespace
+  declare -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR=' '    # separate segments with a space
 
   # Add an empty line before each prompt.
   declare -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
-
-  # Connect left prompt lines with these symbols.
-  declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=
-  declare -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX=
-  declare -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=
-  # Connect right prompt lines with these symbols.
-  declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=
-  declare -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=
-  declare -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=
-
-  # The left end of left prompt.
-  declare -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
-  # The right end of right prompt.
-  declare -g POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL=
 
   # Add a horizontal dotted line before each prompt
   declare -g POWERLEVEL9K_SHOW_RULER=true
   declare -g POWERLEVEL9K_RULER_CHAR='·'
   declare -g POWERLEVEL9K_RULER_FOREGROUND=8
   declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
+
+  # Configurations related to transient and instant prompt and reloading
+  declare -g POWERLEVEL9K_TRANSIENT_PROMPT=always
+  declare -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+  declare -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
   # ····································································································
   # PROMPT-ELEMENT virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html)
@@ -379,9 +364,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Red prompt symbol if the last command failed.
   declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='red'
   # Default prompt symbol.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='≫'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='→'
   # Prompt symbol in command vi mode.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{yellow}⚡%f'
   # Prompt symbol in visual vi mode.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'
   # Prompt symbol in overwrite vi mode.
@@ -392,11 +377,6 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # No line introducer if prompt_char is the first segment.
   declare -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
 
-
-  # Configurations related to transient and instant prompt and reloading
-  declare -g POWERLEVEL9K_TRANSIENT_PROMPT=always
-  declare -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-  declare -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
   # If p10k is already loaded, reload configuration.
   (( ! $+functions[p10k] )) || p10k reload
