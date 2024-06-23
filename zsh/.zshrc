@@ -53,10 +53,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" && source 
 source "$HOMEBREW_PREFIX/share/z.lua/z.lua.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" && source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
-source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
 
 # ·············································································
 # OTHER CONFIGURATION:
