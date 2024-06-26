@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+alias cl='clear'
+
 # File Navigation
 alias -- -="z -"
 alias ~="cd $HOME"
