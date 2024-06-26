@@ -1,144 +1,39 @@
-# Terminal Developement
+# Personal Development Environment
 
-Welcome to my take on a power user Terminal. 
-The philosophy of this terminal should always be **Functional - Fast - Fun**. 
-This is obviosuly a WIP, so if you think something is dogshit, send me a PR.
+Join me on my journey to make a baller PDE!
 
-### [Fast Directory Switching - z.lua](https://github.com/vivek-x-jha/z.lua)
+## Features
 
-- [ ] optimize frecency list
-- [ ] learn fundamentals: watch `zoxide` [tutorial](https://youtu.be/aghxkpyRVDY?si=jBZuI3aLJf1nl_po)
+1. Editor: [Neovim](https://github.com/neovim/neovim?tab=readme-ov-file)
+  - Distribution: [NvChad](https://github.com/NvChad/NvChad)
+  - Package Manager: [Lazy](https://www.github.com/folke/lazy.nvim)
+1. Tmux: [Tmux](https://github.com/tmux/tmux?tab=readme-ov-file)
+  - Package Manager: [Tpm](https://www.github.com/tmux-plugins/tpm)
 
-### [Autocompletion](https://github.com/marlonrichert/zsh-autocomplete)
+## Tasks
 
-To change color, use 
-```zsh
-zstyle ':completion:*:*:descriptions' format '<prompt escape codes>'
-```
-
-- [ ] configure results color: black 
-- [ ] configure results selection color: magenta? green? try a few out...
-- [ ] configure results header color: token dependent
-- [ ] configure common substring color: no background
-- [ ] configure keybindings: tab
-- [ ] configure keybindings: right arrow
-- [ ] configure keybindings: up/down arrow
-- [ ] test menu_complete independence
-- [ ] test autosuggestions independence
-- [ ] remap history-substring keybinding
-- [ ] debug p10k truncating directory name to '~autocomplete'
-- [ ] debug crashing when in
-- [ ] learn fundamentals: [zsh completions](https://thevaluable.dev/zsh-completion-guide-examples/)
-
-### [Autosuggestions](https://github.com/vivek-x-jha/zsh-autosuggestions)
-
-### [Colored Man Pages](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colored-man-pages)
-
-- [ ] learn fundamentals: MANPATH
-- [ ] learn fundamentals: example of standout mode
-- [ ] debug subcommand not being recognized: i.e. `man git merge`
-
-### [Sudo Toggle](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo)
-
-- [x] update with original repo link
-- [x] configure touch id for sudo password
-
-```zsh
-sudo sed -i.'' '1s/^/auth       sufficient     pam_tid.so\n/' /etc/pam.d/sudo
-```
-
-### [VS Code Launcher](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/vscode)
-
-- [x] refactor `vsc()` as single-line function
-- [ ] debug vscode font looking different: configure `anti-aliasing: true`
-
-### [You Should Use Alias Hinter](https://github.com/vivek-x-jha/zsh-you-should-use)
-
-- [ ] debug `check_alias_usage`: frequency counts are all 0
-- [ ] refactor `zsh-you-should-use.plugin.zsh`
-
-### [Syntax Highlighting](https://github.com/vivek-x-jha/zsh-syntax-highlighting)
-
-- [x] update precommand color: bright green
-- [x] update current directory color: bright green
-- [x] update known token command color: magenta
-
-## Shell Features & Other Tools 
-
-### Homebrew
-
-Install [Homebrew Package Manager](https://brew.sh/)
-
-```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-### Autoload
-
-- [ ] learn fundamentals: lazy loading
-- [ ] learn fundamentals: [define and load shell functions](https://unix.
-  4 stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh)
-
-### Caching & History
-
-- [x] debug `.mycli-history` not populating in cache
-- [x] delete `.zsh_sessions`
-- [ ] configure `.zcompdump` path to `$XDG_CACHE_HOME/zsh` ([Stack Overflow Solution](https://superuser.com/a/1785259/930403))
-- [x] debug `p10k-dump` and `p10k-inst-propt` not populating in `~/.cache/p10k` [[Might not be possible atm](https://github.com/romkatv/powerlevel10k/issues/1817)]
-- [ ] debug `.bash_history` not populating in `$XDG_CACHE_HOME/bash` (works normally for `exec bash`)
-- [ ] debug `.lesshst` reappearing in `$HOME`
-
-### Git
-
-- [x] configure [githb ssh connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
-- [ ] update submodule urls to use `ssh` links
-- [ ] learn fundamentals: `git merge`
-- [ ] learn fundamentals: `git stash`
-- [ ] learn fundamentals: tracking
-- [ ] debug `git <log/status/diff>` not invoking `less` unless piped into: `git diff | less`
-- [ ] learn fundamentals: [more vs. less vs. most](https://www.baeldung.com/linux/more-less-most-commands)
-
-### FZF
-
-- [ ] build [file explorer](https://thevaluable.dev/practical-guide-fzf-example/)
-- [ ] configure colorscheme
-
-### Btop
-
-- [x] configure theme: [catppuccin-mocha](https://github.com/catppuccin/btop)
-
-### Mycli
-
-
-### VS Code
-
-- [ ] configure `$HOME/.vscode` -> `$XDG_CONFIG_HOME/vscode/.vscode`
-- [ ] debug `code` not working when renaming app
-
-### Alfred
-
-- [x] configure old workflows
-- [x] configure new colorscheme
-
-### Think or Swim
-
-- [ ] learn fundamentals: configuration file(s) to track
-
-### Iterm
-
-- [ ] debug [symlink issue](https://stackoverflow.com/questions/78105340/iterm2-keeps-recreating-symlink)
-
-### Stable Diffusion
-
-- [ ] debug CLI launcher not initializing
-
-### [Anaconda](https://www.anaconda.com/download#downloads)
-
-- [ ] automate installation: `sudo bash ~/.config/conda/Anaconda3-2023.03-1-MacOSX-arm64.sh`
-
-### Neofetch
-
-- [ ] debug colorscheme: need to refactor old color env vars to using `colors` assoc arrays
-
-## Other Notes
-
+- neovim colorscheme
+  - create catppuccin mirror
+    - [ ] create custom highlight group
+    - [ ] migrate customizations to independent theme file
+  - learn about integrations
+- vim motions
+  - [ ] what are top used motions
+  - [ ] go through vimtutor completely
+- nvchad
+  - lazy
+  - mason
+  - lsp
+  - treesitter
+  - completions
+  - mappings
+  - options
+  - structure
+- tmux
+  - session manager
+    - [sessionx](https://www.github.com/omerxx/tmux-sessionx)
+      - [ ] learn to configure
+  - UI
+    - [ ] convert to minimal theme
+  - [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
+    - [ ] learn to configure
