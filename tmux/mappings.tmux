@@ -34,4 +34,3 @@ bind -r -T prefix ^L resize-pane -R 5
 
 # Other
 bind -T copy-mode-vi v send-keys -X begin-selection
-# bind-key -n C-q display-popup -w "90%" -h "85%" -E nvim -c ":ObsidianSearch"
