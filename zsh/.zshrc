@@ -31,7 +31,8 @@ for func in ${ZDOTDIR}/functions/*; do autoload -Uz $(basename $func); done
 # for widget in ${ZDOTDIR}/widgets/*; do source $widget; done
 
 # PROMPT THEME
-source "${ZDOTDIR}/themes/powerlevel10k"
+source "${ZDOTDIR}/colorschemes/sourdiesel.zsh"
+source "${ZDOTDIR}/themes/powerlevel10k.zsh"
 
 # SHELL-PLUGINS
 source "${HOMEBREW_PREFIX}/share/z.lua/z.lua.plugin.zsh"
