@@ -49,7 +49,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Add a horizontal dotted line before each prompt
   declare -g POWERLEVEL9K_SHOW_RULER=true
   declare -g POWERLEVEL9K_RULER_CHAR='·'
-  declare -g POWERLEVEL9K_RULER_FOREGROUND='#313244'
+  declare -g POWERLEVEL9K_RULER_FOREGROUND=$textbg
   declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
 
   # Configurations related to transient and instant prompt and reloading
