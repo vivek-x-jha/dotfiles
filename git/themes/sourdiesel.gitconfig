@@ -1,25 +1,25 @@
 # Sour Diesel Theme
 [color "status"]
 	header = black
-	untracked = brightred
-	added = brightgreen
-	changed = brightyellow
-	branch = brightblue
-	nobranch = brightred
-	remoteBranch = brightred
-	localBranch = brightcyan
-	unmerged = brightyellow
+	untracked = red
+	added = green
+	changed = yellow
+	branch = blue
+	nobranch = red
+	remoteBranch = red
+	localBranch = cyan
+	unmerged = yellow
 [color "diff"]
-	old = brightred
+	old = red
 	meta = black
-	new = brightgreen
+	new = green
 	frag = magenta
 	context = brightblack
 [color "decorate"]
-	HEAD = brightgreen
-	branch = brightblue
-	remoteBranch = brightred
+	HEAD = green
+	branch = blue
+	remoteBranch = red
 	tag = brightyellow
 	stash = brightmagenta
-	grafted = brightred
+	grafted = red
 	hash = magenta
