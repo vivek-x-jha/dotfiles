@@ -49,7 +49,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Add a horizontal dotted line before each prompt
   declare -g POWERLEVEL9K_SHOW_RULER=true
   declare -g POWERLEVEL9K_RULER_CHAR='·'
-  declare -g POWERLEVEL9K_RULER_FOREGROUND=8
+  declare -g POWERLEVEL9K_RULER_FOREGROUND='#313244'
   declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
 
   # Configurations related to transient and instant prompt and reloading
@@ -61,7 +61,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # PROMPT-ELEMENT virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html)
   # ····································································································
   # Python virtual environment color.
-  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=yellow
+  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$yellow
   # Don't show Python version next to the virtual environment name.
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   # If set to "false", won't show virtualenv if pyenv is already shown.
@@ -74,7 +74,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT anaconda: conda environment (https://conda.io/)
   # ····································································································
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=green
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=$green
   # Anaconda segment format. The following parameters are available within the expansion.
   #
   # - CONDA_PREFIX                 Absolute path to the active Anaconda/Miniconda environment.
@@ -105,7 +105,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT pyenv: python environment (https://github.com/pyenv/pyenv)
   # ····································································································
-  declare -g POWERLEVEL9K_PYENV_FOREGROUND=yellow
+  declare -g POWERLEVEL9K_PYENV_FOREGROUND='$yellow'
   # Hide python version if it doesn't come from one of these sources.
   declare -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
   # If set to false, hide python version if it's the same as global:
@@ -130,13 +130,13 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # PROMPT-ELEMENT context: user@hostname
   # ····································································································
   # Context format when running with privileges: user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND='red'
+  declare -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=$red
   declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%7F@%1F%m'
   # Context format when in SSH without privileges: user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND='yellow'
+  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=$yellow
   declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%7F@%3F%m'
   # Default context format (no privileges, no SSH): user@hostname.
-  declare -g POWERLEVEL9K_CONTEXT_FOREGROUND='green'
+  declare -g POWERLEVEL9K_CONTEXT_FOREGROUND=$green
   declare -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%7F@%2F%m'
 
   # Don't show context unless running with privileges or in SSH.
@@ -146,12 +146,12 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT dir: current directory
   # ····································································································
-  declare -g POWERLEVEL9K_DIR_FOREGROUND=magenta
+  declare -g POWERLEVEL9K_DIR_FOREGROUND=$magenta
   declare -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
   # Enable special styling for non-writable or non-existent directories
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v2 # non-writable
   declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3 # non-writable and non-existent
-  declare -g POWERLEVEL9K_LOCK_ICON='%F{red}∅%f'
+  declare -g POWERLEVEL9K_LOCK_ICON='%F{$red}∅%f'
   # ····································································································
   # PROMPT-ELEMENT vcs: git status 
   # ····································································································
@@ -290,7 +290,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
   # Icon color.
-  declare -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=green
+  declare -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=$green
   declare -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=
   # Custom icon.
   declare -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=
@@ -304,9 +304,9 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   # These settings are used for repositories other than Git or when gitstatusd fails and
   # Powerlevel10k has to fall back to using vcs_info.
-  declare -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=green
-  declare -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=green
-  declare -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=yellow
+  declare -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=$green
+  declare -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=$green
+  declare -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=$yellow
 
   # ····································································································
   # PROMPT-ELEMENT command_execution_time: duration of the last command
@@ -316,7 +316,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # Show this many fractional digits. Zero means round to seconds.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
   # Execution time color.
-  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=black
+  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$black
   # Duration format: 1d 2h 3m 4s.
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
 
@@ -328,43 +328,43 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   # Status on success. No content, just an icon. No need to show it if prompt_char is enabled as it will signify success by turning green.
   declare -g POWERLEVEL9K_STATUS_OK=false
-  declare -g POWERLEVEL9K_STATUS_OK_FOREGROUND='green'
+  declare -g POWERLEVEL9K_STATUS_OK_FOREGROUND=$green
   declare -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   declare -g POWERLEVEL9K_STATUS_OK_PIPE=true
-  declare -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND='green'
+  declare -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$green
   declare -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as it will signify error by turning red.
   declare -g POWERLEVEL9K_STATUS_ERROR=false
-  declare -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='red'
+  declare -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$red
   declare -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
 
   # Status when the last command was terminated by a signal.
   declare -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
-  declare -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND='red'
+  declare -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$red
   # Use terse signal names: "INT" instead of "SIGINT(2)".
   declare -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   declare -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
 
   # Status when some part of a pipe command fails and the overall exit status is also non-zero: i.e 1|1|0
   declare -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
-  declare -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND='red'
+  declare -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=$red
   declare -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
   
   # ····································································································
   # PROMPT-ELEMENT prompt_char: prompt symbol
   # ····································································································
   # White prompt symbol if the last command succeeded.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='white'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$white
   # Red prompt symbol if the last command failed.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='red'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$bright_red
   # Default prompt symbol.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='ᐷ'
   # Prompt symbol in command vi mode.
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{yellow}⚡%f'
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{$yellow}%f'
   # Prompt symbol in visual vi mode.
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'
   # Prompt symbol in overwrite vi mode.
