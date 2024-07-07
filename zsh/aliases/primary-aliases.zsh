@@ -23,6 +23,9 @@ alias l='eza --all --long --git --icons=always'
 alias ls='gls --color=auto'
 alias cat='bat -p'
 
+# Fuzzy Find Tools
+alias fuz='fzf --layout=reverse --preview="bat -p --color=always {}" | xargs -r nvim'
+
 # CLI Tools
 alias mycli='mycli --myclirc ~/.config/mycli/.myclirc'
 alias weather='curl wttr.in'
