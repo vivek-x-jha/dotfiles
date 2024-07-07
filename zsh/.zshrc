@@ -20,7 +20,6 @@ setopt menu_complete
 setopt share_history
 
 # COMPLETIONS
-autoload -Uz compinit; compinit
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/zsh/.zcompcache"
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.config/ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
@@ -35,7 +34,6 @@ source "${ZDOTDIR}/colorschemes/sourdiesel.zsh"
 source "${ZDOTDIR}/themes/powerlevel10k.zsh"
 
 # SHELL-PLUGINS
-source "${HOMEBREW_PREFIX}/share/z.lua/z.lua.plugin.zsh"
 source "${HOMEBREW_PREFIX}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "${HOMEBREW_PREFIX}/share/zsh-autopair/autopair.zsh"
 source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -43,8 +41,9 @@ source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting
 
 source "${XDG_CONFIG_HOME}/syntax-highlighting/sourdiesel.zsh"
 
-source "${HOMEBREW_PREFIX}/opt/fzf/shell/completion.zsh"
-source "${HOMEBREW_PREFIX}/opt/fzf/shell/key-bindings.zsh"
+source <(fzf --zsh)
+
+eval "$(lua "${HOMEBREW_PREFIX}/share/z.lua/z.lua" --init zsh enhanced once echo fzf)"
 
 # NON-SHELL CONFIGURATIONS 
 source "${XDG_CONFIG_HOME}/eza/eza-colors.conf"
