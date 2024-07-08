@@ -61,7 +61,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # PROMPT-ELEMENT virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html)
   # ····································································································
   # Python virtual environment color.
-  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$yellow
+  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=13
   # Don't show Python version next to the virtual environment name.
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   # If set to "false", won't show virtualenv if pyenv is already shown.
@@ -74,7 +74,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT anaconda: conda environment (https://conda.io/)
   # ····································································································
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=$green
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=13
   # Anaconda segment format. The following parameters are available within the expansion.
   #
   # - CONDA_PREFIX                 Absolute path to the active Anaconda/Miniconda environment.
@@ -105,7 +105,7 @@ source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT pyenv: python environment (https://github.com/pyenv/pyenv)
   # ····································································································
-  declare -g POWERLEVEL9K_PYENV_FOREGROUND='$yellow'
+  declare -g POWERLEVEL9K_PYENV_FOREGROUND=13
   # Hide python version if it doesn't come from one of these sources.
   declare -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
   # If set to false, hide python version if it's the same as global:
