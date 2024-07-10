@@ -6,7 +6,7 @@
 	changed = yellow
 	branch = blue
 	nobranch = red
-	remoteBranch = red
+	remoteBranch = magenta
 	localBranch = cyan
 	unmerged = yellow
 [color "diff"]
@@ -18,8 +18,8 @@
 [color "decorate"]
 	HEAD = green
 	branch = blue
-	remoteBranch = red
+	remoteBranch = magenta
 	tag = brightyellow
-	stash = brightmagenta
+	stash = cyan
 	grafted = red
 	hash = magenta
