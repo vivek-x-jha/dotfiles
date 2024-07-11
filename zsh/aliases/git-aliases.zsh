@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 alias gst='git status'
-alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(magenta)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"'
+alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(brightblue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"'
 alias gss='git status --short'
 alias grs='git restore'
 alias grst='git restore --staged'
