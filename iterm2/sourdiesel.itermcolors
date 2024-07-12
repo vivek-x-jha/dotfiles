@@ -306,13 +306,13 @@
 		<key>Alpha Component</key>
 		<real>1</real>
 		<key>Blue Component</key>
-		<real>0.80392158031463623</real>
+		<real>0.77254903316497803</real>
 		<key>Color Space</key>
 		<string>P3</string>
 		<key>Green Component</key>
-		<real>0.9686274528503418</real>
+		<real>0.90588235855102539</real>
 		<key>Red Component</key>
-		<real>0.99215686321258545</real>
+		<real>0.54117649793624878</real>
 	</dict>
 	<key>Match Background Color</key>
 	<dict>
