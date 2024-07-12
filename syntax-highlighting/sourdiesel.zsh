@@ -1,11 +1,5 @@
 #!/usr/bin/env zsh
 
-# ****************************************************************
-# Author: Vivek Jha
-# Last Modified: Jun 2, 2024
-#
-# Custom theme for Zsh-syntax-highlighting plugin
-# ***************************************************************
 ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red
 ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=magenta
 ZSH_HIGHLIGHT_STYLES[alias]=fg=green
@@ -54,4 +48,3 @@ ZSH_HIGHLIGHT_STYLES[comment]=fg=black
 ZSH_HIGHLIGHT_STYLES[named-fd]=fg=yellow
 ZSH_HIGHLIGHT_STYLES[numeric-fd]=fg=yellow
 ZSH_HIGHLIGHT_STYLES[arg0]=fg=yellow
-
