@@ -48,7 +48,7 @@ eval "$(lua "${HOMEBREW_PREFIX}/share/z.lua/z.lua" --init zsh enhanced once echo
 # NON-SHELL CONFIGURATIONS 
 source "${XDG_CONFIG_HOME}/eza/eza-colors.conf"
 eval "$(gdircolors "${XDG_CONFIG_HOME}/dircolors/sourdiesel.conf")"
-export GREP_COLOR="38;5;3"
+export GREP_COLOR="38;5;6"
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonstartup.py"
