@@ -24,13 +24,22 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/zsh/.zcompcache"
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.config/ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
+# PATH/FPATH
+[[ -z $TMUX ]] || { PATH=''; eval "$(/usr/libexec/path_helper -s)" }
+[[ $PATH == */opt/homebrew/bin* ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
+[[ $PATH == */Library/Frameworks/Python.framework/Versions/3.12/bin* ]] || export PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:${PATH}"
+[[ $PATH == */Library/TeX/texbin* ]] || export PATH="${PATH}:/Library/TeX/texbin"
+[[ $PATH == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH="${PATH}:/Applications/iTerm.app/Contents/Resources/utilities"
+
+fpath=("$HOMEBREW_PREFIX/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
+
 # ALIASES/FUNCTIONS/WIDGETS
 for alias in ${ZDOTDIR}/aliases/*; do source $alias; done
 for func in ${ZDOTDIR}/functions/*; do autoload -Uz $(basename $func); done
 # for widget in ${ZDOTDIR}/widgets/*; do source $widget; done
 
 # PROMPT THEME
-# source "${ZDOTDIR}/colorschemes/sourdiesel.zsh"
+source "${ZDOTDIR}/colorschemes/sourdiesel.zsh"
 source "${ZDOTDIR}/themes/powerlevel10k.zsh"
 
 # SHELL-PLUGINS
