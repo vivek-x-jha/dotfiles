@@ -31,7 +31,7 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 [[ $PATH == */Library/TeX/texbin* ]] || export PATH="${PATH}:/Library/TeX/texbin"
 [[ $PATH == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH="${PATH}:/Applications/iTerm.app/Contents/Resources/utilities"
 
-fpath=("$HOMEBREW_PREFIX/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
+fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
 # ALIASES/FUNCTIONS/WIDGETS
 for alias in ${ZDOTDIR}/aliases/*; do source $alias; done
@@ -43,16 +43,16 @@ source "${ZDOTDIR}/colorschemes/sourdiesel.zsh"
 source "${ZDOTDIR}/themes/powerlevel10k.zsh"
 
 # SHELL-PLUGINS
-source "${HOMEBREW_PREFIX}/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-source "${HOMEBREW_PREFIX}/share/zsh-autopair/autopair.zsh"
-source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
+source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 source "${XDG_CONFIG_HOME}/syntax-highlighting/sourdiesel.zsh"
 
 source <(fzf --zsh)
 
-eval "$(lua "${HOMEBREW_PREFIX}/share/z.lua/z.lua" --init zsh enhanced once echo fzf)"
+eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once echo fzf)"
 
 # NON-SHELL CONFIGURATIONS 
 source "${XDG_CONFIG_HOME}/eza/eza-colors.conf"
