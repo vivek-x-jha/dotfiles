@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Load base theme file
-source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
 # Temporarily change options.
 'builtin' 'local' '-a' 'p10k_config_opts'
