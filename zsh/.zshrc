@@ -40,7 +40,7 @@ for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 
 # PROMPT THEME
 source "$ZDOTDIR/colorschemes/sourdiesel.zsh"
-source "$ZDOTDIR/themes/powerlevel10k.zsh"
+source "$ZDOTDIR/.p10k.zsh"
 
 # SHELL-PLUGINS
 source "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
