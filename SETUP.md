@@ -70,12 +70,12 @@ Both of these commands should return `/opt/homebrew/bin/zsh`
 ## iTerm2 Configuration
 
 ```sh
-# Specify the preferences directory
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$XDG_CONFIG_HOME/iterm2"
-defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-
 # Surpress Shell Last Login Message
-ln -sF "$XDG_CONFIG_HOME/iterm2/.hushlogin" ~/.hushlogin
+touch ~/.hushlogin
+
+# Specify the preferences directory
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/dotfiles/iterm2"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 ```
 
 ## MacOS Utilities
