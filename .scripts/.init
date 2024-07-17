@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+func() {
+  :
+}
+
+main() {
+
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  
+  func 
+
+  echo "[TUI INIT SUCCESS - 1/3]"
+}
+
+main
