@@ -55,9 +55,9 @@ source <(fzf --zsh)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
 # NON-SHELL CONFIGURATIONS 
-source "$XDG_CONFIG_HOME/eza/eza-colors.conf"
-eval "$(gdircolors "$XDG_CONFIG_HOME/dircolors/sourdiesel.conf")"
+source "$DOT/eza/.eza_colors"
+eval "$(gdircolors "$DOT/dircolors/.ls_colors")"
 export GREP_COLOR="38;5;6"
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonstartup.py"
+export PYTHONSTARTUP="$DOT/python/pythonstartup.py"
