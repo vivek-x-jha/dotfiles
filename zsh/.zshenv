@@ -4,6 +4,9 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# Dotfiles
+export DOT="$HOME/dotfiles"
+
 # Editor Configuration
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
@@ -12,5 +15,5 @@ export VISUAL="$EDITOR"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 
 # Zsh Configuration
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export ZDOTDIR="$DOT/zsh"
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"

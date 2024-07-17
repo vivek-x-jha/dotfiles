@@ -48,7 +48,7 @@ source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
 source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-source "$XDG_CONFIG_HOME/syntax-highlighting/sourdiesel.zsh"
+source "$ZDOTDIR/syntaxes/sourdiesel.zsh"
 
 source <(fzf --zsh)
 
