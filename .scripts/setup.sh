@@ -8,21 +8,22 @@ symlink() {
   [ -d $HOME/Dropbox   ] || ln -sF Library/CloudStorage/Dropbox
   [ -d $HOME/Developer ] || ln -sF Dropbox/developer Developer
 
-  ln -sF dotfiles/conda/.anaconda
-  ln -sF dotfiles/bash/.bashrc
-  ln -sF dotfiles/conda/.conda
-  ln -sF dotfiles/conda/.condarc
-  ln -sF dotfiles/conda/.continuum
-  ln -sF dotfiles/cricut/.cricut-design-space
-  ln -sF dotfiles/ipython/.ipython
-  ln -sF dotfiles/keras/.keras
-  ln -sF dotfiles/matplotlib/.matplotlib
-  ln -sF dotfiles/npm/.npm
-  ln -sF dotfiles/redhat/.redhat
-  ln -sF dotfiles/thinkorswim/.thinkorswim
-  ln -sF dotfiles/vscode/.vscode
-  ln -sF dotfiles/zsh/.zshenv 
-  ln -sF dotfiles/zsh/.zprofile
+  ln -sf dotfiles/conda/.anaconda
+  ln -sf dotfiles/bash/.bashrc
+  ln -sf dotfiles/conda/.conda
+  ln -sf dotfiles/conda/.condarc
+  ln -sf dotfiles/conda/.continuum
+  ln -sf dotfiles/cricut/.cricut-design-space
+  ln -sf dotfiles/git/.gitconfig
+  ln -sf dotfiles/ipython/.ipython
+  ln -sf dotfiles/keras/.keras
+  ln -sf dotfiles/matplotlib/.matplotlib
+  ln -sf dotfiles/npm/.npm
+  ln -sf dotfiles/redhat/.redhat
+  ln -sf dotfiles/thinkorswim/.thinkorswim
+  ln -sf dotfiles/vscode/.vscode
+  ln -sf dotfiles/zsh/.zshenv 
+  ln -sf dotfiles/zsh/.zprofile
 
   # Configuation Symlinks
   cd ${XDG_CONFIG_HOME:-$HOME/.config}
