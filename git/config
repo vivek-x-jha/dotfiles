@@ -5,7 +5,7 @@
 [core]
 	editor = nvim
 	pager = less
-	sshCommand = ssh -F ~/.config/ssh/config
+	sshCommand = ssh -F ~/dotfiles/ssh/config
 [color]
 	diff = auto
 	status = auto
@@ -13,6 +13,30 @@
 	interactive = auto
 	ui = true
 	pager = true
+[color "status"]
+	header = black
+	untracked = red
+	added = green
+	changed = yellow
+	branch = blue
+	nobranch = red
+	remoteBranch = magenta
+	localBranch = cyan
+	unmerged = yellow
+[color "diff"]
+	old = red
+	meta = black
+	new = green
+	frag = magenta
+	context = brightblack
+[color "decorate"]
+	HEAD = green
+	branch = blue
+	remoteBranch = magenta
+	tag = brightyellow
+	stash = cyan
+	grafted = red
+	hash = magenta
 [gpg]
 	format = ssh
 [gpg "ssh"]
@@ -21,5 +45,4 @@
 	gpgsign = true
 [init]
 	defaultBranch = main
-[include]
-	path = ~/.config/git/themes/sourdiesel.gitconfig
+
