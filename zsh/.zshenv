@@ -7,6 +7,12 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # Dotfiles
 export DOT="$HOME/dotfiles"
 
+# Zsh Configuration
+export ZDOTDIR="$DOT/zsh"
+
+# Zsh Configuration
+export ZDOTDIR="$DOT/zsh"
+
 # Editor Configuration
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
@@ -14,6 +20,7 @@ export VISUAL="$EDITOR"
 # History Configuration
 export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 
-# Zsh Configuration
-export ZDOTDIR="$DOT/zsh"
+# Z.lua Directory Frecency Database
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
+
+

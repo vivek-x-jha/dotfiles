@@ -39,7 +39,7 @@ for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 # for widget in $ZDOTDIR/widgets/*; do source $widget; done
 
 # PROMPT THEME
-source "$ZDOTDIR/colorschemes/sourdiesel.zsh"
+source "$DOT/colors/sourdiesel.sh"
 source "$ZDOTDIR/.p10k.zsh"
 
 # SHELL-PLUGINS
@@ -55,9 +55,12 @@ source <(fzf --zsh)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
 # NON-SHELL CONFIGURATIONS 
-source "$DOT/eza/.eza_colors"
-eval "$(gdircolors "$DOT/dircolors/.ls_colors")"
-export GREP_COLOR="38;5;6"
+
+eval "$(gdircolors "$DOT/colors/.dircolors")"
+
+source "$DOT/colors/.eza_colors"
+source "$DOT/colors/.grep_colors"
+
 export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
 export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
 export PYTHONSTARTUP="$DOT/python/pythonstartup.py"
