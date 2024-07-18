@@ -2,7 +2,11 @@
 
 symlink() {
 
+  # Home Symlinks
   cd $HOME
+
+  [ -d $HOME/Dropbox   ] || ln -sF Library/CloudStorage/Dropbox
+  [ -d $HOME/Developer ] || ln -sF Dropbox/developer Developer
 
   ln -sF dotfiles/conda/.anaconda
   ln -sF dotfiles/bash/.bashrc
@@ -21,8 +25,28 @@ symlink() {
   ln -sF dotfiles/zsh/.zshenv 
   ln -sF dotfiles/zsh/.zprofile
 
-  ln -sF Library/CloudStorage/Dropbox
-  ln -sF Dropbox/developer Developer
+  # Configuation Symlinks
+  cd ${XDG_CONFIG_HOME:-$HOME/.config}
+  
+  config_pkgs=(
+    bat
+    bpython
+    btop
+    dust
+    gh
+    git
+    lazygit
+    nvim
+    op
+    ssh
+    tmux
+    yazi
+  )
+
+  for pkg in "${config_pkgs[@]}"; do
+    rm -rf "$pkg"
+    ln -sF "../dotfiles/$pkg"
+  done
 
 }
 
@@ -32,7 +56,7 @@ main() {
   
   symlink
 
-  cd "$pwd"
+  cd "$SCRIPT_DIR"
   echo "[TUI SETUP SUCCESS - 3/3]"  
 }
 
