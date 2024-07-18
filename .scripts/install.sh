@@ -100,11 +100,17 @@ homebrew_init() {
   done
 }
 
+iterm2_init() {
+
+  [ -f "$HOME/.hushlogin" ] || touch "$HOME/.hushlogin"
+}
+
 main() {
 
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
   homebrew_init
+  iterm2_init
 
   echo "[TUI INSTALL SUCCESS - 2/3]"
 }

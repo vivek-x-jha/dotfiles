@@ -14,7 +14,6 @@ symlink() {
   ln -sF dotfiles/conda/.condarc
   ln -sF dotfiles/conda/.continuum
   ln -sF dotfiles/cricut/.cricut-design-space
-  ln -sF dotfiles/iterm2/.hushlogin
   ln -sF dotfiles/ipython/.ipython
   ln -sF dotfiles/keras/.keras
   ln -sF dotfiles/matplotlib/.matplotlib
