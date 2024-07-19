@@ -1,4 +1,6 @@
-#Sourdiesel base17 colors
+#!/usr/bin/env bash
+
+# Sourdiesel base17 colors
 
 black="#cccccc"
 red="#ffc7c7"

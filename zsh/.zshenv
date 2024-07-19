@@ -10,9 +10,6 @@ export DOT="$HOME/dotfiles"
 # Zsh Configuration
 export ZDOTDIR="$DOT/zsh"
 
-# Zsh Configuration
-export ZDOTDIR="$DOT/zsh"
-
 # Editor Configuration
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
@@ -22,5 +19,3 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 
 # Z.lua Directory Frecency Database
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
-
-

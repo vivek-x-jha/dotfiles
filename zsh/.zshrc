@@ -39,11 +39,11 @@ for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
 # for widget in $ZDOTDIR/widgets/*; do source $widget; done
 
 # LS/EZA/GREP and PROMPT THEME
-eval "$(gdircolors "$DOT/colors/.dircolors")"
+eval "$(gdircolors "$DOT/dircolors/.dircolors")"
 
-source "$DOT/colors/.eza_colors"
-source "$DOT/colors/.grep_colors"
-source "$DOT/colors/sourdiesel.sh"
+source "$DOT/eza/.eza_colors"
+source "$DOT/grep/.grep_colors"
+source "$DOT/.colorscheme"
 
 source "$ZDOTDIR/.p10k.zsh"
 
