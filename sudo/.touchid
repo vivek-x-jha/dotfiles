@@ -1,0 +1,9 @@
+# /etc/pam.d/sudo: sudo auth account password session
+auth       optional     /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
+auth       sufficient   pam_tid.so
+auth       include      sudo_local
+auth       sufficient   pam_smartcard.so
+auth       required     pam_opendirectory.so
+account    required     pam_permit.so
+password   required     pam_deny.so
+session    required     pam_permit.so
