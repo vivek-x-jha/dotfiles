@@ -1,0 +1,117 @@
+#!/usr/bin/env zsh
+
+# Editor
+alias v='nvim'
+alias vim='vim -i "$XDG_STATE_HOME/vim/viminfo"'
+alias vi='vim'
+
+# File Navigation & Previewing
+alias -- -="z -"
+alias ~="cd $HOME"
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+alias cl='clear'
+alias grep='grep --color=auto'
+alias l='eza --all --long --git --icons=always'
+alias tree='tree -aCI .git'
+alias vfp='fzf --layout=reverse --preview="bat -p --color=always {}" | xargs -r nvim'
+
+# Printing Long List Format
+alias list-aliases='alias | sort'
+alias list-colors16='for c in {0..7}; do b=$((c+8)); print -P - "%F{$c}$c%f -> %F{$b}$b%f"; done'
+alias list-colors256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
+alias list-env-vars='env | sort'
+alias list-fpath='print -l $fpath'
+alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
+alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
+alias list-path='print -l $path'
+alias list-sourdiesel='cat "$DOT/.colorscheme"'
+alias list-users='dscl . list /Users | grep -v "^_"'
+
+# Tmux
+alias t='tmux attach || tmux new-session'
+alias ta='tmux attach -t'
+alias tn='tmux new-session'
+alias tks='tmux kill-server'
+alias tl='tmux-list-sessions'
+
+# Git
+alias gst='git status'
+alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(brightblue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"'
+alias gss='git status --short'
+alias grs='git restore'
+alias grst='git restore --staged'
+alias gcmsg='git commit --message'
+alias gcam='git commit --all --message'
+alias gcl='git clone --recurse-submodules'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gp='git push'
+alias gl='git pull'
+alias gf='git fetch'
+alias ga='git add'
+alias gaa='git add --all'
+alias grv='git remote --verbose'
+alias gmv='git mv'
+alias grm='git rm'
+alias gco='git checkout'
+alias gsw='git switch'
+alias gb='git branch'
+alias gmg='git merge'
+
+# LaTex
+alias update-texlive='sudo tlmgr update --self --all'
+
+# CLI Tools
+alias mycli='mycli --myclirc ~/dotfiles/mycli/.myclirc'
+alias weather='curl wttr.in'
+alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
+
+# System 
+alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
+alias touchid-sudo='sudo cp -f "$DOT/sudo/.touchid" /etc/pam.d/sudo; cat /etc/pam.d/sudo'
+
+alias airpods='SwitchAudioSource -s "band4band"'
+alias sound-default='SwitchAudioSource -s "MacBook Pro Speakers"'
+
+# Extension Aliases - special aliases that are triggered when a file name is passed as the command
+# Ex: if the pdf file extension is aliased to `acroread` (a popular Linux pdf reader), when running `file.pdf` that file will be open with `acroread`
+autoload -Uz is-at-least
+if is-at-least 4.2.0; then
+  # Opens urls in terminal using browser specified by $BROWSER
+  if [[ -n "$BROWSER" ]]; then
+    _browser_fts=(htm html de org net com at cx nl se dk)
+    for ft in $_browser_fts; do alias -s $ft='$BROWSER'; done
+  fi
+
+  # Opens C, C++, Tex and text files using editor specified by $EDITOR
+  _editor_fts=(cpp cxx cc c hh h inl asc txt TXT tex)
+  for ft in $_editor_fts; do alias -s $ft='$EDITOR'; done
+
+  # Opens images using image viewer specified by $XIVIEWER
+  if [[ -n "$XIVIEWER" ]]; then
+    _image_fts=(jpg jpeg png gif mng tiff tif xpm)
+    for ft in $_image_fts; do alias -s $ft='$XIVIEWER'; done
+  fi
+
+  # Opens videos and other media using mplayer
+  _media_fts=(ape avi flv m4a mkv mov mp3 mpeg mpg ogg ogm rm wav webm)
+  for ft in $_media_fts; do alias -s $ft=mplayer; done
+
+  # Reading Docs
+  alias -s pdf=acroread   # Opens up a document using acroread
+  alias -s ps=gv          # Opens up a .ps file using gv
+  alias -s dvi=xdvi       # Opens up a .dvi file using xdvi
+  alias -s chm=xchm       # Opens up a .chm file using xchm
+  alias -s djvu=djview    # Opens up a .djvu file using djview
+
+  # Listing files inside a packed file
+  alias -s zip="unzip -l" # Lists files inside a .zip file
+  alias -s rar="unrar l"  # Lists files inside a .rar file
+  alias -s tar="tar tf"   # Lists files inside a .tar file
+  alias -s tar.gz="echo " # Lists files inside a .tar.gz file
+  alias -s ace="unace l"  # Lists files inside a .ace file
+fi
