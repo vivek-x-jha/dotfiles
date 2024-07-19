@@ -74,8 +74,8 @@ alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Develo
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias touchid-sudo='sudo cp -f "$DOT/sudo/.touchid" /etc/pam.d/sudo; cat /etc/pam.d/sudo'
 
-alias airpods='SwitchAudioSource -s "band4band"'
-alias sound-default='SwitchAudioSource -s "MacBook Pro Speakers"'
+alias sas-airpods='SwitchAudioSource -s "band4band"'
+alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
 
 # Extension Aliases - special aliases that are triggered when a file name is passed as the command
 # Ex: if the pdf file extension is aliased to `acroread` (a popular Linux pdf reader), when running `file.pdf` that file will be open with `acroread`
