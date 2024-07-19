@@ -36,7 +36,6 @@ fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]
 # ALIASES/FUNCTIONS/WIDGETS
 for alias in $ZDOTDIR/aliases/*; do source $alias; done
 for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
-# for widget in $ZDOTDIR/widgets/*; do source $widget; done
 
 # LS/EZA/GREP and PROMPT THEME
 eval "$(gdircolors "$DOT/dircolors/.dircolors")"
@@ -53,7 +52,7 @@ source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
 source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-source "$ZDOTDIR/configs/zsh-syntax-highlighing/sourdiesel.zsh"
+source "$ZDOTDIR/.zsh-syntax-highlighting"
 source <(fzf --zsh)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
