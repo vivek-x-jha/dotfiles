@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 # Load base theme file
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
