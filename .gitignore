@@ -18,6 +18,7 @@ thinkorswim
 tmux/plugins
 vscode/.vscode
 zsh/.zcompdump
+zsh/plugins
 
 *.sock
 .DS_Store
