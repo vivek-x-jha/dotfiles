@@ -41,6 +41,7 @@ homebrew_init() {
     dropbox
     firefox
     font-comic-shanns-mono-nerd-font
+    font-sf-mono-nerd-font-ligaturized
     font-symbols-only-nerd-font
     google-chrome
     image2icon
@@ -63,18 +64,22 @@ homebrew_init() {
     coreutils
     bat
     btop
+    dust
     eza
     fzf
     gh
     git
     gitmux
+    img2pdf
     lazygit
     lua
     mycli
     mysql
     neovim
+    ocrmypdf
     powerlevel10k
     ripgrep
+    switchaudio-osx
     tree
     tmux
     z.lua
