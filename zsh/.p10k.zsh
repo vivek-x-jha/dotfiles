@@ -55,30 +55,11 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_INSTANT_PROMPT=quiet
   declare -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
-  # Set theme colors
-  # black="#cccccc"
-  # red="#ffc7c7"
-  # green="#ceffc9"
-  # yellow="#fdf7cd"
-  # blue="#c4effa"
-  # magenta="#eccef0"
-  # cyan="#8ae7c5"
-  # white="#f4f3f2"
-  # bright_black="#5c617d"
-  # bright_red="#f096b7"
-  # bright_green="#d2fd9d"
-  # bright_yellow="#f3b175"
-  # bright_blue="#80d7fe"
-  # bright_magenta="#c9ccfb"
-  # bright_cyan="#47e7b1"
-  # bright_white="#ffffff"
-  # grey="#313244"
-
   # ····································································································
   # PROMPT-ELEMENT virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html)
   # ····································································································
   # Python virtual environment color.
-  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$bright_magenta
+  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$bright_blue
   # Don't show Python version next to the virtual environment name.
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   # If set to "false", won't show virtualenv if pyenv is already shown.
@@ -91,7 +72,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT anaconda: conda environment (https://conda.io/)
   # ····································································································
-  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=$bright_magenta
+  declare -g POWERLEVEL9K_ANACONDA_FOREGROUND=$bright_blue
   # Anaconda segment format. The following parameters are available within the expansion.
   #
   # - CONDA_PREFIX                 Absolute path to the active Anaconda/Miniconda environment.
@@ -122,7 +103,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   # ····································································································
   # PROMPT-ELEMENT pyenv: python environment (https://github.com/pyenv/pyenv)
   # ····································································································
-  declare -g POWERLEVEL9K_PYENV_FOREGROUND=$bright_magenta
+  declare -g POWERLEVEL9K_PYENV_FOREGROUND=$bright_blue
   # Hide python version if it doesn't come from one of these sources.
   declare -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
   # If set to false, hide python version if it's the same as global:
