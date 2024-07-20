@@ -49,7 +49,7 @@ source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
 source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-source "$ZDOTDIR/.zsh-syntax-highlighting"
+source "$ZDOTDIR/.zsh-syntax-highlighting.conf"
 source <(fzf --zsh)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
