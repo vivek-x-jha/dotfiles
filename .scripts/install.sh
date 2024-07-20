@@ -36,7 +36,7 @@ homebrew_config() {
 }
 
 iterm2_init() {
-  [ -f "$HOME/.hushlogin" ] || touch "$HOME/.hushlogin"
+  touch "$HOME/.hushlogin"
 }
 
 main() {
