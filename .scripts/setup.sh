@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 
 symlink() {
+  # Dropbox links
+  cd $HOME/Movies
+  
+  ln -sF ../Dropbox/content
 
-  # Home Symlinks
+  cd $HOME/Pictures
+  
+  ln -sF ../Dropbox/icons
+  ln -sF ../Dropbox/screenshots
+  ln -sF ../Dropbox/wallpapers
+
   cd $HOME
 
-  [ -d $HOME/Dropbox   ] || ln -sF Library/CloudStorage/Dropbox
-  [ -d $HOME/Developer ] || ln -sF Dropbox/developer Developer
+  ln -sF Dropbox/developer Developer
 
+  # Home Dotfiles links
   ln -sf .dotfiles/conda/.anaconda
   ln -sf .dotfiles/bash/.bashrc
   ln -sf .dotfiles/conda/.conda
@@ -25,7 +34,7 @@ symlink() {
   ln -sf .dotfiles/zsh/.zshenv 
   ln -sf .dotfiles/zsh/.zprofile
 
-  # Configuation Symlinks
+  # Configuation links
   cd ${XDG_CONFIG_HOME:-$HOME/.config}
   
   config_pkgs=(
@@ -52,7 +61,6 @@ symlink() {
 }
 
 main() {
-
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   
   symlink
