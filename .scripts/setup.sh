@@ -44,7 +44,6 @@ symlink() {
     dust
     gh
     git
-    jupyter
     lazygit
     nvim
     op
