@@ -75,6 +75,7 @@ alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias touchid-sudo='sudo cp -f "$DOT/sudo/.touchid" /etc/pam.d/sudo; cat /etc/pam.d/sudo'
 
 alias sas-airpods='SwitchAudioSource -s "band4band"'
+alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
 alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
 
 # Extension Aliases - special aliases that are triggered when a file name is passed as the command
