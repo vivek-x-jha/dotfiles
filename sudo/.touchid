@@ -1,4 +1,5 @@
-# /etc/pam.d/sudo: sudo auth account password session
+# First 2 lines enable touchid to authenticate sudo - even in tmux
+# https://github.com/fabianishere/pam_reattach#Usage 
 auth       optional     /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
 auth       sufficient   pam_tid.so
 auth       include      sudo_local
