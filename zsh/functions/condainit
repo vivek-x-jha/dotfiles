@@ -1,5 +1,5 @@
 # Jupyter settings
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter/.jupyter"
+export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
 
 # Initialize conda environment
 __conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
