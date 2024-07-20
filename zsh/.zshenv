@@ -5,7 +5,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # Dotfiles
-export DOT="$HOME/dotfiles"
+export DOT="$HOME/.dotfiles"
 
 # Zsh Configuration
 export ZDOTDIR="$DOT/zsh"
