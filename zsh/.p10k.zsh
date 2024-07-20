@@ -177,6 +177,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
       # Styling for up-to-date Git status.
       local meta='%f'
       local clean='%4F'
+      local diverged='%6F'
       local modified='%3F'
       local staged='%2F'
       local untracked='%1F'
@@ -231,17 +232,17 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
     fi
 
     # ⇣42 if behind the remote.
-    (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${clean} ${VCS_STATUS_COMMITS_BEHIND}"
+    (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${diverged} ${VCS_STATUS_COMMITS_BEHIND}"
     # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
     (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && res+=" "
-    (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${clean} ${VCS_STATUS_COMMITS_AHEAD}"
+    (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${diverged} ${VCS_STATUS_COMMITS_AHEAD}"
     # ⇠42 if behind the push remote.
-    (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${clean}${VCS_STATUS_PUSH_COMMITS_BEHIND}"
+    (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${diverged} ${VCS_STATUS_PUSH_COMMITS_BEHIND}"
     (( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" "
     # ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
-    (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${clean} ${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+    (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${diverged} ${VCS_STATUS_PUSH_COMMITS_AHEAD}"
     # *42 if have stashes.
-    (( VCS_STATUS_STASHES        )) && res+=" ${clean}⚑${VCS_STATUS_STASHES}"
+    (( VCS_STATUS_STASHES        )) && res+=" ${diverged}⚑${VCS_STATUS_STASHES}"
     # 'merge' if the repo is in an unusual state.
     [[ -n $VCS_STATUS_ACTION     ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
     # ~42 if have merge conflicts.
@@ -303,7 +304,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   # These settings are used for repositories other than Git or when gitstatusd fails and
   # Powerlevel10k has to fall back to using vcs_info.
   declare -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=$green
-  declare -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=$green
+  declare -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=$red
   declare -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=$yellow
 
   # ····································································································
