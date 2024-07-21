@@ -175,6 +175,17 @@
 			<key>utf8</key>
 			<true/>
 		</dict>
+		<key>AB7096AE-A634-4853-B074-B58A45BA32D8</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>x</string>
+			<key>text</key>
+			<string>Search X for '{query}'</string>
+			<key>url</key>
+			<string>https://x.com/search?q=%23{query}</string>
+		</dict>
 		<key>C05B3078-6AE3-4A4E-ADC1-FCF402D64A1D</key>
 		<dict>
 			<key>enabled</key>
@@ -189,7 +200,7 @@
 		<key>E074A5FF-99EC-4DF8-8440-66C9B02F7D53</key>
 		<dict>
 			<key>enabled</key>
-			<true/>
+			<false/>
 			<key>keyword</key>
 			<string>sa</string>
 			<key>text</key>
