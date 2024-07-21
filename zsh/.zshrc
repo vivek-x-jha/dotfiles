@@ -54,6 +54,6 @@ source <(fzf --zsh)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
 # OTHER CONFIGURATION FILES
-export MYSQL_HISTFILE=~/.cache/mysql/.mysql_history
-export MYCLI_HISTFILE=~/.cache/mycli/.mycli-history
+export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
+export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 export PYTHONSTARTUP="$DOT/python/pythonstartup.py"
