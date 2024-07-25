@@ -21,7 +21,7 @@ source "$DOT/.colorscheme"
 source "$DOT/bash/.aliases"
 source "$DOT/bash/functions.sh"
 
-# Set up fzf key bindings and fuzzy completion
+eval "$(starship init bash)"
 eval "$(fzf --bash)"
 
 # OTHER CONFIGURATION FILES
