@@ -1,10 +1,14 @@
 # Create System Variables
-export EDITOR="code"
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# Create Bash Variables
-export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
+# Editor Configuration
+export EDITOR='nvim'
+export VISUAL="$EDITOR"
+
+# Dotfiles
+export DOT="$HOME/.dotfiles"
+
+[ ! -f "$HOME/.bashrc" ] || source "$HOME/.bashrc"
