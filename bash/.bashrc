@@ -1,6 +1,9 @@
 # Set History
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 
+# Starship
+export STARSHIP_CONFIG="$DOT/starship/starship.toml"
+
 # Set Options
 shopt -s autocd
 
