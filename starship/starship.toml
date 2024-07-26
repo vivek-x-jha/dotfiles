@@ -1,1 +1,62 @@
+# General settings
 add_newline = false
+format = """
+$username\
+$hostname\
+$python\
+$conda\
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$character"""
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[directory]
+style = "purple"
+truncate_to_repo = true
+format = "[$path]($style) "
+
+[git_branch]
+format = "[$branch]($style) "
+style = "blue"
+disabled = false
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "yellow"
+disabled = false
+
+[cmd_duration]
+min_time = 0
+format = "[$duration]($style) "
+style = "black"
+show_milliseconds = true
+
+[line_break]
+disabled = true
+
+[jobs]
+symbol = "✦ "
+style = "bright-blue"
+
+[battery]
+disabled = true
+
+[time]
+format = ""
+disabled = true
+
+[character]
+success_symbol = "[](white)"
+error_symbol = "[](bright-red)"
+vicmd_symbol = "[](yellow)"
