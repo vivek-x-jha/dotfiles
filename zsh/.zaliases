@@ -30,6 +30,7 @@ alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 alias list-path='print -l $path'
 alias list-sourdiesel='cat "$DOT/.colorscheme"'
 alias list-users='dscl . list /Users | grep -v "^_"'
+alias list-shells='tail -n +5 /etc/shells'
 
 # Tmux
 alias t='tmux attach || tmux new-session'
