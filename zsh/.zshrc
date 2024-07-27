@@ -40,7 +40,7 @@ source "$DOT/grep/.grep_colors"
 source "$DOT/.colorscheme"
 
 # Configure Shell Theme + Plugins
-for func in $ZDOTDIR/functions/*; do autoload -Uz $(basename $func); done
+for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
 source "$ZDOTDIR/.p10k.zsh"
 source "$ZDOTDIR/.zaliases"
 
