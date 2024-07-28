@@ -33,3 +33,7 @@ tmux_list_sessions() {
   print "·······································"} \
   { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
 }
+
+cpdf() {
+  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
+}
