@@ -1,0 +1,19 @@
+packages=(
+  coreutils
+  eza
+  fzf
+  lua
+  mycli
+  mysql
+  neovim
+  powerlevel10k
+  tmux
+  tree
+  z.lua
+  zsh-autocomplete
+  zsh-autopair
+  zsh-autosuggestions
+  zsh-completions
+  zsh-syntax-highlighting
+)
+for pkg in ${packages[@]}; do brew install $pkg; done
