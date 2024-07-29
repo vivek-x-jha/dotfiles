@@ -7,14 +7,17 @@ HISTSIZE=12000
 SAVEHIST=10000
 
 # OPTIONS
-setopt always_to_end
-setopt auto_cd
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt inc_append_history
-setopt share_history
+zsh_options=(
+  always_to_end
+  auto_cd
+  extended_history
+  hist_expire_dups_first
+  hist_ignore_dups
+  hist_ignore_space
+  inc_append_history
+  share_history
+)
+for opt in ${zsh_options[@]}; do setopt $opt; done
 
 # COMPLETIONS
 zstyle ':completion:*' use-cache on
@@ -24,7 +27,7 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 # Set PATH and FPATH without duplicating any directories
 [[ -z $TMUX ]] || { PATH=''; eval "$(/usr/libexec/path_helper -s)" }
 [[ $PATH == */opt/homebrew/bin* ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
-[[ $PATH == */Library/Frameworks/Python.framework/Versions/3.12/bin* ]] || export PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:$PATH"
+[[ $PATH == */Library/Frameworks/Python.framework/Versions/3.12/bin* ]] || export PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:$PATH" 
 [[ $PATH == */Library/TeX/texbin* ]] || export PATH="$PATH:/Library/TeX/texbin"
 [[ $PATH == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 
