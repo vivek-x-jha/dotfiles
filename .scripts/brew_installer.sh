@@ -16,4 +16,4 @@ packages=(
   zsh-completions
   zsh-syntax-highlighting
 )
-for pkg in ${packages[@]}; do brew install $pkg; done
+brew install "${packages[@]}"

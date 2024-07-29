@@ -17,7 +17,7 @@ zsh_options=(
   inc_append_history
   share_history
 )
-for opt in ${zsh_options[@]}; do setopt $opt; done
+setopt "${zsh_options[@]}" 
 
 # COMPLETIONS
 zstyle ':completion:*' use-cache on
