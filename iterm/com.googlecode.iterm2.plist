@@ -2093,7 +2093,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>0</integer>
+			<integer>12</integer>
 			<key>Working Directory</key>
 			<string>/Users/mubuntu</string>
 		</dict>
@@ -3124,7 +3124,7 @@
 	<key>TerminalMargin</key>
 	<integer>15</integer>
 	<key>TerminalVMargin</key>
-	<integer>13</integer>
+	<integer>15</integer>
 	<key>TmuxUsesDedicatedProfile</key>
 	<true/>
 	<key>TmuxWarnBeforePausing</key>
