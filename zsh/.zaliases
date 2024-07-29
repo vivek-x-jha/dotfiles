@@ -31,7 +31,7 @@ alias list-path='print -l $path'
 alias list-sourdiesel='cat "$DOT/.colorscheme"'
 alias list-users='dscl . list /Users | grep -v "^_"'
 alias list-shells='tail -n +5 /etc/shells'
-
+alias list-options='print -l $zsh_options | sort'
 # Tmux
 alias t='tmux attach || tmux new-session'
 alias ta='tmux attach -t'
