@@ -20,18 +20,23 @@ alias tree='tree -aCI ".editorconfig|.git|.github|.gitignore|.shellcheckrc|LICEN
 alias vfp='fzf --layout=reverse --preview="bat -p --color=always {}" | xargs -r nvim'
 
 # Printing Long List Format
+alias list-path='print -l "${path[@]}"'
+alias list-fpath='print -l "${fpath[@]}"'
+
+alias list-plugins='print -l "${zsh_plugins[@]}" | sort'
+alias list-configs='print -l "${zsh_configs[@]}" | sort'
+alias list-options='print -l "${zsh_options[@]}" | sort'
+
 alias list-aliases='alias | sort'
+alias list-env-vars='env | sort'
+alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
+alias list-shells='tail -n +5 /etc/shells'
+alias list-users='dscl . list /Users | grep -v "^_"'
+
 alias list-colors16='for c in {0..7}; do b=$((c+8)); print -P - "%F{$c}$c%f -> %F{$b}$b%f"; done'
 alias list-colors256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
-alias list-env-vars='env | sort'
-alias list-fpath='print -l $fpath'
-alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
-alias list-path='print -l $path'
 alias list-sourdiesel='cat "$DOT/.colorscheme"'
-alias list-users='dscl . list /Users | grep -v "^_"'
-alias list-shells='tail -n +5 /etc/shells'
-alias list-options='print -l $zsh_options | sort'
 
 # Tmux
 alias t='tmux attach || tmux new-session'

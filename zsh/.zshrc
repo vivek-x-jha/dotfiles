@@ -6,19 +6,6 @@ HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=12000
 SAVEHIST=10000
 
-# OPTIONS
-zsh_options=(
-  always_to_end
-  auto_cd
-  extended_history
-  hist_expire_dups_first
-  hist_ignore_dups
-  hist_ignore_space
-  inc_append_history
-  share_history
-)
-setopt "${zsh_options[@]}" 
-
 # COMPLETIONS
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
@@ -39,17 +26,36 @@ source "$DOT/eza/.eza_colors"
 source "$DOT/grep/.grep_colors"
 source "$DOT/.colorscheme"
 
-# Configure Shell Theme + Plugins
+# Configure Shell Plugins, Theme, Aliases, Configs Functions
+zsh_plugins=(
+  zsh-autocomplete/zsh-autocomplete.plugin.zsh
+  zsh-autopair/autopair.zsh
+  zsh-autosuggestions/zsh-autosuggestions.zsh
+  zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+)
+
+zsh_configs=(
+  .p10k.zsh
+  .zaliases
+  .zsh-syntax-highlighting.conf
+)
+
+zsh_options=(
+  always_to_end
+  auto_cd
+  extended_history
+  hist_expire_dups_first
+  hist_ignore_dups
+  hist_ignore_space
+  inc_append_history
+  share_history
+)
+
+for plugin in "${zsh_plugins[@]}"; do source "$(brew --prefix)/share/$plugin"; done
+for config in "${zsh_configs[@]}"; do source "$ZDOTDIR/$config"; done
 for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
-source "$ZDOTDIR/.p10k.zsh"
-source "$ZDOTDIR/.zaliases"
+setopt "${zsh_options[@]}" 
 
-source "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
-source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-source "$ZDOTDIR/.zsh-syntax-highlighting.conf"
 source <(fzf --zsh)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
