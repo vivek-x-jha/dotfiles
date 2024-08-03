@@ -31,3 +31,5 @@ eval "$(fzf --bash)"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 export PYTHONSTARTUP="$DOT/python/pythonstartup.py"
+
+source "$XDG_DATA_HOME/blesh/ble.sh"
