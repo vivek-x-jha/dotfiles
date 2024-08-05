@@ -26,10 +26,10 @@ alias list-fpath='print -l "${fpath[@]}"'
 alias list-plugins='print -l "${zsh_plugins[@]}" | sort'
 alias list-configs='print -l "${zsh_configs[@]}" | sort'
 alias list-options='print -l "${zsh_options[@]}" | sort'
+alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 
 alias list-aliases='alias | sort'
 alias list-env-vars='env | sort'
-alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 alias list-shells='tail -n +5 /etc/shells'
 alias list-users='dscl . list /Users | grep -v "^_"'
 
