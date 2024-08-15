@@ -21,9 +21,9 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
 # Configure Colorschmes: ls/eza/grep + variables
-eval "$(gdircolors "$DOT/dircolors/.dircolors")"
-source "$DOT/eza/.eza_colors"
-source "$DOT/grep/.grep_colors"
+eval "$(gdircolors "$DOT/.dircolors")"
+source "$DOT/.eza_colors"
+source "$DOT/.grep_colors"
 source "$DOT/.colorscheme"
 
 # Configure Shell Plugins, Theme, Aliases, Configs Functions
@@ -62,4 +62,4 @@ eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 # OTHER CONFIGURATION FILES
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
-export PYTHONSTARTUP="$DOT/python/pythonstartup.py"
+export PYTHONSTARTUP="$DOT/.pythonstartup"

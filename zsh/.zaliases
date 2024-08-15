@@ -73,13 +73,13 @@ alias gmg='git merge'
 alias update-texlive='sudo tlmgr update --self --all'
 
 # CLI Tools
-alias mycli='mycli --myclirc "$DOT/mycli/.myclirc"'
+alias mycli='mycli --myclirc "$DOT/.myclirc"'
 alias weather='curl wttr.in'
 alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
 
 # System 
 alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
-alias touchid-sudo='sudo cp -f "$DOT/sudo/.touchid" /etc/pam.d/sudo && echo "Successfully updated /etc/pam.d/sudo"'
+alias touchid-sudo='sudo cp -f "$DOT/.sudo" /etc/pam.d/sudo && echo "Successfully updated /etc/pam.d/sudo"'
 
 alias sas-airpods='SwitchAudioSource -s "band4band"'
 alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
