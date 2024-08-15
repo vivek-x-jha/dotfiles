@@ -29,9 +29,15 @@ alias list-env-vars='env | sort'
 # alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 # alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 alias list-path='tr ":" "\n" <<< "$PATH"'
-alias list-sourdiesel='cat "$DOT/.colorscheme"'
+alias list-colors='cat "$DOT/.colors"'
 alias list-users='dscl . list /Users | grep -v "^_"'
 alias list-shells='tail -n +5 /etc/shells'
+alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
+
+# Update Management
+alias update-brewfile='brew bundle dump --force --file="$DOT/.Brewfile"'
+alias update-sudo-touchid='sudo cp -f "$DOT/.sudo" /etc/pam.d/sudo && echo "Successfully updated /etc/pam.d/sudo"'
+alias update-texlive='sudo tlmgr update --self --all'
 
 # Tmux
 alias t='tmux attach || tmux new-session'
@@ -64,18 +70,12 @@ alias gsw='git switch'
 alias gb='git branch'
 alias gmg='git merge'
 
-# LaTex
-alias update-texlive='sudo tlmgr update --self --all'
-
 # CLI Tools
 alias mycli='mycli --myclirc "$DOT/.myclirc"'
 alias weather='curl wttr.in'
 alias chatgpt='python3 ~/Developer/chatgpt-cli/chatgpt.py --key=$(python3 ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
 
-# System
-alias sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
-alias touchid-sudo='sudo cp -f "$DOT/.sudo" /etc/pam.d/sudo && echo "Successfully updated /etc/pam.d/sudo"'
-
+# Audio
 alias sas-airpods='SwitchAudioSource -s "band4band"'
 alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
 alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
