@@ -2,7 +2,7 @@
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 
 # Starship
-export STARSHIP_CONFIG="$DOT/starship/starship.toml"
+export STARSHIP_CONFIG="$DOT/.starship.toml"
 
 # Set Options
 shopt -s autocd
@@ -15,9 +15,9 @@ shopt -s autocd
 [[ $PATH == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 
 # Configure Colorschmes: ls/eza/grep + variables
-eval "$(gdircolors "$DOT/dircolors/.dircolors")"
-source "$DOT/eza/.eza_colors"
-source "$DOT/grep/.grep_colors"
+eval "$(gdircolors "$DOT/.dircolors")"
+source "$DOT/.eza_colors"
+source "$DOT/.grep_colors"
 source "$DOT/.colorscheme"
 
 # Configure Shell Theme + Plugins
