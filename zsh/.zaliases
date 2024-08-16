@@ -39,10 +39,10 @@ alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 alias list-colors='cat "$DOT/.colors"'
 
 # Update Management
+alias update-brew='brew update && brew upgrade && brew cleanup && brew doctor'
 alias update-brewfile='brew bundle dump --force --file="$DOT/.Brewfile"'
 alias update-sudo-touchid='sudo cp -f "$DOT/.sudo" /etc/pam.d/sudo && echo "Successfully updated /etc/pam.d/sudo"'
 alias update-texlive='sudo tlmgr update --self --all'
-
 # Tmux
 alias t='tmux attach || tmux new-session'
 alias ta='tmux attach -t'
