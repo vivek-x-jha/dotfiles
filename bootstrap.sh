@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 init_homebrew() {
-  local brew_binary="${1:-'/opt/homebrew/bin/brew'}"
+  local brew_binary="$1"
 
   xcode-select --install
 
@@ -20,6 +20,8 @@ init_homebrew() {
 }
 
 init_filesystem() {
+  local cloud_service="$1"
+
   # Download dotfiles repo
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
@@ -33,14 +35,14 @@ init_filesystem() {
   # Link video content
   cd "$HOME/Movies"
   rm -r "$HOME/Movies/content" 2> /dev/null
-  ln -sF ../Dropbox/content
+  ln -sF ../$cloud_service/content
 
   # Link image content
   cd "$HOME/Pictures"
   local img_content=(icons screenshots wallpapers)
   for dir in "${img_content[@]}"; do
     rm -r "$HOME/Movies/$dir" 2> /dev/null
-    ln -sF ../Dropbox/icons
+    ln -sF ../$cloud_service/icons
   done
  
   # Link CLI packages
@@ -71,7 +73,7 @@ init_filesystem() {
   ln -sf .dotfiles/thinkorswim/.thinkorswim
   ln -sf .dotfiles/vscode/.vscode
   ln -sf .dotfiles/zsh/.zshenv
-  ln -sf Dropbox/developer
+  ln -sf $cloud_service/developer
   
   # Supress iTerm login message
   touch .hushlogin
@@ -85,7 +87,7 @@ init_macos() {
 }
 
 init_ssh() {
-  local email="${1:-'vivek.x.jha@gmail.com'}"
+  local email="$1"
 
   # Generate new SSH key
   ssh-keygen -t ed25519 -C "$email"
@@ -96,16 +98,16 @@ init_ssh() {
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
-  init_homebrew 
+  init_homebrew '/opt/homebrew/bin/brew'
   echo "󰗡 [1/4] Homebrew & Packages Installed 󰗡"
 
-  init_filesystem
+  init_filesystem 'Dropbox'
   echo "󰗡 [2/4] Filesystem & Symlinks Created 󰗡"
   
   init_macos
   echo "󰗡 [3/4] MacOS Defaults Configured 󰗡"
 
-  init_ssh
+  init_ssh 'vivek.x.jha@gmail.com'
   echo "󰗡 [4/4] SSH Keys Generated 󰗡"
 
   echo "󰓒 INSTALLATION COMPLETE 󰓒"
