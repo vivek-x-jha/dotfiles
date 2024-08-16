@@ -24,21 +24,22 @@ init_filesystem() {
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
   # Create XDG-Base Directories
-  [ -d "$HOME/.cache" ]       || mkdir "$HOME/.cache"
-  [ -d "$HOME/.config" ]      || mkdir "$HOME/.config"
-  [ -d "$HOME/.local" ]       || mkdir "$HOME/.local"
+  [ -d "$HOME/.cache"       ] || mkdir "$HOME/.cache"
+  [ -d "$HOME/.config"      ] || mkdir "$HOME/.config"
+  [ -d "$HOME/.local"       ] || mkdir "$HOME/.local"
   [ -d "$HOME/.local/share" ] || mkdir "$HOME/.local/share"
   [ -d "$HOME/.local/state" ] || mkdir "$HOME/.local/state"
 
   # Link video content
   cd "$HOME/Movies"
-  rm -r "$HOME/Movies/content" 2> /dev/null; ln -s ../Dropbox/content
+  rm -r "$HOME/Movies/content" 2> /dev/null
+  ln -sF ../Dropbox/content
 
   # Link image content
   cd "$HOME/Pictures"
   local img_content=(icons screenshots wallpapers)
   for dir in "${img_content[@]}"; do
-    rm -r "$HOME/Movies/$folder" 2> /dev/null
+    rm -r "$HOME/Movies/$dir" 2> /dev/null
     ln -sF ../Dropbox/icons
   done
  
