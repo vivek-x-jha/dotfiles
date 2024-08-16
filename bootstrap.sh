@@ -79,6 +79,10 @@ init_filesystem() {
   bat cache --build
 }
 
+init_macos() {
+  #TODO https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+}
+
 init_ssh() {
   local email="${1:-'vivek.x.jha@gmail.com'}"
 
@@ -92,13 +96,16 @@ main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
   init_homebrew 
-  echo "󰗡 Homebrew & Packages Installed 󰗡"
+  echo "󰗡 [1/4] Homebrew & Packages Installed 󰗡"
 
   init_filesystem
-  echo "󰗡 Filesystem & Symlinks Created 󰗡"
+  echo "󰗡 [2/4] Filesystem & Symlinks Created 󰗡"
+  
+  init_macos
+  echo "󰗡 [3/4] MacOS Defaults Configured 󰗡"
 
   init_ssh
-  echo "󰗡 SSH Keys Generated 󰗡"
+  echo "󰗡 [4/4] SSH Keys Generated 󰗡"
 
   echo "󰓒 INSTALLATION COMPLETE 󰓒"
 }
