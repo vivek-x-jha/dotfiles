@@ -1,9 +1,9 @@
 # Custom ssh config
 Include /etc/ssh/ssh_config.d/*
 Host *
-  UserKnownHostsFile "~/.dotfiles/ssh/known_hosts"
+  UserKnownHostsFile '~/.dotfiles/ssh/known_hosts'
   SendEnv LANG LC_*
   AddKeysToAgent yes
   UseKeychain yes
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-  IdentityFile "~/.dotfiles//ssh/id_ed25519"
+  IdentityAgent '~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'
+  IdentityFile '~/.dotfiles/ssh/id_ed25519'
