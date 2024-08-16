@@ -1,8 +1,8 @@
 Alfred.alfredpreferences/workflows
 dropbox
 iterm2/AppSupport
-ssh/id*
-ssh/known*
+.ssh/id*
+.ssh/known_hosts
 thinkorswim
 tmux/plugins
 vscode/.vscode
