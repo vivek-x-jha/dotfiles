@@ -19,24 +19,12 @@ configure_homebrew() {
   brew doctor
 }
 
-configure_symlinks() {
-  touch "$HOME/.hushlogin"
-
+configure_filesystem() {
   [ -d "$HOME/.cache" ]       || mkdir "$HOME/.cache"
   [ -d "$HOME/.config" ]      || mkdir "$HOME/.config"
   [ -d "$HOME/.local" ]       || mkdir "$HOME/.local"
   [ -d "$HOME/.local/share" ] || mkdir "$HOME/.local/share"
   [ -d "$HOME/.local/state" ] || mkdir "$HOME/.local/state"
-
-  cd "$HOME"
-
-  ln -sf .dotfiles/bash/.bash_profile
-  ln -sf .dotfiles/bash/.bashrc
-  ln -sf .dotfiles/thinkorswim/.thinkorswim
-  ln -sf .dotfiles/vscode/.vscode
-  ln -sf .dotfiles/zsh/.zshenv
-
-  ln -sf Dropbox/developer
 
   cd "$HOME/Movies"
   rm -r "$HOME/Movies/content" 2> /dev/null; ln -s ../Dropbox/content
@@ -64,7 +52,20 @@ configure_symlinks() {
   rm -r "$HOME/.config/git" 2> /dev/null
   cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
+
+  cd "$HOME"
+  
+  ln -sf .dotfiles/bash/.bash_profile
+  ln -sf .dotfiles/bash/.bashrc
+  ln -sf .dotfiles/thinkorswim/.thinkorswim
+  ln -sf .dotfiles/vscode/.vscode
+  ln -sf .dotfiles/zsh/.zshenv
+  ln -sf Dropbox/developer
+  
+  touch .hushlogin
 }
+
+configure_bat
 
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
@@ -72,7 +73,7 @@ main() {
   configure_homebrew 
   echo "󰗡 Homebrew Setup 󰗡"
 
-  configure_symlinks
+  configure_filesystem
   echo "󰗡 Symlinks and Directories Setup 󰗡"
 
   echo "󰓒 INSTALLATION COMPLETE 󰓒"
