@@ -35,6 +35,7 @@ alias list-shells='tail -n +5 /etc/shells'
 alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 
 # Update Management
+alias update-brew='brew update && brew upgrade && brew cleanup && brew doctor'
 alias update-brewfile='brew bundle dump --force --file="$DOT/.Brewfile"'
 alias update-sudo-touchid='sudo cp -f "$DOT/.sudo" /etc/pam.d/sudo && echo "Successfully updated /etc/pam.d/sudo"'
 alias update-texlive='sudo tlmgr update --self --all'

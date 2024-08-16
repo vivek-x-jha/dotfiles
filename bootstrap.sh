@@ -59,7 +59,7 @@ init_filesystem() {
   ln -sf ../../.dotfiles/.dust.toml config.toml
 
   # Link Git
-  rm -r "$HOME/.config/git"  2> /dev/null
+  rm -r "$HOME/.config/git" 2> /dev/null
   mkdir "$HOME/.config/git" && cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
 
