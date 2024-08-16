@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-configure_homebrew() {
+init_homebrew() {
   local brew_binary="${1:-'/opt/homebrew/bin/brew'}"
 
   xcode-select --install
@@ -19,42 +19,52 @@ configure_homebrew() {
   brew doctor
 }
 
-configure_filesystem() {
+init_filesystem() {
+  # Download dotfiles repo
+  git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
+
+  # Create XDG-Base Directories
   [ -d "$HOME/.cache" ]       || mkdir "$HOME/.cache"
   [ -d "$HOME/.config" ]      || mkdir "$HOME/.config"
   [ -d "$HOME/.local" ]       || mkdir "$HOME/.local"
   [ -d "$HOME/.local/share" ] || mkdir "$HOME/.local/share"
   [ -d "$HOME/.local/state" ] || mkdir "$HOME/.local/state"
 
+  # Link video content
   cd "$HOME/Movies"
   rm -r "$HOME/Movies/content" 2> /dev/null; ln -s ../Dropbox/content
 
+  # Link image content
   cd "$HOME/Pictures"
-  rm -r "$HOME/Movies/icons" 2> /dev/null; ln -s ../Dropbox/icons
-  rm -r "$HOME/Movies/screenshots" 2> /dev/null; ln -s ../Dropbox/screenshots
-  rm -r "$HOME/Movies/wallpapers" 2> /dev/null; ln -s ../Dropbox/wallpapers
-
+  local img_content=(icons screenshots wallpapers)
+  for dir in "${img_content[@]}"; do
+    rm -r "$HOME/Movies/$folder" 2> /dev/null
+    ln -sF ../Dropbox/icons
+  done
+ 
+  # Link CLI packages
   cd "$HOME/.config"
+
+  local packages=(bat btop gh nvim ssh tmux yazi)
+  for pkg in "${packages[@]}"; do
+    rm -r "$HOME/.config/$pkg" 2> /dev/null 
+    ln -s ../.dotfiles/$pkg
+  done
+
   ln -sf ../.dotfiles/.starship.toml starship.toml
 
-  rm -r "$HOME/.config/bat" 2> /dev/null; ln -s ../.dotfiles/bat
-  rm -r "$HOME/.config/btop" 2> /dev/null; ln -s ../.dotfiles/btop
-  rm -r "$HOME/.config/gh" 2> /dev/null; ln -s ../.dotfiles/gh
-  rm -r "$HOME/.config/nvim" 2> /dev/null; ln -s ../.dotfiles/nvim
-  rm -r "$HOME/.config/ssh" 2> /dev/null; ln -s ../.dotfiles/ssh
-  rm -r "$HOME/.config/tmux" 2> /dev/null; ln -s ../.dotfiles/tmux
-  rm -r "$HOME/.config/yazi" 2> /dev/null; ln -s ../.dotfiles/yazi
-
+  # Link Dust
   rm -r "$HOME/.config/dust" 2> /dev/null
-  cd "$HOME/.config/dust"
+  mkdir "$HOME/.config/dust" && cd "$HOME/.config/dust"
   ln -sf ../../.dotfiles/.dust.toml config.toml
 
-  rm -r "$HOME/.config/git" 2> /dev/null
-  cd "$HOME/.config/git"
+  # Link Git
+  rm -r "$HOME/.config/git"  2> /dev/null
+  mkdir "$HOME/.config/git" && cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
 
+  # Link Shells, VS Code, & Think or Swim
   cd "$HOME"
-  
   ln -sf .dotfiles/bash/.bash_profile
   ln -sf .dotfiles/bash/.bashrc
   ln -sf .dotfiles/thinkorswim/.thinkorswim
@@ -62,19 +72,33 @@ configure_filesystem() {
   ln -sf .dotfiles/zsh/.zshenv
   ln -sf Dropbox/developer
   
+  # Supress iTerm login message
   touch .hushlogin
+
+  # Build Bat Config
+  bat cache --build
 }
 
-configure_bat
+init_ssh() {
+  local email="${1:-'vivek.x.jha@gmail.com'}"
+
+  # Generate new SSH key
+  ssh-keygen -t ed25519 -C "$email"
+
+  eval "$(ssh-agent -s)"
+}
 
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
-  configure_homebrew 
-  echo "󰗡 Homebrew Setup 󰗡"
+  init_homebrew 
+  echo "󰗡 Homebrew & Packages Installed 󰗡"
 
-  configure_filesystem
-  echo "󰗡 Symlinks and Directories Setup 󰗡"
+  init_filesystem
+  echo "󰗡 Filesystem & Symlinks Created 󰗡"
+
+  init_ssh
+  echo "󰗡 SSH Keys Generated 󰗡"
 
   echo "󰓒 INSTALLATION COMPLETE 󰓒"
 }
