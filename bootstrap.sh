@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
 
 init_homebrew() {
-  local brew_binary="$1"
+  local binary_path="$1" # /opt/homebrew/bin, /usr/local/bin
+  local install_type="$2" # all, formulas, casks
+  local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
+  local brew_installer='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
 
   xcode-select --install
 
   # Installs Homebrew and add to current session's PATH
-  [[ -x $(which brew) ]] || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$("$brew_binary" shellenv)"
+  [[ -x $(which brew) ]] || /bin/bash -c "$(curl -fsSL "$brew_installer")"
+  eval "$("$binary_path/brew" shellenv)"
   
-  # Installs packages & guis
-  curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile | brew bundle --file=-
-  
+  # Installs packages
+  if [ "$install_type" == 'all' ]; then
+    curl -fsSL "$brewfile" | brew bundle --file=-
+  elif [ "$install_type" == 'formulas' ]; then
+    curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
+    curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install
+  elif [ "$install_type" == 'casks' ]; then
+    curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
+    curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install --cask
+  fi
+
   # Run Diagnostics
   brew update
   brew upgrade
@@ -20,50 +31,57 @@ init_homebrew() {
 }
 
 init_filesystem() {
-  local cloud_service="$1"
+  local service="$1"
 
-  # Download dotfiles repo
+  link_dir() {
+    local root="$1"
+    local service="$2"
+    local folder="$3"
+
+    cd "$root"
+
+    [ -d "$root/$folder" ] && rm -rf "$root/$folder"
+    ln -sF ../$service/$folder
+  }
+
+  # Download Dotfiles repo - creates backup of any existing dotfiles
+  [ -d "$HOME/.dotfiles" ] && mv "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
   # Create XDG-Base Directories
-  [ -d "$HOME/.cache"       ] || mkdir "$HOME/.cache"
-  [ -d "$HOME/.config"      ] || mkdir "$HOME/.config"
-  [ -d "$HOME/.local"       ] || mkdir "$HOME/.local"
-  [ -d "$HOME/.local/share" ] || mkdir "$HOME/.local/share"
-  [ -d "$HOME/.local/state" ] || mkdir "$HOME/.local/state"
+  [ -d "$HOME/.cache"       ] || mkdir -p "$HOME/.cache"
+  [ -d "$HOME/.config"      ] || mkdir -p "$HOME/.config"
+  [ -d "$HOME/.local/share" ] || mkdir -p "$HOME/.local/share"
+  [ -d "$HOME/.local/state" ] || mkdir -p "$HOME/.local/state"
 
-  # Link video content
-  cd "$HOME/Movies"
-  rm -r "$HOME/Movies/content" 2> /dev/null
-  ln -sF ../$cloud_service/content
+  # Create Content Directories
+  [ -d "$HOME/Movies"   ] || mkdir -p "$HOME/Movies"
+  [ -d "$HOME/Pictures" ] || mkdir -p "$HOME/Pictures"
 
-  # Link image content
-  cd "$HOME/Pictures"
-  local img_content=(icons screenshots wallpapers)
-  for dir in "${img_content[@]}"; do
-    rm -r "$HOME/Movies/$dir" 2> /dev/null
-    ln -sF ../$cloud_service/icons
-  done
- 
-  # Link CLI packages
-  cd "$HOME/.config"
+  # Link Developer Folder
+  ln -sf $service/developer Developer
+  
+  # Link Media Diretories
+  link_dir "$HOME/Movies" "$service" content
 
-  local packages=(bat btop gh nvim ssh tmux yazi)
-  for pkg in "${packages[@]}"; do
-    rm -r "$HOME/.config/$pkg" 2> /dev/null 
-    ln -s ../.dotfiles/$pkg
-  done
+  local content=(icons screenshots wallpapers)
+  for folder in "${content[@]}"; do link_dir "$HOME/Pictures" "$service" "$folder"; done
 
+  # Link XDG-CONFIG programs
+  local packages=(bat btop gh nvim tmux yazi)
+  for pkg in "${packages[@]}"; do link_dir "$HOME/.config" .dotfiles "$pkg"; done
+
+  # Link Starship
   ln -sf ../.dotfiles/.starship.toml starship.toml
 
   # Link Dust
-  rm -r "$HOME/.config/dust" 2> /dev/null
-  mkdir "$HOME/.config/dust" && cd "$HOME/.config/dust"
+  [ -d "$HOME/.config/dust" ] || mkdir -p "$HOME/.config/dust"
+  cd "$HOME/.config/dust"
   ln -sf ../../.dotfiles/.dust.toml config.toml
 
   # Link Git
-  rm -r "$HOME/.config/git" 2> /dev/null
-  mkdir "$HOME/.config/git" && cd "$HOME/.config/git"
+  [ -d "$HOME/.config/git" ] || mkdir -p "$HOME/.config/git"
+  cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
 
   # Link Bash, Zsh, VS Code, & Think or Swim
@@ -75,7 +93,7 @@ init_filesystem() {
   ln -sf .dotfiles/zsh/.zshenv
 
   # Link Developer Folder
-  ln -sf $cloud_service/developer Developer
+  ln -sf $service/developer Developer
   
   # Supress iTerm login message
   touch .hushlogin
@@ -100,10 +118,10 @@ init_ssh() {
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
-  init_homebrew '/opt/homebrew/bin/brew'
+  init_homebrew '/opt/homebrew/bin' 'all'
   echo "󰗡 [1/4] Homebrew & Packages Installed 󰗡"
 
-  init_filesystem 'Dropbox'
+  init_filesystem
   echo "󰗡 [2/4] Filesystem & Symlinks Created 󰗡"
   
   init_macos
