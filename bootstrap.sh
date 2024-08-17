@@ -66,14 +66,16 @@ init_filesystem() {
   mkdir "$HOME/.config/git" && cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
 
-  # Link Shells, VS Code, & Think or Swim
+  # Link Bash, Zsh, VS Code, & Think or Swim
   cd "$HOME"
   ln -sf .dotfiles/bash/.bash_profile
   ln -sf .dotfiles/bash/.bashrc
   ln -sf .dotfiles/thinkorswim/.thinkorswim
   ln -sf .dotfiles/vscode/.vscode
   ln -sf .dotfiles/zsh/.zshenv
-  ln -sf $cloud_service/developer
+
+  # Link Developer Folder
+  ln -sf $cloud_service/developer Developer
   
   # Supress iTerm login message
   touch .hushlogin
