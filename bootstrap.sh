@@ -83,7 +83,7 @@ init_filesystem() {
 }
 
 init_macos() {
-  #TODO https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+  # https://github.com/mathiasbynens/dotfiles/blob/main/.macos
 }
 
 init_ssh() {
