@@ -33,19 +33,11 @@ init_homebrew() {
 init_filesystem() {
   local service="$1"
 
-  link_dir() {
-    local root="$1"
-    local service="$2"
-    local folder="$3"
-
-    cd "$root"
-
-    [ -d "$root/$folder" ] && rm -rf "$root/$folder"
-    ln -sF ../$service/$folder
-  }
+  # Supress iTerm login message
+  touch .hushlogin
 
   # Download Dotfiles repo - creates backup of any existing dotfiles
-  [ -d "$HOME/.dotfiles" ] && mv "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
+  [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
   # Create XDG-Base Directories
@@ -58,18 +50,55 @@ init_filesystem() {
   [ -d "$HOME/Movies"   ] || mkdir -p "$HOME/Movies"
   [ -d "$HOME/Pictures" ] || mkdir -p "$HOME/Pictures"
 
-  # Link Developer Folder
-  ln -sf $service/developer Developer
+  # Link Home
+  cd "$HOME"
   
-  # Link Media Diretories
-  link_dir "$HOME/Movies" "$service" content
+  ln -sf .dotfiles/bash/.bash_profile
+  ln -sf .dotfiles/bash/.bashrc
+  ln -sf .dotfiles/zsh/.zshenv
 
-  local content=(icons screenshots wallpapers)
-  for folder in "${content[@]}"; do link_dir "$HOME/Pictures" "$service" "$folder"; done
+  [ -d "$HOME/.thinkorswim"] && rm -rf "$HOME/.thinkorswim"
+  ln -sF .dotfiles/thinkorswim/.thinkorswim
 
-  # Link XDG-CONFIG programs
+  [ -d "$HOME/.vscode"] && rm -rf "$HOME/.vscode"
+  ln -sF .dotfiles/vscode/.vscode
+
+  [ -d "$HOME/Developer"] && rm -rf "$HOME/Developer"
+  ln -sF Dropbox/developer Developer
+
+  # Link Media
+  cd "$HOME/Movies"
+
+  local movies=(content)
+  for folder in "${movies[@]}"; do
+    [ -d "$HOME/Movies/$folder" ] && rm -rf "$HOME/Movies/$folder"
+    ln -sF ../Dropbox/$folder
+  done
+
+  cd "$HOME/Pictures"
+
+  local pictures=(icons screenshots wallpapers)
+  for folder in "${pictures[@]}"; do
+    [ -d "$HOME/Pictures/$folder" ] && rm -rf "$HOME/Pictures/$folder"
+    ln -sF ../Dropbox/$folder
+  done
+
+  cd "$HOME/Documents"
+
+  local documents=(education finances)
+  for folder in "${documents[@]}"; do
+    [ -d "$HOME/Documents/$folder" ] && rm -rf "$HOME/Documents/$folder"
+    ln -sF ../Dropbox/$folder
+  done
+
+  # Link Configurations
+  cd "$HOME/.config"
+
   local packages=(bat btop gh nvim tmux yazi)
-  for pkg in "${packages[@]}"; do link_dir "$HOME/.config" .dotfiles "$pkg"; done
+  for folder in "${packages[@]}"; do 
+    [ -d "$HOME/.config/$folder" ] && rm -rf "$HOME/.config/$folder"
+    ln -sF ../.dotfiles/$folder
+  done
 
   # Link Starship
   ln -sf ../.dotfiles/.starship.toml starship.toml
@@ -83,27 +112,28 @@ init_filesystem() {
   [ -d "$HOME/.config/git" ] || mkdir -p "$HOME/.config/git"
   cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
-
-  # Link Bash, Zsh, VS Code, & Think or Swim
-  cd "$HOME"
-  ln -sf .dotfiles/bash/.bash_profile
-  ln -sf .dotfiles/bash/.bashrc
-  ln -sf .dotfiles/thinkorswim/.thinkorswim
-  ln -sf .dotfiles/vscode/.vscode
-  ln -sf .dotfiles/zsh/.zshenv
-
-  # Link Developer Folder
-  ln -sf $service/developer Developer
-  
-  # Supress iTerm login message
-  touch .hushlogin
-
-  # Build Bat Config
-  bat cache --build
 }
 
 init_macos() {
   # https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+  
+  # Build Bat Config
+  bat cache --build
+
+  # Save screenshots to ~/Pictures/screenshots
+  defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
+
+  # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+  defaults write com.apple.finder QuitMenuItem -bool true
+
+  # Finder: show hidden files by default
+  defaults write com.apple.finder AppleShowAllFiles -bool true
+
+  # Finder: Display full POSIX path as window title
+  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+  # Finder: Disable the warning when changing a file extension
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 }
 
 init_ssh() {
@@ -121,7 +151,7 @@ main() {
   init_homebrew '/opt/homebrew/bin' 'all'
   echo "󰗡 [1/4] Homebrew & Packages Installed 󰗡"
 
-  init_filesystem
+  init_filesystem 
   echo "󰗡 [2/4] Filesystem & Symlinks Created 󰗡"
   
   init_macos
