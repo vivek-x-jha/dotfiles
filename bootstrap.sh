@@ -139,6 +139,9 @@ init_macos() {
 init_ssh() {
   local email="$1"
 
+  # https://developer.1password.com/docs/ssh/get-started
+  # https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+
   # Generate new SSH key
   ssh-keygen -t ed25519 -C "$email"
 
