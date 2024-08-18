@@ -40,6 +40,8 @@ init_filesystem() {
   [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
+  # TODO Create custom input for git.user, email, signing_key
+  
   # Create XDG-Base Directories
   [ -d "$HOME/.cache"       ] || mkdir -p "$HOME/.cache"
   [ -d "$HOME/.config"      ] || mkdir -p "$HOME/.config"
