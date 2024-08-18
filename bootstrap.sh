@@ -5,8 +5,9 @@ init_homebrew() {
   local install_type="$2" # all, formulas, casks
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
   local brew_installer='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+  local log="$HOME/.bootstrap.log"
 
-  xcode-select --install
+  xcode-select --install &> "$log"
 
   # Installs Homebrew and add to current session's PATH
   [[ -x $(which brew) ]] || /bin/bash -c "$(curl -fsSL "$brew_installer")"
@@ -31,7 +32,16 @@ init_homebrew() {
 }
 
 init_filesystem() {
-  local service="$1"
+  link_dir() {
+    local parent_dir="$1"
+    local folder="$2"
+    local target_dir="$3"
+
+    cd "$target_dir"
+
+    [ -d "$target_dir/$folder" ] && rm -rf "$target_dir/$folder"
+    ln -sF $parent_dir/$folder
+  }
 
   # Supress iTerm login message
   touch .hushlogin
@@ -52,55 +62,33 @@ init_filesystem() {
   [ -d "$HOME/Movies"   ] || mkdir -p "$HOME/Movies"
   [ -d "$HOME/Pictures" ] || mkdir -p "$HOME/Pictures"
 
-  # Link Home
+  # Link Management
   cd "$HOME"
   
   ln -sf .dotfiles/bash/.bash_profile
   ln -sf .dotfiles/bash/.bashrc
   ln -sf .dotfiles/zsh/.zshenv
 
-  [ -d "$HOME/.thinkorswim"] && rm -rf "$HOME/.thinkorswim"
-  ln -sF .dotfiles/thinkorswim/.thinkorswim
-
-  [ -d "$HOME/.vscode"] && rm -rf "$HOME/.vscode"
-  ln -sF .dotfiles/vscode/.vscode
-
   [ -d "$HOME/Developer"] && rm -rf "$HOME/Developer"
   ln -sF Dropbox/developer Developer
 
   # Link Media
-  cd "$HOME/Movies"
+  link_dir '.dotfiles/thinkorswim' .thinkorswim "$HOME"
+  link_dir '.dotfiles/vscode'      .vscode      "$HOME"
+  
+  link_dir '../Dropbox'   content     "$HOME/Movies"
+  link_dir '../Dropbox'   icons       "$HOME/Pictures"
+  link_dir '../Dropbox'   screenshots "$HOME/Pictures"
+  link_dir '../Dropbox'   wallpapers  "$HOME/Pictures"
+  link_dir '../Dropbox'   education   "$HOME/Documents"
+  link_dir '../Dropbox'   finances    "$HOME/Documents"
 
-  local movies=(content)
-  for folder in "${movies[@]}"; do
-    [ -d "$HOME/Movies/$folder" ] && rm -rf "$HOME/Movies/$folder"
-    ln -sF ../Dropbox/$folder
-  done
-
-  cd "$HOME/Pictures"
-
-  local pictures=(icons screenshots wallpapers)
-  for folder in "${pictures[@]}"; do
-    [ -d "$HOME/Pictures/$folder" ] && rm -rf "$HOME/Pictures/$folder"
-    ln -sF ../Dropbox/$folder
-  done
-
-  cd "$HOME/Documents"
-
-  local documents=(education finances)
-  for folder in "${documents[@]}"; do
-    [ -d "$HOME/Documents/$folder" ] && rm -rf "$HOME/Documents/$folder"
-    ln -sF ../Dropbox/$folder
-  done
-
-  # Link Configurations
-  cd "$HOME/.config"
-
-  local packages=(bat btop gh nvim tmux yazi)
-  for folder in "${packages[@]}"; do 
-    [ -d "$HOME/.config/$folder" ] && rm -rf "$HOME/.config/$folder"
-    ln -sF ../.dotfiles/$folder
-  done
+  link_dir '../.dotfiles' bat         "$HOME/.config"
+  link_dir '../.dotfiles' btop        "$HOME/.config"
+  link_dir '../.dotfiles' gh          "$HOME/.config"
+  link_dir '../.dotfiles' nvim        "$HOME/.config"
+  link_dir '../.dotfiles' tmux        "$HOME/.config"
+  link_dir '../.dotfiles' yazi        "$HOME/.config"
 
   # Link Starship
   ln -sf ../.dotfiles/.starship.toml starship.toml
