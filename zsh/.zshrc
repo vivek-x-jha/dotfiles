@@ -24,7 +24,7 @@ fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]
 eval "$(gdircolors "$DOT/.dircolors")"
 source "$DOT/.ezacolors"
 source "$DOT/.grepcolors"
-source "$DOT/.colors"
+source "$DOT/.colorscheme"
 
 # Configure Shell Plugins, Theme, Aliases, Configs Functions
 zsh_plugins=(
