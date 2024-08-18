@@ -136,32 +136,17 @@ init_macos() {
   defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 }
 
-init_ssh() {
-  local email="$1"
-
-  # https://developer.1password.com/docs/ssh/get-started
-  # https://docs.github.com/en/authentication/connecting-to-github-with-ssh
-
-  # Generate new SSH key
-  ssh-keygen -t ed25519 -C "$email"
-
-  eval "$(ssh-agent -s)"
-}
-
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
   init_homebrew '/opt/homebrew/bin' 'all'
-  echo "󰗡 [1/4] Homebrew & Packages Installed 󰗡"
+  echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
   init_filesystem 
-  echo "󰗡 [2/4] Filesystem & Symlinks Created 󰗡"
+  echo "󰗡 [2/3] Filesystem & Symlinks Created 󰗡"
   
   init_macos
-  echo "󰗡 [3/4] MacOS Defaults Configured 󰗡"
-
-  init_ssh 'vivek.x.jha@gmail.com'
-  echo "󰗡 [4/4] SSH Keys Generated 󰗡"
+  echo "󰗡 [3/3] MacOS Defaults Configured 󰗡"
 
   echo "󰓒 INSTALLATION COMPLETE 󰓒"
 }
