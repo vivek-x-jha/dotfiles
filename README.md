@@ -23,20 +23,30 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/b
 
 1. [Completion + Syntax-Highlighting](https://github.com/akinomyoga/ble.sh)
 
-## Tmux
+### [Neovim](https://github.com/neovim/neovim?tab=readme-ov-file)
 
-1. [Vim Navigation Integration](https://github.com/vivek-x-jha/tmux-vim-navigator)
-1. [Plugin Manager: tpm](https://github.com/tmux-plugins/tpm)
-1. [Copy-Paste Manager: yank](https://github.com/tmux-plugins/tmux-yank)
-1. [Additional Options: sensible](https://github.com/tmux-plugins/tmux-sensible)
-1. [Persistent Sessions: resurrect](https://github.com/tmux-plugins/tmux-resurrect)
-1. [Persistent Sessions: continuum](https://github.com/tmux-plugins/tmux-continuum)
+1. [NvChad](https://github.com/NvChad/NvChad)
+1. [Lazy](https://www.github.com/folke/lazy.nvim)
+1. [Harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
+
+### [Tmux](https://github.com/tmux/tmux?tab=readme-ov-file)
+
+1. [Tpm](https://www.github.com/tmux-plugins/tpm)
+1. [Floax](https://github.com/vivek-x-jha/tmux-floax)
+1. [Sessionx](https://github.com/vivek-x-jha/tmux-sessionx)
+1. [Vim-Navigator](https://github.com/vivek-x-jha/tmux-vim-navigator)
+1. [Yank](https://github.com/tmux-plugins/tmux-yank)
+1. [Sensible](https://github.com/tmux-plugins/tmux-sensible)
+1. [Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
+1. [Continuum](https://github.com/tmux-plugins/tmux-continuum)
+
+## Fonts
+
+Using [Nerd Fonts](https://www.nerdfonts.com/)
 
 ## Links
-1. Editor: [Neovim](https://github.com/neovim/neovim?tab=readme-ov-file)
-  - Distribution: [NvChad](https://github.com/NvChad/NvChad)
-  - Package Manager: [Lazy](https://www.github.com/folke/lazy.nvim)
-1. Tmux: [Tmux](https://github.com/tmux/tmux?tab=readme-ov-file)
-  - Package Manager: [Tpm](https://www.github.com/tmux-plugins/tpm)
-    - [sessionx](https://www.github.com/omerxx/tmux-sessionx)
-  - [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
+
+### SSH
+
+1. [1Password for SSH & Git](https://developer.1password.com/docs/ssh/get-started)
+1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
