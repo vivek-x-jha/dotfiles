@@ -63,42 +63,34 @@ init_filesystem() {
   [ -d "$HOME/Pictures" ] || mkdir -p "$HOME/Pictures"
 
   # Link Management
-  cd "$HOME"
+  link_dir 'Dropbox'               Developer    "$HOME" 
+  link_dir '.dotfiles/thinkorswim' .thinkorswim "$HOME"
+  link_dir '.dotfiles/vscode'      .vscode      "$HOME"
   
   ln -sf .dotfiles/bash/.bash_profile
   ln -sf .dotfiles/bash/.bashrc
   ln -sf .dotfiles/zsh/.zshenv
 
-  [ -d "$HOME/Developer"] && rm -rf "$HOME/Developer"
-  ln -sF Dropbox/developer Developer
+  link_dir '../Dropbox' content     "$HOME/Movies"
+  link_dir '../Dropbox' icons       "$HOME/Pictures"
+  link_dir '../Dropbox' screenshots "$HOME/Pictures"
+  link_dir '../Dropbox' wallpapers  "$HOME/Pictures"
+  link_dir '../Dropbox' education   "$HOME/Documents"
+  link_dir '../Dropbox' finances    "$HOME/Documents"
 
-  # Link Media
-  link_dir '.dotfiles/thinkorswim' .thinkorswim "$HOME"
-  link_dir '.dotfiles/vscode'      .vscode      "$HOME"
-  
-  link_dir '../Dropbox'   content     "$HOME/Movies"
-  link_dir '../Dropbox'   icons       "$HOME/Pictures"
-  link_dir '../Dropbox'   screenshots "$HOME/Pictures"
-  link_dir '../Dropbox'   wallpapers  "$HOME/Pictures"
-  link_dir '../Dropbox'   education   "$HOME/Documents"
-  link_dir '../Dropbox'   finances    "$HOME/Documents"
-
-  link_dir '../.dotfiles' bat         "$HOME/.config"
-  link_dir '../.dotfiles' btop        "$HOME/.config"
-  link_dir '../.dotfiles' gh          "$HOME/.config"
-  link_dir '../.dotfiles' nvim        "$HOME/.config"
-  link_dir '../.dotfiles' tmux        "$HOME/.config"
-  link_dir '../.dotfiles' yazi        "$HOME/.config"
-
-  # Link Starship
+  link_dir '../.dotfiles' bat  "$HOME/.config"
+  link_dir '../.dotfiles' btop "$HOME/.config"
+  link_dir '../.dotfiles' gh   "$HOME/.config"
+  link_dir '../.dotfiles' nvim "$HOME/.config"
+  link_dir '../.dotfiles' tmux "$HOME/.config"
+  link_dir '../.dotfiles' yazi "$HOME/.config"
+    
   ln -sf ../.dotfiles/.starship.toml starship.toml
 
-  # Link Dust
   [ -d "$HOME/.config/dust" ] || mkdir -p "$HOME/.config/dust"
   cd "$HOME/.config/dust"
   ln -sf ../../.dotfiles/.dust.toml config.toml
 
-  # Link Git
   [ -d "$HOME/.config/git" ] || mkdir -p "$HOME/.config/git"
   cd "$HOME/.config/git"
   ln -sf ../../.dotfiles/.gitconfig config
