@@ -15,7 +15,7 @@ shopt -s autocd
 eval "$(gdircolors "$DOT/.dircolors")"
 source "$DOT/.ezacolors"
 source "$DOT/.grepcolors"
-source "$DOT/.colors"
+source "$DOT/.colorscheme"
 
 # Configure Shell Theme + Plugins
 source "$DOT/bash/.aliases"
