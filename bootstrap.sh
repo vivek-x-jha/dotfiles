@@ -80,19 +80,19 @@ init_filesystem() {
   link_dir '.dotfiles/vscode'      .vscode       "$HOME"
   link_dir '.dotfiles/zsh'         .zshenv       "$HOME"
 
-  link_dir '../Dropbox'   content     "$HOME/Movies"
-  link_dir '../Dropbox'   icons       "$HOME/Pictures"
-  link_dir '../Dropbox'   screenshots "$HOME/Pictures"
-  link_dir '../Dropbox'   wallpapers  "$HOME/Pictures"
-  link_dir '../Dropbox'   education   "$HOME/Documents"
-  link_dir '../Dropbox'   finances    "$HOME/Documents"
+  link_dir '../Dropbox'            content       "$HOME/Movies"
+  link_dir '../Dropbox'            icons         "$HOME/Pictures"
+  link_dir '../Dropbox'            screenshots   "$HOME/Pictures"
+  link_dir '../Dropbox'            wallpapers    "$HOME/Pictures"
+  link_dir '../Dropbox'            education     "$HOME/Documents"
+  link_dir '../Dropbox'            finances      "$HOME/Documents"
 
-  link_dir '../.dotfiles' bat         "$HOME/.config"
-  link_dir '../.dotfiles' btop        "$HOME/.config"
-  link_dir '../.dotfiles' gh          "$HOME/.config"
-  link_dir '../.dotfiles' nvim        "$HOME/.config"
-  link_dir '../.dotfiles' tmux        "$HOME/.config"
-  link_dir '../.dotfiles' yazi        "$HOME/.config"
+  link_dir '../.dotfiles'          bat           "$HOME/.config"
+  link_dir '../.dotfiles'          btop          "$HOME/.config"
+  link_dir '../.dotfiles'          gh            "$HOME/.config"
+  link_dir '../.dotfiles'          nvim          "$HOME/.config"
+  link_dir '../.dotfiles'          tmux          "$HOME/.config"
+  link_dir '../.dotfiles'          yazi          "$HOME/.config"
     
   ln -sf ../.dotfiles/.starship.toml starship.toml
 
