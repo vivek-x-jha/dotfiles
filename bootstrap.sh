@@ -40,7 +40,7 @@ init_filesystem() {
     cd "$target_dir"
 
     [ -d "$target_dir/$folder" ] && rm -rf "$target_dir/$folder"
-    ln -sF $parent_dir/$folder
+    ln -sf $parent_dir/$folder
   }
 
   # Supress iTerm login message
@@ -52,24 +52,22 @@ init_filesystem() {
 
   # TODO Create custom input for git.user, email, signing_key
   
-  # Create XDG-Base Directories
+  # Create Directories
   [ -d "$HOME/.cache"       ] || mkdir -p "$HOME/.cache"
   [ -d "$HOME/.config"      ] || mkdir -p "$HOME/.config"
   [ -d "$HOME/.local/share" ] || mkdir -p "$HOME/.local/share"
   [ -d "$HOME/.local/state" ] || mkdir -p "$HOME/.local/state"
 
-  # Create Content Directories
-  [ -d "$HOME/Movies"   ] || mkdir -p "$HOME/Movies"
-  [ -d "$HOME/Pictures" ] || mkdir -p "$HOME/Pictures"
+  [ -d "$HOME/Movies"       ] || mkdir -p "$HOME/Movies"
+  [ -d "$HOME/Pictures"     ] || mkdir -p "$HOME/Pictures"
 
-  # Link Management
-  link_dir 'Dropbox'               Developer    "$HOME" 
-  link_dir '.dotfiles/thinkorswim' .thinkorswim "$HOME"
-  link_dir '.dotfiles/vscode'      .vscode      "$HOME"
-  
-  ln -sf .dotfiles/bash/.bash_profile
-  ln -sf .dotfiles/bash/.bashrc
-  ln -sf .dotfiles/zsh/.zshenv
+  # Link Directories
+  link_dir 'Dropbox'               Developer     "$HOME" 
+  link_dir '.dotfiles/bash'        .bash_profile "$HOME"
+  link_dir '.dotfiles/bash'        .bashrc       "$HOME"
+  link_dir '.dotfiles/thinkorswim' .thinkorswim  "$HOME"
+  link_dir '.dotfiles/vscode'      .vscode       "$HOME"
+  link_dir '.dotfiles/zsh'         .zshenv       "$HOME"
 
   link_dir '../Dropbox'   content     "$HOME/Movies"
   link_dir '../Dropbox'   icons       "$HOME/Pictures"
