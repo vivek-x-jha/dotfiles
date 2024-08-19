@@ -1,5 +1,5 @@
 # INSTANT PROMPT
-[[ ! -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] || source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+[[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # HISTORY
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"

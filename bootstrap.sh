@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 
+is_installed() {
+  local cmd="$1"
+  if command -v "$cmd" &> /dev/null; then
+    echo "+ $cmd INSTALLED"
+  else
+    echo "? $cmd NOT INSTALLED - ATTEMPTING TO NOW..."
+    return 1
+  fi
+}
+
 init_homebrew() {
   local binary_path="$1" # /opt/homebrew/bin, /usr/local/bin
   local install_type="$2" # all, formulas, casks
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
-  local brew_installer='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+  local brew_installer_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
   local log="$HOME/.bootstrap.log"
 
-  xcode-select --install &> "$log"
+  # Install Xcode
+  is_installed xcode-select || xcode-select --install
 
-  # Installs Homebrew and add to current session's PATH
-  [[ -x $(which brew) ]] || /bin/bash -c "$(curl -fsSL "$brew_installer")"
+  # Install Homebrew and add to current session's PATH
+  is_installed brew || /bin/bash -c "$(curl -fsSL "$brew_installer_url")"
   eval "$("$binary_path/brew" shellenv)"
   
   # Installs packages
