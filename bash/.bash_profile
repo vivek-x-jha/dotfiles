@@ -11,4 +11,4 @@ export VISUAL="$EDITOR"
 # Dotfiles
 export DOT="$HOME/.dotfiles"
 
-[ ! -f "$HOME/.bashrc" ] || source "$HOME/.bashrc"
+[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
