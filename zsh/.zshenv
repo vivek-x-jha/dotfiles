@@ -18,3 +18,6 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export ZDOTDIR="$DOT/zsh"
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
 export SHELL_SESSIONS_DISABLE=1
+
+# Tmux
+export TPM="$XDG_CONFIG_HOME/tmux/plugins/tpm"
