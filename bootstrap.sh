@@ -10,12 +10,40 @@ is_installed() {
   fi
 }
 
+makedir() {
+  local dir="$1"
+  [ -d "$dir" ] || mkdir -p "$dir"
+}
+
+backup() {
+  local file="$1"
+  [ -e "$file" ] && mv -f "$file" "$file.bak"
+}
+
+symlink() {
+  local parent="$1"
+  local name="$2"
+  local cwd="$3"
+  local target="${4:-$name}"
+  
+  local src="$parent/$name"
+  [[ "$parent" == '.' ]] && local src="$name"
+
+  cd "$cwd"
+
+  [ -e "$src" ] || return 1
+
+  [ -d "$target" ] && rm -rf "$target"
+  ln -sf "$src" "$target"
+}
+
 init_homebrew() {
-  local binary_path="$1" # /opt/homebrew/bin, /usr/local/bin
-  local install_type="$2" # all, formulas, casks
+  local install_type="${1:-'all'}" # all, formulas, casks
+  local binary_path="${2:-'/opt/homebrew/bin'}" # /usr/local/bin
+  local logger="${3:-"$HOME/.bootstrap.log"}"
+
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
   local brew_installer_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
-  local log="$HOME/.bootstrap.log"
 
   # Install Xcode
   is_installed xcode-select || xcode-select --install
@@ -40,40 +68,17 @@ init_homebrew() {
   brew upgrade
   brew cleanup
   brew doctor
+
+  brew list &> "$logger" 
 }
 
 init_filesystem() {
-  symlink() {
-    local parent="$1"
-    local name="$2"
-    local cwd="$3"
-    local target="${4:-$name}"
-    
-    local src="$parent/$name"
-    [[ "$parent" == '.' ]] && local src="$name"
-
-    cd "$cwd"
-
-    [ -e "$src" ] || return 1
-
-    [ -d "$target" ] && rm -rf "$target"
-    ln -sf "$src" "$target"
-  }
-
-  # Supress iTerm login message
-  touch .hushlogin
-  
-  # Create Dotfiles folder
+  # Requires brew and git
   is_installed brew || init_homebrew
   is_installed git || brew install git
-
-  [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
-  git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
-
-  # TODO Create custom input for git.user, email, signing_key
   
-  # Create Directories
-  local home_dirs=(
+  # Create XDG & Media Directories
+  local directories=(
     .cache
     .config
     .config/dust
@@ -84,36 +89,45 @@ init_filesystem() {
     Movies
     Pictures
   )
-  for dir in "$home_dirs[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
+  for dir in "$directories[@]"; do makedir "$HOME/$dir"; done
 
-  # Link Directories
-  symlink Dropbox               developer      "$HOME" Developer
-  symlink .dotfiles/bash        .bash_profile  "$HOME"
-  symlink .dotfiles/bash        .bashrc        "$HOME"
-  symlink .dotfiles/thinkorswim .thinkorswim   "$HOME"
-  symlink .dotfiles/vscode      .vscode        "$HOME"
-  symlink .dotfiles/zsh         .zshenv        "$HOME"
+  # Create Dotfiles folder
+  backup "$HOME/.dotfiles"
+  git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
+  
+  # Supress iTerm login message
+  touch .hushlogin
+  
+  # Link Dotfiles
+  symlink .dotfiles/bash   .bash_profile  "$HOME"
+  symlink .dotfiles/bash   .bashrc        "$HOME"
+  symlink .dotfiles/vscode .vscode        "$HOME"
+  symlink .dotfiles/zsh    .zshenv        "$HOME"
 
-  symlink ../Dropbox            content        "$HOME/Movies"
-  symlink ../Dropbox            icons          "$HOME/Pictures"
-  symlink ../Dropbox            screenshots    "$HOME/Pictures"
-  symlink ../Dropbox            wallpapers     "$HOME/Pictures"
-  symlink ../Dropbox            education      "$HOME/Documents"
-  symlink ../Dropbox            finances       "$HOME/Documents"
+  symlink ../.dotfiles     bat            "$HOME/.config"
+  symlink ../.dotfiles     btop           "$HOME/.config"
+  symlink ../.dotfiles     gh             "$HOME/.config"
+  symlink ../.dotfiles     nvim           "$HOME/.config"
+  symlink ../.dotfiles     .starship.toml "$HOME/.config"      starship.toml
+  symlink ../.dotfiles     tmux           "$HOME/.config"
+  symlink ../.dotfiles     yazi           "$HOME/.config"
+  
+  symlink ../../.dotfiles  .dust.toml     "$HOME/.config/dust" config.toml
+  symlink ../../.dotfiles  .gitconfig     "$HOME/.config/git"  config
 
-  symlink ../.dotfiles          bat            "$HOME/.config"
-  symlink ../.dotfiles          btop           "$HOME/.config"
-  symlink ../.dotfiles          gh             "$HOME/.config"
-  symlink ../.dotfiles          nvim           "$HOME/.config"
-  symlink ../.dotfiles          .starship.toml "$HOME/.config" starship.toml
-  symlink ../.dotfiles          tmux           "$HOME/.config"
-  symlink ../.dotfiles          yazi           "$HOME/.config"
+  # Link Cloud Services
+  symlink Dropbox          developer      "$HOME"              Developer
 
-  symlink ../../.dotfiles       .dust.toml     "$HOME/.config/dust" config.toml
-  symlink ../../.dotfiles       .gitconfig     "$HOME/.config/git" config
+  symlink ../Dropbox       content        "$HOME/Movies"
+  symlink ../Dropbox       icons          "$HOME/Pictures"
+  symlink ../Dropbox       screenshots    "$HOME/Pictures"
+  symlink ../Dropbox       wallpapers     "$HOME/Pictures"
+  symlink ../Dropbox       education      "$HOME/Documents"
+  symlink ../Dropbox       finances       "$HOME/Documents"
 
-  symlink . zsh-autocomplete.plugin.zsh "$(brew --prefix)/share/zsh-autocomplete" autocomplete.zsh
-  symlink . zsh-autosuggestions.zsh "$(brew --prefix)/share/zsh-autosuggestions" autosuggestions.zsh
+  # Link Zsh Plugins
+  symlink . zsh-autocomplete.plugin.zsh "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
+  symlink . zsh-autosuggestions.zsh     "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
   symlink . zsh-syntax-highlighting.zsh "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
 }
 
@@ -140,9 +154,10 @@ init_macos() {
 }
 
 main() {
+  # TODO Create custom input for git.user, email, signing_key
   echo "󰓒 INSTALLATION START 󰓒"
 
-  init_homebrew '/opt/homebrew/bin' 'all'
+  init_homebrew
   echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
   init_filesystem 
