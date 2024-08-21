@@ -61,9 +61,6 @@ init_filesystem() {
     ln -sf "$source_name" "$target_name"
   }
 
-  # Requires brew and git to be installed and in PATH
-
-
   # Supress iTerm login message
   touch .hushlogin
   
@@ -110,8 +107,8 @@ init_filesystem() {
   symlink ../.dotfiles          tmux           "$HOME/.config"
   symlink ../.dotfiles          yazi           "$HOME/.config"
 
-  symlink ../../.dotfiles       dust           "$HOME/.config" config.toml
-  symlink ../../.dotfiles       git            "$HOME/.config" config
+  symlink ../../.dotfiles       .dust.toml     "$HOME/.config/dust" config.toml
+  symlink ../../.dotfiles       .gitconfig     "$HOME/.config/git" config
 
   symlink . zsh-autocomplete.plugin.zsh "$(brew --prefix)/share/zsh-autocomplete" autocomplete.zsh
   symlink . zsh-autosuggestions.zsh "$(brew --prefix)/share/zsh-autosuggestions" autosuggestions.zsh
