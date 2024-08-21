@@ -44,21 +44,20 @@ init_homebrew() {
 
 init_filesystem() {
   symlink() {
-    local source_parent="$1"
+    local parent="$1"
+    local name="$2"
+    local cwd="$3"
+    local target="${4:-$name}"
+    
+    local src="$parent/$name"
+    [[ "$parent" == '.' ]] && local src="$name"
 
-    if [[ "$source_parent" == '.' ]]; then 
-      local source_name="$2"
-    else
-      local source_name="$source_parent/$2"
-    fi
+    cd "$cwd"
 
-    local target_parent="$3"
-    local target_name="${4:-$source_name}"
+    [ -e "$src" ] || return 1
 
-    cd "$target_parent"
-
-    [ -d "$target_parent/$target_name" ] && rm -rf "$target_parent/$target_name"
-    ln -sf "$source_name" "$target_name"
+    [ -d "$target" ] && rm -rf "$target"
+    ln -sf "$src" "$target"
   }
 
   # Supress iTerm login message
@@ -77,8 +76,11 @@ init_filesystem() {
   local home_dirs=(
     .cache
     .config
+    .config/dust
+    .config/git
     .local/share
     .local/state
+    Documents
     Movies
     Pictures
   )
@@ -140,7 +142,7 @@ init_macos() {
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
-  # init_homebrew '/opt/homebrew/bin' 'all'
+  init_homebrew '/opt/homebrew/bin' 'all'
   echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
   init_filesystem 
