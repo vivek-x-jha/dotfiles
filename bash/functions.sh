@@ -34,29 +34,28 @@ tmux_list_sessions() {
   { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
 }
 
-cpdf() {
+combinepdf() {
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
 }
 
 update-icons() {
-  [[ -x $(which fileicon) ]] || return
+  command -v fileicon &> /dev/null || return
 
-  sudo fileicon set /Applications/Tex ~/Pictures/icons/tex.png
+  sudo fileicon set /Applications/Tex                 ~/Pictures/icons/tex.png
 
-  fileicon set /Applications/ChatGPT.app ~/Pictures/icons/chatgpt.png
-  fileicon set /Applications/iTerm.app ~/Pictures/icons/very-colorful-terminal-icons/indigo-to-light.icns
-  fileicon set /Applications/iTermAI.app ~/Pictures/icons/ai-brain.png
-  fileicon set /Applications/Mimestream.app ~/Pictures/icons/gmail.png
-  fileicon set /Applications/Neovim.app ~/Pictures/icons/neovim.png
-  fileicon set /Applications/Slack.app ~/Pictures/icons/slack.png
-  fileicon set "/Applications/Visual Studio Code.app" ~/Pictures/icons/vscode.png
+  fileicon set /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
+  fileicon set /Applications/iTerm.app                ~/Pictures/icons/very-colorful-terminal-icons/indigo-to-light.icns
+  fileicon set /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
+  fileicon set /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
+  fileicon set /Applications/Neovim.app               ~/Pictures/icons/neovim.png
+  fileicon set /Applications/Slack.app                ~/Pictures/icons/slack.png
+  fileicon set /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
 
-  fileicon set ~/Developer ~/Pictures/icons/developer.png
-  fileicon set ~/Downloads ~/Pictures/icons/download.png
-  fileicon set ~/Dropbox/content ~/Pictures/icons/content.png
-  fileicon set ~/Pictures/icons ~/Pictures/icons/png.png
-  fileicon set ~/Pictures/screenshots ~/Pictures/icons/screenshot.png
-  fileicon set ~/Pictures/wallpapers ~/Pictures/icons/wallpaper.png
-
-  fileicon set ~/.dotfiles ~/Pictures/icons/gear.png
+  fileicon set ~/Developer                            ~/Pictures/icons/developer.png
+  fileicon set ~/Downloads                            ~/Pictures/icons/download.png
+  fileicon set ~/Dropbox/content                      ~/Pictures/icons/content.png
+  fileicon set ~/Pictures/icons                       ~/Pictures/icons/png.png
+  fileicon set ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
+  fileicon set ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
+  fileicon set ~/.dotfiles                            ~/Pictures/icons/gear.png
 }
