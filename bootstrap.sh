@@ -43,66 +43,78 @@ init_homebrew() {
 }
 
 init_filesystem() {
-  link_dir() {
-    local parent_dir="$1"
-    local folder="$2"
-    local target_dir="$3"
+  backup() {
+    local file="$1"
+    [ -d "$file" ] && mv -f "$file" "$file.bak"
+  }
 
-    cd "$target_dir"
+  symlink() {
+    local source_parent="$1"
 
-    [ -d "$target_dir/$folder" ] && rm -rf "$target_dir/$folder"
-    ln -sf $parent_dir/$folder
+    if [[ "$source_parent" == '.' ]]; then 
+      local source_name="$2"
+    else
+      local source_name="$source_parent/$2"
+    fi
+
+    local target_parent="$3"
+    local target_name="${4:-$source_name}"
+
+    cd "$target_parent"
+
+    [ -d "$target_parent/$target_name" ] && rm -rf "$target_parent/$target_name"
+    ln -sf "$source_name" "$target_name"
   }
 
   # Supress iTerm login message
   touch .hushlogin
 
-  # Download Dotfiles repo - creates backup of any existing dotfiles
-  [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
+  # Download Dotfiles repo
+  backup "$HOME/.dotfiles"
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
   # TODO Create custom input for git.user, email, signing_key
   
   # Create Directories
-  [ -d "$HOME/.cache"       ] || mkdir -p "$HOME/.cache"
-  [ -d "$HOME/.config"      ] || mkdir -p "$HOME/.config"
-  [ -d "$HOME/.local/share" ] || mkdir -p "$HOME/.local/share"
-  [ -d "$HOME/.local/state" ] || mkdir -p "$HOME/.local/state"
-
-  [ -d "$HOME/Movies"       ] || mkdir -p "$HOME/Movies"
-  [ -d "$HOME/Pictures"     ] || mkdir -p "$HOME/Pictures"
+  local home_dirs=(
+    .cache
+    .config
+    .local/share
+    .local/state
+    Movies
+    Pictures
+  )
+  for dir in "$home_dirs[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
 
   # Link Directories
-  link_dir 'Dropbox'               Developer     "$HOME" 
-  link_dir '.dotfiles/bash'        .bash_profile "$HOME"
-  link_dir '.dotfiles/bash'        .bashrc       "$HOME"
-  link_dir '.dotfiles/thinkorswim' .thinkorswim  "$HOME"
-  link_dir '.dotfiles/vscode'      .vscode       "$HOME"
-  link_dir '.dotfiles/zsh'         .zshenv       "$HOME"
+  symlink Dropbox               developer      "$HOME" Developer
+  symlink .dotfiles/bash        .bash_profile  "$HOME"
+  symlink .dotfiles/bash        .bashrc        "$HOME"
+  symlink .dotfiles/thinkorswim .thinkorswim   "$HOME"
+  symlink .dotfiles/vscode      .vscode        "$HOME"
+  symlink .dotfiles/zsh         .zshenv        "$HOME"
 
-  link_dir '../Dropbox'            content       "$HOME/Movies"
-  link_dir '../Dropbox'            icons         "$HOME/Pictures"
-  link_dir '../Dropbox'            screenshots   "$HOME/Pictures"
-  link_dir '../Dropbox'            wallpapers    "$HOME/Pictures"
-  link_dir '../Dropbox'            education     "$HOME/Documents"
-  link_dir '../Dropbox'            finances      "$HOME/Documents"
+  symlink ../Dropbox            content        "$HOME/Movies"
+  symlink ../Dropbox            icons          "$HOME/Pictures"
+  symlink ../Dropbox            screenshots    "$HOME/Pictures"
+  symlink ../Dropbox            wallpapers     "$HOME/Pictures"
+  symlink ../Dropbox            education      "$HOME/Documents"
+  symlink ../Dropbox            finances       "$HOME/Documents"
 
-  link_dir '../.dotfiles'          bat           "$HOME/.config"
-  link_dir '../.dotfiles'          btop          "$HOME/.config"
-  link_dir '../.dotfiles'          gh            "$HOME/.config"
-  link_dir '../.dotfiles'          nvim          "$HOME/.config"
-  link_dir '../.dotfiles'          tmux          "$HOME/.config"
-  link_dir '../.dotfiles'          yazi          "$HOME/.config"
-    
-  ln -sf ../.dotfiles/.starship.toml starship.toml
+  symlink ../.dotfiles          bat            "$HOME/.config"
+  symlink ../.dotfiles          btop           "$HOME/.config"
+  symlink ../.dotfiles          gh             "$HOME/.config"
+  symlink ../.dotfiles          nvim           "$HOME/.config"
+  symlink ../.dotfiles          .starship.toml "$HOME/.config" starship.toml
+  symlink ../.dotfiles          tmux           "$HOME/.config"
+  symlink ../.dotfiles          yazi           "$HOME/.config"
 
-  [ -d "$HOME/.config/dust" ] || mkdir -p "$HOME/.config/dust"
-  cd "$HOME/.config/dust"
-  ln -sf ../../.dotfiles/.dust.toml config.toml
+  symlink ../../.dotfiles       dust           "$HOME/.config" config.toml
+  symlink ../../.dotfiles       git            "$HOME/.config" config
 
-  [ -d "$HOME/.config/git" ] || mkdir -p "$HOME/.config/git"
-  cd "$HOME/.config/git"
-  ln -sf ../../.dotfiles/.gitconfig config
+  symlink . zsh-autocomplete.plugin.zsh "$(brew --prefix)/share/zsh-autocomplete" autocomplete.zsh
+  symlink . zsh-autosuggestions.zsh "$(brew --prefix)/share/zsh-autosuggestions" autosuggestions.zsh
+  symlink . zsh-syntax-highlighting.zsh "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
 }
 
 init_macos() {
