@@ -43,11 +43,6 @@ init_homebrew() {
 }
 
 init_filesystem() {
-  backup() {
-    local file="$1"
-    [ -d "$file" ] && mv -f "$file" "$file.bak"
-  }
-
   symlink() {
     local source_parent="$1"
 
@@ -66,11 +61,17 @@ init_filesystem() {
     ln -sf "$source_name" "$target_name"
   }
 
+  # Requires brew and git to be installed and in PATH
+
+
   # Supress iTerm login message
   touch .hushlogin
+  
+  # Create Dotfiles folder
+  is_installed brew || init_homebrew
+  is_installed git || brew install git
 
-  # Download Dotfiles repo
-  backup "$HOME/.dotfiles"
+  [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
 
   # TODO Create custom input for git.user, email, signing_key
