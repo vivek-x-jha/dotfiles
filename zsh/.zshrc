@@ -37,7 +37,7 @@ zsh_plugins=(
 zsh_configs=(
   .p10k.zsh
   .zaliases
-  .zsh-syntax-highlighting.conf
+  .zsh-syntax-highlighting
 )
 
 zsh_options=(
