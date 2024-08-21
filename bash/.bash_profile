@@ -11,4 +11,7 @@ export VISUAL="$EDITOR"
 # Dotfiles
 export DOT="$HOME/.dotfiles"
 
+# Tmux
+export TPM="$XDG_CONFIG_HOME/tmux/plugins/tpm"
+
 [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
