@@ -143,7 +143,7 @@ init_macos() {
 main() {
   echo "󰓒 INSTALLATION START 󰓒"
 
-  init_homebrew '/opt/homebrew/bin' 'all'
+  # init_homebrew '/opt/homebrew/bin' 'all'
   echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
   init_filesystem 
