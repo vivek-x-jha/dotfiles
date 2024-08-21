@@ -28,10 +28,10 @@ source "$DOT/.colorscheme"
 
 # Configure Shell Plugins, Theme, Aliases, Configs Functions
 zsh_plugins=(
-  zsh-autocomplete/zsh-autocomplete.plugin.zsh
-  zsh-autopair/autopair.zsh
-  zsh-autosuggestions/zsh-autosuggestions.zsh
-  zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  autocomplete
+  autopair
+  autosuggestions
+  syntax-highlighting
 )
 
 zsh_configs=(
@@ -51,7 +51,7 @@ zsh_options=(
   share_history
 )
 
-for plugin in "${zsh_plugins[@]}"; do source "$(brew --prefix)/share/$plugin"; done
+for plugin in "${zsh_plugins[@]}"; do source "$(brew --prefix)/share/zsh-$plugin/$plugin.zsh"; done
 for config in "${zsh_configs[@]}"; do source "$ZDOTDIR/$config"; done
 for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
 setopt "${zsh_options[@]}" 
