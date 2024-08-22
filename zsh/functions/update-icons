@@ -1,4 +1,4 @@
-command -v fileicon &> /dev/null || return
+command -v fileicon &> /dev/null || brew install fileicon
 
 sudo fileicon set /Applications/Tex                 ~/Pictures/icons/tex.png
 
