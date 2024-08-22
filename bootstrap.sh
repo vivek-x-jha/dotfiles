@@ -138,7 +138,7 @@ init_macos() {
   bat cache --build
 
   # Enable touchid for sudo
-  sudo cp -f "$HOME/.dotfiles/.sudo" /etc/pam.d/sudo_local
+  sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local
 
   # Save screenshots to ~/Pictures/screenshots
   defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
