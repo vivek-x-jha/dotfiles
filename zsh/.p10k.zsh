@@ -1,4 +1,5 @@
 # Load base theme file
+[ -f "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" ] || brew install powerlevel10k
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
 # Temporarily change options.

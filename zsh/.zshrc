@@ -21,12 +21,13 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
 # Configure Colorschmes: ls/eza/grep + variables
+command -v gdircolors &> /dev/null || brew install coreutils
 eval "$(gdircolors "$DOT/.dircolors")"
 source "$DOT/.ezacolors"
 source "$DOT/.grepcolors"
 source "$DOT/.colorscheme"
 
-# Configure Shell Plugins, Theme, Aliases, Configs Functions
+# Configure Shell Core Plugins
 zsh_plugins=(
   autocomplete
   autopair
@@ -34,12 +35,20 @@ zsh_plugins=(
   syntax-highlighting
 )
 
+for plugin in "${zsh_plugins[@]}"; do
+  [ -d "$(brew --prefix)/share/zsh-$plugin" ] || brew install "zsh-$plugin"
+  source "$(brew --prefix)/share/zsh-$plugin/$plugin.zsh"
+done
+
+# Configure Shell Theme, Aliases, & Syntax-Highlighting
 zsh_configs=(
   .p10k.zsh
   .zaliases
   .zsh-syntax-highlighting
 )
+for config in "${zsh_configs[@]}"; do source "$ZDOTDIR/$config"; done
 
+# Configure Shell Options
 zsh_options=(
   always_to_end
   auto_cd
@@ -50,16 +59,22 @@ zsh_options=(
   inc_append_history
   share_history
 )
-
-for plugin in "${zsh_plugins[@]}"; do source "$(brew --prefix)/share/zsh-$plugin/$plugin.zsh"; done
-for config in "${zsh_configs[@]}"; do source "$ZDOTDIR/$config"; done
-for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
 setopt "${zsh_options[@]}" 
 
+# Autoload Shell Functions
+for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
+
+# Enable Fuzzy Finder
+command -v fzf &> /dev/null || brew install fzf 
 source <(fzf --zsh)
+
+# Enable Fast Directory Movement
+[ -d "$(brew --prefix)/share/z.lua" ] || brew install z.lua
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
-# OTHER CONFIGURATION FILES
+# Log Database History
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
+
+# Initialize Python Environments
 export PYTHONSTARTUP="$DOT/.pythonstartup"
