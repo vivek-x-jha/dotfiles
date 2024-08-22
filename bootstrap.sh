@@ -37,19 +37,19 @@ symlink() {
   ln -sf "$src" "$target"
 }
 
-init_homebrew() {
+install_homebrew() {
   local install_type="${1:-'all'}" # all, formulas, casks
   local binary_path="${2:-'/opt/homebrew/bin'}" # /usr/local/bin
   local logger="${3:-"$HOME/.bootstrap.log"}"
 
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
-  local brew_installer_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+  local brew_installer='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
 
   # Install Xcode
   is_installed xcode-select || xcode-select --install
 
   # Install Homebrew and add to current session's PATH
-  is_installed brew || /bin/bash -c "$(curl -fsSL "$brew_installer_url")"
+  is_installed brew || /bin/bash -c "$(curl -fsSL "$brew_installer")"
   eval "$("$binary_path/brew" shellenv)"
   
   # Installs packages
@@ -73,9 +73,13 @@ init_homebrew() {
 }
 
 init_filesystem() {
+  local CLOUD="$1"
+  local DOT="$2"
+  local XDG_CONFIG="$3"
+
   # Requires brew and git
-  is_installed brew || init_homebrew
-  is_installed git || brew install git
+  is_installed brew || install_homebrew
+  is_installed git  || brew install git
   
   # Create XDG & Media Directories
   local directories=(
@@ -92,8 +96,8 @@ init_filesystem() {
   for dir in "$directories[@]"; do makedir "$HOME/$dir"; done
 
   # Create Dotfiles folder
-  backup "$HOME/.dotfiles"
-  git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
+  backup "$DOT"
+  git clone https://github.com/vivek-x-jha/dotfiles.git "$DOT"
   
   # Link Dotfiles
   symlink .dotfiles/bash   .bash_profile  "$HOME"
@@ -101,31 +105,31 @@ init_filesystem() {
   symlink .dotfiles/vscode .vscode        "$HOME"
   symlink .dotfiles/zsh    .zshenv        "$HOME"
 
-  symlink ../.dotfiles     bat            "$HOME/.config"
-  symlink ../.dotfiles     btop           "$HOME/.config"
-  symlink ../.dotfiles     gh             "$HOME/.config"
-  symlink ../.dotfiles     nvim           "$HOME/.config"
-  symlink ../.dotfiles     .starship.toml "$HOME/.config"      starship.toml
-  symlink ../.dotfiles     tmux           "$HOME/.config"
-  symlink ../.dotfiles     yazi           "$HOME/.config"
+  symlink ../.dotfiles     bat            "$XDG_CONFIG"
+  symlink ../.dotfiles     btop           "$XDG_CONFIG"
+  symlink ../.dotfiles     gh             "$XDG_CONFIG"
+  symlink ../.dotfiles     nvim           "$XDG_CONFIG"
+  symlink ../.dotfiles     .starship.toml "$XDG_CONFIG"      starship.toml
+  symlink ../.dotfiles     tmux           "$XDG_CONFIG"
+  symlink ../.dotfiles     yazi           "$XDG_CONFIG"
   
-  symlink ../../.dotfiles  .dust.toml     "$HOME/.config/dust" config.toml
-  symlink ../../.dotfiles  .gitconfig     "$HOME/.config/git"  config
+  symlink ../../.dotfiles  .dust.toml     "$XDG_CONFIG/dust" config.toml
+  symlink ../../.dotfiles  .gitconfig     "$XDG_CONFIG/git"  config
 
   # Link Cloud Services
-  symlink Dropbox          developer      "$HOME"              Developer
+  symlink "$CLOUD"         developer      "$HOME"            Developer
 
-  symlink ../Dropbox       content        "$HOME/Movies"
-  symlink ../Dropbox       icons          "$HOME/Pictures"
-  symlink ../Dropbox       screenshots    "$HOME/Pictures"
-  symlink ../Dropbox       wallpapers     "$HOME/Pictures"
-  symlink ../Dropbox       education      "$HOME/Documents"
-  symlink ../Dropbox       finances       "$HOME/Documents"
+  symlink "../$CLOUD"      content        "$HOME/Movies"
+  symlink "../$CLOUD"      icons          "$HOME/Pictures"
+  symlink "../$CLOUD"      screenshots    "$HOME/Pictures"
+  symlink "../$CLOUD"      wallpapers     "$HOME/Pictures"
+  symlink "../$CLOUD"      education      "$HOME/Documents"
+  symlink "../$CLOUD"      finances       "$HOME/Documents"
 
   # Link Zsh Plugins
-  symlink . zsh-autocomplete.plugin.zsh "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
-  symlink . zsh-autosuggestions.zsh     "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
-  symlink . zsh-syntax-highlighting.zsh "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
+  symlink . zsh-autocomplete.plugin.zsh   "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
+  symlink . zsh-autosuggestions.zsh       "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
+  symlink . zsh-syntax-highlighting.zsh   "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
 }
 
 init_macos() {
@@ -160,10 +164,10 @@ main() {
   # TODO Create custom input for git.user, email, signing_key
   echo "󰓒 INSTALLATION START 󰓒"
 
-  init_homebrew
+  install_homebrew
   echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
-  init_filesystem 
+  init_filesystem Dropbox "$HOME/.dotfiles" "$HOME/.config"
   echo "󰗡 [2/3] Filesystem & Symlinks Created 󰗡"
   
   init_macos
