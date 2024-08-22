@@ -10,16 +10,16 @@ Run the following:
 eval "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/bootstrap.sh)"
 ```
 
-# Features
+## Features
 
-## Zsh
+### Zsh
 
 1. [Auto-Complete](https://github.com/marlonrichert/zsh-autocomplete)
 1. [Auto-Pair](https://github.com/hlissner/zsh-autopair)
 1. [Auto-Suggestions](https://github.com/zsh-users/zsh-autosuggestions)
 1. [Syntax-Highlighting](https://github.com/zsh-users/zsh-autosuggestions)
 
-## Bash
+### Bash
 
 1. [Completion + Syntax-Highlighting](https://github.com/akinomyoga/ble.sh)
 
@@ -42,19 +42,19 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/b
 
 ### Sudo
 
-Enable authentication using touchid - works in multiplexers like tux and screen
+Enable authentication using touchid - works in multiplexers like tmux and screen
 
 ```sh
 sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local
 ```
 
-## Fonts
-
-Using [Nerd Fonts](https://www.nerdfonts.com/)
-
-## Links
-
 ### SSH
+
+Configure 1Password as SSH Manager
 
 1. [1Password for SSH & Git](https://developer.1password.com/docs/ssh/get-started)
 1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+
+## Fonts
+
+Using [Nerd Fonts](https://www.nerdfonts.com/)
