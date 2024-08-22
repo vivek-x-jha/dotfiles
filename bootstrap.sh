@@ -111,39 +111,40 @@ create_filesystem() {
     [ -d "$tgt" ] && rm -rf "$tgt"
     ln -sf "$src" "$tgt"
 
-    echo "[+ Link: $cwd/$tgt -> $src]"
+    echo "[+ Link: $src -> $cwd/$tgt]"
   }
 
-  symlink .dotfiles/bash/.bash_profile "$HOME"            .bash_profile
-  symlink .dotfiles/bash/.bashrc       "$HOME"            .bashrc      
-  symlink .dotfiles/vscode/.vscode     "$HOME"            .vscode    
-  symlink .dotfiles/zsh/.zshenv        "$HOME"            .zshenv       
+  local symlinks=(
+    .dotfiles/bash/.bash_profile "$HOME"            .bash_profile
+    .dotfiles/bash/.bashrc       "$HOME"            .bashrc      
+    .dotfiles/vscode/.vscode     "$HOME"            .vscode    
+    .dotfiles/zsh/.zshenv        "$HOME"            .zshenv       
 
-  symlink ../.dotfiles/bat             "$XDG_CONFIG"      bat 
-  symlink ../.dotfiles/btop            "$XDG_CONFIG"      btop
-  symlink ../.dotfiles/gh              "$XDG_CONFIG"      gh  
-  symlink ../.dotfiles/nvim            "$XDG_CONFIG"      nvim
-  symlink ../.dotfiles/.starship.toml  "$XDG_CONFIG"      starship.toml
-  symlink ../.dotfiles/tmux            "$XDG_CONFIG"      tmux
-  symlink ../.dotfiles/yazi            "$XDG_CONFIG"      yazi
-  
-  symlink ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust" config.toml
-  symlink ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"  config
+    ../.dotfiles/bat             "$XDG_CONFIG"      bat 
+    ../.dotfiles/btop            "$XDG_CONFIG"      btop
+    ../.dotfiles/gh              "$XDG_CONFIG"      gh  
+    ../.dotfiles/nvim            "$XDG_CONFIG"      nvim
+    ../.dotfiles/.starship.toml  "$XDG_CONFIG"      starship.toml
+    ../.dotfiles/tmux            "$XDG_CONFIG"      tmux
+    ../.dotfiles/yazi            "$XDG_CONFIG"      yazi
+    
+    ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust" config.toml
+    ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"  config
 
-  # Link Cloud Services
-  symlink "$CLOUD/developer"           "$HOME"            Developer
+    "$CLOUD/developer"           "$HOME"            Developer
 
-  symlink "../$CLOUD/content"          "$HOME/Movies"     content
-  symlink "../$CLOUD/icons"            "$HOME/Pictures"   icons
-  symlink "../$CLOUD/screenshots"      "$HOME/Pictures"   screenshots
-  symlink "../$CLOUD/wallpapers"       "$HOME/Pictures"   wallpapers
-  symlink "../$CLOUD/education"        "$HOME/Documents"  education
-  symlink "../$CLOUD/finances"         "$HOME/Documents"  finances
+    "../$CLOUD/content"          "$HOME/Movies"     content
+    "../$CLOUD/icons"            "$HOME/Pictures"   icons
+    "../$CLOUD/screenshots"      "$HOME/Pictures"   screenshots
+    "../$CLOUD/wallpapers"       "$HOME/Pictures"   wallpapers
+    "../$CLOUD/education"        "$HOME/Documents"  education
+    "../$CLOUD/finances"         "$HOME/Documents"  finances
 
-  # Link Zsh Plugins
-  symlink zsh-autocomplete.plugin.zsh  "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
-  symlink zsh-autosuggestions.zsh      "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
-  symlink zsh-syntax-highlighting.zsh  "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
+    zsh-autocomplete.plugin.zsh  "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
+    zsh-autosuggestions.zsh      "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
+    zsh-syntax-highlighting.zsh  "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
+  )
+  for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 }
 
 configure_macos() {
