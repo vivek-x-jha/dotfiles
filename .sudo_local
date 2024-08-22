@@ -1,4 +1,3 @@
-# Enable touchid in tmux and screen
+# Authenticate with touchid - even in tmux
 auth  optional    /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
-# Authenticate with touchid
 auth  sufficient  pam_tid.so
