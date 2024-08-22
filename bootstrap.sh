@@ -11,9 +11,9 @@
 is_installed() {
   local cmd="$1"
   if command -v "$cmd" &> /dev/null; then
-    echo "+ $cmd INSTALLED"
+    echo "[+ $cmd: INSTALLED]"
   else
-    echo "? $cmd NOT INSTALLED"
+    echo "[? $cmd: NOT INSTALLED]"
     return 1
   fi
 }
@@ -44,7 +44,7 @@ symlink() {
   [ -d "$tgt" ] && rm -rf "$tgt"
   ln -sf "$src" "$tgt"
 
-  echo "[+ Link]: Source '$src' Target '$cwd/$tgt'"
+  echo "[+ Link: $cwd/$tgt -> $src]"
 }
 
 install_homebrew() {
