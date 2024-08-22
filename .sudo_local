@@ -1,3 +1,7 @@
-# Authenticate sudo with touchid even in multiplexers like tmux & screen
-auth       optional     /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
-auth       sufficient   pam_tid.so
+# Copy this to /etc/pam.d/sudo_local
+
+# Enable touchid in tmux - uses pam-reattach module
+auth  optional    /opt/homebrew/lib/pam/pam_reattach.so ignore_ssh
+
+# Authenticate with touchid
+auth  sufficient  pam_tid.so
