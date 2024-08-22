@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Boostrap script to build MacOS Development Environment
 #
 # System Version:   macOS 14.6.1 (23G93)
@@ -11,7 +13,7 @@ is_installed() {
   if command -v "$cmd" &> /dev/null; then
     echo "+ $cmd INSTALLED"
   else
-    echo "? $cmd NOT INSTALLED - ATTEMPTING TO NOW..."
+    echo "? $cmd NOT INSTALLED"
     return 1
   fi
 }
@@ -42,23 +44,38 @@ symlink() {
   [ -d "$tgt" ] && rm -rf "$tgt"
   ln -sf "$src" "$tgt"
 
-  echo "[+ Link: Source '"$src"' Target '"$cwd/$tgt"'}"
+  echo "[+ Link]: Source '$src' Target '$cwd/$tgt'"
 }
 
 install_homebrew() {
-  local install_type="${1:-'all'}" # all, formulas, casks
-  local binary_path="${2:-'/opt/homebrew/bin'}" # /usr/local/bin
-  local logger="${3:-"$HOME/.bootstrap.log"}"
+  local install_type="$1" # all, formulas, casks
+  local logger="$2"
 
+  local arch=$(uname -m)
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
-  local brew_installer='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
 
-  # Install Xcode
-  is_installed xcode-select || xcode-select --install
+  # Test: Xcode is installed
+  if ! is_installed xcode-select; then
+    echo 'Homebrew requires Xcode to run: xcode-select --install'
+    exit 1
+  fi
 
-  # Install Homebrew and add to current session's PATH
-  is_installed brew || /bin/bash -c "$(curl -fsSL "$brew_installer")"
-  eval "$("$binary_path/brew" shellenv)"
+  # Test: Architecture is arm64 or x86_64
+  if [[ "$arch" == "arm64" ]]; then
+    binary_path='/opt/homebrew/bin'
+  elif [[ "$arch" == "x86_64" ]]; then
+    binary_path='/usr/local/bin'
+  else
+    echo "Unknown architecture: $arch"
+    echo 'Requires arm64 or x86_64'
+    exit 1
+  fi
+
+  # Test: Homebrew installed and in PATH
+  if ! is_installed brew; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$("$binary_path/brew" shellenv)"
+  fi
   
   # Installs packages
   if [ "$install_type" == 'all' ]; then
@@ -77,7 +94,7 @@ install_homebrew() {
   brew cleanup
   brew doctor
 
-  brew list &> "$logger" 
+  brew list
 }
 
 init_filesystem() {
@@ -172,7 +189,7 @@ main() {
   # TODO Create custom input for git.user, email, signing_key
   echo "󰓒 INSTALLATION START 󰓒"
 
-  install_homebrew
+  install_homebrew all "$HOME/.bootstrap.log"
   echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
   init_filesystem Dropbox "$HOME/.dotfiles" "$HOME/.config"
