@@ -1,6 +1,6 @@
 command -v fileicon &> /dev/null || return
 
-sudo fileicon set /Applications/Tex ~/Pictures/icons/tex.png
+sudo fileicon set /Applications/Tex                 ~/Pictures/icons/tex.png
 
 fileicon set /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
 fileicon set /Applications/iTerm.app                ~/Pictures/icons/very-colorful-terminal-icons/indigo-to-light.icns
@@ -8,7 +8,8 @@ fileicon set /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.pn
 fileicon set /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
 fileicon set /Applications/Neovim.app               ~/Pictures/icons/neovim.png
 fileicon set /Applications/Slack.app                ~/Pictures/icons/slack.png
-fileicon set "/Applications/Visual Studio Code.app" ~/Pictures/icons/vscode.png
+fileicon set /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
+
 fileicon set ~/Developer                            ~/Pictures/icons/developer.png
 fileicon set ~/Downloads                            ~/Pictures/icons/download.png
 fileicon set ~/Dropbox/content                      ~/Pictures/icons/content.png
