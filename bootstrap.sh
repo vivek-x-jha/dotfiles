@@ -1,4 +1,10 @@
-#!/usr/bin/env bash
+# Boostrap script to build MacOS Development Environment
+#
+# System Version:   macOS 14.6.1 (23G93)
+# Kernel Version:   Darwin 23.6.0
+# Chip:             Apple M2 Max
+# Padckage Manager: Homebrew
+# Cloud Service:    Dropbox
 
 is_installed() {
   local cmd="$1"
@@ -21,20 +27,22 @@ backup() {
 }
 
 symlink() {
-  local parent="$1"
-  local name="$2"
-  local cwd="$3"
-  local target="${4:-$name}"
+  local src="$1"
+  local cwd="$2"
+  local tgt="$3"
   
-  local src="$parent/$name"
-  [[ "$parent" == '.' ]] && local src="$name"
-
+  # Test: Valid Current Working Dir
+  [ -d "$cwd" ] || return 1
   cd "$cwd"
 
+  # Test: Valid Source File/Folder
   [ -e "$src" ] || return 1
 
-  [ -d "$target" ] && rm -rf "$target"
-  ln -sf "$src" "$target"
+  # Link Source to Target - remove original if directory
+  [ -d "$tgt" ] && rm -rf "$tgt"
+  ln -sf "$src" "$tgt"
+
+  echo "[+ Link: Source '"$src"' Target '"$cwd/$tgt"'}"
 }
 
 install_homebrew() {
@@ -100,36 +108,36 @@ init_filesystem() {
   git clone https://github.com/vivek-x-jha/dotfiles.git "$DOT"
   
   # Link Dotfiles
-  symlink .dotfiles/bash   .bash_profile  "$HOME"
-  symlink .dotfiles/bash   .bashrc        "$HOME"
-  symlink .dotfiles/vscode .vscode        "$HOME"
-  symlink .dotfiles/zsh    .zshenv        "$HOME"
+  symlink .dotfiles/bash/.bash_profile "$HOME"            .bash_profile
+  symlink .dotfiles/bash/.bashrc       "$HOME"            .bashrc      
+  symlink .dotfiles/vscode/.vscode     "$HOME"            .vscode    
+  symlink .dotfiles/zsh/.zshenv        "$HOME"            .zshenv       
 
-  symlink ../.dotfiles     bat            "$XDG_CONFIG"
-  symlink ../.dotfiles     btop           "$XDG_CONFIG"
-  symlink ../.dotfiles     gh             "$XDG_CONFIG"
-  symlink ../.dotfiles     nvim           "$XDG_CONFIG"
-  symlink ../.dotfiles     .starship.toml "$XDG_CONFIG"      starship.toml
-  symlink ../.dotfiles     tmux           "$XDG_CONFIG"
-  symlink ../.dotfiles     yazi           "$XDG_CONFIG"
+  symlink ../.dotfiles/bat             "$XDG_CONFIG"      bat 
+  symlink ../.dotfiles/btop            "$XDG_CONFIG"      btop
+  symlink ../.dotfiles/gh              "$XDG_CONFIG"      gh  
+  symlink ../.dotfiles/nvim            "$XDG_CONFIG"      nvim
+  symlink ../.dotfiles/.starship.toml  "$XDG_CONFIG"      starship.toml
+  symlink ../.dotfiles/tmux            "$XDG_CONFIG"      tmux
+  symlink ../.dotfiles/yazi            "$XDG_CONFIG"      yazi
   
-  symlink ../../.dotfiles  .dust.toml     "$XDG_CONFIG/dust" config.toml
-  symlink ../../.dotfiles  .gitconfig     "$XDG_CONFIG/git"  config
+  symlink ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust" config.toml
+  symlink ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"  config
 
   # Link Cloud Services
-  symlink "$CLOUD"         developer      "$HOME"            Developer
+  symlink "$CLOUD/developer"           "$HOME"            Developer
 
-  symlink "../$CLOUD"      content        "$HOME/Movies"
-  symlink "../$CLOUD"      icons          "$HOME/Pictures"
-  symlink "../$CLOUD"      screenshots    "$HOME/Pictures"
-  symlink "../$CLOUD"      wallpapers     "$HOME/Pictures"
-  symlink "../$CLOUD"      education      "$HOME/Documents"
-  symlink "../$CLOUD"      finances       "$HOME/Documents"
+  symlink "../$CLOUD/content"          "$HOME/Movies"     content
+  symlink "../$CLOUD/icons"            "$HOME/Pictures"   icons
+  symlink "../$CLOUD/screenshots"      "$HOME/Pictures"   screenshots
+  symlink "../$CLOUD/wallpapers"       "$HOME/Pictures"   wallpapers
+  symlink "../$CLOUD/education"        "$HOME/Documents"  education
+  symlink "../$CLOUD/finances"         "$HOME/Documents"  finances
 
   # Link Zsh Plugins
-  symlink . zsh-autocomplete.plugin.zsh   "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
-  symlink . zsh-autosuggestions.zsh       "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
-  symlink . zsh-syntax-highlighting.zsh   "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
+  symlink zsh-autocomplete.plugin.zsh  "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
+  symlink zsh-autosuggestions.zsh      "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
+  symlink zsh-syntax-highlighting.zsh  "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
 }
 
 init_macos() {

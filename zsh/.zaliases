@@ -31,6 +31,7 @@ alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 alias list-aliases='alias | sort'
 alias list-env-vars='env | sort'
 alias list-shells='tail -n +5 /etc/shells'
+alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias list-users='dscl . list /Users | grep -v "^_"'
 
 alias list-colors='sed -n 5,\$p "$DOT/.colorscheme" | grep -v ^$'
