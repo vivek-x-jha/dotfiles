@@ -23,13 +23,13 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/b
 
 1. [Completion + Syntax-Highlighting](https://github.com/akinomyoga/ble.sh)
 
-### [Neovim](https://github.com/neovim/neovim?tab=readme-ov-file)
+### Neovim
 
 1. [NvChad](https://github.com/NvChad/NvChad)
 1. [Lazy](https://www.github.com/folke/lazy.nvim)
 1. [Harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
 
-### [Tmux](https://github.com/tmux/tmux?tab=readme-ov-file)
+### Tmux
 
 1. [Tpm](https://www.github.com/tmux-plugins/tpm)
 1. [Floax](https://github.com/vivek-x-jha/tmux-floax)
