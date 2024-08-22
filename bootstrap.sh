@@ -72,25 +72,6 @@ create_filesystem() {
   local DOT="$2"
   local XDG_CONFIG="$3"
 
-  symlink() {
-    local src="$1"
-    local cwd="$2"
-    local tgt="$3"
-    
-    # Test: Valid Current Working Dir
-    [ -d "$cwd" ] || return 1
-    cd "$cwd"
-
-    # Test: Valid Source File/Folder
-    [ -e "$src" ] || return 1
-
-    # Link Source to Target - remove original if directory
-    [ -d "$tgt" ] && rm -rf "$tgt"
-    ln -sf "$src" "$tgt"
-
-    echo "[+ Link: $cwd/$tgt -> $src]"
-  }
-
   # Test: Brew and Git installed
   is_installed brew || install_homebrew
   is_installed git  || brew install git
@@ -114,6 +95,25 @@ create_filesystem() {
   git clone https://github.com/vivek-x-jha/dotfiles.git "$DOT"
   
   # Link Dotfiles
+  symlink() {
+    local src="$1"
+    local cwd="$2"
+    local tgt="$3"
+    
+    # Test: Valid Current Working Dir
+    [ -d "$cwd" ] || return 1
+    cd "$cwd"
+
+    # Test: Valid Source File/Folder
+    [ -e "$src" ] || return 1
+
+    # Link Source to Target - remove original if directory
+    [ -d "$tgt" ] && rm -rf "$tgt"
+    ln -sf "$src" "$tgt"
+
+    echo "[+ Link: $cwd/$tgt -> $src]"
+  }
+
   symlink .dotfiles/bash/.bash_profile "$HOME"            .bash_profile
   symlink .dotfiles/bash/.bashrc       "$HOME"            .bashrc      
   symlink .dotfiles/vscode/.vscode     "$HOME"            .vscode    
