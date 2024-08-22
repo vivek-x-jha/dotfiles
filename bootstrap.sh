@@ -95,9 +95,6 @@ init_filesystem() {
   backup "$HOME/.dotfiles"
   git clone https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
   
-  # Supress iTerm login message
-  touch .hushlogin
-  
   # Link Dotfiles
   symlink .dotfiles/bash   .bash_profile  "$HOME"
   symlink .dotfiles/bash   .bashrc        "$HOME"
@@ -133,9 +130,15 @@ init_filesystem() {
 
 init_macos() {
   # https://github.com/mathiasbynens/dotfiles/blob/main/.macos
-  
+
+  # Supress iTerm login message
+  touch .hushlogin
+
   # Build Bat Config
   bat cache --build
+
+  # Enable touchid for sudo
+  sudo cp -f "$HOME/.dotfiles/.sudo" /etc/pam.d/sudo_local
 
   # Save screenshots to ~/Pictures/screenshots
   defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
