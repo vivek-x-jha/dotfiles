@@ -40,6 +40,14 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/b
 1. [Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
 1. [Continuum](https://github.com/tmux-plugins/tmux-continuum)
 
+### Sudo
+
+Enable authentication using touchid - works in multiplexers like tux and screen
+
+```sh
+sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local
+```
+
 ## Fonts
 
 Using [Nerd Fonts](https://www.nerdfonts.com/)
