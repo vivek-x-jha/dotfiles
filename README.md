@@ -7,7 +7,7 @@ Checkout a fast, functional, & fun Terminal environent full of beuatiful and mod
 Run the following:
 
 ```sh
-eval "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/bootstrap.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/bootstrap.sh)"
 ```
 
 ## Features
