@@ -69,8 +69,7 @@ install_homebrew() {
 
 create_filesystem() {
   local CLOUD="$1"
-  local DOT="$2"
-  local XDG_CONFIG="$3"
+  local XDG_CONFIG="${2:-$HOME/.config}"
 
   # Test: Brew and Git installed
   is_installed brew || install_homebrew
@@ -91,8 +90,9 @@ create_filesystem() {
   for dir in "$directories[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
 
   # Create Dotfiles directory
-  [ -e "$DOT" ] && mv -f "$DOT" "$DOT.bak"
-  git clone https://github.com/vivek-x-jha/dotfiles.git "$DOT"
+  cd "$HOME"
+  [ -d .dotfiles ] && mv -f .dotfiles .dotfiles.bak
+  git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
   
   # Link Dotfiles
   symlink() {
@@ -148,7 +148,6 @@ create_filesystem() {
 }
 
 configure_macos() {
-  local DOT="$1"
   # https://github.com/mathiasbynens/dotfiles/blob/main/.macos
 
   # Supress iTerm login message
@@ -158,7 +157,7 @@ configure_macos() {
   bat cache --build
 
   # Enable touchid for sudo
-  sudo cp -f "$DOT/.sudo_local" /etc/pam.d/sudo_local
+  sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local
 
   # Save screenshots to ~/Pictures/screenshots
   defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
@@ -183,10 +182,10 @@ main() {
   install_homebrew all
   echo "󰗡 [1/3] Homebrew & Packages Installed 󰗡"
 
-  create_filesystem Dropbox "$HOME/.dotfiles" "$HOME/.config"
+  create_filesystem Dropbox
   echo "󰗡 [2/3] Filesystem & Symlinks Created 󰗡"
   
-  configure_macos "$HOME/.dotfiles"
+  configure_macos
   echo "󰗡 [3/3] MacOS Defaults Configured 󰗡"
 
   echo "󰓒 INSTALLATION COMPLETE 󰓒"
