@@ -90,9 +90,8 @@ create_filesystem() {
   for dir in "$directories[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
 
   # Create Dotfiles directory
-  cd "$HOME"
-  [ -d .dotfiles ] && mv -f .dotfiles .dotfiles.bak
-  git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
+  [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
+  cd "$HOME" && git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
   
   # Link Dotfiles
   symlink() {
