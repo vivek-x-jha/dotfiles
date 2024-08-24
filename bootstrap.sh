@@ -18,8 +18,7 @@ is_installed() {
 
 install_homebrew() {
   local install_type="$1" # all, formulas, casks
-
-  local arch=$(uname -m)
+  local architecture=$(uname -m)
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
 
   # Test: Xcode installed
@@ -28,13 +27,13 @@ install_homebrew() {
     exit 1
   fi
 
-  # Test: Architecture arm64 or x86_64
-  if [[ "$arch" == "arm64" ]]; then
+  # Test: architecture arm64 or x86_64
+  if [[ "$architecture" == "arm64" ]]; then
     binary_path='/opt/homebrew/bin'
-  elif [[ "$arch" == "x86_64" ]]; then
+  elif [[ "$architecture" == "x86_64" ]]; then
     binary_path='/usr/local/bin'
   else
-    echo "Unknown architecture: $arch"
+    echo "Unknown architecture: $architecture"
     echo 'Requires arm64 or x86_64'
     exit 1
   fi
