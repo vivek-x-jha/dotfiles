@@ -49,6 +49,7 @@ update-icons() {
   fileicon set /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
   fileicon set /Applications/Neovim.app               ~/Pictures/icons/neovim.png
   fileicon set /Applications/Slack.app                ~/Pictures/icons/slack.png
+  fileicon set /Applications/Spotify.app              ~/Pictures/icons/spotify.png
   fileicon set /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
 
   fileicon set ~/Developer                            ~/Pictures/icons/developer.png
