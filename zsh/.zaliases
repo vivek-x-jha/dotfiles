@@ -45,6 +45,9 @@ alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 alias update-brew='brew update && brew upgrade && brew cleanup && brew doctor && brew bundle dump --force --file="$DOT/.Brewfile"'
 alias update-texlive='sudo tlmgr update --self --all'
 
+# Neovim
+alias refresh-shada='mv "$XDG_DATA_HOME/nvim/shada/main.shada.tmp.x" "$XDG_DATA_HOME/nvim/shada/main.shada"'
+
 # Tmux
 alias t='tmux attach || tmux new-session'
 alias ta='tmux attach -t'
