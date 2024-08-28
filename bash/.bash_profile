@@ -15,10 +15,8 @@ export DOT="$HOME/.dotfiles"
 export TPM="$XDG_CONFIG_HOME/tmux/plugins/tpm"
 
 # Homebrew
-if [[ "$(uname -m)" == 'arm64' ]]; then
-  export HOMEBREW_BIN='/opt/homebrew/bin'
-elif [[ "$(uname -m)" == 'x86_64' ]]; then
-  export HOMEBREW_BIN='/usr/local/bin'
-fi
+[[ "$(uname -m)" == 'arm64'  ]] && export HOMEBREW_BIN='/opt/homebrew/bin'
+[[ "$(uname -m)" == 'x86_64' ]] && export HOMEBREW_BIN='/usr/local/bin'
 
+# User Configurations
 [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
