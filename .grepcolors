@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-
 export GREP_COLOR="38;5;6"

@@ -29,21 +29,21 @@ install_homebrew() {
 
   # Test: architecture arm64 or x86_64
   if [[ "$architecture" == "arm64" ]]; then
-    binary_path='/opt/homebrew/bin'
+    local homebrew_bin='/opt/homebrew/bin'
   elif [[ "$architecture" == "x86_64" ]]; then
-    binary_path='/usr/local/bin'
+    local homebrew_bin='/usr/local/bin'
   else
     echo "Unknown architecture: $architecture"
     echo 'Requires arm64 or x86_64'
     exit 1
   fi
 
-  echo "[+ brew: Binary Path @ $binary_path]"
+  echo "[+ brew: Binary Path @ $homebrew_bin]"
 
   # Test: Homebrew installed and in PATH
   if ! is_installed brew; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$("$binary_path/brew" shellenv)"
+    eval "$("$homebrew_bin/brew" shellenv)"
   fi
   
   # Installs packages
