@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Jupyter settings
 export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
 

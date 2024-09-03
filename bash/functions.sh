@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
 take() {
-  if [ -d "$1" ]; then
-      cd "$1"
-  else
-      mkdir "$1"
-      cd "$1"
-  fi
+  [ -d "$1" ] || mkdir -p "$1"
+  cd "$1"
 }
 
 condainit() {
