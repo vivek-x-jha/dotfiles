@@ -1,1 +1,3 @@
+#!/usr/bin/env zsh
+
 gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"

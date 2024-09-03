@@ -1,4 +1,6 @@
- tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
- printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
- print "·······································"} \
- { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
+#!/usr/bin/env zsh
+
+tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
+printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
+print "·······································"} \
+{ printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
