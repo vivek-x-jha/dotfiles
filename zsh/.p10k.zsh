@@ -43,13 +43,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR=' '    # separate segments with a space
 
   # Add an empty line before each prompt.
-  declare -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
-
-  # Add a horizontal dotted line before each prompt
-  declare -g POWERLEVEL9K_SHOW_RULER=true
-  declare -g POWERLEVEL9K_RULER_CHAR='·'
-  declare -g POWERLEVEL9K_RULER_FOREGROUND=$grey
-  declare -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
+  declare -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
   # Configurations related to transient and instant prompt and reloading
   declare -g POWERLEVEL9K_TRANSIENT_PROMPT=always
