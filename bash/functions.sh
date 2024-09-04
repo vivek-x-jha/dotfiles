@@ -39,6 +39,7 @@ update-icons() {
 
   sudo fileicon set /Applications/Tex                 ~/Pictures/icons/tex.png
 
+  fileicon set /Applications/1Password.app            ~/Pictures/icons/1password.png
   fileicon set /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
   fileicon set /Applications/iTerm.app                ~/Pictures/icons/very-colorful-terminal-icons/indigo-to-light.icns
   fileicon set /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
