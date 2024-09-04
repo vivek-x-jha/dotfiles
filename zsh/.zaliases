@@ -17,7 +17,7 @@ alias cl='clear'
 alias grep='grep --color=auto'
 alias l='eza --all --long --git --icons=always --group-directories-first'
 alias tree='tree -aCI ".editorconfig|.git|.github|.gitignore|.shellcheckrc|LICENSE"'
-alias vfp='fzf --layout=reverse --preview="bat -p --color=always {}" | xargs -r nvim'
+alias vfp='fzf | xargs -r nvim'
 
 # Printing Long List Format
 alias list-path='print -l "${path[@]}"'

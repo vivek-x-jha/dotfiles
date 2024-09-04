@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+export FZF_DEFAULT_OPTS='
+  --layout=reverse
+  --preview="bat -p --color=always {}"
+  --color=fg:#5c617d,hl:#c9ccfb,fg+:#cccccc,bg+:-1,hl+:#8ae7c5,gutter:-1
+  --color=info:#c9ccfb,border:#313244,prompt:#f096b7,pointer:#eccef0,marker:#d2fd9d,spinner:#f3b175,header:#d79921
+  --prompt="  "
+  --pointer="▶"
+  --marker="*"
+'
