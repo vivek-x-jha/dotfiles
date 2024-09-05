@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+# TODO configure specific border colors
+# TODO hoist --color header:italic to FZF_DEFAULT_OPTS
+# TODO debug FZF_DEFAULT_OPTS_FILE not respecting shell integration commands
+
+export FZF_DEFAULT_OPTS="
+  --color fg:#5c617d,hl:#c9ccfb,fg+:#cccccc,bg+:-1,hl+:#8ae7c5,gutter:-1
+  --color info:#c9ccfb,border:#5c617d,prompt:#f096b7,pointer:#f096b7,marker:#d2fd9d,spinner:#eccef0,header:#f3b175
+  --layout reverse
+  --marker '*'
+  --pointer '▶'
+  --prompt '  '
+  --tmux center
+  --walker-skip .git,node_modules,target
+"
+
+export FZF_CTRL_T_OPTS="
+  --header 'Preview File Content'
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'
+  --color header:italic
+"
+
+export FZF_CTRL_R_OPTS="
+  --header 'Press CTRL-Y to copy command into clipboard'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+"
+
+export FZF_ALT_C_OPTS="
+  --header 'Change Directory to...'
+  --preview 'tree -aC {}'
+  --color header:italic
+"

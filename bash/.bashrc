@@ -32,7 +32,7 @@ source "$DOT/bash/functions.sh"
 # Enable Fuzzy Finder
 command -v fzf &> /dev/null || brew install fzf 
 eval "$(fzf --bash)"
-source "$DOT/.fzf"
+source "$DOT/.fzfrc"
 
 # Log Database History
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
