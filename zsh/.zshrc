@@ -68,7 +68,7 @@ for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
 # Enable Fuzzy Finder
 command -v fzf &> /dev/null || brew install fzf 
 source <(fzf --zsh)
-source "$DOT/.fzf"
+source "$DOT/.fzfrc"
 
 # Enable Fast Directory Movement
 [ -d "$(brew --prefix)/share/z.lua" ] || brew install z.lua
