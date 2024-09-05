@@ -38,7 +38,7 @@ alias update-brew='brew update && brew upgrade && brew cleanup && brew doctor &&
 alias update-texlive='sudo tlmgr update --self --all'
 
 # Neovim
-alias refresh-shada='mv "$XDG_DATA_HOME/nvim/shada/main.shada.tmp.x" "$XDG_DATA_HOME/nvim/shada/main.shada"'
+alias refresh-shada='mv "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
 # Tmux
 alias t='tmux attach || tmux new-session'
