@@ -24,8 +24,8 @@ fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]
 # Configure colorschemes for ls, eza, & grep
 command -v gdircolors &>/dev/null || brew install coreutils
 eval "$(gdircolors "$DOT/.dircolors")"
-source "$DOT/.ezacolors"
-source "$DOT/.grepcolors"
+source "$DOT/.ezarc"
+source "$DOT/.greprc"
 
 # Configure shell plugins, theme, aliases, & options
 zsh_plugins=(

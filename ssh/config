@@ -1,6 +1,6 @@
 Include /etc/ssh/ssh_config.d/*
 Host *
-  UserKnownHostsFile ~/.dotfiles/.ssh/known_hosts
+  UserKnownHostsFile ~/.dotfiles/ssh/known_hosts
   SendEnv LANG LC_*
   AddKeysToAgent yes
   UseKeychain yes

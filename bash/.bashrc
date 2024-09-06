@@ -16,8 +16,8 @@ shopt -s autocd
 command -v gdircolors &> /dev/null || brew install coreutils
 eval "$(gdircolors "$DOT/.dircolors")"
 
-source "$DOT/.ezacolors"
-source "$DOT/.grepcolors"
+source "$DOT/.ezarc"
+source "$DOT/.greprc"
 
 # Configure Shell Core Plugins
 source "$XDG_DATA_HOME/blesh/ble.sh"

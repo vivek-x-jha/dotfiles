@@ -29,4 +29,7 @@ export TPM="$XDG_CONFIG_HOME/tmux/plugins/tpm"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
-export PYTHONSTARTUP="$DOT/.pythonstartup"
+
+# Python
+export PYTHONUSERDIR="$DOT/python"
+export PYTHONSTARTUP="$PYTHONUSERDIR/startup.py"
