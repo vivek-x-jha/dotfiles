@@ -33,10 +33,3 @@ source "$DOT/bash/functions.sh"
 command -v fzf &> /dev/null || brew install fzf 
 eval "$(fzf --bash)"
 source "$DOT/.fzfrc"
-
-# Log Database History
-export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
-export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
-
-# Initialize Python Environments
-export PYTHONSTARTUP="$DOT/.pythonstartup"
