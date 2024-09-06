@@ -34,17 +34,15 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   # Prompt segments
   declare -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    # ================[ Line #1 ]=========================
-    context                   # user@host
-    dir                       # current directory
-    vcs                       # git status
-    command_execution_time    # previous command duration
-    status                    # previous command exit code
-    # ================[ Line #2 ]=========================
-    newline                   # \n
-    virtualenv                # python virtual environment
-    pyenv                     # python virtual environment
-    prompt_char               # prompt symbol
+    context                # user@host
+    virtualenv             # python virtual environment
+    pyenv                  # python virtual environment
+    dir                    # current directory
+    vcs                    # git status
+    command_execution_time # previous command duration
+    status                 # previous command exit code
+    newline                # \n
+    prompt_char            # prompt symbol
   )
   declare -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=
 
@@ -61,7 +59,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_INSTANT_PROMPT=quiet                   # supress instant prompt errors
   declare -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true                # prevent option editing on the fly
 
-  # Configure context: user@hostname
+  # Configure context:
   declare -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION= # hide unless running w/ privileges or ssh
   declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE="%F{$white}%n%f%F{$grey}@%m%f"          # running ssh with privileges
   declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE="%F{$grey}%n@%m%f"      # running ssh w/o privileges
@@ -211,14 +209,14 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
   
   # Configure virtualenv
-  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$bright_blue
+  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$yellow
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false      # hide version number
   declare -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false          # hide when pyenv active
   declare -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='' # no icon
   
   # Configure pyenv
-  declare -g POWERLEVEL9K_PYENV_FOREGROUND=$bright_blue
+  declare -g POWERLEVEL9K_PYENV_FOREGROUND=$yellow
   declare -g POWERLEVEL9K_PYENV_SOURCES=(shell local global) # hide python version if not from given sources
   declare -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=false     # hide python version if same as global
   declare -g POWERLEVEL9K_PYENV_SHOW_SYSTEM=true             # hide python version if same as system
@@ -235,7 +233,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$white      # Last Command Success Color
   declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$red     # Last Command Fail Color
 
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{$yellow}%f' # Vim Command Mode Symbol
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{3}%f' # Vim Command Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'              # Vim Visual Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='▶'              # Vim Overwrite Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
