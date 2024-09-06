@@ -1,12 +1,15 @@
-# INSTANT PROMPT
+# Invoke Instant Prompt
 [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
-# HISTORY
+# History
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=12000
 SAVEHIST=10000
 
-# COMPLETIONS
+export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
+export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
+
+# Completions
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.dotfiles/ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
@@ -21,8 +24,8 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 [ -d "$(brew --prefix)/share/zsh-completions" ] || brew install zsh-completions
 fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
-# Configure Colorschmes: ls/eza/grep + variables
-command -v gdircolors &> /dev/null || brew install coreutils
+# Configure Colorschmes: ls/eza/grep
+command -v gdircolors &>/dev/null || brew install coreutils
 eval "$(gdircolors "$DOT/.dircolors")"
 source "$DOT/.ezacolors"
 source "$DOT/.grepcolors"
@@ -34,7 +37,6 @@ zsh_plugins=(
   autosuggestions
   syntax-highlighting
 )
-
 for plugin in "${zsh_plugins[@]}"; do
   [ -d "$(brew --prefix)/share/zsh-$plugin" ] || brew install "zsh-$plugin"
   source "$(brew --prefix)/share/zsh-$plugin/$plugin.zsh"
@@ -42,13 +44,13 @@ done
 
 # Configure Shell Theme, Aliases, & Syntax-Highlighting
 zsh_configs=(
-  .p10k.zsh
+  .p10k.zsh                 # Powerlevel10k config
   .zaliases
   .zsh-syntax-highlighting
 )
 for config in "${zsh_configs[@]}"; do source "$ZDOTDIR/$config"; done
 
-# Configure Shell Options
+# Configure shell options
 zsh_options=(
   always_to_end
   auto_cd
@@ -62,21 +64,17 @@ zsh_options=(
 )
 setopt "${zsh_options[@]}" 
 
-# Autoload Shell Functions
+# Autoload shell functions
 for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
 
-# Enable Fuzzy Finder
-command -v fzf &> /dev/null || brew install fzf 
+# Configure fzf and enable shell integration
+command -v fzf &>/dev/null || brew install fzf 
 source <(fzf --zsh)
 source "$DOT/.fzfrc"
 
-# Enable Fast Directory Movement
+# Configure z.lua
 [ -d "$(brew --prefix)/share/z.lua" ] || brew install z.lua
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
 
-# Log Database History
-export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
-export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
-
-# Initialize Python Environments
+# Initialize Python nvi
 export PYTHONSTARTUP="$DOT/.pythonstartup"
