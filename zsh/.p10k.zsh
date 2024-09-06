@@ -68,9 +68,6 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   # Configure dir
   declare -g POWERLEVEL9K_DIR_FOREGROUND=$blue
-  declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v2    # Enable special styling for non-writable directories
-  declare -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3    # Enable special styling for non-writable or non-existent directories
-  declare -g POWERLEVEL9K_LOCK_ICON='%F{$red}∅%f'
 
   # Configure vcs
   declare -g POWERLEVEL9K_VCS_LOADING_TEXT=              # disable async loading indicator

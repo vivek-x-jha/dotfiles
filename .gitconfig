@@ -26,9 +26,9 @@
 	untracked = red
 	added = green
 	changed = yellow
-	branch = blue
+	branch = magenta
 	nobranch = red
-	remoteBranch = magenta
+	remoteBranch = blue
 	localBranch = cyan
 	unmerged = yellow
 [color "diff"]
@@ -39,8 +39,8 @@
 	context = brightblack
 [color "decorate"]
 	HEAD = green
-	branch = blue
-	remoteBranch = magenta
+	branch = magenta
+	remoteBranch = blue
 	tag = brightyellow
 	stash = cyan
 	grafted = red
