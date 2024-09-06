@@ -13,7 +13,7 @@
 [core]
 	editor = nvim
 	pager = less
-	sshCommand = ssh -F ~/.dotfiles/.ssh/config
+	sshCommand = ssh -F ~/.dotfiles/ssh/config
 [color]
 	diff = auto
 	status = auto
