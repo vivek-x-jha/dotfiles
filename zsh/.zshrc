@@ -57,6 +57,7 @@ zsh_options=(
   hist_ignore_dups
   hist_ignore_space
   inc_append_history
+  interactive_comments
   share_history
 )
 setopt "${zsh_options[@]}" 
