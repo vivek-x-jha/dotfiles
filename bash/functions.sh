@@ -34,7 +34,27 @@ combinepdf() {
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
 }
 
-update-icons() {
+list_colors() {
+  echo 'grey          #313244'
+  echo 'black         #cccccc'
+  echo 'red           #ffc7c7'
+  echo 'green         #ceffc9'
+  echo 'yellow        #fdf7cd'
+  echo 'blue          #c4effa'
+  echo 'magenta       #eccef0'
+  echo 'cyan          #8ae7c5'
+  echo 'white         #f4f3f2'
+  echo 'brightblack   #5c617d'
+  echo 'brightred     #f096b7'
+  echo 'brightgreen   #d2fd9d'
+  echo 'brightyellow  #f3b175'
+  echo 'brightblue    #80d7fe'
+  echo 'brightmagenta #c9ccfb'
+  echo 'brightcyan    #47e7b1'
+  echo 'brightwhite   #ffffff'
+}
+
+update_icons() {
   command -v fileicon &> /dev/null || return
 
   sudo fileicon set /Applications/Tex                 ~/Pictures/icons/tex.png

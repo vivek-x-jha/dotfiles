@@ -1,5 +1,6 @@
 # Set History
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
+export HISTTIMEFORMAT="%F %T "
 
 # Configure Shell Options
 shopt -s autocd
@@ -17,7 +18,6 @@ eval "$(gdircolors "$DOT/.dircolors")"
 
 source "$DOT/.ezacolors"
 source "$DOT/.grepcolors"
-source "$DOT/.colorscheme"
 
 # Configure Shell Core Plugins
 source "$XDG_DATA_HOME/blesh/ble.sh"

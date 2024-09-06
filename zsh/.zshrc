@@ -26,7 +26,6 @@ command -v gdircolors &> /dev/null || brew install coreutils
 eval "$(gdircolors "$DOT/.dircolors")"
 source "$DOT/.ezacolors"
 source "$DOT/.grepcolors"
-source "$DOT/.colorscheme"
 
 # Configure Shell Core Plugins
 zsh_plugins=(
