@@ -3,8 +3,8 @@
 # TODO debug FZF_DEFAULT_OPTS_FILE not respecting shell integration commands
 
 export FZF_DEFAULT_OPTS="
-  --color fg:#5c617d,hl:#c9ccfb,fg+:#cccccc,bg+:-1,hl+:#8ae7c5,gutter:-1
-  --color info:#c9ccfb,border:#5c617d,prompt:#f096b7,pointer:#f3b175,marker:#d2fd9d,spinner:#eccef0,header:#eccef0
+  --color bg+:-1,fg:#5c617d,fg+:#cccccc,gutter:-1,hl:#c9ccfb,hl+:#8ae7c5
+  --color border:#5c617d,header:#eccef0,info:#c9ccfb,marker:#f3b175,pointer:#d2fd9d,prompt:#f096b7,spinner:#c4effa
   --color header:italic
   --header 'Preview File Content'
   --layout reverse
