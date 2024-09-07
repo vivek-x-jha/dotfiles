@@ -69,4 +69,4 @@ source "$DOT/.fzfrc"
 
 # Configure z.lua
 [ -d "$(brew --prefix)/share/z.lua" ] || brew install z.lua
-eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once fzf)"
+eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once)"
