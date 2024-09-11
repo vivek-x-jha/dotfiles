@@ -1,19 +1,13 @@
 [init]
 	defaultBranch = main
 [user]
-	name = Vivek Jha
-	email = vivek.x.jha@gmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK5uQ9GkYPNNwckcMPr9U1bR/yy+hDO1XPAiSCNtC7G
-[gpg]
-	format = ssh
-[gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-[commit]
-	gpgsign = true
+	name = Ari Ganapathi
+	email = ariganapathi7@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMRqqb6qyKXeIKrDSaLwZqkGumn7oLVGmTvUKKu0NNm
 [core]
 	editor = nvim
 	pager = less
-	sshCommand = ssh -F ~/.dotfiles/ssh/config
+	sshCommand = ssh -F ~/.ssh/config
 [color]
 	diff = auto
 	status = auto
