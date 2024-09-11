@@ -1,5 +1,4 @@
-Include /etc/ssh/ssh_config.d/*
-Host *
-  UserKnownHostsFile ~/.ssh/known_hosts
-  SendEnv LANG LC_*
+Host github.com
   AddKeysToAgent yes
+  # UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
