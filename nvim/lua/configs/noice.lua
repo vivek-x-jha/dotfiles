@@ -8,7 +8,6 @@ require("noice").setup({
     },
     signature = { enabled = false }
   },
-  -- you can enable a preset for easier configuration
   presets = {
     command_palette = true, -- position the cmdline and popupmenu together
     long_message_to_split = true, -- long messages will be sent to a split
