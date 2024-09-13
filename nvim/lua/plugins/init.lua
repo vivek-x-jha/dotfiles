@@ -9,13 +9,6 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
-
-  {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
@@ -39,6 +32,13 @@ return {
   },
 
   {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require "configs.lspconfig"
+    end,
+  },
+
+  {
     "rcarriga/nvim-notify",
     module = "notify",
     config = function()
@@ -52,21 +52,15 @@ return {
     event = "VeryLazy",
     config = function()
       require("nvim-surround").setup({})
-    end
+    end,
   },
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "html",
-        "css",
-        "python",
-      },
-    },
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("configs.treesitter")
+    end,
   },
 
   {
@@ -79,10 +73,10 @@ return {
       "TmuxNavigatePrevious",
     },
     keys = {
-      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
