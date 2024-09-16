@@ -57,6 +57,12 @@ list_colors() {
   for color in "${colorscheme[@]}"; do echo "$color"; done
 }
 
+rmds() {
+  local directory="${1:-$HOME}"
+  find "$directory" -name .DS_Store -type f -delete &>/dev/null
+  return 0
+}
+
 update_icons() {
   command -v fileicon &> /dev/null || return
 
