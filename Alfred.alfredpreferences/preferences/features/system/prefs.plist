@@ -4,5 +4,7 @@
 <dict>
 	<key>ejectKeywordEnabled</key>
 	<true/>
+	<key>quitallConfirm</key>
+	<true/>
 </dict>
 </plist>

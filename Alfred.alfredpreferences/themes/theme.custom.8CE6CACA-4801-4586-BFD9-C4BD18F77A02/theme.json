@@ -10,9 +10,9 @@
       },
       "shortcut" : {
         "size" : 17,
-        "colorSelected" : "#FFF6C7FF",
+        "colorSelected" : "#F096B7FF",
         "font" : "System",
-        "color" : "#80D7FEFF"
+        "color" : "#81FF65FF"
       },
       "backgroundSelected" : "#1E1D2CFF",
       "text" : {
@@ -32,9 +32,9 @@
       "spacing" : 8,
       "text" : {
         "size" : 34,
-        "colorSelected" : "#A8FFE6FF",
+        "colorSelected" : "#F3B175FF",
         "font" : "System Light",
-        "color" : "#C6FF8FFF"
+        "color" : "#C3EFFAFF"
       },
       "background" : "#1E1D2CFF",
       "roundness" : 0,
