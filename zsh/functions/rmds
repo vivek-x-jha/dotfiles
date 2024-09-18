@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+local directory="${1:-$HOME}"
+find "$directory" -name .DS_Store -type f -delete &>/dev/null
+return 0
