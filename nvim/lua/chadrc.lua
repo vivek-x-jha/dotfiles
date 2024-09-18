@@ -1,17 +1,17 @@
--- This file needs to have same structure as nvconfig.lua 
+-- This file needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/ui/blob/v2.5/lua/nvconfig.lua
--- Please read that file to know all available options :( 
+-- Please read that file to know all available options :(
 
 ---@type ChadrcConfig
 local M = {}
 
 M.base46 = {
-	theme = "catppuccin",
+  theme = "catppuccin",
   transparency = true,
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+  -- hl_override = {
+  -- 	Comment = { italic = true },
+  -- 	["@comment"] = { italic = true },
+  -- },
   changed_themes = {
     catppuccin = {
       base_16 = {
@@ -35,15 +35,15 @@ M.base46 = {
       base_30 = {
         white = "#f4f3f2",
         darker_black = "#212030", -- nvtree background
-        black = "#212030", --  statusline icon background and editor active tab background and telescope background
-        black2 = "#252435", -- highlights nvtree current line and inactive tabs bg, and cheat sheet sections
-        one_bg = "#313244", -- status line background
-        one_bg2 = "#5c617d", -- highlights current scope and nvtree divider
-        one_bg3 = "#212030", -- highlights toggle button and telescope borders
-        grey = "#5c617d", -- line number fg
-        grey_fg = "#5c617d", -- comments
+        black = "#212030",        --  statusline icon background and editor active tab background and telescope background
+        black2 = "#252435",       -- highlights nvtree current line and inactive tabs bg, and cheat sheet sections
+        one_bg = "#313244",       -- status line background
+        one_bg2 = "#5c617d",      -- highlights current scope and nvtree divider
+        one_bg3 = "#212030",      -- highlights toggle button and telescope borders
+        grey = "#5c617d",         -- line number fg
+        grey_fg = "#5c617d",      -- comments
         grey_fg2 = "#555464",
-        light_grey = "#605f6f", -- inactive tabs fg
+        light_grey = "#605f6f",   -- inactive tabs fg
         red = "#FFC7C7",
         baby_pink = "#f096b7",
         pink = "#ECCEF0",
@@ -81,26 +81,6 @@ M.base46 = {
       { "  Bookmarks", "<Space> + m a", "Telescope marks" },
       { "  Themes", "<Space> + t h", "Telescope themes" },
       { "  Mappings", "<Space> + c h", "NvCheatsheet" },
-    },
-  },
-  noice = {
-    lsp = {
-      -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-      override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-        ["config.lsp.hover.enabled" ] = false,
-        ["config.lsp.signature.enabled" ] = false,
-      },
-    },
-    -- you can enable a preset for easier configuration
-    presets = {
-      bottom_search = true, -- use a classic bottom cmdline for search
-      command_palette = true, -- position the cmdline and popupmenu together
-      long_message_to_split = true, -- long messages will be sent to a split
-      inc_rename = false, -- enables an input dialog for inc-rename.nvim
-      lsp_doc_border = false, -- add a border to hover docs and signature help
     },
   },
 }

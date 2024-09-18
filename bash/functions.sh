@@ -57,6 +57,12 @@ list_colors() {
   for color in "${colorscheme[@]}"; do echo "$color"; done
 }
 
+rmds() {
+  local directory="${1:-$HOME}"
+  find "$directory" -name .DS_Store -type f -delete &>/dev/null
+  return 0
+}
+
 update_icons() {
   command -v fileicon &> /dev/null || return
 
@@ -64,7 +70,7 @@ update_icons() {
 
   fileicon set /Applications/1Password.app            ~/Pictures/icons/1password.png
   fileicon set /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
-  fileicon set /Applications/iTerm.app                ~/Pictures/icons/very-colorful-terminal-icons/indigo-to-light.icns
+  fileicon set /Applications/iTerm.app                ~/Pictures/icons/iterm2.png
   fileicon set /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
   fileicon set /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
   fileicon set /Applications/Neovim.app               ~/Pictures/icons/neovim.png

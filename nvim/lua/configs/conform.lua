@@ -1,4 +1,4 @@
-local options = {
+require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
     -- css = { "prettier" },
@@ -10,6 +10,4 @@ local options = {
     timeout_ms = 500,
     lsp_fallback = true,
   },
-}
-
-return options
+})
