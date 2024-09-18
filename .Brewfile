@@ -42,7 +42,7 @@ brew "less"
 brew "lynx"
 brew "mycli"
 brew "protobuf"
-brew "mysql", restart_service: true
+brew "mysql"
 brew "mysql@8.4"
 brew "neovim"
 brew "node"
