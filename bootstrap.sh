@@ -121,6 +121,7 @@ create_filesystem() {
     ../.dotfiles/bat             "$XDG_CONFIG"      bat 
     ../.dotfiles/btop            "$XDG_CONFIG"      btop
     ../.dotfiles/gh              "$XDG_CONFIG"      gh  
+    ../.dotfiles/glow            "$XDG_CONFIG"      glow
     ../.dotfiles/nvim            "$XDG_CONFIG"      nvim
     ../.dotfiles/.starship.toml  "$XDG_CONFIG"      starship.toml
     ../.dotfiles/tmux            "$XDG_CONFIG"      tmux
