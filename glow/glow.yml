@@ -1,0 +1,8 @@
+# style name or JSON path (default "auto")
+style: "$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
+# mouse support (TUI-mode only)
+mouse: true
+# use pager to display markdown
+pager: true
+# word-wrap at width
+width: 80
