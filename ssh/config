@@ -1,4 +1,6 @@
-Host github.com
+Host *
+  UserKnownHostsFile ~/.dotfiles/ssh/known_hosts
+  SendEnv LANG LC_*
   AddKeysToAgent yes
   # UseKeychain yes
   IdentityFile ~/.dotfiles/ssh/id_ed25519
