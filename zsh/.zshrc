@@ -63,9 +63,15 @@ setopt "${zsh_options[@]}"
 for func in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$func")"; done
 
 # Configure fzf and enable shell integration
-command -v fzf &>/dev/null || brew install fzf 
+command -v fzf &>/dev/null || brew install fzf
 source <(fzf --zsh)
 source "$DOT/.fzfrc"
+
+# Configure Atuin
+command -v atuin &>/dev/null || brew install atuin
+eval "$(atuin init zsh)"
+bindkey '^e' atuin-search
+bindkey '^[[A' atuin-up-search
 
 # Configure z.lua
 [ -d "$(brew --prefix)/share/z.lua" ] || brew install z.lua
