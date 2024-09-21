@@ -37,7 +37,8 @@ condainit() {
 }
 
 list_colors() {
-  # TODO Centralize responsibility of color ansi
+
+  local table_width=36
   local colorscheme=(
     black         '#cccccc'  '\e[0;30m' 
     red           '#ffc7c7'  '\e[0;31m' 
@@ -58,50 +59,29 @@ list_colors() {
     grey          '#313244'  '\e[38;5;248m'
   )
 
-  local reset='\e[0m'
-
-  local black='\e[0;30m'
-  local red='\e[0;31m'
-  local green='\e[0;32m'
-  local yellow='\e[0;33m'
-  local blue='\e[0;34m'
-  local magenta='\e[0;35m'
-  local cyan='\e[0;36m'
-  local white='\e[0;37m'
-
-  local brightblack='\e[0;90m'
-  local brightred='\e[0;91m'
-  local brightgreen='\e[0;92m'
-  local brightyellow='\e[0;93m'
-  local brightblue='\e[0;94m'
-  local brightmagenta='\e[0;95m'
-  local brightcyan='\e[0;96m'
-  local brightwhite='\e[0;97m'
-
-  local grey='\e[38;5;248m'
-
-  local table_width=36
-
+  # Create Color Table Header
   print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
 
   print_separator
   printf "${white}%-14s %-8s %-8s${reset}\n" 'Color' 'Hex' 'Ansi'
   print_separator
 
+  # Create Color Table Rows
   for ((i=0; i<${#colorscheme[@]}; i+=3)); do
     local name="${colorscheme[i]}"
     local hex="${colorscheme[i+1]}"
     local ansi="${colorscheme[i+2]}"
 
+    # Indirect Substitution of name as color variable
     printf "${!name}%-14s %-8s %-8s${reset}\n" "$name" "$hex" "$ansi"
   done
   echo
 }
 
 update_icons() {
-  # TODO Centralize responsibility of color ansi
   command -v fileicon &>/dev/null || brew install fileicon
 
+  local table_width=57
   declare -A dir_icons=(
 
     # Apps                                 Icons
@@ -130,29 +110,7 @@ update_icons() {
 
   )
 
-  local reset='\e[0m'
-
-  local black='\e[0;30m'
-  local red='\e[0;31m'
-  local green='\e[0;32m'
-  local yellow='\e[0;33m]'
-  local blue='\e[0;34m'
-  local magenta='\e[0;35m'
-  local cyan='\e[0;36m'
-  local white='\e[0;37m'
-
-  local brightblack='\e[0;90m'
-  local brightred='\e[0;91m'
-  local brightgreen='\e[0;92m'
-  local brightyellow='\e[0;93m]'
-  local brightblue='\e[0;94m'
-  local brightmagenta='\e[0;95m'
-  local brightcyan='\e[0;96m'
-  local brightwhite='\e[0;97m'
-
-  local table_width=57
-
-  # Header
+  # Create Directory-Icons Table Header
   print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
 
   print_separator
@@ -165,6 +123,7 @@ update_icons() {
   local dir_count="${#sorted_dirs[@]}"
   local success_count=$dir_count
 
+  # Create Directory-Icons Table Rows
   for dir in "${sorted_dirs[@]}"; do
 
     local icon=${dir_icons["$dir"]}
@@ -183,9 +142,9 @@ update_icons() {
 
   done
 
+  # Footer
   local fail_count=$(($dir_count-$success_count))
 
-  # Footer
   print_separator
   printf "${green}%-2s ${brightblack}%-37s ${reset}\n" "$success_count" 'Folder icon(s) updated successfully'
   [ $fail_count -eq 0 ] || printf "${red}%-2s ${brightblack}%-37s ${reset}\n" "$fail_count" 'Folder icon(s) failed to update'
