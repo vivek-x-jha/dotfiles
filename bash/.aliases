@@ -30,7 +30,7 @@ alias list-shells='tail -n +5 /etc/shells'
 alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 
 # Update Management
-alias update-brew='brew update && brew upgrade && brew cleanup && brew doctor && brew bundle dump --force --file="$DOT/.Brewfile"'
+alias update-brew='brew upgrade && brew cu -af && brew cleanup && brew doctor && brew bundle dump --force --file="$DOT/.Brewfile"'
 alias update-icons=update_icons
 alias update-texlive='sudo tlmgr update --self --all'
 
