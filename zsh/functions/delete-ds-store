@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+local dir="${1:-/}"
+
+command -v fd &>/dev/null || brew install fd
+fd -HI '.DS_Store' "$dir" -x rm -f {} &>/dev/null
+# return 0

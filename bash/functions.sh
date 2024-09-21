@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 take() {
-  [ -d "$1" ] || mkdir -p "$1"
-  cd "$1"
+  local dir="$1"
+
+  [ -d "$dir" ] || mkdir -p "$dir"
+  cd "$dir"
 }
 
 condainit() {
-   # Jupyter settings
-  export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
+  # export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
 
   # Initialize conda environment
   __conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -36,31 +37,63 @@ combinepdf() {
 
 list_colors() {
   local colorscheme=(
-    'grey          #313244'
-    'black         #cccccc'
-    'red           #ffc7c7'
-    'green         #ceffc9'
-    'yellow        #fdf7cd'
-    'blue          #c4effa'
-    'magenta       #eccef0'
-    'cyan          #8ae7c5'
-    'white         #f4f3f2'
-    'brightblack   #5c617d'
-    'brightred     #f096b7'
-    'brightgreen   #d2fd9d'
-    'brightyellow  #f3b175'
-    'brightblue    #80d7fe'
-    'brightmagenta #c9ccfb'
-    'brightcyan    #47e7b1'
-    'brightwhite   #ffffff'
+    black         '#cccccc'  '\e[0;30m' 
+    red           '#ffc7c7'  '\e[0;31m' 
+    green         '#ceffc9'  '\e[0;32m' 
+    yellow        '#fdf7cd'  '\e[0;33m' 
+    blue          '#c4effa'  '\e[0;34m' 
+    magenta       '#eccef0'  '\e[0;35m' 
+    cyan          '#8ae7c5'  '\e[0;36m' 
+    white         '#f4f3f2'  '\e[0;37m'
+    brightblack   '#5c617d'  '\e[0;90m'
+    brightred     '#f096b7'  '\e[0;91m'
+    brightgreen   '#d2fd9d'  '\e[0;92m'
+    brightyellow  '#f3b175'  '\e[0;93m'
+    brightblue    '#80d7fe'  '\e[0;94m'
+    brightmagenta '#c9ccfb'  '\e[0;95m'
+    brightcyan    '#47e7b1'  '\e[0;96m'
+    brightwhite   '#ffffff'  '\e[0;97m'
+    grey          '#313244'  '\e[38;5;248m'
   )
-  for color in "${colorscheme[@]}"; do echo "$color"; done
-}
 
-rmds() {
-  local directory="${1:-$HOME}"
-  find "$directory" -name '.DS_Store' -type f -delete &>/dev/null
-  return 0
+  local reset='\e[0m'
+
+  local black='\e[0;30m'
+  local red='\e[0;31m'
+  local green='\e[0;32m'
+  local yellow='\e[0;33m'
+  local blue='\e[0;34m'
+  local magenta='\e[0;35m'
+  local cyan='\e[0;36m'
+  local white='\e[0;37m'
+
+  local brightblack='\e[0;90m'
+  local brightred='\e[0;91m'
+  local brightgreen='\e[0;92m'
+  local brightyellow='\e[0;93m'
+  local brightblue='\e[0;94m'
+  local brightmagenta='\e[0;95m'
+  local brightcyan='\e[0;96m'
+  local brightwhite='\e[0;97m'
+
+  local grey='\e[38;5;248m'
+
+  local table_width=36
+
+  print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
+
+  print_separator
+  printf "${white}%-14s %-8s %-8s${reset}\n" 'Color' 'Hex' 'Ansi'
+  print_separator
+
+  for ((i=0; i<${#colorscheme[@]}; i+=3)); do
+    local name="${colorscheme[i]}"
+    local hex="${colorscheme[i+1]}"
+    local ansi="${colorscheme[i+2]}"
+
+    printf "${!name}%-14s %-8s %-8s${reset}\n" "$name" "$hex" "$ansi"
+  done
+  echo
 }
 
 update_icons() {
@@ -89,27 +122,38 @@ update_icons() {
     ~/Dropbox/content                      ~/Pictures/icons/content.png
     ~/Pictures/icons                       ~/Pictures/icons/png.png
     ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
-    ~/Pictures/wallpaper                  ~/Pictures/icons/wallpaper.png
+    ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
     ~/.dotfiles                            ~/Pictures/icons/gear.png
 
   )
 
-  # Header
+  local reset='\e[0m'
+
   local black='\e[0;30m'
   local red='\e[0;31m'
   local green='\e[0;32m'
+  local yellow='\e[0;33m]'
   local blue='\e[0;34m'
   local magenta='\e[0;35m'
+  local cyan='\e[0;36m'
+  local white='\e[0;37m'
+
   local brightblack='\e[0;90m'
+  local brightred='\e[0;91m'
+  local brightgreen='\e[0;92m'
+  local brightyellow='\e[0;93m]'
   local brightblue='\e[0;94m'
   local brightmagenta='\e[0;95m'
-  local reset='\e[0m'
+  local brightcyan='\e[0;96m'
+  local brightwhite='\e[0;97m'
 
   local table_width=57
 
+  # Header
   print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
 
-  printf "%-1s ${brightblue}%-37s ${magenta}%-5s${reset}\n" '' 'Folder' '~/Pictures/icons/'
+  print_separator
+  printf "%-1s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
   print_separator
 
   # Sort keys while preserving spaces in the directories
@@ -119,17 +163,18 @@ update_icons() {
   local success_count=$dir_count
 
   for dir in "${sorted_dirs[@]}"; do
+
     local icon=${dir_icons["$dir"]}
     local expanded_dir=$(echo "$dir" | sed "s|^$HOME|~|")  # Replace $HOME with ~ for output
     local basename_dir=$(basename "$expanded_dir")
     local basename_icon=$(basename "$icon")
 
     if sudo fileicon set "$dir" "$icon" &> /dev/null; then
-      printf "${green}%-1s ${blue}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
+      printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
     elif [[ $basename_dir == 'Mimestream.app' ]]; then
-      printf "${green}%-1s ${blue}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
+      printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
     else
-      printf "${red}%-1s ${blue}%-37s ${brightmagenta}%-5s${reset}\n"   "" "$expanded_dir" "$basename_icon"
+      printf "${red}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n"   "" "$expanded_dir" "$basename_icon"
       ((success_count--))
     fi
 
