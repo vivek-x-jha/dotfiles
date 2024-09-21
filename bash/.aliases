@@ -23,7 +23,6 @@ alias vf='fzf --preview "bat -n --color=always {}" | xargs -r nvim'
 # Printing Long List Format
 alias list-aliases='alias | sort'
 alias list-colors=list_colors
-alias list-colors256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
 alias list-env-vars='env | sort'
 alias list-path='tr ":" "\n" <<< "$PATH"'
 alias list-users='dscl . list /Users | grep -v "^_"'
