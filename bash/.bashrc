@@ -18,6 +18,7 @@ eval "$(gdircolors "$DOT/.dircolors")"
 
 source "$DOT/.ezarc"
 source "$DOT/.greprc"
+source "$DOT/.colors"
 
 # Configure Shell Core Plugins
 source "$XDG_DATA_HOME/blesh/ble.sh"

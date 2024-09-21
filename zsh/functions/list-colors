@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
-# TODO Centralize responsibility of color ansi
+local table_width=36
 local colorscheme=(
+
   black         '#cccccc'  '\e[0;30m' 
   red           '#ffc7c7'  '\e[0;31m' 
   green         '#ceffc9'  '\e[0;32m' 
@@ -10,6 +11,7 @@ local colorscheme=(
   magenta       '#eccef0'  '\e[0;35m' 
   cyan          '#8ae7c5'  '\e[0;36m' 
   white         '#f4f3f2'  '\e[0;37m'
+
   brightblack   '#5c617d'  '\e[0;90m'
   brightred     '#f096b7'  '\e[0;91m'
   brightgreen   '#d2fd9d'  '\e[0;92m'
@@ -18,39 +20,18 @@ local colorscheme=(
   brightmagenta '#c9ccfb'  '\e[0;95m'
   brightcyan    '#47e7b1'  '\e[0;96m'
   brightwhite   '#ffffff'  '\e[0;97m'
+
   grey          '#313244'  '\e[38;5;248m'
 )
 
-local reset='\e[0m'
-
-local black='\e[0;30m'
-local red='\e[0;31m'
-local green='\e[0;32m'
-local yellow='\e[0;33m'
-local blue='\e[0;34m'
-local magenta='\e[0;35m'
-local cyan='\e[0;36m'
-local white='\e[0;37m'
-
-local brightblack='\e[0;90m'
-local brightred='\e[0;91m'
-local brightgreen='\e[0;92m'
-local brightyellow='\e[0;93m'
-local brightblue='\e[0;94m'
-local brightmagenta='\e[0;95m'
-local brightcyan='\e[0;96m'
-local brightwhite='\e[0;97m'
-
-local grey='\e[38;5;248m'
-
-local table_width=36
-
+# Create Color Table Header
 print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
 
 print_separator
 printf "${white}%-14s %-8s %-8s${reset}\n" 'Color' 'Hex' 'Ansi'
 print_separator
 
+# Create Color Table Rows
 for ((i=1; i<${#colorscheme[@]}; i+=3)); do
   local name="${colorscheme[i]}"
   local hex="${colorscheme[i+1]}"
