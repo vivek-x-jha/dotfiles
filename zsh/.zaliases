@@ -36,13 +36,15 @@ alias list-shells='tail -n +5 /etc/shells'
 alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias list-users='dscl . list /Users | grep -v "^_"'
 
-alias list-colors16='for c in {0..7}; do b=$((c+8)); print -P - "%F{$c}$c%f -> %F{$b}$b%f"; done'
 alias list-colors256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
 alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 
 # Version Management
 alias update-brew='brew update && brew upgrade && brew cleanup && brew doctor && brew bundle dump --force --file="$DOT/.Brewfile"'
 alias update-texlive='sudo tlmgr update --self --all'
+
+# Deletion
+alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
 
 # Neovim
 alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
