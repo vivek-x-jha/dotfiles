@@ -20,4 +20,4 @@ export brightmagenta='\e[0;95m'
 export brightcyan='\e[0;96m'
 export brightwhite='\e[0;97m'
 
-export grey='\e[38;5;248m'
+export grey='\e[38;5;242m'
