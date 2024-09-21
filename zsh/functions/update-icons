@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+# TODO Centralize responsibility of color ansi
 command -v fileicon &> /dev/null || brew install fileicon
 
 declare -A dir_icons=(

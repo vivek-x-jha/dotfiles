@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+# TODO Centralize responsibility of color ansi
 local colorscheme=(
   black         '#cccccc'  '\e[0;30m' 
   red           '#ffc7c7'  '\e[0;31m' 

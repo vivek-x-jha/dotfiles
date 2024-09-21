@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+# TODO standardize with header
 tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
 printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
 print "·······································"} \

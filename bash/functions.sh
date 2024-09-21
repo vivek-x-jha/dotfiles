@@ -7,6 +7,18 @@ take() {
   cd "$dir"
 }
 
+combinepdf() {
+  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
+}
+
+tmux_list_sessions() {
+  # TODO standardize with header
+  tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
+  printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
+  print "·······································"} \
+  { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
+}
+
 condainit() {
   # export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
 
@@ -24,18 +36,8 @@ condainit() {
   unset __conda_setup
 }
 
-tmux_list_sessions() {
-  tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
-  printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
-  print "·······································"} \
-  { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
-}
-
-combinepdf() {
-  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
-}
-
 list_colors() {
+  # TODO Centralize responsibility of color ansi
   local colorscheme=(
     black         '#cccccc'  '\e[0;30m' 
     red           '#ffc7c7'  '\e[0;31m' 
@@ -97,6 +99,7 @@ list_colors() {
 }
 
 update_icons() {
+  # TODO Centralize responsibility of color ansi
   command -v fileicon &>/dev/null || brew install fileicon
 
   declare -A dir_icons=(
