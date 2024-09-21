@@ -45,3 +45,5 @@
 	stash = cyan
 	grafted = red
 	hash = magenta
+[maintenance]
+	repo = /Users/mubuntu/.dotfiles
