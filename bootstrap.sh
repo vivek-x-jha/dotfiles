@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
+: '
+Boostrap script to build MacOS Development Environment
 
-# Boostrap script to build MacOS Development Environment
-#
-# System Version:   macOS 15.0
-# Kernel Version:   Darwin 23.6.0
-# Chip:             Apple M2 Max
-# Package Manager:  Homebrew
-# Cloud Service:    Dropbox
+System Version:   macOS 15.0
+Kernel Version:   Darwin 24.0.0
+Chip:             Apple M2 Max
+Package Manager:  Homebrew
+Cloud Service:    Dropbox
+'
 
 is_installed() {
   local cmd="$1"
-  if ! command -v "$cmd" &> /dev/null; then
+  if ! command -v "$cmd" &>/dev/null; then
     echo "[? $cmd: NOT INSTALLED]"
     return 1
   fi
