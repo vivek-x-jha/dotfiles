@@ -4,6 +4,11 @@ Current pipeline to make the ultimate TUI!
 
 ## Neovim
 
+### Lazy
+
+- [ ] Learn what each conf param means
+- [ ] opt vs setup
+
 ### Telescope
 
 - [ ] Create config
@@ -15,6 +20,13 @@ Current pipeline to make the ultimate TUI!
 
 - [ ] Configure Style to be compact like tmux
 - [ ] Change Git Indicators to color and clean
+
+### LSP
+
+- [ ] Learn how LSP works
+- [ ] Setup LSP for Python
+- [ ] Setup "LSP" for bash/zsh
+- [ ] Configure lsp-config
 
 ### Config Structure
 
@@ -34,5 +46,4 @@ Current pipeline to make the ultimate TUI!
 
 ### ChatGPT
 
-- Debug CLI tool
-
+- [ ] Debug CLI tool
