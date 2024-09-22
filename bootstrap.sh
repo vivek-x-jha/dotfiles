@@ -2,10 +2,10 @@
 
 # Boostrap script to build MacOS Development Environment
 #
-# System Version:   macOS 14.6.1 (23G93)
+# System Version:   macOS 15.0
 # Kernel Version:   Darwin 23.6.0
 # Chip:             Apple M2 Max
-# Padckage Manager: Homebrew
+# Package Manager:  Homebrew
 # Cloud Service:    Dropbox
 
 is_installed() {
@@ -20,42 +20,32 @@ install_homebrew() {
   local install_type="$1" # all, formulas, casks
   local architecture=$(uname -m)
   local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
+  local brewinstaller='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
 
   # Test: Xcode installed
-  if ! is_installed xcode-select; then
-    echo 'Homebrew requires Xcode to run: xcode-select --install'
-    exit 1
-  fi
+  is_installed xcode-select || { echo 'Homebrew requires Xcode to run: xcode-select --install'; exit 1; }
 
   # Test: architecture arm64 or x86_64
-  if [[ "$architecture" == "arm64" ]]; then
-    local homebrew_bin='/opt/homebrew/bin'
-  elif [[ "$architecture" == "x86_64" ]]; then
-    local homebrew_bin='/usr/local/bin'
-  else
-    echo "Unknown architecture: $architecture"
-    echo 'Requires arm64 or x86_64'
-    exit 1
-  fi
+  case "$architecture" in
+    'arm64' ) local homebrew_bin='/opt/homebrew/bin' ;;
+    'x86_64') local homebrew_bin='/usr/local/bin' ;;
+           *) echo "Unknown architecture $architecture: Requires arm64 or x86_64"; exit 1 ;;
+  esac
+
+  # Test: Homebrew installed and in PATH
+  is_installed brew || /bin/bash -c "$(curl -fsSL "$brewinstaller")"
+  eval "$("$homebrew_bin/brew" shellenv)"
 
   echo "[+ brew: Binary Path @ $homebrew_bin]"
 
-  # Test: Homebrew installed and in PATH
-  if ! is_installed brew; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$("$homebrew_bin/brew" shellenv)"
-  fi
-  
   # Installs packages
-  if [ "$install_type" == 'all' ]; then
-    curl -fsSL "$brewfile" | brew bundle --file=-
-  elif [ "$install_type" == 'formulas' ]; then
-    curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
-    curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install
-  elif [ "$install_type" == 'casks' ]; then
-    curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
-    curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install --cask
-  fi
+  case "$install_type" in
+    'all'     ) curl -fsSL "$brewfile" | brew bundle --file=- ;;
+    'formulas') curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
+                curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install ;;
+    'casks'   ) curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
+                curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install --cask ;;
+  esac
 
   # Run Diagnostics
   brew update
@@ -113,36 +103,39 @@ create_filesystem() {
   }
 
   local symlinks=(
-    .dotfiles/bash/.bash_profile "$HOME"            .bash_profile
-    .dotfiles/bash/.bashrc       "$HOME"            .bashrc      
-    .dotfiles/vscode/.vscode     "$HOME"            .vscode    
-    .dotfiles/zsh/.zshenv        "$HOME"            .zshenv       
 
-    ../.dotfiles/bat             "$XDG_CONFIG"      bat 
-    ../.dotfiles/btop            "$XDG_CONFIG"      btop
-    ../.dotfiles/gh              "$XDG_CONFIG"      gh  
-    ../.dotfiles/glow            "$XDG_CONFIG"      glow
-    ../.dotfiles/nvim            "$XDG_CONFIG"      nvim
-    ../.dotfiles/.starship.toml  "$XDG_CONFIG"      starship.toml
-    ../.dotfiles/tmux            "$XDG_CONFIG"      tmux
-    ../.dotfiles/yazi            "$XDG_CONFIG"      yazi
-    
-    ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust" config.toml
-    ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"  config
+    .dotfiles/bash/.bash_profile "$HOME"             .bash_profile
+    .dotfiles/bash/.bashrc       "$HOME"             .bashrc      
+    .dotfiles/vscode/.vscode     "$HOME"             .vscode    
+    .dotfiles/zsh/.zshenv        "$HOME"             .zshenv       
 
-    "$CLOUD/developer"           "$HOME"            Developer
+    ../.dotfiles/bat             "$XDG_CONFIG"       bat 
+    ../.dotfiles/btop            "$XDG_CONFIG"       btop
+    ../.dotfiles/gh              "$XDG_CONFIG"       gh  
+    ../.dotfiles/glow            "$XDG_CONFIG"       glow
+    ../.dotfiles/nvim            "$XDG_CONFIG"       nvim
+    ../.dotfiles/.starship.toml  "$XDG_CONFIG"       starship.toml
+    ../.dotfiles/tmux            "$XDG_CONFIG"       tmux
+    ../.dotfiles/yazi            "$XDG_CONFIG"       yazi
 
-    "../$CLOUD/content"          "$HOME/Movies"     content
-    "../$CLOUD/icons"            "$HOME/Pictures"   icons
-    "../$CLOUD/screenshots"      "$HOME/Pictures"   screenshots
-    "../$CLOUD/wallpapers"       "$HOME/Pictures"   wallpapers
-    "../$CLOUD/education"        "$HOME/Documents"  education
-    "../$CLOUD/finances"         "$HOME/Documents"  finances
+    ../../.dotfiles/.atuin.toml  "$XDG_CONFIG/atuin" config.toml
+    ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust"  config.toml
+    ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"   config
+
+    "$CLOUD/developer"           "$HOME"             Developer
+
+    "../$CLOUD/content"          "$HOME/Movies"      content
+    "../$CLOUD/icons"            "$HOME/Pictures"    icons
+    "../$CLOUD/screenshots"      "$HOME/Pictures"    screenshots
+    "../$CLOUD/wallpapers"       "$HOME/Pictures"    wallpapers
+    "../$CLOUD/education"        "$HOME/Documents"   education
+    "../$CLOUD/finances"         "$HOME/Documents"   finances
 
     zsh-autocomplete.plugin.zsh  "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
     zsh-autosuggestions.zsh      "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
     zsh-syntax-highlighting.zsh  "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
   )
+
   for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 }
 
@@ -166,9 +159,6 @@ configure_macos() {
 
   # Finder: show hidden files by default
   defaults write com.apple.finder AppleShowAllFiles -bool true
-
-  # Finder: Display full POSIX path as window title
-  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
   # Finder: Disable the warning when changing a file extension
   defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
