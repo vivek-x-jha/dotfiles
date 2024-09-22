@@ -46,4 +46,4 @@
 	grafted = red
 	hash = magenta
 [maintenance]
-	repo = /Users/mubuntu/.dotfiles
+	; repo = ~/.dotfiles
