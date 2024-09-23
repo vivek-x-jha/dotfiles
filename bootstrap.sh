@@ -11,10 +11,7 @@ Cloud Service:    Dropbox
 
 is_installed() {
   local cmd="$1"
-  if ! command -v "$cmd" &>/dev/null; then
-    echo "[? $cmd: NOT INSTALLED]"
-    return 1
-  fi
+  command -v "$cmd" &>/dev/null || { echo "[? $cmd: NOT INSTALLED]"; return 1; }
 }
 
 install_homebrew() {
@@ -39,13 +36,23 @@ install_homebrew() {
 
   echo "[+ brew: Binary Path @ $homebrew_bin]"
 
-  # Installs packages
+  # Install packages
+  brew_install () {
+    local filter="$1"
+    local cmd="$2"
+    local pkgs="curl -fsSL $brewfile"
+
+    [[ "$install_type" == 'all' ]] && { $pkgs | brew bundle --file=-; }
+
+    "$pkgs" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
+  } 
+
   case "$install_type" in
-    'all'     ) curl -fsSL "$brewfile" | brew bundle --file=- ;;
-    'formulas') curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
-                curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install ;;
-    'casks'   ) curl -fsSL "$brewfile" | grep '^tap '  | awk '{print $2}' | xargs -n1 brew tap
-                curl -fsSL "$brewfile" | grep '^brew ' | awk '{print $2}' | xargs brew install --cask ;;
+    'all'     ) brew_install ;;
+    'formulas') brew_install '^tap '  '-n1 brew tap'
+                brew_install '^brew ' 'brew install' ;;
+    'casks'   ) brew_install '^tap '  '-n1 brew tap'
+                brew_install '^brew ' 'brew install --cask' ;;
   esac
 
   # Run Diagnostics
