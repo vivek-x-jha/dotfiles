@@ -42,9 +42,11 @@ install_homebrew() {
     local cmd="$2"
     local pkgs="curl -fsSL $brewfile"
 
-    [[ "$install_type" == 'all' ]] && { $pkgs | brew bundle --file=-; }
-
-    "$pkgs" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
+    if [[ "$install_type" == 'all' ]]; then
+      "$pkgs" | brew bundle --file=-
+    else
+      "$pkgs" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
+    fi
   } 
 
   case "$install_type" in
