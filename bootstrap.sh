@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 : '
-Boostrap script to build MacOS Development Environment
+Bootstrap script to build MacOS Development Environment
 
 System Version:   macOS 15.0
 Kernel Version:   Darwin 24.0.0
@@ -9,38 +9,45 @@ Package Manager:  Homebrew
 Cloud Service:    Dropbox
 '
 
+declare repo='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main'
+
+# Load ANSI color variables
+eval "$(curl -fsSL $repo/.colors)"
+
+# Util condiional func 
 is_installed() {
   local cmd="$1"
-  command -v "$cmd" &>/dev/null || { echo "[? $cmd: NOT INSTALLED]"; return 1; }
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "${red}[! $cmd: NOT INSTALLED]"${reset}
+    return 1
+  fi
 }
 
 install_homebrew() {
   local install_type="$1" # all, formulas, casks
-  local architecture=$(uname -m)
-  local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/.Brewfile'
   local brewinstaller='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
 
   # Test: Xcode installed
-  is_installed xcode-select || { echo 'Homebrew requires Xcode to run: xcode-select --install'; exit 1; }
+  is_installed xcode-select || { echo 'Please run: xcode-select --install'; exit 1; }
 
   # Test: architecture arm64 or x86_64
-  case "$architecture" in
+  case "$(uname -m)" in
     'arm64' ) local homebrew_bin='/opt/homebrew/bin' ;;
     'x86_64') local homebrew_bin='/usr/local/bin' ;;
-           *) echo "Unknown architecture $architecture: Requires arm64 or x86_64"; exit 1 ;;
+           *) echo "${red}[! Unknown architecture - requires arm64 or x86_64]${reset}"; exit 1 ;;
   esac
 
   # Test: Homebrew installed and in PATH
   is_installed brew || /bin/bash -c "$(curl -fsSL "$brewinstaller")"
   eval "$("$homebrew_bin/brew" shellenv)"
 
-  echo "[+ brew: Binary Path @ $homebrew_bin]"
+  echo "${green}[+ brew: $homebrew_bin]{$reset}"
 
   # Install packages
   brew_install () {
     local filter="$1"
     local cmd="$2"
-    local pkgs="curl -fsSL $brewfile"
+    local pkgs="curl -fsSL $repo/.Brewfile"
 
     if [[ "$install_type" == 'all' ]]; then
       "$pkgs" | brew bundle --file=-
@@ -150,28 +157,29 @@ create_filesystem() {
 }
 
 configure_macos() {
-  # https://github.com/mathiasbynens/dotfiles/blob/main/.macos
 
-  # Supress iTerm login message
-  touch .hushlogin
-
-  # Build Bat Config
-  bat cache --build
-
-  # Enable touchid for sudo
-  sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local
-
-  # Save screenshots to ~/Pictures/screenshots
+  # Screenshots
   defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
 
-  # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-  defaults write com.apple.finder QuitMenuItem -bool true
+  # Dock 
+  defaults write com.apple.dock autohide-delay -float 0.1                     # speed up dock animation
+  defaults write com.apple.dock autohide-time-modifier -int 0
+  defaults write com.apple.dock appswitcher-all-displays -bool true           # show app switcher on all screens
+  defaults write com.apple.dock expose-animation-duration -float 0.1          # shorten mission conrol animation
 
-  # Finder: show hidden files by default
-  defaults write com.apple.finder AppleShowAllFiles -bool true
+  # Finder
+  defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"         # use list view
+  defaults write com.apple.finder QuitMenuItem -bool true                     # quit via ⌘ + Q
+  defaults write com.apple.finder AppleShowAllFiles -bool true                # show hidden files
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # disable file ext change warning
+  
+  # Authentication
+  sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local              # enable touchid for sudo
 
-  # Finder: Disable the warning when changing a file extension
-  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+  # 3rd Party Apps
+  touch "$HOME/.hushlogin"                                                    # surpress iterm2 login message
+  bat cache --build                                                           # load bat themes
+
 }
 
 main() {
