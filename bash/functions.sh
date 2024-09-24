@@ -87,6 +87,7 @@ update_icons() {
     # Apps                                 Icons
     /Applications/1Password.app            ~/Pictures/icons/1password.png
     /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
+    /Applications/Discord.app              ~/Pictures/icons/discord-macos.png
     /Applications/Figma.app                ~/Pictures/icons/figma.png
     /Applications/Firefox.app              ~/Pictures/icons/firefox-macos.png
     /Applications/Google\ Chrome.app       ~/Pictures/icons/chrome.png
