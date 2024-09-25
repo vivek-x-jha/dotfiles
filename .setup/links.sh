@@ -18,7 +18,7 @@ directories=(
 for dir in "$directories[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
 
 # Backup dotfiles directory
-[ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
+cp -Rf "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
 
 # Link dotfiles and cloud folders
 symlinks=(
