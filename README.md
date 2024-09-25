@@ -19,6 +19,13 @@ git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
 
 *Optional:* after installation, run ```rm -rf "$HOME/.dotfiles/.git"``` and begin your own version control!
 
+## Post-Installation
+
+Add alfred workflows
+```op signin```
+always allow for git-osx-keychain
+
+
 ## Features
 
 ### Zsh
