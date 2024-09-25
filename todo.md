@@ -2,6 +2,11 @@
 
 Current pipeline to make the ultimate TUI!
 
+## Bugs
+
+- [ ] 1password touch id
+- [ ] alfred workflows do not load
+
 ## Neovim
 
 ### Lazy
