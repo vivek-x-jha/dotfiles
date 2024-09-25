@@ -58,3 +58,4 @@ symlinks=(
 )
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
+cd "$HOME"

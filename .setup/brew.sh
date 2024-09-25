@@ -17,13 +17,12 @@ install_packages () {
     local filter="$1"
     local cmd="$2"
     local repo='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main'
-    local pkgs="curl -fsSL $repo/.Brewfile"
 
     command -v brew &>/dev/null || install_homebrew
 
     case "$install_type" in
-      'all') "$pkgs" | brew bundle --file=- ;;
-          *) "$pkgs" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
+      'all') curl -fsSL "$repo/.Brewfile" | brew bundle --file=- ;;
+          *) curl -fsSL "$repo/.Brewfile" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
     esac
   } 
 
