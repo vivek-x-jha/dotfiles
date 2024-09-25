@@ -17,10 +17,8 @@ directories=(
 )
 for dir in "$directories[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
 
-# Create dotfiles directory
+# Backup dotfiles directory
 [ -d "$HOME/.dotfiles" ] && mv -f "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
-cd "$HOME"
-git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
 
 # Link dotfiles and cloud folders
 symlinks=(
@@ -58,4 +56,3 @@ symlinks=(
 )
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
-cd "$HOME"
