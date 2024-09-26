@@ -2,10 +2,14 @@
 
 Current pipeline to make the ultimate TUI!
 
-## Bugs
+## SSH
 
-- [x] 1password touch id
-- [ ] alfred workflows do not load
+- [ ] create mechanism that backs up and redownloads repo via ssh 
+
+## Alfred
+
+- [ ] create mechanism to load workflows
+- [ ] save api keys for 
 
 ## Neovim
 
