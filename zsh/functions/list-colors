@@ -1,23 +1,42 @@
 #!/usr/bin/env zsh
 
-# Sourdiesel base17
+local table_width=36
 local colorscheme=(
-  'grey          #313244'
-  'black         #cccccc'
-  'red           #ffc7c7'
-  'green         #ceffc9'
-  'yellow        #fdf7cd'
-  'blue          #c4effa'
-  'magenta       #eccef0'
-  'cyan          #8ae7c5'
-  'white         #f4f3f2'
-  'brightblack   #5c617d'
-  'brightred     #f096b7'
-  'brightgreen   #d2fd9d'
-  'brightyellow  #f3b175'
-  'brightblue    #80d7fe'
-  'brightmagenta #c9ccfb'
-  'brightcyan    #47e7b1'
-  'brightwhite   #ffffff'
+
+  black         '#cccccc'  '\e[0;30m' 
+  red           '#ffc7c7'  '\e[0;31m' 
+  green         '#ceffc9'  '\e[0;32m' 
+  yellow        '#fdf7cd'  '\e[0;33m' 
+  blue          '#c4effa'  '\e[0;34m' 
+  magenta       '#eccef0'  '\e[0;35m' 
+  cyan          '#8ae7c5'  '\e[0;36m' 
+  white         '#f4f3f2'  '\e[0;37m'
+
+  brightblack   '#5c617d'  '\e[0;90m'
+  brightred     '#f096b7'  '\e[0;91m'
+  brightgreen   '#d2fd9d'  '\e[0;92m'
+  brightyellow  '#f3b175'  '\e[0;93m'
+  brightblue    '#80d7fe'  '\e[0;94m'
+  brightmagenta '#c9ccfb'  '\e[0;95m'
+  brightcyan    '#47e7b1'  '\e[0;96m'
+  brightwhite   '#ffffff'  '\e[0;97m'
+
+  grey          '#313244'  '\e[38;5;248m'
 )
-print -l "${colorscheme[@]}"
+
+# Create Color Table Header
+print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
+
+print_separator
+printf "${white}%-14s %-8s %-8s${reset}\n" 'Color' 'Hex' 'Ansi'
+print_separator
+
+# Create Color Table Rows
+for ((i=1; i<${#colorscheme[@]}; i+=3)); do
+  local name="${colorscheme[i]}"
+  local hex="${colorscheme[i+1]}"
+  local ansi="${colorscheme[i+2]}"
+
+  # Indirect Substitution of name as color variable
+  printf "${(P)${:-$name}}%-14s %-8s %-8s${reset}\n" "$name" "$hex" "$ansi"
+done

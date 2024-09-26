@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+export FZF_DEFAULT_COMMAND="fd --type f"
+
 export FZF_DEFAULT_OPTS="
   --color       bg+:-1
   --color       border:#5c617d
@@ -32,6 +34,8 @@ export FZF_CTRL_T_OPTS="
 export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --header 'Press CTRL-Y to copy command into clipboard'
+  --preview 'echo {2..} | bat --color=always -pl sh'
+  --preview-window 'wrap:up:3'
 "
 
 export FZF_ALT_C_OPTS="

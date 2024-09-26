@@ -2,22 +2,70 @@
 
 command -v fileicon &> /dev/null || brew install fileicon
 
-sudo fileicon set /Applications/Tex                 ~/Pictures/icons/tex.png
+local table_width=57
+declare -A dir_icons=(
 
-fileicon set /Applications/1Password.app            ~/Pictures/icons/1password.png
-fileicon set /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
-fileicon set /Applications/iTerm.app                ~/Pictures/icons/iterm2.png
-fileicon set /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
-fileicon set /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
-fileicon set /Applications/Neovim.app               ~/Pictures/icons/neovim.png
-fileicon set /Applications/Slack.app                ~/Pictures/icons/slack.png
-fileicon set /Applications/Spotify.app              ~/Pictures/icons/spotify.png
-fileicon set /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
+  # Apps                                 Icons
+  /Applications/1Password.app            ~/Pictures/icons/1password.png
+  /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
+  /Applications/Discord.app              ~/Pictures/icons/discord-macos.png
+  /Applications/Figma.app                ~/Pictures/icons/figma.png
+  /Applications/Firefox.app              ~/Pictures/icons/firefox-macos.png
+  /Applications/Google\ Chrome.app       ~/Pictures/icons/chrome.png
+  /Applications/iTerm.app                ~/Pictures/icons/iterm2.png
+  /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
+  /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
+  /Applications/Neovim.app               ~/Pictures/icons/neovim.png
+  /Applications/Slack.app                ~/Pictures/icons/slack.png
+  /Applications/Spotify.app              ~/Pictures/icons/spotify.png
+  /Applications/Tex                      ~/Pictures/icons/tex.png
+  /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
 
-fileicon set ~/Developer                            ~/Pictures/icons/developer.png
-fileicon set ~/Downloads                            ~/Pictures/icons/download.png
-fileicon set ~/Dropbox/content                      ~/Pictures/icons/content.png
-fileicon set ~/Pictures/icons                       ~/Pictures/icons/png.png
-fileicon set ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
-fileicon set ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
-fileicon set ~/.dotfiles                            ~/Pictures/icons/gear.png
+  # Folders                              Icons
+  ~/Developer                            ~/Pictures/icons/developer.png
+  ~/Downloads                            ~/Pictures/icons/download.png
+  ~/Dropbox/content                      ~/Pictures/icons/content.png
+  ~/Pictures/icons                       ~/Pictures/icons/png.png
+  ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
+  ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
+  ~/.dotfiles                            ~/Pictures/icons/gear.png
+)
+
+# Create Directory-Icons Table Header
+print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
+
+print_separator
+printf "%-1s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
+print_separator
+
+# Sort keys while preserving spaces in the directories
+local sorted_dirs=("${(@f)$(print -lo ${(k)dir_icons})}")
+
+local dir_count="${#sorted_dirs[@]}"
+local success_count=$dir_count
+
+# Create Directory-Icons Table Rows
+for dir in "${sorted_dirs[@]}"; do
+
+  icon=${dir_icons[$dir]}
+  expanded_dir=$(echo "$dir" | sed "s|^$HOME|~|")  # Replace $HOME with ~ for output
+  basename_dir=$(basename "$expanded_dir")
+  basename_icon=$(basename "$icon")
+
+  if sudo fileicon set "$dir" "$icon" &>/dev/null; then
+    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
+  elif [[ $basename_dir == 'Mimestream.app' ]]; then
+    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
+  else
+    printf "${red}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n"   "" "$expanded_dir" "$basename_icon"
+    ((success_count--))
+  fi
+
+done
+
+# Footer
+local fail_count=$(($dir_count-$success_count))
+
+print_separator
+printf "${green}%-2s ${brightblack}%-37s${reset}\n" "$success_count" 'Folder icon(s) updated successfully'
+[ $fail_count -eq 0 ] || printf "${red}%-2s ${brightblack}%-37s${reset}\n" "$fail_count" 'Folder icon(s) failed to update'

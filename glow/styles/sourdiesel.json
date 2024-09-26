@@ -68,8 +68,7 @@
     "underline": true
   },
   "link_text": {
-    "color": "#c4effa",
-    "bold": true
+    "color": "#ffc7c7"
   },
   "image": {
     "color": "#5c617d",
@@ -80,7 +79,8 @@
     "format": "Image: {{.text}} →"
   },
   "code": {
-    "color": "#d2fd9d"
+    "color": "#c9ccfb",
+    "background_color": "#313244"
   },
   "code_block": {
     "color": "#ff9e64",
@@ -124,7 +124,7 @@
         "color": "#c4effa"
       },
       "name_tag": {
-        "color": "#2ac3de"
+        "color": "#f4f3f2"
       },
       "name_attribute": {
         "color": "#d2fd9d"
@@ -133,14 +133,16 @@
         "color": "#c4effa"
       },
       "name_constant": {
-        "color": "#bb9af7"
+        "color": "#f4f3f2"
       },
       "name_decorator": {
         "color": "#d2fd9d"
       },
-      "name_exception": {},
+      "name_exception": {
+        "color": "#ffc7c7"
+      },
       "name_function": {
-        "color": "#d2fd9d"
+        "color": "#fdf7cd"
       },
       "name_other": {},
       "literal": {},
@@ -153,7 +155,7 @@
         "color": "#2ac3de"
       },
       "generic_deleted": {
-        "color": "#f7768e"
+        "color": "#ffc7c7"
       },
       "generic_emph": {
         "italic": true

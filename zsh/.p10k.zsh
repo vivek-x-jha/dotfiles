@@ -23,7 +23,6 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   [[ $ZSH_VERSION == (5.<1->*|<6->.*) ]] || return
 
   # Prompt colors
-  local grey='242'
   local black='0'
   local red='1'
   local yellow='3'
@@ -61,8 +60,8 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
   # Configure context:
   declare -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION= # hide unless running w/ privileges or ssh
-  declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE="%F{$white}%n%f%F{$grey}@%m%f"          # running ssh with privileges
-  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE="%F{$grey}%n@%m%f"      # running ssh w/o privileges
+  declare -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE="%F{$white}%n%f%F{$yellow}@%m%f"        # running ssh with privileges
+  declare -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE="%F{$green}%n@%m%f"     # running ssh w/o privileges
 
   # Configure dir
   declare -g POWERLEVEL9K_DIR_FOREGROUND=$blue
