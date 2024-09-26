@@ -2,13 +2,29 @@
 
 Checkout a fast, functional, & fun Terminal environent full of beuatiful and modern IDE features
 
+## Requiements
+
+- [x] macOS (Intel or Apple Silicon)
+- [ ] Linux Distros
+
 ## Installation
 
 Run the following:
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/bootstrap.sh)"
+cd "$HOME"
+git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
+./bootstrap.sh
 ```
+
+*Optional:* after installation, run ```rm -rf "$HOME/.dotfiles/.git"``` and begin your own version control!
+
+## Post-Installation
+
+Add alfred workflows
+```op signin```
+always allow for git-osx-keychain
+
 
 ## Features
 

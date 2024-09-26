@@ -18,6 +18,7 @@ eval "$(gdircolors "$DOT/.dircolors")"
 
 source "$DOT/.ezarc"
 source "$DOT/.greprc"
+source "$DOT/.colors"
 
 # Configure Shell Core Plugins
 source "$XDG_DATA_HOME/blesh/ble.sh"
@@ -33,3 +34,9 @@ source "$DOT/bash/functions.sh"
 command -v fzf &> /dev/null || brew install fzf 
 eval "$(fzf --bash)"
 source "$DOT/.fzfrc"
+
+# Configure Atuin
+command -v atuin &>/dev/null || brew install atuin
+eval "$(atuin init bash)"
+bind -x '"^e" : __atuin_history'
+bind -x '"^[[A": __atuin_history --shell-up-key-binding'
