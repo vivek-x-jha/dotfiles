@@ -1,7 +1,4 @@
 Host *
-  UsePAM yes
-  AcceptEnv LANG LC_*
-  Subsystem sftp  /usr/libexec/sftp-server
   UserKnownHostsFile ~/.dotfiles/ssh/known_hosts
   SendEnv LANG LC_*
   AddKeysToAgent yes
