@@ -1,8 +1,8 @@
+# Project ignore
 ssh/id*
-thinkorswim
 tmux/plugins
-zsh/.zcompdump
 
+# Program Settings
 *.sock
 .DS_Store
 *.code-workspace
@@ -24,9 +24,12 @@ Sessionx.vim
 .netrwhist
 *.bak
 *~
+
 # Auto-generated tag files
 tags
+
 # Persistent undo
 [._]*.un~
 
+# Folder icon
 Icon[^M]
