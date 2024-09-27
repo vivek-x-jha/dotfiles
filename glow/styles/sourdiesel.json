@@ -21,10 +21,10 @@
     "prefix": "󰸖 "
   },
   "h1": {
-    "color": "#ceffc9"
+    "color": "#8ae7c5"
   },
   "h2": {
-    "color": "#fdf7cd"
+    "color": "#eccef0"
   },
   "h3": {
     "color": "#c4effa"
@@ -68,18 +68,18 @@
     "underline": true
   },
   "link_text": {
-    "color": "#ffc7c7"
+    "color": "#fdf7cd"
   },
   "image": {
     "color": "#5c617d",
     "underline": true
   },
   "image_text": {
-    "color": "#ffc7c7",
+    "color": "#fdf7cd",
     "format": "Image: {{.text}} →"
   },
   "code": {
-    "color": "#c9ccfb",
+    "color": "#f096b7",
     "background_color": "#313244"
   },
   "code_block": {
