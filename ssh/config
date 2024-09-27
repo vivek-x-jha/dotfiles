@@ -1,4 +1,4 @@
-Include /etc/ssh/ssh_config.d/*
+Include /etc/ssh/sshd_config.d/*
 Host *
   UserKnownHostsFile ~/.dotfiles/ssh/known_hosts
   SendEnv LANG LC_*
