@@ -96,6 +96,7 @@ update_icons() {
     /Applications/Google\ Chrome.app       ~/Pictures/icons/chrome.png
     /Applications/iTerm.app                ~/Pictures/icons/iterm2.png
     /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
+    /Applications/KeyCastr.app             ~/Pictures/icons/keycastr.png
     /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
     /Applications/Neovim.app               ~/Pictures/icons/neovim.png
     /Applications/Slack.app                ~/Pictures/icons/slack.png
