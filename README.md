@@ -70,6 +70,7 @@ Configure 1Password as SSH Manager
 
 1. [1Password for SSH & Git](https://developer.1password.com/docs/ssh/get-started)
 1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+1. [Use 1Password to securely authenticate the GitHub CLI](https://developer.1password.com/docs/cli/shell-plugins/github/)
 
 ## Fonts
 
