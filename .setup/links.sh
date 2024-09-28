@@ -3,20 +3,30 @@
 CLOUD='Dropbox'
 XDG_CONFIG="$HOME/.config"
 XDG_CACHE="$HOME/.cache"
+XDG_DATA="$HOME/.local/share"
+XDG_STATE="$HOME/.local/state"
 
 # Create xdg & media directories
 directories=(
-  .cache
-  .config
-  .config/dust
-  .config/git
-  .local/share
-  .local/state
-  Documents
-  Movies
-  Pictures
+
+  "$XDG_CACHE"
+
+  "$XDG_CONFIG"
+  "$XDG_CONFIG/atuin"
+  "$XDG_CONFIG/dust"
+  "$XDG_CONFIG/gh"
+  "$XDG_CONFIG/git"
+  "$XDG_CONFIG/op"
+
+  "$XDG_DATA"
+  "$XDG_STATE"
+
+  "$HOME/Documents"
+  "$HOME/Movies"
+  "$HOME/Pictures"
+
 )
-for dir in "$directories[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
+for dir in "${directories[@]}"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
 # Backup dotfiles directory
 cp -Rf "$HOME/.dotfiles" "$XDG_CACHE/.dotfiles.bak"
@@ -32,7 +42,6 @@ symlinks=(
   ../.dotfiles/1Password       "$XDG_CONFIG"       1Password
   ../.dotfiles/bat             "$XDG_CONFIG"       bat 
   ../.dotfiles/btop            "$XDG_CONFIG"       btop
-  ../.dotfiles/gh              "$XDG_CONFIG"       gh  
   ../.dotfiles/glow            "$XDG_CONFIG"       glow
   ../.dotfiles/nvim            "$XDG_CONFIG"       nvim
   ../.dotfiles/.starship.toml  "$XDG_CONFIG"       starship.toml
