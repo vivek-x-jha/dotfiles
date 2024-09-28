@@ -30,6 +30,7 @@ declare -A dir_icons=(
   ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
   ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
   ~/.dotfiles                            ~/Pictures/icons/gear.png
+
 )
 
 # Create Directory-Icons Table Header
