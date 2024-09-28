@@ -40,6 +40,7 @@ symlinks=(
 
   ../../.dotfiles/.atuin.toml  "$XDG_CONFIG/atuin" config.toml
   ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust"  config.toml
+  ../../.dotfiles/.gh.yml      "$XDG_CONFIG/gh"    config.yml
   ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"   config
   ../../.dotfiles/.op          "$XDG_CONFIG/op"    plugins.sh
 
