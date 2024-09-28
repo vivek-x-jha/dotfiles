@@ -40,3 +40,6 @@ command -v atuin &>/dev/null || brew install atuin
 eval "$(atuin init bash)"
 bind -x '"^e" : __atuin_history'
 bind -x '"^[[A": __atuin_history --shell-up-key-binding'
+
+# Enable 1Password plugins
+source "$XDG_CONFIG_HOME/op/plugins.sh"

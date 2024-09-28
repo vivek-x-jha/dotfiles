@@ -41,6 +41,7 @@ symlinks=(
   ../../.dotfiles/.atuin.toml  "$XDG_CONFIG/atuin" config.toml
   ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust"  config.toml
   ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"   config
+  ../../.dotfiles/.op          "$XDG_CONFIG/op"    plugins.sh
 
   "$CLOUD/developer"           "$HOME"             Developer
 

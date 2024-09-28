@@ -74,6 +74,9 @@ eval "$(atuin init zsh)"
 bindkey '^e' atuin-search
 bindkey '^[[A' atuin-up-search
 
+# Enable 1Password plugins
+source "$XDG_CONFIG_HOME/op/plugins.sh"
+
 # Configure z.lua
 [ -d "$(brew --prefix)/share/z.lua" ] || brew install z.lua
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once)"
