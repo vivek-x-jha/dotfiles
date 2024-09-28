@@ -2,6 +2,7 @@
 
 CLOUD='Dropbox'
 XDG_CONFIG="$HOME/.config"
+XDG_CACHE="$HOME/.cache"
 
 # Create xdg & media directories
 directories=(
@@ -18,7 +19,7 @@ directories=(
 for dir in "$directories[@]"; do [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"; done
 
 # Backup dotfiles directory
-cp -Rf "$HOME/.dotfiles" "$HOME/.dotfiles.bak"
+cp -Rf "$HOME/.dotfiles" "$XDG_CACHE/.dotfiles.bak"
 
 # Link dotfiles and cloud folders
 symlinks=(
