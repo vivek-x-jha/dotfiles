@@ -29,16 +29,21 @@ fi
 # Install Homebrew and Packages 
 is_installed brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 source "$SETUP/brew.sh"
-echo '[ 1/3 Homebrew & Packages Installed]'
+echo '[ 1/4 Homebrew & Packages Installed]'
 
 # Create Filesystem and Symlinks
-is_installed git || brew install git
 source "$SETUP/links.sh"
-echo '[ 2/3 Filesystem & Symlinks Created]'
+echo '[ 2/4 Filesystem & Symlinks Created]'
+
+# Setup Git and SSH
+is_installed git || brew install git
+is_installed op  || brew install 1password-cli
+source "$SETUP/ssh-git.sh"
+echo '[ 3/4 Git and SSH Configured]'
 
 # Configure macOS options
 source "$SETUP/macos.sh"
-echo '[ 3/3 macOS Settings Configured]'
+echo '[ 4/4 macOS Settings Configured]'
 
 echo "󰓒 INSTALLATION COMPLETE 󰓒"
 cd "$HOME"
