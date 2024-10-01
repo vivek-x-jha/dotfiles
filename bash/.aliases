@@ -23,6 +23,7 @@ alias vf='fzf --preview "bat -n --color=always {}" | xargs -r nvim'
 # Printing Long List Format
 alias list-aliases='alias | sort'
 alias list-colors=list_colors
+alias list-dependencies='brew deps --tree --installed'
 alias list-env-vars='env | sort'
 alias list-path='tr ":" "\n" <<< "$PATH"'
 alias list-users='dscl . list /Users | grep -v "^_"'
