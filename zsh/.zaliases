@@ -43,7 +43,7 @@ alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 # Version Management
 alias update-brew='brew upgrade && brew cu -af && brew cleanup && brew doctor && brew bundle dump --force --file="$DOT/.Brewfile"'
 alias update-texlive='sudo tlmgr update --self --all'
-alias update-all='update-brew update-icons update-texlive'
+alias update-all='update-brew; update-icons; update-texlive'
 
 # Deletion
 alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
