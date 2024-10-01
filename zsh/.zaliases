@@ -29,6 +29,7 @@ alias list-options='print -l "${zsh_options[@]}" | sort'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 
 alias list-aliases='alias | sort'
+alias list-dependencies='brew deps --tree --installed'
 alias list-casks='print -l "$(brew list --cask)"'
 alias list-env-vars='env | sort'
 alias list-formulas='print -l "$(brew list --formula)"'
