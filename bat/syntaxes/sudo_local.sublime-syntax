@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: SudoLocal
+file_extensions:
+  - .sudo_local
+scope: source.sudo_local
+
+contexts:
+  main:
+    # Highlight comments starting with #
+    - match: '#.*$'
+      scope: comment.line
+
+    # Match keywords like sudo and local commands
+    - match: \b(sudo|local|command|auth)\b
+      scope: keyword.control
+    
+    # Match strings inside double quotes
+    - match: '"[^"]*"'
+      scope: string.quoted.double
+    
+    # Match anything after a variable-like assignment
+    - match: '\b[A-Za-z0-9_]+\s*='
+      scope: variable.assignment
+    
+    # Match numbers
+    - match: '\b\d+\b'
+      scope: constant.numeric

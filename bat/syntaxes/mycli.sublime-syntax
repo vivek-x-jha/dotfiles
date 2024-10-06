@@ -1,0 +1,40 @@
+%YAML 1.2
+---
+name: MyCLI Config
+file-extensions:
+  - .myclirc
+scope: source.myclirc
+
+contexts:
+  main:
+    # Comment lines (starting with # or ;)
+    - match: '^[#;].*'
+      scope: comment.line.myclirc
+
+    # Sections in square brackets, like [section]
+    - match: '^\[.*\]'
+      scope: entity.name.section.myclirc
+
+    # Keywords followed by equals sign (e.g., key=value)
+    - match: '^\s*([a-zA-Z0-9_-]+)\s*(=)'
+      captures:
+        1: keyword.control.myclirc
+        2: punctuation.separator.key-value.myclirc
+
+    # Values (anything after the = sign)
+    - match: '(=)\s*(.*)$'
+      captures:
+        1: punctuation.separator.key-value.myclirc
+        2: string.unquoted.myclirc
+
+    # Boolean values (e.g., true/false, yes/no)
+    - match: '\b(true|false|yes|no)\b'
+      scope: constant.language.myclirc
+
+    # Numbers (numeric values)
+    - match: '\b\d+\b'
+      scope: constant.numeric.myclirc
+
+    # Paths (assumed to be anything that looks like a path)
+    - match: '([a-zA-Z0-9_\-/\.~]+)'
+      scope: string.unquoted.path.myclirc

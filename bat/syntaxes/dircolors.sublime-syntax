@@ -1,0 +1,30 @@
+%YAML 1.2
+---
+name: Dircolors
+file_extensions:
+  - .dircolors
+scope: source.dircolors
+
+contexts:
+  main:
+    # Comment lines
+    - match: '^#.*'
+      scope: comment.line.number-sign.dircolors
+
+    # File type with color code
+    - match: '^(\w+)\s+(\d+;?)+'
+      captures:
+        1: variable.language.dircolors
+        2: constant.numeric.dircolors
+
+    # Keywords like TERM, COLOR
+    - match: '\b(TERM|COLOR)\b'
+      scope: keyword.control.dircolors
+
+    # Color codes
+    - match: '\b(\d{1,2};?)+\b'
+      scope: constant.numeric.dircolors
+
+    # General keywords
+    - match: '\b(all|RESET)\b'
+      scope: keyword.other.dircolors
