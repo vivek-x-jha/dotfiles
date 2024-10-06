@@ -1,9 +1,10 @@
-# Run `bat cache --build` after any changes to `./themes/*`
-
---theme="sourdiesel"
+# Options
+--theme='sourdiesel'
 --tabs=2
 --line-range=:1000
 --italic-text=always
-## --map-syntax "*.ino:C++"
-## --map-syntax ".ignore:Git Ignore"
-# --pager="less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse"
+
+# Syntaxes
+--map-syntax "config:SSH Config"
+--map-syntax "*.ino:C++"
+--map-syntax ".ignore:Git Ignore"

@@ -1,0 +1,42 @@
+%YAML 1.2
+---
+name: SSH Config
+scope: source.ssh-config
+
+contexts:
+  main:
+    # Match the start of a Host section (Magenta)
+    - match: '^Host\b.*'
+      scope: entity.name.section.ssh-config
+      push: host-section
+
+    # Comment lines (starting with #)
+    - match: '^#.*'
+      scope: comment.line.number-sign.ssh-config
+
+  host-section:
+    # Keywords in Host section (White)
+    - match: '\b(HostName|User|Port|IdentityFile|ForwardAgent|ProxyCommand|ServerAliveInterval|ServerAliveCountMax|LocalForward|RemoteForward|PermitLocalCommand|UseKeychain|AddKeysToAgent|StrictHostKeyChecking|LogLevel|ControlMaster|ControlPath|ControlPersist|UserKnownHostsFile|SendEnv|IdentityAgent)\b'
+      scope: keyword.control.ssh-config
+
+    # Boolean values (yes/no), LANG, and LC_* (Yellow)
+    - match: '\b(yes|no|LANG|LC_\w*)\b'
+      scope: constant.language.ssh-config
+
+    # Numeric values (for port numbers or other numbers)
+    - match: '\b\d+\b'
+      scope: constant.numeric.ssh-config
+
+    # File paths (unquoted or quoted) (Blue)
+    - match: '"([^"]*)"'
+      scope: string.quoted.double.ssh-config
+    - match: '([a-zA-Z0-9_\-/\.~]+)'
+      scope: string.unquoted.ssh-config
+
+    # Exit the Host section
+    - match: '^Host\b.*'
+      scope: entity.name.section.ssh-config
+      pop: true
+
+    # Handle the end of the file
+    - include: main
