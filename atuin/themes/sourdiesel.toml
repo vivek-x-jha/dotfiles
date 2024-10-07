@@ -1,0 +1,8 @@
+[theme]
+name = "sourdiesel"
+parent = "autumn"
+
+[colors]
+AlertInto = "green"
+Guidance = "#888844"
+Base = "magenta"
