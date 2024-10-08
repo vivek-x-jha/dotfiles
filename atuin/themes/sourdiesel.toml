@@ -1,8 +1,9 @@
 [theme]
 name = "sourdiesel"
-parent = "autumn"
+# parent = "default"
 
 [colors]
 AlertInto = "green"
 Guidance = "#888844"
 Base = "magenta"
+Title = "black"
