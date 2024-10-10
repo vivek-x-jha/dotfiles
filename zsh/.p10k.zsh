@@ -1,7 +1,5 @@
 # Powerlevel10k Theme configuration
 
-# TODO test if we need git formatter
-
 # Load base theme file
 [ -f "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" ] || brew install powerlevel10k
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
@@ -72,26 +70,26 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
 
   my_git_formatter() {
-    # Example output: main wip ⇣42⇡42 *42 merge ~42 +42 !42 ?42
-    # VCS_STATUS_* parameters are set by gitstatus plugin: https://github.com/romkatv/gitstatus/blob/master/gitstatus.plugin.zsh
+    # Example output: main WIP  42  42 *42 merge !42 +42 ~42 ?42
+    # VCS_STATUS_* parameters are set by gitstatus plugin:
+    # https://github.com/romkatv/gitstatus/blob/master/gitstatus.plugin.zsh
+
     emulate -L zsh
 
-    if [[ -n $P9K_CONTENT ]]; then
-      # If P9K_CONTENT is not empty, use it. It's either "loading" or from vcs_info (not from
-      # gitstatus plugin). VCS_STATUS_* parameters are not available in this case.
-      declare -g my_git_format=$P9K_CONTENT
-      return
-    fi
+    # Format with P9K_CONTENT when set - VCS_STATUS_* params will be unavailable
+    [[ -n $P9K_CONTENT ]] && declare -g my_git_format=$P9K_CONTENT && return
 
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local meta='%f'
       local clean='%5F'
-      local diverged='%6F'
+      local diverged='%12F'
+      local stashed='%248F'
       local modified='%3F'
       local staged='%2F'
       local untracked='%1F'
-      local conflicted='%1F'
+      local conflicted='%9F'
+
     else
       # Styling for incomplete and stale Git status.
       local meta='%f'
@@ -104,72 +102,65 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
     local res
 
+    # Truncate branch name to 'first 12 … last 12' if longer than 32 chars
     if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
       local branch=${(V)VCS_STATUS_LOCAL_BRANCH}
-      # If local branch name is at most 32 characters long, show it in full.
-      # Otherwise show the first 12 … the last 12.
-      # Tip: To always show local branch name in full without truncation, delete the next line.
-      (( $#branch > 32 )) && branch[13,-13]="…"  # <-- this line
+      (( $#branch > 32 )) && branch[13,-13]="…"
       res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}${branch//\%/%%}"
     fi
 
-    if [[ -n $VCS_STATUS_TAG
-          # Show tag only if not on a branch.
-          # Tip: To always show tag, delete the next line.
-          && -z $VCS_STATUS_LOCAL_BRANCH  # <-- this line
-        ]]; then
+    # Show tag if not on a branch
+    # Truncate tag name to 'first 12 … last 12' if longer than 32 chars
+    if [[ -n $VCS_STATUS_TAG && -z $VCS_STATUS_LOCAL_BRANCH ]]; then
       local tag=${(V)VCS_STATUS_TAG}
-      # If tag name is at most 32 characters long, show it in full.
-      # Otherwise show the first 12 … the last 12.
-      # Tip: To always show tag name in full without truncation, delete the next line.
-      (( $#tag > 32 )) && tag[13,-13]="…"  # <-- this line
+      (( $#tag > 32 )) && tag[13,-13]="…"
       res+="${meta}#${clean}${tag//\%/%%}"
     fi
 
-    # Display the current Git commit if there is no branch and no tag.
-    # Tip: To always display the current Git commit, delete the next line.
-    [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]] &&  # <-- this line
-      res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
+    # Display current Git commit if there is no branch or tag
+    [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]] && res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
 
-    # Show tracking branch name if it differs from local branch.
-    if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
-      res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
-    fi
+    # Show tracking branch name if it differs from local branch
+    [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]] && res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
 
-    # Display "wip" if the latest commit's summary contains "wip" or "WIP".
-    if [[ $VCS_STATUS_COMMIT_SUMMARY == (|*[^[:alnum:]])(wip|WIP)(|[^[:alnum:]]*) ]]; then
-      res+=" ${modified}wip"
-    fi
+    # Display "WIP" if the latest commit's summary contains "wip" or "WIP"
+    [[ $VCS_STATUS_COMMIT_SUMMARY == (|*[^[:alnum:]])(wip|WIP)(|[^[:alnum:]]*) ]] && res+=" ${modified}WIP"
 
-    # ⇣42 if behind the remote.
+    #  42 if behind the remote.
     (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${diverged} ${VCS_STATUS_COMMITS_BEHIND}"
-    # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
+
+    #  42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42
     (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && res+=" "
-    (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${diverged} ${VCS_STATUS_COMMITS_AHEAD}"
-    # ⇠42 if behind the push remote.
+    (( VCS_STATUS_COMMITS_AHEAD )) && res+="${diverged} ${VCS_STATUS_COMMITS_AHEAD}"
+
+    #  42 if behind the push remote.
     (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${diverged} ${VCS_STATUS_PUSH_COMMITS_BEHIND}"
     (( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" "
-    # ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
-    (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${diverged} ${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+
+    #  42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42
+    (( VCS_STATUS_PUSH_COMMITS_AHEAD )) && res+="${diverged} ${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+
+    # 'merge' if the repo is in an unusual state
+    [[ -n $VCS_STATUS_ACTION ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
+
+    # !42 if have merge conflicts
+    (( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}!${VCS_STATUS_NUM_CONFLICTED}"
+
+    # +42 if have staged changes
+    (( VCS_STATUS_NUM_STAGED )) && res+=" ${staged}+${VCS_STATUS_NUM_STAGED}"
+
+    # ~42 if have unstaged changes
+    (( VCS_STATUS_NUM_UNSTAGED )) && res+=" ${modified}~${VCS_STATUS_NUM_UNSTAGED}"
+
     # *42 if have stashes.
-    (( VCS_STATUS_STASHES        )) && res+=" ${diverged}⚑${VCS_STATUS_STASHES}"
-    # 'merge' if the repo is in an unusual state.
-    [[ -n $VCS_STATUS_ACTION     ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
-    # ~42 if have merge conflicts.
-    (( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}x${VCS_STATUS_NUM_CONFLICTED}"
-    # +42 if have staged changes.
-    (( VCS_STATUS_NUM_STAGED     )) && res+=" ${staged}+${VCS_STATUS_NUM_STAGED}"
-    # !42 if have unstaged changes.
-    (( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified}~${VCS_STATUS_NUM_UNSTAGED}"
-    # ?42 if have untracked files. It's really a question mark, your font isn't broken.
-    # See POWERLEVEL9K_VCS_UNTRACKED_ICON above if you want to use a different icon.
-    # Remove the next line if you don't want to see untracked files at all.
-    (( VCS_STATUS_NUM_UNTRACKED  )) && res+=" ${untracked}${(g::)POWERLEVEL9K_VCS_UNTRACKED_ICON}${VCS_STATUS_NUM_UNTRACKED}"
-    # "─" if the number of unstaged files is unknown. This can happen due to
-    # POWERLEVEL9K_VCS_MAX_INDEX_SIZE_DIRTY (see below) being set to a non-negative number lower
-    # than the number of files in the Git index, or due to bash.showDirtyState being set to false
-    # in the repository config. The number of staged and untracked files may also be unknown
-    # in this case.
+    (( VCS_STATUS_STASHES )) && res+=" ${stashed}*${VCS_STATUS_STASHES}"
+
+    # ?42 if have untracked files
+    (( VCS_STATUS_NUM_UNTRACKED )) && res+=" ${untracked}${(g::)POWERLEVEL9K_VCS_UNTRACKED_ICON}${VCS_STATUS_NUM_UNTRACKED}"
+
+    # "─" if number of unstaged files is unknown - can happen due to:
+    # POWERLEVEL9K_VCS_MAX_INDEX_SIZE_DIRTY >= 0 and < number of files in Git repo
+    # bash.showDirtyState = false in the repository config - the number of staged and untracked files may also be unknown
     (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}─"
 
     declare -g my_git_format=$res
@@ -232,8 +223,8 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$white      # Last Command Success Color
   declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$red     # Last Command Fail Color
 
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{3}%f' # Vim Command Mode Symbol
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'              # Vim Visual Mode Symbol
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{12}%f'      # Vim Command Mode Symbol
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='%F{13}%f'      # Vim Visual Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='▶'              # Vim Overwrite Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
 
