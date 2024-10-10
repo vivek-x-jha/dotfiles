@@ -30,6 +30,7 @@ contexts:
     # File paths (unquoted or quoted) (Blue)
     - match: '"([^"]*)"'
       scope: string.quoted.double.ssh-config
+
     - match: '([a-zA-Z0-9_\-/\.~]+)'
       scope: string.unquoted.ssh-config
 
