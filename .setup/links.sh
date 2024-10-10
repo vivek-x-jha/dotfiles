@@ -40,6 +40,7 @@ symlinks=(
   .dotfiles/zsh/.zshenv        "$HOME"             .zshenv       
 
   ../.dotfiles/1Password       "$XDG_CONFIG"       1Password
+  ../.dotfiles/atuin           "$XDG_CONFIG"       atuin
   ../.dotfiles/bat             "$XDG_CONFIG"       bat 
   ../.dotfiles/btop            "$XDG_CONFIG"       btop
   ../.dotfiles/glow            "$XDG_CONFIG"       glow
@@ -48,7 +49,6 @@ symlinks=(
   ../.dotfiles/tmux            "$XDG_CONFIG"       tmux
   ../.dotfiles/yazi            "$XDG_CONFIG"       yazi
 
-  ../../.dotfiles/.atuin.toml  "$XDG_CONFIG/atuin" config.toml
   ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust"  config.toml
   ../../.dotfiles/.gh.yml      "$XDG_CONFIG/gh"    config.yml
   ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"   config
