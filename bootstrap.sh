@@ -46,4 +46,4 @@ source "$SETUP/macos.sh"
 echo '[ 4/4 macOS Settings Configured]'
 
 echo "󰓒 INSTALLATION COMPLETE 󰓒"
-cd "$HOME"
+cd 
