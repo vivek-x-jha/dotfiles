@@ -88,7 +88,7 @@ update_icons() {
   declare -A dir_icons=(
 
     # Apps                                 Icons
-    /Applications/1Password.app            ~/Pictures/icons/1password.png
+    /Applications/1Password.app            ~/Pictures/icons/1password-macos.png
     /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
     /Applications/Discord.app              ~/Pictures/icons/discord-macos.png
     /Applications/Figma.app                ~/Pictures/icons/figma.png
