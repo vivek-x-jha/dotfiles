@@ -224,7 +224,7 @@ source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
   declare -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$red     # Last Command Fail Color
 
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%F{12}%f'      # Vim Command Mode Symbol
-  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='%F{13}%f'      # Vim Visual Mode Symbol
+  declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='%F{14}%f'      # Vim Visual Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='▶'              # Vim Overwrite Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
 

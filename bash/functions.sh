@@ -27,6 +27,7 @@ gsw() {
     git switch "$@"
   fi
 }
+
 condainit() {
   # export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
 
