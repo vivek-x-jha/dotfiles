@@ -78,7 +78,6 @@ alias grv='git remote --verbose'
 alias gmv='git mv'
 alias grm='git rm'
 alias gco='git checkout'
-alias gsw='git switch'
 alias gb='git branch'
 alias gmg='git merge'
 
