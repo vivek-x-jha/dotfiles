@@ -40,5 +40,5 @@ export FZF_CTRL_R_OPTS="
 
 export FZF_ALT_C_OPTS="
   --header 'Change Directory to...'
-  --preview 'tree -aC {}'
+  --preview 'tree -aCI \".git|.github\" {}'
 "

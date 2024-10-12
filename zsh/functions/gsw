@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+if (( $# == 0 )) && command -v fzf; then
+  git switch $(git branch | fzf)
+else
+  git switch "$@"
+fi

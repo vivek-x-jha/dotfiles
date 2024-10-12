@@ -16,7 +16,7 @@ alias ......="cd ../../../../.."
 alias cl='clear'
 alias grep='grep --color=auto'
 alias l='eza --all --long --git --icons=always --group-directories-first'
-alias tree='tree -aCI ".editorconfig|.git|.github|.gitignore|.shellcheckrc|LICENSE"'
+alias tree='tree -aCI ".git|.github"'
 alias vf='fzf --preview "bat -n --color=always {}" | xargs -r nvim'
 
 # Printing Long List Format
@@ -78,7 +78,6 @@ alias grv='git remote --verbose'
 alias gmv='git mv'
 alias grm='git rm'
 alias gco='git checkout'
-alias gsw='git switch'
 alias gb='git branch'
 alias gmg='git merge'
 
