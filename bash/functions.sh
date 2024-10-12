@@ -22,9 +22,9 @@ tmux_list_sessions() {
 gsw() {
   # Function overload for git switch fuzzy finding
   if (( $# == 0 )) && command -v fzf; then
-      git switch $(git branch | fzf)
-    else
-        git switch "$@"
+    git switch $(git branch | fzf --header 'Switch Local  ')
+  else
+    git switch "$@"
   fi
 }
 condainit() {
