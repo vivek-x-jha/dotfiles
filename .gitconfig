@@ -29,19 +29,19 @@
 	changed = yellow
 	branch = magenta
 	nobranch = red
-	remoteBranch = blue
+	remoteBranch = brightmagenta
 	localBranch = cyan
 	unmerged = yellow
 [color "diff"]
 	old = red
 	meta = black
 	new = green
-	frag = magenta
+	frag = blue
 	context = brightblack
 [color "decorate"]
 	HEAD = green
 	branch = magenta
-	remoteBranch = blue
+	remoteBranch = brightmagenta
 	tag = brightyellow
 	stash = cyan
 	grafted = red
