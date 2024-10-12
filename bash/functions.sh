@@ -19,6 +19,14 @@ tmux_list_sessions() {
   { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
 }
 
+gsw() {
+  # Function overload for git switch fuzzy finding
+  if (( $# == 0 )) && command -v fzf; then
+      git switch $(git branch | fzf)
+    else
+        git switch "$@"
+  fi
+}
 condainit() {
   # export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
 
