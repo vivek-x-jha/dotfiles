@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+local dir=$1
+local files=("$dir"/*(N) "$dir"/.*(N))
+echo "${#files[@]}"

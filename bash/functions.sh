@@ -7,6 +7,13 @@ take() {
   cd "$dir"
 }
 
+count-files() (
+  shopt -s nullglob
+  local dir=$1
+  local files=("$dir"/* "$dir"/.*)
+  echo "${#files[@]}"
+)
+
 combinepdf() {
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
 }
