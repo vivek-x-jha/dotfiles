@@ -1,10 +1,6 @@
-# Powerlevel10k Theme configuration
+# Powerlevel10k theme configuration - based on p10k-lean-8colors
 
-# Load base theme file
-[ -f "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" ] || brew install powerlevel10k
-source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
-
-# Temporarily change options.
+# Temporarily change options
 'builtin' 'local' '-a' 'p10k_config_opts'
 [[ ! -o 'aliases'         ]] || p10k_config_opts+=('aliases')
 [[ ! -o 'sh_glob'         ]] || p10k_config_opts+=('sh_glob')

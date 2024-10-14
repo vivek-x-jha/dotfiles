@@ -12,22 +12,24 @@ shopt -s autocd
 [[ $PATH == */Library/TeX/texbin* ]] || export PATH="$PATH:/Library/TeX/texbin"
 [[ $PATH == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 
-# Configure Colorschmes: ls/eza/grep + variables
+# Configure colorschemes for ls, eza, grep, & colors
 command -v gdircolors &> /dev/null || brew install coreutils
 eval "$(gdircolors "$DOT/.dircolors")"
-
 source "$DOT/.ezarc"
 source "$DOT/.greprc"
 source "$DOT/.colors"
 
-# Configure Shell Core Plugins
+# Load shell plugins
 source "$XDG_DATA_HOME/blesh/ble.sh"
 
-# Configure Shell Theme, Aliases, & Functions
+# Load prompt theme
 command -v starship &> /dev/null || brew install starship
 eval "$(starship init bash)"
 
+# Load aliases
 source "$DOT/bash/.aliases"
+
+# Load shell functions
 source "$DOT/bash/functions.sh"
 
 # Enable Fuzzy Finder
