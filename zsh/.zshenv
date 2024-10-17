@@ -33,4 +33,4 @@ export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
 # Python
 export PYTHONUSERDIR="$DOT/python"
-export PYTHONSTARTUP="$PYTHONUSERDIR/startup.py"
+# export PYTHONSTARTUP="$PYTHONUSERDIR/startup.py"
