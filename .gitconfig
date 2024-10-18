@@ -39,7 +39,7 @@
 	frag = blue
 	context = brightblack
 [color "decorate"]
-	HEAD = green
+	HEAD = brightgreen
 	branch = magenta
 	remoteBranch = cyan
 	tag = brightyellow
