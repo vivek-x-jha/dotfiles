@@ -97,6 +97,17 @@ list_colors() {
   echo
 }
 
+update_texlive() {
+  sudo tlmgr update --all
+}
+
+update_brew() {
+  brew upgrade
+  brew cu -af
+  brew cleanup
+  brew doctor
+  brew bundle dump --force --file="$DOT/.Brewfile"
+}
 update_icons() {
   command -v fileicon &>/dev/null || brew install fileicon
 
@@ -170,4 +181,24 @@ update_icons() {
   printf "${green}%-2s ${brightblack}%-37s ${reset}\n" "$success_count" 'Folder icon(s) updated successfully'
   [ $fail_count -eq 0 ] || printf "${red}%-2s ${brightblack}%-37s ${reset}\n" "$fail_count" 'Folder icon(s) failed to update'
   echo
+}
+
+update_all() {
+  # Keep sudo alive for the duration of the script
+  sudo -v
+  # while true; do
+  #   sudo -n true
+  #   sleep 60
+  # done 2>/dev/null &
+
+  # # Store the PID of the keep-alive process
+  # sudo_keep_alive_pid=$!
+
+  # # Ensure the keep-alive process is killed when the script exits
+  # trap "kill $sudo_keep_alive_pid" EXIT
+
+  # Run the updates
+  update_brew
+  update_icons
+  update_texlive
 }

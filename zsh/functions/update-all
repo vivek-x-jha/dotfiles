@@ -6,13 +6,13 @@ sudo -v
 #   sudo -n true
 #   sleep 60
 # done 2>/dev/null &
-#
+
 # # Store the PID of the keep-alive process
 # sudo_keep_alive_pid=$!
-#
+
 # # Ensure the keep-alive process is killed when the script exits
 # trap "kill $sudo_keep_alive_pid" EXIT
-#
+
 # Run the updates
 update-brew
 update-icons
