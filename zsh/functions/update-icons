@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+# Create directory-icons association
 command -v fileicon &> /dev/null || brew install fileicon
 
 local table_width=57
@@ -33,7 +34,7 @@ declare -A dir_icons=(
 
 )
 
-# Create Directory-Icons Table Header
+# Create directory-icons table header
 print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
 
 print_separator
