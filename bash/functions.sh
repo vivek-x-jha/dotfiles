@@ -55,27 +55,6 @@ condainit() {
 list_colors() {
 
   local table_width=36
-  local colorscheme=(
-    0   black         '#cccccc'  '\e[0;30m' 
-    1   red           '#ffc7c7'  '\e[0;31m' 
-    2   green         '#ceffc9'  '\e[0;32m' 
-    3   yellow        '#fdf7cd'  '\e[0;33m' 
-    4   blue          '#c4effa'  '\e[0;34m' 
-    5   magenta       '#eccef0'  '\e[0;35m' 
-    6   cyan          '#8ae7c5'  '\e[0;36m' 
-    7   white         '#f4f3f2'  '\e[0;37m'
-        
-    8   brightblack   '#5c617d'  '\e[0;90m'
-    9   brightred     '#f096b7'  '\e[0;91m'
-    10  brightgreen   '#d2fd9d'  '\e[0;92m'
-    11  brightyellow  '#f3b175'  '\e[0;93m'
-    12  brightblue    '#80d7fe'  '\e[0;94m'
-    13  brightmagenta '#c9ccfb'  '\e[0;95m'
-    14  brightcyan    '#47e7b1'  '\e[0;96m'
-    15  brightwhite   '#ffffff'  '\e[0;97m'
-        
-    248 grey          '#313244'  '\e[38;5;248m'
-  )
 
   # Create Color Table Header
   print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
@@ -85,20 +64,26 @@ list_colors() {
   print_separator
 
   # Create Color Table Rows
-  for ((i=0; i<${#colorscheme[@]}; i+=4)); do
-    local vga="${colorscheme[i]}"
-    local name="${colorscheme[i+1]}"
-    local hex="${colorscheme[i+2]}"
-    local ansi="${colorscheme[i+3]}"
+  for ((i=0; i<${#colors[@]}; i+=4)); do
+    local vga="${colors[i]}"
+    local name="${colors[i+1]}"
+    local hex="${colors[i+2]}"
+    local ansi="${colors[i+3]}"
+
+    if [[ "$name" == 'reset' ]]; then
+      local linecolor=''
+    else
+      local linecolor=${!name}
+    fi
 
     # Indirect Substitution of name as color variable
-    printf "${!name}%-4s %-14s %-8s %-8s${reset}\n" "$vga" "$name" "$hex" "$ansi"
+    printf "${linecolor}%-4s %-14s %-8s %-8s${reset}\n" "$vga" "$name" "$hex" "$ansi"
   done
   echo
 }
 
 update_texlive() {
-  sudo tlmgr update --all
+  sudo tlmgr update --self --all
 }
 
 update_brew() {
