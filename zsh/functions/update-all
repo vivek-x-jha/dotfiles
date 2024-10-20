@@ -16,4 +16,4 @@ sudo -v
 # Run the updates
 update-brew
 update-icons
-sudo tlmgr update --all
+update-texlive

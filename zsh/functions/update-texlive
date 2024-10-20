@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+sudo tlmgr update --self --all
