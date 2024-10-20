@@ -50,16 +50,26 @@ source "$DOT/bash/.aliases"
 # Load shell functions
 source "$DOT/bash/functions.sh"
 
-# Enable Fuzzy Finder
+# Configure tree and ls: sets LS_COLORS
+command -v gdircolors &> /dev/null || brew install coreutils
+eval "$(gdircolors "$DOT/.dircolors")"
+
+# Configure eza: sets EZA_COLORS
+source "$DOT/.ezarc"
+
+# Configure grep: sets GREP_COLOR
+source "$DOT/.greprc"
+
+# Configure fzf and enable shell integration
 command -v fzf &> /dev/null || brew install fzf 
 eval "$(fzf --bash)"
 source "$DOT/.fzfrc"
 
-# Configure Atuin
+# Configure atuin
 command -v atuin &>/dev/null || brew install atuin
 eval "$(atuin init bash)"
-bind -x '"^e" : __atuin_history'
-bind -x '"^[[A": __atuin_history --shell-up-key-binding'
+bind -x '"\C-e": "__atuin_history"'
+bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'
 
-# Enable 1Password plugins
+# Configure 1Password plugins
 source "$XDG_CONFIG_HOME/op/plugins.sh"
