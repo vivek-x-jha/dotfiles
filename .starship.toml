@@ -22,28 +22,33 @@ disabled = true
 disabled = true
 
 [directory]
-style = "purple"
+style = "blue"
 truncate_to_repo = true
 format = "[$path]($style) "
 
 [git_branch]
 format = "[$branch]($style) "
-style = "blue"
+style = "purple"
 disabled = false
 
 [git_status]
-format = "[$all_status$ahead_behind]($style) "
-style = "yellow"
-disabled = false
+format = "$ahead_behind$staged$modified$renamed$deleted$stashed$untracked"
+conflicted = "[!${count} ](bright-red)"
+ahead = "[ ${count} ](bright-blue)"
+behind = "[ ${count} ](bright-blue)"
+# diverged = "[ ${ahead_count}: ${behind_count} ](bright-blue)"
+untracked = "[?${count} ](red)"
+stashed = "[*${count} ](black)"
+modified = "[~${count} ](yellow)"
+staged = "[+${count} ](green)"
+renamed = "[~${count} ](yellow)"
+deleted = "[~${count} ](yellow)"
 
 [cmd_duration]
 min_time = 0
 format = "[$duration]($style) "
-style = "black"
+style = "bright-purple"
 show_milliseconds = true
-
-[line_break]
-disabled = true
 
 [jobs]
 symbol = "✦ "
