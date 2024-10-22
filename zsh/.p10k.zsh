@@ -25,6 +25,14 @@
   local cyan='6'
   local white='7'
 
+  local brightblack='8'
+  local brightred='9'
+  local brightyellow='11'
+  local brightblue='12'
+  local brightmagenta='13'
+  local brightcyan='14'
+  local brightwhite='15'
+
   # Prompt segments
   declare -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     context                # user@host
@@ -80,7 +88,7 @@
       local meta='%f'
       local clean='%5F'
       local diverged='%12F'
-      local stashed='%248F'
+      local stashed='%0F'
       local modified='%3F'
       local staged='%2F'
       local untracked='%1F'
@@ -171,7 +179,7 @@
   declare -g POWERLEVEL9K_VCS_BACKENDS=(git) # Show status of repositories of these types
 
   # Configure command_execution_time
-  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$black
+  declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$brightmagenta
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0       # Always show
   declare -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=2       # Use 2 decimals
