@@ -3,42 +3,42 @@
 export FZF_DEFAULT_COMMAND="fd --type f"
 
 export FZF_DEFAULT_OPTS="
-  --color       bg+:-1
-  --color       border:#5c617d
-  --color       fg:#5c617d
-  --color       fg+:#cccccc
-  --color       gutter:-1
-  --color       header:#eccef0
-  --color       header:italic
-  --color       hl:#c9ccfb
-  --color       hl+:#8ae7c5
-  --color       info:#c9ccfb
-  --color       marker:#f3b175
-  --color       pointer:#d2fd9d
-  --color       prompt:#f096b7
-  --color       spinner:#c4effa
-  --header      'Preview File Content'
-  --layout      reverse
-  --marker      '*'
-  --pointer     '▶'
-  --prompt      '  '
-  --tmux        center
-  --walker-skip .git,node_modules,target
+  --color          bg+:-1
+  --color          border:#5c617d
+  --color          fg:#5c617d
+  --color          fg+:#cccccc
+  --color          gutter:-1
+  --color          header:#eccef0
+  --color          header:italic
+  --color          hl:#c9ccfb
+  --color          hl+:#8ae7c5
+  --color          info:#c9ccfb
+  --color          marker:#f3b175
+  --color          pointer:#d2fd9d
+  --color          prompt:#f096b7
+  --color          spinner:#c4effa
+  --header         'Preview File Content'
+  --layout         reverse
+  --marker         '*'
+  --pointer        '▶'
+  --prompt         '  '
+  --tmux           center
+  --walker-skip    .git,node_modules,target
 "
 
 export FZF_CTRL_T_OPTS="
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'
-  --preview 'bat -n --color=always {}'
+  --bind           'ctrl-/:change-preview-window(down|hidden|)'
+  --preview        'bat -n --color=always {}'
 "
 
 export FZF_CTRL_R_OPTS="
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-  --header 'Press CTRL-Y to copy command into clipboard'
-  --preview 'echo {2..} | bat --color=always -pl sh'
+  --bind           'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --header         'Press CTRL-Y to copy command into clipboard'
+  --preview        'echo {2..} | bat --color=always -pl sh'
   --preview-window 'wrap:up:3'
 "
 
 export FZF_ALT_C_OPTS="
-  --header 'Change Directory to...'
-  --preview 'tree -aCI \".git|.github\" {}'
+  --header         'Change Directory to...'
+  --preview        'tree -aCI \".git|.github\" {}'
 "
