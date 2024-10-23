@@ -11,7 +11,7 @@ export FZF_DEFAULT_OPTS="
   --color          header:#eccef0
   --color          header:italic
   --color          hl:#c9ccfb
-  --color          hl+:#8ae7c5
+  --color          hl+:#f096b7
   --color          info:#c9ccfb
   --color          marker:#f3b175
   --color          pointer:#d2fd9d
