@@ -257,6 +257,10 @@
       "keyCode" : 8,
       "modifierFlags" : 786432
     },
+    "centerThird" : {
+      "keyCode" : 1,
+      "modifierFlags" : 1835008
+    },
     "firstThird" : {
       "keyCode" : 2,
       "modifierFlags" : 786432
@@ -330,5 +334,5 @@
       "modifierFlags" : 786432
     }
   },
-  "version" : "89"
+  "version" : "90"
 }
