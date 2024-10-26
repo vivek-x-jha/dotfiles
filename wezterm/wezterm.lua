@@ -1,22 +1,19 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
--- Window UI
-
--- Disable traffic light buttons
-config.window_decorations = "RESIZE"
-
--- Disable tab bar
+-- Title Bar
 config.enable_tab_bar = false
+config.window_decorations = "RESIZE" -- Disable traffic light buttons
 
--- Transparency (0.0 is fully transparent, 1.0 is fully opaque)
+-- Transparency
 config.window_background_opacity = 0.97
 
+-- Blur
 if wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin' then
   config.macos_window_background_blur = 25
 end
 
--- Set Padding
+-- Padding
 config.window_padding = {
   left   = 25,
   right  = 25,
@@ -24,8 +21,12 @@ config.window_padding = {
   bottom = 20
 }
 
--- Colorscheme
+-- Cursor
+config.default_cursor_style = "BlinkingBlock"
+config.cursor_blink_rate = 300
+config.cursor_thickness = 0.25
 
+-- Colorscheme
 config.colors = {
   foreground = "#f4f3f2",
   background = "#212030",
@@ -59,7 +60,7 @@ config.colors = {
   },
 }
 
--- Set Font
+-- Font
 config.font = wezterm.font(
   'ComicShannsMono Nerd Font',
   {
