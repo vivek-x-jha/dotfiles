@@ -1,0 +1,35 @@
+[colors]
+ansi = [
+  "#cccccc",
+  "#ffc7c7",
+  "#ceffc9",
+  "#fdf7cd",
+  "#c4effa",
+  "#eccef0",
+  "#8ae7c5",
+  "#f4f3f2",
+]
+background = "#212030"
+brights = [
+  "#5c617d",
+  "#f096b7",
+  "#d2fd9d",
+  "#f3b175",
+  "#80d7fe",
+  "#c9ccfb",
+  "#47e7b1",
+  "#ffffff",
+]
+compose_cursor = '#f2cdcd'
+cursor_bg = "#cdd6f4"
+cursor_border = "#f4f3f2"
+cursor_fg = "#313244"
+foreground = "#f4f3f2"
+selection_bg = "#5c617d"
+selection_fg = "#f4f3f2"
+split = '#5c617d'
+
+[metadata]
+aliases = []
+author = 'Vivek Jha'
+name = 'Sourdiesel'
