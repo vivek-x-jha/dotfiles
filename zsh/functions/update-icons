@@ -22,6 +22,7 @@ declare -A dir_icons=(
   /Applications/Spotify.app              ~/Pictures/icons/spotify.png
   /Applications/Tex                      ~/Pictures/icons/tex.png
   /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
+  /Applications/WezTerm.app              ~/Pictures/icons/wezterm.png
 
   # Folders                              Icons
   ~/Developer                            ~/Pictures/icons/developer.png
