@@ -21,8 +21,8 @@ config.enable_tab_bar = false
 config.font = wezterm.font('ComicShannsMono Nerd Font', { weight = 'Regular', italic = false })
 config.font_size = 16
 
-config.macos_window_background_blur = 15
-config.window_background_opacity = 0.8
+config.macos_window_background_blur = 50
+config.window_background_opacity = 0.9
 
 config.window_close_confirmation = 'NeverPrompt'
 config.window_decorations = "RESIZE"
