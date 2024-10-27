@@ -30,6 +30,9 @@ config.enable_tab_bar = false
 config.font = wezterm.font('ComicShannsMono Nerd Font', { weight = 'Regular', italic = false })
 config.font_size = 16
 
+config.initial_rows = 40
+config.initial_cols = 100
+
 config.macos_window_background_blur = 50
 config.window_background_opacity = 0.9
 
