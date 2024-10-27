@@ -1,5 +1,3 @@
--- Sourdiesel colorscheme
--- TODO make this linked with a central sourdiesel theme file
 return {
   foreground = "#f4f3f2",
   background = "#212030",
