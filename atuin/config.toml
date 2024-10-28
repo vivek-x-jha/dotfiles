@@ -1,3 +1,11 @@
+#        _______ _    _ _____ _   _ 
+#     /\|__   __| |  | |_   _| \ | |
+#    /  \  | |  | |  | | | | |  \| |
+#   / /\ \ | |  | |  | | | | | . ` |
+#  / ____ \| |  | |__| |_| |_| |\  |
+# /_/    \_\_|   \____/|_____|_| \_|
+# https://docs.atuin.sh/
+
 ## where to store your database, default is your system data directory
 ## linux/mac: ~/.local/share/atuin/history.db
 ## windows: %USERPROFILE%/.local/share/atuin/history.db

@@ -1,3 +1,11 @@
+#   _____ _____ _______ _    _ _    _ ____  
+#  / ____|_   _|__   __| |  | | |  | |  _ \ 
+# | |  __  | |    | |  | |__| | |  | | |_) |
+# | | |_ | | |    | |  |  __  | |  | |  _ < 
+# | |__| |_| |_   | |  | |  | | |__| | |_) |
+#  \_____|_____|  |_|  |_|  |_|\____/|____/ 
+# https://docs.github.com/en/github-cli
+
 # What protocol to use when performing git operations. Supported values: ssh, https
 git_protocol: ssh
 # What editor gh should run when creating issues, pull requests, etc. If blank, will refer to environment.

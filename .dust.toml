@@ -1,7 +1,10 @@
-# Sample Config file, works with toml and yaml
-# Place in either:
-#   ~/.config/dust/config.toml
-#   ~/.dust.toml
+#  _____  _    _  _____ _______ 
+# |  __ \| |  | |/ ____|__   __|
+# | |  | | |  | | (___    | |   
+# | |  | | |  | |\___ \   | |   
+# | |__| | |__| |____) |  | |   
+# |_____/ \____/|_____/   |_|   
+# https://docs.rs/crate/du-dust/0.2.4
 
 # Print tree upside down (biggest highest)
 reverse=true

@@ -1,3 +1,11 @@
+#  ______ _____ _    _ 
+# |___  // ____| |  | |
+#    / /| (___ | |__| |
+#   / /  \___ \|  __  |
+#  / /__ ____) | |  | |
+# /_____|_____/|_|  |_|
+# https://zsh.sourceforge.io/
+
 # Invoke instant prompt
 [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
