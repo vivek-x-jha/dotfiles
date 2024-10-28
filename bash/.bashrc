@@ -1,3 +1,11 @@
+#  ____           _____ _    _ 
+# |  _ \   /\    / ____| |  | |
+# | |_) | /  \  | (___ | |__| |
+# |  _ < / /\ \  \___ \|  __  |
+# | |_) / ____ \ ____) | |  | |
+# |____/_/    \_\_____/|_|  |_|
+# https://www.gnu.org/software/bash/
+
 # Set History
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "

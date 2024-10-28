@@ -44,10 +44,11 @@ symlinks=(
   ../.dotfiles/bat             "$XDG_CONFIG"       bat 
   ../.dotfiles/btop            "$XDG_CONFIG"       btop
   ../.dotfiles/glow            "$XDG_CONFIG"       glow
+  ../.dotfiles/karabiner       "$XDG_CONFIG"       karabiner
   ../.dotfiles/nvim            "$XDG_CONFIG"       nvim
-  ../.dotfiles/.starship.toml  "$XDG_CONFIG"       starship.toml
   ../.dotfiles/tmux            "$XDG_CONFIG"       tmux
   ../.dotfiles/yazi            "$XDG_CONFIG"       yazi
+  ../.dotfiles/.starship.toml  "$XDG_CONFIG"       starship.toml
 
   ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust"  config.toml
   ../../.dotfiles/.gh.yml      "$XDG_CONFIG/gh"    config.yml

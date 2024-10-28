@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+#  ______ ______         
+# |  ____|___  /   /\    
+# | |__     / /   /  \   
+# |  __|   / /   / /\ \  
+# | |____ / /__ / ____ \ 
+# |______/_____/_/    \_\
+# https://github.com/eza-community/eza/blob/main/man/eza_colors-explanation.5.md
 
 export EZA_COLORS="\
 ur=00;38;5;3:\

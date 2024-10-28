@@ -1,4 +1,11 @@
-# Powerlevel10k theme configuration - based on p10k-lean-8colors
+#  _____  __  ___  _  __
+# |  __ \/_ |/ _ \| |/ /
+# | |__) || | | | | ' / 
+# |  ___/ | | | | |  <  
+# | |     | | |_| | . \ 
+# |_|     |_|\___/|_|\_\
+# https://github.com/romkatv/powerlevel10k
+# original: https://github.com/romkatv/powerlevel10k/blob/master/config/p10k-lean-8colors.zsh
 
 # Temporarily change options
 'builtin' 'local' '-a' 'p10k_config_opts'
