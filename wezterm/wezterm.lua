@@ -7,10 +7,10 @@
 -- https://wezfurlong.org/wezterm/
 
 local wezterm = require 'wezterm'
+local keybindings = require 'keybindings'
 local config = {}
-if wezterm.config_builder then
-  config = wezterm.config_builder()
-end
+
+if wezterm.config_builder then config = wezterm.config_builder() end
 
 config.bold_brightens_ansi_colors = 'BrightOnly'
 config.color_scheme = 'Sourdiesel'
@@ -26,12 +26,24 @@ config.default_cursor_style = 'BlinkingBlock'
 
 config.enable_tab_bar = false
 
--- config.font = wezterm.font('ComicShannsMono Nerd Font', { weight = 'Regular', italic = false })
 config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Light' })
-config.font_size = 14
+config.font_size = 13
 
 config.initial_rows = 40
 config.initial_cols = 100
+
+config.leader = { key = 'a', mods = 'CTRL' }
+config.keys = keybindings.keys
+config.key_tables = keybindings.key_tables
+
+-- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
+-- for i = 1, 9 do
+--   table.insert(config.keys, {
+--     key = tostring(i),
+--     mods = "LEADER",
+--     action = act.ActivateTab(i - 1)
+--   })
+-- end
 
 config.macos_window_background_blur = 50
 config.window_background_opacity = 0.9
