@@ -26,13 +26,13 @@ config.default_cursor_style = 'BlinkingBlock'
 
 config.enable_tab_bar = false
 
-config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Light' })
-config.font_size = 13
+config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Thin' })
+config.font_size = 15
 
 config.initial_rows = 40
 config.initial_cols = 100
 
-config.leader = { key = 'a', mods = 'CTRL' }
+config.leader = { key = 'b', mods = 'CTRL' }
 config.keys = keybindings.keys
 config.key_tables = keybindings.key_tables
 
