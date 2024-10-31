@@ -3,10 +3,10 @@ local act = wezterm.action
 
 local keys = {
 
-  { key = "h", mods = "CTRL", action = act.ActivatePaneDirection "Left" },
-  { key = "j", mods = "CTRL", action = act.ActivatePaneDirection "Down" },
-  { key = "k", mods = "CTRL", action = act.ActivatePaneDirection "Up" },
-  { key = "l", mods = "CTRL", action = act.ActivatePaneDirection "Right" },
+  -- { key = "h", mods = "CTRL", action = act.ActivatePaneDirection "Left" },
+  -- { key = "j", mods = "CTRL", action = act.ActivatePaneDirection "Down" },
+  -- { key = "k", mods = "CTRL", action = act.ActivatePaneDirection "Up" },
+  -- { key = "l", mods = "CTRL", action = act.ActivatePaneDirection "Right" },
 
   -- Send C-a when pressing C-a twice
   -- { key = "a",          mods = "LEADER|CTRL", action = act.SendKey { key = "a", mods = "CTRL" } },
