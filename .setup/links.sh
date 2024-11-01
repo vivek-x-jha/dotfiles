@@ -47,6 +47,7 @@ symlinks=(
   ../.dotfiles/karabiner       "$XDG_CONFIG"       karabiner
   ../.dotfiles/nvim            "$XDG_CONFIG"       nvim
   ../.dotfiles/tmux            "$XDG_CONFIG"       tmux
+  ../.dotfiles/wezterm         "$XDG_CONFIG"       wezterm
   ../.dotfiles/yazi            "$XDG_CONFIG"       yazi
   ../.dotfiles/.starship.toml  "$XDG_CONFIG"       starship.toml
 
