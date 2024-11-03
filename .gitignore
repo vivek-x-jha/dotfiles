@@ -2,6 +2,9 @@
 ssh/id*
 tmux/plugins
 
+# Databases
+*.sqlite3
+
 # Program Settings
 *.sock
 .DS_Store
