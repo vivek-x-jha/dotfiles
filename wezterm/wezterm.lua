@@ -26,7 +26,7 @@ config.default_cursor_style = 'BlinkingBlock'
 
 config.enable_tab_bar = false
 
-config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Thin' })
+config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'ExtraLight' })
 config.font_size = 15
 
 config.initial_rows = 40
