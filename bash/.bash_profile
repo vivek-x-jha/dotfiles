@@ -19,8 +19,8 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
-# Homebrew binary path
-case "$(uname -m)" in
+# Homebrew
+export HOMEBREW_NO_ENV_HINTS=1
   'arm64' ) export HOMEBREW_BIN='/opt/homebrew/bin' ;;
   'x86_64') export HOMEBREW_BIN='/usr/local/bin'    ;;
 esac

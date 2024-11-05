@@ -24,7 +24,8 @@ export SHELL_SESSIONS_DISABLE=1
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
-# Homebrew binary path
+# Homebrew
+export HOMEBREW_NO_ENV_HINTS=1
 case "$(uname -m)" in
   'arm64' ) export HOMEBREW_BIN='/opt/homebrew/bin' ;;
   'x86_64') export HOMEBREW_BIN='/usr/local/bin'    ;;
