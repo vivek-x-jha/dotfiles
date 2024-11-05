@@ -1,8 +1,17 @@
 return {
+
   {
-      "ThePrimeagen/harpoon",
-      branch = "harpoon2",
-      dependencies = { "nvim-lua/plenary.nvim" }
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = function()
+      return require "configs.nvimtree"
+    end,
+  },
+
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" }
   },
 
   {
@@ -90,6 +99,6 @@ return {
   {
     "tpope/vim-obsession",
     cmd = "Obsession",
-  },
+  }
 
 }
