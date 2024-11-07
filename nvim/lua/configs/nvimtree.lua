@@ -1,4 +1,16 @@
-dofile(vim.g.base46_cache .. "nvimtree")
+dofile(vim.g.base46_cache .. 'nvimtree')
+
+vim.cmd([[
+  :hi NvimTreeExecFile          guifg=#ceffc9
+  :hi NvimTreeSpecialFile       guifg=#f3b175
+  :hi NvimTreeSymlink           guifg=#fdf7cd
+  :hi NvimTreeSymlinkFolderName guifg=#fdf7cd
+
+  :hi NvimTreeGitNew            guifg=#ffc7c7
+  :hi NvimTreeGitDirty          guifg=#fdf7cd
+  :hi NvimTreeGitStaged         guifg=#ceffc9
+  :hi NvimTreeGitRenamed        guifg=#c9ccfb
+]])
 
 return {
   filters = { dotfiles = false },
@@ -20,22 +32,20 @@ return {
     indent_markers = { enable = true },
     icons = {
       glyphs = {
-        default = "󰈚",
+        default = '󰈚',
         folder = {
-          default = "",
-          empty = "",
-          empty_open = "",
-          open = "",
-          symlink = "",
+          default = '󰉖',
+          empty = '󱧹',
+          empty_open = '󰷏',
+          open = '󰷏',
+          symlink = '󱉆',
         },
         git = {
-          unstaged = '~',
+          renamed = 'r',
           staged = '+',
           unmerged = '!',
-          renamed = 'r',
+          unstaged = '~',
           untracked = '?',
-          deleted = 'x',
-          ignored = 'I',
         },
       },
     },
