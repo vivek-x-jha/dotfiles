@@ -17,7 +17,7 @@ return {
   {
     'stevearc/conform.nvim',
     event = 'BufWritePre', -- uncomment for format on save
-    opts = function()
+    config = function()
       require 'configs.conform'
     end,
   },
@@ -87,13 +87,13 @@ return {
       'TmuxNavigateRight',
       'TmuxNavigatePrevious',
     },
-    -- keys = {
-    --   { '<c-h>',  '<cmd><C-U>TmuxNavigateLeft<cr>' },
-    --   { '<c-j>',  '<cmd><C-U>TmuxNavigateDown<cr>' },
-    --   { '<c-k>',  '<cmd><C-U>TmuxNavigateUp<cr>' },
-    --   { '<c-l>',  '<cmd><C-U>TmuxNavigateRight<cr>' },
-    --   { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
-    -- },
+    keys = {
+      { '<c-h>',  '<cmd>TmuxNavigateLeft<CR>',     { desc = 'switch window left' } },
+      { '<c-j>',  '<cmd>TmuxNavigateDown<CR>',     { desc = 'switch window down' } },
+      { '<c-k>',  '<cmd>TmuxNavigateUp<CR>',       { desc = 'switch window up' } },
+      { '<c-l>',  '<cmd>TmuxNavigateRight<CR>',    { desc = 'switch window right' } },
+      { '<c-\\>', '<cmd>TmuxNavigatePrevious<CR>', { desc = 'switch last window' } },
+    },
   },
 
   {

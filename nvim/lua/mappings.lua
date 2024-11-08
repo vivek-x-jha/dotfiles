@@ -8,22 +8,26 @@ map('i', '<C-l>', '<Right>', { desc = 'move right' })
 map('i', '<C-j>', '<Down>',  { desc = 'move down' })
 map('i', '<C-k>', '<Up>',    { desc = 'move up' })
 
-map('n', '<C-h>',  '<cmd>TmuxNavigateLeft<CR>',       { desc = 'switch window left' })
-map('n', '<C-j>',  '<cmd>TmuxNavigateDown<CR>',       { desc = 'switch window down' })
-map('n', '<C-k>',  '<cmd>TmuxNavigateUp<CR>',         { desc = 'switch window up' })
-map('n', '<C-l>',  '<cmd>TmuxNavigateRight<CR>',      { desc = 'switch window right' })
-map('n', '<C-\\>', '<cmd>TmuxNavigateLastActive<CR>', { desc = 'switch last window' })
-
--- quality of life
+-- command line with ;
 map('n', ';', ':', { desc = 'CMD enter command mode' })
+
+-- clear text
 map('n', '<Esc>', '<cmd>noh<CR>', { desc = 'general clear highlights' })
+
+-- save in any mode
 map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = 'general save file' })
+
+-- copy file
 map('n', '<C-c>', '<cmd>%y+<CR>', { desc = 'general copy whole file' })
 
+-- line numbers
 map('n', '<leader>n', '<cmd>set nu!<CR>', { desc = 'toggle line number' })
 map('n', '<leader>rn', '<cmd>set rnu!<CR>', { desc = 'toggle relative number' })
+
+-- cheatsheet
 map('n', '<leader>ch', '<cmd>NvCheatsheet<CR>', { desc = 'toggle nvcheatsheet' })
 
+-- format with conform
 map('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, { desc = 'general format file' })
 
 -- global lsp mappings
