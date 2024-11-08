@@ -2,16 +2,16 @@ local map = vim.keymap.set
 
 -- navigation
 map('i', '<C-b>', '<ESC>^i', { desc = 'move beginning of line' })
-map('i', '<C-e>', '<End>', { desc = 'move end of line' })
-map('i', '<C-h>', '<Left>', { desc = 'move left' })
+map('i', '<C-e>', '<End>',   { desc = 'move end of line' })
+map('i', '<C-h>', '<Left>',  { desc = 'move left' })
 map('i', '<C-l>', '<Right>', { desc = 'move right' })
-map('i', '<C-j>', '<Down>', { desc = 'move down' })
-map('i', '<C-k>', '<Up>', { desc = 'move up' })
+map('i', '<C-j>', '<Down>',  { desc = 'move down' })
+map('i', '<C-k>', '<Up>',    { desc = 'move up' })
 
-map('n', '<C-h>', '<cmd>TmuxNavigateLeft<CR>', { desc = 'switch window left' })
-map('n', '<C-j>', '<cmd>TmuxNavigateDown<CR>', { desc = 'switch window down' })
-map('n', '<C-k>', '<cmd>TmuxNavigateUp<CR>', { desc = 'switch window up' })
-map('n', '<C-l>', '<cmd>TmuxNavigateRight<CR>', { desc = 'switch window right' })
+map('n', '<C-h>',  '<cmd>TmuxNavigateLeft<CR>',       { desc = 'switch window left' })
+map('n', '<C-j>',  '<cmd>TmuxNavigateDown<CR>',       { desc = 'switch window down' })
+map('n', '<C-k>',  '<cmd>TmuxNavigateUp<CR>',         { desc = 'switch window up' })
+map('n', '<C-l>',  '<cmd>TmuxNavigateRight<CR>',      { desc = 'switch window right' })
 map('n', '<C-\\>', '<cmd>TmuxNavigateLastActive<CR>', { desc = 'switch last window' })
 
 -- quality of life
@@ -63,11 +63,9 @@ map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hid
 -- terminal
 map('t', '<C-x>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
--- new terminals
 map('n', '<leader>h', function() require('nvchad.term').new { pos = 'sp' } end, { desc = 'terminal new horizontal term' })
 map('n', '<leader>v', function() require('nvchad.term').new { pos = 'vsp' } end, { desc = 'terminal new vertical term' })
 
--- toggleable
 map({ 'n', 't' }, '<A-v>', function() require('nvchad.term').toggle { pos = 'vsp', id = 'vtoggleTerm' } end, { desc = 'terminal toggleable vertical term' })
 map({ 'n', 't' }, '<A-h>', function() require('nvchad.term').toggle { pos = 'sp', id = 'htoggleTerm' } end, { desc = 'terminal toggleable horizontal term' })
 map({ 'n', 't' }, '<A-i>', function() require('nvchad.term').toggle { pos = 'float', id = 'floatTerm' } end, { desc = 'terminal toggle floating term' })
