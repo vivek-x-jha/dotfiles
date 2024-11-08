@@ -13,7 +13,7 @@ M.base46 = {
   -- 	["@comment"] = { italic = true },
   -- },
   changed_themes = {
-    catppuccin = {
+    all = {
       base_16 = {
         base00 = "#212030", -- editor background
         base01 = "#CCCCCC", -- BLACK
