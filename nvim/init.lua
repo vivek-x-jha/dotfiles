@@ -28,18 +28,17 @@ vim.g.maplocalleader = '\\'
 vim.g.base46_cache = vim.fn.stdpath 'data' .. '/nvchad/base46/'
 
 -- load plugins
-local lazy_plugins = {
+local lazy_config = require 'configs.lazy'
+require("lazy").setup({
   {
-    'NvChad/NvChad',
+    "NvChad/NvChad",
     lazy = false,
-    branch = 'v2.5',
-    import = 'nvchad.plugins',
+    branch = "v2.5",
+    import = "nvchad.plugins",
   },
 
-  { import = 'plugins' },
-}
-local lazy_config = require 'configs.lazy'
-require('lazy').setup(lazy_plugins, lazy_config)
+  { import = "plugins" },
+}, lazy_config)
 
 -- load theme
 dofile(vim.g.base46_cache .. 'defaults')
