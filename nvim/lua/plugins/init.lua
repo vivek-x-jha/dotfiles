@@ -1,4 +1,29 @@
 return {
+  {
+    'stevearc/conform.nvim',
+    event = 'BufWritePre',
+    opts = require 'configs.conform',
+  },
+
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      require 'configs.lspconfig'
+    end,
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter',
+    opts = {
+      ensure_installed = {
+        'bash',
+        'fish',
+        'markdown',
+        'toml',
+        'yaml',
+      },
+    },
+  },
 
   {
     'nvim-tree/nvim-tree.lua',
@@ -11,15 +36,7 @@ return {
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
-    dependencies = { 'nvim-lua/plenary.nvim' }
-  },
-
-  {
-    'stevearc/conform.nvim',
-    event = 'BufWritePre', -- uncomment for format on save
-    config = function()
-      require 'configs.conform'
-    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
 
   {
@@ -39,25 +56,18 @@ return {
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    dependencies = { 'MunifTanjim/nui.nvim' }, -- if lazy-loaded, add proper `module='...'` entries
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      {
+        'rcarriga/nvim-notify',
+        module = 'notify',
+        config = function()
+          require 'configs.notify'
+        end,
+      },
+    }, -- if lazy-loaded, add proper `module='...'` entries
     config = function()
       require 'configs.noice'
-    end,
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require 'configs.lspconfig'
-    end,
-  },
-
-  {
-    'rcarriga/nvim-notify',
-    module = 'notify',
-    config = function()
-      require 'configs.notify'
     end,
   },
 
@@ -71,14 +81,6 @@ return {
   },
 
   {
-    'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require 'configs.treesitter'
-    end,
-  },
-
-  {
     'vivek-x-jha/tmux-vim-navigator',
     cmd = {
       'TmuxNavigateLeft',
@@ -88,10 +90,10 @@ return {
       'TmuxNavigatePrevious',
     },
     keys = {
-      { '<c-h>',  '<cmd>TmuxNavigateLeft<CR>',     { desc = 'switch window left' } },
-      { '<c-j>',  '<cmd>TmuxNavigateDown<CR>',     { desc = 'switch window down' } },
-      { '<c-k>',  '<cmd>TmuxNavigateUp<CR>',       { desc = 'switch window up' } },
-      { '<c-l>',  '<cmd>TmuxNavigateRight<CR>',    { desc = 'switch window right' } },
+      { '<c-h>', '<cmd>TmuxNavigateLeft<CR>', { desc = 'switch window left' } },
+      { '<c-j>', '<cmd>TmuxNavigateDown<CR>', { desc = 'switch window down' } },
+      { '<c-k>', '<cmd>TmuxNavigateUp<CR>', { desc = 'switch window up' } },
+      { '<c-l>', '<cmd>TmuxNavigateRight<CR>', { desc = 'switch window right' } },
       { '<c-\\>', '<cmd>TmuxNavigatePrevious<CR>', { desc = 'switch last window' } },
     },
   },
@@ -99,6 +101,5 @@ return {
   {
     'tpope/vim-obsession',
     cmd = 'Obsession',
-  }
-
+  },
 }
