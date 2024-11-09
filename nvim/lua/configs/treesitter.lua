@@ -1,4 +1,9 @@
-require("nvim-treesitter.configs").setup({
+pcall(function()
+  dofile(vim.g.base46_cache .. "syntax")
+  dofile(vim.g.base46_cache .. "treesitter")
+end)
+
+return {
   ensure_installed = {
     "bash",
     "fish",
@@ -18,4 +23,4 @@ require("nvim-treesitter.configs").setup({
   },
 
   indent = { enable = true },
-})
+}
