@@ -7,14 +7,14 @@
 -- https://neovim.io/doc/
 
 -- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out,                            'WarningMsg' },
+      { out, 'WarningMsg' },
       { '\nPress any key to exit...' },
     }, true, {})
     vim.fn.getchar()
@@ -29,15 +29,15 @@ vim.g.base46_cache = vim.fn.stdpath 'data' .. '/nvchad/base46/'
 
 -- load plugins
 local lazy_config = require 'configs.lazy'
-require("lazy").setup({
+require('lazy').setup({
   {
-    "NvChad/NvChad",
+    'NvChad/NvChad',
     lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
+    branch = 'v2.5',
+    import = 'nvchad.plugins',
   },
 
-  { import = "plugins" },
+  { import = 'plugins' },
 }, lazy_config)
 
 -- load theme
@@ -47,4 +47,6 @@ dofile(vim.g.base46_cache .. 'statusline')
 require 'options'
 require 'autocmds'
 
-vim.schedule(function() require 'mappings' end)
+vim.schedule(function()
+  require 'mappings'
+end)
