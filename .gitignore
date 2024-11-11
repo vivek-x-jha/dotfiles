@@ -6,6 +6,7 @@ tmux/plugins
 *.sqlite3
 
 # Program Settings
+.env
 *.sock
 .DS_Store
 *.code-workspace
