@@ -1,6 +1,6 @@
 dofile(vim.g.base46_cache .. 'nvimtree')
 
-vim.cmd([[
+vim.cmd [[
   :hi NvimTreeExecFile          guifg=#ceffc9
   :hi NvimTreeSpecialFile       guifg=#f3b175
   :hi NvimTreeSymlink           guifg=#fdf7cd
@@ -10,7 +10,7 @@ vim.cmd([[
   :hi NvimTreeGitDirty          guifg=#fdf7cd
   :hi NvimTreeGitStaged         guifg=#ceffc9
   :hi NvimTreeGitRenamed        guifg=#c9ccfb
-]])
+]]
 
 return {
   filters = { dotfiles = false },
@@ -22,7 +22,7 @@ return {
     update_root = false,
   },
   view = {
-    side = 'right',
+    side = 'left',
     width = 30,
     preserve_window_proportions = true,
   },
