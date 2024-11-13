@@ -29,9 +29,6 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 [ -d "$(brew --prefix)/share/zsh-completions" ] || brew install zsh-completions
 fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
-# Load secrets
-[ -f "$DOT/.env" ] && source "$DOT/.env"
-
 # Set color variables
 colors=(
   0   black         '#cccccc'  '\e[0;30m'
@@ -53,9 +50,12 @@ colors=(
   15  brightwhite   '#ffffff'  '\e[0;97m'
 
   248 grey          '#313244'  '\e[38;5;248m'
-  ''  reset         ''         '\e[0m'
+  ''  reset         ''           '\e[0m'
 )
 for ((i=1; i<${#colors[@]}; i+=4)); do declare "${colors[i+1]}"="${colors[i+3]}"; done
+
+# Load secrets
+[ -f "$DOT/.env" ] && source "$DOT/.env"
 
 # Set shell options
 zsh_options=(
