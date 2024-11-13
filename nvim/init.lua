@@ -6,28 +6,33 @@
 -- |_| \_|______\____/   \/   |_____|_|  |_|
 -- https://neovim.io/doc/
 
+local g = vim.g
+local opt = vim.opt
+local fn = vim.fn
+local api = vim.api
+local v = vim.v
+
+g.mapleader = ' '
+g.maplocalleader = '\\'
+g.base46_cache = fn.stdpath 'data' .. '/nvchad/base46/'
+
 -- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
+  local out = fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if v.shell_error ~= 0 then
+    api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
       { out, 'WarningMsg' },
       { '\nPress any key to exit...' },
     }, true, {})
-    vim.fn.getchar()
+    fn.getchar()
     os.exit(1)
   end
 end
-vim.opt.rtp:prepend(lazypath)
+opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
-vim.g.base46_cache = vim.fn.stdpath 'data' .. '/nvchad/base46/'
-
--- load plugins
 local lazy_config = require 'configs.lazy'
 require('lazy').setup({
   {
@@ -41,8 +46,8 @@ require('lazy').setup({
 }, lazy_config)
 
 -- load theme
-dofile(vim.g.base46_cache .. 'defaults')
-dofile(vim.g.base46_cache .. 'statusline')
+dofile(g.base46_cache .. 'defaults')
+dofile(g.base46_cache .. 'statusline')
 
 require 'options'
 require 'autocmds'
