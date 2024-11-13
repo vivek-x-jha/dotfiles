@@ -3,7 +3,7 @@
 # Create directory-icons association
 command -v fileicon &> /dev/null || brew install fileicon
 
-local table_width=57
+local table_width=60
 declare -A dir_icons=(
 
   # Apps                                 Icons
@@ -40,7 +40,7 @@ declare -A dir_icons=(
 print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
 
 print_separator
-printf "%-1s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
+printf "%-2s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
 print_separator
 
 # Sort keys while preserving spaces in the directories
@@ -58,11 +58,11 @@ for dir in "${sorted_dirs[@]}"; do
   basename_icon=$(basename "$icon")
 
   if sudo fileicon set "$dir" "$icon" &>/dev/null; then
-    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
+    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" " " "$expanded_dir" "$basename_icon"
   elif [[ $basename_dir == 'Mimestream.app' ]]; then
-    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
+    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" " " "$expanded_dir" "$basename_icon"
   else
-    printf "${red}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n"   "" "$expanded_dir" "$basename_icon"
+    printf "${red}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n"   " " "$expanded_dir" "$basename_icon"
     ((success_count--))
   fi
 
