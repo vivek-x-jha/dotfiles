@@ -35,23 +35,6 @@ gsw() {
   fi
 }
 
-condainit() {
-  # export JUPYTER_CONFIG_DIR="$DOT/jupyter/.jupyter"
-
-  # Initialize conda environment
-  __conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
-          source "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
-      else
-          export PATH="/opt/homebrew/anaconda3/bin:$PATH"
-      fi
-  fi
-  unset __conda_setup
-}
-
 list_colors() {
 
   local table_width=36
@@ -96,7 +79,7 @@ update_brew() {
 update_icons() {
   command -v fileicon &>/dev/null || brew install fileicon
 
-  local table_width=57
+  local table_width=60
   declare -A dir_icons=(
 
     # Apps                                 Icons
@@ -133,7 +116,7 @@ update_icons() {
   print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
 
   print_separator
-  printf "%-1s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
+  printf "%-2s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
   print_separator
 
   # Sort keys while preserving spaces in the directories
@@ -173,16 +156,16 @@ update_icons() {
 update_all() {
   # Keep sudo alive for the duration of the script
   sudo -v
-  # while true; do
-  #   sudo -n true
-  #   sleep 60
-  # done 2>/dev/null &
+  while true; do
+    sudo -n true
+    sleep 60
+  done 2>/dev/null &
 
-  # # Store the PID of the keep-alive process
-  # sudo_keep_alive_pid=$!
+  # Store the PID of the keep-alive process
+  sudo_keep_alive_pid=$!
 
-  # # Ensure the keep-alive process is killed when the script exits
-  # trap "kill $sudo_keep_alive_pid" EXIT
+  # Ensure the keep-alive process is killed when the script exits
+  trap "kill $sudo_keep_alive_pid" EXIT
 
   # Run the updates
   update_brew
