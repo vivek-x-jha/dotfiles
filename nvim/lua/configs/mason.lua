@@ -1,4 +1,4 @@
-dofile(vim.g.base46_cache .. 'mason')
+require('utils.ui').set_base46 'mason'
 
 return {
   PATH = 'skip',

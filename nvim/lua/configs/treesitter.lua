@@ -1,20 +1,17 @@
-pcall(function()
-  dofile(vim.g.base46_cache .. "syntax")
-  dofile(vim.g.base46_cache .. "treesitter")
-end)
+require('utils.ui').set_base46 'treesitter'
 
 return {
   ensure_installed = {
-    "bash",
-    "fish",
-    "lua",
-    "luadoc",
-    "markdown",
-    "printf",
-    "toml",
-    "vim",
-    "vimdoc",
-    "yaml",
+    'bash',
+    'fish',
+    'lua',
+    'luadoc',
+    'markdown',
+    'printf',
+    'toml',
+    'vim',
+    'vimdoc',
+    'yaml',
   },
 
   highlight = {

@@ -1,4 +1,4 @@
-dofile(vim.g.base46_cache .. 'nvimtree')
+require('utils.ui').set_base46 'nvimtree'
 
 vim.cmd [[
   :hi NvimTreeExecFile          guifg=#ceffc9

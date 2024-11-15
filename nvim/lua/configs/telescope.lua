@@ -1,4 +1,4 @@
-dofile(vim.g.base46_cache .. 'telescope')
+require('utils.ui').set_base46 'telescope'
 
 return {
   defaults = {
