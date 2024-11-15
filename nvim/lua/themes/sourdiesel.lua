@@ -70,7 +70,7 @@ M.polish_hl = {
   },
 
   treesitter = {
-    ['@variable'] = { fg = '#000000' },
+    -- ['@variable'] = { fg = '#000000' },
   },
 }
 
