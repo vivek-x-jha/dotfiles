@@ -1,4 +1,4 @@
-dofile(vim.g.base46_cache .. 'git')
+require('utils.ui').set_base46 'git'
 
 return {
   signs = {

@@ -1,4 +1,4 @@
-dofile(vim.g.base46_cache .. 'cmp')
+require('utils.ui').set_base46 'cmp'
 
 local cmp = require 'cmp'
 

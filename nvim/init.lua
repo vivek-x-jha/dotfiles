@@ -46,8 +46,15 @@ require('lazy').setup({
 }, lazy_config)
 
 -- load theme
-dofile(g.base46_cache .. 'defaults')
-dofile(g.base46_cache .. 'statusline')
+local base46_files = {
+  'syntax',
+  'defaults',
+  'statusline',
+}
+
+for _, file in ipairs(base46_files) do
+  require('utils.ui').set_base46(file)
+end
 
 require 'options'
 require 'autocmds'
