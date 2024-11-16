@@ -10,7 +10,6 @@ local g = vim.g
 local opt = vim.opt
 local fn = vim.fn
 local api = vim.api
-local v = vim.v
 
 g.mapleader = ' '
 g.maplocalleader = '\\'
@@ -21,7 +20,7 @@ local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if v.shell_error ~= 0 then
+  if vim.v.shell_error ~= 0 then
     api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
       { out, 'WarningMsg' },
@@ -54,6 +53,10 @@ local base46_files = {
 
 for _, file in ipairs(base46_files) do
   require('utils.ui').set_base46(file)
+end
+
+for _, v in ipairs(fn.readdir(g.base46_cache)) do
+  dofile(g.base46_cache .. v)
 end
 
 require 'options'
