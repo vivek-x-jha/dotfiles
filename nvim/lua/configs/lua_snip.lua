@@ -1,4 +1,4 @@
-local loaders = 'luasnip.loaders'
+local loaders = 'luasnip.loaders.'
 local g = vim.g
 local api = vim.api
 
