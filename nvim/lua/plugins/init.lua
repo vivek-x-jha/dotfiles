@@ -225,14 +225,14 @@ return {
   { 'nvzone/minty', cmd = { 'Huefy', 'Shades' } },
 
   {
-    'nvchad/base46',
+    'vivek-x-jha/base46',
     build = function()
       require('base46').load_all_highlights()
     end,
   },
 
   {
-    'nvchad/ui',
+    'vivek-x-jha/ui',
     lazy = false,
     config = function()
       require 'nvchad'
