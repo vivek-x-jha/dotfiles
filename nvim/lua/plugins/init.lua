@@ -1,4 +1,57 @@
 return {
+  'nvim-lua/plenary.nvim',
+  'MunifTanjim/nui.nvim',
+  'nvzone/volt',
+  'nvzone/menu',
+
+  {
+    'nvzone/minty',
+    cmd = { 'Huefy', 'Shades' },
+  },
+
+  {
+    'vivek-x-jha/base46',
+    build = function()
+      require('base46').load_all_highlights()
+    end,
+  },
+
+  {
+    'vivek-x-jha/ui',
+    lazy = false,
+    config = function()
+      require 'nvchad'
+    end,
+  },
+
+  {
+    'nvim-tree/nvim-web-devicons',
+    opts = function()
+      dofile(vim.g.base46_cache .. 'devicons')
+      return { override = require 'nvchad.icons.devicons' }
+    end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPost', 'BufNewFile' },
+    cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
+    build = ':TSUpdate',
+    opts = function()
+      return require 'configs.treesitter'
+    end,
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+    end,
+  },
+
+  {
+    'nvim-telescope/telescope.nvim',
+    cmd = 'Telescope',
+    opts = function()
+      return require 'configs.telescope'
+    end,
+  },
+
   {
     'yetone/avante.nvim',
     event = 'VeryLazy',
@@ -10,16 +63,12 @@ return {
         model = 'gpt-4o-mini',
       },
     },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = 'make',
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    -- build = 'make BUILD_FROM_SOURCE=true' --to build from source
+    -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
     dependencies = {
-      'nvim-treesitter/nvim-treesitter',
       'stevearc/dressing.nvim',
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      --- The below dependencies are optional,
-      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+      --- optional
       'zbirenbaum/copilot.lua', -- for providers='copilot'
       {
         -- support for image pasting
@@ -109,28 +158,6 @@ return {
   },
 
   {
-    'nvim-telescope/telescope.nvim',
-    cmd = 'Telescope',
-    dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter',
-        event = { 'BufReadPost', 'BufNewFile' },
-        cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
-        build = ':TSUpdate',
-        opts = function()
-          return require 'configs.treesitter'
-        end,
-        config = function(_, opts)
-          require('nvim-treesitter.configs').setup(opts)
-        end,
-      },
-    },
-    opts = function()
-      return require 'configs.telescope'
-    end,
-  },
-
-  {
     'nvim-tree/nvim-tree.lua',
     cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
     opts = function()
@@ -141,7 +168,6 @@ return {
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
 
   {
@@ -156,7 +182,6 @@ return {
     'folke/noice.nvim',
     event = 'VeryLazy',
     dependencies = {
-      'MunifTanjim/nui.nvim',
       {
         'rcarriga/nvim-notify',
         module = 'notify',
@@ -217,34 +242,6 @@ return {
     opts = function()
       dofile(vim.g.base46_cache .. 'whichkey')
       return {}
-    end,
-  },
-
-  'nvim-lua/plenary.nvim',
-  'nvzone/volt',
-  'nvzone/menu',
-  { 'nvzone/minty', cmd = { 'Huefy', 'Shades' } },
-
-  {
-    'vivek-x-jha/base46',
-    build = function()
-      require('base46').load_all_highlights()
-    end,
-  },
-
-  {
-    'vivek-x-jha/ui',
-    lazy = false,
-    config = function()
-      require 'nvchad'
-    end,
-  },
-
-  {
-    'nvim-tree/nvim-web-devicons',
-    opts = function()
-      dofile(vim.g.base46_cache .. 'devicons')
-      return { override = require 'nvchad.icons.devicons' }
     end,
   },
 
