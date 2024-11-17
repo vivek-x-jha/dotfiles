@@ -1,12 +1,17 @@
 return {
   'nvim-lua/plenary.nvim',
   'MunifTanjim/nui.nvim',
-  'nvzone/volt',
   'nvzone/menu',
-
+  'nvzone/volt',
   {
     'nvzone/minty',
     cmd = { 'Huefy', 'Shades' },
+  },
+
+  {
+    'nvzone/showkeys',
+    cmd = { 'ShowkeysToggle' },
+    opts = require 'configs.showkeys',
   },
 
   {
@@ -31,6 +36,7 @@ return {
       return { override = require 'nvchad.icons.devicons' }
     end,
   },
+
   {
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufReadPost', 'BufNewFile' },
