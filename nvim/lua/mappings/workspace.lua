@@ -2,6 +2,14 @@ local map = vim.keymap.set
 local tabufline = require 'nvchad.tabufline'
 local term = require 'nvchad.term'
 
+-- obsession
+map('n', '<leader>ob', '<cmd>Obsession<CR>', { desc = 'Toggle Obsession session' })
+map('n', '<leader>oo', function()
+  vim.cmd 'silent! Obsession'
+  vim.cmd 'silent! Obsession'
+  vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
+end, { desc = 'Restart Obsession session' })
+
 -- tabufline
 map('n', '<leader>b', '<cmd>enew<CR>', { desc = 'buffer new' })
 
