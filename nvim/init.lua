@@ -33,16 +33,7 @@ end
 opt.rtp:prepend(lazypath)
 
 local lazy_config = require 'configs.lazy'
-require('lazy').setup({
-  {
-    'NvChad/NvChad',
-    lazy = false,
-    branch = 'v2.5',
-    import = 'nvchad.plugins',
-  },
-
-  { import = 'plugins' },
-}, lazy_config)
+require('lazy').setup({ { import = 'plugins' } }, lazy_config)
 
 -- load theme
 local base46_files = {
