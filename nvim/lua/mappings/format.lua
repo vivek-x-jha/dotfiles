@@ -1,7 +1,4 @@
-local map = vim.keymap.set
-local conform = require 'conform'
-
 -- format with conform
-map('n', '<leader>fm', function()
-  conform.format { lsp_fallback = true }
+vim.keymap.set('n', '<leader>fm', function()
+  require('conform').format { lsp_fallback = true }
 end, { desc = 'general format file' })
