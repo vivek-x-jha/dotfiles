@@ -211,7 +211,7 @@ return {
   },
 
   {
-    'vivek-x-jha/tmux-vim-navigator',
+    'christoomey/vim-tmux-navigator',
     cmd = {
       'TmuxNavigateLeft',
       'TmuxNavigateDown',
