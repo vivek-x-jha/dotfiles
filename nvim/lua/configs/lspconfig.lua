@@ -1,28 +1,30 @@
+local lspconf = require 'lspconfig'
 local M = {}
-local map = vim.keymap.set
 
 -- export on_attach & capabilities
 M.on_attach = function(_, bufnr)
-  local function opts(desc)
-    return { buffer = bufnr, desc = 'LSP ' .. desc }
+  local lspbuf = vim.lsp.buf
+  local lsprename = require 'nvchad.lsp.renamer'
+
+  local listfolders = function()
+    print(vim.inspect(lspbuf.list_workspace_folders()))
   end
 
-  map('n', 'gD', vim.lsp.buf.declaration, opts 'Go to declaration')
-  map('n', 'gd', vim.lsp.buf.definition, opts 'Go to definition')
-  map('n', 'gi', vim.lsp.buf.implementation, opts 'Go to implementation')
-  map('n', '<leader>sh', vim.lsp.buf.signature_help, opts 'Show signature help')
-  map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts 'Add workspace folder')
-  map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts 'Remove workspace folder')
+  local map = function(mode, lhs, rhs, desc)
+    return vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = 'LSP ' .. desc })
+  end
 
-  map('n', '<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, opts 'List workspace folders')
-
-  map('n', '<leader>D', vim.lsp.buf.type_definition, opts 'Go to type definition')
-  map('n', '<leader>ra', require 'nvchad.lsp.renamer', opts 'NvRenamer')
-
-  map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts 'Code action')
-  map('n', 'gr', vim.lsp.buf.references, opts 'Show references')
+  map('n', 'gD', lspbuf.declaration, 'Go to declaration')
+  map('n', 'gd', lspbuf.definition, 'Go to definition')
+  map('n', 'gi', lspbuf.implementation, 'Go to implementation')
+  map('n', '<leader>sh', lspbuf.signature_help, 'Show signature help')
+  map('n', '<leader>wa', lspbuf.add_workspace_folder, 'Add workspace folder')
+  map('n', '<leader>wr', lspbuf.remove_workspace_folder, 'Remove workspace folder')
+  map('n', '<leader>wl', listfolders, 'List workspace folders')
+  map('n', '<leader>D', lspbuf.type_definition, 'Go to type definition')
+  map('n', '<leader>ra', lsprename, 'NvRenamer')
+  map({ 'n', 'v' }, '<leader>ca', lspbuf.code_action, 'Code action')
+  map('n', 'gr', lspbuf.references, 'Show references')
 end
 
 -- disable semanticTokens
@@ -56,7 +58,7 @@ M.defaults = function()
   dofile(vim.g.base46_cache .. 'lsp')
   require('nvchad.lsp').diagnostic_config()
 
-  require('lspconfig').lua_ls.setup {
+  lspconf.lua_ls.setup {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
     on_init = M.on_init,
@@ -82,4 +84,23 @@ M.defaults = function()
   }
 end
 
-return M
+M.setupLSP = function()
+  M.defaults()
+
+  -- lsps with default configurations
+  local servers = {
+    'html',
+    'cssls',
+    'pyre',
+  }
+
+  for _, lsp in ipairs(servers) do
+    lspconf[lsp].setup {
+      on_attach = M.on_attach,
+      on_init = M.on_init,
+      capabilities = M.capabilities,
+    }
+  end
+end
+
+return M.setupLSP()
