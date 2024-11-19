@@ -2,6 +2,11 @@
 
 # Editor
 alias v='nvim'
+alias va='nvim $(fd -HItf --exclude .git --exclude .github --exclude Session.vim)'
+alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
+alias vs='nvim -S Session.vim'
+alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
+
 alias vim='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 alias vi='vim'
 
@@ -18,7 +23,6 @@ alias cl='clear'
 alias grep='grep --color=auto'
 alias l='eza --all --long --git --icons=always --group-directories-first'
 alias tree='tree -aCI ".git|.github"'
-alias vf='fzf --preview "bat -n --color=always {}" | xargs -r nvim'
 
 # Printing Long List Format
 alias list-aliases='alias | sort'
@@ -38,9 +42,6 @@ alias update-all='update_all'
 
 # Deletion
 alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
-
-# Neovim
-alias refresh-shada='mv "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
 # Tmux
 alias t='tmux attach || tmux new-session'
