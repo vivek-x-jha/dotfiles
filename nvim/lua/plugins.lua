@@ -33,8 +33,7 @@ return {
   {
     'nvim-tree/nvim-web-devicons',
     opts = function()
-      dofile(vim.g.base46_cache .. 'devicons')
-      return { override = require 'nvchad.icons.devicons' }
+      return require 'configs.webdevicons'
     end,
   },
 
@@ -69,7 +68,9 @@ return {
     -- Make sure to set this up properly if you have lazy=true
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown', 'Avante' },
-    opts = { file_types = { 'markdown', 'Avante' } },
+    opts = function()
+      return require 'configs.markdown'
+    end,
   },
 
   {
@@ -177,20 +178,14 @@ return {
     'kylechui/nvim-surround',
     version = '*',
     event = 'VeryLazy',
-    config = function()
-      require 'configs.surround'
+    opts = function()
+      return require 'configs.surround'
     end,
   },
 
   {
     'christoomey/vim-tmux-navigator',
-    cmd = {
-      'TmuxNavigateLeft',
-      'TmuxNavigateDown',
-      'TmuxNavigateUp',
-      'TmuxNavigateRight',
-      'TmuxNavigatePrevious',
-    },
+    cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight', 'TmuxNavigatePrevious' },
     keys = {
       { '<c-h>', '<cmd>TmuxNavigateLeft<CR>', { desc = 'switch window left' } },
       { '<c-j>', '<cmd>TmuxNavigateDown<CR>', { desc = 'switch window down' } },
@@ -218,23 +213,17 @@ return {
     keys = { '<leader>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
     cmd = 'WhichKey',
     opts = function()
-      dofile(vim.g.base46_cache .. 'whichkey')
-      return {}
+      return require 'configs.whichkey'
     end,
   },
 
   {
     'lukas-reineke/indent-blankline.nvim',
     event = 'User FilePost',
-    opts = {
-      indent = { char = '│', highlight = 'IblChar' },
-      scope = { char = '│', highlight = 'IblScopeChar' },
-    },
+    opts = function()
+      return require 'configs.indentblankline'
+    end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. 'blankline')
-
-      local hooks = require 'ibl.hooks'
-      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require('ibl').setup(opts)
 
       dofile(vim.g.base46_cache .. 'blankline')
