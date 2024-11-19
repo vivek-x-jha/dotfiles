@@ -1,6 +1,14 @@
 return {
-  defaults = { lazy = true },
-  install = { colorscheme = { 'nvchad' } },
+  defaults = {
+    lazy = true,
+    version = '*',
+  },
+
+  spec = 'plugins',
+
+  install = {
+    colorscheme = { 'nvchad' },
+  },
 
   ui = {
     icons = {
