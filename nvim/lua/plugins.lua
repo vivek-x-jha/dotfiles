@@ -162,21 +162,7 @@ return {
     'neovim/nvim-lspconfig',
     event = 'User FilePost',
     config = function()
-      local nvlsp = require 'configs.lspconfig'
-      nvlsp.defaults()
-
-      -- load defaults i.e lua_lsp
-      local lspconfig = require 'lspconfig'
-      local servers = { 'html', 'cssls', 'pyre' }
-
-      -- lsps with default config
-      for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup {
-          on_attach = nvlsp.on_attach,
-          on_init = nvlsp.on_init,
-          capabilities = nvlsp.capabilities,
-        }
-      end
+      require 'configs.lspconfig'
     end,
   },
 
@@ -220,7 +206,7 @@ return {
 
   {
     'kylechui/nvim-surround',
-    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    version = '*',
     event = 'VeryLazy',
     config = function()
       require 'configs.surround'
