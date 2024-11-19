@@ -1,4 +1,5 @@
 return {
+  'stevearc/dressing.nvim',
   'nvim-lua/plenary.nvim',
   'MunifTanjim/nui.nvim',
   'nvzone/menu',
@@ -45,9 +46,6 @@ return {
     opts = function()
       return require 'configs.treesitter'
     end,
-    config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end,
   },
 
   {
@@ -59,49 +57,29 @@ return {
   },
 
   {
+    -- support for image pasting
+    'HakonHarnes/img-clip.nvim',
+    event = 'VeryLazy',
+    opts = function()
+      return require 'configs.imgclip'
+    end,
+  },
+
+  {
+    -- Make sure to set this up properly if you have lazy=true
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { 'markdown', 'Avante' },
+    opts = { file_types = { 'markdown', 'Avante' } },
+  },
+
+  {
     'yetone/avante.nvim',
     event = 'VeryLazy',
     lazy = false,
-    version = false, -- set this if you want to always pull the latest change
-    opts = {
-      provider = 'openai',
-      openai = {
-        model = 'gpt-4o-mini',
-      },
-    },
     build = 'make',
-    -- build = 'make BUILD_FROM_SOURCE=true' --to build from source
-    -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
-    dependencies = {
-      'stevearc/dressing.nvim',
-      --- optional
-      'zbirenbaum/copilot.lua', -- for providers='copilot'
-      {
-        -- support for image pasting
-        'HakonHarnes/img-clip.nvim',
-        event = 'VeryLazy',
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { 'markdown', 'Avante' },
-        },
-        ft = { 'markdown', 'Avante' },
-      },
-    },
+    opts = function()
+      return require 'configs.avante'
+    end,
   },
 
   -- load luasnips + cmp related in insert mode only
@@ -123,16 +101,8 @@ return {
       -- autopairing of (){}[] etc
       {
         'windwp/nvim-autopairs',
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { 'TelescopePrompt', 'vim' },
-        },
-        config = function(_, opts)
-          require('nvim-autopairs').setup(opts)
-
-          -- setup cmp for autopairs
-          local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-          require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+        opts = function()
+          return require 'configs.autopairs'
         end,
       },
 
@@ -188,19 +158,18 @@ return {
   },
 
   {
+    'rcarriga/nvim-notify',
+    module = 'notify',
+    opts = function()
+      return require 'configs.notify'
+    end,
+  },
+
+  {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    dependencies = {
-      {
-        'rcarriga/nvim-notify',
-        module = 'notify',
-        config = function()
-          require 'configs.notify'
-        end,
-      },
-    }, -- if lazy-loaded, add proper `module='...'` entries
-    config = function()
-      require 'configs.noice'
+    opts = function()
+      return require 'configs.noice'
     end,
   },
 

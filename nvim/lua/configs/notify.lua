@@ -14,8 +14,8 @@ set_hl('NotifyINFOTitle', { fg = '#d2fd9d' })
 set_hl('NotifyDEBUGTitle', { fg = '#c9ccfb' })
 set_hl('NotifyTRACETitle', { fg = '#47e7b1' })
 
-require('notify').setup({
+return {
   background_colour = '#000000',
   fps = 60,
   stages = 'fade',
-})
+}
