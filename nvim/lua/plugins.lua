@@ -55,6 +55,18 @@ return {
     end,
   },
 
+  -------------------------------- ai support -------------------------------
+
+  {
+    'yetone/avante.nvim',
+    event = 'VeryLazy',
+    lazy = false,
+    build = 'make',
+    opts = function()
+      return require 'configs.avante'
+    end,
+  },
+
   {
     -- support for image pasting
     'HakonHarnes/img-clip.nvim',
@@ -70,16 +82,6 @@ return {
     ft = { 'markdown', 'Avante' },
     opts = function()
       return require 'configs.markdown'
-    end,
-  },
-
-  {
-    'yetone/avante.nvim',
-    event = 'VeryLazy',
-    lazy = false,
-    build = 'make',
-    opts = function()
-      return require 'configs.avante'
     end,
   },
 
