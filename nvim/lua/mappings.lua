@@ -1,25 +1,29 @@
 local map = vim.keymap.set
 local diag = vim.diagnostic
+
+local conform = require 'conform'
+
+local colorschemes = require 'nvchad.themes'
 local tabufline = require 'nvchad.tabufline'
 local term = require 'nvchad.term'
 
 -- user mapping functions
-local funcs = {
-  restart_session = function()
+local fn = {
+  restartSession = function()
     vim.cmd 'silent! Obsession'
     vim.cmd 'silent! Obsession'
     vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
   end,
 
-  nextbuffer = function()
+  nextBuffer = function()
     tabufline.next()
   end,
 
-  prevbuffer = function()
+  prevBuffer = function()
     tabufline.prev()
   end,
 
-  closebuffer = function()
+  closeBuffer = function()
     tabufline.close_buffer()
   end,
 
@@ -43,8 +47,8 @@ local funcs = {
     term.toggle { pos = 'float', id = 'floatTerm' }
   end,
 
-  view_themes = function()
-    require('nvchad.themes').open()
+  switchTheme = function()
+    colorschemes.open()
   end,
 
   queryWhichKey = function()
@@ -52,7 +56,7 @@ local funcs = {
   end,
 
   generalFormat = function()
-    require('conform').format { lsp_fallback = true }
+    conform.format { lsp_fallback = true }
   end,
 }
 
@@ -82,13 +86,13 @@ map('v', '<leader>/', 'gc', { desc = 'toggle comment', remap = true })
 
 -- obsession
 map('n', '<leader>ob', '<cmd>Obsession<CR>', { desc = 'Toggle Obsession session' })
-map('n', '<leader>oo', funcs.restart_session, { desc = 'Restart Obsession session' })
+map('n', '<leader>oo', fn.restartSession, { desc = 'Restart Obsession session' })
 
 -- tabufline
 map('n', '<leader>b', '<cmd>enew<CR>', { desc = 'buffer new' })
-map('n', '<tab>', funcs.nextbuffer, { desc = 'buffer goto next' })
-map('n', '<S-tab>', funcs.prevbuffer, { desc = 'buffer goto prev' })
-map('n', '<leader>x', funcs.closebuffer, { desc = 'buffer close' })
+map('n', '<tab>', fn.nextBuffer, { desc = 'Buffer goto next' })
+map('n', '<S-tab>', fn.prevBuffer, { desc = 'Buffer goto prev' })
+map('n', '<leader>x', fn.closeBuffer, { desc = 'Buffer close' })
 
 -- nvimtree
 map('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', { desc = 'nvimtree toggle window' })
@@ -97,12 +101,12 @@ map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', { desc = 'nvimtree focus window'
 -- terminal
 map('t', '<C-x>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
-map('n', '<leader>h', funcs.hsplitTerm, { desc = 'terminal new horizontal term' })
-map('n', '<leader>v', funcs.vtoggleTerm, { desc = 'terminal new vertical term' })
+map('n', '<leader>h', fn.hsplitTerm, { desc = 'terminal new horizontal term' })
+map('n', '<leader>v', fn.vtoggleTerm, { desc = 'terminal new vertical term' })
 
-map({ 'n', 't' }, '<A-v>', funcs.vtoggleTerm, { desc = 'terminal toggleable vertical term' })
-map({ 'n', 't' }, '<A-h>', funcs.htoggleTerm, { desc = 'terminal toggleable horizontal term' })
-map({ 'n', 't' }, '<A-i>', funcs.floatTerm, { desc = 'terminal toggle floating term' })
+map({ 'n', 't' }, '<A-v>', fn.vtoggleTerm, { desc = 'terminal toggleable vertical term' })
+map({ 'n', 't' }, '<A-h>', fn.htoggleTerm, { desc = 'terminal toggleable horizontal term' })
+map({ 'n', 't' }, '<A-i>', fn.floatTerm, { desc = 'terminal toggle floating term' })
 
 -- search
 
@@ -117,7 +121,7 @@ map('n', '<leader>cm', '<cmd>Telescope git_commits<CR>', { desc = 'telescope git
 map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', { desc = 'telescope git status' })
 map('n', '<leader>pt', '<cmd>Telescope terms<CR>', { desc = 'telescope pick hidden term' })
 
-map('n', '<leader>th', funcs.view_themes, { desc = 'telescope nvchad themes' })
+map('n', '<leader>th', fn.switchTheme, { desc = 'telescope nvchad themes' })
 
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = 'telescope find files' })
 map(
@@ -149,7 +153,7 @@ map('n', '<leader>ch', '<cmd>NvCheatsheet<CR>', { desc = 'toggle nvcheatsheet' }
 
 -- whichkey
 map('n', '<leader>wK', '<cmd>WhichKey <CR>', { desc = 'whichkey all keymaps' })
-map('n', '<leader>wk', funcs.queryWhichKey, { desc = 'whichkey query lookup' })
+map('n', '<leader>wk', fn.queryWhichKey, { desc = 'whichkey query lookup' })
 
 -- showkey
 map('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', { desc = 'Toggle Showkeys' })
@@ -157,4 +161,4 @@ map('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', { desc = 'Toggle Showkeys' })
 -- format
 
 -- conform
-map('n', '<leader>fm', funcs.generalFormat, { desc = 'general format file' })
+map('n', '<leader>fm', fn.generalFormat, { desc = 'general format file' })
