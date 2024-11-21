@@ -73,6 +73,9 @@ alias gco='git checkout'
 alias gb='git branch'
 alias gmg='git merge'
 
+# Commitizen
+alias czc='cz commit'
+
 # CLI Tools
 alias mycli='mycli --myclirc "$DOT/.myclirc"'
 alias weather='curl wttr.in'
