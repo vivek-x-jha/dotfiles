@@ -1,15 +1,21 @@
+dofile(vim.g.base46_cache .. 'lsp')
+
 local lspconfig = require 'lspconfig'
+local lspUI = require 'nvchad.lsp'
+local lsprename = require 'nvchad.lsp.renamer'
+local lspbuf = vim.lsp.buf
+local lspproto = vim.lsp.protocol
+
+local listfolders = function()
+  print(vim.inspect(lspbuf.list_workspace_folders()))
+end
+
+lspUI.diagnostic_config()
+
 local M = {}
 
 -- export on_attach & capabilities
 M.on_attach = function(_, bufnr)
-  local lspbuf = vim.lsp.buf
-  local lsprename = require 'nvchad.lsp.renamer'
-
-  local listfolders = function()
-    print(vim.inspect(lspbuf.list_workspace_folders()))
-  end
-
   local map = function(mode, lhs, rhs, desc)
     return vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = 'LSP ' .. desc })
   end
@@ -34,7 +40,7 @@ M.on_init = function(client, _)
   end
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities = lspproto.make_client_capabilities()
 
 M.capabilities.textDocument.completion.completionItem = {
   documentationFormat = { 'markdown', 'plaintext' },
@@ -45,19 +51,10 @@ M.capabilities.textDocument.completion.completionItem = {
   deprecatedSupport = true,
   commitCharactersSupport = true,
   tagSupport = { valueSet = { 1 } },
-  resolveSupport = {
-    properties = {
-      'documentation',
-      'detail',
-      'additionalTextEdits',
-    },
-  },
+  resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } },
 }
 
 M.defaults = function()
-  dofile(vim.g.base46_cache .. 'lsp')
-  require('nvchad.lsp').diagnostic_config()
-
   lspconfig.lua_ls.setup {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
