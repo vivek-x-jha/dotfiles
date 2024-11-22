@@ -1,4 +1,4 @@
-local lspconf = require 'lspconfig'
+local lspconfig = require 'lspconfig'
 local M = {}
 
 -- export on_attach & capabilities
@@ -58,7 +58,7 @@ M.defaults = function()
   dofile(vim.g.base46_cache .. 'lsp')
   require('nvchad.lsp').diagnostic_config()
 
-  lspconf.lua_ls.setup {
+  lspconfig.lua_ls.setup {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
     on_init = M.on_init,
@@ -95,7 +95,7 @@ M.setupLSP = function()
   }
 
   for _, lsp in ipairs(servers) do
-    lspconf[lsp].setup {
+    lspconfig[lsp].setup {
       on_attach = M.on_attach,
       on_init = M.on_init,
       capabilities = M.capabilities,
