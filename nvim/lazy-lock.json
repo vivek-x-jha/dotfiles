@@ -1,7 +1,7 @@
 {
   "LuaSnip": { "branch": "master", "commit": "03c8e67eb7293c404845b3982db895d59c0d1538" },
-  "avante.nvim": { "branch": "main", "commit": "2863473bbf575bd7ae3836ed385602515e0fab12" },
-  "base46": { "branch": "v2.5", "commit": "a487f3769a59c8219889d02c34ff26fda0e6841f" },
+  "avante.nvim": { "branch": "main", "commit": "341ecd207348841403ee4c2473864ef5c74ab710" },
+  "base46": { "branch": "v2.5", "commit": "3a419fc2e55d7571135ce6afc373c026f0617d04" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "39e2eda76828d88b773cc27a3f61d2ad782c922d" },
   "cmp-nvim-lua": { "branch": "main", "commit": "f12408bdb54c39c23e67cab726264c10db33ada8" },
@@ -33,9 +33,9 @@
   "render-markdown.nvim": { "branch": "main", "commit": "4ec7a51856e9324b2b758afe73b64dd05396a9a8" },
   "showkeys": { "branch": "main", "commit": "38a5d15ef687da37ef0de3d6944b9eb6830982f3" },
   "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
-  "ui": { "branch": "v3.0", "commit": "3a31f24939f41f8e52a6ad43ff8f55fa10ef1bdb" },
+  "ui": { "branch": "v3.0", "commit": "4ce798fab41f645a762c7f0dced8ee253559d8d0" },
   "vim-obsession": { "branch": "master", "commit": "ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63" },
   "vim-tmux-navigator": { "branch": "master", "commit": "85b8e5f60c1690cde57dbb66467ce39cd1b63343" },
-  "volt": { "branch": "main", "commit": "a36c576baae487634151377f601bf3f5de355f5a" },
+  "volt": { "branch": "main", "commit": "8d35e03c70490190149a77c59155618ef4370721" },
   "which-key.nvim": { "branch": "main", "commit": "fb070344402cfc662299d9914f5546d840a22126" }
 }
