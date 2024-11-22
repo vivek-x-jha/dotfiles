@@ -22,12 +22,12 @@ export FZF_DEFAULT_OPTS="
   --color          info:#c9ccfb
   --color          marker:#f3b175
   --color          pointer:#d2fd9d
-  --color          prompt:#f096b7
+  --color          prompt:#f3b175
   --color          spinner:#c4effa
   --header         'Preview File Content'
   --layout         reverse
   --marker         '*'
-  --pointer        '▶'
+  --pointer        '󰧂'
   --prompt         '  '
   --tmux           center
   --walker-skip    .git,node_modules,target
