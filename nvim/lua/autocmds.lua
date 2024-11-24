@@ -39,3 +39,11 @@ vapi.nvim_create_autocmd({ 'BufWinEnter' }, {
   desc = 'load view (folds), when opening file',
   command = 'silent! loadview',
 })
+
+-- Start Showkeys on open
+vapi.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    vim.cmd 'ShowkeysToggle'
+  end,
+  desc = 'Start ShowkeysToggle on Neovim launch',
+})
