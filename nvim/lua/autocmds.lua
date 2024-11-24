@@ -1,8 +1,9 @@
-local vapi = vim.api
 local g = vim.g
+local vapi = vim.api
+local create_autocmd = vapi.nvim_create_autocmd
 
 -- user event that loads after UIEnter + only if file buf is there
-vapi.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
+create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   group = vapi.nvim_create_augroup('NvFilePost', { clear = true }),
   callback = function(args)
     local file = vapi.nvim_buf_get_name(args.buf)
@@ -28,20 +29,20 @@ vapi.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 })
 
 -- Maintains fold state on reopen
-vapi.nvim_create_autocmd({ 'BufWinLeave' }, {
+create_autocmd({ 'BufWinLeave' }, {
   pattern = { '*.*' },
   desc = 'save view (folds), when closing file',
   command = 'mkview',
 })
 
-vapi.nvim_create_autocmd({ 'BufWinEnter' }, {
+create_autocmd({ 'BufWinEnter' }, {
   pattern = { '*.*' },
   desc = 'load view (folds), when opening file',
   command = 'silent! loadview',
 })
 
 -- Start Showkeys on open
-vapi.nvim_create_autocmd('VimEnter', {
+create_autocmd('VimEnter', {
   callback = function()
     vim.cmd 'ShowkeysToggle'
   end,
