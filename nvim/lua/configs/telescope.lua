@@ -1,5 +1,7 @@
 require('utils.ui').set_base46 'telescope'
 
+local actions = require 'telescope.actions'
+
 return {
   defaults = {
     prompt_prefix = '   ',
@@ -15,7 +17,7 @@ return {
       height = 0.80,
     },
     mappings = {
-      n = { ['q'] = require('telescope.actions').close },
+      n = { ['q'] = actions.close },
     },
   },
 
