@@ -7,7 +7,8 @@ local colorschemes = require 'nvchad.themes'
 local tabufline = require 'nvchad.tabufline'
 local term = require 'nvchad.term'
 
--- user mapping functions
+--------------------------- user mapping functions ----------------------------
+
 local fn = {
   restartSession = function()
     vim.cmd 'silent! Obsession'
@@ -60,7 +61,8 @@ local fn = {
   end,
 }
 
--- general
+--------------------------- general -------------------------------------------
+
 map('n', ';', ':', { desc = 'CMD enter command mode' })
 
 map('n', '<Esc>', '<cmd>noh<CR>', { desc = 'general clear highlights' })
@@ -72,7 +74,7 @@ map('n', '<leader>rn', '<cmd>set rnu!<CR>', { desc = 'toggle relative number' })
 map('n', '<leader>/', 'gcc', { desc = 'toggle comment', remap = true })
 map('v', '<leader>/', 'gc', { desc = 'toggle comment', remap = true })
 
--- workspace
+--------------------------- workspace -----------------------------------------
 
 -- obsession
 map('n', '<leader>ob', '<cmd>Obsession<CR>', { desc = 'Toggle Obsession session' })
@@ -98,7 +100,7 @@ map({ 'n', 't' }, '<A-v>', fn.vtoggleTerm, { desc = 'terminal toggleable vertica
 map({ 'n', 't' }, '<A-h>', fn.htoggleTerm, { desc = 'terminal toggleable horizontal term' })
 map({ 'n', 't' }, '<A-i>', fn.floatTerm, { desc = 'terminal toggle floating term' })
 
--- search
+--------------------------- search --------------------------------------------
 
 -- telescope
 map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', { desc = 'telescope live grep' })
@@ -121,7 +123,7 @@ map(
   { desc = 'telescope find all files' }
 )
 
--- navigation
+--------------------------- navigation ----------------------------------------
 
 -- insert mode
 map('i', '<C-b>', '<ESC>^i', { desc = 'move beginning of line' })
@@ -131,12 +133,12 @@ map('i', '<C-l>', '<Right>', { desc = 'move right' })
 map('i', '<C-j>', '<Down>', { desc = 'move down' })
 map('i', '<C-k>', '<Up>', { desc = 'move up' })
 
--- lsp
+--------------------------- lsp -----------------------------------------------
 
 -- global lsp mappings
 map('n', '<leader>ds', diag.setloclist, { desc = 'LSP diagnostic loclist' })
 
--- keymeta
+--------------------------- keymeta -------------------------------------------
 
 -- cheatsheet
 map('n', '<leader>ch', '<cmd>NvCheatsheet<CR>', { desc = 'toggle nvcheatsheet' })
@@ -148,7 +150,7 @@ map('n', '<leader>wk', fn.queryWhichKey, { desc = 'whichkey query lookup' })
 -- showkey
 map('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', { desc = 'Toggle Showkeys' })
 
--- format
+--------------------------- format --------------------------------------------
 
 -- conform
 map('n', '<leader>fm', fn.generalFormat, { desc = 'general format file' })
