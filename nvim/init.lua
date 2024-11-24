@@ -27,7 +27,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
 -- load plugins
-vim.g.base46_cache = vim.fn.stdpath 'data' .. '/nvchad/base46/'
+vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46/'
 local opts = require 'configs.lazy'
 require('lazy').setup(opts)
 
