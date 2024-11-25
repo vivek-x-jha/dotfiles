@@ -1,15 +1,11 @@
 local diag = vim.diagnostic
 
-local conform = require 'conform'
 local colorschemes = require 'nvchad.themes'
+local conform = require 'conform'
 local tabufline = require 'nvchad.tabufline'
 local term = require 'nvchad.term'
 
-local map = function(mode, lhs, rhs, desc, remap)
-	vim.keymap.set(mode, lhs, rhs, { desc = desc, remap = remap or false })
-end
-
---------------------------- user mapping functions ----------------------------
+local map = function(mode, lhs, rhs, desc, remap) vim.keymap.set(mode, lhs, rhs, { desc = desc, remap = remap or false }) end
 
 local fn = {
 	restartSession = function()
@@ -18,49 +14,20 @@ local fn = {
 		vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
 	end,
 
-	nextBuffer = function()
-		tabufline.next()
-	end,
+	nextBuffer = function() tabufline.next() end,
+	prevBuffer = function() tabufline.prev() end,
+	closeBuffer = function() tabufline.close_buffer() end,
 
-	prevBuffer = function()
-		tabufline.prev()
-	end,
+	hsplitTerm = function() term.new { pos = 'sp' } end,
+	vsplitTerm = function() term.new { pos = 'vsp' } end,
+	htoggleTerm = function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end,
+	vtoggleTerm = function() term.toggle { pos = 'vsp', id = 'vtoggleTerm' } end,
+	floatTerm = function() term.toggle { pos = 'float', id = 'floatTerm' } end,
 
-	closeBuffer = function()
-		tabufline.close_buffer()
-	end,
+	switchTheme = function() colorschemes.open() end,
 
-	hsplitTerm = function()
-		term.new { pos = 'sp' }
-	end,
-
-	vsplitTerm = function()
-		term.new { pos = 'vsp' }
-	end,
-
-	htoggleTerm = function()
-		term.toggle { pos = 'sp', id = 'htoggleTerm' }
-	end,
-
-	vtoggleTerm = function()
-		term.toggle { pos = 'vsp', id = 'vtoggleTerm' }
-	end,
-
-	floatTerm = function()
-		term.toggle { pos = 'float', id = 'floatTerm' }
-	end,
-
-	switchTheme = function()
-		colorschemes.open()
-	end,
-
-	queryWhichKey = function()
-		vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ')
-	end,
-
-	generalFormat = function()
-		conform.format { lsp_fallback = true }
-	end,
+	queryWhichKey = function() vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ') end,
+	generalFormat = function() conform.format { lsp_fallback = true } end,
 }
 
 --------------------------- general -------------------------------------------
@@ -84,9 +51,9 @@ map('n', '<leader>oo', fn.restartSession, 'Restart Obsession session')
 
 -- tabufline
 map('n', '<leader>b', '<cmd>enew<CR>', 'buffer new')
-map('n', '<tab>', fn.nextBuffer, 'Buffer goto next')
-map('n', '<S-tab>', fn.prevBuffer, 'Buffer goto prev')
-map('n', '<leader>x', fn.closeBuffer, 'Buffer close')
+map('n', '<tab>', tabufline.next, 'Buffer goto next')
+map('n', '<S-tab>', tabufline.prev, 'Buffer goto prev')
+map('n', '<leader>x', tabufline.close_buffer, 'Buffer close')
 
 -- nvimtree
 map('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', 'nvimtree toggle window')
@@ -105,20 +72,18 @@ map({ 'n', 't' }, '<A-i>', fn.floatTerm, 'terminal toggle floating term')
 --------------------------- search --------------------------------------------
 
 -- telescope
-map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', 'telescope live grep')
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', 'telescope find buffers')
-map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', 'telescope help page')
-map('n', '<leader>ma', '<cmd>Telescope marks<CR>', 'telescope find marks')
-map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>', 'telescope find oldfiles')
-map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'telescope find in current buffer')
 map('n', '<leader>cm', '<cmd>Telescope git_commits<CR>', 'telescope git commits')
-map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', 'telescope git status')
-map('n', '<leader>pt', '<cmd>Telescope terms<CR>', 'telescope pick hidden term')
-
-map('n', '<leader>th', fn.switchTheme, 'telescope nvchad themes')
-
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', 'telescope find files')
 map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', 'telescope find all files')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', 'telescope find buffers')
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', 'telescope find files')
+map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', 'telescope help page')
+map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>', 'telescope find oldfiles')
+map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', 'telescope live grep')
+map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'telescope find in current buffer')
+map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', 'telescope git status')
+map('n', '<leader>ma', '<cmd>Telescope marks<CR>', 'telescope find marks')
+map('n', '<leader>pt', '<cmd>Telescope terms<CR>', 'telescope pick hidden term')
+map('n', '<leader>th', fn.switchTheme, 'telescope nvchad themes')
 
 --------------------------- navigation ----------------------------------------
 
