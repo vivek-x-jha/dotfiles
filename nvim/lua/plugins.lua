@@ -206,10 +206,6 @@ return {
 		'lukas-reineke/indent-blankline.nvim',
 		event = 'User FilePost',
 		opts = function() return require 'configs.indentblankline' end,
-		config = function(_, opts)
-			require('ibl').setup(opts)
-
-			dofile(vim.g.base46_cache .. 'blankline')
-		end,
+		config = function(_, opts) require('ibl').setup(opts) end,
 	},
 }

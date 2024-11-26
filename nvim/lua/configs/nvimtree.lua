@@ -1,5 +1,3 @@
-require('utils.ui').set_base46 'nvimtree'
-
 vim.cmd [[
   :hi NvimTreeExecFile          guifg=#ceffc9
   :hi NvimTreeSpecialFile       guifg=#f3b175
@@ -13,41 +11,41 @@ vim.cmd [[
 ]]
 
 return {
-  filters = { dotfiles = false },
-  disable_netrw = true,
-  hijack_cursor = true,
-  sync_root_with_cwd = true,
-  update_focused_file = {
-    enable = true,
-    update_root = false,
-  },
-  view = {
-    side = 'left',
-    width = 30,
-    preserve_window_proportions = true,
-  },
-  renderer = {
-    root_folder_label = false,
-    highlight_git = true,
-    indent_markers = { enable = true },
-    icons = {
-      glyphs = {
-        default = '󰈚',
-        folder = {
-          default = '󰉖',
-          empty = '󱧹',
-          empty_open = '󰷏',
-          open = '󰷏',
-          symlink = '󱉆',
-        },
-        git = {
-          renamed = 'r',
-          staged = '+',
-          unmerged = '!',
-          unstaged = '~',
-          untracked = '?',
-        },
-      },
-    },
-  },
+	filters = { dotfiles = false },
+	disable_netrw = true,
+	hijack_cursor = true,
+	sync_root_with_cwd = true,
+	update_focused_file = {
+		enable = true,
+		update_root = false,
+	},
+	view = {
+		side = 'left',
+		width = 30,
+		preserve_window_proportions = true,
+	},
+	renderer = {
+		root_folder_label = false,
+		highlight_git = true,
+		indent_markers = { enable = true },
+		icons = {
+			glyphs = {
+				default = '󰈚',
+				folder = {
+					default = '󰉖',
+					empty = '󱧹',
+					empty_open = '󰷏',
+					open = '󰷏',
+					symlink = '󱉆',
+				},
+				git = {
+					renamed = 'r',
+					staged = '+',
+					unmerged = '!',
+					unstaged = '~',
+					untracked = '?',
+				},
+			},
+		},
+	},
 }
