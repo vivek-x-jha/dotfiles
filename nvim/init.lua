@@ -38,4 +38,6 @@ end
 require 'options'
 require 'autocmds'
 
+vim.api.nvim_set_hl(0, 'QuickFixLine', { fg = '#f096b7', bg = 'NONE' })
+
 vim.schedule(function() require 'mappings' end)
