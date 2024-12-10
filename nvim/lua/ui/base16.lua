@@ -20,6 +20,7 @@ return {
 	brightwhite = '#ffffff',
 
 	-- extras
-	background = '#212030',
+	-- background = '#212030',
+	background = 'NONE',
 	grey = '#313244',
 }
