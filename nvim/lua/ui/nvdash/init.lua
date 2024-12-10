@@ -2,7 +2,14 @@ local M = {}
 local api = vim.api
 local fn = vim.fn
 local strw = api.nvim_strwidth
+local b16 = require 'ui.base16'
 local opts = require 'ui.nvdash.options'
+
+require('ui.utils').highlight {
+	NvDashAscii = { fg = b16.blue },
+	NvDashButtons = { fg = b16.black },
+	NvDashFooter = { fg = b16.red },
+}
 
 local map = function(keys, action, buf)
 	for _, v in ipairs(keys) do
@@ -10,13 +17,13 @@ local map = function(keys, action, buf)
 	end
 end
 
-local function txt_pad(str, max_str_w)
+local txt_pad = function(str, max_str_w)
 	local av = (max_str_w - strw(str)) / 2
 	av = math.floor(av)
 	return string.rep(' ', av) .. str .. string.rep(' ', av)
 end
 
-local function btn_gap(txt1, txt2, max_str_w)
+local btn_gap = function(txt1, txt2, max_str_w)
 	local btn_len = strw(txt1) + #txt2
 	local spacing = max_str_w - btn_len
 	return txt1 .. string.rep(' ', spacing) .. txt2
@@ -28,7 +35,7 @@ M.open = function(buf, win, action)
 	local ns = api.nvim_create_namespace 'nvdash'
 	local winh = api.nvim_win_get_height(win)
 	local winw = api.nvim_win_get_width(win)
-	buf = buf or vim.api.nvim_create_buf(false, true)
+	buf = buf or api.nvim_create_buf(false, true)
 
 	vim.g.nvdash_buf = buf
 	vim.g.nvdash_win = win
