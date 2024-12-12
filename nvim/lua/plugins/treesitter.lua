@@ -9,7 +9,7 @@ return {
 		require('ui.utils').highlight {
 
 			-- syntax
-			Boolean = { fg = b16.brightblue },
+			Boolean = { fg = b16.red },
 			Character = { fg = b16.base08 },
 			Conditional = { fg = b16.magenta },
 			Constant = { fg = b16.black },
