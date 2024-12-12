@@ -55,7 +55,7 @@ vim.schedule(function()
 	-- reload the plugin!
 	create_autocmd('BufWritePost', {
 		pattern = vim.tbl_map(
-			function(path) return fs.normalize(vim.uv.fs_realpath(path)) end,
+			function(path) return fs.normalize(vim.uv.fs_realpath(path) or path) end,
 			fn.glob(fn.stdpath 'config' .. '/lua/**/*.lua', true, true, true)
 		),
 		group = api.nvim_create_augroup('ReloadNvChad', {}),
