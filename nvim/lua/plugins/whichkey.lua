@@ -6,7 +6,7 @@ return {
 	opts = function()
 		local b16 = require 'ui.base16'
 		require('ui.utils').highlight {
-			WhichKey = { fg = b16.red },
+			WhichKey = { fg = b16.yellow },
 			WhichKeySeparator = { fg = b16.black },
 			WhichKeyDesc = { fg = b16.blue },
 			WhichKeyGroup = { fg = b16.yellow },

@@ -78,9 +78,6 @@ map('n', '<leader>ds', vim.diagnostic.setloclist, 'LSP diagnostic loclist')
 
 --------------------------- keymeta -------------------------------------------
 
--- cheatsheet
-map('n', '<leader>ch', '<cmd>NvCheatsheet<CR>', 'toggle nvcheatsheet')
-
 -- whichkey
 map('n', '<leader>wK', '<cmd>WhichKey <CR>', 'whichkey all keymaps')
 map('n', '<leader>wk', function() vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ') end, 'whichkey query lookup')
