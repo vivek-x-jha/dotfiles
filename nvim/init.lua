@@ -167,22 +167,22 @@ vim.schedule(function()
 	})
 
 	-- reload the plugin!
-	create_autocmd('BufWritePost', {
-		pattern = vim.tbl_map(
-			function(path) return fs.normalize(vim.uv.fs_realpath(path) or path) end,
-			fn.glob(fn.stdpath 'config' .. '/lua/**/*.lua', true, true, true)
-		),
-		group = api.nvim_create_augroup('ReloadNvChad', {}),
-
-		callback = function(opts)
-			local fp = fn.fnamemodify(fs.normalize(api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
-			local app_name = env.NVIM_APPNAME and env.NVIM_APPNAME or 'nvim'
-			local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
-
-			utils.reload(module)
-			-- vim.cmd("redraw!")
-		end,
-	})
+	-- create_autocmd('BufWritePost', {
+	-- 	pattern = vim.tbl_map(
+	-- 		function(path) return fs.normalize(vim.uv.fs_realpath(path) or path) end,
+	-- 		fn.glob(fn.stdpath 'config' .. '/lua/**/*.lua', true, true, true)
+	-- 	),
+	-- 	group = api.nvim_create_augroup('ReloadNvChad', {}),
+	--
+	-- 	callback = function(opts)
+	-- 		local fp = fn.fnamemodify(fs.normalize(api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
+	-- 		local app_name = env.NVIM_APPNAME and env.NVIM_APPNAME or 'nvim'
+	-- 		local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
+	--
+	-- 		utils.reload(module)
+	-- 		-- vim.cmd("redraw!")
+	-- 	end,
+	-- })
 
 	create_usercmd('MasonInstallAll', function() mason.install_all() end, {})
 
