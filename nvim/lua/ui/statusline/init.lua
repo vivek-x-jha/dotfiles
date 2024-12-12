@@ -1,4 +1,5 @@
 local b16 = require 'ui.base16'
+local utils = require 'ui.statusline.utils'
 
 require('ui.utils').highlight {
 	-- StatusLine Highlights
@@ -6,7 +7,7 @@ require('ui.utils').highlight {
 	StText = { fg = b16.brightred, bg = 'NONE' },
 
 	St_file = { fg = b16.black, bg = 'NONE' },
-	St_cursor = { fg = b16.black, bg = 'NONE' },
+	St_cursor = { fg = b16.black, bg = 'NONE' }, -- TODO: Adjusted to black
 	St_cwd = { fg = b16.blue, bg = 'NONE' },
 	St_ft = { fg = b16.brightblue, bg = 'NONE' },
 
@@ -36,40 +37,42 @@ require('ui.utils').highlight {
 	St_SelectMode = { fg = b16.blue, bg = 'NONE' },
 }
 
-local utils = require 'ui.statusline.utils'
+return {
+	init = function()
+		return utils.generate {
+			['%='] = '%=',
 
-return function()
-	return utils.generate {
-		['%='] = '%=',
+			mode = function()
+				if not utils.is_activewin() then return '' end
 
-		mode = function()
-			if not utils.is_activewin() then return '' end
+				local modes = utils.modes
+				local m = vim.api.nvim_get_mode().mode
+				return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
+			end,
 
-			local modes = utils.modes
-			local m = vim.api.nvim_get_mode().mode
-			return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
-		end,
+			cwd = function()
+				local name = vim.uv.cwd()
+				if not name then return '' end
 
-		cwd = function()
-			local name = vim.uv.cwd()
-			if not name then return '' end
+				name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
+				return (vim.o.columns > 85 and name) or ''
+			end,
 
-			name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
-			return (vim.o.columns > 85 and name) or ''
-		end,
+			git = utils.git,
+			lsp_msg = utils.lsp_msg,
+			diagnostics = utils.diagnostics,
 
-		git = utils.git,
-		lsp_msg = utils.lsp_msg,
-		diagnostics = utils.diagnostics,
+			lsp = function() return '%#St_lsp#' .. utils.lsp() end,
 
-		lsp = function() return '%#St_lsp#' .. utils.lsp() end,
+			file = function()
+				local icon = utils.file()[1]
+				local name = utils.file()[2]
+				return '%#St_file#' .. icon .. ' ' .. name .. ' '
+			end,
 
-		file = function()
-			local icon = utils.file()[1]
-			local name = utils.file()[2]
-			return '%#St_file#' .. icon .. ' ' .. name .. ' '
-		end,
+			cursor = function() return '%#St_cursor#󰓾 %l:%c' end,
+		}
+	end,
 
-		cursor = function() return '%#St_cursor#󰓾 %l:%c' end,
-	}
-end
+	autocmds = function() return utils.autocmds() end,
+}
