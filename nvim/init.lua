@@ -11,7 +11,6 @@ local create_autocmd = api.nvim_create_autocmd
 local create_usercmd = api.nvim_create_user_command
 local env = vim.env
 local fn = vim.fn
-local fs = vim.fs
 local g = vim.g
 local o = vim.o
 local opt = vim.opt
@@ -23,7 +22,6 @@ local mason = require 'ui.mason'
 local statusline = require 'ui.statusline'
 local tabufline = require 'ui.tabufline'
 local term = require 'ui.terminal'
-local utils = require 'ui.utils'
 
 local is_windows = fn.has 'win32' ~= 0
 local sep = is_windows and '\\' or '/'
@@ -35,7 +33,7 @@ local map = function(mode, lhs, rhs, desc, remap) vim.keymap.set(mode, lhs, rhs,
 g.mapleader = ' '
 g.maplocalleader = '\\'
 
-require 'configs.lazy'
+require 'lazyconfig'
 
 ------------------------------------ Options -----------------------------------
 o.laststatus = 3
@@ -165,24 +163,6 @@ vim.schedule(function()
 			end)
 		end,
 	})
-
-	-- reload the plugin!
-	-- create_autocmd('BufWritePost', {
-	-- 	pattern = vim.tbl_map(
-	-- 		function(path) return fs.normalize(vim.uv.fs_realpath(path) or path) end,
-	-- 		fn.glob(fn.stdpath 'config' .. '/lua/**/*.lua', true, true, true)
-	-- 	),
-	-- 	group = api.nvim_create_augroup('ReloadNvChad', {}),
-	--
-	-- 	callback = function(opts)
-	-- 		local fp = fn.fnamemodify(fs.normalize(api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
-	-- 		local app_name = env.NVIM_APPNAME and env.NVIM_APPNAME or 'nvim'
-	-- 		local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
-	--
-	-- 		utils.reload(module)
-	-- 		-- vim.cmd("redraw!")
-	-- 	end,
-	-- })
 
 	create_usercmd('MasonInstallAll', function() mason.install_all() end, {})
 

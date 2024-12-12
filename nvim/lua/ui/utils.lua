@@ -1,5 +1,3 @@
--- TODO debug reload field: refactored so no ui/init.lua
-
 local api = vim.api
 local opt_local = api.nvim_set_option_value
 
@@ -24,10 +22,4 @@ return {
 		opt_local('ft', ft, { buf = buf })
 		vim.g[ft .. '_displayed'] = true
 	end,
-
-	-- reload = function(module)
-	-- 	if module then require('plenary.reload').reload_module(module) end
-	--
-	-- 	require 'ui'
-	-- end,
 }
