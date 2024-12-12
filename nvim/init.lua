@@ -20,6 +20,7 @@ local colorify = require 'ui.colorify'
 local dashboard = require 'ui.dashboard'
 local lspsignature = require 'ui.lsp.signature'
 local mason = require 'ui.mason'
+local statusline = require 'ui.statusline'
 local tabufline = require 'ui.tabufline'
 local term = require 'ui.terminal'
 local utils = require 'ui.utils'
@@ -29,6 +30,7 @@ local sep = is_windows and '\\' or '/'
 local delim = is_windows and ';' or ':'
 
 local map = function(mode, lhs, rhs, desc, remap) vim.keymap.set(mode, lhs, rhs, { desc = desc, remap = remap or false }) end
+
 ------------------------------------ Plugins -----------------------------------
 g.mapleader = ' '
 g.maplocalleader = '\\'
@@ -90,8 +92,9 @@ env.PATH = table.concat({ fn.stdpath 'data', 'mason', 'bin' }, sep) .. delim .. 
 opt.guicursor = 'n-v-c:block-blinkwait300-blinkon200-blinkoff150,i-ci:ver25-blinkwait300-blinkon200-blinkoff150'
 
 ------------------------------- UI + Highlighting ------------------------------
-vim.o.statusline = "%!v:lua.require('ui.statusline')()"
-require('ui.statusline.utils').autocmds()
+o.statusline = "%!v:lua.require('ui.statusline').init()"
+statusline.autocmds()
+
 require 'ui.tabufline.lazyload'
 require 'ui.defaults'
 require 'ui.git'
