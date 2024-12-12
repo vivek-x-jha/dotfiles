@@ -1,4 +1,5 @@
 local api = vim.api
+local diag = vim.diagnostic
 local g = vim.g
 
 local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
@@ -155,14 +156,12 @@ local stl = {
 	diagnostics = function()
 		if not rawget(vim, 'lsp') then return '' end
 
-		local bufnum = utl.stbufnr()
-		local diag = vim.diagnostic
-		local sev = diag.severity
+		local count = function(level) return #diag.get(utl.stbufnr(), { severity = diag.severity[level] }) end
 
-		local err_cnt = #diag.get(bufnum, { severity = sev.ERROR })
-		local warn_cnt = #diag.get(bufnum, { severity = sev.WARN })
-		local hints_cnt = #diag.get(bufnum, { severity = sev.HINT })
-		local info_cnt = #diag.get(bufnum, { severity = sev.INFO })
+		local err_cnt = count 'ERROR'
+		local warn_cnt = count 'WARN'
+		local hints_cnt = count 'HINT'
+		local info_cnt = count 'INFO'
 
 		local err = (err_cnt and err_cnt > 0) and ('%#St_lspError#' .. '󰯈 ' .. tostring(err_cnt) .. ' ') or ''
 		local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
