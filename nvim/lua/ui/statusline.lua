@@ -1,6 +1,9 @@
 local api = vim.api
 local g = vim.g
 
+local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
+
+---------------------------- Highlight Groups ----------------------------------
 local b16 = require 'ui.base16'
 
 require('ui.utils').highlight {
@@ -9,7 +12,7 @@ require('ui.utils').highlight {
 	StText = { fg = b16.brightred, bg = 'NONE' },
 
 	St_file = { fg = b16.black, bg = 'NONE' },
-	St_cursor = { fg = b16.black, bg = 'NONE' }, -- TODO: Adjusted to black
+	St_cursor = { fg = b16.black, bg = 'NONE' },
 	St_cwd = { fg = b16.blue, bg = 'NONE' },
 	St_ft = { fg = b16.brightblue, bg = 'NONE' },
 
@@ -39,8 +42,7 @@ require('ui.utils').highlight {
 	St_SelectMode = { fg = b16.blue, bg = 'NONE' },
 }
 
-local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
-
+---------------------------- Helper Functions ----------------------------------
 local utl = {
 	state = { lsp_msg = '' },
 
@@ -153,13 +155,14 @@ local stl = {
 	diagnostics = function()
 		if not rawget(vim, 'lsp') then return '' end
 
+		local bufnum = utl.stbufnr()
 		local diag = vim.diagnostic
 		local sev = diag.severity
 
-		local err_cnt = #diag.get(utl.stbufnr(), { severity = sev.ERROR })
-		local warn_cnt = #diag.get(utl.stbufnr(), { severity = sev.WARN })
-		local hints_cnt = #diag.get(utl.stbufnr(), { severity = sev.HINT })
-		local info_cnt = #diag.get(utl.stbufnr(), { severity = sev.INFO })
+		local err_cnt = #diag.get(bufnum, { severity = sev.ERROR })
+		local warn_cnt = #diag.get(bufnum, { severity = sev.WARN })
+		local hints_cnt = #diag.get(bufnum, { severity = sev.HINT })
+		local info_cnt = #diag.get(bufnum, { severity = sev.INFO })
 
 		local err = (err_cnt and err_cnt > 0) and ('%#St_lspError#' .. '󰯈 ' .. tostring(err_cnt) .. ' ') or ''
 		local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
@@ -170,6 +173,7 @@ local stl = {
 	end,
 }
 
+------------------------ Output Statusline Elements -----------------------------
 return {
 	autocmds = function()
 		api.nvim_create_autocmd('LspProgress', {
