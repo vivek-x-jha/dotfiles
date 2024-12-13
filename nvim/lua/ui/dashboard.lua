@@ -1,13 +1,17 @@
 local api = vim.api
 local fn = vim.fn
 local g = vim.g
+local v = vim.v
 local strw = api.nvim_strwidth
 
 local b16 = require 'ui.base16'
 require('ui.utils').highlight {
-	NvDashAscii = { fg = b16.blue },
-	NvDashButtons = { fg = b16.black },
-	NvDashFooter = { fg = b16.red },
+	DashAscii = { fg = b16.magenta },
+	DashFindFile = { fg = b16.brightyellow },
+	DashFindWord = { fg = b16.brightred },
+	DashRecentFiles = { fg = b16.blue },
+	DashPlugins = { fg = b16.brightgreen },
+	DashLine = { fg = b16.black },
 }
 
 local opts = {
@@ -21,34 +25,32 @@ local opts = {
 		' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
 		' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
 		'                                                       ',
-		'                  Time to Build!                     ',
+		'                    Time to Build!                  ',
 		'                                                       ',
 	},
 
 	buttons = {
-		{ txt = '  Find File', keys = 'ff', cmd = 'Telescope find_files' },
-		{ txt = '  Recent Files', keys = 'fo', cmd = 'Telescope oldfiles' },
-		{ txt = '󰈭  Find Word', keys = 'fw', cmd = 'Telescope live_grep' },
-
-		{ txt = '─', hl = 'NvDashFooter', no_gap = true, rep = true },
-
+		{ txt = '─', hl = 'DashLine', no_gap = true, rep = true },
 		{
 			txt = function()
 				local stats = require('lazy').stats()
 				local ms = math.floor(stats.startuptime) .. ' ms'
-				return '  Loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms
+				return '  Loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms
 			end,
-			hl = 'NvDashFooter',
+			hl = 'DashPlugins',
 			no_gap = true,
 		},
 
-		{ txt = '─', hl = 'NvDashFooter', no_gap = true, rep = true },
+		{ txt = '─', hl = 'DashLine', no_gap = true, rep = true },
+		{ txt = '  Find File', hl = 'DashFindFile', keys = 'ff', cmd = 'Telescope find_files' },
+		{ txt = '  Find Word', hl = 'DashFindWord', keys = 'fw', cmd = 'Telescope live_grep' },
+		{ txt = '  Recent Files', hl = 'DashRecentFiles', keys = 'fo', cmd = 'Telescope oldfiles' },
 	},
 }
 
 local map = function(keys, action, buf)
-	for _, v in ipairs(keys) do
-		vim.keymap.set('n', v, action, { buffer = buf })
+	for _, val in ipairs(keys) do
+		vim.keymap.set('n', val, action, { buffer = buf })
 	end
 end
 
@@ -106,23 +108,23 @@ return {
 		----------------------- save display txt -----------------------------------------
 		local dashboard = {}
 
-		for _, v in ipairs(header) do
-			table.insert(dashboard, { txt = txt_pad(v, dashboard_w), hl = 'NvDashAscii' })
+		for _, line in ipairs(header) do
+			table.insert(dashboard, { txt = txt_pad(line, dashboard_w), hl = 'DashAscii' })
 		end
 
-		for _, v in ipairs(opts.buttons) do
+		for _, item in ipairs(opts.buttons) do
 			local txt
 
-			if not v.keys then
-				local str = type(v.txt) == 'string' and v.txt or v.txt()
-				txt = v.rep and string.rep(str, dashboard_w) or txt_pad(str, dashboard_w)
+			if not item.keys then
+				local str = type(item.txt) == 'string' and item.txt or item.txt()
+				txt = item.rep and string.rep(str, dashboard_w) or txt_pad(str, dashboard_w)
 			else
-				txt = btn_gap(v.txt, v.keys, dashboard_w)
+				txt = btn_gap(item.txt, item.keys, dashboard_w)
 			end
 
-			table.insert(dashboard, { txt = txt, hl = v.hl, cmd = v.cmd })
+			table.insert(dashboard, { txt = txt, hl = item.hl, cmd = item.cmd })
 
-			if not v.no_gap then table.insert(dashboard, { txt = string.rep(' ', dashboard_w) }) end
+			if not item.no_gap then table.insert(dashboard, { txt = string.rep(' ', dashboard_w) }) end
 		end
 
 		-- if screen height is small
@@ -142,13 +144,12 @@ return {
 		api.nvim_buf_set_lines(buf, 0, -1, false, empty_str)
 		local key_lines = {}
 
-		for i, v in ipairs(dashboard) do
-			v.txt = '  ' .. v.txt .. '  '
-			v.hl = v.hl or 'NvDashButtons'
-			local opt = { virt_text_win_col = col_i, virt_text = { { v.txt, v.hl } } }
+		for i, item in ipairs(dashboard) do
+			item.txt = '  ' .. item.txt .. '  '
+			local opt = { virt_text_win_col = col_i, virt_text = { { item.txt, item.hl } } }
 			api.nvim_buf_set_extmark(buf, ns, row_i + i, 0, opt)
 
-			if v.cmd then table.insert(key_lines, { i = row_i + i + 1, cmd = v.cmd }) end
+			if item.cmd then table.insert(key_lines, { i = row_i + i + 1, cmd = item.cmd }) end
 		end
 
 		------------------------------------ keybinds ------------------------------------------
