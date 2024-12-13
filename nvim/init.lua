@@ -197,7 +197,7 @@ vim.schedule(function()
 	map('n', '<leader>x', tabufline.close_buffer, 'Buffer close')
 
 	-- nvimtree
-	map('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', 'nvimtree toggle window')
+	map('n', '<C-n>', '<cmd>NvimTreeToggle<CR><C-w>=', 'nvimtree toggle window')
 	map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', 'nvimtree focus window')
 
 	-- terminal
