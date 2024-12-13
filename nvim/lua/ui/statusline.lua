@@ -164,7 +164,7 @@ local stl = {
 		local info_cnt = count 'INFO'
 
 		local err = (err_cnt and err_cnt > 0) and ('%#St_lspError#' .. '󰯈 ' .. tostring(err_cnt) .. ' ') or ''
-		local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
+		local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
 		local hints = (hints_cnt and hints_cnt > 0) and ('%#St_lspHints#' .. ' ' .. tostring(hints_cnt) .. ' ') or ''
 		local info = (info_cnt and info_cnt > 0) and ('%#St_lspInfo#' .. ' ' .. tostring(info_cnt) .. ' ') or ''
 
