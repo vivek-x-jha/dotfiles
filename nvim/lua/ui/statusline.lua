@@ -9,38 +9,38 @@ local b16 = require 'ui.base16'
 
 require('ui.utils').highlight {
 	-- StatusLine Highlights
-	StatusLine = { fg = b16.brightred, bg = 'NONE' },
-	StText = { fg = b16.brightred, bg = 'NONE' },
+	StatusLine = { fg = b16.brightred, bg = b16.statusline_bg },
+	StText = { fg = b16.brightred, bg = b16.statusline_bg },
 
-	St_file = { fg = b16.black, bg = 'NONE' },
-	St_cursor = { fg = b16.black, bg = 'NONE' },
-	St_cwd = { fg = b16.blue, bg = 'NONE' },
-	St_ft = { fg = b16.brightblue, bg = 'NONE' },
+	St_file = { fg = b16.black, bg = b16.statusline_bg },
+	St_cursor = { fg = b16.black, bg = b16.statusline_bg },
+	St_cwd = { fg = b16.blue, bg = b16.statusline_bg },
+	St_ft = { fg = b16.brightblue, bg = b16.statusline_bg },
 
 	-- LSP Highlights
-	St_lspMsg = { fg = b16.brightmagenta, bg = 'NONE' },
-	St_lspError = { fg = b16.brightred, bg = 'NONE' },
-	St_lspWarning = { fg = b16.brightyellow, bg = 'NONE' },
-	St_lspHints = { fg = b16.brightmagenta, bg = 'NONE' },
-	St_lspInfo = { fg = b16.brightblue, bg = 'NONE' },
-	St_lsp = { fg = b16.cyan, bg = 'NONE' },
+	St_lspMsg = { fg = b16.brightmagenta, bg = b16.background },
+	St_lspError = { fg = b16.brightred, bg = b16.statusline_bg },
+	St_lspWarning = { fg = b16.brightyellow, bg = b16.statusline_bg },
+	St_lspHints = { fg = b16.brightmagenta, bg = b16.statusline_bg },
+	St_lspInfo = { fg = b16.brightblue, bg = b16.statusline_bg },
+	St_lsp = { fg = b16.cyan, bg = b16.background },
 
 	-- Git Highlights
-	St_GitAdded = { fg = b16.green, bg = 'NONE' },
-	St_GitChanged = { fg = b16.yellow, bg = 'NONE' },
-	St_GitRemoved = { fg = b16.red, bg = 'NONE' },
-	St_GitBranch = { fg = b16.magenta, bg = 'NONE' },
+	St_GitAdded = { fg = b16.green, bg = b16.statusline_bg },
+	St_GitChanged = { fg = b16.yellow, bg = b16.statusline_bg },
+	St_GitRemoved = { fg = b16.red, bg = b16.statusline_bg },
+	St_GitBranch = { fg = b16.magenta, bg = b16.statusline_bg },
 
 	-- Mode Highlights
-	St_NormalMode = { fg = b16.brightblue, bg = 'NONE' },
-	St_VisualMode = { fg = b16.brightcyan, bg = 'NONE' },
-	St_InsertMode = { fg = b16.brightred, bg = 'NONE' },
-	St_TerminalMode = { fg = b16.brightgreen, bg = 'NONE' },
-	St_NTerminalMode = { fg = b16.yellow, bg = 'NONE' },
-	St_ReplaceMode = { fg = b16.brightyellow, bg = 'NONE' },
-	St_ConfirmMode = { fg = b16.cyan, bg = 'NONE' },
-	St_CommandMode = { fg = b16.brightgreen, bg = 'NONE' },
-	St_SelectMode = { fg = b16.blue, bg = 'NONE' },
+	St_NormalMode = { fg = b16.brightblue, bg = b16.statusline_bg },
+	St_VisualMode = { fg = b16.brightcyan, bg = b16.statusline_bg },
+	St_InsertMode = { fg = b16.brightred, bg = b16.statusline_bg },
+	St_TerminalMode = { fg = b16.brightgreen, bg = b16.statusline_bg },
+	St_NTerminalMode = { fg = b16.yellow, bg = b16.statusline_bg },
+	St_ReplaceMode = { fg = b16.brightyellow, bg = b16.statusline_bg },
+	St_ConfirmMode = { fg = b16.cyan, bg = b16.statusline_bg },
+	St_CommandMode = { fg = b16.brightgreen, bg = b16.statusline_bg },
+	St_SelectMode = { fg = b16.blue, bg = b16.statusline_bg },
 }
 
 ---------------------------- Helper Functions ----------------------------------

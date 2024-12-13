@@ -23,4 +23,5 @@ return {
 	-- background = '#212030',
 	background = 'NONE',
 	grey = '#313244',
+	statusline_bg = '#1b1c28',
 }
