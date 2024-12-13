@@ -12,6 +12,7 @@ require('ui.utils').highlight {
 	DashRecentFiles = { fg = b16.blue },
 	DashPlugins = { fg = b16.brightgreen },
 	DashLine = { fg = b16.black },
+	DashSettings = { fg = b16.brightmagenta },
 }
 
 local opts = {
@@ -25,7 +26,7 @@ local opts = {
 		' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
 		' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
 		'                                                       ',
-		'                    Time to Build!                  ',
+		'                  󰛩  Time to Build! 󰛩                  ',
 		'                                                       ',
 	},
 
@@ -45,6 +46,7 @@ local opts = {
 		{ txt = '  Find File', hl = 'DashFindFile', keys = 'ff', cmd = 'Telescope find_files' },
 		{ txt = '  Find Word', hl = 'DashFindWord', keys = 'fw', cmd = 'Telescope live_grep' },
 		{ txt = '  Recent Files', hl = 'DashRecentFiles', keys = 'fo', cmd = 'Telescope oldfiles' },
+		{ txt = '  Settings', hl = 'DashSettings', keys = 's', cmd = 'edit ~/.config/nvim/init.lua' },
 	},
 }
 
