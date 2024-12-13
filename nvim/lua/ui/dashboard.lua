@@ -1,7 +1,6 @@
 local api = vim.api
 local fn = vim.fn
 local g = vim.g
-local v = vim.v
 local strw = api.nvim_strwidth
 
 local b16 = require 'ui.base16'
