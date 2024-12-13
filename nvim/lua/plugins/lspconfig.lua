@@ -35,7 +35,7 @@ return {
 				signs = {
 					text = {
 						[sev.ERROR] = '󰯈',
-						[sev.WARN] = '',
+						[sev.WARN] = '',
 						[sev.HINT] = '',
 						[sev.INFO] = '',
 					},
