@@ -17,7 +17,7 @@ require('ui.utils').highlight {
 	ErrorMsg = { fg = b16.red, bg = b16.background },
 	Exception = { fg = b16.brightred },
 
-	FloatBorder = { fg = b16.blue },
+	FloatBorder = { fg = b16.brightblack },
 	FloatTitle = { fg = b16.magenta },
 	FoldColumn = { bg = b16.background },
 	Folded = { fg = b16.black, bg = b16.black },
