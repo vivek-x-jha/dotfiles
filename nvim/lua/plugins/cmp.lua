@@ -2,6 +2,64 @@
 return {
 	'hrsh7th/nvim-cmp',
 	event = 'InsertEnter',
+	dependencies = {
+		-- https://github.com/L3MON4D3/LuaSnip
+		{
+			-- snippet plugin
+			'L3MON4D3/LuaSnip',
+			dependencies = 'rafamadriz/friendly-snippets',
+			opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
+			config = function(_, opts)
+				require('luasnip').config.set_config(opts)
+
+				-- vscode format
+				require('luasnip.loaders.from_vscode').lazy_load { exclude = vim.g.vscode_snippets_exclude or {} }
+				require('luasnip.loaders.from_vscode').lazy_load { paths = vim.g.vscode_snippets_path or '' }
+
+				-- snipmate format
+				require('luasnip.loaders.from_snipmate').load()
+				require('luasnip.loaders.from_snipmate').lazy_load { paths = vim.g.snipmate_snippets_path or '' }
+
+				-- lua format
+				require('luasnip.loaders.from_lua').load()
+				require('luasnip.loaders.from_lua').lazy_load { paths = vim.g.lua_snippets_path or '' }
+
+				vim.api.nvim_create_autocmd('InsertLeave', {
+					callback = function()
+						if require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()] and not require('luasnip').session.jump_active then
+							require('luasnip').unlink_current()
+						end
+					end,
+				})
+			end,
+		},
+
+		-- https://github.com/windwp/nvim-autopairs
+		{
+			'windwp/nvim-autopairs',
+			opts = {
+				fast_wrap = {},
+				disable_filetype = { 'TelescopePrompt', 'vim' },
+			},
+			config = function(_, opts)
+				require('nvim-autopairs').setup(opts)
+
+				-- setup cmp for autopairs
+				local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+				require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+			end,
+		},
+
+		-- cmp sources plugins
+		{
+			'saadparwaiz1/cmp_luasnip',
+			'hrsh7th/cmp-nvim-lua',
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+		},
+	},
+
 	opts = function()
 		local b16 = require 'ui.base16'
 		require('ui.utils').highlight {
@@ -15,51 +73,43 @@ return {
 			CmpSel = { link = 'PmenuSel', bold = true },
 
 			-- cmp item kinds
-			CmpItemKindConstant = { fg = b16.base09 },
-			CmpItemKindFunction = { fg = b16.base0D },
-			CmpItemKindIdentifier = { fg = b16.base08 },
-			CmpItemKindField = { fg = b16.base08 },
-			CmpItemKindVariable = { fg = b16.base0E },
+			-- CmpItemKindConstant = { fg = b16.base09 },
+			-- CmpItemKindFunction = { fg = b16.base0D },
+			-- CmpItemKindIdentifier = { fg = b16.base08 },
+			-- CmpItemKindField = { fg = b16.base08 },
+			-- CmpItemKindVariable = { fg = b16.base0E },
 			CmpItemKindSnippet = { fg = b16.red },
-			CmpItemKindText = { fg = b16.base0B },
-			CmpItemKindStructure = { fg = b16.base0E },
-			CmpItemKindType = { fg = b16.base0A },
-			CmpItemKindKeyword = { fg = b16.base07 },
-			CmpItemKindMethod = { fg = b16.base0D },
+			-- CmpItemKindText = { fg = b16.base0B },
+			-- CmpItemKindStructure = { fg = b16.base0E },
+			-- CmpItemKindType = { fg = b16.base0A },
+			-- CmpItemKindKeyword = { fg = b16.base07 },
+			-- CmpItemKindMethod = { fg = b16.base0D },
 			CmpItemKindConstructor = { fg = b16.blue },
-			CmpItemKindFolder = { fg = b16.base07 },
-			CmpItemKindModule = { fg = b16.base0A },
-			CmpItemKindProperty = { fg = b16.base08 },
+			-- CmpItemKindFolder = { fg = b16.base07 },
+			-- CmpItemKindModule = { fg = b16.base0A },
+			-- CmpItemKindProperty = { fg = b16.base08 },
 			CmpItemKindEnum = { fg = b16.blue },
-			CmpItemKindUnit = { fg = b16.base0E },
-			CmpItemKindClass = { fg = b16.teal },
-			CmpItemKindFile = { fg = b16.base07 },
+			-- CmpItemKindUnit = { fg = b16.base0E },
+			CmpItemKindClass = { fg = b16.cyan },
+			-- CmpItemKindFile = { fg = b16.base07 },
 			CmpItemKindInterface = { fg = b16.green },
 			CmpItemKindColor = { fg = b16.white },
-			CmpItemKindReference = { fg = b16.base05 },
-			CmpItemKindEnumMember = { fg = b16.purple },
-			CmpItemKindStruct = { fg = b16.base0E },
+			-- CmpItemKindReference = { fg = b16.base05 },
+			CmpItemKindEnumMember = { fg = b16.brightmagenta },
+			-- CmpItemKindStruct = { fg = b16.base0E },
 			CmpItemKindValue = { fg = b16.cyan },
 			CmpItemKindEvent = { fg = b16.yellow },
-			CmpItemKindOperator = { fg = b16.base05 },
-			CmpItemKindTypeParameter = { fg = b16.base08 },
+			-- CmpItemKindOperator = { fg = b16.base05 },
+			-- CmpItemKindTypeParameter = { fg = b16.base08 },
 			CmpItemKindCopilot = { fg = b16.green },
-			CmpItemKindCodeium = { fg = b16.vibrant_green },
-			CmpItemKindTabNine = { fg = b16.baby_pink },
+			CmpItemKindCodeium = { fg = b16.brightgreen },
+			CmpItemKindTabNine = { fg = b16.magenta },
 			CmpItemKindSuperMaven = { fg = b16.yellow },
 		}
 
 		local cmp = require 'cmp'
-		local cmp_ui = {
-			icons_left = false,
-			lspkind_text = true,
-			style = 'default',
-			format_colors = {
-				icon = '󱓻',
-			},
-		}
 
-		return {
+		local options = {
 			completion = { completeopt = 'menu,menuone' },
 
 			snippet = {
@@ -107,30 +157,75 @@ return {
 				{ name = 'nvim_lua' },
 				{ name = 'path' },
 			},
+		}
 
+		local api = vim.api
+		local cmp_ui = {
+			icons_left = false, -- only for non-atom styles!
+			style = 'default', -- default/flat_light/flat_dark/atom/atom_colored
+			format_colors = {
+				tailwind = false, -- will work for css lsp too
+				icon = '󱓻',
+			},
+		}
+		local cmp_style = cmp_ui.style
+		local icn = cmp_ui.format_colors.icon .. ' '
+		local format_color = {
+			tailwind = function(entry, item, kind_txt)
+				local entryItem = entry:get_completion_item()
+				local color = entryItem.documentation
+
+				if color and type(color) == 'string' and color:match '^#%x%x%x%x%x%x$' then
+					local hl = 'hex-' .. color:sub(2)
+
+					if #api.nvim_get_hl(0, { name = hl }) == 0 then api.nvim_set_hl(0, hl, { fg = color }) end
+
+					item.kind = ((cmp_ui.icons_left and icn) or (' ' .. icn)) .. kind_txt
+					item.kind_hl_group = hl
+					item.menu_hl_group = hl
+				end
+			end,
+		}
+
+		local atom_styled = cmp_style == 'atom' or cmp_style == 'atom_colored'
+		local fields = (atom_styled or cmp_ui.icons_left) and { 'kind', 'abbr', 'menu' } or { 'abbr', 'kind', 'menu' }
+
+		return vim.tbl_deep_extend('force', options, {
 			formatting = {
-				format = function(_, item)
+				format = function(entry, item)
 					local icons = require 'ui.icons.lspkind'
+					local icon = icons[item.kind] or ''
+					local kind = item.kind or ''
 
-					item.abbr = item.abbr .. ' '
-					item.menu = cmp_ui.lspkind_text and item.kind or ''
-					item.menu_hl_group = 'CmpItemKind' .. (item.kind or '')
-					item.kind = (icons[item.kind] or '') .. ' '
+					if atom_styled then
+						item.menu = kind
+						item.menu_hl_group = 'LineNr'
+						item.kind = ' ' .. icon .. ' '
+					elseif cmp_ui.icons_left then
+						item.menu = kind
+						item.menu_hl_group = 'CmpItemKind' .. kind
+						item.kind = icon
+					else
+						item.kind = ' ' .. icon .. ' ' .. kind
+						item.menu_hl_group = 'comment'
+					end
 
-					if not cmp_ui.icons_left then item.kind = ' ' .. item.kind end
+					if kind == 'Color' and cmp_ui.format_colors.tailwind then
+						format_color.tailwind(entry, item, (not (atom_styled or cmp_ui.icons_left) and kind) or '')
+					end
 
 					return item
 				end,
 
-				fields = { 'abbr', 'kind', 'menu' },
+				fields = fields,
 			},
 
 			window = {
 				completion = {
 					scrollbar = false,
-					side_padding = 1,
+					side_padding = atom_styled and 0 or 1,
 					winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:None,FloatBorder:CmpBorder',
-					border = 'single',
+					border = atom_styled and 'none' or 'single',
 				},
 
 				documentation = {
@@ -138,6 +233,6 @@ return {
 					winhighlight = 'Normal:CmpDoc,FloatBorder:CmpDocBorder',
 				},
 			},
-		}
+		})
 	end,
 }
