@@ -36,4 +36,4 @@ tags
 [._]*.un~
 
 # Folder icon
-Icon[^M]
+/Icon[^M]

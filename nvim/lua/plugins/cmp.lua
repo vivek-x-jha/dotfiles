@@ -1,4 +1,6 @@
 -- https://github.com/hrsh7th/nvim-cmp
+-- TODO refactor and siplify this-
+
 return {
 	'hrsh7th/nvim-cmp',
 	event = 'InsertEnter',
@@ -193,7 +195,51 @@ return {
 
 			formatting = {
 				format = function(entry, item)
-					local icons = require 'ui.icons.lspkind'
+					local icons = {
+						Namespace = '󰌗',
+						Text = '󰉿',
+						Method = '󰆧',
+						Function = '󰆧',
+						Constructor = '',
+						Field = '󰜢',
+						Variable = '󰀫',
+						Class = '󰠱',
+						Interface = '',
+						Module = '',
+						Property = '󰜢',
+						Unit = '󰑭',
+						Value = '󰎠',
+						Enum = '',
+						Keyword = '󰌋',
+						Snippet = '',
+						Color = '󰏘',
+						File = '󰈚',
+						Reference = '󰈇',
+						Folder = '󰉋',
+						EnumMember = '',
+						Constant = '󰏿',
+						Struct = '󰙅',
+						Event = '',
+						Operator = '󰆕',
+						TypeParameter = '󰊄',
+						Table = '',
+						Object = '󰅩',
+						Tag = '',
+						Array = '[]',
+						Boolean = '',
+						Number = '',
+						Null = '󰟢',
+						Supermaven = '',
+						String = '󰉿',
+						Calendar = '',
+						Watch = '󰥔',
+						Package = '',
+						Copilot = '',
+						Codeium = '',
+						TabNine = '',
+						BladeNav = '',
+					}
+
 					local icon = icons[item.kind] or ''
 					local kind = item.kind or ''
 

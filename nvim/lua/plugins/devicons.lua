@@ -40,6 +40,14 @@ return {
 			DevIconDart = { fg = b16.cyan },
 		}
 
-		return { override = require 'ui.icons.devicons' }
+		return {
+			override = {
+				default_icon = { icon = '󰈚', name = 'Default' },
+				js = { icon = '󰌞', name = 'js' },
+				ts = { icon = '󰛦', name = 'ts' },
+				lock = { icon = '󰌾', name = 'lock' },
+				['robots.txt'] = { icon = '󰚩', name = 'robots' },
+			},
+		}
 	end,
 }
