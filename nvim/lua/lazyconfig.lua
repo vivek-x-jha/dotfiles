@@ -20,6 +20,7 @@ local b16 = require 'ui.base16'
 b16.highlight {
 
 	LazyH1 = { fg = b16.brightgreen },
+	LazyBorder = { fg = b16.brightblack },
 	LazyButton = { fg = b16.grey },
 	LazyH2 = { fg = b16.magenta, bold = true },
 	LazyReasonPlugin = { fg = b16.red },
@@ -57,6 +58,7 @@ require('lazy').setup {
 	},
 
 	ui = {
+		border = 'single',
 		icons = {
 			ft = '',
 			lazy = '󰂠 ',
