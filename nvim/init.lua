@@ -27,7 +27,10 @@ local is_windows = fn.has 'win32' ~= 0
 local sep = is_windows and '\\' or '/'
 local delim = is_windows and ';' or ':'
 
-local map = function(mode, lhs, rhs, desc, remap) vim.keymap.set(mode, lhs, rhs, { desc = desc, remap = remap or false }) end
+local map = function(mode, lhs, rhs, desc, remap)
+	local opts = { desc = desc, remap = remap or false }
+	vim.keymap.set(mode, lhs, rhs, opts)
+end
 
 ------------------------------------ Plugins -----------------------------------
 g.mapleader = ' '
