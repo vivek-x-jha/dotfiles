@@ -1,8 +1,7 @@
 local api = vim.api
+local bo = vim.bo
 local diag = vim.diagnostic
 local g = vim.g
-
-local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
 
 ---------------------------- Highlight Groups ----------------------------------
 local b16 = require 'ui.base16'
@@ -12,6 +11,7 @@ b16.highlight {
 	StText = { fg = b16.brightred, bg = b16.statusline_bg },
 
 	St_file = { fg = b16.black, bg = b16.statusline_bg },
+	St_filemod = { fg = b16.brightred, bg = b16.statusline_bg },
 	St_cursor = { fg = b16.black, bg = b16.statusline_bg },
 	St_cwd = { fg = b16.blue, bg = b16.statusline_bg },
 	St_ft = { fg = b16.brightblue, bg = b16.statusline_bg },
@@ -49,18 +49,6 @@ local utl = {
 	stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end,
 
 	is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end,
-
-	generate = function(modules)
-		local result = {}
-
-		for _, v in ipairs(orders) do
-			local module = modules[v]
-			module = type(module) == 'string' and module or module()
-			table.insert(result, module)
-		end
-
-		return table.concat(result)
-	end,
 
 	-- 2nd item is highlight groupname St_NormalMode
 	modes = {
@@ -109,22 +97,26 @@ local utl = {
 	},
 }
 
-local stl = {
-	file = function()
-		local icon = '󰈚'
-		local path = api.nvim_buf_get_name(utl.stbufnr())
-		local name = (path == '' and 'Empty') or path:match '([^/\\]+)[/\\]*$'
+------------------------ Output Statusline Elements -----------------------------
+local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
 
-		if name ~= 'Empty' then
-			local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
+local modules = {
+	['%='] = '%=',
 
-			if devicons_present then
-				local ft_icon = devicons.get_icon(name)
-				icon = (ft_icon ~= nil and ft_icon) or icon
-			end
-		end
+	mode = function()
+		if not utl.is_activewin() then return '' end
 
-		return { icon, name }
+		local modes = utl.modes
+		local m = api.nvim_get_mode().mode
+		return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
+	end,
+
+	cwd = function()
+		local name = vim.uv.cwd()
+		if not name then return '' end
+
+		name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
+		return (vim.o.columns > 85 and name) or ''
 	end,
 
 	git = function()
@@ -141,16 +133,6 @@ local stl = {
 	end,
 
 	lsp_msg = function() return vim.o.columns < 120 and '' or utl.state.lsp_msg end,
-
-	lsp = function()
-		if rawget(vim, 'lsp') then
-			for _, client in ipairs(vim.lsp.get_clients()) do
-				if client.attached_buffers[utl.stbufnr()] then return (vim.o.columns > 100 and '  ' .. client.name .. ' ') or '  LSP ' end
-			end
-		end
-
-		return ''
-	end,
 
 	diagnostics = function()
 		if not rawget(vim, 'lsp') then return '' end
@@ -169,10 +151,56 @@ local stl = {
 
 		return ' ' .. err .. warn .. hints .. info
 	end,
+
+	lsp = function()
+		if rawget(vim, 'lsp') then
+			for _, client in ipairs(vim.lsp.get_clients()) do
+				if client.attached_buffers[utl.stbufnr()] then
+					local server = (vim.o.columns > 100 and '  ' .. client.name .. ' ') or '  LSP '
+					return '%#St_lsp#' .. server
+				end
+			end
+		end
+
+		return ''
+	end,
+
+	file = function()
+		local icon = '󰈚'
+		local path = api.nvim_buf_get_name(utl.stbufnr())
+		local name = (path == '' and 'Empty') or path:match '([^/\\]+)[/\\]*$'
+
+		if name ~= 'Empty' then
+			local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
+
+			if devicons_present then
+				local ft_icon = devicons.get_icon(name)
+				icon = (ft_icon ~= nil and ft_icon) or icon
+			end
+		end
+
+		local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
+		local modified_indicator = bo.modified and ' [ 󰷫 ]' or ''
+
+		return highlight .. icon .. ' ' .. name .. modified_indicator .. ' '
+	end,
+
+	cursor = function() return '%#St_cursor#󰓾 %l:%c' end,
 }
 
------------------------- Output Statusline Elements -----------------------------
 return {
+	open = function()
+		local result = {}
+
+		for _, v in ipairs(orders) do
+			local module = modules[v]
+			module = type(module) == 'string' and module or module()
+			table.insert(result, module)
+		end
+
+		return table.concat(result)
+	end,
+
 	autocmds = function()
 		api.nvim_create_autocmd('LspProgress', {
 			pattern = { 'begin', 'end' },
@@ -192,41 +220,5 @@ return {
 				vim.cmd.redrawstatus()
 			end,
 		})
-	end,
-
-	init = function()
-		return utl.generate {
-			['%='] = '%=',
-
-			mode = function()
-				if not utl.is_activewin() then return '' end
-
-				local modes = utl.modes
-				local m = api.nvim_get_mode().mode
-				return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
-			end,
-
-			cwd = function()
-				local name = vim.uv.cwd()
-				if not name then return '' end
-
-				name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
-				return (vim.o.columns > 85 and name) or ''
-			end,
-
-			git = stl.git,
-			lsp_msg = stl.lsp_msg,
-			diagnostics = stl.diagnostics,
-
-			lsp = function() return '%#St_lsp#' .. stl.lsp() end,
-
-			file = function()
-				local icon = stl.file()[1]
-				local name = stl.file()[2]
-				return '%#St_file#' .. icon .. ' ' .. name .. ' '
-			end,
-
-			cursor = function() return '%#St_cursor#󰓾 %l:%c' end,
-		}
 	end,
 }
