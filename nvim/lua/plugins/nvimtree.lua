@@ -5,7 +5,8 @@ return {
 	opts = function()
 		local b16 = require 'ui.base16'
 		b16.highlight {
-			NvimTreeCursorLine = { fg = b16.white, underline = true },
+			NvimTreeNormal = { fg = b16.black },
+			NvimTreeCursorLine = { italic = true },
 			NvimTreeFileName = { fg = b16.black },
 			NvimTreeExecFile = { fg = b16.brightgreen },
 			NvimTreeSpecialFile = { fg = b16.brightyellow },

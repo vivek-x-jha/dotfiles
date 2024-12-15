@@ -243,4 +243,32 @@ vim.schedule(function()
 
 	-- conform
 	map('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, 'general format file')
+
+	-- multi-file refactoring
+	map('n', '<leader>mr', function()
+		-- Step 1: Open Telescope live_grep
+		vim.cmd 'Telescope live_grep'
+
+		-- Step 2: After live_grep, send results to quickfix list (manual <C-q>)
+		print 'After entering your search term, press <C-q> in Telescope to send results to the quickfix list.'
+
+		-- Step 3: Perform refactor when results are in the quickfix list
+		vim.schedule(function()
+			local search = vim.fn.input 'Search pattern: '
+			local replace = vim.fn.input 'Replace with: '
+
+			if search == '' or replace == '' then
+				print 'Search and replace patterns cannot be empty!'
+				return
+			end
+
+			-- Use cfdo to perform the substitution
+			local command = string.format(':cfdo %%s/%s/%s/g | update', search, replace)
+			vim.cmd(command)
+
+			-- Close the quickfix list
+			vim.cmd ':cclose'
+			print 'Refactor complete!'
+		end)
+	end, 'Multi-file Refactor')
 end)
