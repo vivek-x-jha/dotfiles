@@ -90,7 +90,7 @@ env.PATH = table.concat({ fn.stdpath 'data', 'mason', 'bin' }, sep) .. delim .. 
 opt.guicursor = 'n-v-c:block-blinkwait300-blinkon200-blinkoff150,i-ci:ver25-blinkwait300-blinkon200-blinkoff150'
 
 ------------------------------- UI + Highlighting ------------------------------
-o.statusline = "%!v:lua.require('ui.statusline').init()"
+o.statusline = "%!v:lua.require('ui.statusline').open()"
 statusline.autocmds()
 
 require 'ui.tabufline.lazyload'
