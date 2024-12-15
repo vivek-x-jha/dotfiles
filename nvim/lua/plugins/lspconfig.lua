@@ -10,7 +10,7 @@ return {
 		local listfolders = function() print(vim.inspect(lspbuf.list_workspace_folders())) end
 
 		local b16 = require 'ui.base16'
-		require('ui.utils').highlight {
+		b16.highlight {
 			-- LSP References
 			LspReferenceText = { bg = b16.one_bg3 },
 			LspReferenceRead = { bg = b16.one_bg3 },

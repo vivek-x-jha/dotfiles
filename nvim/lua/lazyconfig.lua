@@ -17,7 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load Highlights
 local b16 = require 'ui.base16'
-require('ui.utils').highlight {
+b16.highlight {
 
 	LazyH1 = { fg = b16.brightgreen },
 	LazyButton = { fg = b16.grey },

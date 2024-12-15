@@ -3,7 +3,7 @@ return {
 	'folke/todo-comments.nvim',
 	opts = function()
 		-- local b16 = require 'ui.base16'
-		-- require('ui.utils').highlight {
+		-- b16.highlight {
 		--   TodoBgFix = { fg = b16.black2, bg = b16.red, bold = true },
 		--   TodoBgHack = { fg = b16.black2, bg = b16.orange, bold = true },
 		--   TodoBgNote = { fg = b16.black2, bg = b16.white, bold = true },

@@ -5,7 +5,7 @@ return {
 	opts = function()
 		local actions = require 'telescope.actions'
 		local b16 = require 'ui.base16'
-		require('ui.utils').highlight {
+		b16.highlight {
 			TelescopeBorder = { fg = b16.brightblack, bg = 'NONE' },
 			TelescopeMatching = { fg = b16.brightred, bg = 'NONE' },
 			TelescopeNormal = { fg = b16.brightblack, bg = 'NONE' },
