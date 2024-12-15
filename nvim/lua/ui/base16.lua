@@ -20,8 +20,15 @@ return {
 	brightwhite = '#ffffff',
 
 	-- extras
-	-- background = '#212030',
 	background = 'NONE',
 	grey = '#313244',
 	statusline_bg = '#1b1c28',
+	dark = '#1b1c28',
+
+	-- highlighter
+	highlight = function(highlights)
+		for hlgroup, hlopts in pairs(highlights) do
+			vim.api.nvim_set_hl(0, hlgroup, hlopts)
+		end
+	end,
 }

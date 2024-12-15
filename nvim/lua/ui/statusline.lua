@@ -6,8 +6,7 @@ local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'l
 
 ---------------------------- Highlight Groups ----------------------------------
 local b16 = require 'ui.base16'
-
-require('ui.utils').highlight {
+b16.highlight {
 	-- StatusLine Highlights
 	StatusLine = { fg = b16.brightred, bg = b16.statusline_bg },
 	StText = { fg = b16.brightred, bg = b16.statusline_bg },

@@ -1,5 +1,5 @@
 local b16 = require 'ui.base16'
-require('ui.utils').highlight {
+b16.highlight {
 
 	Added = { fg = b16.green },
 	Changed = { fg = b16.yellow },
@@ -32,10 +32,13 @@ require('ui.utils').highlight {
 	Normal = { fg = b16.white, bg = b16.background },
 	NormalFloat = { bg = b16.background },
 	NvimInternalError = { fg = b16.red },
-	Pmenu = { bg = b16.grey },
-	PmenuSbar = { bg = b16.grey },
+
+	--  popup menu
+	Pmenu = { bg = b16.dark },
+	PmenuSbar = { bg = b16.dark },
 	PmenuSel = { fg = b16.brightgreen, bg = b16.grey },
-	PmenuThumb = { bg = b16.black },
+	PmenuThumb = { bg = b16.background },
+
 	Question = { fg = b16.blue },
 	QuickFixLine = { fg = b16.cyan, bg = b16.background },
 	Removed = { fg = b16.red },

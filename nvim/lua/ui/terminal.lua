@@ -1,30 +1,7 @@
 local g = vim.g
-local b16 = require 'ui.base16'
 local api = vim.api
-local M = {}
 local set_buf = api.nvim_set_current_buf
-
--- Primary colors
-g.terminal_color_0 = b16.black
-g.terminal_color_1 = b16.red
-g.terminal_color_2 = b16.green
-g.terminal_color_3 = b16.yellow
-g.terminal_color_4 = b16.blue
-g.terminal_color_5 = b16.magenta
-g.terminal_color_6 = b16.cyan
-g.terminal_color_7 = b16.white
-
--- Bright colors
-g.terminal_color_8 = b16.brightblack
-g.terminal_color_9 = b16.brightred
-g.terminal_color_10 = b16.brightgreen
-g.terminal_color_11 = b16.brightyellow
-g.terminal_color_12 = b16.brightblue
-g.terminal_color_13 = b16.brightmagenta
-g.terminal_color_14 = b16.brightcyan
-g.terminal_color_15 = b16.brightwhite
-
-g.nvchad_terms = {}
+local M = {}
 
 local pos_data = {
 	sp = { resize = 'height', area = 'lines' },
@@ -46,11 +23,34 @@ local config = {
 	},
 }
 
+---------------------------- Highlight Groups ----------------------------------
+local b16 = require 'ui.base16'
+
+g.terminal_color_0 = b16.black
+g.terminal_color_1 = b16.red
+g.terminal_color_2 = b16.green
+g.terminal_color_3 = b16.yellow
+g.terminal_color_4 = b16.blue
+g.terminal_color_5 = b16.magenta
+g.terminal_color_6 = b16.cyan
+g.terminal_color_7 = b16.white
+
+g.terminal_color_8 = b16.brightblack
+g.terminal_color_9 = b16.brightred
+g.terminal_color_10 = b16.brightgreen
+g.terminal_color_11 = b16.brightyellow
+g.terminal_color_12 = b16.brightblue
+g.terminal_color_13 = b16.brightmagenta
+g.terminal_color_14 = b16.brightcyan
+g.terminal_color_15 = b16.brightwhite
+
+-------------------------- util funcs -----------------------------
+g.nvchad_terms = {}
+
 -- used for initially resizing terms
 g.nvhterm = false
 g.nvvterm = false
 
--------------------------- util funcs -----------------------------
 local function save_term_info(index, val)
 	local terms_list = g.nvchad_terms
 	terms_list[tostring(index)] = val

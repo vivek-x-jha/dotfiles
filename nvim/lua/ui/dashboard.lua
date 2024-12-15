@@ -1,10 +1,12 @@
 local api = vim.api
+local opt_local = api.nvim_set_option_value
+local strw = api.nvim_strwidth
 local fn = vim.fn
 local g = vim.g
-local strw = api.nvim_strwidth
 
+---------------------------- Highlight Groups ----------------------------------
 local b16 = require 'ui.base16'
-require('ui.utils').highlight {
+b16.highlight {
 	DashAscii = { fg = b16.magenta },
 	DashFindFile = { fg = b16.brightyellow },
 	DashFindWord = { fg = b16.brightred },
@@ -14,6 +16,7 @@ require('ui.utils').highlight {
 	DashSettings = { fg = b16.brightmagenta },
 }
 
+---------------------------- Default Configuration ----------------------------------
 local opts = {
 	load_on_startup = false,
 	header = {
@@ -49,6 +52,7 @@ local opts = {
 	},
 }
 
+---------------------------- Util Functions ----------------------------------
 local map = function(keys, action, buf)
 	for _, val in ipairs(keys) do
 		vim.keymap.set('n', val, action, { buffer = buf })
@@ -67,13 +71,29 @@ local btn_gap = function(txt1, txt2, max_str_w)
 	return txt1 .. string.rep(' ', spacing) .. txt2
 end
 
+local set_cleanbuf_opts = function(ft, buf)
+	opt_local('buflisted', false, { scope = 'local' })
+	opt_local('modifiable', false, { scope = 'local' })
+	opt_local('buftype', 'nofile', { buf = buf })
+	opt_local('number', false, { scope = 'local' })
+	opt_local('list', false, { scope = 'local' })
+	opt_local('wrap', false, { scope = 'local' })
+	opt_local('relativenumber', false, { scope = 'local' })
+	opt_local('cursorline', false, { scope = 'local' })
+	opt_local('colorcolumn', '0', { scope = 'local' })
+	opt_local('foldcolumn', '0', { scope = 'local' })
+	opt_local('ft', ft, { buf = buf })
+	vim.g[ft .. '_displayed'] = true
+end
+
+---------------------------- Constructor ----------------------------------
 return {
 	open = function(buf, win, action)
 		buf = buf or api.nvim_create_buf(false, true)
 		win = win or api.nvim_get_current_win()
 		action = action or 'open'
 
-		local ns = api.nvim_create_namespace 'nvdash'
+		local ns = api.nvim_create_namespace 'dashboard'
 		local winh = api.nvim_win_get_height(win)
 		local winw = api.nvim_win_get_width(win)
 
@@ -176,7 +196,7 @@ return {
 			if key[1] and key[1].cmd then vim.cmd(key[1].cmd) end
 		end, buf)
 
-		require('ui.utils').set_cleanbuf_opts('nvdash', buf)
+		set_cleanbuf_opts('dashboard', buf)
 
 		if action == 'redraw' then return end
 

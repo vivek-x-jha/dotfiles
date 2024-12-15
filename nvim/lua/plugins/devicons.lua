@@ -3,7 +3,7 @@ return {
 	'nvim-tree/nvim-web-devicons',
 	opts = function()
 		local b16 = require 'ui.base16'
-		require('ui.utils').highlight {
+		b16.highlight {
 
 			DevIconc = { fg = b16.blue },
 			DevIconcss = { fg = b16.blue },

@@ -16,8 +16,7 @@ local config = {
 g.toggle_theme_icon = '   '
 
 local b16 = require 'ui.base16'
-
-require('ui.utils').highlight {
+b16.highlight {
 	-- Buffers
 	TbFill = { bg = 'NONE' },
 
