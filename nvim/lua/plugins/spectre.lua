@@ -2,6 +2,7 @@
 return {
 	'nvim-pack/nvim-spectre',
 	opts = function()
+		-- Force highlighting: spectre.setup() sets highlights after passing opts
 		vim.schedule(function()
 			local b16 = require 'ui.base16'
 
@@ -16,7 +17,7 @@ return {
 			}
 		end)
 
-		-- Autocommand to turn off line numbers when Spectre is opened
+		-- Turn off line numbers for (and only for) Spectre buffers
 		vim.api.nvim_create_autocmd('FileType', {
 			pattern = 'spectre_panel',
 			callback = function()
