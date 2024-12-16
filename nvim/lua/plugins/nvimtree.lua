@@ -3,38 +3,14 @@ return {
 	'nvim-tree/nvim-tree.lua',
 	cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
 	opts = function()
-		local b16 = require 'ui.base16'
-		b16.highlight {
-			NvimTreeNormal = { fg = b16.black },
-			NvimTreeCursorLine = { bg = b16.dark, bold = true },
-			NvimTreeFileName = { fg = b16.black },
-			NvimTreeExecFile = { fg = b16.brightgreen },
-			NvimTreeSpecialFile = { fg = b16.brightyellow },
-			NvimTreeFolderIcon = { fg = b16.blue },
-			NvimTreeIndentMarker = { fg = b16.brightmagenta },
-			NvimTreeSymlink = { fg = b16.yellow },
-			NvimTreeSymlinkFolderName = { fg = b16.yellow },
-
-			NvimTreeGitNew = { fg = b16.red },
-			NvimTreeGitDirty = { fg = b16.yellow },
-			NvimTreeGitStaged = { fg = b16.green },
-			NvimTreeGitRenamed = { link = 'NvimTreeGitStaged' },
-		}
-
 		return {
 			filters = { dotfiles = false },
 			disable_netrw = true,
 			hijack_cursor = true,
 			sync_root_with_cwd = true,
-			update_focused_file = {
-				enable = true,
-				update_root = false,
-			},
-			view = {
-				side = 'left',
-				width = 30,
-				preserve_window_proportions = true,
-			},
+			update_focused_file = { enable = true, update_root = false },
+			view = { side = 'left', width = 30, preserve_window_proportions = true },
+
 			renderer = {
 				root_folder_label = false,
 				highlight_git = true,
