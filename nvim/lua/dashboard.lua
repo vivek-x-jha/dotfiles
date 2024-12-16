@@ -214,7 +214,7 @@ M.open = function(buf, win, action)
 		group = group_id,
 		callback = function()
 			vim.bo[g.dashboard_buf].ma = true
-			require('ui.dashboard').open(g.dashboard_buf, g.dashboard_win, 'redraw')
+			require('dashboard').open(g.dashboard_buf, g.dashboard_win, 'redraw')
 		end,
 	})
 end
