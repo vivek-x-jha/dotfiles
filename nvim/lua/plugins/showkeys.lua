@@ -3,12 +3,6 @@ return {
 	'nvzone/showkeys',
 	cmd = { 'ShowkeysToggle' },
 	opts = function()
-		-- Start Showkeys on open
-		vim.api.nvim_create_autocmd('VimEnter', {
-			callback = function() vim.cmd 'ShowkeysToggle' end,
-			desc = 'Start ShowkeysToggle on Neovim launch',
-		})
-
 		return {
 			-- :h nvim_open_win params
 			winopts = {

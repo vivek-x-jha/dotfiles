@@ -137,6 +137,12 @@ create_autocmd('BufWinEnter', {
 	command = 'silent! loadview',
 })
 
+-- Start Showkeys on open
+create_autocmd('VimEnter', {
+	callback = function() vim.cmd 'ShowkeysToggle' end,
+	desc = 'Start ShowkeysToggle on Neovim launch',
+})
+
 -- Toggle Dashboard
 create_usercmd('Dashboard', function()
 	if vim.g.dashboard_displayed then
