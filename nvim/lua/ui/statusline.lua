@@ -166,10 +166,14 @@ local modules = {
 	end,
 
 	file = function()
+		-- Surpress when NvimTree active
+		if bo.filetype:match '^NvimTree' then return '' end
+
 		local icon = '󰈚'
 		local path = api.nvim_buf_get_name(utl.stbufnr())
 		local name = (path == '' and 'Empty') or path:match '([^/\\]+)[/\\]*$'
 
+		-- Replace icon with devicon
 		if name ~= 'Empty' then
 			local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
 
@@ -179,6 +183,7 @@ local modules = {
 			end
 		end
 
+		-- Format checks if any unsaved modifications
 		local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
 		local modified_indicator = bo.modified and ' [ 󰷫 ]' or ''
 
