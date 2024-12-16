@@ -1,11 +1,31 @@
 local api = vim.api
-local opt_local = api.nvim_set_option_value
-local strw = api.nvim_strwidth
-local fn = vim.fn
 local g = vim.g
+
+local utl = {
+	remap = function(keys, action, buf)
+		for _, val in ipairs(keys) do
+			vim.keymap.set('n', val, action, { buffer = buf })
+		end
+	end,
+
+	txt_pad = function(str, max_str_w)
+		local av = math.floor((max_str_w - api.nvim_strwidth(str)) / 2)
+		local spacing = string.rep(' ', av)
+
+		return spacing .. str .. spacing
+	end,
+
+	btn_gap = function(txt1, txt2, max_str_w)
+		local nonbuttonlength = max_str_w - api.nvim_strwidth(txt1) - #txt2
+		local spacing = string.rep(' ', nonbuttonlength)
+
+		return txt1 .. spacing .. txt2
+	end,
+}
 
 ---------------------------- Highlight Groups ----------------------------------
 local b16 = require 'ui.base16'
+
 b16.highlight {
 	DashAscii = { fg = b16.magenta },
 	DashFindFile = { fg = b16.brightyellow },
@@ -52,40 +72,6 @@ local opts = {
 	},
 }
 
----------------------------- Util Functions ----------------------------------
-local map = function(keys, action, buf)
-	for _, val in ipairs(keys) do
-		vim.keymap.set('n', val, action, { buffer = buf })
-	end
-end
-
-local txt_pad = function(str, max_str_w)
-	local av = (max_str_w - strw(str)) / 2
-	av = math.floor(av)
-	return string.rep(' ', av) .. str .. string.rep(' ', av)
-end
-
-local btn_gap = function(txt1, txt2, max_str_w)
-	local btn_len = strw(txt1) + #txt2
-	local spacing = max_str_w - btn_len
-	return txt1 .. string.rep(' ', spacing) .. txt2
-end
-
-local set_cleanbuf_opts = function(ft, buf)
-	opt_local('buflisted', false, { scope = 'local' })
-	opt_local('modifiable', false, { scope = 'local' })
-	opt_local('buftype', 'nofile', { buf = buf })
-	opt_local('number', false, { scope = 'local' })
-	opt_local('list', false, { scope = 'local' })
-	opt_local('wrap', false, { scope = 'local' })
-	opt_local('relativenumber', false, { scope = 'local' })
-	opt_local('cursorline', false, { scope = 'local' })
-	opt_local('colorcolumn', '0', { scope = 'local' })
-	opt_local('foldcolumn', '0', { scope = 'local' })
-	opt_local('ft', ft, { buf = buf })
-	vim.g[ft .. '_displayed'] = true
-end
-
 ---------------------------- Constructor ----------------------------------
 return {
 	open = function(buf, win, action)
@@ -108,7 +94,7 @@ return {
 
 		------------------------ find largest string's width -----------------------------
 		for _, val in ipairs(header) do
-			local headerw = strw(val)
+			local headerw = api.nvim_strwidth(val)
 			if headerw > dashboard_w then dashboard_w = headerw end
 		end
 
@@ -120,17 +106,17 @@ return {
 		for _, val in ipairs(opts.buttons) do
 			local str = type(val.txt) == 'string' and val.txt or val.txt()
 			str = val.keys and str .. val.keys or str
-			local w = strw(str)
+			local w = api.nvim_strwidth(str)
 
 			if dashboard_w < w then dashboard_w = w end
 
-			if val.keys then map({ val.keys }, '<cmd>' .. val.cmd .. '<cr>', buf) end
+			if val.keys then utl.remap({ val.keys }, '<cmd>' .. val.cmd .. '<cr>', buf) end
 		end
 		----------------------- save display txt -----------------------------------------
 		local dashboard = {}
 
 		for _, line in ipairs(header) do
-			table.insert(dashboard, { txt = txt_pad(line, dashboard_w), hl = 'DashAscii' })
+			table.insert(dashboard, { txt = utl.txt_pad(line, dashboard_w), hl = 'DashAscii' })
 		end
 
 		for _, item in ipairs(opts.buttons) do
@@ -138,9 +124,9 @@ return {
 
 			if not item.keys then
 				local str = type(item.txt) == 'string' and item.txt or item.txt()
-				txt = item.rep and string.rep(str, dashboard_w) or txt_pad(str, dashboard_w)
+				txt = item.rep and string.rep(str, dashboard_w) or utl.txt_pad(str, dashboard_w)
 			else
-				txt = btn_gap(item.txt, item.keys, dashboard_w)
+				txt = utl.btn_gap(item.txt, item.keys, dashboard_w)
 			end
 
 			table.insert(dashboard, { txt = txt, hl = item.hl, cmd = item.cmd })
@@ -178,25 +164,44 @@ return {
 		local btn_start_i = row_i + #header + 2
 		api.nvim_win_set_cursor(win, { btn_start_i, col_i + 5 })
 
-		map({ 'k', '<up>' }, function()
-			local cur = fn.line '.'
+		utl.remap({ 'k', '<up>' }, function()
+			local cur = vim.fn.line '.'
 			local target_line = cur == key_lines[1].i and key_lines[#key_lines].i or cur - 2
 			api.nvim_win_set_cursor(win, { target_line, col_i + 5 })
 		end, buf)
 
-		map({ 'j', '<down>' }, function()
-			local cur = fn.line '.'
+		utl.remap({ 'j', '<down>' }, function()
+			local cur = vim.fn.line '.'
 			local target_line = cur == key_lines[#key_lines].i and key_lines[1].i or cur + 2
 			api.nvim_win_set_cursor(win, { target_line, col_i + 5 })
 		end, buf)
 
-		map({ '<cr>' }, function()
-			local key = vim.tbl_filter(function(item) return item.i == fn.line '.' end, key_lines)
+		utl.remap({ '<cr>' }, function()
+			local key = vim.tbl_filter(function(item) return item.i == vim.fn.line '.' end, key_lines)
 
 			if key[1] and key[1].cmd then vim.cmd(key[1].cmd) end
 		end, buf)
 
-		set_cleanbuf_opts('dashboard', buf)
+		------------------------------ clean buffer options ------------------------------------
+		local opt_local = {
+			{ 'buflisted', false, { scope = 'local' } },
+			{ 'modifiable', false, { scope = 'local' } },
+			{ 'buftype', 'nofile', { buf = buf } },
+			{ 'number', false, { scope = 'local' } },
+			{ 'list', false, { scope = 'local' } },
+			{ 'wrap', false, { scope = 'local' } },
+			{ 'relativenumber', false, { scope = 'local' } },
+			{ 'cursorline', false, { scope = 'local' } },
+			{ 'colorcolumn', '0', { scope = 'local' } },
+			{ 'foldcolumn', '0', { scope = 'local' } },
+			{ 'ft', 'dashboard', { buf = buf } },
+		}
+
+		for _, optl in ipairs(opt_local) do
+			api.nvim_set_option_value(optl[1], optl[2], optl[3])
+		end
+
+		g['dashboard_displayed'] = true
 
 		if action == 'redraw' then return end
 
