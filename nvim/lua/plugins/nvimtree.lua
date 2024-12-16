@@ -18,7 +18,7 @@ return {
 			NvimTreeGitNew = { fg = b16.red },
 			NvimTreeGitDirty = { fg = b16.yellow },
 			NvimTreeGitStaged = { fg = b16.green },
-			NvimTreeGitRenamed = { fg = b16.brightmagenta },
+			NvimTreeGitRenamed = { link = 'NvimTreeGitStaged' },
 		}
 
 		return {
@@ -56,7 +56,7 @@ return {
 							symlink = '󱉆',
 						},
 						git = {
-							renamed = 'r',
+							renamed = '󰑙',
 							staged = '+',
 							unmerged = '!',
 							unstaged = '~',
