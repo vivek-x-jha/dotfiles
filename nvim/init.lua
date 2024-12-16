@@ -97,7 +97,7 @@ o.statusline = "%!v:lua.require('ui.statusline').open()"
 statusline.autocmds()
 
 require 'ui.tabufline.lazyload'
-require 'ui.defaults'
+require 'ui.highlights'
 require 'ui.git'
 require 'ui.terminal'
 
