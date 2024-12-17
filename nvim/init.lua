@@ -13,13 +13,13 @@ g.theme = 'themes.sourdiesel'
 
 require 'configs.lazy'
 require 'configs.options'
+require 'configs.autocmds'
 
 vim.o.statusline = "%!v:lua.require('ui.statusline').open()"
-require('ui.statusline').autocmds()
 
+require('ui.statusline').autocmds()
 require('ui.buffers').load()
 require 'ui.terminal'
-require 'configs.autocmds'
 require('ui.highlights').color_all()
 
 vim.schedule(function() require 'configs.mappings' end)
