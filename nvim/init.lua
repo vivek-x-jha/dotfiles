@@ -9,7 +9,7 @@ local g = vim.g
 
 g.mapleader = ' '
 g.maplocalleader = '\\'
-g.theme = 'base16'
+g.theme = 'themes.sourdiesel'
 
 require 'lazyconfig'
 require 'options'

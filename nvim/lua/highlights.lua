@@ -1,5 +1,11 @@
 local g = vim.g
-local theme = require('themes.' .. g.theme)
+local present, theme = pcall(require, g.theme)
+
+if not present then
+	local err_msg = 'Highlights not loaded! "~/.config/nvim/lua/themes/' .. g.theme .. '.lua" not found'
+	vim.notify(err_msg, vim.log.levels.ERROR)
+	return
+end
 
 local set_highlight_groups = function(highlights)
 	for hlgroup, hlopts in pairs(highlights) do
