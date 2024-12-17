@@ -57,6 +57,15 @@ api.nvim_create_user_command('Dashboard', function()
 	end
 end, {})
 
+-- Turn off line numbers for (and only for) Spectre buffers
+api.nvim_create_autocmd('FileType', {
+	pattern = 'spectre_panel',
+	callback = function()
+		vim.opt_local.number = false
+		vim.opt_local.relativenumber = false
+	end,
+})
+
 vim.schedule(function()
 	-- load nvdash only on empty file
 	local buf_lines = api.nvim_buf_get_lines(0, 0, 1, false)

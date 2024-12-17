@@ -1,7 +1,8 @@
+local M = {}
+local fn = vim.fn
 local g = vim.g
 local api = vim.api
 local set_buf = api.nvim_set_current_buf
-local M = {}
 
 local pos_data = {
 	sp = { resize = 'height', area = 'lines' },
@@ -23,26 +24,26 @@ local config = {
 	},
 }
 
--------------------------- util funcs -----------------------------
+-------------------------- Utils -----------------------------
 g.nvchad_terms = {}
 
 -- used for initially resizing terms
 g.nvhterm = false
 g.nvvterm = false
 
-local function save_term_info(index, val)
+local save_term_info = function(index, val)
 	local terms_list = g.nvchad_terms
 	terms_list[tostring(index)] = val
 	g.nvchad_terms = terms_list
 end
 
-local function opts_to_id(id)
+local opts_to_id = function(id)
 	for _, opts in pairs(g.nvchad_terms) do
 		if opts.id == id then return opts end
 	end
 end
 
-local function create_float(buffer, float_opts)
+local create_float = function(buffer, float_opts)
 	local opts = vim.tbl_deep_extend('force', config.float, float_opts or {})
 
 	opts.width = math.ceil(opts.width * vim.o.columns)
@@ -53,7 +54,7 @@ local function create_float(buffer, float_opts)
 	api.nvim_open_win(buffer, true, opts)
 end
 
-local function format_cmd(cmd) return type(cmd) == 'string' and cmd or cmd() end
+local format_cmd = function(cmd) return type(cmd) == 'string' and cmd or cmd() end
 
 M.display = function(opts)
 	if opts.pos == 'float' then
@@ -88,7 +89,7 @@ M.display = function(opts)
 	save_term_info(opts.buf, opts)
 end
 
-local function create(opts)
+local create = function(opts)
 	local buf_exists = opts.buf
 	opts.buf = opts.buf or vim.api.nvim_create_buf(false, true)
 
@@ -106,20 +107,20 @@ local function create(opts)
 
 	save_term_info(opts.buf, opts)
 
-	if not buf_exists then vim.fn.termopen(cmd, opts.termopen_opts or { detach = false }) end
+	if not buf_exists then fn.termopen(cmd, opts.termopen_opts or { detach = false }) end
 
-	vim.g.nvhterm = opts.pos == 'sp'
-	vim.g.nvvterm = opts.pos == 'vsp'
+	g.nvhterm = opts.pos == 'sp'
+	g.nvvterm = opts.pos == 'vsp'
 end
 
---------------------------- user api -------------------------------
+--------------------------- User API -------------------------------
 M.new = function(opts) create(opts) end
 
 M.toggle = function(opts)
 	local x = opts_to_id(opts.id)
 	opts.buf = x and x.buf or nil
 
-	if (x == nil or not api.nvim_buf_is_valid(x.buf)) or vim.fn.bufwinid(x.buf) == -1 then
+	if (x == nil or not api.nvim_buf_is_valid(x.buf)) or fn.bufwinid(x.buf) == -1 then
 		create(opts)
 	else
 		api.nvim_win_close(x.win, true)
@@ -137,7 +138,7 @@ M.runner = function(opts)
 		create(opts)
 	else
 		-- window isnt visible
-		if vim.fn.bufwinid(x.buf) == -1 then M.display(opts) end
+		if fn.bufwinid(x.buf) == -1 then M.display(opts) end
 
 		local cmd = format_cmd(opts.cmd)
 
@@ -152,9 +153,12 @@ M.runner = function(opts)
 	end
 end
 
---------------------------- autocmds -------------------------------
+--------------------------- Autocmds -------------------------------
 api.nvim_create_autocmd('TermClose', {
 	callback = function(args) save_term_info(args.buf, nil) end,
 })
+
+-------------------------- Colorscheme -----------------------------
+require('highlights').color_terminal()
 
 return M
