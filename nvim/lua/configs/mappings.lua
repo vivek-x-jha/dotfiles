@@ -38,8 +38,8 @@ map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', 'nvimtree focus window')
 -- terminal
 map('t', '<C-x>', '<C-\\><C-N>', 'terminal escape terminal mode')
 
-map('n', '<leader>h', function() term.new { pos = 'sp' } end, 'terminal new horizontal term')
-map('n', '<leader>v', function() term.new { pos = 'vsp' } end, 'terminal new vertical term')
+map('n', '<leader>h', function() term.open { pos = 'sp' } end, 'terminal new horizontal term')
+map('n', '<leader>v', function() term.open { pos = 'vsp' } end, 'terminal new vertical term')
 
 map({ 'n', 't' }, '<A-v>', function() term.toggle { pos = 'vsp', id = 'vtoggleTerm' } end, 'terminal toggleable vertical term')
 map({ 'n', 't' }, '<A-h>', function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end, 'terminal toggleable horizontal term')

@@ -12,14 +12,12 @@ g.maplocalleader = '\\'
 g.theme = 'themes.sourdiesel'
 
 require 'configs.lazy'
+
+vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
+
+require('ui.buffers').setup()
+require('ui.highlights').setup()
+
 require 'configs.options'
 require 'configs.autocmds'
-
-vim.o.statusline = "%!v:lua.require('ui.statusline').open()"
-
-require('ui.statusline').autocmds()
-require('ui.buffers').load()
-require 'ui.terminal'
-require('ui.highlights').color_all()
-
 vim.schedule(function() require 'configs.mappings' end)
