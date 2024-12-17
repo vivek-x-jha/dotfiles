@@ -1,4 +1,5 @@
 local M = {}
+local bo = vim.bo
 local fn = vim.fn
 local g = vim.g
 local api = vim.api
@@ -66,8 +67,8 @@ M.display = function(opts)
 	local win = api.nvim_get_current_win()
 	opts.win = win
 
-	vim.bo[opts.buf].buflisted = false
-	vim.bo[opts.buf].ft = 'NvTerm_' .. opts.pos:gsub(' ', '')
+	bo[opts.buf].buflisted = false
+	bo[opts.buf].ft = 'NvTerm_' .. opts.pos:gsub(' ', '')
 	vim.cmd 'startinsert'
 
 	-- resize non floating wins initially + or only when they're toggleable
