@@ -19,7 +19,7 @@ require('statusline').autocmds()
 
 require 'ui.tabufline.lazyload'
 require 'terminal'
-require 'highlights'
 require 'autocmds'
+require('highlights').color_all()
 
 vim.schedule(function() require 'mappings' end)
