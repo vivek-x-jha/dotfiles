@@ -17,7 +17,7 @@ require 'options'
 vim.o.statusline = "%!v:lua.require('statusline').open()"
 require('statusline').autocmds()
 
-require 'ui.tabufline.lazyload'
+require('buffers').load()
 require 'terminal'
 require 'autocmds'
 require('highlights').color_all()

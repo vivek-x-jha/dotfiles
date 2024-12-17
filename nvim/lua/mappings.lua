@@ -1,4 +1,4 @@
-local tbfline = require 'ui.tabufline'
+local buf = require 'buffers'
 local term = require 'terminal'
 
 local map = function(mode, keys, action, desc, remap)
@@ -25,11 +25,11 @@ map('n', '<leader>oo', function()
 	vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
 end, 'Restart Obsession session')
 
--- tabufline
+-- buffers
 map('n', '<leader>b', '<cmd>enew<CR>', 'buffer new')
-map('n', '<tab>', tbfline.next, 'Buffer goto next')
-map('n', '<S-tab>', tbfline.prev, 'Buffer goto prev')
-map('n', '<leader>x', tbfline.close_buffer, 'Buffer close')
+map('n', '<tab>', buf.next, 'Buffer goto next')
+map('n', '<S-tab>', buf.prev, 'Buffer goto prev')
+map('n', '<leader>x', buf.close, 'Buffer close')
 
 -- nvimtree
 map('n', '<C-n>', '<cmd>NvimTreeToggle<CR><C-w>=', 'nvimtree toggle window')

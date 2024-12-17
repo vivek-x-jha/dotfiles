@@ -1,11 +1,11 @@
 local api = vim.api
 local g = vim.g
 
+local buf = require 'buffers'
 local colorify = require 'ui.colorify'
 local dashboard = require 'dashboard'
 local lspsignature = require 'ui.lsp.signature'
 local mason = require 'ui.mason'
-local tabufline = require 'ui.tabufline'
 
 -- user event that loads after UIEnter + only if file buf is there
 api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
@@ -51,7 +51,7 @@ api.nvim_create_autocmd('VimEnter', {
 -- Toggle Dashboard
 api.nvim_create_user_command('Dashboard', function()
 	if vim.g.dashboard_displayed then
-		tabufline.close_buffer()
+		buf.close()
 	else
 		dashboard.open()
 	end
