@@ -11,15 +11,15 @@ g.mapleader = ' '
 g.maplocalleader = '\\'
 g.theme = 'themes.sourdiesel'
 
-require 'lazyconfig'
-require 'options'
+require 'configs.lazy'
+require 'configs.options'
 
-vim.o.statusline = "%!v:lua.require('statusline').open()"
-require('statusline').autocmds()
+vim.o.statusline = "%!v:lua.require('ui.statusline').open()"
+require('ui.statusline').autocmds()
 
-require('buffers').load()
-require 'terminal'
-require 'autocmds'
-require('highlights').color_all()
+require('ui.buffers').load()
+require 'ui.terminal'
+require 'configs.autocmds'
+require('ui.highlights').color_all()
 
-vim.schedule(function() require 'mappings' end)
+vim.schedule(function() require 'configs.mappings' end)

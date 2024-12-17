@@ -1,9 +1,9 @@
 local api = vim.api
 local g = vim.g
 
-local buf = require 'buffers'
+local buf = require 'ui.buffers'
 local colorify = require 'ui.colorify'
-local dashboard = require 'dashboard'
+local dashboard = require 'ui.dashboard'
 local lspsignature = require 'ui.lsp.signature'
 local mason = require 'ui.mason'
 
