@@ -15,33 +15,6 @@ local config = {
 
 g.toggle_theme_icon = '   '
 
-local b16 = require 'ui.base16'
-b16.highlight {
-	-- Buffers
-	TbFill = { bg = 'NONE' },
-
-	TbBufOn = { fg = b16.brightyellow, bg = 'NONE' },
-	TbBufOff = { fg = b16.brightblack, bg = 'NONE' },
-
-	TbBufOnClose = { fg = b16.white, bg = 'NONE' },
-	TbBufOffClose = { fg = b16.brightblack, bg = 'NONE' },
-
-	TbBufOnModified = { fg = b16.brightred, bg = 'NONE' },
-	TbBufOffModified = { fg = b16.red, bg = 'NONE' },
-
-	-- Tabs
-	TbTabOn = { fg = b16.red, bg = 'NONE' },
-	TbTabOff = { fg = b16.white, bg = 'NONE' },
-
-	TbTabNewBtn = { fg = b16.white, bg = 'NONE' },
-	TbTabCloseBtn = { fg = b16.black, bg = 'NONE' },
-	TBTabTitle = { fg = b16.black, bg = 'NONE' },
-
-	-- Other UI
-	TbThemeToggleBtn = { fg = b16.white, bg = 'NONE' },
-	TbCloseAllBufsBtn = { fg = b16.brightred, bg = 'NONE' },
-}
-
 ---------------------------------------------------------- btn actions functions ----------------------------------------------
 
 vim.cmd "function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction"

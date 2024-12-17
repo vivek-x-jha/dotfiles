@@ -1,104 +1,63 @@
+local M = {}
+local utl = {}
 local api = vim.api
 local bo = vim.bo
 local diag = vim.diagnostic
 local g = vim.g
 
----------------------------- Highlight Groups ----------------------------------
-local b16 = require 'ui.base16'
-b16.highlight {
-	-- StatusLine Highlights
-	StatusLine = { fg = b16.brightred, bg = b16.statusline_bg },
-	StText = { fg = b16.brightred, bg = b16.statusline_bg },
-
-	St_file = { fg = b16.black, bg = b16.statusline_bg },
-	St_filemod = { fg = b16.brightred, bg = b16.statusline_bg },
-	St_cursor = { fg = b16.black, bg = b16.statusline_bg },
-	St_cwd = { fg = b16.blue, bg = b16.statusline_bg },
-	St_ft = { fg = b16.brightblue, bg = b16.statusline_bg },
-
-	-- LSP Highlights
-	St_lspMsg = { fg = b16.brightmagenta, bg = b16.background },
-	St_lspError = { fg = b16.brightred, bg = b16.statusline_bg },
-	St_lspWarning = { fg = b16.brightyellow, bg = b16.statusline_bg },
-	St_lspHints = { fg = b16.brightmagenta, bg = b16.statusline_bg },
-	St_lspInfo = { fg = b16.brightblue, bg = b16.statusline_bg },
-	St_lsp = { fg = b16.cyan, bg = b16.background },
-
-	-- Git Highlights
-	St_GitAdded = { fg = b16.green, bg = b16.statusline_bg },
-	St_GitChanged = { fg = b16.yellow, bg = b16.statusline_bg },
-	St_GitRemoved = { fg = b16.red, bg = b16.statusline_bg },
-	St_GitBranch = { fg = b16.magenta, bg = b16.statusline_bg },
-
-	-- Mode Highlights
-	St_NormalMode = { fg = b16.brightblue, bg = b16.statusline_bg },
-	St_VisualMode = { fg = b16.brightcyan, bg = b16.statusline_bg },
-	St_InsertMode = { fg = b16.brightred, bg = b16.statusline_bg },
-	St_TerminalMode = { fg = b16.brightgreen, bg = b16.statusline_bg },
-	St_NTerminalMode = { fg = b16.yellow, bg = b16.statusline_bg },
-	St_ReplaceMode = { fg = b16.brightyellow, bg = b16.statusline_bg },
-	St_ConfirmMode = { fg = b16.cyan, bg = b16.statusline_bg },
-	St_CommandMode = { fg = b16.brightgreen, bg = b16.statusline_bg },
-	St_SelectMode = { fg = b16.blue, bg = b16.statusline_bg },
-}
-
----------------------------- Helper Functions ----------------------------------
-local utl = {
-	state = { lsp_msg = '' },
-
-	stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end,
-
-	is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end,
-
-	-- 2nd item is highlight groupname St_NormalMode
-	modes = {
-		['n'] = { 'NORMAL', 'Normal' },
-		['no'] = { 'NORMAL (no)', 'Normal' },
-		['nov'] = { 'NORMAL (nov)', 'Normal' },
-		['noV'] = { 'NORMAL (noV)', 'Normal' },
-		['noCTRL-V'] = { 'NORMAL', 'Normal' },
-		['niI'] = { 'NORMAL i', 'Normal' },
-		['niR'] = { 'NORMAL r', 'Normal' },
-		['niV'] = { 'NORMAL v', 'Normal' },
-		['nt'] = { 'NTERMINAL', 'NTerminal' },
-		['ntT'] = { 'NTERMINAL (ntT)', 'NTerminal' },
-
-		['v'] = { 'VISUAL', 'Visual' },
-		['vs'] = { 'V-CHAR (Ctrl O)', 'Visual' },
-		['V'] = { 'V-LINE', 'Visual' },
-		['Vs'] = { 'V-LINE', 'Visual' },
-		[''] = { 'V-BLOCK', 'Visual' },
-
-		['i'] = { 'INSERT', 'Insert' },
-		['ic'] = { 'INSERT (completion)', 'Insert' },
-		['ix'] = { 'INSERT completion', 'Insert' },
-
-		['t'] = { 'TERMINAL', 'Terminal' },
-
-		['R'] = { 'REPLACE', 'Replace' },
-		['Rc'] = { 'REPLACE (Rc)', 'Replace' },
-		['Rx'] = { 'REPLACEa (Rx)', 'Replace' },
-		['Rv'] = { 'V-REPLACE', 'Replace' },
-		['Rvc'] = { 'V-REPLACE (Rvc)', 'Replace' },
-		['Rvx'] = { 'V-REPLACE (Rvx)', 'Replace' },
-
-		['s'] = { 'SELECT', 'Select' },
-		['S'] = { 'S-LINE', 'Select' },
-		[''] = { 'S-BLOCK', 'Select' },
-		['c'] = { 'COMMAND', 'Command' },
-		['cv'] = { 'COMMAND', 'Command' },
-		['ce'] = { 'COMMAND', 'Command' },
-		['cr'] = { 'COMMAND', 'Command' },
-		['r'] = { 'PROMPT', 'Confirm' },
-		['rm'] = { 'MORE', 'Confirm' },
-		['r?'] = { 'CONFIRM', 'Confirm' },
-		['x'] = { 'CONFIRM', 'Confirm' },
-		['!'] = { 'SHELL', 'Terminal' },
-	},
-}
-
------------------------- Output Statusline Elements -----------------------------
 local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
+
+utl.state = { lsp_msg = '' }
+
+utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
+
+utl.is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end
+
+-- 2nd item is highlight groupname St_NormalMode
+utl.modes = {
+	['n'] = { 'NORMAL', 'Normal' },
+	['no'] = { 'NORMAL (no)', 'Normal' },
+	['nov'] = { 'NORMAL (nov)', 'Normal' },
+	['noV'] = { 'NORMAL (noV)', 'Normal' },
+	['noCTRL-V'] = { 'NORMAL', 'Normal' },
+	['niI'] = { 'NORMAL i', 'Normal' },
+	['niR'] = { 'NORMAL r', 'Normal' },
+	['niV'] = { 'NORMAL v', 'Normal' },
+	['nt'] = { 'NTERMINAL', 'NTerminal' },
+	['ntT'] = { 'NTERMINAL (ntT)', 'NTerminal' },
+
+	['v'] = { 'VISUAL', 'Visual' },
+	['vs'] = { 'V-CHAR (Ctrl O)', 'Visual' },
+	['V'] = { 'V-LINE', 'Visual' },
+	['Vs'] = { 'V-LINE', 'Visual' },
+	[''] = { 'V-BLOCK', 'Visual' },
+
+	['i'] = { 'INSERT', 'Insert' },
+	['ic'] = { 'INSERT (completion)', 'Insert' },
+	['ix'] = { 'INSERT completion', 'Insert' },
+
+	['t'] = { 'TERMINAL', 'Terminal' },
+
+	['R'] = { 'REPLACE', 'Replace' },
+	['Rc'] = { 'REPLACE (Rc)', 'Replace' },
+	['Rx'] = { 'REPLACEa (Rx)', 'Replace' },
+	['Rv'] = { 'V-REPLACE', 'Replace' },
+	['Rvc'] = { 'V-REPLACE (Rvc)', 'Replace' },
+	['Rvx'] = { 'V-REPLACE (Rvx)', 'Replace' },
+
+	['s'] = { 'SELECT', 'Select' },
+	['S'] = { 'S-LINE', 'Select' },
+	[''] = { 'S-BLOCK', 'Select' },
+	['c'] = { 'COMMAND', 'Command' },
+	['cv'] = { 'COMMAND', 'Command' },
+	['ce'] = { 'COMMAND', 'Command' },
+	['cr'] = { 'COMMAND', 'Command' },
+	['r'] = { 'PROMPT', 'Confirm' },
+	['rm'] = { 'MORE', 'Confirm' },
+	['r?'] = { 'CONFIRM', 'Confirm' },
+	['x'] = { 'CONFIRM', 'Confirm' },
+	['!'] = { 'SHELL', 'Terminal' },
+}
 
 local modules = {
 	['%='] = '%=',
@@ -166,12 +125,16 @@ local modules = {
 	end,
 
 	file = function()
-		-- Surpress when NvimTree active
-		if bo.filetype:match '^NvimTree' then return '' end
-
 		local icon = '󰈚'
 		local path = api.nvim_buf_get_name(utl.stbufnr())
-		local name = (path == '' and 'Empty') or path:match '([^/\\]+)[/\\]*$'
+		local is_empty = path == ''
+		local is_nvimtree = bo.filetype:match '^NvimTree'
+		local is_terminal = bo.buftype == 'terminal'
+
+		-- Surpress
+		if is_empty or is_nvimtree or is_terminal then return '' end
+
+		local name = path:match '([^/\\]+)[/\\]*$'
 
 		-- Replace icon with devicon
 		if name ~= 'Empty' then
@@ -193,37 +156,37 @@ local modules = {
 	cursor = function() return '%#St_cursor#󰓾 %l:%c' end,
 }
 
-return {
-	open = function()
-		local result = {}
+M.open = function()
+	local result = {}
 
-		for _, v in ipairs(orders) do
-			local module = modules[v]
-			module = type(module) == 'string' and module or module()
-			table.insert(result, module)
-		end
+	for _, v in ipairs(orders) do
+		local module = modules[v]
+		module = type(module) == 'string' and module or module()
+		table.insert(result, module)
+	end
 
-		return table.concat(result)
-	end,
+	return table.concat(result)
+end
 
-	autocmds = function()
-		api.nvim_create_autocmd('LspProgress', {
-			pattern = { 'begin', 'end' },
-			callback = function(args)
-				local data = args.data.params.value
-				local progress = ''
+M.autocmds = function()
+	api.nvim_create_autocmd('LspProgress', {
+		pattern = { 'begin', 'end' },
+		callback = function(args)
+			local data = args.data.params.value
+			local progress = ''
 
-				if data.percentage then
-					local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
-					local idx = math.max(1, math.floor(data.percentage / 10))
-					local icon = spinners[idx]
-					progress = icon .. ' ' .. data.percentage .. '%% '
-				end
+			if data.percentage then
+				local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
+				local idx = math.max(1, math.floor(data.percentage / 10))
+				local icon = spinners[idx]
+				progress = icon .. ' ' .. data.percentage .. '%% '
+			end
 
-				local str = progress .. (data.message or '') .. ' ' .. (data.title or '')
-				utl.state.lsp_msg = data.kind == 'end' and '' or str
-				vim.cmd.redrawstatus()
-			end,
-		})
-	end,
-}
+			local str = progress .. (data.message or '') .. ' ' .. (data.title or '')
+			utl.state.lsp_msg = data.kind == 'end' and '' or str
+			vim.cmd.redrawstatus()
+		end,
+	})
+end
+
+return M

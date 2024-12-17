@@ -2,7 +2,6 @@ local M = {}
 local utl = {}
 local api = vim.api
 local g = vim.g
-local b16 = require 'ui.base16'
 
 local header = {
 	'                                                       ',
@@ -36,18 +35,6 @@ local buttons = {
 	{ txt = '  Settings', hl = 'DashSettings', keys = 's', cmd = 'edit ~/.config/nvim/init.lua' },
 }
 
----------------------------- Highlight  ----------------------------------
-b16.highlight {
-	DashAscii = { fg = b16.magenta },
-	DashFindFile = { fg = b16.brightyellow },
-	DashFindWord = { fg = b16.brightred },
-	DashRecentFiles = { fg = b16.blue },
-	DashPlugins = { fg = b16.brightgreen },
-	DashLine = { fg = b16.black },
-	DashSettings = { fg = b16.brightmagenta },
-}
-
----------------------------- Helper Funcs ----------------------------------
 utl.remap = function(keys, action, buf)
 	for _, val in ipairs(keys) do
 		vim.keymap.set('n', val, action, { buffer = buf })
@@ -68,7 +55,6 @@ utl.btn_gap = function(txt1, txt2, max_str_w)
 	return txt1 .. spacing .. txt2
 end
 
----------------------------- Constructor ----------------------------------
 M.open = function(buf, win, action)
 	buf = buf or api.nvim_create_buf(false, true)
 	win = win or api.nvim_get_current_win()

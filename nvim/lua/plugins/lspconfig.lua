@@ -9,23 +9,6 @@ return {
 		local lspproto = vim.lsp.protocol
 		local listfolders = function() print(vim.inspect(lspbuf.list_workspace_folders())) end
 
-		local b16 = require 'ui.base16'
-		b16.highlight {
-			-- LSP References
-			LspReferenceText = { bg = b16.one_bg3 },
-			LspReferenceRead = { bg = b16.one_bg3 },
-			LspReferenceWrite = { bg = b16.one_bg3 },
-
-			-- LSP Diagnostics
-			DiagnosticError = { fg = b16.brightred },
-			DiagnosticWarn = { fg = b16.brightyellow },
-			DiagnosticHint = { fg = b16.brightmagenta },
-			DiagnosticInfo = { fg = b16.brightblue },
-			LspSignatureActiveParameter = { fg = b16.black, bg = b16.green },
-
-			LspInlayHint = { fg = b16.grey },
-		}
-
 		-- Run diagnostics
 		local diag = vim.diagnostic
 		local sev = diag.severity
