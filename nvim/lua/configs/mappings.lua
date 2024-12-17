@@ -1,5 +1,5 @@
-local buf = require 'buffers'
-local term = require 'terminal'
+local buf = require 'ui.buffers'
+local term = require 'ui.terminal'
 
 local map = function(mode, keys, action, desc, remap)
 	local opts = { desc = desc, remap = remap or false }

@@ -159,6 +159,6 @@ api.nvim_create_autocmd('TermClose', {
 })
 
 -------------------------- Colorscheme -----------------------------
-require('highlights').color_terminal()
+require('ui.highlights').color_terminal()
 
 return M
