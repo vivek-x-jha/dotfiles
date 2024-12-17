@@ -3,14 +3,5 @@ return {
 	'lukas-reineke/indent-blankline.nvim',
 	event = 'User FilePost',
 	main = 'ibl',
-	opts = function()
-		local b16 = require 'ui.base16'
-		b16.highlight {
-			IblIndent = { fg = b16.brightblack },
-			IblWhitespace = { fg = b16.grey },
-			IblScope = { fg = b16.brightmagenta },
-		}
-
-		return { indent = { char = '┊' } }
-	end,
+	opts = { indent = { char = '┊' } },
 }

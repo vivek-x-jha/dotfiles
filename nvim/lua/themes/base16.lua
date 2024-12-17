@@ -1,5 +1,4 @@
-return {
-	-- primary colors
+local primary = {
 	black = '#cccccc',
 	red = '#ffc7c7',
 	green = '#ceffc9',
@@ -9,7 +8,6 @@ return {
 	cyan = '#8ae7c5',
 	white = '#f4f3f2',
 
-	-- primary bright colors
 	brightblack = '#5c617d',
 	brightred = '#f096b7',
 	brightgreen = '#d2fd9d',
@@ -18,17 +16,13 @@ return {
 	brightmagenta = '#c9ccfb',
 	brightcyan = '#47e7b1',
 	brightwhite = '#ffffff',
+}
 
-	-- extras
+local extras = {
 	background = 'NONE',
 	grey = '#313244',
 	statusline_bg = '#1b1c28',
 	dark = '#1b1c28',
-
-	-- highlighter
-	highlight = function(highlights)
-		for hlgroup, hlopts in pairs(highlights) do
-			vim.api.nvim_set_hl(0, hlgroup, hlopts)
-		end
-	end,
 }
+
+return vim.tbl_deep_extend('force', primary, extras)

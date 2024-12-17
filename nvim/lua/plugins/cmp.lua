@@ -63,57 +63,9 @@ return {
 	},
 
 	opts = function()
-		local b16 = require 'ui.base16'
-		b16.highlight {
-
-			CmpBorder = { fg = b16.brightblack },
-			CmpItemAbbr = { fg = b16.black },
-			CmpItemAbbrMatch = { fg = b16.brightred },
-			CmpDoc = { bg = b16.background },
-			CmpDocBorder = { fg = b16.brightblack },
-			CmpPmenu = { bg = b16.background },
-			CmpSel = { link = 'PmenuSel' },
-
-			-- cmp item kinds
-			-- CmpItemKindConstant = { fg = b16.base09 },
-			CmpItemKindFunction = { fg = b16.brightblue },
-			-- CmpItemKindIdentifier = { fg = b16.base08 },
-			CmpItemKindField = { fg = b16.red },
-			CmpItemKindVariable = { fg = b16.black },
-			CmpItemKindSnippet = { fg = b16.brightmagenta },
-			CmpItemKindText = { fg = b16.white },
-			-- CmpItemKindStructure = { fg = b16.base0E },
-			-- CmpItemKindType = { fg = b16.base0A },
-			CmpItemKindKeyword = { fg = b16.magenta },
-			CmpItemKindMethod = { fg = b16.brightblue },
-			CmpItemKindConstructor = { fg = b16.brightyellow },
-			CmpItemKindFolder = { fg = b16.blue },
-			-- CmpItemKindModule = { fg = b16.base0A },
-			CmpItemKindProperty = { fg = b16.red },
-			CmpItemKindEnum = { fg = b16.blue },
-			-- CmpItemKindUnit = { fg = b16.base0E },
-			CmpItemKindClass = { fg = b16.yellow },
-			CmpItemKindFile = { fg = b16.brightmagenta },
-			CmpItemKindInterface = { fg = b16.green },
-			CmpItemKindColor = { fg = b16.white },
-			CmpItemKindReference = { fg = b16.cyan },
-			CmpItemKindEnumMember = { fg = b16.yellow },
-			-- CmpItemKindStruct = { fg = b16.base0E },
-			CmpItemKindValue = { fg = b16.white },
-			CmpItemKindEvent = { fg = b16.yellow },
-			CmpItemKindOperator = { fg = b16.cyan },
-			CmpItemKindTypeParameter = { fg = b16.red },
-			-- CmpItemKindCopilot = { fg = b16.green },
-			-- CmpItemKindCodeium = { fg = b16.brightgreen },
-			-- CmpItemKindTabNine = { fg = b16.magenta },
-			-- CmpItemKindSuperMaven = { fg = b16.yellow },
-		}
-
 		local cmp = require 'cmp'
-
-		local options = {}
-
 		local api = vim.api
+
 		local cmp_ui = {
 			icons_left = false, -- only for non-atom styles!
 			style = 'default', -- default/flat_light/flat_dark/atom/atom_colored
@@ -124,6 +76,7 @@ return {
 		}
 		local cmp_style = cmp_ui.style
 		local icn = cmp_ui.format_colors.icon .. ' '
+
 		local format_color = {
 			tailwind = function(entry, item, kind_txt)
 				local entryItem = entry:get_completion_item()

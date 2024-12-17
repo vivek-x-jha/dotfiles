@@ -5,9 +5,11 @@
 -- | |\  | |___| |__| | \  /   _| |_| |  | |
 -- |_| \_|______\____/   \/   |_____|_|  |_|
 -- https://neovim.io/doc/
+local g = vim.g
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+g.mapleader = ' '
+g.maplocalleader = '\\'
+g.theme = 'base16'
 
 require 'lazyconfig'
 require 'options'

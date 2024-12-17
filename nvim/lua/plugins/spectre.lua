@@ -4,16 +4,22 @@ return {
 	opts = function()
 		-- Force highlighting: spectre.setup() sets highlights after passing opts
 		vim.schedule(function()
-			local b16 = require 'ui.base16'
+			local theme = require('themes.' .. vim.g.theme)
 
-			b16.highlight {
-				SpectreHeader = { fg = b16.brightmagenta, bg = b16.background, bold = true },
-				SpectreBody = { fg = b16.black, bg = b16.background, bold = true },
-				SpectreFile = { fg = b16.yellow, bg = b16.background },
-				SpectreDir = { fg = b16.blue, bg = b16.background },
-				SpectreSearch = { fg = b16.brightred, bg = b16.grey },
-				SpectreBorder = { fg = b16.brightblack, bg = b16.background },
-				SpectreReplace = { fg = b16.brightgreen, bg = b16.grey },
+			local set_highlight_groups = function(highlights)
+				for hlgroup, hlopts in pairs(highlights) do
+					vim.api.nvim_set_hl(0, hlgroup, hlopts)
+				end
+			end
+
+			set_highlight_groups {
+				SpectreHeader = { fg = theme.brightmagenta, bg = theme.background, bold = true },
+				SpectreBody = { fg = theme.black, bg = theme.background, bold = true },
+				SpectreFile = { fg = theme.yellow, bg = theme.background },
+				SpectreDir = { fg = theme.blue, bg = theme.background },
+				SpectreSearch = { fg = theme.brightred, bg = theme.grey },
+				SpectreBorder = { fg = theme.brightblack, bg = theme.background },
+				SpectreReplace = { fg = theme.brightgreen, bg = theme.grey },
 			}
 		end)
 
