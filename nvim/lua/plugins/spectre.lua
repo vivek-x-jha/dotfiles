@@ -13,13 +13,7 @@ return {
 				return
 			end
 
-			local set_highlight_groups = function(highlights)
-				for hlgroup, hlopts in pairs(highlights) do
-					vim.api.nvim_set_hl(0, hlgroup, hlopts)
-				end
-			end
-
-			set_highlight_groups {
+			for hlgroup, hlopts in pairs {
 				SpectreHeader = { fg = theme.brightmagenta, bg = theme.background, bold = true },
 				SpectreBody = { fg = theme.black, bg = theme.background, bold = true },
 				SpectreFile = { fg = theme.yellow, bg = theme.background },
@@ -27,7 +21,9 @@ return {
 				SpectreSearch = { fg = theme.brightred, bg = theme.grey },
 				SpectreBorder = { fg = theme.brightblack, bg = theme.background },
 				SpectreReplace = { fg = theme.brightgreen, bg = theme.grey },
-			}
+			} do
+				vim.api.nvim_set_hl(0, hlgroup, hlopts)
+			end
 		end)
 
 		-- Turn off line numbers for (and only for) Spectre buffers

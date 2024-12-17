@@ -1,5 +1,6 @@
 local M = {}
 local utl = {}
+local modules = {}
 local api = vim.api
 local bo = vim.bo
 local diag = vim.diagnostic
@@ -59,102 +60,98 @@ utl.modes = {
 	['!'] = { 'SHELL', 'Terminal' },
 }
 
-local modules = {
-	['%='] = '%=',
+modules.mode = function()
+	if not utl.is_activewin() then return '' end
 
-	mode = function()
-		if not utl.is_activewin() then return '' end
+	local modes = utl.modes
+	local m = api.nvim_get_mode().mode
+	return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
+end
 
-		local modes = utl.modes
-		local m = api.nvim_get_mode().mode
-		return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
-	end,
+modules.cwd = function()
+	local name = vim.uv.cwd()
+	if not name then return '' end
 
-	cwd = function()
-		local name = vim.uv.cwd()
-		if not name then return '' end
+	name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
+	return (vim.o.columns > 85 and name) or ''
+end
 
-		name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
-		return (vim.o.columns > 85 and name) or ''
-	end,
+modules.git = function()
+	if not vim.b[utl.stbufnr()].gitsigns_head or vim.b[utl.stbufnr()].gitsigns_git_status then return '' end
 
-	git = function()
-		if not vim.b[utl.stbufnr()].gitsigns_head or vim.b[utl.stbufnr()].gitsigns_git_status then return '' end
+	local git_status = vim.b[utl.stbufnr()].gitsigns_status_dict
 
-		local git_status = vim.b[utl.stbufnr()].gitsigns_status_dict
+	local added = (git_status.added and git_status.added ~= 0) and ('%#St_GitAdded#' .. ' +' .. git_status.added) or ''
+	local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_GitChanged#' .. ' ~' .. git_status.changed) or ''
+	local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemoved#' .. ' -' .. git_status.removed) or ''
+	local branch_name = '%#St_GitBranch#' .. ' ' .. git_status.head
 
-		local added = (git_status.added and git_status.added ~= 0) and ('%#St_GitAdded#' .. ' +' .. git_status.added) or ''
-		local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_GitChanged#' .. ' ~' .. git_status.changed) or ''
-		local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemoved#' .. ' -' .. git_status.removed) or ''
-		local branch_name = '%#St_GitBranch#' .. ' ' .. git_status.head
+	return branch_name .. added .. changed .. removed .. ' '
+end
 
-		return branch_name .. added .. changed .. removed .. ' '
-	end,
+modules.lsp_msg = function() return vim.o.columns < 120 and '' or utl.state.lsp_msg end
 
-	lsp_msg = function() return vim.o.columns < 120 and '' or utl.state.lsp_msg end,
+modules.diagnostics = function()
+	if not rawget(vim, 'lsp') then return '' end
 
-	diagnostics = function()
-		if not rawget(vim, 'lsp') then return '' end
+	local count = function(level) return #diag.get(utl.stbufnr(), { severity = diag.severity[level] }) end
 
-		local count = function(level) return #diag.get(utl.stbufnr(), { severity = diag.severity[level] }) end
+	local err_cnt = count 'ERROR'
+	local warn_cnt = count 'WARN'
+	local hints_cnt = count 'HINT'
+	local info_cnt = count 'INFO'
 
-		local err_cnt = count 'ERROR'
-		local warn_cnt = count 'WARN'
-		local hints_cnt = count 'HINT'
-		local info_cnt = count 'INFO'
+	local err = (err_cnt and err_cnt > 0) and ('%#St_lspError#' .. '󰯈 ' .. tostring(err_cnt) .. ' ') or ''
+	local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
+	local hints = (hints_cnt and hints_cnt > 0) and ('%#St_lspHints#' .. ' ' .. tostring(hints_cnt) .. ' ') or ''
+	local info = (info_cnt and info_cnt > 0) and ('%#St_lspInfo#' .. ' ' .. tostring(info_cnt) .. ' ') or ''
 
-		local err = (err_cnt and err_cnt > 0) and ('%#St_lspError#' .. '󰯈 ' .. tostring(err_cnt) .. ' ') or ''
-		local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
-		local hints = (hints_cnt and hints_cnt > 0) and ('%#St_lspHints#' .. ' ' .. tostring(hints_cnt) .. ' ') or ''
-		local info = (info_cnt and info_cnt > 0) and ('%#St_lspInfo#' .. ' ' .. tostring(info_cnt) .. ' ') or ''
+	return ' ' .. err .. warn .. hints .. info
+end
 
-		return ' ' .. err .. warn .. hints .. info
-	end,
-
-	lsp = function()
-		if rawget(vim, 'lsp') then
-			for _, client in ipairs(vim.lsp.get_clients()) do
-				if client.attached_buffers[utl.stbufnr()] then
-					local server = (vim.o.columns > 100 and '  ' .. client.name .. ' ') or '  LSP '
-					return '%#St_lsp#' .. server
-				end
+modules.lsp = function()
+	if rawget(vim, 'lsp') then
+		for _, client in ipairs(vim.lsp.get_clients()) do
+			if client.attached_buffers[utl.stbufnr()] then
+				local server = (vim.o.columns > 100 and '  ' .. client.name .. ' ') or '  LSP '
+				return '%#St_lsp#' .. server
 			end
 		end
+	end
 
-		return ''
-	end,
+	return ''
+end
 
-	file = function()
-		local icon = '󰈚'
-		local path = api.nvim_buf_get_name(utl.stbufnr())
-		local is_empty = path == ''
-		local is_nvimtree = bo.filetype:match '^NvimTree'
-		local is_terminal = bo.buftype == 'terminal'
+modules.file = function()
+	local icon = '󰈚'
+	local path = api.nvim_buf_get_name(utl.stbufnr())
+	local empty = path == ''
+	local nvimtree = bo.filetype:match '^NvimTree'
+	local terminal = bo.buftype == 'terminal'
 
-		-- Surpress
-		if is_empty or is_nvimtree or is_terminal then return '' end
+	-- Suppress
+	if empty or nvimtree or terminal then return '' end
 
-		local name = path:match '([^/\\]+)[/\\]*$'
+	local name = path:match '([^/\\]+)[/\\]*$'
 
-		-- Replace icon with devicon
-		if name ~= 'Empty' then
-			local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
+	-- Replace icon with devicon
+	local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
 
-			if devicons_present then
-				local ft_icon = devicons.get_icon(name)
-				icon = (ft_icon ~= nil and ft_icon) or icon
-			end
-		end
+	if devicons_present then
+		local ft_icon = devicons.get_icon(name)
+		icon = ft_icon ~= nil and ft_icon or icon
+	end
 
-		-- Format checks if any unsaved modifications
-		local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
-		local modified_indicator = bo.modified and ' [ 󰷫 ]' or ''
+	-- Format checks if any unsaved modifications
+	local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
+	local modified_indicator = bo.modified and ' [ 󰷫 ]' or ''
 
-		return highlight .. icon .. ' ' .. name .. modified_indicator .. ' '
-	end,
+	return highlight .. icon .. ' ' .. name .. modified_indicator .. ' '
+end
 
-	cursor = function() return '%#St_cursor#󰓾 %l:%c' end,
-}
+modules.cursor = function() return '%#St_cursor#󰓾 %l:%c' end
+
+modules['%='] = '%='
 
 M.open = function()
 	local result = {}
