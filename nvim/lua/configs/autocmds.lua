@@ -6,6 +6,7 @@ local colorify = require 'ui.colorify'
 local dashboard = require 'ui.dashboard'
 local lspsignature = require 'ui.lsp.signature'
 local mason = require 'ui.mason'
+local term = require 'ui.terminal'
 
 -- user event that loads after UIEnter + only if file buf is there
 api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
@@ -27,6 +28,11 @@ api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 			end)
 		end
 	end,
+})
+
+-- Terminal
+api.nvim_create_autocmd('TermClose', {
+	callback = function(args) term.save_term_info(args.buf, nil) end,
 })
 
 -- Maintain fold state on reopen
@@ -65,6 +71,9 @@ api.nvim_create_autocmd('FileType', {
 		vim.opt_local.relativenumber = false
 	end,
 })
+
+-- Progress bar when loading Lsp
+require('ui.statusline').autocmds()
 
 vim.schedule(function()
 	-- load nvdash only on empty file

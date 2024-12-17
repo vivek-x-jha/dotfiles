@@ -12,7 +12,7 @@ local buf_index = function(bufnr)
 	end
 end
 
-M.load = function()
+M.setup = function()
 	-- store listed buffers in tab local var
 	t.bufs = t.bufs or api.nvim_list_bufs()
 

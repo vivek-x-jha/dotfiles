@@ -9,9 +9,7 @@ local g = vim.g
 local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
 
 utl.state = { lsp_msg = '' }
-
 utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
-
 utl.is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end
 
 -- 2nd item is highlight groupname St_NormalMode
@@ -153,7 +151,7 @@ modules.cursor = function() return '%#St_cursor#󰓾 %l:%c' end
 
 modules['%='] = '%='
 
-M.open = function()
+M.setup = function()
 	local result = {}
 
 	for _, v in ipairs(orders) do

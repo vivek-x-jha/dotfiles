@@ -3,7 +3,7 @@ return {
 	'nvim-pack/nvim-spectre',
 	opts = function()
 		-- Force highlighting: spectre.setup() sets highlights after passing opts
-		vim.schedule(require('ui.highlights').color_spectre)
+		vim.schedule(function() require('ui.highlights').setup 'spectre' end)
 
 		return {
 			result_padding = '',

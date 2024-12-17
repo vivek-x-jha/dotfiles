@@ -1,4 +1,5 @@
 local M = {}
+local utl = {}
 local g = vim.g
 local theme_exists, theme = pcall(require, g.theme)
 
@@ -8,8 +9,30 @@ if not theme_exists then
 	return
 end
 
----------------------------- Terminal ----------------------------------
-M.color_terminal = function()
+utl.highlight = function(highlight_groups)
+	for hlgroup, hlopts in pairs(highlight_groups) do
+		vim.api.nvim_set_hl(0, hlgroup, hlopts)
+	end
+end
+
+M.setup = function(plugin)
+	---------------------------- Spectre ----------------------------------
+
+	if plugin == 'spectre' then
+		utl.highlight {
+			SpectreHeader = { fg = theme.brightmagenta, bg = theme.background, bold = true },
+			SpectreBody = { fg = theme.black, bg = theme.background, bold = true },
+			SpectreFile = { fg = theme.yellow, bg = theme.background },
+			SpectreDir = { fg = theme.blue, bg = theme.background },
+			SpectreSearch = { fg = theme.brightred, bg = theme.grey },
+			SpectreBorder = { fg = theme.brightblack, bg = theme.background },
+			SpectreReplace = { fg = theme.brightgreen, bg = theme.grey },
+		}
+		return
+	end
+
+	---------------------------- Terminal ----------------------------------
+
 	g.terminal_color_0 = theme.black
 	g.terminal_color_1 = theme.red
 	g.terminal_color_2 = theme.green
@@ -27,26 +50,9 @@ M.color_terminal = function()
 	g.terminal_color_13 = theme.brightmagenta
 	g.terminal_color_14 = theme.brightcyan
 	g.terminal_color_15 = theme.brightwhite
-end
 
----------------------------- Spectre ----------------------------------
-M.color_spectre = function()
-	for hlgroup, hlopts in pairs {
-		SpectreHeader = { fg = theme.brightmagenta, bg = theme.background, bold = true },
-		SpectreBody = { fg = theme.black, bg = theme.background, bold = true },
-		SpectreFile = { fg = theme.yellow, bg = theme.background },
-		SpectreDir = { fg = theme.blue, bg = theme.background },
-		SpectreSearch = { fg = theme.brightred, bg = theme.grey },
-		SpectreBorder = { fg = theme.brightblack, bg = theme.background },
-		SpectreReplace = { fg = theme.brightgreen, bg = theme.grey },
-	} do
-		vim.api.nvim_set_hl(0, hlgroup, hlopts)
-	end
-end
-
----------------------------- Defaults ----------------------------------
-M.color_all = function()
-	for hlgroup, hlopts in pairs {
+	utl.highlight {
+		---------------------------- Defaults ----------------------------------
 
 		Added = { fg = theme.green },
 		Changed = { fg = theme.yellow },
@@ -417,7 +423,7 @@ M.color_all = function()
 		-- Lazy
 		LazyH1 = { fg = theme.brightgreen },
 		LazyBorder = { fg = theme.brightblack },
-		LazyButton = { fg = theme.grey },
+		LazyButton = { fg = theme.black },
 		LazyH2 = { fg = theme.magenta, bold = true },
 		LazyReasonPlugin = { fg = theme.red },
 		LazyValue = { fg = theme.cyan },
@@ -551,9 +557,7 @@ M.color_all = function()
 		DevIconSvelte = { fg = theme.red },
 		DevIconJava = { fg = theme.brightyellow },
 		DevIconDart = { fg = theme.cyan },
-	} do
-		vim.api.nvim_set_hl(0, hlgroup, hlopts)
-	end
+	}
 end
 
 return M
