@@ -17,6 +17,10 @@ map('n', '<leader>rn', '<cmd>set rnu!<CR>', 'toggle relative number')
 map('n', '<leader>/', 'gcc', 'toggle comment', true)
 map('v', '<leader>/', 'gc', 'toggle comment', true)
 
+-- scrolling
+map('n', '<C-d>', '<C-d>zz', 'Page [d]own and center')
+map('n', '<C-u>', '<C-u>zz', 'Page [u]p and center')
+
 -- obsession
 map('n', '<leader>ob', '<cmd>Obsession<CR>', 'Toggle Obsession session')
 map('n', '<leader>oo', function()
