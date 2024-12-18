@@ -1,20 +1,21 @@
 local M = {}
 local g = vim.g
-local theme_exists, theme = pcall(require, g.theme)
 
-if not theme_exists then
-	local err_msg = 'Highlights not loaded! "~/.config/nvim/lua/themes/' .. g.theme .. '.lua" not found'
-	vim.notify(err_msg, vim.log.levels.ERROR)
-	return
-end
+M.setup = function(colorscheme, plugin)
+	local theme_exists, theme = pcall(require, colorscheme)
 
-local set_hlgroups = function(hlgroups)
-	for hlgroup, hlopts in pairs(hlgroups) do
-		vim.api.nvim_set_hl(0, hlgroup, hlopts)
+	if not theme_exists then
+		local err_msg = 'Highlights not loaded! Cannot load "~/.config/nvim/lua/' .. string.gsub(colorscheme, '%.', '/') .. '.lua"'
+		vim.notify(err_msg, vim.log.levels.ERROR)
+		return
 	end
-end
 
-M.setup = function(plugin)
+	local set_hlgroups = function(hlgroups)
+		for hlgroup, hlopts in pairs(hlgroups) do
+			vim.api.nvim_set_hl(0, hlgroup, hlopts)
+		end
+	end
+
 	---------------------------- Spectre ----------------------------------
 	if plugin == 'spectre' then
 		set_hlgroups {
@@ -475,9 +476,9 @@ M.setup = function(plugin)
 		---------------------------- UI and Status ----------------------------------
 
 		-- StatusLine
-		StatusLine = { fg = theme.brightred, bg = theme.background },
+		StatusLine = { fg = theme.yellow, bg = theme.background },
 
-		StText = { fg = theme.brightred, bg = theme.background },
+		StText = { fg = theme.brightgreen, bg = theme.background },
 
 		St_file = { fg = theme.black, bg = theme.background },
 		St_filemod = { fg = theme.brightyellow, bg = theme.grey, bold = true },
