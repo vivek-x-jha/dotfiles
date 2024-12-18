@@ -144,7 +144,7 @@ modules.file = function()
 	local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
 	local modified_indicator = bo.modified and ' [ 󰷫 ]' or ''
 
-	return highlight .. icon .. ' ' .. name .. modified_indicator .. ' '
+	return highlight .. icon .. ' ' .. name .. modified_indicator .. '%#Normal#%*'
 end
 
 modules.cursor = function() return '%#St_cursor#󰓾 %l:%c' end
