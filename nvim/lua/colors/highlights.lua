@@ -311,7 +311,7 @@ M.setup = function(colorscheme, plugin)
 		NvimTreeIndentMarker = { fg = theme.brightmagenta },
 		NvimTreeSymlink = { fg = theme.yellow },
 		NvimTreeSymlinkFolderName = { fg = theme.yellow },
-
+		NvimTreeModifiedIcon = { fg = theme.magenta },
 		NvimTreeGitNew = { fg = theme.red },
 		NvimTreeGitDirty = { fg = theme.yellow },
 		NvimTreeGitStaged = { fg = theme.green },
@@ -481,12 +481,12 @@ M.setup = function(colorscheme, plugin)
 		StText = { fg = theme.brightgreen, bg = theme.background },
 
 		St_file = { fg = theme.black, bg = theme.background },
-		St_filemod = { fg = theme.brightyellow, bg = theme.grey, bold = true },
+		St_filemod = { fg = theme.magenta, bg = theme.grey, bold = true },
 		St_cursor = { fg = theme.black, bg = theme.background },
 		St_cwd = { fg = theme.blue, bg = theme.background },
 		St_ft = { fg = theme.brightblue, bg = theme.background },
 
-		St_lspMsg = { fg = theme.brightmagenta, bg = theme.background },
+		St_lspMsg = { fg = theme.brightyellow, bg = theme.background },
 		St_lspError = { fg = theme.brightred, bg = theme.background },
 		St_lspWarning = { fg = theme.brightyellow, bg = theme.background },
 		St_lspHints = { fg = theme.brightmagenta, bg = theme.background },
