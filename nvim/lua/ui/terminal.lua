@@ -26,7 +26,7 @@ M.save_term_info = function(index, val)
 	g.nvchad_terms = terms_list
 end
 
-M.display = function(opts)
+M.setup = function(opts)
 	-- Controls floating terminal opts
 	if opts.pos == 'float' then
 		local default_float_opts = {
@@ -100,7 +100,7 @@ M.open = function(opts)
 		cmd = { shell }
 	end
 
-	M.display(opts)
+	M.setup(opts)
 	M.save_term_info(opts.buf, opts)
 
 	if not buf_exists then fn.termopen(cmd, opts.termopen_opts or { detach = false }) end
@@ -131,7 +131,7 @@ M.runner = function(opts)
 		M.open(opts)
 	else
 		-- window isnt visible
-		if fn.bufwinid(x.buf) == -1 then M.display(opts) end
+		if fn.bufwinid(x.buf) == -1 then M.setup(opts) end
 
 		local cmd = utl.format_cmd(opts.cmd)
 
