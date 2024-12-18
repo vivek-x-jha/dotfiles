@@ -1,5 +1,4 @@
 local M = {}
-local utl = {}
 local g = vim.g
 local theme_exists, theme = pcall(require, g.theme)
 
@@ -9,17 +8,16 @@ if not theme_exists then
 	return
 end
 
-utl.highlight = function(highlight_groups)
-	for hlgroup, hlopts in pairs(highlight_groups) do
+local set_hlgroups = function(hlgroups)
+	for hlgroup, hlopts in pairs(hlgroups) do
 		vim.api.nvim_set_hl(0, hlgroup, hlopts)
 	end
 end
 
 M.setup = function(plugin)
 	---------------------------- Spectre ----------------------------------
-
 	if plugin == 'spectre' then
-		utl.highlight {
+		set_hlgroups {
 			SpectreHeader = { fg = theme.brightmagenta, bg = theme.background, bold = true },
 			SpectreBody = { fg = theme.black, bg = theme.background, bold = true },
 			SpectreFile = { fg = theme.yellow, bg = theme.background },
@@ -51,7 +49,7 @@ M.setup = function(plugin)
 	g.terminal_color_14 = theme.brightcyan
 	g.terminal_color_15 = theme.brightwhite
 
-	utl.highlight {
+	set_hlgroups {
 		---------------------------- Defaults ----------------------------------
 
 		Added = { fg = theme.green },
@@ -227,13 +225,14 @@ M.setup = function(plugin)
 		---------------------------- LSP ----------------------------------
 
 		-- Completions
-		CmpBorder = { fg = theme.brightblack },
+		CmpBorder = { fg = theme.brightmagenta },
 		CmpItemAbbr = { fg = theme.black },
 		CmpItemAbbrMatch = { fg = theme.brightred },
 		CmpDoc = { bg = theme.background },
-		CmpDocBorder = { fg = theme.brightblack },
+		CmpDocBorder = { fg = theme.brightmagenta },
+
 		CmpPmenu = { bg = theme.background },
-		CmpSel = { link = 'PmenuSel' },
+		CmpSel = { bg = theme.grey },
 
 		-- CmpItemKindConstant = { fg = theme.base09 },
 		CmpItemKindFunction = { fg = theme.brightblue },
@@ -476,53 +475,37 @@ M.setup = function(plugin)
 		---------------------------- UI and Status ----------------------------------
 
 		-- StatusLine
-		StatusLine = { fg = theme.brightred, bg = theme.grey },
+		StatusLine = { fg = theme.brightred, bg = theme.background },
 
-		StText = { fg = theme.brightred, bg = theme.grey },
+		StText = { fg = theme.brightred, bg = theme.background },
 
-		St_file = { fg = theme.black, bg = theme.grey },
-		St_filemod = { fg = theme.brightred, bg = theme.grey },
-		St_cursor = { fg = theme.black, bg = theme.grey },
-		St_cwd = { fg = theme.blue, bg = theme.grey },
-		St_ft = { fg = theme.brightblue, bg = theme.grey },
+		St_file = { fg = theme.black, bg = theme.background },
+		St_filemod = { fg = theme.brightyellow, bg = theme.grey, bold = true },
+		St_cursor = { fg = theme.black, bg = theme.background },
+		St_cwd = { fg = theme.blue, bg = theme.background },
+		St_ft = { fg = theme.brightblue, bg = theme.background },
 
-		St_lspMsg = { fg = theme.brightmagenta, bg = theme.grey },
-		St_lspError = { fg = theme.brightred, bg = theme.grey },
-		St_lspWarning = { fg = theme.brightyellow, bg = theme.grey },
-		St_lspHints = { fg = theme.brightmagenta, bg = theme.grey },
-		St_lspInfo = { fg = theme.brightblue, bg = theme.grey },
-		St_lsp = { fg = theme.cyan, bg = theme.grey },
+		St_lspMsg = { fg = theme.brightmagenta, bg = theme.background },
+		St_lspError = { fg = theme.brightred, bg = theme.background },
+		St_lspWarning = { fg = theme.brightyellow, bg = theme.background },
+		St_lspHints = { fg = theme.brightmagenta, bg = theme.background },
+		St_lspInfo = { fg = theme.brightblue, bg = theme.background },
+		St_lsp = { fg = theme.cyan, bg = theme.background },
 
-		St_GitAdded = { fg = theme.green, bg = theme.grey },
-		St_GitChanged = { fg = theme.yellow, bg = theme.grey },
-		St_GitRemoved = { fg = theme.red, bg = theme.grey },
-		St_GitBranch = { fg = theme.magenta, bg = theme.grey },
+		St_GitAdded = { fg = theme.green, bg = theme.background },
+		St_GitChanged = { fg = theme.yellow, bg = theme.background },
+		St_GitRemoved = { fg = theme.red, bg = theme.background },
+		St_GitBranch = { fg = theme.magenta, bg = theme.background },
 
-		St_NormalMode = { fg = theme.brightblue, bg = theme.grey },
-		St_VisualMode = { fg = theme.brightcyan, bg = theme.grey },
-		St_InsertMode = { fg = theme.brightred, bg = theme.grey },
-		St_TerminalMode = { fg = theme.brightgreen, bg = theme.grey },
-		St_NTerminalMode = { fg = theme.yellow, bg = theme.grey },
-		St_ReplaceMode = { fg = theme.brightyellow, bg = theme.grey },
-		St_ConfirmMode = { fg = theme.cyan, bg = theme.grey },
-		St_CommandMode = { fg = theme.brightgreen, bg = theme.grey },
-		St_SelectMode = { fg = theme.blue, bg = theme.grey },
-
-		-- Tabs + Bufferline
-		-- TbFill = { bg = 'NONE' },
-		-- TbBufOn = { fg = theme.brightyellow, bg = 'NONE' },
-		-- TbBufOff = { fg = theme.brightblack, bg = 'NONE' },
-		-- TbBufOnClose = { fg = theme.white, bg = 'NONE' },
-		-- TbBufOffClose = { fg = theme.brightblack, bg = 'NONE' },
-		-- TbBufOnModified = { fg = theme.brightred, bg = 'NONE' },
-		-- TbBufOffModified = { fg = theme.red, bg = 'NONE' },
-		-- TbTabOn = { fg = theme.red, bg = 'NONE' },
-		-- TbTabOff = { fg = theme.white, bg = 'NONE' },
-		-- TbTabNewBtn = { fg = theme.white, bg = 'NONE' },
-		-- TbTabCloseBtn = { fg = theme.black, bg = 'NONE' },
-		-- TBTabTitle = { fg = theme.black, bg = 'NONE' },
-		-- TbThemeToggleBtn = { fg = theme.white, bg = 'NONE' },
-		-- TbCloseAllBufsBtn = { fg = theme.brightred, bg = 'NONE' },
+		St_NormalMode = { fg = theme.brightblue, bg = theme.background },
+		St_VisualMode = { fg = theme.brightcyan, bg = theme.background },
+		St_InsertMode = { fg = theme.brightred, bg = theme.background },
+		St_TerminalMode = { fg = theme.brightgreen, bg = theme.background },
+		St_NTerminalMode = { fg = theme.yellow, bg = theme.background },
+		St_ReplaceMode = { fg = theme.brightyellow, bg = theme.background },
+		St_ConfirmMode = { fg = theme.cyan, bg = theme.background },
+		St_CommandMode = { fg = theme.brightgreen, bg = theme.background },
+		St_SelectMode = { fg = theme.blue, bg = theme.background },
 
 		-- Devicons
 		DevIconc = { fg = theme.blue },
