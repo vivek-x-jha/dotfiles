@@ -3,17 +3,20 @@ return {
 	'nvim-tree/nvim-tree.lua',
 	cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
 	opts = function()
+		local icn = require 'ui.icons'
+
 		return {
-			filters = { dotfiles = false },
-			disable_netrw = true,
 			hijack_cursor = true,
+			disable_netrw = true,
 			sync_root_with_cwd = true,
-			update_focused_file = { enable = true, update_root = false },
-			view = { side = 'left', width = 30, preserve_window_proportions = true },
+			view = { preserve_window_proportions = true },
 
 			renderer = {
 				root_folder_label = false,
+				special_files = { 'README.md' },
 				highlight_git = true,
+				highlight_diagnostics = true,
+				highlight_modified = 'icon',
 				indent_markers = {
 					enable = true,
 					icons = {
@@ -22,8 +25,10 @@ return {
 					},
 				},
 				icons = {
+					modified_placement = 'signcolumn',
+					diagnostics_placement = 'before',
 					glyphs = {
-						default = '󰈚',
+						modified = icn.modified,
 						folder = {
 							default = '󰉖',
 							empty = '󱧹',
@@ -41,6 +46,22 @@ return {
 					},
 				},
 			},
+
+			update_focused_file = { enable = true },
+			diagnostics = {
+				enable = true,
+				show_on_dirs = true,
+				icons = {
+					hint = icn.hint,
+					info = icn.info,
+					warning = icn.warning,
+					error = icn.error,
+				},
+			},
+			modified = { enable = true },
+			filters = { dotfiles = true },
+			live_filter = { prefix = ' ' },
+			help = { sort_by = 'desc' },
 		}
 	end,
 }

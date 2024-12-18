@@ -6,7 +6,9 @@ local bo = vim.bo
 local diag = vim.diagnostic
 local g = vim.g
 
-local orders = { 'mode', 'git', 'file', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
+local icn = require 'ui.icons'
+
+local orders = { 'mode', 'file', 'lsp', 'diagnostics', 'git', '%=', 'lsp_msg', '%=', 'cwd', 'cursor' }
 
 utl.state = { lsp_msg = '' }
 utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
@@ -63,15 +65,15 @@ modules.mode = function()
 
 	local modes = utl.modes
 	local m = api.nvim_get_mode().mode
-	return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' '
+	return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' %#Normal#%*'
 end
 
 modules.cwd = function()
 	local name = vim.uv.cwd()
 	if not name then return '' end
 
-	name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' '
-	return (vim.o.columns > 85 and name) or ''
+	name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' %#Normal#%*'
+	return vim.o.columns > 85 and name or ''
 end
 
 modules.git = function()
@@ -84,35 +86,36 @@ modules.git = function()
 	local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemoved#' .. ' -' .. git_status.removed) or ''
 	local branch_name = '%#St_GitBranch#' .. ' ' .. git_status.head
 
-	return branch_name .. added .. changed .. removed .. ' '
+	return branch_name .. added .. changed .. removed .. ' %#Normal#%*'
 end
 
-modules.lsp_msg = function() return vim.o.columns < 120 and '' or utl.state.lsp_msg end
+modules.lsp_msg = function() return vim.o.columns > 100 and '%#St_lspMsg#' .. utl.state.lsp_msg .. '%#Normal#%*' or '' end
 
 modules.diagnostics = function()
 	if not rawget(vim, 'lsp') then return '' end
 
-	local count = function(level) return #diag.get(utl.stbufnr(), { severity = diag.severity[level] }) end
+	local formatter = function(level, hlgroup, icon)
+		local bufnr = utl.stbufnr() or 0
+		local cnt = #diag.get(bufnr, { severity = diag.severity[level] })
+		local lsp_diagnostics = hlgroup .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
 
-	local err_cnt = count 'ERROR'
-	local warn_cnt = count 'WARN'
-	local hints_cnt = count 'HINT'
-	local info_cnt = count 'INFO'
+		return cnt > 0 and lsp_diagnostics or ''
+	end
 
-	local err = (err_cnt and err_cnt > 0) and ('%#St_lspError#' .. '󰯈 ' .. tostring(err_cnt) .. ' ') or ''
-	local warn = (warn_cnt and warn_cnt > 0) and ('%#St_lspWarning#' .. ' ' .. tostring(warn_cnt) .. ' ') or ''
-	local hints = (hints_cnt and hints_cnt > 0) and ('%#St_lspHints#' .. ' ' .. tostring(hints_cnt) .. ' ') or ''
-	local info = (info_cnt and info_cnt > 0) and ('%#St_lspInfo#' .. ' ' .. tostring(info_cnt) .. ' ') or ''
+	local err = formatter('EROR', '%#St_lspError#', icn.error)
+	local warn = formatter('WARN', '%#St_lspWarning#', icn.warn)
+	local hints = formatter('HINTS', '%#St_lspHints#', icn.hint)
+	local info = formatter('INFO', '%#St_lspInfo#', icn.info)
 
-	return ' ' .. err .. warn .. hints .. info
+	return err .. warn .. hints .. info
 end
 
 modules.lsp = function()
 	if rawget(vim, 'lsp') then
 		for _, client in ipairs(vim.lsp.get_clients()) do
 			if client.attached_buffers[utl.stbufnr()] then
-				local server = (vim.o.columns > 100 and '  ' .. client.name .. ' ') or '  LSP '
-				return '%#St_lsp#' .. server
+				local server = vim.o.columns > 100 and '  ' .. client.name or '  LSP'
+				return '%#St_lsp#' .. server .. ' %#Normal#%*'
 			end
 		end
 	end
@@ -142,12 +145,12 @@ modules.file = function()
 
 	-- Format checks if any unsaved modifications
 	local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
-	local modified_indicator = bo.modified and ' [ 󰷫 ]' or ''
+	local modified_indicator = bo.modified and ' [ ' .. icn.modified .. ' ]' or ''
 
-	return highlight .. icon .. ' ' .. name .. modified_indicator .. '%#Normal#%*'
+	return highlight .. icon .. ' ' .. name .. modified_indicator .. '%#Normal#%* '
 end
 
-modules.cursor = function() return '%#St_cursor#󰓾 %l:%c' end
+modules.cursor = function() return '%#St_cursor#' .. '󰓾 %l:%c' .. '%#Normal#%*' end
 
 modules['%='] = '%='
 
