@@ -54,7 +54,7 @@ return {
 				icons = {
 					hint = icn.hint,
 					info = icn.info,
-					warning = icn.warning,
+					warning = icn.warn,
 					error = icn.error,
 				},
 			},

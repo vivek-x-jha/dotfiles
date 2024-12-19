@@ -2,13 +2,15 @@ local M = {}
 local utl = {}
 local modules = {}
 local api = vim.api
+local b = vim.b
 local bo = vim.bo
 local diag = vim.diagnostic
 local g = vim.g
+local o = vim.o
 
 local icn = require 'ui.icons'
 
-local orders = { 'mode', 'file', 'lsp', 'diagnostics', 'git', '%=', 'lsp_msg', '%=', 'cwd', 'cursor' }
+local orders = { 'mode', 'file', 'git', 'lsp', 'diagnostics', '%=', 'lsp_msg', '%=', 'cwd', 'cursor' }
 
 utl.state = { lsp_msg = '' }
 utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
@@ -73,39 +75,48 @@ modules.cwd = function()
 	if not name then return '' end
 
 	name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' %#Normal#%*'
-	return vim.o.columns > 85 and name or ''
+	return o.columns > 85 and name or ''
 end
 
 modules.git = function()
-	if not vim.b[utl.stbufnr()].gitsigns_head or vim.b[utl.stbufnr()].gitsigns_git_status then return '' end
+	local bufnr = utl.stbufnr() or 0
 
-	local git_status = vim.b[utl.stbufnr()].gitsigns_status_dict
+	if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
 
-	local added = (git_status.added and git_status.added ~= 0) and ('%#St_GitAdded#' .. ' +' .. git_status.added) or ''
-	local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_GitChanged#' .. ' ~' .. git_status.changed) or ''
-	local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemoved#' .. ' -' .. git_status.removed) or ''
-	local branch_name = '%#St_GitBranch#' .. ' ' .. git_status.head
+	local git_status = b[bufnr].gitsigns_status_dict
 
-	return branch_name .. added .. changed .. removed .. ' %#Normal#%*'
+	local display_git = function(status, hlgroup, icon)
+		status = status or 0
+		local git_info = '%#' .. hlgroup .. '#' .. icon .. tostring(status) .. ' %#Normal#%*'
+
+		return status > 0 and git_info or ''
+	end
+
+	-- local branch_name = '%#St_GitBranch# ' .. git_status.head
+	local added = display_git(git_status.added, 'St_GitAdded', '+')
+	local changed = display_git(git_status.changed, 'St_GitChanged', '~')
+	local removed = display_git(git_status.removed, 'St_GitRemoved', '-')
+
+	return added .. changed .. removed
 end
 
-modules.lsp_msg = function() return vim.o.columns > 100 and '%#St_lspMsg#' .. utl.state.lsp_msg .. '%#Normal#%*' or '' end
+modules.lsp_msg = function() return o.columns > 100 and '%#St_lspMsg#' .. utl.state.lsp_msg .. '%#Normal#%*' or '' end
 
 modules.diagnostics = function()
 	if not rawget(vim, 'lsp') then return '' end
 
-	local formatter = function(level, hlgroup, icon)
+	local display = function(level, hlgroup, icon)
 		local bufnr = utl.stbufnr() or 0
 		local cnt = #diag.get(bufnr, { severity = diag.severity[level] })
-		local lsp_diagnostics = hlgroup .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
+		local lsp_diagnostics = '%#' .. hlgroup .. '#' .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
 
 		return cnt > 0 and lsp_diagnostics or ''
 	end
 
-	local err = formatter('EROR', '%#St_lspError#', icn.error)
-	local warn = formatter('WARN', '%#St_lspWarning#', icn.warn)
-	local hints = formatter('HINTS', '%#St_lspHints#', icn.hint)
-	local info = formatter('INFO', '%#St_lspInfo#', icn.info)
+	local err = display('EROR', 'St_lspError', icn.error)
+	local warn = display('WARN', 'St_lspWarning', icn.warn)
+	local hints = display('HINTS', 'St_lspHints', icn.hint)
+	local info = display('INFO', 'St_lspInfo', icn.info)
 
 	return err .. warn .. hints .. info
 end
@@ -114,7 +125,7 @@ modules.lsp = function()
 	if rawget(vim, 'lsp') then
 		for _, client in ipairs(vim.lsp.get_clients()) do
 			if client.attached_buffers[utl.stbufnr()] then
-				local server = vim.o.columns > 100 and '  ' .. client.name or '  LSP'
+				local server = o.columns > 100 and '  ' .. client.name or '  LSP'
 				return '%#St_lsp#' .. server .. ' %#Normal#%*'
 			end
 		end
