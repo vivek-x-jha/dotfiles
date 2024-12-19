@@ -85,17 +85,17 @@ modules.git = function()
 
 	local git_status = b[bufnr].gitsigns_status_dict
 
-	local display_git = function(status, hlgroup, icon)
-		status = status or 0
-		local git_info = '%#' .. hlgroup .. '#' .. icon .. tostring(status) .. ' %#Normal#%*'
+	local disp_changes = function(cnt, hlgroup, icon)
+		cnt = cnt or 0
+		local git_info = '%#' .. hlgroup .. '#' .. icon .. tostring(cnt) .. ' %#Normal#%*'
 
-		return status > 0 and git_info or ''
+		return cnt > 0 and git_info or ''
 	end
 
 	-- local branch_name = '%#St_GitBranch# ' .. git_status.head
-	local added = display_git(git_status.added, 'St_GitAdded', '+')
-	local changed = display_git(git_status.changed, 'St_GitChanged', '~')
-	local removed = display_git(git_status.removed, 'St_GitRemoved', '-')
+	local added = disp_changes(git_status.added, 'St_GitAdded', '+')
+	local changed = disp_changes(git_status.changed, 'St_GitChanged', '~')
+	local removed = disp_changes(git_status.removed, 'St_GitRemoved', '-')
 
 	return added .. changed .. removed
 end
@@ -105,7 +105,7 @@ modules.lsp_msg = function() return o.columns > 100 and '%#St_lspMsg#' .. utl.st
 modules.diagnostics = function()
 	if not rawget(vim, 'lsp') then return '' end
 
-	local display = function(level, hlgroup, icon)
+	local disp_diag = function(level, hlgroup, icon)
 		local bufnr = utl.stbufnr() or 0
 		local cnt = #diag.get(bufnr, { severity = diag.severity[level] })
 		local lsp_diagnostics = '%#' .. hlgroup .. '#' .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
@@ -113,10 +113,10 @@ modules.diagnostics = function()
 		return cnt > 0 and lsp_diagnostics or ''
 	end
 
-	local err = display('EROR', 'St_lspError', icn.error)
-	local warn = display('WARN', 'St_lspWarning', icn.warn)
-	local hints = display('HINTS', 'St_lspHints', icn.hint)
-	local info = display('INFO', 'St_lspInfo', icn.info)
+	local err = disp_diag('EROR', 'St_lspError', icn.error)
+	local warn = disp_diag('WARN', 'St_lspWarning', icn.warn)
+	local hints = disp_diag('HINTS', 'St_lspHints', icn.hint)
+	local info = disp_diag('INFO', 'St_lspInfo', icn.info)
 
 	return err .. warn .. hints .. info
 end

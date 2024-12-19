@@ -480,7 +480,7 @@ M.setup = function(colorscheme, plugin)
 
 		StText = { fg = theme.brightgreen, bg = theme.background },
 
-		St_file = { fg = theme.black, bg = theme.background },
+		St_file = { fg = theme.brightmagenta, bg = theme.background },
 		St_filemod = { fg = theme.brightyellow, bg = theme.grey, bold = true },
 		St_cursor = { fg = theme.black, bg = theme.background },
 		St_cwd = { fg = theme.blue, bg = theme.background },
