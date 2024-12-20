@@ -2,8 +2,8 @@ local buf = require 'ui.buffers'
 local term = require 'ui.terminal'
 
 local map = function(mode, keys, action, desc, remap)
-	local opts = { desc = desc, remap = remap or false }
-	vim.keymap.set(mode, keys, action, opts)
+  local opts = { desc = desc, remap = remap or false }
+  vim.keymap.set(mode, keys, action, opts)
 end
 
 map('n', ';', ':', 'CMD enter command mode')
@@ -27,9 +27,9 @@ map('v', 'K', ":m '<-2<CR>gv=gv")
 -- obsession
 map('n', '<leader>ob', '<cmd>Obsession<CR>', 'Toggle Obsession session')
 map('n', '<leader>oo', function()
-	vim.cmd 'silent! Obsession'
-	vim.cmd 'silent! Obsession'
-	vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
+  vim.cmd 'silent! Obsession'
+  vim.cmd 'silent! Obsession'
+  vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
 end, 'Restart Obsession session')
 
 -- buffers

@@ -1,12 +1,12 @@
 return {
-	modified = '󰷫',
+  modified = '󰷫',
 
-	-- lsp diagnostics
-	error = '󰯈',
-	warn = '',
-	hint = '',
-	info = '',
+  -- lsp diagnostics
+  error = '󰯈',
+  warn = '',
+  hint = '',
+  info = '',
 
-	-- virtual text
-	colorify = '󱓻 ',
+  -- virtual text
+  colorify = '󱓻 ',
 }
