@@ -113,9 +113,9 @@ modules.diagnostics = function()
 		return cnt > 0 and lsp_diagnostics or ''
 	end
 
-	local err = disp_diag('EROR', 'St_lspError', icn.error)
+	local err = disp_diag('ERROR', 'St_lspError', icn.error)
 	local warn = disp_diag('WARN', 'St_lspWarning', icn.warn)
-	local hints = disp_diag('HINTS', 'St_lspHints', icn.hint)
+	local hints = disp_diag('HINT', 'St_lspHints', icn.hint)
 	local info = disp_diag('INFO', 'St_lspInfo', icn.info)
 
 	return err .. warn .. hints .. info
