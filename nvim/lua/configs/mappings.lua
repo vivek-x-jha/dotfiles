@@ -1,3 +1,4 @@
+-- TODO standardize keymap descriptions
 local buf = require 'ui.buffers'
 local term = require 'ui.terminal'
 
@@ -8,14 +9,14 @@ end
 
 map('n', ';', ':', 'CMD enter command mode')
 
-map('n', '<Esc>', '<cmd>noh<CR>', 'general clear highlights')
-map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', 'general save file')
-map('n', '<C-c>', '<cmd>%y+<CR>', 'general copy whole file')
+map('n', '<Esc>', '<cmd>noh<CR>', 'Clear highlights')
+map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', '[s]ave file')
+map('n', '<C-c>', '<cmd>%y+<CR>', '[C]opy file')
 
-map('n', '<leader>n', '<cmd>set nu!<CR>', 'toggle line number')
-map('n', '<leader>rn', '<cmd>set rnu!<CR>', 'toggle relative number')
-map('n', '<leader>/', 'gcc', 'toggle comment', true)
-map('v', '<leader>/', 'gc', 'toggle comment', true)
+map('n', '<leader>n', '<cmd>set nu!<CR>', 'Toggle line number')
+map('n', '<leader>rn', '<cmd>set rnu!<CR>', 'Toggle relative number')
+map('n', '<leader>/', 'gcc', 'Toggle comment', true)
+map('v', '<leader>/', 'gc', 'Toggle comment', true)
 
 -- scrolling
 map('n', '<C-d>', '<C-d>zz', 'Page [d]own and center')
@@ -25,76 +26,75 @@ map('v', 'J', ":m '>+1<CR>gv=gv")
 map('v', 'K', ":m '<-2<CR>gv=gv")
 
 -- obsession
-map('n', '<leader>ob', '<cmd>Obsession<CR>', 'Toggle Obsession session')
+map('n', '<leader>ob', '<cmd>Obsession<CR>', 'Toggle [ob]session')
 map('n', '<leader>oo', function()
   vim.cmd 'silent! Obsession'
   vim.cmd 'silent! Obsession'
-  vim.notify('Restarting session in Session.vim', vim.log.levels.INFO)
-end, 'Restart Obsession session')
+  vim.notify('Updating workspace state: Session.vim', vim.log.levels.INFO)
+end, 'Save workspace config')
 
 -- buffers
-map('n', '<leader>b', '<cmd>enew<CR>', 'buffer new')
-map('n', '<tab>', buf.next, 'Buffer goto next')
-map('n', '<S-tab>', buf.prev, 'Buffer goto prev')
-map('n', '<leader>x', buf.close, 'Buffer close')
+map('n', '<leader>b', '<cmd>enew<CR>', 'Open [b]uffer')
+map('n', '<tab>', buf.next, 'Next buffer')
+map('n', '<S-tab>', buf.prev, 'Prev buffer')
+map('n', '<leader>x', buf.close, 'Close buffer')
 
 -- nvimtree
 map('n', '<C-n>', function()
   require('nvim-tree.api').tree.toggle { focus = false }
   vim.cmd 'wincmd ='
-end, 'Toggle Nvim-Tree')
+end, 'Toggle file explorer')
 
 map('n', '<leader>e', function()
   require('nvim-tree.api').tree.open()
   vim.cmd 'wincmd ='
-end, 'Toggle and focus Nvim-Tree')
+end, 'Focus file [e]xplorer')
 
 -- terminal
-map('t', '<C-x>', '<C-\\><C-N>', 'terminal escape terminal mode')
+map('t', '<C-x>', '<C-\\><C-N>', 'Escape terminal mode')
 
-map('n', '<leader>h', function() term.open { pos = 'sp' } end, 'terminal new horizontal term')
-map('n', '<leader>v', function() term.open { pos = 'vsp' } end, 'terminal new vertical term')
+map('n', '<leader>h', function() term.open { pos = 'sp' } end, 'Open [h]orizontal terminal')
+map('n', '<leader>v', function() term.open { pos = 'vsp' } end, 'Open [v]ertical terminal')
 
-map({ 'n', 't' }, '<A-v>', function() term.toggle { pos = 'vsp', id = 'vtoggleTerm' } end, 'terminal toggleable vertical term')
-map({ 'n', 't' }, '<A-h>', function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end, 'terminal toggleable horizontal term')
-map({ 'n', 't' }, '<A-i>', function() term.toggle { pos = 'float', id = 'floatTerm' } end, 'terminal toggle floating term')
+map({ 'n', 't' }, '<A-v>', function() term.toggle { pos = 'vsp', id = 'vtoggleTerm' } end, 'Toggle [v]ertical terminal')
+map({ 'n', 't' }, '<A-h>', function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end, 'Toggle [h]orizontal terminal')
+map({ 'n', 't' }, '<A-i>', function() term.toggle { pos = 'float', id = 'floatTerm' } end, 'Toggle [f]loating terminal')
 
 -- telescope
-map('n', '<leader>cm', '<cmd>Telescope git_commits<CR>', 'telescope git commits')
-map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', 'telescope find all files')
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', 'telescope find buffers')
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', 'telescope find files')
-map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', 'telescope help page')
-map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>', 'telescope find oldfiles')
-map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', 'telescope live grep')
-map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'telescope find in current buffer')
-map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', 'telescope git status')
-map('n', '<leader>ma', '<cmd>Telescope marks<CR>', 'telescope find marks')
-map('n', '<leader>pt', '<cmd>Telescope terms<CR>', 'telescope pick hidden term')
+map('n', '<leader>cm', '<cmd>Telescope git_commits<CR>', 'Telescope git [c]o[m]mits')
+map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', 'Telescope [f]ind [a]ll files')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>', 'Telescope [f]ind [b]uffers')
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', 'Telescope [f]ind [f]iles')
+map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', 'Telescope [h]elp page')
+map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>', 'Telescope [f]ind [o]ldfiles')
+map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', 'Telescope [f]ind [w]ord')
+map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Telescope [f]u[z]zy find in current buffer')
+map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', 'Telescope [g]it s[t]atus')
+map('n', '<leader>ma', '<cmd>Telescope marks<CR>', 'Telescope [m]arks')
+map('n', '<leader>pt', '<cmd>Telescope terms<CR>', 'Telescope [p]ick [t]erm')
 
 -- insert mode
-map('i', '<C-b>', '<ESC>^i', 'move beginning of line')
-map('i', '<C-e>', '<End>', 'move end of line')
-map('i', '<C-h>', '<Left>', 'move left')
-map('i', '<C-l>', '<Right>', 'move right')
-map('i', '<C-j>', '<Down>', 'move down')
-map('i', '<C-k>', '<Up>', 'move up')
+map('i', '<C-b>', '<ESC>I', 'Move [b]eginning of line')
+map('i', '<C-e>', '<End>', 'Move [e]nd of line')
+map('i', '<C-h>', '<Left>', 'Move left')
+map('i', '<C-l>', '<Right>', 'Move right')
+map('i', '<C-j>', '<Down>', 'Move down')
+map('i', '<C-k>', '<Up>', 'Move up')
 
 -- global lsp mappings
 map('n', '<leader>ds', vim.diagnostic.setloclist, 'LSP diagnostic loclist')
 
 -- whichkey
-map('n', '<leader>wK', '<cmd>WhichKey <CR>', 'whichkey all keymaps')
-map('n', '<leader>wk', function() vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ') end, 'whichkey query lookup')
+map('n', '<leader>wK', '<cmd>WhichKey <CR>', 'Toggle all [w]hichkey [K]eymaps')
+map('n', '<leader>wk', function() vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ') end, 'Search [w]hich[k]ey')
 
 -- showkey
-map('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', 'Toggle Showkeys')
+map('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', 'Toggle [s]how[k]eys')
 
 -- conform
-map('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, 'general format file')
+map('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, '[f]or[m]at file with linter')
 
 -- spectre
-map('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', 'Toggle Spectre')
-map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', 'Search current word')
-map('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', 'Search current word')
-map('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', 'Search on current file')
+map('n', '<leader>S', '<cmd>SpectreToggle<CR>', 'Toggle [S]earch & Replace')
+map({ 'n', 'v' }, '<leader>sw', '<cmd>SpectreCurrWord<CR>', '[s]earch current [w]ord')
+map('n', '<leader>sf', '<cmd>SpectreCurrFile<CR>', '[s]earch current word & [f]ile')

@@ -114,6 +114,26 @@ end
 -- Load LSP Progress bar
 require('ui.statusline').autocmds()
 
+-- Create Spectre user commands for easy remapping
+usrcmd('SpectreToggle', function() require('spectre').toggle() end, {
+  desc = 'Toggle Spectre search and replace',
+})
+
+usrcmd('SpectreCurrWord', function()
+  local spectre = require 'spectre'
+  if vim.fn.mode() == 'v' then
+    spectre.open_visual()
+  else
+    spectre.open_visual { select_word = true }
+  end
+end, {
+  desc = 'Open Spectre in visual mode or with the current word in normal mode',
+})
+
+usrcmd('SpectreCurrFile', function() require('spectre').open_file_search { select_word = true } end, {
+  desc = 'Open Spectre file search with the current word',
+})
+
 ---------------------------- Deferred ----------------------------------
 
 aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
