@@ -6,24 +6,24 @@ local fn = vim.fn
 local g = vim.g
 local o = vim.o
 
-g.nvchad_terms = {}
+g.terminals = {}
 
 -- used for initially resizing terms
 g.nvhterm = false
 g.nvvterm = false
 
 utl.opts_to_id = function(id)
-	for _, opts in pairs(g.nvchad_terms) do
+	for _, opts in pairs(g.terminals) do
 		if opts.id == id then return opts end
 	end
 end
 
 utl.format_cmd = function(cmd) return type(cmd) == 'string' and cmd or cmd() end
 
-M.save_term_info = function(index, val)
-	local terms_list = g.nvchad_terms
+M.save = function(index, val)
+	local terms_list = g.terminals
 	terms_list[tostring(index)] = val
-	g.nvchad_terms = terms_list
+	g.terminals = terms_list
 end
 
 M.setup = function(opts)
@@ -82,7 +82,7 @@ M.setup = function(opts)
 		vim.wo[win][k] = v
 	end
 
-	M.save_term_info(opts.buf, opts)
+	M.save(opts.buf, opts)
 end
 
 --------------------------- User API -------------------------------
@@ -91,17 +91,11 @@ M.open = function(opts)
 	opts.buf = opts.buf or api.nvim_create_buf(false, true)
 
 	-- handle cmd opt
-	local shell = vim.o.shell
-	local cmd = shell
-
-	if opts.cmd and opts.buf then
-		cmd = { shell, '-c', utl.format_cmd(opts.cmd) .. '; ' .. shell }
-	else
-		cmd = { shell }
-	end
+	local cmd = { o.shell }
+	if opts.cmd and opts.buf then cmd = { o.shell, '-c', utl.format_cmd(opts.cmd) .. '; ' .. o.shell } end
 
 	M.setup(opts)
-	M.save_term_info(opts.buf, opts)
+	M.save(opts.buf, opts)
 
 	if not buf_exists then fn.termopen(cmd, opts.termopen_opts or { detach = false }) end
 
