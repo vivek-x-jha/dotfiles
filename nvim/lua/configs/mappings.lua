@@ -21,6 +21,9 @@ map('v', '<leader>/', 'gc', 'toggle comment', true)
 map('n', '<C-d>', '<C-d>zz', 'Page [d]own and center')
 map('n', '<C-u>', '<C-u>zz', 'Page [u]p and center')
 
+map('v', 'J', ":m '>+1<CR>gv=gv")
+map('v', 'K', ":m '<-2<CR>gv=gv")
+
 -- obsession
 map('n', '<leader>ob', '<cmd>Obsession<CR>', 'Toggle Obsession session')
 map('n', '<leader>oo', function()
