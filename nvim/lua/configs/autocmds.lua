@@ -1,13 +1,23 @@
 local g = vim.g
-local aucmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-local bufline_cnt = vim.api.nvim_buf_line_count
-local buflines = vim.api.nvim_buf_get_lines
-local bufname = vim.api.nvim_buf_get_name
-local del_augroup = vim.api.nvim_del_augroup_by_name
-local exec_aucmds = vim.api.nvim_exec_autocmds
-local usrcmd = vim.api.nvim_create_user_command
-local value = vim.api.nvim_get_option_value
+
+local api = vim.api
+local aucmd = api.nvim_create_autocmd
+local augroup = api.nvim_create_augroup
+local bufline_cnt = api.nvim_buf_line_count
+local buflines = api.nvim_buf_get_lines
+local bufname = api.nvim_buf_get_name
+local clear_aucmds = api.nvim_clear_autocmds
+local curline = api.nvim_get_current_line
+local cursor = api.nvim_win_get_cursor
+local del_augroup = api.nvim_del_augroup_by_name
+local exec_aucmds = api.nvim_exec_autocmds
+local usrcmd = api.nvim_create_user_command
+local value = api.nvim_get_option_value
+
+local vlsp = vim.lsp
+local lsp_handlers = vlsp.handlers
+local lsp_buf = vlsp.buf
+local lsp_with = vlsp.with
 
 local bufempty = function()
 	local buf_lines = buflines(0, 0, 1, false)
@@ -22,6 +32,17 @@ local tree_events = {
 	{ events = { 'User' }, pattern = { 'GitCommitPost', 'GitRebasePost', 'GitCheckoutPost', 'GitPullPost', 'GitMergePost' } },
 	{ events = { 'VimLeavePre', 'VimEnter' } },
 }
+
+local check_triggeredChars = function(triggerChars)
+	local cur_line = curline()
+	local pos = cursor(0)[2]
+	local prev_char = cur_line:sub(pos - 1, pos - 1)
+	local cur_char = cur_line:sub(pos, pos)
+
+	for _, char in ipairs(triggerChars) do
+		if cur_char == char or prev_char == char then return true end
+	end
+end
 
 ---------------------------- Initialization ----------------------------------
 
@@ -126,7 +147,28 @@ vim.schedule(function()
 
 				if client then
 					local signatureProvider = client.server_capabilities.signatureHelpProvider
-					if signatureProvider and signatureProvider.triggerCharacters then require('ui.lsp.signature').setup(client, args.buf) end
+
+					if signatureProvider and signatureProvider.triggerCharacters then
+						local LspAuGroup = augroup('LspSignature', { clear = false })
+						local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters
+
+						lsp_handlers['textDocument/signatureHelp'] = lsp_with(lsp_handlers.signature_help, {
+							border = 'rounded',
+							focusable = false,
+							silent = true,
+							max_height = 7,
+						})
+
+						clear_aucmds { group = LspAuGroup, buffer = args.buf }
+						aucmd('TextChangedI', {
+							group = LspAuGroup,
+							buffer = args.buf,
+							callback = function()
+								if check_triggeredChars(triggerChars) then lsp_buf.signature_help() end
+							end,
+							desc = 'Detects Trigger Characters on Insert',
+						})
+					end
 				end
 			end)
 		end,

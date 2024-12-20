@@ -14,66 +14,62 @@ return {
 		local sev = diag.severity
 		local icn = require 'ui.icons'
 
-		local diagnostic_config = function()
-			diag.config {
-				virtual_text = { prefix = '' },
-				signs = {
-					text = {
-						[sev.ERROR] = icn.error,
-						[sev.WARN] = icn.warn,
-						[sev.HINT] = icn.hint,
-						[sev.INFO] = icn.info,
-					},
+		diag.config {
+			virtual_text = { prefix = '' },
+			signs = {
+				text = {
+					[sev.ERROR] = icn.error,
+					[sev.WARN] = icn.warn,
+					[sev.HINT] = icn.hint,
+					[sev.INFO] = icn.info,
 				},
-				underline = true,
-				float = { border = 'single' },
-			}
+			},
+			underline = true,
+			float = { border = 'single' },
+		}
 
-			-- Default border style
-			local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-			function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-				opts = opts or {}
-				opts.border = 'rounded'
-				return orig_util_open_floating_preview(contents, syntax, opts, ...)
-			end
+		-- Default border style
+		local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+		function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+			opts = opts or {}
+			opts.border = 'rounded'
+			return orig_util_open_floating_preview(contents, syntax, opts, ...)
 		end
 
-		diagnostic_config()
+		local lsprename = function()
+			local api = vim.api
+			local var = vim.fn.expand '<cword>'
+			local buf = api.nvim_create_buf(false, true)
+			local opts = { height = 1, style = 'minimal', border = 'single', row = 1, col = 1 }
+
+			opts.relative, opts.width = 'cursor', #var + 15
+			opts.title, opts.title_pos = { { ' Renamer ', '@comment.danger' } }, 'center'
+
+			local win = api.nvim_open_win(buf, true, opts)
+			vim.wo[win].winhl = 'Normal:Normal,FloatBorder:Removed'
+			api.nvim_set_current_win(win)
+
+			api.nvim_buf_set_lines(buf, 0, -1, true, { ' ' .. var })
+			api.nvim_input 'A'
+
+			vim.keymap.set({ 'i', 'n' }, '<Esc>', '<cmd>q<CR>', { buffer = buf })
+
+			vim.keymap.set('i', '<CR>', function()
+				local newName = vim.trim(api.nvim_get_current_line())
+				api.nvim_win_close(win, true)
+
+				if #newName > 0 and newName ~= var then
+					local params = vim.lsp.util.make_position_params()
+					params.newName = newName
+					vim.lsp.buf_request(0, 'textDocument/rename', params)
+				end
+
+				vim.cmd.stopinsert()
+			end, { buffer = buf })
+		end
 
 		-- export on_attach & capabilities
 		M.on_attach = function(_, bufnr)
-			local lsprename = function()
-				local api = vim.api
-				local var = vim.fn.expand '<cword>'
-				local buf = api.nvim_create_buf(false, true)
-				local opts = { height = 1, style = 'minimal', border = 'single', row = 1, col = 1 }
-
-				opts.relative, opts.width = 'cursor', #var + 15
-				opts.title, opts.title_pos = { { ' Renamer ', '@comment.danger' } }, 'center'
-
-				local win = api.nvim_open_win(buf, true, opts)
-				vim.wo[win].winhl = 'Normal:Normal,FloatBorder:Removed'
-				api.nvim_set_current_win(win)
-
-				api.nvim_buf_set_lines(buf, 0, -1, true, { ' ' .. var })
-				api.nvim_input 'A'
-
-				vim.keymap.set({ 'i', 'n' }, '<Esc>', '<cmd>q<CR>', { buffer = buf })
-
-				vim.keymap.set('i', '<CR>', function()
-					local newName = vim.trim(api.nvim_get_current_line())
-					api.nvim_win_close(win, true)
-
-					if #newName > 0 and newName ~= var then
-						local params = vim.lsp.util.make_position_params()
-						params.newName = newName
-						vim.lsp.buf_request(0, 'textDocument/rename', params)
-					end
-
-					vim.cmd.stopinsert()
-				end, { buffer = buf })
-			end
-
 			local map = function(mode, lhs, rhs, desc) return vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = 'LSP ' .. desc }) end
 
 			map('n', 'gD', lspbuf.declaration, 'Go to declaration')
