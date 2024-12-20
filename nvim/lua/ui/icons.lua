@@ -6,4 +6,7 @@ return {
 	warn = '',
 	hint = '',
 	info = '',
+
+	-- virtual text
+	colorify = '󱓻 ',
 }

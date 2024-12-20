@@ -11,6 +11,7 @@ local curline = api.nvim_get_current_line
 local cursor = api.nvim_win_get_cursor
 local del_augroup = api.nvim_del_augroup_by_name
 local exec_aucmds = api.nvim_exec_autocmds
+local namespace = api.nvim_create_namespace
 local usrcmd = api.nvim_create_user_command
 local value = api.nvim_get_option_value
 
@@ -139,8 +140,24 @@ aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 })
 
 vim.schedule(function()
-	-- Initialize colorify
-	require('ui.colorify').run()
+	aucmd({
+		'TextChanged',
+		'TextChangedI',
+		'TextChangedP',
+		'VimResized',
+		'LspAttach',
+		'WinScrolled',
+		'BufEnter',
+	}, {
+		group = augroup('Colorify', { clear = true }),
+		callback = function(args)
+			local state = require 'ui.state'
+			state.ns = namespace 'Colorify'
+
+			if vim.bo[args.buf].bl then require('ui.colorify').attach(args.buf, args.event) end
+		end,
+		desc = 'Initialize Colorify Virtual Text',
+	})
 
 	aucmd('LspAttach', {
 		group = augroup('LSP', { clear = true }),
@@ -197,7 +214,6 @@ vim.schedule(function()
 				end
 			end
 
-			-- nvim-lint
 			local lint_exists, lint = pcall(require, 'lint')
 
 			if lint_exists then
