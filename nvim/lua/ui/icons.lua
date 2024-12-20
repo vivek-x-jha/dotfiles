@@ -9,4 +9,5 @@ return {
 
   -- virtual text
   colorify = '󱓻 ',
+  lsp = '',
 }
