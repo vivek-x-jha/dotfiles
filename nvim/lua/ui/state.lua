@@ -1,4 +1,4 @@
 return {
-	events = {},
-	ns = 1,
+  events = {},
+  ns = 1,
 }
