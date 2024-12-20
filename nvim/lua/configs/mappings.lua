@@ -39,8 +39,15 @@ map('n', '<S-tab>', buf.prev, 'Buffer goto prev')
 map('n', '<leader>x', buf.close, 'Buffer close')
 
 -- nvimtree
-map('n', '<C-n>', '<cmd>NvimTreeToggle<CR><C-w>=', 'nvimtree toggle window')
-map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', 'nvimtree focus window')
+map('n', '<C-n>', function()
+  require('nvim-tree.api').tree.toggle { focus = false }
+  vim.cmd 'wincmd ='
+end, 'Toggle Nvim-Tree')
+
+map('n', '<leader>e', function()
+  require('nvim-tree.api').tree.open()
+  vim.cmd 'wincmd ='
+end, 'Toggle and focus Nvim-Tree')
 
 -- terminal
 map('t', '<C-x>', '<C-\\><C-N>', 'terminal escape terminal mode')
