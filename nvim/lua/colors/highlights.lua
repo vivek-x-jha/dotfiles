@@ -91,7 +91,7 @@ M.setup = function(colorscheme, plugin)
 		PmenuThumb = { bg = theme.background },
 
 		Question = { fg = theme.blue },
-		QuickFixLine = { fg = theme.cyan, bg = theme.background },
+		QuickFixLine = { bold = true, bg = theme.grey },
 		Removed = { fg = theme.red },
 		Search = { fg = theme.brightred, bg = theme.grey },
 		SignColumn = { fg = theme.black },
