@@ -30,7 +30,6 @@ end
 local tree_events = {
   { events = { 'BufWritePost', 'BufDelete', 'BufNewFile' } },
   { events = { 'DirChanged', 'FocusGained', 'CursorHold' } },
-  { events = { 'User' }, pattern = { 'GitCommitPost', 'GitRebasePost', 'GitCheckoutPost', 'GitPullPost', 'GitMergePost' } },
   { events = { 'VimLeavePre', 'VimEnter' } },
 }
 
