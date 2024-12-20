@@ -15,7 +15,7 @@ return {
     local icn = require 'ui.icons'
 
     diag.config {
-      virtual_text = { prefix = '' },
+      virtual_text = { prefix = icn.lsp },
       signs = {
         text = {
           [sev.ERROR] = icn.error,
