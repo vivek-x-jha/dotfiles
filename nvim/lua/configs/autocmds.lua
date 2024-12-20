@@ -9,76 +9,92 @@ local exec_aucmds = vim.api.nvim_exec_autocmds
 local usrcmd = vim.api.nvim_create_user_command
 local value = vim.api.nvim_get_option_value
 
+local bufempty = function()
+	local buf_lines = buflines(0, 0, 1, false)
+	local no_buf_content = bufline_cnt(0) == 1 and buf_lines[1] == ''
+
+	return bufname(0) == '' and no_buf_content
+end
+
+local tree_events = {
+	{ events = { 'BufWritePost', 'BufDelete', 'BufNewFile' } },
+	{ events = { 'DirChanged', 'FocusGained', 'CursorHold' } },
+	{ events = { 'User' }, pattern = { 'GitCommitPost', 'GitRebasePost', 'GitCheckoutPost', 'GitPullPost', 'GitMergePost' } },
+	{ events = { 'VimLeavePre', 'VimEnter' } },
+}
+
 ---------------------------- Initialization ----------------------------------
 
--- Toggle Dashboard
 usrcmd('Dashboard', function()
 	if g.dashboard_displayed then
 		require('ui.buffers').close()
 	else
 		require('ui.dashboard').open()
 	end
-end, {})
-
--- Load Dashboard on start if no file opened
-aucmd('VimEnter', {
-	group = augroup('DashboardLoader', { clear = true }),
-	callback = function()
-		local buf_lines = buflines(0, 0, 1, false)
-		local no_buf_content = bufline_cnt(0) == 1 and buf_lines[1] == ''
-		local buf_name = bufname(0)
-
-		if buf_name == '' and no_buf_content then vim.cmd 'Dashboard' end
-	end,
+end, {
+	desc = 'Toggle Dashboard',
 })
 
--- Load Showkeys on start
 aucmd('VimEnter', {
+	group = augroup('Dashboard', { clear = true }),
+	callback = function()
+		if bufempty() then vim.cmd 'Dashboard' end
+	end,
+	desc = 'Display Dashboard on blank startup',
+})
+
+aucmd('VimEnter', {
+	group = augroup('Showkeys', { clear = true }),
 	callback = function() vim.cmd 'ShowkeysToggle' end,
-	desc = 'Start ShowkeysToggle on Neovim launch',
+	desc = 'Initialize Showkeys on startup',
 })
 
 ---------------------------- UI Preparation ----------------------------------
 
--- Load LSP Progress bar
-require('ui.statusline').autocmds()
-
--- Remove line numbers for Spectre buffers
 aucmd('FileType', {
+	group = augroup('Spectre', { clear = true }),
 	pattern = 'spectre_panel',
 	callback = function()
 		vim.opt_local.number = false
 		vim.opt_local.relativenumber = false
 	end,
+	desc = 'Hide line numbers for Spectre',
 })
 
--- Maintain fold state on reopen
 aucmd('BufWinEnter', {
+	group = augroup('Folds', { clear = true }),
 	pattern = { '*.*' },
-	desc = 'load view (folds), when opening file',
+	desc = 'Load folds when opening file',
 	command = 'silent! loadview',
 })
 
 aucmd('BufWinLeave', {
+	group = augroup('Folds', { clear = true }),
 	pattern = { '*.*' },
-	desc = 'save view (folds), when closing file',
+	desc = 'Save folds when closing file',
 	command = 'mkview',
 })
 
--- Save terminal state on close
 aucmd('TermClose', {
+	group = augroup('Terminal', { clear = true }),
 	callback = function(args) require('ui.terminal').save(args.buf, nil) end,
+	desc = 'Save terminal state on close',
 })
 
--- Reloads Nvim-Tree on most events
-aucmd({ 'BufWritePost', 'BufDelete', 'BufNewFile', 'DirChanged', 'FocusGained', 'CursorHold', 'VimLeavePre', 'VimEnter', 'User' }, {
-	pattern = { '*', 'GitCommitPost', 'GitRebasePost', 'GitCheckoutPost', 'GitPullPost', 'GitMergePost' },
-	callback = function() require('nvim-tree.api').tree.reload() end,
-})
+for _, action in ipairs(tree_events) do
+	aucmd(action.events, {
+		group = augroup('NvimTreeRefresh', { clear = true }),
+		pattern = action.pattern,
+		callback = function() require('nvim-tree.api').tree.reload() end,
+		desc = 'Reloads Nvim-Tree on most events',
+	})
+end
+
+-- Load LSP Progress bar
+require('ui.statusline').autocmds()
 
 ---------------------------- Deferred ----------------------------------
 
--- Wait to load user events on non-empty buffers
 aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 	group = augroup('NvFilePost', { clear = true }),
 	callback = function(args)
@@ -98,11 +114,12 @@ aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 			end)
 		end
 	end,
+	desc = 'Wait to load user events on non-empty buffers',
 })
 
 vim.schedule(function()
-	-- Initialize LSP config
 	aucmd('LspAttach', {
+		group = augroup('LSP', { clear = true }),
 		callback = function(args)
 			vim.schedule(function()
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -113,10 +130,12 @@ vim.schedule(function()
 				end
 			end)
 		end,
+		desc = 'Initialize LSP config',
 	})
 
-	-- Install all language servers
-	usrcmd('MasonInstallAll', function() require('ui.mason').install_all() end, {})
+	usrcmd('MasonInstallAll', function() require('ui.mason').install_all() end, {
+		desc = 'Install all language servers',
+	})
 
 	-- Initialize colorify
 	require('ui.colorify').run()
