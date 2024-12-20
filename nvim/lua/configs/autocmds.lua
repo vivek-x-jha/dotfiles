@@ -1,16 +1,13 @@
-local api = vim.api
-local fn = vim.fn
-local fs = vim.fs
 local g = vim.g
-local schedule = vim.schedule
-
-local aucmd = api.nvim_create_autocmd
-local augroup = api.nvim_create_augroup
-local usrcmd = api.nvim_create_user_command
-local exec_aucmds = api.nvim_exec_autocmds
-local del_augroup = api.nvim_del_augroup_by_name
-local bufname = api.nvim_buf_get_name
-local value = api.nvim_get_option_value
+local aucmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+local bufline_cnt = vim.api.nvim_buf_line_count
+local buflines = vim.api.nvim_buf_get_lines
+local bufname = vim.api.nvim_buf_get_name
+local del_augroup = vim.api.nvim_del_augroup_by_name
+local exec_aucmds = vim.api.nvim_exec_autocmds
+local usrcmd = vim.api.nvim_create_user_command
+local value = vim.api.nvim_get_option_value
 
 ---------------------------- Initialization ----------------------------------
 
@@ -27,8 +24,8 @@ end, {})
 aucmd('VimEnter', {
 	group = augroup('DashboardLoader', { clear = true }),
 	callback = function()
-		local buf_lines = vim.api.nvim_buf_get_lines(0, 0, 1, false)
-		local no_buf_content = vim.api.nvim_buf_line_count(0) == 1 and buf_lines[1] == ''
+		local buf_lines = buflines(0, 0, 1, false)
+		local no_buf_content = bufline_cnt(0) == 1 and buf_lines[1] == ''
 		local buf_name = bufname(0)
 
 		if buf_name == '' and no_buf_content then vim.cmd 'Dashboard' end
@@ -73,6 +70,12 @@ aucmd('TermClose', {
 	callback = function(args) require('ui.terminal').save(args.buf, nil) end,
 })
 
+-- Reloads Nvim-Tree on most events
+aucmd({ 'BufWritePost', 'BufDelete', 'BufNewFile', 'DirChanged', 'FocusGained', 'CursorHold', 'VimLeavePre', 'VimEnter', 'User' }, {
+	pattern = { '*', 'GitCommitPost', 'GitRebasePost', 'GitCheckoutPost', 'GitPullPost', 'GitMergePost' },
+	callback = function() require('nvim-tree.api').tree.reload() end,
+})
+
 ---------------------------- Deferred ----------------------------------
 
 -- Wait to load user events on non-empty buffers
@@ -88,7 +91,7 @@ aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 			exec_aucmds('User', { pattern = 'FilePost', modeline = false })
 			del_augroup 'NvFilePost'
 
-			schedule(function()
+			vim.schedule(function()
 				exec_aucmds('FileType', {})
 
 				if g.editorconfig then require('editorconfig').config(args.buf) end
@@ -97,7 +100,7 @@ aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 	end,
 })
 
-schedule(function()
+vim.schedule(function()
 	-- Initialize LSP config
 	aucmd('LspAttach', {
 		callback = function(args)
@@ -111,24 +114,6 @@ schedule(function()
 			end)
 		end,
 	})
-
-	-- Hot reload neovim config
-	-- DEBUG module not properly parsed
-
-	-- aucmd('BufWritePost', {
-	-- 	pattern = vim.tbl_map(
-	-- 		function(path) return fs.normalize(vim.uv.fs_realpath(path) or '') end,
-	-- 		fn.glob(fn.stdpath 'config' .. '/lua/**/*.lua', true, true, true)
-	-- 	),
-	-- 	group = augroup('ReloadConfig', { clear = true }),
-	-- 	callback = function(opts)
-	-- 		local buf_path = fs.normalize(bufname(opts.buf))
-	-- 		local root_config = fn.stdpath 'config' .. '/lua/'
-	-- 		local module = buf_path:sub(#root_config + 1):gsub('%.lua$', ''):gsub('/', '.')
-	-- 		require('plenary.reload').reload_module(module)
-	-- 		vim.notify('Reloaded module: ' .. module, vim.log.levels.INFO)
-	-- 	end,
-	-- })
 
 	-- Install all language servers
 	usrcmd('MasonInstallAll', function() require('ui.mason').install_all() end, {})
