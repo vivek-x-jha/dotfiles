@@ -368,7 +368,8 @@ M.setup = function(colorscheme, plugin)
     ---------------------------- Meta Assistance ----------------------------------
 
     -- WhichKey
-    WhichKey = { fg = theme.yellow },
+    WhichKey = { fg = theme.magenta },
+    WhichKeyBorder = { fg = theme.brightblack },
     WhichKeySeparator = { fg = theme.black },
     WhichKeyDesc = { fg = theme.blue },
     WhichKeyGroup = { fg = theme.yellow },
