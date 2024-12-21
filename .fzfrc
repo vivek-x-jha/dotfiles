@@ -17,7 +17,7 @@ export FZF_DEFAULT_OPTS="
   --color          gutter:-1
   --color          header:#eccef0
   --color          header:italic
-  --color          hl:#c9ccfb
+  --color          hl:#f096b7
   --color          hl+:#f096b7
   --color          info:#c9ccfb
   --color          marker:#f3b175
@@ -27,7 +27,7 @@ export FZF_DEFAULT_OPTS="
   --header         'Preview File Content'
   --layout         reverse
   --marker         '*'
-  --pointer        '󰧂'
+  --pointer        ''
   --prompt         '  '
   --tmux           center
   --walker-skip    .git,node_modules,target
