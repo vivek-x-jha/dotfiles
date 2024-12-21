@@ -1,4 +1,5 @@
 -- TODO standardize keymap descriptions
+-- TODO fix scrolling move line up/down
 local buf = require 'ui.buffers'
 local term = require 'ui.terminal'
 
@@ -22,8 +23,8 @@ map('v', '<leader>/', 'gc', 'Toggle comment', true)
 map('n', '<C-d>', '<C-d>zz', 'Page [d]own and center')
 map('n', '<C-u>', '<C-u>zz', 'Page [u]p and center')
 
-map('v', 'J', ":m '>+1<CR>gv=gv")
-map('v', 'K', ":m '<-2<CR>gv=gv")
+map('v', 'J', ":m '>+1<CR>gv=gv", 'Move selection down')
+map('v', 'K', ":m '<-2<CR>gv=gv", 'Move selection up')
 
 -- obsession
 map('n', '<leader>ob', '<cmd>Obsession<CR>', 'Toggle [ob]session')
