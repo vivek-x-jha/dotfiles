@@ -12,7 +12,6 @@ local cursor = api.nvim_win_get_cursor
 local del_augroup = api.nvim_del_augroup_by_name
 local exec_aucmds = api.nvim_exec_autocmds
 local namespace = api.nvim_create_namespace
-local usrcmd = api.nvim_create_user_command
 local value = api.nvim_get_option_value
 
 local vlsp = vim.lsp
@@ -45,16 +44,6 @@ local check_triggeredChars = function(triggerChars)
 end
 
 ---------------------------- Initialization ----------------------------------
-
-usrcmd('Dashboard', function()
-  if g.dashboard_displayed then
-    require('ui.buffers').close()
-  else
-    require('ui.dashboard').open()
-  end
-end, {
-  desc = 'Toggle Dashboard',
-})
 
 aucmd('VimEnter', {
   group = augroup('Dashboard', { clear = true }),
@@ -113,26 +102,6 @@ end
 
 -- Load LSP Progress bar
 require('ui.statusline').autocmds()
-
--- Create Spectre user commands for easy remapping
-usrcmd('SpectreToggle', function() require('spectre').toggle() end, {
-  desc = 'Toggle Spectre search and replace',
-})
-
-usrcmd('SpectreCurrWord', function()
-  local spectre = require 'spectre'
-  if vim.fn.mode() == 'v' then
-    spectre.open_visual()
-  else
-    spectre.open_visual { select_word = true }
-  end
-end, {
-  desc = 'Open Spectre in visual mode or with the current word in normal mode',
-})
-
-usrcmd('SpectreCurrFile', function() require('spectre').open_file_search { select_word = true } end, {
-  desc = 'Open Spectre file search with the current word',
-})
 
 ---------------------------- Deferred ----------------------------------
 
@@ -212,56 +181,5 @@ vim.schedule(function()
       end)
     end,
     desc = 'Initialize LSP config',
-  })
-
-  usrcmd('MasonInstallAll', function()
-    local masonames = require 'ui.masonames'
-    local pkgs = {}
-
-    local get_pkgs = function()
-      local tools = {}
-
-      local lsps = require('lspconfig.util').available_servers()
-      vim.list_extend(tools, lsps)
-
-      local conform_exists, conform = pcall(require, 'conform')
-
-      if conform_exists then
-        for _, v in ipairs(conform.list_all_formatters()) do
-          local fmts = vim.split(v.name:gsub(',', ''), '%s+')
-          vim.list_extend(tools, fmts)
-        end
-      end
-
-      local lint_exists, lint = pcall(require, 'lint')
-
-      if lint_exists then
-        local linters = lint.linters_by_ft
-
-        for _, v in pairs(linters) do
-          vim.list_extend(tools, v)
-        end
-      end
-
-      for _, v in pairs(tools) do
-        table.insert(pkgs, masonames[v])
-      end
-
-      return pkgs
-    end
-
-    vim.cmd 'Mason'
-
-    local mr = require 'mason-registry'
-
-    mr.refresh(function()
-      for _, tool in ipairs(get_pkgs()) do
-        local p = mr.get_package(tool)
-
-        if not p:is_installed() then p:install() end
-      end
-    end)
-  end, {
-    desc = 'Install all language servers',
   })
 end)

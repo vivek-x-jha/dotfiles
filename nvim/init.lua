@@ -24,5 +24,6 @@ require('colors.highlights').setup(g.colorscheme)
 
 -- Load core configs
 require 'configs.options'
+require 'configs.usercmds'
 require 'configs.autocmds'
 vim.schedule(function() require 'configs.mappings' end)
