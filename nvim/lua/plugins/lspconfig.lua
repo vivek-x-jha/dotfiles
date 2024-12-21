@@ -12,16 +12,16 @@ return {
     -- Run diagnostics
     local diag = vim.diagnostic
     local sev = diag.severity
-    local icn = require 'ui.icons'
+    local icons = require 'ui.icons'
 
     diag.config {
-      virtual_text = { prefix = icn.lsp },
+      virtual_text = { prefix = icons.virtualcircle },
       signs = {
         text = {
-          [sev.ERROR] = icn.error,
-          [sev.WARN] = icn.warn,
-          [sev.HINT] = icn.hint,
-          [sev.INFO] = icn.info,
+          [sev.ERROR] = icons.error,
+          [sev.WARN] = icons.warn,
+          [sev.HINT] = icons.hint,
+          [sev.INFO] = icons.info,
         },
       },
       underline = true,

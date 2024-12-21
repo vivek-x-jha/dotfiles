@@ -5,7 +5,7 @@ local api = vim.api
 local get_extmarks = api.nvim_buf_get_extmarks
 local set_extmark = api.nvim_buf_set_extmark
 
-local icn = require 'ui.icons'
+local icons = require 'ui.icons'
 local state = require 'ui.state'
 
 utl.add_hl = function(hex)
@@ -35,7 +35,7 @@ utl.hex = function(buf, line, str)
 
     opts.hl_group = nil
     opts.virt_text_pos = 'inline'
-    opts.virt_text = { { icn.colorify, hl_group } }
+    opts.virt_text = { { icons.virtualblock .. ' ', hl_group } }
 
     if utl.needs_hl(buf, line, col, hl_group, opts) then set_extmark(buf, state.ns, line, col, opts) end
   end
@@ -65,7 +65,7 @@ utl.lsp_var = function(buf, line, min, max)
 
           opts.hl_group = nil
           opts.virt_text_pos = 'inline'
-          opts.virt_text = { { icn.colorify, hl_group } }
+          opts.virt_text = { { icons.virtualblock .. ' ', hl_group } }
 
           if utl.needs_hl(buf, range_start.line, range_start.character, hl_group, opts) then
             set_extmark(buf, state.ns, range_start.line, range_start.character, opts)
