@@ -5,20 +5,22 @@
 -- | |\  | |___| |__| | \  /   _| |_| |  | |
 -- |_| \_|______\____/   \/   |_____|_|  |_|
 -- https://neovim.io/doc/
+local g = vim.g
+local o = vim.o
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+g.mapleader = ' '
+g.maplocalleader = '\\'
 
 -- Load plugins
 require 'configs.lazy'
 
 -- Load ui elements
-vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
+o.statusline = "%!v:lua.require('ui.statusline').setup()"
 require('ui.buffers').setup()
 
 -- Load colors and highlights
-vim.g.colorscheme = 'colors.themes.sourdiesel'
-require('colors.highlights').setup(vim.g.colorscheme)
+g.colorscheme = 'colors.themes.sourdiesel'
+require('colors.highlights').setup(g.colorscheme)
 
 -- Load core configs
 require 'configs.options'
