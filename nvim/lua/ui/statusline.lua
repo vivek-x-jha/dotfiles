@@ -1,3 +1,5 @@
+-- TODO fix git info only updating on reload
+-- TODO fix lsp info only updating on reload
 local M = {}
 local utl = {}
 local modules = {}
