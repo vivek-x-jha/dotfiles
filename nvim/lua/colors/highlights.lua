@@ -69,12 +69,19 @@ M.setup = function(colorscheme, plugin)
     ErrorMsg = { fg = theme.red, bg = theme.background },
     Exception = { fg = theme.brightred },
 
+    -- Search
+    Search = { fg = theme.brightred, bg = theme.grey, bold = true },
+    CurSearch = { fg = theme.brightcyan, bg = theme.grey, bold = true },
+    IncSearch = { fg = theme.brightgreen, bg = theme.grey },
+
+    -- Folds
+    Folded = { fg = theme.black, bg = theme.background, italic = true },
+    FoldColumn = { fg = theme.brightblue, bg = theme.background },
+    CursorLineFold = { fg = theme.brightmagenta, bg = theme.background },
+
+    LineNr = { fg = theme.brightblack },
     FloatBorder = { fg = theme.brightmagenta },
     FloatTitle = { fg = theme.magenta },
-    FoldColumn = { bg = theme.background },
-    Folded = { fg = theme.black, bg = theme.black },
-    IncSearch = { fg = theme.brightgreen, bg = theme.grey },
-    LineNr = { fg = theme.brightblack },
     Macro = { fg = theme.white },
     MatchParen = { link = 'MatchWord' },
     MatchWord = { bg = theme.grey, fg = theme.brightred },
@@ -93,7 +100,6 @@ M.setup = function(colorscheme, plugin)
     Question = { fg = theme.blue },
     QuickFixLine = { bold = true, bg = theme.grey },
     Removed = { fg = theme.red },
-    Search = { fg = theme.brightred, bg = theme.grey },
     SignColumn = { fg = theme.black },
     SpecialKey = { fg = theme.black },
     Substitute = { fg = theme.brightred, bg = theme.grey },
