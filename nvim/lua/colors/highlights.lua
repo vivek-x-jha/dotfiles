@@ -69,7 +69,7 @@ M.setup = function(colorscheme, plugin)
     ErrorMsg = { fg = theme.red, bg = theme.background },
     Exception = { fg = theme.brightred },
 
-    FloatBorder = { fg = theme.brightblack },
+    FloatBorder = { fg = theme.brightmagenta },
     FloatTitle = { fg = theme.magenta },
     FoldColumn = { bg = theme.background },
     Folded = { fg = theme.black, bg = theme.black },
