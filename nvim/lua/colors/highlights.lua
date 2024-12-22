@@ -60,19 +60,14 @@ M.setup = function(colorscheme, plugin)
     Conceal = { bg = theme.background },
     Cursor = { fg = theme.black, bg = theme.grey },
     CursorColumn = { bg = theme.black },
-    CursorLine = { bg = theme.black },
-    CursorLineNr = { fg = theme.black },
+    CursorLine = { bg = theme.grey },
+    CursorLineNr = { fg = theme.cyan },
     Debug = { fg = theme.white },
     DevIconDefault = { fg = theme.red },
     Directory = { fg = theme.blue },
     Error = { fg = theme.black, bg = theme.white },
     ErrorMsg = { fg = theme.red, bg = theme.background },
     Exception = { fg = theme.brightred },
-
-    -- Search
-    Search = { fg = theme.brightred, bg = theme.grey, bold = true },
-    CurSearch = { fg = theme.brightcyan, bg = theme.grey, bold = true },
-    IncSearch = { fg = theme.brightgreen, bg = theme.grey },
 
     -- Folds
     Folded = { fg = theme.black, bg = theme.background, italic = true },
@@ -297,6 +292,10 @@ M.setup = function(colorscheme, plugin)
     LspInlayHint = { fg = theme.grey },
 
     ---------------------------- Search and Refactor ----------------------------------
+
+    Search = { fg = theme.brightred, bg = theme.grey, bold = true },
+    CurSearch = { fg = theme.brightcyan, bg = theme.grey, bold = true },
+    IncSearch = { fg = theme.brightgreen, bg = theme.grey, bold = true },
 
     -- Dashboard
     DashAscii = { fg = theme.magenta },
