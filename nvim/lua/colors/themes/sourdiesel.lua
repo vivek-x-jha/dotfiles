@@ -21,7 +21,6 @@ local primary = {
 local extras = {
   background = 'NONE',
   grey = '#313244',
-  statusline_bg = '#1b1c28',
   dark = '#1b1c28',
 }
 
