@@ -8,8 +8,10 @@ return {
   -- lsp diagnostics
   error = '󰯈',
   warn = '',
-  hint = '',
-  info = '',
+  hint = '',
+  info = '',
+
+  -- devicons
 
   -- lsp completions
   completions = {
