@@ -12,6 +12,10 @@ return {
   info = '',
 
   -- devicons
+  javascript = '󰌞',
+  typescript = '󰛦',
+  lock = '',
+  robot = '󱙺',
 
   -- lsp completions
   completions = {
@@ -20,7 +24,7 @@ return {
     Method = '󰆧',
     Function = '󰆧',
     Constructor = '',
-    Field = '󰜢',
+    Field = '',
     Variable = '󰀫',
     Class = '󰠱',
     Interface = '',
@@ -32,9 +36,9 @@ return {
     Keyword = '󰌋',
     Snippet = '',
     Color = '󰏘',
-    File = '󰈚',
+    File = '',
     Reference = '󰈇',
-    Folder = '󰉋',
+    Folder = '',
     EnumMember = '',
     Constant = '󰏿',
     Struct = '󰙅',
@@ -43,7 +47,7 @@ return {
     TypeParameter = '󰊄',
     Table = '',
     Object = '󰅩',
-    Tag = '',
+    Tag = '',
     Array = '[]',
     Boolean = '',
     Number = '',
