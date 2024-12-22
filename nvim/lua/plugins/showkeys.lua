@@ -19,7 +19,7 @@ return {
       maxkeys = 3,
       show_count = false,
       excluded_modes = { 'i' },
-      position = 'bottom-right',
+      position = 'top-right',
 
       keyformat = {
         ['<BS>'] = '󰭜 ',
