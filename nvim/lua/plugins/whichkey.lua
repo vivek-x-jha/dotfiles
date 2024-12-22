@@ -6,6 +6,7 @@ return {
   keys = { '<leader>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
   cmd = 'WhichKey',
   opts = {
-    preset = 'modern',
+    preset = 'helix',
+    delay = 500,
   },
 }
