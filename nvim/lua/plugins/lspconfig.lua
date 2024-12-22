@@ -4,6 +4,7 @@ return {
   event = 'User FilePost',
   config = function()
     local M = {}
+    local fn = vim.fn
     local lspconfig = require 'lspconfig'
     local lspbuf = vim.lsp.buf
     local lspproto = vim.lsp.protocol
@@ -24,7 +25,7 @@ return {
           [sev.INFO] = icons.info,
         },
       },
-      underline = true,
+      severity_sort = true,
       float = { border = 'single' },
     }
 
@@ -38,7 +39,7 @@ return {
 
     local lsprename = function()
       local api = vim.api
-      local var = vim.fn.expand '<cword>'
+      local var = fn.expand '<cword>'
       local buf = api.nvim_create_buf(false, true)
       local opts = { height = 1, style = 'minimal', border = 'single', row = 1, col = 1 }
 
@@ -117,10 +118,10 @@ return {
             },
             workspace = {
               library = {
-                vim.fn.expand '$VIMRUNTIME/lua',
-                vim.fn.expand '$VIMRUNTIME/lua/vim/lsp',
-                vim.fn.stdpath 'data' .. '/lazy/ui/nvchad_types',
-                vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
+                fn.expand '$VIMRUNTIME/lua',
+                fn.expand '$VIMRUNTIME/lua/vim/lsp',
+                fn.stdpath 'data' .. '/lazy/ui/nvchad_types',
+                fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
                 '${3rd}/luv/library',
               },
               maxPreload = 100000,
