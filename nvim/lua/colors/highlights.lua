@@ -118,7 +118,7 @@ M.setup = function(colorscheme, plugin)
     ---------------------------- Syntax ----------------------------------
 
     Boolean = { fg = theme.red },
-    Character = { fg = theme.red },
+    Character = { fg = theme.cyan },
     Conditional = { fg = theme.magenta },
     Constant = { fg = theme.black },
     Define = { fg = theme.magenta, sp = 'none' },
@@ -252,7 +252,7 @@ M.setup = function(colorscheme, plugin)
     CmpItemKindStructure = { fg = theme.brightmagenta },
     CmpItemKindType = { fg = theme.yellow },
     CmpItemKindKeyword = { fg = theme.magenta },
-    CmpItemKindMethod = { fg = theme.brightblue },
+    CmpItemKindMethod = { fg = theme.blue },
     CmpItemKindConstructor = { fg = theme.brightyellow },
     CmpItemKindFolder = { fg = theme.blue },
     CmpItemKindModule = { fg = theme.yellow },
