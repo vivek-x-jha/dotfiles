@@ -18,6 +18,16 @@ remap('n', '<leader>n', '<cmd>set nu!<CR>', 'Toggle line number')
 remap('n', '<leader>rn', '<cmd>set rnu!<CR>', 'Toggle relative number')
 remap('n', '<leader>/', 'gcc', 'Toggle comment', true)
 remap('v', '<leader>/', 'gc', 'Toggle comment', true)
+remap('v', '<Tab>', '>gv', 'Indent selection')
+remap('v', '<S-Tab>', '<gv', 'Outdent selection')
+
+-- insert mode
+remap('i', '<C-b>', '<ESC>I', 'Move [b]eginning of line')
+remap('i', '<C-e>', '<End>', 'Move [e]nd of line')
+remap('i', '<C-h>', '<Left>', 'Move left')
+remap('i', '<C-l>', '<Right>', 'Move right')
+remap('i', '<C-j>', '<Down>', 'Move down')
+remap('i', '<C-k>', '<Up>', 'Move up')
 
 -- scrolling
 remap('n', '<C-d>', '<C-d>zz', 'Page [d]own and center')
@@ -73,14 +83,6 @@ remap('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'Telesc
 remap('n', '<leader>gt', '<cmd>Telescope git_status<CR>', 'Telescope [g]it s[t]atus')
 remap('n', '<leader>ma', '<cmd>Telescope marks<CR>', 'Telescope [m]arks')
 remap('n', '<leader>pt', '<cmd>Telescope terms<CR>', 'Telescope [p]ick [t]erm')
-
--- insert mode
-remap('i', '<C-b>', '<ESC>I', 'Move [b]eginning of line')
-remap('i', '<C-e>', '<End>', 'Move [e]nd of line')
-remap('i', '<C-h>', '<Left>', 'Move left')
-remap('i', '<C-l>', '<Right>', 'Move right')
-remap('i', '<C-j>', '<Down>', 'Move down')
-remap('i', '<C-k>', '<Up>', 'Move up')
 
 -- global lsp remappings
 remap('n', '<leader>ds', vim.diagnostic.setloclist, 'LSP diagnostic loclist')
