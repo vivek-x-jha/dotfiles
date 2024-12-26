@@ -1,9 +1,22 @@
--- https://github.com/nvzone/showkeys
 return {
-  'nvzone/showkeys',
-  cmd = { 'ShowkeysToggle' },
-  opts = function()
-    return {
+  -- https://github.com/folke/which-key.nvim
+  -- TODO create standardized groups and icons (mostly in mappings)
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    keys = { '<leader>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
+    cmd = 'WhichKey',
+    opts = {
+      preset = 'helix',
+      delay = 500,
+    },
+  },
+
+  -- https://github.com/nvzone/showkeys
+  {
+    'nvzone/showkeys',
+    cmd = { 'ShowkeysToggle' },
+    opts = {
       -- :h nvim_open_win params
       winopts = {
         focusable = false,
@@ -34,6 +47,6 @@ return {
         ['<M>'] = 'Alt',
         ['<C>'] = 'Ctrl',
       },
-    }
-  end,
+    },
+  },
 }
