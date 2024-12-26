@@ -86,6 +86,7 @@ update_icons() {
     /Applications/1Password.app            ~/Pictures/icons/1password-macos.png
     /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
     /Applications/Discord.app              ~/Pictures/icons/discord-macos.png
+    /Applications/Docker.app               ~/Pictures/icons/docker.png
     /Applications/Figma.app                ~/Pictures/icons/figma.png
     /Applications/Firefox.app              ~/Pictures/icons/firefox-macos.png
     /Applications/Google\ Chrome.app       ~/Pictures/icons/chrome.png
@@ -94,6 +95,7 @@ update_icons() {
     /Applications/KeyCastr.app             ~/Pictures/icons/keycastr.png
     /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
     /Applications/Neovim.app               ~/Pictures/icons/neovim.png
+    /Applications/Postman.app              ~/Pictures/icons/postman.png
     /Applications/Python\ 3.13             ~/Pictures/icons/python.png
     /Applications/Slack.app                ~/Pictures/icons/slack.png
     /Applications/Spotify.app              ~/Pictures/icons/spotify.png
