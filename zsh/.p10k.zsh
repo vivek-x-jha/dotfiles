@@ -26,6 +26,7 @@
   # Prompt colors
   local black='0'
   local red='1'
+  local green='2'
   local yellow='3'
   local blue='4'
   local magenta='5'
@@ -34,6 +35,7 @@
 
   local brightblack='8'
   local brightred='9'
+  local brightgreen='10'
   local brightyellow='11'
   local brightblue='12'
   local brightmagenta='13'
@@ -212,7 +214,8 @@
   # Configure virtualenv
   declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$yellow
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false      # hide version number
-  declare -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+  declare -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER='('
+  declare -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER=')'
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false          # hide when pyenv active
   declare -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='' # no icon
   
