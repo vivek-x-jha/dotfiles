@@ -1,3 +1,8 @@
+local lspservers = {
+  'lua_ls',
+  'pyright',
+}
+
 return {
   -- https://github.com/williamboman/mason.nvim
   {
@@ -21,7 +26,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
     config = function()
       require('mason-lspconfig').setup {
-        ensure_installed = { 'lua_ls', 'pyright' },
+        ensure_installed = lspservers,
       }
     end,
   },
@@ -61,8 +66,6 @@ return {
       }
 
       -- configure language servers
-      local lspservers = { 'lua_ls', 'pyright' }
-
       for _, server in ipairs(lspservers) do
         lspconfig[server].setup {
           on_attach = function(_, bufnr)
