@@ -166,35 +166,33 @@ vim.schedule(function()
   aucmd('LspAttach', {
     group = augroup('LSP', { clear = true }),
     callback = function(args)
-      vim.schedule(function()
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-        if client then
-          local signatureProvider = client.server_capabilities.signatureHelpProvider
+      if client then
+        local signatureProvider = client.server_capabilities.signatureHelpProvider
 
-          if signatureProvider and signatureProvider.triggerCharacters then
-            local LspAuGroup = augroup('LspSignature', { clear = false })
-            local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters
+        if signatureProvider and signatureProvider.triggerCharacters then
+          local LspAuGroup = augroup('LspSignature', { clear = false })
+          local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters
 
-            lsp_handlers['textDocument/signatureHelp'] = lsp_with(lsp_handlers.signature_help, {
-              border = 'rounded',
-              focusable = false,
-              silent = true,
-              max_height = 7,
-            })
+          lsp_handlers['textDocument/signatureHelp'] = lsp_with(lsp_handlers.signature_help, {
+            border = 'rounded',
+            focusable = false,
+            silent = true,
+            max_height = 7,
+          })
 
-            clear_aucmds { group = LspAuGroup, buffer = args.buf }
-            aucmd('TextChangedI', {
-              group = LspAuGroup,
-              buffer = args.buf,
-              callback = function()
-                if check_triggeredChars(triggerChars) then lsp_buf.signature_help() end
-              end,
-              desc = 'Detects Trigger Characters on Insert',
-            })
-          end
+          clear_aucmds { group = LspAuGroup, buffer = args.buf }
+          aucmd('TextChangedI', {
+            group = LspAuGroup,
+            buffer = args.buf,
+            callback = function()
+              if check_triggeredChars(triggerChars) then lsp_buf.signature_help() end
+            end,
+            desc = 'Detects Trigger Characters on Insert',
+          })
         end
-      end)
+      end
     end,
     desc = 'Initialize LSP config',
   })
