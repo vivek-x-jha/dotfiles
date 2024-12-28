@@ -114,6 +114,7 @@ M.setup = function(colorscheme, plugin)
     WinBarNC = { bg = theme.background },
     WinSeparator = { fg = theme.brightblack },
     healthSuccess = { bg = theme.green, fg = theme.black },
+    YankFlash = { fg = theme.brightyellow, bg = theme.grey },
 
     ---------------------------- Syntax ----------------------------------
 
@@ -301,7 +302,7 @@ M.setup = function(colorscheme, plugin)
 
     Search = { fg = theme.brightred, bg = theme.grey, bold = true },
     CurSearch = { fg = theme.brightcyan, bg = theme.grey, bold = true },
-    IncSearch = { fg = theme.brightgreen, bg = theme.grey, bold = true },
+    IncSearch = { fg = theme.brightyellow, bg = theme.grey, bold = true },
 
     -- Dashboard
     DashAscii = { fg = theme.magenta },
