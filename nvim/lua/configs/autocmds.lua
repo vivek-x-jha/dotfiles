@@ -1,4 +1,5 @@
 local g = vim.g
+local wo = vim.wo
 
 local api = vim.api
 local aucmd = api.nvim_create_autocmd
@@ -19,18 +20,21 @@ local lsp_handlers = vlsp.handlers
 local lsp_buf = vlsp.buf
 local lsp_with = vlsp.with
 
+local tree_events = {
+  { events = { 'BufWritePost', 'BufDelete', 'BufNewFile' } },
+  { events = { 'DirChanged', 'FocusGained', 'CursorHold' } },
+  { events = { 'VimLeavePre', 'VimEnter' } },
+}
+
+local folds_augroup = augroup('Folds', { clear = false })
+local term_augroup = augroup('Terminal', { clear = false })
+
 local bufempty = function()
   local buf_lines = buflines(0, 0, 1, false)
   local no_buf_content = bufline_cnt(0) == 1 and buf_lines[1] == ''
 
   return bufname(0) == '' and no_buf_content
 end
-
-local tree_events = {
-  { events = { 'BufWritePost', 'BufDelete', 'BufNewFile' } },
-  { events = { 'DirChanged', 'FocusGained', 'CursorHold' } },
-  { events = { 'VimLeavePre', 'VimEnter' } },
-}
 
 local check_triggeredChars = function(triggerChars)
   local cur_line = curline()
@@ -72,21 +76,33 @@ aucmd('FileType', {
 })
 
 aucmd('BufWinEnter', {
-  group = augroup('Folds', { clear = true }),
+  group = folds_augroup,
   pattern = { '*.*' },
   desc = 'Load folds when opening file',
   command = 'silent! loadview',
 })
 
 aucmd('BufWinLeave', {
-  group = augroup('Folds', { clear = true }),
+  group = folds_augroup,
   pattern = { '*.*' },
   desc = 'Save folds when closing file',
   command = 'mkview',
 })
 
+aucmd('TermOpen', {
+  group = term_augroup,
+  callback = function() wo.cursorline = false end,
+  desc = 'Disable cursorline in terminal buffers',
+})
+
+aucmd('TermLeave', {
+  group = term_augroup,
+  callback = function() wo.cursorline = true end,
+  desc = 'Re-enable cursorline after leaving terminal buffers',
+})
+
 aucmd('TermClose', {
-  group = augroup('Terminal', { clear = true }),
+  group = term_augroup,
   callback = function(args) require('ui.terminal').save(args.buf, nil) end,
   desc = 'Save terminal state on close',
 })
