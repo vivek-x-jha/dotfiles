@@ -127,7 +127,7 @@ modules.lsp = function()
   if rawget(vim, 'lsp') then
     for _, client in ipairs(vim.lsp.get_clients()) do
       if client.attached_buffers[utl.stbufnr()] then
-        local server = o.columns > 100 and '  ' .. client.name or '  LSP'
+        local server = o.columns > 100 and ' ' .. client.name or ' LSP'
         return '%#St_lsp#' .. server .. ' %#Normal#%*'
       end
     end
