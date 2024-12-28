@@ -32,7 +32,7 @@ return {
       maxkeys = 3,
       show_count = false,
       excluded_modes = { 'i' },
-      position = 'top-right',
+      position = 'bottom-right',
 
       keyformat = {
         ['<BS>'] = '󰭜 ',
