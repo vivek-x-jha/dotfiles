@@ -28,7 +28,7 @@ end
 --- ```lua
 --- require('configs.utils').create_autocmd {
 ---   event = 'FileType',
----   group = augroup 'SpectreAU',
+---   group = 4,
 ---   pattern = 'spectre_panel',
 ---   desc = 'Hide line numbers for Spectre',
 ---   callback = function()
