@@ -7,10 +7,9 @@ M.create_autocmd = function(opts)
   api.nvim_create_autocmd(event, opts)
 end
 
-M.create_augroup = function(name, clear)
-  local opts = {}
-  if clear == false then opts = { clear = false } end
-  return api.nvim_create_augroup(name, opts)
+M.create_augroup = function(opts)
+  if type(opts) == 'string' then return vim.api.nvim_create_augroup(opts, {}) end
+  return api.nvim_create_augroup(opts[1], { clear = opts[2] })
 end
 
 M.set_keymap = function(opts)
