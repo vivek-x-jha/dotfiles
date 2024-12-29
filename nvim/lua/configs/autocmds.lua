@@ -1,15 +1,13 @@
 local api = vim.api
-local g = vim.g
-local lsp = vim.lsp
-local wo = vim.wo
 
-local utl = require 'configs.utils'
+local aucmd = require('configs.utils').create_autocmd
+local augroup = require('configs.utils').create_augroup
 
 ---------------------------- Initialization ----------------------------------
 
-utl.create_autocmd {
+aucmd {
   event = 'VimEnter',
-  group = utl.create_augroup 'DashAU',
+  group = augroup 'DashAU',
   desc = 'Display Dashboard on blank startup',
   callback = function()
     local buf_lines = api.nvim_buf_get_lines(0, 0, 1, false)
@@ -19,25 +17,25 @@ utl.create_autocmd {
   end,
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'VimEnter',
-  group = utl.create_augroup 'ShowkeysAU',
+  group = augroup 'ShowkeysAU',
   desc = 'Initialize Showkeys on startup',
   callback = function() vim.cmd 'ShowkeysToggle' end,
 }
 
 ---------------------------- UI Preparation ----------------------------------
 
-utl.create_autocmd {
+aucmd {
   event = 'TextYankPost',
-  group = utl.create_augroup 'YankAU',
+  group = augroup 'YankAU',
   desc = 'Highlight when yanking (copying) text',
   callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'FileType',
-  group = utl.create_augroup 'SpectreAU',
+  group = augroup 'SpectreAU',
   pattern = 'spectre_panel',
   desc = 'Hide line numbers for Spectre',
   callback = function()
@@ -46,44 +44,44 @@ utl.create_autocmd {
   end,
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'BufWinEnter',
-  group = utl.create_augroup { 'FoldsAU', false },
+  group = augroup { 'FoldsAU', false },
   pattern = { '*.*' },
   desc = 'Load folds when opening file',
   command = 'silent! loadview',
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'BufWinLeave',
-  group = utl.create_augroup { 'FoldsAU', false },
+  group = augroup { 'FoldsAU', false },
   pattern = { '*.*' },
   desc = 'Save folds when closing file',
   command = 'mkview',
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'TermOpen',
-  group = utl.create_augroup { 'TermAU', false },
+  group = augroup { 'TermAU', false },
   desc = 'Disable cursorline in terminal buffers',
-  callback = function() wo.cursorline = false end,
+  callback = function() vim.wo.cursorline = false end,
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'TermLeave',
-  group = utl.create_augroup { 'TermAU', false },
+  group = augroup { 'TermAU', false },
   desc = 'Re-enable cursorline after leaving terminal buffers',
-  callback = function() wo.cursorline = true end,
+  callback = function() vim.wo.cursorline = true end,
 }
 
-utl.create_autocmd {
+aucmd {
   event = 'TermClose',
-  group = utl.create_augroup { 'TermAU', false },
+  group = augroup { 'TermAU', false },
   desc = 'Save terminal state on close',
   callback = function(args) require('ui.terminal').save(args.buf, nil) end,
 }
 
-utl.create_autocmd {
+aucmd {
   event = {
     'BufWritePost',
     'BufDelete',
@@ -93,7 +91,7 @@ utl.create_autocmd {
     'ShellCmdPost',
     'FileChangedShellPost',
   },
-  group = utl.create_augroup 'TreeAU',
+  group = augroup 'TreeAU',
   pattern = '*',
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   callback = function()
@@ -107,15 +105,16 @@ require('ui.statusline').autocmds()
 
 ---------------------------- Deferred ----------------------------------
 
-utl.create_autocmd {
+aucmd {
   event = {
     'UIEnter',
     'BufReadPost',
     'BufNewFile',
   },
-  group = utl.create_augroup 'FilePostAU',
+  group = augroup 'FilePostAU',
   desc = 'Wait to load user events on non-empty buffers',
   callback = function(args)
+    local g = vim.g
     local file = api.nvim_buf_get_name(args.buf)
     local buftype = api.nvim_get_option_value('buftype', { buf = args.buf })
 
@@ -135,7 +134,7 @@ utl.create_autocmd {
 }
 
 vim.schedule(function()
-  utl.create_autocmd {
+  aucmd {
     event = {
       'TextChanged',
       'TextChangedI',
@@ -145,7 +144,7 @@ vim.schedule(function()
       'WinScrolled',
       'BufEnter',
     },
-    group = utl.create_augroup 'ColorifyAU',
+    group = augroup 'ColorifyAU',
     desc = 'Initialize Colorify Virtual Text',
     callback = function(args)
       local state = require 'ui.state'
@@ -155,18 +154,19 @@ vim.schedule(function()
     end,
   }
 
-  utl.create_autocmd {
+  aucmd {
     event = 'LspAttach',
-    group = utl.create_augroup 'LspAttachAU',
+    group = augroup 'LspAttachAU',
     desc = 'Initialize LSP config',
     callback = function(args)
+      local lsp = vim.lsp
       local client = lsp.get_client_by_id(args.data.client_id)
 
       if client then
         local signatureProvider = client.server_capabilities.signatureHelpProvider
 
         if signatureProvider and signatureProvider.triggerCharacters then
-          local lsp_sig_au = utl.create_augroup { 'LspSignatureAU', false }
+          local lsp_sig_au = augroup { 'LspSignatureAU', false }
           local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
 
           lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
@@ -178,7 +178,8 @@ vim.schedule(function()
 
           api.nvim_clear_autocmds { group = lsp_sig_au, buffer = args.buf }
 
-          api.nvim_create_autocmd('TextChangedI', {
+          aucmd {
+            event = 'TextChangedI',
             group = lsp_sig_au,
             buffer = args.buf,
             desc = 'Detects Trigger Characters on Insert',
@@ -192,7 +193,7 @@ vim.schedule(function()
                 if cur_char == char or prev_char == char then lsp.buf.signature_help() end
               end
             end,
-          })
+          }
         end
       end
     end,
