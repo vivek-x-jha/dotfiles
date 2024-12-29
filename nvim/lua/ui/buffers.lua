@@ -6,6 +6,9 @@ local api = vim.api
 local cur_buf = api.nvim_get_current_buf
 local set_buf = api.nvim_set_current_buf
 
+local utl = require 'configs.utils'
+local aucmd = utl.create_autocmd
+
 local buf_index = function(bufnr)
   for i, value in ipairs(t.bufs) do
     if value == bufnr then return i end
@@ -26,7 +29,8 @@ M.setup = function()
 
   --------------------------- Autocmds -------------------------------
 
-  api.nvim_create_autocmd({ 'BufAdd', 'BufEnter', 'tabnew' }, {
+  aucmd {
+    event = { 'BufAdd', 'BufEnter', 'tabnew' },
     callback = function(args)
       local bufs = t.bufs
       local is_curbuf = api.nvim_get_current_buf() == args.buf
@@ -61,9 +65,10 @@ M.setup = function()
         vim.g.buf_history = buf_history
       end
     end,
-  })
+  }
 
-  api.nvim_create_autocmd('BufDelete', {
+  aucmd {
+    event = 'BufDelete',
     callback = function(args)
       for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
         local bufs = t[tab].bufs
@@ -78,12 +83,13 @@ M.setup = function()
         end
       end
     end,
-  })
+  }
 
-  api.nvim_create_autocmd('FileType', {
+  aucmd {
+    event = 'FileType',
     pattern = 'qf',
     callback = function() vim.opt_local.buflisted = false end,
-  })
+  }
 end
 
 M.next = function()
