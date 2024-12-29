@@ -1,11 +1,13 @@
-local mason_registry = require 'mason-registry'
-local spectre = require 'spectre'
 local conform_exists, conform = pcall(require, 'conform')
 local lint_exists, lint = pcall(require, 'lint')
+local _, mason_registry = pcall(require, 'mason-registry')
+local _, spectre = pcall(require, 'spectre')
 
-local utl = require 'configs.utils'
+local usrcmd = require('configs.utils').create_user_command
 
-utl.create_user_command {
+---------------------------- Initialization ----------------------------------
+
+usrcmd {
   name = 'Dashboard',
   desc = 'Toggle Dashboard',
   command = function()
@@ -17,13 +19,13 @@ utl.create_user_command {
   end,
 }
 
-utl.create_user_command {
+usrcmd {
   name = 'SpectreToggle',
   desc = 'Toggle Spectre search and replace',
   command = function() spectre.toggle() end,
 }
 
-utl.create_user_command {
+usrcmd {
   name = 'SpectreCurrWord',
   desc = 'Open Spectre in visual mode or with the current word in normal mode',
   command = function()
@@ -35,14 +37,16 @@ utl.create_user_command {
   end,
 }
 
-utl.create_user_command {
+usrcmd {
   name = 'SpectreCurrFile',
   desc = 'Open Spectre file search with the current word',
   command = function() spectre.open_file_search { select_word = true } end,
 }
 
+---------------------------- Deferred ----------------------------------
+
 vim.schedule(function()
-  utl.create_user_command {
+  usrcmd {
     name = 'MasonInstallAll',
     desc = 'Install all language servers',
     command = function()
