@@ -1,16 +1,25 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+local fn = vim.fn
+local g = vim.g
+local o = vim.o
+
+local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazyopts = require 'configs.lazy'
+
+-- Set globals
+g.mapleader = ' '
+g.maplocalleader = '\\'
+g.colorscheme = 'colors.themes.sourdiesel'
 
 -- Load plugins
-require 'configs.lazy'
+require('configs.utils').set_rtp(lazypath)
+require('lazy').setup(lazyopts)
 
 -- Load ui elements
-vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
+o.statusline = "%!v:lua.require('ui.statusline').setup()"
 require('ui.buffers').setup()
 
 -- Load colors and highlights
-vim.g.colorscheme = 'colors.themes.sourdiesel'
-require('colors.highlights').setup(vim.g.colorscheme)
+require('colors.highlights').setup(g.colorscheme)
 
 -- Load core configs
 require 'configs.options'

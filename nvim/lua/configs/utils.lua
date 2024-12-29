@@ -1,7 +1,7 @@
----@class M
+--- @class M
 local M = {}
-
 local api = vim.api
+local fn = vim.fn
 
 --- Converts autocommand group name to ID and clears old group commands
 --- (For more help :h nvim_create_augroup)
@@ -19,7 +19,7 @@ local api = vim.api
 --- @param opts string|{[1]: string, [2]: boolean} AU Group name | { AU Group name, Clear Group }
 --- @return integer
 M.create_augroup = function(opts)
-  if type(opts) == 'string' then return vim.api.nvim_create_augroup(opts, {}) end
+  if type(opts) == 'string' then return api.nvim_create_augroup(opts, {}) end
   return api.nvim_create_augroup(opts[1], { clear = opts[2] })
 end
 
@@ -92,6 +92,42 @@ M.set_keymap = function(opts)
   opts.command = nil
 
   vim.keymap.set(mode, keys, command, opts)
+end
+
+--- Sets runtime path (rtp) and clones lazy.nvim repo if not present
+--- (For more help, see :h 'runtimepath')
+--- ```lua
+--- require('configs.utils').set_rtp('~/.local/share/nvim/lazy/lazy.nvim')
+--- ```
+--- @param lazypath string Path to lazy.nvim directory
+M.set_rtp = function(lazypath)
+  -- Bootstrap lazy if not installed
+  if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+
+    local out = fn.system {
+      'git',
+      'clone',
+      '--filter=blob:none',
+      '--branch=stable',
+      lazyrepo,
+      lazypath,
+    }
+
+    if vim.v.shell_error ~= 0 then
+      api.nvim_echo({
+        { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+        { out, 'WarningMsg' },
+        { '\nPress any key to exit...' },
+      }, true, {})
+
+      fn.getchar()
+      os.exit(1)
+    end
+  end
+
+  -- Prepend lazy to runtimepath
+  vim.opt.rtp:prepend(lazypath)
 end
 
 return M
