@@ -24,11 +24,9 @@ return {
   -- https://github.com/williamboman/mason-lspconfig.nvim
   {
     'williamboman/mason-lspconfig.nvim',
-    config = function()
-      require('mason-lspconfig').setup {
-        ensure_installed = lspservers,
-      }
-    end,
+    opts = {
+      ensure_installed = lspservers,
+    },
   },
 
   -- https://github.com/neovim/nvim-lspconfig
