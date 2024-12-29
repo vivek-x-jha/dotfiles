@@ -169,7 +169,7 @@ vim.schedule(function()
 
         if signatureProvider and signatureProvider.triggerCharacters then
           local lsp_sig_au = augroup('LspSignatureAU', false)
-          local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters
+          local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
 
           lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
             border = 'rounded',
