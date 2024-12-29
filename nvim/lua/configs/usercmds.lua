@@ -1,79 +1,87 @@
 local fn = vim.fn
 local g = vim.g
-local usrcmd = vim.api.nvim_create_user_command
 
-local masonreg = require 'mason-registry'
+local mason_registry = require 'mason-registry'
 local spectre = require 'spectre'
 local conform_exists, conform = pcall(require, 'conform')
 local lint_exists, lint = pcall(require, 'lint')
 
--- Dashboard
-usrcmd('Dashboard', function()
-  if g.dashboard_displayed then
-    require('ui.buffers').close()
-  else
-    require('ui.dashboard').open()
-  end
-end, {
+local usrcmd = require('configs.utils').create_user_command
+
+usrcmd {
+  name = 'Dashboard',
   desc = 'Toggle Dashboard',
-})
+  command = function()
+    if g.dashboard_displayed then
+      require('ui.buffers').close()
+    else
+      require('ui.dashboard').open()
+    end
+  end,
+}
 
--- Spectre
-usrcmd('SpectreToggle', function() spectre.toggle() end, {
+usrcmd {
+  name = 'SpectreToggle',
   desc = 'Toggle Spectre search and replace',
-})
+  command = function() spectre.toggle() end,
+}
 
-usrcmd('SpectreCurrWord', function()
-  if fn.mode() == 'v' then
-    spectre.open_visual()
-  else
-    spectre.open_visual { select_word = true }
-  end
-end, {
+usrcmd {
+  name = 'SpectreCurrWord',
   desc = 'Open Spectre in visual mode or with the current word in normal mode',
-})
+  command = function()
+    if fn.mode() == 'v' then
+      spectre.open_visual()
+    else
+      spectre.open_visual { select_word = true }
+    end
+  end,
+}
 
-usrcmd('SpectreCurrFile', function() spectre.open_file_search { select_word = true } end, {
+usrcmd {
+  name = 'SpectreCurrFile',
   desc = 'Open Spectre file search with the current word',
-})
+  command = function() spectre.open_file_search { select_word = true } end,
+}
 
--- Mason
 vim.schedule(function()
-  usrcmd('MasonInstallAll', function()
-    local pkgs = {}
-    local tools = {}
-
-    vim.list_extend(tools, require('lspconfig.util').available_servers())
-
-    if conform_exists then
-      for _, v in ipairs(conform.list_all_formatters()) do
-        local fmts = vim.split(v.name:gsub(',', ''), '%s+')
-        vim.list_extend(tools, fmts)
-      end
-    end
-
-    if lint_exists then
-      local linters = lint.linters_by_ft
-
-      for _, v in pairs(linters) do
-        vim.list_extend(tools, v)
-      end
-    end
-
-    for _, v in pairs(tools) do
-      table.insert(pkgs, require('ui.masonames')[v])
-    end
-
-    vim.cmd 'Mason'
-
-    masonreg.refresh(function()
-      for _, tool in ipairs(pkgs) do
-        local p = masonreg.get_package(tool)
-
-        if not p:is_installed() then p:install() end
-      end
-    end)
-  end, {
+  usrcmd {
+    name = 'MasonInstallAll',
     desc = 'Install all language servers',
-  })
+    command = function()
+      local pkgs = {}
+      local tools = {}
+
+      vim.list_extend(tools, require('lspconfig.util').available_servers())
+
+      if conform_exists then
+        for _, v in ipairs(conform.list_all_formatters()) do
+          local fmts = vim.split(v.name:gsub(',', ''), '%s+')
+          vim.list_extend(tools, fmts)
+        end
+      end
+
+      if lint_exists then
+        local linters = lint.linters_by_ft
+
+        for _, v in pairs(linters) do
+          vim.list_extend(tools, v)
+        end
+      end
+
+      for _, v in pairs(tools) do
+        table.insert(pkgs, require('ui.masonames')[v])
+      end
+
+      vim.cmd 'Mason'
+
+      mason_registry.refresh(function()
+        for _, tool in ipairs(pkgs) do
+          local p = mason_registry.get_package(tool)
+
+          if not p:is_installed() then p:install() end
+        end
+      end)
+    end,
+  }
 end)
