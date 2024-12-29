@@ -50,7 +50,7 @@ aucmd {
 
 aucmd {
   event = 'BufWinEnter',
-  group = augroup('Folds', false),
+  group = augroup { 'Folds', false },
   pattern = { '*.*' },
   desc = 'Load folds when opening file',
   command = 'silent! loadview',
@@ -58,7 +58,7 @@ aucmd {
 
 aucmd {
   event = 'BufWinLeave',
-  group = augroup('FoldsAU', false),
+  group = augroup { 'FoldsAU', false },
   pattern = { '*.*' },
   desc = 'Save folds when closing file',
   command = 'mkview',
@@ -66,21 +66,21 @@ aucmd {
 
 aucmd {
   event = 'TermOpen',
-  group = augroup('TermAU', false),
+  group = augroup { 'TermAU', false },
   desc = 'Disable cursorline in terminal buffers',
   callback = function() wo.cursorline = false end,
 }
 
 aucmd {
   event = 'TermLeave',
-  group = augroup('TermAU', false),
+  group = augroup { 'TermAU', false },
   desc = 'Re-enable cursorline after leaving terminal buffers',
   callback = function() wo.cursorline = true end,
 }
 
 aucmd {
   event = 'TermClose',
-  group = augroup('TermAU', false),
+  group = augroup { 'TermAU', false },
   desc = 'Save terminal state on close',
   callback = function(args) require('ui.terminal').save(args.buf, nil) end,
 }
@@ -168,7 +168,7 @@ vim.schedule(function()
         local signatureProvider = client.server_capabilities.signatureHelpProvider
 
         if signatureProvider and signatureProvider.triggerCharacters then
-          local lsp_sig_au = augroup('LspSignatureAU', false)
+          local lsp_sig_au = augroup { 'LspSignatureAU', false }
           local triggerChars = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
 
           lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
