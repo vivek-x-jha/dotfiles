@@ -1,52 +1,53 @@
+--- @class M
+local M = {}
 local conform_exists, conform = pcall(require, 'conform')
 local lint_exists, lint = pcall(require, 'lint')
 local _, mason_registry = pcall(require, 'mason-registry')
 local _, spectre = pcall(require, 'spectre')
 
-local usrcmd = require('configs.utils').create_user_command
+--- User commands to be available on startup
+--- @type table[]
+M.main_cmds = {
+  {
+    name = 'Dashboard',
+    desc = 'Toggle Dashboard',
+    command = function()
+      if vim.g.dashboard_displayed then
+        require('ui.buffers').close()
+      else
+        require('ui.dashboard').open()
+      end
+    end,
+  },
 
----------------------------- Initialization ----------------------------------
+  {
+    name = 'SpectreToggle',
+    desc = 'Toggle Spectre search and replace',
+    command = function() spectre.toggle() end,
+  },
 
-usrcmd {
-  name = 'Dashboard',
-  desc = 'Toggle Dashboard',
-  command = function()
-    if vim.g.dashboard_displayed then
-      require('ui.buffers').close()
-    else
-      require('ui.dashboard').open()
-    end
-  end,
+  {
+    name = 'SpectreCurrWord',
+    desc = 'Open Spectre in visual mode or with the current word in normal mode',
+    command = function()
+      if vim.fn.mode() == 'v' then
+        spectre.open_visual()
+      else
+        spectre.open_visual { select_word = true }
+      end
+    end,
+  },
+
+  {
+    name = 'SpectreCurrFile',
+    desc = 'Open Spectre file search with the current word',
+    command = function() spectre.open_file_search { select_word = true } end,
+  },
 }
-
-usrcmd {
-  name = 'SpectreToggle',
-  desc = 'Toggle Spectre search and replace',
-  command = function() spectre.toggle() end,
-}
-
-usrcmd {
-  name = 'SpectreCurrWord',
-  desc = 'Open Spectre in visual mode or with the current word in normal mode',
-  command = function()
-    if vim.fn.mode() == 'v' then
-      spectre.open_visual()
-    else
-      spectre.open_visual { select_word = true }
-    end
-  end,
-}
-
-usrcmd {
-  name = 'SpectreCurrFile',
-  desc = 'Open Spectre file search with the current word',
-  command = function() spectre.open_file_search { select_word = true } end,
-}
-
----------------------------- Deferred ----------------------------------
-
-vim.schedule(function()
-  usrcmd {
+--- User commands to be scheduled
+--- @type table[]
+M.deferred_cmds = {
+  {
     name = 'MasonInstallAll',
     desc = 'Install all language servers',
     command = function()
@@ -84,5 +85,7 @@ vim.schedule(function()
         end
       end)
     end,
-  }
-end)
+  },
+}
+
+return M

@@ -7,7 +7,7 @@ local cur_buf = api.nvim_get_current_buf
 local set_buf = api.nvim_set_current_buf
 
 local utl = require 'configs.utils'
-local aucmd = utl.create_autocmd
+local aucmd = utl.create_auto_command
 
 local buf_index = function(bufnr)
   for i, value in ipairs(t.bufs) do
