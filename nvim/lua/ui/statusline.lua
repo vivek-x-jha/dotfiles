@@ -72,72 +72,8 @@ modules.mode = function()
   return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' %#Normal#%*'
 end
 
-modules.cwd = function()
-  local name = vim.uv.cwd()
-  if not name then return '' end
-
-  name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' %#Normal#%*'
-  return o.columns > 85 and name or ''
-end
-
-modules.git = function()
-  local bufnr = utl.stbufnr() or 0
-
-  if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
-
-  local git_status = b[bufnr].gitsigns_status_dict
-
-  local disp_changes = function(cnt, hlgroup, icon)
-    cnt = cnt or 0
-    local git_info = '%#' .. hlgroup .. '#' .. icon .. tostring(cnt) .. ' %#Normal#%*'
-
-    return cnt > 0 and git_info or ''
-  end
-
-  -- local branch_name = '%#St_GitBranch# ' .. git_status.head
-  local added = disp_changes(git_status.added, 'St_GitAdded', '+')
-  local changed = disp_changes(git_status.changed, 'St_GitChanged', '~')
-  local removed = disp_changes(git_status.removed, 'St_GitRemoved', '-')
-
-  return added .. changed .. removed
-end
-
-modules.lsp_msg = function() return o.columns > 100 and '%#St_lspMsg#' .. utl.state.lsp_msg .. '%#Normal#%*' or '' end
-
-modules.diagnostics = function()
-  if not rawget(vim, 'lsp') then return '' end
-
-  local disp_diag = function(level, hlgroup, icon)
-    local bufnr = utl.stbufnr() or 0
-    local cnt = #diag.get(bufnr, { severity = diag.severity[level] })
-    local lsp_diagnostics = '%#' .. hlgroup .. '#' .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
-
-    return cnt > 0 and lsp_diagnostics or ''
-  end
-
-  local err = disp_diag('ERROR', 'St_lspError', icn.error)
-  local warn = disp_diag('WARN', 'St_lspWarning', icn.warn)
-  local hints = disp_diag('HINT', 'St_lspHints', icn.hint)
-  local info = disp_diag('INFO', 'St_lspInfo', icn.info)
-
-  return err .. warn .. hints .. info
-end
-
-modules.lsp = function()
-  if rawget(vim, 'lsp') then
-    for _, client in ipairs(vim.lsp.get_clients()) do
-      if client.attached_buffers[utl.stbufnr()] then
-        local server = o.columns > 100 and ' ' .. client.name or ' LSP'
-        return '%#St_lsp#' .. server .. ' %#Normal#%*'
-      end
-    end
-  end
-
-  return ''
-end
-
 modules.file = function()
-  local icon = '󰈚'
+  local icon = icn.file
   local path = api.nvim_buf_get_name(utl.stbufnr())
   local empty = path == ''
   local nvimtree = bo.filetype:match '^NvimTree'
@@ -163,9 +99,73 @@ modules.file = function()
   return highlight .. icon .. ' ' .. name .. modified_indicator .. '%#Normal#%* '
 end
 
-modules.cursor = function() return '%#St_cursor#' .. '󰓾 %l:%c' .. '%#Normal#%*' end
+modules.git = function()
+  local bufnr = utl.stbufnr() or 0
+
+  if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
+
+  local git_status = b[bufnr].gitsigns_status_dict
+
+  local disp_changes = function(cnt, hlgroup, icon)
+    cnt = cnt or 0
+    local git_info = '%#' .. hlgroup .. '#' .. icon .. tostring(cnt) .. ' %#Normal#%*'
+
+    return cnt > 0 and git_info or ''
+  end
+
+  -- local branch_name = '%#St_GitBranch# ' .. git_status.head
+  local added = disp_changes(git_status.added, 'St_GitAdded', '+')
+  local changed = disp_changes(git_status.changed, 'St_GitChanged', '~')
+  local removed = disp_changes(git_status.removed, 'St_GitRemoved', '-')
+
+  return added .. changed .. removed
+end
+
+modules.lsp = function()
+  if rawget(vim, 'lsp') then
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      if client.attached_buffers[utl.stbufnr()] then
+        local server = o.columns > 100 and icn.gear .. ' ' .. client.name or icn.gear
+        return '%#St_lsp#' .. server .. ' %#Normal#%*'
+      end
+    end
+  end
+
+  return ''
+end
+
+modules.diagnostics = function()
+  if not rawget(vim, 'lsp') then return '' end
+
+  local disp_diag = function(level, hlgroup, icon)
+    local bufnr = utl.stbufnr() or 0
+    local cnt = #diag.get(bufnr, { severity = diag.severity[level] })
+    local lsp_diagnostics = '%#' .. hlgroup .. '#' .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
+
+    return cnt > 0 and lsp_diagnostics or ''
+  end
+
+  local err = disp_diag('ERROR', 'St_lspError', icn.error)
+  local warn = disp_diag('WARN', 'St_lspWarning', icn.warn)
+  local hints = disp_diag('HINT', 'St_lspHints', icn.hint)
+  local info = disp_diag('INFO', 'St_lspInfo', icn.info)
+
+  return err .. warn .. hints .. info
+end
 
 modules['%='] = '%='
+
+modules.lsp_msg = function() return o.columns > 100 and '%#St_lspMsg#' .. utl.state.lsp_msg .. '%#Normal#%*' or '' end
+
+modules.cwd = function()
+  local name = vim.uv.cwd()
+  if not name then return '' end
+
+  name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' %#Normal#%*'
+  return o.columns > 85 and name or ''
+end
+
+modules.cursor = function() return '%#St_cursor#' .. '󰓾 %l:%c' .. '%#Normal#%*' end
 
 M.setup = function()
   local result = {}

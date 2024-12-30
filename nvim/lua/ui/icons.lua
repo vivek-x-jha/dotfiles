@@ -5,6 +5,10 @@ return {
   virtualblock = '󱓻',
   virtualcircle = '',
 
+  -- general
+  gear = '',
+  file = '',
+
   -- lsp diagnostics
   error = '󰯈',
   warn = '',
