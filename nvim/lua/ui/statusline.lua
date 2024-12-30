@@ -12,7 +12,19 @@ local o = vim.o
 
 local icn = require 'ui.icons'
 
-local orders = { 'mode', 'file', 'git', 'lsp', 'diagnostics', '%=', 'lsp_msg', '%=', 'cwd', 'cursor' }
+local orders = {
+  'mode',
+  'git_branch',
+  'lsp',
+  'diagnostics',
+  'file',
+  'git_mod',
+  '%=',
+  'lsp_msg',
+  '%=',
+  'cwd',
+  'cursor',
+}
 
 utl.state = { lsp_msg = '' }
 utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
@@ -72,53 +84,12 @@ modules.mode = function()
   return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' %#Normal#%*'
 end
 
-modules.file = function()
-  local icon = icn.file
-  local path = api.nvim_buf_get_name(utl.stbufnr())
-  local empty = path == ''
-  local nvimtree = bo.filetype:match '^NvimTree'
-  local terminal = bo.buftype == 'terminal'
-
-  -- Suppress
-  if empty or nvimtree or terminal then return '' end
-
-  local name = path:match '([^/\\]+)[/\\]*$'
-
-  -- Replace icon with devicon
-  local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
-
-  if devicons_present then
-    local ft_icon = devicons.get_icon(name)
-    icon = ft_icon ~= nil and ft_icon or icon
-  end
-
-  -- Format checks if any unsaved modifications
-  local highlight = bo.modified and '%#St_filemod#' or '%#St_file#'
-  local modified_indicator = bo.modified and ' [ ' .. icn.modified .. ' ]' or ''
-
-  return highlight .. icon .. ' ' .. name .. modified_indicator .. '%#Normal#%* '
-end
-
-modules.git = function()
+modules.git_branch = function()
   local bufnr = utl.stbufnr() or 0
-
   if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
-
   local git_status = b[bufnr].gitsigns_status_dict
 
-  local disp_changes = function(cnt, hlgroup, icon)
-    cnt = cnt or 0
-    local git_info = '%#' .. hlgroup .. '#' .. icon .. tostring(cnt) .. ' %#Normal#%*'
-
-    return cnt > 0 and git_info or ''
-  end
-
-  -- local branch_name = '%#St_GitBranch# ' .. git_status.head
-  local added = disp_changes(git_status.added, 'St_GitAdded', '+')
-  local changed = disp_changes(git_status.changed, 'St_GitChanged', '~')
-  local removed = disp_changes(git_status.removed, 'St_GitRemoved', '-')
-
-  return added .. changed .. removed
+  return '%#St_GitBranch# ' .. git_status.head .. ' '
 end
 
 modules.lsp = function()
@@ -151,6 +122,83 @@ modules.diagnostics = function()
   local info = disp_diag('INFO', 'St_lspInfo', icn.info)
 
   return err .. warn .. hints .. info
+end
+
+modules.file = function()
+  local icon = icn.file
+  local path = api.nvim_buf_get_name(utl.stbufnr())
+  local empty = path == ''
+  local nvimtree = bo.filetype:match '^NvimTree'
+  local terminal = bo.buftype == 'terminal'
+
+  -- Suppress
+  if empty or nvimtree or terminal then return '' end
+
+  local name = path:match '([^/\\]+)[/\\]*$'
+
+  -- Replace icon with devicon
+  local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
+
+  if devicons_present then
+    local ft_icon = devicons.get_icon(name)
+    icon = ft_icon ~= nil and ft_icon or icon
+  end
+
+  -- Format checks if any unsaved modifications
+  local highlight = '%#St_file#' .. icon
+  if bo.modified then highlight = '%#St_filemod#' .. icn.modified end
+
+  return highlight .. ' ' .. name .. '%#Normal#%* '
+end
+
+--- @class GitSignsStatusTbl
+--- @field added integer Number of added lines
+--- @field changed integer Number of changed lines
+--- @field removed integer Number of removed lines
+--- @field head string Current branch name
+--- @field root string Git repository root directory
+
+--- Creates statusline module: git modification
+--- @return string Formatted git modifications for statusline
+modules.git_mod = function()
+  --- @type integer Buffer ID
+  local bufnr = utl.stbufnr() or 0
+  if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
+
+  --- @type GitSignsStatusTbl Git status information for the buffer
+  local git_status = b[bufnr].gitsigns_status_dict
+
+  --- @class GitModTbl
+  --- @field count integer Number of git modifications
+  --- @field hl string Highlight group suffix for styling
+  --- @field icon string Symbol representing the type of modification
+
+  --- Creates a formatted string for git modifications
+  --- @param opts GitModTbl Dictionary of git status count, highlight group, and icon
+  --- @return string Formatted string for a git modification
+  local disp_changes = function(opts)
+    --- @type integer Number of git modifications
+    local cnt = opts.count or 0
+    --- @type string Formatted git modification element
+    local git_info = '%#' .. opts.hl .. '#' .. opts.icon .. tostring(cnt) .. ' %#Normal#%*'
+    return cnt > 0 and git_info or ''
+  end
+
+  --- @type GitModTbl[] Table of all git add, changed, and removed modifications
+  local statuses = {
+    { count = git_status.added, hl = 'St_GitAdded', icon = '+' },
+    { count = git_status.changed, hl = 'St_GitChanged', icon = '~' },
+    { count = git_status.removed, hl = 'St_GitRemoved', icon = '-' },
+  }
+
+  --- @type string[] Formatted statusline elements for each modification type
+  local git_mod_result = {}
+
+  for _, mod in ipairs(statuses) do
+    table.insert(git_mod_result, disp_changes(mod))
+  end
+
+  return table.concat(git_mod_result)
 end
 
 modules['%='] = '%='

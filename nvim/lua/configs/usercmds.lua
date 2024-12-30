@@ -1,5 +1,3 @@
---- @class M
-local M = {}
 local conform_exists, conform = pcall(require, 'conform')
 local lint_exists, lint = pcall(require, 'lint')
 local _, mason_registry = pcall(require, 'mason-registry')
@@ -8,11 +6,12 @@ local _, spectre = pcall(require, 'spectre')
 --- @class UsrcmdTbl
 --- @field name string Name of user command
 --- @field desc string Description of user command
+--- @field after? boolean Flag to schedule user comand
 --- @field command fun() Custom function to execute
 
---- User commands table (immediate execution)
+--- User commands table
 --- @type UsrcmdTbl[]
-M.main_cmds = {
+return {
   {
     name = 'Dashboard',
     desc = 'Toggle Dashboard',
@@ -48,14 +47,11 @@ M.main_cmds = {
     desc = 'Open Spectre file search with the current word',
     command = function() spectre.open_file_search { select_word = true } end,
   },
-}
 
---- User commands table to be scheduled
---- @type UsrcmdTbl[]
-M.deferred_cmds = {
   {
     name = 'MasonInstallAll',
     desc = 'Install all language servers',
+    after = true,
     command = function()
       local pkgs = {}
       local tools = {}
@@ -93,5 +89,3 @@ M.deferred_cmds = {
     end,
   },
 }
-
-return M

@@ -1,5 +1,5 @@
 return {
-  modified = '󰷫',
+  modified = '',
 
   -- virtual text
   virtualblock = '󱓻',
