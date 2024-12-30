@@ -18,9 +18,19 @@ local fn = vim.fn
 --- ```
 --- @param opts string|{[1]: string, [2]: boolean} AU Group name | { AU Group name, Clear Group }
 --- @return integer
-M.create_augroup = function(opts)
-  if type(opts) == 'string' then return api.nvim_create_augroup(opts, {}) end
-  return api.nvim_create_augroup(opts[1], { clear = opts[2] })
+M.create_auto_group = function(opts)
+  --- @type string
+  local name
+  --- @type table
+  local options = {}
+
+  if type(opts) == 'string' then
+    name = opts
+  elseif type(opts) == 'table' then
+    name, options = opts[1], { clear = opts[2] }
+  end
+
+  return api.nvim_create_augroup(name, options)
 end
 
 --- Creates and configures autocommand
@@ -38,7 +48,7 @@ end
 --- }
 --- ```
 --- @param opts table  Options Dictionary: `event` required
-M.create_autocmd = function(opts)
+M.create_auto_command = function(opts)
   --- @type string|string[] Event(s) for the autocmd
   local event = opts.event
   opts.event = nil
@@ -126,7 +136,7 @@ M.set_rtp = function(lazypath)
     end
   end
 
-  -- Prepend lazy to runtimepath
+  -- Prepend lazy to rtp
   vim.opt.rtp:prepend(lazypath)
 end
 
