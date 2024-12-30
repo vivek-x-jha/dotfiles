@@ -5,8 +5,16 @@ local utl = require 'configs.utils'
 local aucmd = utl.create_auto_command
 local augroup = utl.create_auto_group
 
---- Auto commands to immediately prepare for execution
---- @type table[]
+--- @class AutocmdTbl
+--- @field event string|string[] Trigger(s) to execute `command` or `callback`
+--- @field group integer ID assigned to auto command
+--- @field desc string Description of auto command
+--- @field pattern? string|string[] Secondary trigger - defaults to '*'
+--- @field callback? fun(args?) Custom function to execute
+--- @field command? string Vim command to execute
+
+--- Auto commands Table (immediate execution)
+--- @type AutocmdTbl[]
 M.main_cmds = {
   {
     event = 'VimEnter',
