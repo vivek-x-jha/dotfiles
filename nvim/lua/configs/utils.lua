@@ -52,6 +52,7 @@ M.create_auto_command = function(opts)
   --- @type string|string[] Event(s) for the autocmd
   local event = opts.event
   opts.event = nil
+  opts.after = nil
 
   api.nvim_create_autocmd(event, opts)
 end
@@ -74,6 +75,7 @@ M.create_user_command = function(opts)
 
   opts.name = nil
   opts.command = nil
+  opts.after = nil
 
   api.nvim_create_user_command(name, cmd, opts)
 end

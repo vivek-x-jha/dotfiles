@@ -2,7 +2,14 @@ local fn = vim.fn
 local g = vim.g
 local o = vim.o
 
+local autocmds = require 'configs.autocmds'
+local lazyopts = require 'configs.lazy'
+local usrcmds = require 'configs.usercmds'
 local utl = require 'configs.utils'
+
+local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local deferred_usrcmds = {}
+local deferred_autocmds = {}
 
 -- Set globals
 g.mapleader = ' '
@@ -10,14 +17,13 @@ g.maplocalleader = '\\'
 g.colorscheme = 'colors.themes.sourdiesel'
 
 -- Load plugins
-local lazypath = fn.stdpath 'data' .. '/lazy/lazy.nvim'
-local lazyopts = require 'configs.lazy'
-
 require('configs.utils').set_rtp(lazypath)
 require('lazy').setup(lazyopts)
 
--- Load ui elements
+-- Load Statusline dynamically
 o.statusline = "%!v:lua.require('ui.statusline').setup()"
+
+-- Enable Buffer cycling
 require('ui.buffers').setup()
 
 -- Load colors and highlights
@@ -27,14 +33,16 @@ require('colors.highlights').setup(g.colorscheme)
 require 'configs.options'
 
 -- Load & schedule user commands
-local usr = require 'configs.usercmds'
-
-for _, opts in ipairs(usr.main_cmds) do
-  utl.create_user_command(opts)
+for _, opts in ipairs(usrcmds) do
+  if opts.after then
+    table.insert(deferred_usrcmds, opts)
+  else
+    utl.create_user_command(opts)
+  end
 end
 
 vim.schedule(function()
-  for _, opts in ipairs(usr.deferred_cmds) do
+  for _, opts in ipairs(deferred_usrcmds) do
     utl.create_user_command(opts)
   end
 end)
@@ -43,14 +51,16 @@ end)
 require('ui.statusline').autocmds()
 
 -- Load & schedule auto commands
-local au = require 'configs.autocmds'
-
-for _, opts in ipairs(au.main_cmds) do
-  utl.create_auto_command(opts)
+for _, opts in ipairs(autocmds) do
+  if opts.after then
+    table.insert(deferred_autocmds, opts)
+  else
+    utl.create_auto_command(opts)
+  end
 end
 
 vim.schedule(function()
-  for _, opts in ipairs(au.deferred_cmds) do
+  for _, opts in ipairs(deferred_autocmds) do
     utl.create_auto_command(opts)
   end
 end)

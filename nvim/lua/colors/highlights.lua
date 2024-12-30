@@ -323,7 +323,7 @@ M.setup = function(colorscheme, plugin)
     NvimTreeIndentMarker = { fg = theme.brightmagenta },
     NvimTreeSymlink = { fg = theme.yellow },
     NvimTreeSymlinkFolderName = { fg = theme.yellow },
-    NvimTreeModifiedIcon = { fg = theme.brightyellow },
+    NvimTreeModifiedIcon = { fg = theme.red },
     NvimTreeGitNew = { fg = theme.red },
     NvimTreeGitDirty = { fg = theme.yellow },
     NvimTreeGitStaged = { fg = theme.green },
@@ -496,8 +496,8 @@ M.setup = function(colorscheme, plugin)
 
     StText = { fg = theme.brightgreen, bg = theme.background },
 
-    St_file = { fg = theme.brightmagenta, bg = theme.background },
-    St_filemod = { fg = theme.brightyellow, bg = theme.grey, bold = true },
+    St_file = { fg = theme.black, bg = theme.background },
+    St_filemod = { fg = theme.red, bold = true, underline = true },
     St_cursor = { fg = theme.black, bg = theme.background },
     St_cwd = { fg = theme.blue, bg = theme.background },
     St_ft = { fg = theme.brightblue, bg = theme.background },

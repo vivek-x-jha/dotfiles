@@ -1,5 +1,3 @@
---- @class M
-local M = {}
 local api = vim.api
 local utl = require 'configs.utils'
 local aucmd = utl.create_auto_command
@@ -9,13 +7,14 @@ local augroup = utl.create_auto_group
 --- @field event string|string[] Trigger(s) to execute `command` or `callback`
 --- @field group integer ID assigned to auto command
 --- @field desc string Description of auto command
+--- @field after? boolean Flag to schedule auto command
 --- @field pattern? string|string[] Secondary trigger - defaults to '*'
 --- @field callback? fun(args?) Custom function to execute
 --- @field command? string Vim command to execute
 
 --- Auto commands Table (immediate execution)
 --- @type AutocmdTbl[]
-M.main_cmds = {
+return {
   {
     event = 'VimEnter',
     group = augroup 'DashAU',
@@ -136,11 +135,8 @@ M.main_cmds = {
       end
     end,
   },
-}
 
---- Auto commands to schedule for execution
---- @type table[]
-M.deferred_cmds = {
+  --- Auto commands to schedule for execution
   {
     event = {
       'TextChanged',
@@ -153,6 +149,7 @@ M.deferred_cmds = {
     },
     group = augroup 'ColorifyAU',
     desc = 'Initialize Colorify Virtual Text',
+    after = true,
     callback = function(args)
       local state = require 'ui.state'
       state.ns = api.nvim_create_namespace 'Colorify'
@@ -165,6 +162,7 @@ M.deferred_cmds = {
     event = 'LspAttach',
     group = augroup 'LspAttachAU',
     desc = 'Initialize LSP config',
+    after = true,
     callback = function(args)
       local lsp = vim.lsp
       --- @type vim.lsp.Client|nil LSP client object
@@ -209,5 +207,3 @@ M.deferred_cmds = {
     end,
   },
 }
-
-return M
