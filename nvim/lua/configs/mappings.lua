@@ -2,14 +2,15 @@ local buf = require 'ui.buffers' --- @type table Buffer-related commands
 local term = require 'ui.terminal' --- @type table Terminal commands
 local nvtree = require('nvim-tree.api').tree --- @type table NvimTree API
 
---- @class KeymapConfig
+--- @class KeymapTbl
 --- @field desc string Description of the keybinding
 --- @field mode string|string[] Keybinding mode(s)
 --- @field keys string Key sequence
 --- @field command string|fun() Command or function to execute
 --- @field remap? boolean Whether the keybinding requires remapping
---- Keymap table
---- @type KeymapConfig[]
+
+--- Keymaps Table to be scheduled for remappings
+--- @type KeymapTbl[]
 return {
   {
     desc = 'Enter CMD mode w/o <Shift>',

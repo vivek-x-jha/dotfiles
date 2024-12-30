@@ -5,8 +5,13 @@ local lint_exists, lint = pcall(require, 'lint')
 local _, mason_registry = pcall(require, 'mason-registry')
 local _, spectre = pcall(require, 'spectre')
 
---- User commands to be available on startup
---- @type table[]
+--- @class UsrcmdTbl
+--- @field name string Name of user command
+--- @field desc string Description of user command
+--- @field command fun() Custom function to execute
+
+--- User commands table (immediate execution)
+--- @type UsrcmdTbl[]
 M.main_cmds = {
   {
     name = 'Dashboard',
@@ -44,8 +49,9 @@ M.main_cmds = {
     command = function() spectre.open_file_search { select_word = true } end,
   },
 }
---- User commands to be scheduled
---- @type table[]
+
+--- User commands table to be scheduled
+--- @type UsrcmdTbl[]
 M.deferred_cmds = {
   {
     name = 'MasonInstallAll',
