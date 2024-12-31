@@ -1,7 +1,6 @@
 local api = vim.api
-local utl = require 'configs.utils'
-local aucmd = utl.create_auto_command
-local augroup = utl.create_auto_group
+local aucmd = require('configs.utils').create_auto_command
+local augroup = require('configs.utils').create_auto_group
 
 --- Table of auto commands to be executed:
 ---
