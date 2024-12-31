@@ -1,3 +1,4 @@
+-- TODO add annotations
 -- TODO fix git info only updating on reload
 -- TODO fix lsp info only updating on reload
 local M = {}
@@ -11,6 +12,8 @@ local g = vim.g
 local o = vim.o
 
 local icn = require 'ui.icons'
+local aucmd = require('configs.utils').create_auto_command
+local augroup = require('configs.utils').create_auto_group
 
 local orders = {
   'mode',
@@ -76,6 +79,24 @@ utl.modes = {
   ['!'] = { 'SHELL', 'Terminal' },
 }
 
+--- @class GitMod
+--- @field count integer Number of git modifications
+--- @field hl string Highlight group suffix for styling
+--- @field icon string Symbol representing the type of modification
+
+--- Creates a formatted string for git modifications
+--- @param opts GitMod Dictionary of git status count, highlight group, and icon
+--- @return string
+utl.git_mod_display = function(opts)
+  --- @type integer Number of git modifications
+  local cnt = opts.count or 0
+  --- @type string Formatted git modification element
+  local git_info = '%#' .. opts.hl .. '#' .. opts.icon .. tostring(cnt) .. ' %#Normal#%*'
+  return cnt > 0 and git_info or ''
+end
+
+--- Creates statusline module: mode indicator
+--- @return string
 modules.mode = function()
   if not utl.is_activewin() then return '' end
 
@@ -84,14 +105,29 @@ modules.mode = function()
   return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' %#Normal#%*'
 end
 
+--- @class GitSignsStatus
+--- @field added integer Number of added lines
+--- @field changed integer Number of changed lines
+--- @field removed integer Number of removed lines
+--- @field head string Current branch name
+--- @field root string Git repository root directory
+
+--- Creates statusline module: git branch
+--- @return string
 modules.git_branch = function()
+  --- @type integer Buffer ID
   local bufnr = utl.stbufnr() or 0
+
   if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
+
+  --- @type GitSignsStatus Git status information for the buffer
   local git_status = b[bufnr].gitsigns_status_dict
 
   return '%#St_GitBranch# ' .. git_status.head .. ' '
 end
 
+--- Creates statusline module: language server name
+--- @return string
 modules.lsp = function()
   if rawget(vim, 'lsp') then
     for _, client in ipairs(vim.lsp.get_clients()) do
@@ -105,6 +141,8 @@ modules.lsp = function()
   return ''
 end
 
+--- Creates statusline module: LSP diagnostics
+--- @return string
 modules.diagnostics = function()
   if not rawget(vim, 'lsp') then return '' end
 
@@ -124,6 +162,8 @@ modules.diagnostics = function()
   return err .. warn .. hints .. info
 end
 
+--- Creates statusline module: current file
+--- @return string
 modules.file = function()
   local icon = icn.file
   local path = api.nvim_buf_get_name(utl.stbufnr())
@@ -151,40 +191,18 @@ modules.file = function()
   return highlight .. ' ' .. name .. '%#Normal#%* '
 end
 
---- @class GitSignsStatusTbl
---- @field added integer Number of added lines
---- @field changed integer Number of changed lines
---- @field removed integer Number of removed lines
---- @field head string Current branch name
---- @field root string Git repository root directory
-
 --- Creates statusline module: git modification
---- @return string Formatted git modifications for statusline
+--- @return string
 modules.git_mod = function()
   --- @type integer Buffer ID
   local bufnr = utl.stbufnr() or 0
+
   if not b[bufnr].gitsigns_head or b[bufnr].gitsigns_git_status then return '' end
 
-  --- @type GitSignsStatusTbl Git status information for the buffer
+  --- @type GitSignsStatus Git status information for the buffer
   local git_status = b[bufnr].gitsigns_status_dict
 
-  --- @class GitModTbl
-  --- @field count integer Number of git modifications
-  --- @field hl string Highlight group suffix for styling
-  --- @field icon string Symbol representing the type of modification
-
-  --- Creates a formatted string for git modifications
-  --- @param opts GitModTbl Dictionary of git status count, highlight group, and icon
-  --- @return string Formatted string for a git modification
-  local disp_changes = function(opts)
-    --- @type integer Number of git modifications
-    local cnt = opts.count or 0
-    --- @type string Formatted git modification element
-    local git_info = '%#' .. opts.hl .. '#' .. opts.icon .. tostring(cnt) .. ' %#Normal#%*'
-    return cnt > 0 and git_info or ''
-  end
-
-  --- @type GitModTbl[] Table of all git add, changed, and removed modifications
+  --- @type GitMod[] Table of all git add, changed, and removed modifications
   local statuses = {
     { count = git_status.added, hl = 'St_GitAdded', icon = '+' },
     { count = git_status.changed, hl = 'St_GitChanged', icon = '~' },
@@ -195,40 +213,66 @@ modules.git_mod = function()
   local git_mod_result = {}
 
   for _, mod in ipairs(statuses) do
-    table.insert(git_mod_result, disp_changes(mod))
+    table.insert(git_mod_result, utl.git_mod_display(mod))
   end
 
   return table.concat(git_mod_result)
 end
 
+--- Creates statusline module: Separator
 modules['%='] = '%='
 
+--- Creates statusline module: LSP message
+--- @return string
 modules.lsp_msg = function() return o.columns > 100 and '%#St_lspMsg#' .. utl.state.lsp_msg .. '%#Normal#%*' or '' end
 
+--- Creates statusline module: current working directory
+--- @return string
 modules.cwd = function()
-  local name = vim.uv.cwd()
-  if not name then return '' end
+  --- @type integer Max column size to display full path
+  local col_threshold = 50
 
-  name = '%#St_cwd# ' .. (name:match '([^/\\]+)[/\\]*$' or name) .. ' %#Normal#%*'
-  return o.columns > 85 and name or ''
+  --- @type string|nil Path name to display
+  local path = vim.uv.cwd()
+
+  -- handle nil path
+  if not path then return '' end
+
+  -- truncated cwd
+  if #path > col_threshold then path = '.../' .. path:match '([^/\\]+)[/\\]*$' end
+
+  return '%#St_cwd# ' .. path .. ' %#Normal#%*'
 end
 
+--- Creates statusline module: row and column counter
+--- @return string
 modules.cursor = function() return '%#St_cursor#' .. '󰓾 %l:%c' .. '%#Normal#%*' end
 
+--- Aggregates all statusline modules
+--- @return string
 M.setup = function()
-  local result = {}
+  --- @type string[] Aggregated statusline modules
+  local statusline = {}
 
   for _, v in ipairs(orders) do
+    --- @type string|function Statusline module to load
     local module = modules[v]
-    module = type(module) == 'string' and module or module()
-    table.insert(result, module)
+
+    --- @type string|function Formatted statusline module
+    local stl_mod = type(module) == 'string' and module or module()
+
+    table.insert(statusline, stl_mod)
   end
 
-  return table.concat(result)
+  return table.concat(statusline)
 end
 
+--- Creates auto comand to display LSP progress bar
 M.autocmds = function()
-  api.nvim_create_autocmd('LspProgress', {
+  aucmd {
+    desc = 'Show LSP Progress bar',
+    group = augroup 'LspProgressAU',
+    event = 'LspProgress',
     pattern = { 'begin', 'end' },
     callback = function(args)
       local data = args.data.params.value
@@ -245,7 +289,7 @@ M.autocmds = function()
       utl.state.lsp_msg = data.kind == 'end' and '' or str
       vim.cmd.redrawstatus()
     end,
-  })
+  }
 end
 
 return M
