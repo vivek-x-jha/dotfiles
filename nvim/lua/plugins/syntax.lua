@@ -1,3 +1,5 @@
+local icons = require 'ui.icons'
+
 return {
   -- https://github.com/lewis6991/gitsigns.nvim
   {
@@ -18,19 +20,15 @@ return {
   -- https://github.com/nvim-tree/nvim-web-devicons
   {
     'nvim-tree/nvim-web-devicons',
-    opts = function()
-      local icons = require 'ui.icons'
-
-      return {
-        override = {
-          default_icon = { icon = icons.completions.File, name = 'Default' },
-          js = { icon = icons.javascript, name = 'js' },
-          ts = { icon = icons.typescript, name = 'ts' },
-          lock = { icon = icons.lock, name = 'lock' },
-          ['robots.txt'] = { icon = icons.robot, name = 'robots' },
-        },
-      }
-    end,
+    opts = {
+      override = {
+        default_icon = { icon = icons.completions.File, name = 'Default' },
+        js = { icon = icons.javascript, name = 'js' },
+        ts = { icon = icons.typescript, name = 'ts' },
+        lock = { icon = icons.lock, name = 'lock' },
+        ['robots.txt'] = { icon = icons.robot, name = 'robots' },
+      },
+    },
   },
 
   -- https://github.com/nvim-treesitter/nvim-treesitter
