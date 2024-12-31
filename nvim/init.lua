@@ -40,10 +40,9 @@ vim.schedule(function()
   end
 end)
 
--- Load lsp progress bar
+-- Load & schedule auto commands
 require('ui.statusline').autocmds()
 
--- Load & schedule auto commands
 for _, opts in ipairs(require 'configs.autocmds') do
   if opts.after then
     table.insert(deferred_autocmds, opts)
@@ -58,7 +57,7 @@ vim.schedule(function()
   end
 end)
 
--- Schedule mappings
+-- Schedule key mappings
 vim.schedule(function()
   local mappings = require 'configs.mappings'
 
