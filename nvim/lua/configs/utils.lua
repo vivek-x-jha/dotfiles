@@ -96,7 +96,7 @@ M.create_user_command = function(opts)
 end
 
 --- @class KeyMap: table
---- @field desc? string Description of the keybinding
+--- @field desc string Description of the keybinding
 --- @field mode string|string[] Keybinding mode(s)
 --- @field keys string Key sequence
 --- @field command string|fun() Command or function to execute

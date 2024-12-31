@@ -3,7 +3,9 @@ local lint_exists, lint = pcall(require, 'lint')
 local _, mason_registry = pcall(require, 'mason-registry')
 local _, spectre = pcall(require, 'spectre')
 
---- User commands table
+--- Table of user commands to be executed:
+---
+--- - To schedule a user command, set `after` to `true`
 --- @type UsrCmd[]
 return {
   {
