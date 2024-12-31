@@ -3,14 +3,8 @@ local lint_exists, lint = pcall(require, 'lint')
 local _, mason_registry = pcall(require, 'mason-registry')
 local _, spectre = pcall(require, 'spectre')
 
---- @class UsrcmdTbl
---- @field name string Name of user command
---- @field desc string Description of user command
---- @field after? boolean Flag to schedule user comand
---- @field command fun() Custom function to execute
-
 --- User commands table
---- @type UsrcmdTbl[]
+--- @type UsrCmd[]
 return {
   {
     name = 'Dashboard',
@@ -49,9 +43,9 @@ return {
   },
 
   {
+    after = true,
     name = 'MasonInstallAll',
     desc = 'Install all language servers',
-    after = true,
     command = function()
       local pkgs = {}
       local tools = {}
