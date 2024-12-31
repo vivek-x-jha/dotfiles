@@ -3,10 +3,6 @@ local M = {}
 local api = vim.api
 local fn = vim.fn
 
---- @class AutoGroup: table
---- @field [1] string Group name
---- @field [2] boolean Clear old group commands
-
 --- Converts autocommand group name to ID and clears old group commands
 --- (For more help :h nvim_create_augroup)
 --- ```lua
@@ -35,15 +31,6 @@ M.create_auto_group = function(opts)
   return api.nvim_create_augroup(name, options)
 end
 
---- @class AutoCmd: table
---- @field after? boolean Flag to schedule auto command
---- @field desc? string Description of auto command
---- @field group? integer ID assigned to auto command
---- @field event string|string[] Trigger(s) to execute `command` or `callback`
---- @field pattern? string|string[] Secondary trigger - defaults to '*'
---- @field callback? fun(table?)|string Custom function to execute
---- @field command? string Vim command to execute
-
 --- Creates and configures autocommand
 --- (For more help :h nvim_create_autocmd)
 --- ```lua
@@ -68,12 +55,6 @@ M.create_auto_command = function(opts)
   api.nvim_create_autocmd(event, opts)
 end
 
---- @class UsrCmd: table
---- @field after? boolean Flag to schedule user comand
---- @field name string Name of user command
---- @field desc? string Description of user command
---- @field command fun() Command(s) to execute
-
 --- Creates and configures user command
 --- (For more help, see :h nvim_create_user_command)
 --- ```lua
@@ -94,13 +75,6 @@ M.create_user_command = function(opts)
 
   api.nvim_create_user_command(name, cmd, opts)
 end
-
---- @class KeyMap: table
---- @field desc string Description of the keybinding
---- @field mode string|string[] Keybinding mode(s)
---- @field keys string Key sequence
---- @field command string|fun() Command or function to execute
---- @field remap? boolean Whether the keybinding requires remapping
 
 --- Remaps key sequence
 --- (For more help, see :h vim.keymap.set)

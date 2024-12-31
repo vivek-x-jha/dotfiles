@@ -30,8 +30,6 @@ local orders = {
 }
 
 utl.state = { lsp_msg = '' }
-utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
-utl.is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end
 
 -- 2nd item is highlight groupname St_NormalMode
 utl.modes = {
@@ -79,10 +77,13 @@ utl.modes = {
   ['!'] = { 'SHELL', 'Terminal' },
 }
 
---- @class GitMod
---- @field count integer Number of git modifications
---- @field hl string Highlight group suffix for styling
---- @field icon string Symbol representing the type of modification
+--- Gets current buffer ID
+--- @return integer
+utl.stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end
+
+--- Checks if statusline is on current window
+---@return boolean
+utl.is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end
 
 --- Creates a formatted string for git modifications
 --- @param opts GitMod Dictionary of git status count, highlight group, and icon
@@ -90,9 +91,26 @@ utl.modes = {
 utl.git_mod_display = function(opts)
   --- @type integer Number of git modifications
   local cnt = opts.count or 0
+
   --- @type string Formatted git modification element
   local git_info = '%#' .. opts.hl .. '#' .. opts.icon .. tostring(cnt) .. ' %#Normal#%*'
   return cnt > 0 and git_info or ''
+end
+
+--- Creates a formatted string for LSP diagnostics
+---@param opts LspDiag
+---@return string
+utl.lsp_diag_disp = function(opts)
+  --- @type integer Buffer ID
+  local bufnr = utl.stbufnr() or 0
+
+  --- @type integer LSP diagnostic count
+  local count = #diag.get(bufnr, { severity = diag.severity[opts.level] })
+
+  --- @type string Formatted LSP diagnostic count
+  local lsp_diag_info = '%#' .. opts.hl .. '#' .. opts.icon .. ' ' .. tostring(count) .. ' %#Normal#%*'
+
+  return count > 0 and lsp_diag_info or ''
 end
 
 --- Creates statusline module: mode indicator
@@ -146,20 +164,22 @@ end
 modules.diagnostics = function()
   if not rawget(vim, 'lsp') then return '' end
 
-  local disp_diag = function(level, hlgroup, icon)
-    local bufnr = utl.stbufnr() or 0
-    local cnt = #diag.get(bufnr, { severity = diag.severity[level] })
-    local lsp_diagnostics = '%#' .. hlgroup .. '#' .. icon .. ' ' .. tostring(cnt) .. ' %#Normal#%*'
+  --- @type LspDiag[] Table of all LSP diagnostics
+  local lsp_info = {
+    { level = 'ERROR', hl = 'St_lspError', icon = icn.error },
+    { level = 'WARN', hl = 'St_lspWarning', icon = icn.warn },
+    { level = 'HINT', hl = 'St_lspHints', icon = icn.hint },
+    { level = 'INFO', hl = 'St_lspInfo', icon = icn.info },
+  }
 
-    return cnt > 0 and lsp_diagnostics or ''
+  --- @type string[] Formatted statusline elements for each diagnostic
+  local diagnostics_result = {}
+
+  for _, diagnostic in ipairs(lsp_info) do
+    table.insert(diagnostics_result, utl.lsp_diag_disp(diagnostic))
   end
 
-  local err = disp_diag('ERROR', 'St_lspError', icn.error)
-  local warn = disp_diag('WARN', 'St_lspWarning', icn.warn)
-  local hints = disp_diag('HINT', 'St_lspHints', icn.hint)
-  local info = disp_diag('INFO', 'St_lspInfo', icn.info)
-
-  return err .. warn .. hints .. info
+  return table.concat(diagnostics_result)
 end
 
 --- Creates statusline module: current file
