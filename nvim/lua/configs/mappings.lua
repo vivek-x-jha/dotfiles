@@ -140,6 +140,19 @@ return {
     command = '<C-u>zz',
   },
 
+  {
+    desc = 'Next search result and center',
+    mode = 'n',
+    keys = 'n',
+    command = 'nzz',
+  },
+
+  {
+    desc = 'Previous search result and center',
+    mode = 'n',
+    keys = 'N',
+    command = 'Nzz',
+  },
   -- Moving selections
   {
     desc = 'Move selection down',
