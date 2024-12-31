@@ -1,3 +1,5 @@
+require 'types'
+
 local deferred_autocmds = {}
 local deferred_usrcmds = {}
 local fn = vim.fn
