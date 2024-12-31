@@ -5,8 +5,7 @@ local augroup = utl.create_auto_group
 
 --- Table of auto commands to be executed:
 ---
---- - To schedule an auto command: `after = true`
---- - Must have either `callback` or `command` field
+--- - To schedule an auto command, set `after` to `true`
 --- @type AutoCmd[]
 return {
   {

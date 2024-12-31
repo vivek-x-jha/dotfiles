@@ -2,7 +2,9 @@ local buf = require 'ui.buffers'
 local term = require 'ui.terminal'
 local nvtree = require('nvim-tree.api').tree
 
---- Keymaps Table to be scheduled for remappings
+--- Keymaps Table to be scheduled for remappings:
+---
+--- - To remap over old commands set `remap`to `true`
 --- @type KeyMap[]
 return {
   {
