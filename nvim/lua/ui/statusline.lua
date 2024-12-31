@@ -123,13 +123,6 @@ modules.mode = function()
   return '%#St_' .. modes[m][2] .. 'mode#' .. ' ' .. modes[m][1] .. ' %#Normal#%*'
 end
 
---- @class GitSignsStatus
---- @field added integer Number of added lines
---- @field changed integer Number of changed lines
---- @field removed integer Number of removed lines
---- @field head string Current branch name
---- @field root string Git repository root directory
-
 --- Creates statusline module: git branch
 --- @return string
 modules.git_branch = function()
