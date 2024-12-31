@@ -29,7 +29,7 @@
 --------------------------- Statusline --------------------------
 
 --- @class GitMod
---- @field count integer Number of git modifications
+--- @field cnt integer Number of git modifications
 --- @field hl string Highlight group name
 --- @field icon string Symbol representing the type of modification
 
