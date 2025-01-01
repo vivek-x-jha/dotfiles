@@ -1,4 +1,4 @@
---------------------------- Utils --------------------------
+--------------------------- Configs --------------------------
 
 --- @class AutoGroup: table
 --- @field [1] string Group name
@@ -13,7 +13,7 @@
 --- @field callback? fun(args?: table): nil|string Custom function to execute
 --- @field command? string Vim command to execute
 
---- @class UsrCmd: table
+--- @class UserCmd: table
 --- @field after? boolean Flag to schedule user comand
 --- @field name string Name of user command
 --- @field desc? string Description of user command
@@ -26,7 +26,14 @@
 --- @field command string|fun() Command or function to execute
 --- @field remap? boolean Whether the keybinding requires remapping
 
---------------------------- Statusline --------------------------
+--- @class Utils
+--- @field create_auto_group fun(opts: string|AutoGroup): integer Converts autocommand group name to ID and clears old group commands
+--- @field create_auto_command fun(opts: AutoCmd) Creates and configures autocommand
+--- @field create_user_command fun(opts: UserCmd) Creates and configures user command
+--- @field set_keymap fun(opts: KeyMap) Remaps key sequence
+--- @field set_rtp fun(lazypath: string) Sets runtime path (rtp) and clones lazy.nvim repo if not present
+
+--- --------------------------- Statusline --------------------------
 
 --- @class LspMsg
 --- @field lsp_msg string LSP message(s)
