@@ -394,12 +394,18 @@ return {
       WhichKeyValue = { fg = theme.brightmagenta },
 
       -- Avante
-      AvanteTitle = { fg = theme.black2, bg = theme.vibrant_green },
-      AvanteReversedTitle = { fg = theme.vibrant_green, bg = theme.black2 },
-      AvanteSubtitle = { fg = theme.black2, bg = theme.nord_blue },
-      AvanteReversedSubtitle = { fg = theme.nord_blue, bg = theme.black2 },
-      AvanteThirdTitle = { bg = theme.white, fg = theme.black2 },
-      AvanteReversedThirdTitle = { fg = theme.white },
+      AvanteTitle = { fg = theme.brightgreen, bg = theme.background },
+      AvanteReversedTitle = { fg = theme.background, bg = theme.background },
+      AvanteSubtitle = { fg = theme.brightblue, bg = theme.background },
+      AvanteReversedSubtitle = { fg = theme.background, bg = theme.brightblue },
+      AvanteThirdTitle = { fg = theme.brightyellow, bg = theme.background },
+      AvanteReversedThirdTitle = { fg = theme.background, bg = theme.brightyellow },
+      AvanteConflictCurrent = { fg = theme.brightred, bg = theme.background },
+      AvanteConflictIncoming = { fg = theme.brightcyan, bg = theme.background },
+      AvanteConflictCurrentLabel = { fg = theme.brightred, bg = theme.brightblack },
+      AvanteConflictIncomingLabel = { fg = theme.brightcyan, bg = theme.brightblack },
+      AvantePopupHint = { fg = theme.brightgreen, bg = theme.background },
+      AvanteInlineHint = { fg = theme.brightgreen, bg = theme.grey },
 
       -- NOTE should be set automatically by other color groups
       -- AvanteConflictCurrent = {fg = '', bg = ''},

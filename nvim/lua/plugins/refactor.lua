@@ -87,9 +87,15 @@ return {
     version = false,
     build = 'make',
 
+    -- https://github.com/yetone/avante.nvim/blob/main/lua/avante/config.lua
     opts = {
       provider = 'openai',
       openai = { model = 'gpt-4o-mini' },
+      windows = {
+        sidebar_header = { rounded = false },
+        input = { prefix = ' ' },
+        ask = { floating = true, border = 'rounded' },
+      },
     },
   },
 }
