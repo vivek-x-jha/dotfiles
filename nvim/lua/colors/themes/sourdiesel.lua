@@ -1,4 +1,6 @@
-local primary = {
+---@type Colorscheme
+return {
+  -- Primary Colors
   black = '#cccccc',
   red = '#ffc7c7',
   green = '#ceffc9',
@@ -16,12 +18,9 @@ local primary = {
   brightmagenta = '#c9ccfb',
   brightcyan = '#47e7b1',
   brightwhite = '#ffffff',
-}
 
-local extras = {
+  -- Extras
   background = 'NONE',
   grey = '#313244',
   dark = '#1b1c28',
 }
-
-return vim.tbl_deep_extend('force', primary, extras)
