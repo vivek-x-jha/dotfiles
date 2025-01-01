@@ -1,5 +1,3 @@
-local api = vim.api
-local bo = vim.bo
 local icn = require 'ui.icons'
 local utl = require 'ui.statusline.utils'
 
@@ -9,10 +7,10 @@ return {
   mode = function()
     if not utl.is_activewin() then return '' end
 
-    --- @type {[1]: string, [2]: string} Vim mode and highlight group
-    local m = utl.modes[api.nvim_get_mode().mode]
+    --- @type string[2] Vim mode and highlight group
+    local vmode = utl.modes[vim.api.nvget_mode().mode]
 
-    return table.concat { '%#St_', m[2], 'mode#', ' ', m[1], ' %#Normal#%*' }
+    return table.concat { '%#St_', vmode[2], 'mode#', ' ', vmode[1], ' %#Normal#%*' }
   end,
 
   git_branch = function()
@@ -57,13 +55,13 @@ return {
 
   file = function()
     --- @type string Absolute path of current buffer
-    local path = api.nvim_buf_get_name(utl.stbufnr())
+    local path = vim.api.nvim_buf_get_name(utl.stbufnr())
 
     --- @type boolean[] Conditions to suppress file info
     local suppress = {
       path == '', -- empty buffer
-      bo.buftype == 'terminal', -- terminal
-      bo.buftype == 'nofile', -- buffer unrelated to file
+      vim.bo.buftype == 'terminal', -- terminal
+      vim.bo.buftype == 'nofile', -- buffer unrelated to file
     }
 
     -- Hide if buffer matches supress condition
@@ -79,7 +77,7 @@ return {
     local icon = devicons_present and devicons.get_icon(name) or icn.file
 
     --- @type string Highlight and icon conditional on modified buffer
-    local highlight = bo.modified and '%#St_filemod#' .. icn.modified or '%#St_file#' .. icon
+    local highlight = vim.bo.modified and '%#St_filemod#' .. icn.modified or '%#St_file#' .. icon
 
     return table.concat { highlight, ' ', name, '%#Normal#%* ' }
   end,
