@@ -1,6 +1,7 @@
 local api = vim.api
 local g = vim.g
 
+--- Utility functions used to generate statusline modules
 --- @type StatusLineUtils
 return {
   state = { lsp_msg = '' },

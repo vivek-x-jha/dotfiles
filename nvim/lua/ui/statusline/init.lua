@@ -1,3 +1,4 @@
+--- Generates all statusline modules and auto commands
 --- @type StatusLine
 return {
   setup = function()
