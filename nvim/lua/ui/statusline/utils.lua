@@ -1,6 +1,3 @@
-local api = vim.api
-local g = vim.g
-
 --- Utility functions used to generate statusline modules
 --- @type StatusLineUtils
 return {
@@ -52,9 +49,9 @@ return {
     ['!'] = { 'SHELL', 'Terminal' },
   },
 
-  stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) or 0 end,
+  stbufnr = function() return vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0 end,
 
-  is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end,
+  is_activewin = function() return vim.api.nvim_get_current_win() == vim.g.statusline_winid end,
 
   gitsigns_status = function(self)
     --- @type table Current buffer options
