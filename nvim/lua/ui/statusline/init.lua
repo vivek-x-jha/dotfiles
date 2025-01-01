@@ -14,21 +14,16 @@ return {
       'diagnostics',
       'file',
       'git_mod',
-      '%=',
+      'sep',
       'lsp_msg',
-      '%=',
+      'sep',
       'cwd',
       'cursor',
     }
 
-    for _, v in ipairs(orders) do
-      --- @type string|function Statusline module to load
-      local module = modules[v]
-
-      --- @type string|function Formatted statusline module
-      local stl_mod = type(module) == 'string' and module or module()
-
-      table.insert(statusline, stl_mod)
+    for _, mod in ipairs(orders) do
+      -- Directly handle '%=' as a string, otherwise call the module function
+      table.insert(statusline, mod == 'sep' and modules[mod] or modules[mod]())
     end
 
     return table.concat(statusline)
