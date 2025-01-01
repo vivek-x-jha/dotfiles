@@ -10,7 +10,7 @@
 --- @field group? integer ID assigned to auto command
 --- @field event string|string[] Trigger(s) to execute `command` or `callback`
 --- @field pattern? string|string[] Secondary trigger - defaults to '*'
---- @field callback? fun(table?)|string Custom function to execute
+--- @field callback? fun(args?: table): nil|string Custom function to execute
 --- @field command? string Vim command to execute
 
 --- @class UsrCmd: table
@@ -28,6 +28,9 @@
 
 --------------------------- Statusline --------------------------
 
+--- @class LspMsg
+--- @field lsp_msg string LSP message(s)
+
 --- @class GitMod
 --- @field cnt integer Number of git modifications
 --- @field hl string Highlight group name
@@ -44,3 +47,28 @@
 --- @field removed integer Number of removed lines
 --- @field head string Current branch name
 --- @field root string Git repository root directory
+
+--- @class StlUtil
+--- @field state LspMsg Manages state of LSP message(s)
+--- @field modes table Vim mode mappings
+--- @field stbufnr fun(): integer Gets current buffer ID
+--- @field is_activewin fun(): boolean Checks if statusline is on current window
+--- @field gitsigns_status fun(self: StlUtil): boolean, GitSignsStatus Creates gitsigns status table
+--- @field git_mod_display fun(opts: GitMod): string Creates a formatted string for git modifications
+--- @field lsp_diag_disp fun(self: StlUtil, opts: LspDiag): string Creates a formatted string for LSP diagnostics
+
+--- @class StlMod
+--- @field mode fun(): string Creates statusline module: mode indicator
+--- @field git_branch fun(): string Creates statusline module: git branch
+--- @field lsp fun(): string Creates statusline module: language server name
+--- @field diagnostics fun(): string Creates statusline module: LSP diagnostics
+--- @field file fun(): string Creates statusline module: current file
+--- @field git_mod fun(): string Creates statusline module: git modification
+--- @field ['%='] string Separator for left and right alignment
+--- @field lsp_msg fun(): string Creates statusline module: LSP message
+--- @field cwd fun(): string Creates statusline module: current working directory
+--- @field cursor fun(): string Creates statusline module: row and column counter
+
+--- @class Statusline
+--- @field setup fun(): string Aggregates all statusline modules
+--- @field autocmds fun(): nil Creates auto comand to display LSP progress bar
