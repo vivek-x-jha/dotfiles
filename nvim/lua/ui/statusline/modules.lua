@@ -8,7 +8,7 @@ return {
     if not utl.is_activewin() then return '' end
 
     --- @type string[2] Vim mode and highlight group
-    local vmode = utl.modes[vim.api.nvget_mode().mode]
+    local vmode = utl.modes[vim.api.nvim_get_mode().mode]
 
     return table.concat { '%#St_', vmode[2], 'mode#', ' ', vmode[1], ' %#Normal#%*' }
   end,
