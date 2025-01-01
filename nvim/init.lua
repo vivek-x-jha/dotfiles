@@ -9,9 +9,6 @@ require 'types'
 --- @type Utils Load configuration functions
 local utl = require 'configs.utils'
 
---- @type KeyMap[] Mappings to be scheduled
-local mappings = require 'configs.mappings'
-
 --- @type UserCmd[] User commands to be scheduled
 local deferred_usrcmds = {}
 
@@ -68,6 +65,9 @@ end)
 
 -- Schedule key mappings
 vim.schedule(function()
+  --- @type KeyMap[] Mappings to be scheduled
+  local mappings = require 'configs.mappings'
+
   for _, opts in ipairs(mappings) do
     utl.set_keymap(opts)
   end
