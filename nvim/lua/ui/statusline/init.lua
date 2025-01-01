@@ -1,6 +1,4 @@
--- TODO fix git info only updating on reload
--- TODO fix lsp info only updating on reload
---- @type Statusline
+--- @type StatusLine
 return {
   setup = function()
     local modules = require 'ui.statusline.modules'

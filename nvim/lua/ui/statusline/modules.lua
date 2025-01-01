@@ -3,7 +3,7 @@ local bo = vim.bo
 local icn = require 'ui.icons'
 local utl = require 'ui.statusline.utils'
 
---- @type StlMod
+--- @type StatusLineModules
 return {
   mode = function()
     if not utl.is_activewin() then return '' end
@@ -39,7 +39,7 @@ return {
     --- @type string[] Formatted statusline elements for each diagnostic
     local diagnostics_result = {}
 
-    --- @type LspDiag[] Table of all LSP diagnostics
+    --- @type LspDiagnostic[] Table of all LSP diagnostics
     local lsp_info = {
       { level = 'ERROR', hl = 'St_lspError', icon = icn.error },
       { level = 'WARN', hl = 'St_lspWarning', icon = icn.warn },
@@ -89,7 +89,7 @@ return {
 
     if not is_repo then return '' end
 
-    --- @type GitMod[] Table of all git add, changed, and removed modifications
+    --- @type GitModification[] Table of all git add, changed, and removed modifications
     local statuses = {
       { cnt = git_status.added, hl = 'St_GitAdded', icon = '+' },
       { cnt = git_status.changed, hl = 'St_GitChanged', icon = '~' },
