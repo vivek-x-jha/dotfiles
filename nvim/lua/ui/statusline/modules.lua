@@ -3,6 +3,7 @@ local bo = vim.bo
 local icn = require 'ui.icons'
 local utl = require 'ui.statusline.utils'
 
+--- Modules to be loaded by statusline
 --- @type StatusLineModules
 return {
   mode = function()
