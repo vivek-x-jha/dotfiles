@@ -106,7 +106,6 @@ return {
     return table.concat(git_mod_result)
   end,
 
-  --- Creates statusline module: Separator
   ['%='] = '%=',
 
   lsp_msg = function() return table.concat { '%#St_lspMsg#', utl.state.lsp_msg, '%#Normal#%*' } end,

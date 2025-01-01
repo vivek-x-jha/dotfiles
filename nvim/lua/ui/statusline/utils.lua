@@ -51,13 +51,13 @@ return {
     ['!'] = { 'SHELL', 'Terminal' },
   },
 
-  stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) end,
+  stbufnr = function() return api.nvim_win_get_buf(g.statusline_winid or 0) or 0 end,
 
   is_activewin = function() return api.nvim_get_current_win() == g.statusline_winid end,
 
   gitsigns_status = function(self)
     --- @type table Current buffer options
-    local buf = vim.b[self:stbufnr() or 0]
+    local buf = vim.b[self:stbufnr()]
 
     --- @type boolean Flag if a git repository
     local is_repo = true
@@ -82,7 +82,7 @@ return {
     local diag = vim.diagnostic
 
     --- @type integer Buffer ID
-    local bufnr = self:stbufnr() or 0
+    local bufnr = self:stbufnr()
 
     --- @type integer Number of LSP diagnostics for given `level`
     local count = #diag.get(bufnr, { severity = diag.severity[opts.level] })
