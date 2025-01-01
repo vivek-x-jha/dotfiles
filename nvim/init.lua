@@ -1,37 +1,31 @@
--- Set globals
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 vim.g.colorscheme = 'colors.themes.sourdiesel'
 
--- Load type annotations
+-- Load annotations
 require 'types'
 
 --- @type Utils Load configuration functions
 local utl = require 'configs.utils'
 
---- @type UserCmd[] User commands to be scheduled
-local deferred_usrcmds = {}
+--------------------------- Load plugins & UI elements --------------------------
 
---- @type AutoCmd[] Auto commands to be scheduled
-local deferred_autocmds = {}
-
--- Load plugins
 utl.set_rtp(vim.fn.stdpath 'data' .. '/lazy/lazy.nvim')
 require('lazy').setup(require 'configs.lazy')
 
--- Load Statusline dynamically
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
--- Enable Buffer cycling
 require('ui.buffers').setup()
 
--- Load colors and highlights
-require('colors.highlights').setup(vim.g.colorscheme)
+require('colors.highlights').setup { colorscheme = vim.g.colorscheme }
 
--- Configure global and window opts
 require 'configs.options'
 
--- Load & schedule user commands
+--------------------------- Load & schedule user commands --------------------------
+
+--- @type UserCmd[] User commands to be scheduled
+local deferred_usrcmds = {}
+
 for _, opts in ipairs(require 'configs.usercmds') do
   if opts.after then
     table.insert(deferred_usrcmds, opts)
@@ -46,8 +40,12 @@ vim.schedule(function()
   end
 end)
 
--- Load & schedule auto commands
+--------------------------- Load & schedule auto commands --------------------------
+
 require('ui.statusline').autocmds()
+
+--- @type AutoCmd[] Auto commands to be scheduled
+local deferred_autocmds = {}
 
 for _, opts in ipairs(require 'configs.autocmds') do
   if opts.after then
@@ -63,7 +61,8 @@ vim.schedule(function()
   end
 end)
 
--- Schedule key mappings
+--------------------------- Schedule key mappings --------------------------
+
 vim.schedule(function()
   --- @type KeyMap[] Mappings to be scheduled
   local mappings = require 'configs.mappings'

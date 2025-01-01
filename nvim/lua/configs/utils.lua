@@ -1,7 +1,7 @@
 local api = vim.api
 local fn = vim.fn
 
---- @type Utils
+--- @type Utils Support functions used for initialization and configuration
 return {
   create_auto_group = function(opts)
     local name
@@ -76,5 +76,11 @@ return {
 
     -- Prepend lazy to rtp
     vim.opt.rtp:prepend(lazypath)
+  end,
+
+  set_hlgroups = function(hlgroups)
+    for hlgroup, hlopts in pairs(hlgroups) do
+      vim.api.nvim_set_hl(0, hlgroup, hlopts)
+    end
   end,
 }
