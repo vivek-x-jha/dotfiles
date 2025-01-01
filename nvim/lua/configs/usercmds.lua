@@ -6,7 +6,7 @@ local _, spectre = pcall(require, 'spectre')
 --- Table of user commands to be executed:
 ---
 --- - To schedule a user command, set `after` to `true`
---- @type UsrCmd[]
+--- @type UserCmd[]
 return {
   {
     name = 'Dashboard',

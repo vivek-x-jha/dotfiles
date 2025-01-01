@@ -1,18 +1,22 @@
+-- Set globals
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
+vim.g.colorscheme = 'colors.themes.sourdiesel'
+
+-- Load type annotations
 require 'types'
 
-local deferred_autocmds = {}
-local deferred_usrcmds = {}
-local fn = vim.fn
-local g = vim.g
+--- @type Utils Load configuration functions
 local utl = require 'configs.utils'
 
--- Set globals
-g.mapleader = ' '
-g.maplocalleader = '\\'
-g.colorscheme = 'colors.themes.sourdiesel'
+--- @type UserCmd[] User commands to be scheduled
+local deferred_usrcmds = {}
+
+--- @type AutoCmd[] Auto commands to be scheduled
+local deferred_autocmds = {}
 
 -- Load plugins
-utl.set_rtp(fn.stdpath 'data' .. '/lazy/lazy.nvim')
+utl.set_rtp(vim.fn.stdpath 'data' .. '/lazy/lazy.nvim')
 require('lazy').setup(require 'configs.lazy')
 
 -- Load Statusline dynamically
@@ -22,7 +26,7 @@ vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 require('ui.buffers').setup()
 
 -- Load colors and highlights
-require('colors.highlights').setup(g.colorscheme)
+require('colors.highlights').setup(vim.g.colorscheme)
 
 -- Configure global and window opts
 require 'configs.options'
