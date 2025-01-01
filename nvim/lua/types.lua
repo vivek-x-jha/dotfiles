@@ -64,7 +64,7 @@
 --- @field diagnostics fun(): string Creates statusline module: LSP diagnostics
 --- @field file fun(): string Creates statusline module: current file
 --- @field git_mod fun(): string Creates statusline module: git modification
---- @field ['%='] string Separator for left and right alignment
+--- @field sep string Separator for left and right alignment
 --- @field lsp_msg fun(): string Creates statusline module: LSP message
 --- @field cwd fun(): string Creates statusline module: current working directory
 --- @field cursor fun(): string Creates statusline module: row and column counter

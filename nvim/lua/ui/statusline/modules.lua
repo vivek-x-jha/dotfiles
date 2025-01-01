@@ -106,7 +106,7 @@ return {
     return table.concat(git_mod_result)
   end,
 
-  ['%='] = '%=',
+  sep = '%=',
 
   lsp_msg = function() return table.concat { '%#St_lspMsg#', utl.state.lsp_msg, '%#Normal#%*' } end,
 
