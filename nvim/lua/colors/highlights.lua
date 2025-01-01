@@ -407,14 +407,6 @@ return {
       AvantePopupHint = { fg = theme.brightgreen, bg = theme.background },
       AvanteInlineHint = { fg = theme.brightgreen, bg = theme.grey },
 
-      -- NOTE should be set automatically by other color groups
-      -- AvanteConflictCurrent = {fg = '', bg = ''},
-      -- AvanteConflictCurrentLabel = {fg = '', bg = ''},
-      -- AvanteConflictIncoming = {fg = '', bg = ''},
-      -- AvanteConflictIncomingLabel = {fg = '', bg = ''},
-      -- AvantePopupHint = {fg = '', bg = ''},
-      -- AvanteInlineHint = {fg = '', bg = ''}
-
       ---------------------------- Productivity ----------------------------------
 
       -- Git
