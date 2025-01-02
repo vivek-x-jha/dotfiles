@@ -8,6 +8,10 @@ return {
   -- general
   gear = '',
   file = '',
+  download = ' ',
+  checkmark = ' ',
+  dotted_circle = '󱥸 ',
+  bell = ' ',
 
   -- lsp diagnostics
   error = '󰯈',

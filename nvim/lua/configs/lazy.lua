@@ -1,4 +1,6 @@
 -- https://lazy.folke.io/configuration
+local icn = require 'ui.icons'
+
 return {
   defaults = {
     lazy = true,
@@ -7,17 +9,13 @@ return {
 
   spec = 'plugins',
 
-  install = {
-    colorscheme = { 'nvchad' },
-  },
-
   ui = {
     border = 'single',
     icons = {
-      ft = '',
-      lazy = '󰂠 ',
-      loaded = '',
-      not_loaded = '',
+      ft = icn.file,
+      lazy = icn.bell,
+      loaded = icn.checkmark,
+      not_loaded = icn.dotted_circle,
     },
   },
 
