@@ -421,9 +421,10 @@ return {
       gitcommitSelectedFile = { fg = theme.green, bold = true },
 
       -- Lazy
-      LazyH1 = { fg = theme.brightgreen },
+      LazyH1 = { fg = theme.brightcyan, bold = true },
       LazyBorder = { fg = theme.brightblack },
-      LazyButton = { fg = theme.black },
+      LazyButton = { fg = theme.brightblack },
+      LazyButtonActive = { fg = theme.white, bold = true },
       LazyH2 = { fg = theme.magenta, bold = true },
       LazyReasonPlugin = { fg = theme.red },
       LazyValue = { fg = theme.cyan },
@@ -431,7 +432,6 @@ return {
       LazyUrl = { fg = theme.red },
       LazyCommit = { fg = theme.green },
       LazyNoCond = { fg = theme.red },
-      LazySpecial = { fg = theme.blue },
       LazyReasonFt = { fg = theme.brightmagenta },
       LazyOperator = { fg = theme.white },
       LazyReasonKeys = { fg = theme.cyan },
@@ -444,6 +444,7 @@ return {
       LazyReasonSource = { fg = theme.cyan },
       LazyReasonImport = { fg = theme.white },
       LazyProgressDone = { fg = theme.green },
+      LazySpecial = { fg = theme.green },
 
       -- Indent Blankline
       IblIndent = { fg = theme.brightblack },
