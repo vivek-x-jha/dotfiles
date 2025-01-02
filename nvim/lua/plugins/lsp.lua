@@ -1,5 +1,10 @@
 local icn = require 'ui.icons'
 
+local lspservers = {
+  'lua_ls',
+  'pyright',
+}
+
 return {
   -- https://github.com/williamboman/mason.nvim
   {
@@ -39,11 +44,6 @@ return {
 
       local lspconfig = require 'lspconfig'
       local icons = require 'ui.icons'
-
-      local lspservers = {
-        'lua_ls',
-        'pyright',
-      }
 
       local remap = function(mode, keys, action, bufnr, desc)
         local opts = { buffer = bufnr, desc = desc }
