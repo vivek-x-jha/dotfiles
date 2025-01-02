@@ -19,6 +19,8 @@ return {
       return
     end
 
+    utl.set_terminal_colors(theme)
+
     ---------------------------- Spectre ----------------------------------
     if opts.plugin == 'spectre' then
       utl.set_hlgroups {
@@ -32,26 +34,6 @@ return {
       }
       return
     end
-
-    ---------------------------- Terminal ----------------------------------
-
-    vim.g.terminal_color_0 = theme.black
-    vim.g.terminal_color_1 = theme.red
-    vim.g.terminal_color_2 = theme.green
-    vim.g.terminal_color_3 = theme.yellow
-    vim.g.terminal_color_4 = theme.blue
-    vim.g.terminal_color_5 = theme.magenta
-    vim.g.terminal_color_6 = theme.cyan
-    vim.g.terminal_color_7 = theme.white
-
-    vim.g.terminal_color_8 = theme.brightblack
-    vim.g.terminal_color_9 = theme.brightred
-    vim.g.terminal_color_10 = theme.brightgreen
-    vim.g.terminal_color_11 = theme.brightyellow
-    vim.g.terminal_color_12 = theme.brightblue
-    vim.g.terminal_color_13 = theme.brightmagenta
-    vim.g.terminal_color_14 = theme.brightcyan
-    vim.g.terminal_color_15 = theme.brightwhite
 
     utl.set_hlgroups {
       ---------------------------- Defaults ----------------------------------
@@ -404,8 +386,8 @@ return {
       AvanteConflictIncoming = { fg = theme.brightcyan, bg = theme.background },
       AvanteConflictCurrentLabel = { fg = theme.brightred, bg = theme.brightblack },
       AvanteConflictIncomingLabel = { fg = theme.brightcyan, bg = theme.brightblack },
-      AvantePopupHint = { fg = theme.brightgreen, bg = theme.background },
-      AvanteInlineHint = { fg = theme.brightgreen, bg = theme.grey },
+      AvantePopupHint = { fg = theme.brightyellow, bg = theme.background },
+      AvanteInlineHint = { fg = theme.brightcyan, bg = theme.background },
 
       ---------------------------- Productivity ----------------------------------
 

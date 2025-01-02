@@ -31,3 +31,4 @@
 --- @field set_keymap fun(opts: KeyMap) Remaps key sequence
 --- @field set_rtp fun(lazypath: string) Sets runtime path (rtp) and clones lazy.nvim repo if not present
 --- @field set_hlgroups fun(hlgroups: table) Sets highlight groups
+--- @field set_terminal_colors fun(theme: Colorscheme) Sets terminal colors based on theme
