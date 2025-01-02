@@ -5,14 +5,22 @@ local sep = is_windows and '\\' or '/'
 local delim = is_windows and ';' or ':'
 local masonbin = { vim.fn.stdpath 'data', 'mason', 'bin' }
 
-vim.env.PATH = table.concat(masonbin, sep) .. delim .. vim.env.PATH
+vim.env.PATH = table.concat {
+  table.concat(masonbin, sep),
+  delim,
+  vim.env.PATH,
+}
 
 -------------------------- Disable Providers -----------------------------
 
-vim.g.loaded_node_provider = 0
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
+for _, provider in ipairs {
+  'node',
+  'python3',
+  'perl',
+  'ruby',
+} do
+  vim.g[table.concat { 'loaded_', provider, '_provider' }] = 0
+end
 
 -------------------------- Scoped Options -----------------------------
 
