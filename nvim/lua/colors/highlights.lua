@@ -313,6 +313,7 @@ return {
       NvimTreeGitDirty = { fg = theme.yellow },
       NvimTreeGitStaged = { fg = theme.green },
       NvimTreeGitRenamed = { link = 'NvimTreeGitStaged' },
+      NvimTreeGitIgnored = { fg = theme.brightblack, italic = true },
 
       -- Telescope
       TelescopeBorder = { fg = theme.brightblack, bg = theme.background },

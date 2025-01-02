@@ -97,6 +97,7 @@ return {
                 unmerged = '!',
                 unstaged = '~',
                 untracked = '?',
+                ignored = '',
               },
             },
           },
@@ -114,7 +115,7 @@ return {
           },
         },
         modified = { enable = true },
-        filters = { dotfiles = true },
+        filters = { git_ignored = false },
         live_filter = { prefix = ' ' },
         help = { sort_by = 'desc' },
       }
