@@ -1,5 +1,3 @@
-local api = vim.api
-
 --- @type Utils Support functions used for initialization and configuration
 return {
   create_auto_group = function(opts)
@@ -12,7 +10,7 @@ return {
       name, options = opts[1], { clear = opts[2] }
     end
 
-    return api.nvim_create_augroup(name, options)
+    return vim.api.nvim_create_augroup(name, options)
   end,
 
   create_auto_command = function(opts)
@@ -21,7 +19,7 @@ return {
     opts.event = nil
     opts.after = nil
 
-    api.nvim_create_autocmd(event, opts)
+    vim.api.nvim_create_autocmd(event, opts)
   end,
 
   create_user_command = function(opts)
@@ -32,7 +30,7 @@ return {
     opts.command = nil
     opts.after = nil
 
-    api.nvim_create_user_command(name, cmd, opts)
+    vim.api.nvim_create_user_command(name, cmd, opts)
   end,
 
   set_keymap = function(opts)
@@ -62,7 +60,7 @@ return {
       }
 
       if vim.v.shell_error ~= 0 then
-        api.nvim_echo({
+        vim.api.nvim_echo({
           { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
           { out, 'WarningMsg' },
           { '\nPress any key to exit...' },
@@ -79,7 +77,7 @@ return {
 
   set_hlgroups = function(hlgroups)
     for hlgroup, hlopts in pairs(hlgroups) do
-      api.nvim_set_hl(0, hlgroup, hlopts)
+      vim.api.nvim_set_hl(0, hlgroup, hlopts)
     end
   end,
 
