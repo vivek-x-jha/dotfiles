@@ -1,5 +1,4 @@
 local api = vim.api
-local fn = vim.fn
 
 --- @type Utils Support functions used for initialization and configuration
 return {
@@ -53,7 +52,7 @@ return {
     if not (vim.uv or vim.loop).fs_stat(lazypath) then
       local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
 
-      local out = fn.system {
+      local out = vim.fn.system {
         'git',
         'clone',
         '--filter=blob:none',
@@ -69,7 +68,7 @@ return {
           { '\nPress any key to exit...' },
         }, true, {})
 
-        fn.getchar()
+        vim.fn.getchar()
         os.exit(1)
       end
     end
@@ -80,7 +79,30 @@ return {
 
   set_hlgroups = function(hlgroups)
     for hlgroup, hlopts in pairs(hlgroups) do
-      vim.api.nvim_set_hl(0, hlgroup, hlopts)
+      api.nvim_set_hl(0, hlgroup, hlopts)
+    end
+  end,
+
+  set_terminal_colors = function(theme)
+    for i, color in ipairs {
+      'black',
+      'red',
+      'green',
+      'yellow',
+      'blue',
+      'magenta',
+      'cyan',
+      'white',
+      'brightblack',
+      'brightred',
+      'brightgreen',
+      'brightyellow',
+      'brightblue',
+      'brightmagenta',
+      'brightcyan',
+      'brightwhite',
+    } do
+      vim.g['terminal_color_' .. (i - 1)] = theme[color]
     end
   end,
 }
