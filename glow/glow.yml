@@ -1,9 +1,3 @@
-#   _____ _      ______          __
-#  / ____| |    / __ \ \        / /
-# | |  __| |   | |  | \ \  /\  / / 
-# | | |_ | |   | |  | |\ \/  \/ /  
-# | |__| | |___| |__| | \  /\  /   
-#  \_____|______\____/   \/  \/    
 # https://github.com/charmbracelet/glow/blob/master/README.md
 
 # style name or JSON path (default "auto")
