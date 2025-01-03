@@ -47,15 +47,13 @@ return {
 
   set_rtp = function(lazypath)
     -- Bootstrap lazy if not installed
-    if not (vim.uv.fs_stat(lazypath) then
-      local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-
+    if not vim.uv.fs_stat(lazypath) then
       local out = vim.fn.system {
         'git',
         'clone',
         '--filter=blob:none',
         '--branch=stable',
-        lazyrepo,
+        'https://github.com/folke/lazy.nvim.git',
         lazypath,
       }
 
