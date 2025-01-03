@@ -509,6 +509,71 @@ return {
       St_CommandMode = { fg = theme.brightgreen, bg = theme.background },
       St_SelectMode = { fg = theme.blue, bg = theme.background },
 
+      -- Render-markdown
+      RenderMarkdownCode = { bg = theme.dark },
+      RenderMarkdownCodeInline = { fg = theme.brightred },
+      RenderMarkdownH1Bg = { fg = theme.cyan, bold = true },
+      markdownh1 = { fg = theme.cyan, bold = true },
+      markdownh2 = { fg = theme.magenta, bold = true },
+      markdownh3 = { fg = theme.blue, bold = true },
+      markdownh4 = { fg = theme.white, bold = true },
+      markdownh5 = { fg = theme.black, bold = true },
+      markdownh6 = { fg = theme.brightblack, bold = true },
+
+      -- Code
+      -- markdowncode = { fg = theme.brightred, bg = theme.dark },
+      markdowncodeblock = { fg = theme.brightyellow },
+      markdowncodedelimiter = { fg = theme.brightblack },
+
+      -- Links
+      markdownurl = { fg = theme.brightblack, underline = true },
+      markdownlinktext = { fg = theme.yellow, underline = true },
+      markdownlinkdelimiter = { fg = theme.blue },
+
+      -- Emphasis and Formatting
+      markdownitalic = { fg = theme.yellow, italic = true },
+      markdownbold = { fg = theme.red, bold = true },
+      markdownbolditalic = { fg = theme.cyan, bold = true, italic = true },
+      markdownstrike = { fg = theme.brightblue, strikethrough = true },
+
+      -- Blockquotes and Rules
+      markdownblockquote = { fg = theme.brightblack, italic = true },
+      markdownrule = { fg = theme.brightblack },
+
+      -- Lists
+      markdownlistmarker = { fg = theme.white },
+      markdowntable = { fg = theme.blue },
+
+      -- Tasks
+      markdowntaskchecked = { fg = theme.brightgreen },
+      markdowntaskunchecked = { fg = theme.brightblack },
+
+      -- Highlight Groups for Code Syntax
+      markdowncomment = { fg = theme.brightblack },
+      markdowncommentpreproc = { fg = theme.brightcyan },
+      markdownkeyword = { fg = theme.magenta },
+      markdownkeywordtype = { fg = theme.blue },
+      markdownoperator = { fg = theme.black },
+      markdownpunctuation = { fg = theme.white },
+
+      -- String and Literals
+      markdownstring = { fg = theme.green },
+      markdownstringescape = { fg = theme.brightcyan },
+
+      -- Errors and Inserts
+      markdownerror = { fg = theme.white, bg = theme.brightred },
+      markdowninsert = { fg = theme.brightgreen },
+      markdowndelete = { fg = theme.red },
+
+      -- Special Elements
+      markdowndefinitionterm = { fg = theme.brightmagenta },
+      markdowndefinitiondescription = { fg = theme.white },
+      markdownenumeration = { fg = theme.blue },
+
+      -- Images
+      markdownimage = { fg = theme.brightblack, underline = true },
+      markdownimagetext = { fg = theme.yellow },
+
       -- Devicons
       DevIconc = { fg = theme.blue },
       DevIconcss = { fg = theme.blue },
