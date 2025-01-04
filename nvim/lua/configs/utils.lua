@@ -33,6 +33,30 @@ return {
     vim.api.nvim_create_user_command(name, cmd, opts)
   end,
 
+  load = function(self, type)
+    local create_cmd = type == 'autocmds' and self.create_auto_command or self.create_user_command
+
+    --- @type AutoCmd[]|UserCmd[] Auto/User commands
+    local cmds = require('configs.' .. type)
+
+    --- @type AutoCmd[]|UserCmd[] Auto/User commands to be scheduled
+    local deferred_cmds = {}
+
+    for _, cmd in ipairs(cmds) do
+      if cmd.after then
+        table.insert(deferred_cmds, cmd)
+      else
+        create_cmd(cmd)
+      end
+    end
+
+    vim.schedule(function()
+      for _, cmd in ipairs(deferred_cmds) do
+        create_cmd(cmd)
+      end
+    end)
+  end,
+
   set_keymap = function(opts)
     local mode = opts.mode
     local keys = opts.keys
