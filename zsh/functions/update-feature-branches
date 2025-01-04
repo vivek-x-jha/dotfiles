@@ -13,8 +13,8 @@ local branches=("$@")
   wezterm
 )
 
-for branch in "${branches[@]}"; do git switch "feature/$branch" && git merge main done
+for branch in "${branches[@]}"; do git switch "feature/$branch" && git merge main; done
 
 git switch main
 
-git log --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
+git log -5 --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"

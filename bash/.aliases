@@ -39,6 +39,7 @@ alias update-brew='update_brew'
 alias update-icons='update_icons'
 alias update-texlive='update_texlive'
 alias update-all='update_all'
+alias update-feature-branches='update_feature_branches'
 
 # Deletion
 alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
