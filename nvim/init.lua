@@ -42,8 +42,6 @@ end)
 
 --------------------------- Load & schedule auto commands --------------------------
 
-require('ui.statusline').autocmds()
-
 --- @type AutoCmd[] Auto commands to be scheduled
 local deferred_autocmds = {}
 
