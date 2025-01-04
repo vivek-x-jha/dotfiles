@@ -21,6 +21,7 @@ config.cursor_blink_rate = 300
 config.cursor_thickness = 0.25
 config.default_cursor_style = 'BlinkingBlock'
 config.window_background_opacity = 0.9
+config.window_close_confirmation = 'NeverPrompt'
 config.window_decorations = 'RESIZE'
 config.window_padding = {
   left = 25,
