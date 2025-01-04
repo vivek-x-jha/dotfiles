@@ -41,4 +41,3 @@
 
 --- @class StatusLine
 --- @field setup fun(): string Aggregates all statusline modules
---- @field autocmds fun(): nil Creates auto comand to display LSP progress bar

@@ -125,6 +125,7 @@ return {
   },
 
   {
+    desc = 'Manages tab-local buffer lists and tracks buffer history for dynamic navigation and cleanup',
     event = { 'BufAdd', 'BufEnter', 'tabnew' },
     group = augroup 'BufferAU',
     callback = function(args)
@@ -164,8 +165,9 @@ return {
   },
 
   {
-    event = 'BufDelete',
+    desc = 'Remove deleted buffer from buffer list',
     group = augroup 'BufferAU',
+    event = 'BufDelete',
     callback = function(args)
       for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
         local bufs = vim.t[tab].bufs
@@ -183,10 +185,36 @@ return {
   },
 
   {
-    event = 'FileType',
+    desc = 'Prevents quickfix buffers from appearing in buffer lists',
     group = augroup 'BufferAU',
+    event = 'FileType',
     pattern = 'qf',
     callback = function() vim.opt_local.buflisted = false end,
+  },
+
+  {
+    desc = 'Show LSP Progress bar',
+    group = augroup 'LspProgressAU',
+    event = 'LspProgress',
+    pattern = { 'begin', 'end' },
+    callback = function(args)
+      local data = args.data.params.value
+      local progress = ''
+
+      --- @type LspMsg
+      local state = require('ui.statusline.utils').state
+
+      if data.percentage then
+        local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
+        local idx = math.max(1, math.floor(data.percentage / 10))
+        local icon = spinners[idx]
+        progress = icon .. ' ' .. data.percentage .. '%% '
+      end
+
+      local str = progress .. (data.message or '') .. ' ' .. (data.title or '')
+      state.lsp_msg = data.kind == 'end' and '' or str
+      vim.cmd.redrawstatus()
+    end,
   },
 
   --- Auto commands to schedule for execution
