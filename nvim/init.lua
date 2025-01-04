@@ -24,16 +24,7 @@ require('colors.highlights').setup { colorscheme = vim.g.colorscheme }
 -- Load statusline
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
--- Load & schedule commands
-utl:load 'usercmds'
-utl:load 'autocmds'
-
--- Schedule key mappings
-vim.schedule(function()
-  --- @type KeyMap[] Mappings to be scheduled
-  local mappings = require 'configs.mappings'
-
-  for _, opts in ipairs(mappings) do
-    utl.set_keymap(opts)
-  end
-end)
+-- Load & schedule commands and key mappings
+for _, config in ipairs { 'usercmds', 'autocmds', 'mappings' } do
+  utl:load(config)
+end
