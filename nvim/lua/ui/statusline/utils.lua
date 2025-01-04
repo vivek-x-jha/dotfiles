@@ -1,5 +1,4 @@
---- Utility functions used to generate statusline modules
---- @type StatusLineUtils
+--- @type StatusLineUtils Utility functions used to generate statusline modules
 return {
   state = { lsp_msg = '' },
 

@@ -24,4 +24,4 @@
 --- @field plugin? string plugin to highlight
 
 --- @class Highlight
---- @field setup fun(opts: Color) configures highlighting
+--- @field setup fun(opts: Color): nil configures highlighting

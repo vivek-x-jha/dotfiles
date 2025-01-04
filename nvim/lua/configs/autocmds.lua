@@ -124,6 +124,71 @@ return {
     end,
   },
 
+  {
+    event = { 'BufAdd', 'BufEnter', 'tabnew' },
+    group = augroup 'BufferAU',
+    callback = function(args)
+      local bufs = vim.t.bufs
+      local is_curbuf = vim.api.nvim_get_current_buf() == args.buf
+
+      local get_opt = function(option, buffer) return vim.api.nvim_get_option_value(option, { buf = buffer }) end
+
+      if bufs == nil then
+        bufs = vim.api.nvim_get_current_buf() == args.buf and {} or { args.buf }
+      else
+        -- check for duplicates
+        if
+          not vim.tbl_contains(bufs, args.buf)
+          and (args.event == 'BufEnter' or not is_curbuf or get_opt('buflisted', args.buf))
+          and vim.api.nvim_buf_is_valid(args.buf)
+          and get_opt('buflisted', args.buf)
+        then
+          table.insert(bufs, args.buf)
+        end
+      end
+
+      -- remove unnamed buffer which isnt current buf & modified
+      if args.event == 'BufAdd' then
+        if #vim.api.nvim_buf_get_name(bufs[1]) == 0 and not get_opt('modified', bufs[1]) then table.remove(bufs, 1) end
+      end
+
+      vim.t.bufs = bufs
+
+      -- used for knowing previous active buf for term module's runner func
+      if args.event == 'BufEnter' then
+        local buf_history = vim.g.buf_history or {}
+        table.insert(buf_history, args.buf)
+        vim.g.buf_history = buf_history
+      end
+    end,
+  },
+
+  {
+    event = 'BufDelete',
+    group = augroup 'BufferAU',
+    callback = function(args)
+      for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+        local bufs = vim.t[tab].bufs
+        if bufs then
+          for i, bufnr in ipairs(bufs) do
+            if bufnr == args.buf then
+              table.remove(bufs, i)
+              vim.t[tab].bufs = bufs
+              break
+            end
+          end
+        end
+      end
+    end,
+  },
+
+  {
+    event = 'FileType',
+    group = augroup 'BufferAU',
+    pattern = 'qf',
+    callback = function() vim.opt_local.buflisted = false end,
+  },
+
   --- Auto commands to schedule for execution
   {
     after = true,
