@@ -3,10 +3,7 @@
 local wezterm = require 'wezterm'
 
 -- Configuration
-local config = {}
-if wezterm.config_builder then
-  config = wezterm.config_builder()
-end
+local config = wezterm.config_builder() or {}
 
 -- Cross-platform settings
 config.color_scheme = 'Sourdiesel'
