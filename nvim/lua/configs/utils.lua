@@ -34,25 +34,29 @@ return {
   end,
 
   load = function(self, type)
-    local create_cmd = type == 'autocmds' and self.create_auto_command or self.create_user_command
+    local commands = {
+      usercmds = self.create_user_command,
+      autocmds = self.create_auto_command,
+      mappings = self.set_keymap,
+    }
 
-    --- @type AutoCmd[]|UserCmd[] Auto/User commands
+    --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings
     local cmds = require('configs.' .. type)
 
-    --- @type AutoCmd[]|UserCmd[] Auto/User commands to be scheduled
+    --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings to be scheduled
     local deferred_cmds = {}
 
     for _, cmd in ipairs(cmds) do
-      if cmd.after then
+      if cmd.after or type == 'mappings' then
         table.insert(deferred_cmds, cmd)
       else
-        create_cmd(cmd)
+        commands[type](cmd)
       end
     end
 
     vim.schedule(function()
       for _, cmd in ipairs(deferred_cmds) do
-        create_cmd(cmd)
+        commands[type](cmd)
       end
     end)
   end,
