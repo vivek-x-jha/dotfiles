@@ -65,6 +65,25 @@ list_colors() {
   echo
 }
 
+update_feature_branches() {
+  local branches=("$@")
+
+  # Default branches
+  [[ $# -eq 0 ]] && branches=(
+    bootstrap
+    fzf
+    nvim
+    tmux
+    wezterm
+  )
+
+  for branch in "${branches[@]}"; do git switch "feature/$branch" && git merge main; done
+
+  git switch main
+
+  git log -5 --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
+}
+
 update_texlive() {
   sudo tlmgr update --self --all
 }
