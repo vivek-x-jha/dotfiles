@@ -1,4 +1,5 @@
 local icn = require 'ui.icons'
+local utl = require 'configs.utils'
 
 local lspservers = {
   'lua_ls',
@@ -36,29 +37,19 @@ return {
     'neovim/nvim-lspconfig',
     event = 'User FilePost',
     config = function()
-      local api = vim.api
-      local diag = vim.diagnostic
-      local sev = diag.severity
-      local fn = vim.fn
       local lspbuf = vim.lsp.buf
 
       local lspconfig = require 'lspconfig'
-      local icons = require 'ui.icons'
-
-      local remap = function(mode, keys, action, bufnr, desc)
-        local opts = { buffer = bufnr, desc = desc }
-        return vim.keymap.set(mode, keys, action, opts)
-      end
 
       -- configure diagnostics
-      diag.config {
-        virtual_text = { prefix = icons.virtualcircle },
+      vim.diagnostic.config {
+        virtual_text = { prefix = icn.virtualcircle },
         signs = {
           text = {
-            [sev.ERROR] = icons.error,
-            [sev.WARN] = icons.warn,
-            [sev.HINT] = icons.hint,
-            [sev.INFO] = icons.info,
+            [vim.diagnostic.severity.ERROR] = icn.error,
+            [vim.diagnostic.severity.WARN] = icn.warn,
+            [vim.diagnostic.severity.HINT] = icn.hint,
+            [vim.diagnostic.severity.INFO] = icn.info,
           },
         },
         severity_sort = true,
@@ -69,61 +60,143 @@ return {
       for _, server in ipairs(lspservers) do
         lspconfig[server].setup {
           on_attach = function(_, bufnr)
-            local listfolders = function() print(vim.inspect(lspbuf.list_workspace_folders())) end
-
-            local lsprename = function()
-              local buf = api.nvim_create_buf(false, true)
-              local var = fn.expand '<cword>'
-              local win = api.nvim_open_win(buf, true, {
-                height = 1,
-                style = 'minimal',
-                border = 'single',
-                row = 1,
-                col = 1,
-                relative = 'cursor',
-                width = #var + 15,
-                title = { { ' Renamer ', '@comment.danger' } },
-                title_pos = 'center',
-              })
-
-              vim.wo[win].winhl = 'Normal:Normal,FloatBorder:Removed'
-              api.nvim_set_current_win(win)
-
-              api.nvim_buf_set_lines(buf, 0, -1, true, { ' ' .. var })
-              api.nvim_input 'A'
-
-              remap({ 'i', 'n' }, '<Esc>', '<cmd>q<CR>', buf)
-
-              remap('i', '<CR>', function()
-                local newName = vim.trim(api.nvim_get_current_line())
-                api.nvim_win_close(win, true)
-
-                if #newName > 0 and newName ~= var then
-                  local params = vim.lsp.util.make_position_params()
-                  params.newName = newName
-                  vim.lsp.buf_request(0, 'textDocument/rename', params)
-                end
-
-                vim.cmd.stopinsert()
-              end, buf)
-            end
-
             local mappings = {
-              { 'n', 'gD', lspbuf.declaration, 'Go to declaration' },
-              { 'n', 'gd', lspbuf.definition, 'Go to definition' },
-              { 'n', 'gi', lspbuf.implementation, 'Go to implementation' },
-              { 'n', '<leader>sh', lspbuf.signature_help, 'Show signature help' },
-              { 'n', '<leader>wa', lspbuf.add_workspace_folder, 'Add workspace folder' },
-              { 'n', '<leader>wr', lspbuf.remove_workspace_folder, 'Remove workspace folder' },
-              { 'n', '<leader>wl', listfolders, 'List workspace folders' },
-              { 'n', '<leader>D', lspbuf.type_definition, 'Go to type definition' },
-              { 'n', '<leader>ra', lsprename, 'NvRenamer' },
-              { { 'n', 'v' }, '<leader>ca', lspbuf.code_action, 'Code action' },
-              { 'n', 'gr', lspbuf.references, 'Show references' },
+              {
+                desc = 'LSP Go to declaration',
+                buffer = bufnr,
+                mode = 'n',
+                keys = 'gD',
+                command = lspbuf.declaration,
+              },
+
+              {
+                desc = 'LSP Go to definition',
+                buffer = bufnr,
+                mode = 'n',
+                keys = 'gd',
+                command = lspbuf.definition,
+              },
+
+              {
+                desc = 'LSP Go to implementation',
+                buffer = bufnr,
+                mode = 'n',
+                keys = 'gi',
+                command = lspbuf.implementation,
+              },
+
+              {
+                desc = 'LSP Show signature help',
+                buffer = bufnr,
+                mode = 'n',
+                keys = '<leader>sh',
+                command = lspbuf.signature_help,
+              },
+
+              {
+                desc = 'LSP Add workspace folder',
+                buffer = bufnr,
+                mode = 'n',
+                keys = '<leader>wa',
+                command = lspbuf.add_workspace_folder,
+              },
+
+              {
+                desc = 'LSP Remove workspace folder',
+                buffer = bufnr,
+                mode = 'n',
+                keys = '<leader>wr',
+                command = lspbuf.remove_workspace_folder,
+              },
+
+              {
+                desc = 'LSP Go to type definition',
+                buffer = bufnr,
+                mode = 'n',
+                keys = '<leader>D',
+                command = lspbuf.type_definition,
+              },
+
+              {
+                desc = 'LSP Code action',
+                buffer = bufnr,
+                mode = { 'n', 'v' },
+                keys = '<leader>ca',
+                command = lspbuf.code_action,
+              },
+
+              {
+                desc = 'LSP Show references',
+                buffer = bufnr,
+                mode = 'n',
+                keys = 'gr',
+                command = lspbuf.references,
+              },
+
+              {
+                desc = 'LSP List workspace folders',
+                buffer = bufnr,
+                mode = 'n',
+                keys = '<leader>wl',
+                command = function() print(vim.inspect(lspbuf.list_workspace_folders())) end,
+              },
+
+              {
+                desc = 'LSP NvRenamer',
+                buffer = bufnr,
+                mode = 'n',
+                keys = '<leader>ra',
+                command = function()
+                  local buf = vim.api.nvim_create_buf(false, true)
+                  local var = vim.fn.expand '<cword>'
+                  local win = vim.api.nvim_open_win(buf, true, {
+                    height = 1,
+                    style = 'minimal',
+                    border = 'single',
+                    row = 1,
+                    col = 1,
+                    relative = 'cursor',
+                    width = #var + 15,
+                    title = { { ' Renamer ', '@comment.danger' } },
+                    title_pos = 'center',
+                  })
+
+                  vim.wo[win].winhl = 'Normal:Normal,FloatBorder:Removed'
+                  vim.api.nvim_set_current_win(win)
+
+                  vim.api.nvim_buf_set_lines(buf, 0, -1, true, { ' ' .. var })
+                  vim.api.nvim_input 'A'
+
+                  utl.set_keymap {
+                    desc = 'Exit LSP rename operation',
+                    buffer = buf,
+                    mode = { 'i', 'n' },
+                    keys = '<Esc>',
+                    command = '<cmd>q<CR>',
+                  }
+
+                  utl.set_keymap {
+                    desc = 'Send an LSP rename request',
+                    buffer = buf,
+                    mode = 'i',
+                    keys = '<CR>',
+                    command = function()
+                      local newName = vim.trim(vim.api.nvim_get_current_line())
+                      vim.api.nvim_win_close(win, true)
+
+                      if #newName > 0 and newName ~= var then
+                        local params = vim.lsp.util.make_position_params()
+                        params.newName = newName
+                        vim.lsp.buf_request(0, 'textDocument/rename', params)
+                      end
+                    end,
+                  }
+                end,
+              },
             }
 
             for _, keymap in ipairs(mappings) do
-              remap(keymap[1], keymap[2], keymap[3], bufnr, 'LSP ' .. keymap[4])
+              utl.set_keymap(keymap)
             end
           end,
 
