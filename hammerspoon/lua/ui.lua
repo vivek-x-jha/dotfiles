@@ -22,7 +22,7 @@ hs.console.consoleFont {
 }
 
 -- Get or set the color that regular output displayed in the Hammerspoon console is displayed with
-hs.console.consolePrintColor { hex = '#ceffc9' }
+hs.console.consolePrintColor { hex = '#c9ccfb' }
 
 -- Get or set the color that function results displayed in the Hammerspoon console are displayed with
 hs.console.consoleResultColor { hex = '#ffc7c7' }
