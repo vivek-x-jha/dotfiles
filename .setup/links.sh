@@ -39,6 +39,8 @@ symlinks=(
   .dotfiles/vscode/.vscode     "$HOME"             .vscode    
   .dotfiles/zsh/.zshenv        "$HOME"             .zshenv       
 
+  ../.dotfiles/hammerspoon     "$HOME"             .hammerspoon
+
   ../.dotfiles/1Password       "$XDG_CONFIG"       1Password
   ../.dotfiles/atuin           "$XDG_CONFIG"       atuin
   ../.dotfiles/bat             "$XDG_CONFIG"       bat 
