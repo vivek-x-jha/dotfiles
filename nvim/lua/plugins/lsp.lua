@@ -37,10 +37,6 @@ return {
     'neovim/nvim-lspconfig',
     event = 'User FilePost',
     config = function()
-      local lspbuf = vim.lsp.buf
-
-      local lspconfig = require 'lspconfig'
-
       -- configure diagnostics
       vim.diagnostic.config {
         virtual_text = { prefix = icn.virtualcircle },
@@ -58,7 +54,7 @@ return {
 
       -- configure language servers
       for _, server in ipairs(lspservers) do
-        lspconfig[server].setup {
+        require('lspconfig')[server].setup {
           on_attach = function(_, bufnr)
             local mappings = {
               {
@@ -66,7 +62,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = 'gD',
-                command = lspbuf.declaration,
+                command = vim.lsp.buf.declaration,
               },
 
               {
@@ -74,7 +70,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = 'gd',
-                command = lspbuf.definition,
+                command = vim.lsp.buf.definition,
               },
 
               {
@@ -82,7 +78,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = 'gi',
-                command = lspbuf.implementation,
+                command = vim.lsp.buf.implementation,
               },
 
               {
@@ -90,7 +86,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = '<leader>sh',
-                command = lspbuf.signature_help,
+                command = vim.lsp.buf.signature_help,
               },
 
               {
@@ -98,7 +94,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = '<leader>wa',
-                command = lspbuf.add_workspace_folder,
+                command = vim.lsp.buf.add_workspace_folder,
               },
 
               {
@@ -106,7 +102,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = '<leader>wr',
-                command = lspbuf.remove_workspace_folder,
+                command = vim.lsp.buf.remove_workspace_folder,
               },
 
               {
@@ -114,7 +110,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = '<leader>D',
-                command = lspbuf.type_definition,
+                command = vim.lsp.buf.type_definition,
               },
 
               {
@@ -122,7 +118,7 @@ return {
                 buffer = bufnr,
                 mode = { 'n', 'v' },
                 keys = '<leader>ca',
-                command = lspbuf.code_action,
+                command = vim.lsp.buf.code_action,
               },
 
               {
@@ -130,7 +126,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = 'gr',
-                command = lspbuf.references,
+                command = vim.lsp.buf.references,
               },
 
               {
@@ -138,7 +134,7 @@ return {
                 buffer = bufnr,
                 mode = 'n',
                 keys = '<leader>wl',
-                command = function() print(vim.inspect(lspbuf.list_workspace_folders())) end,
+                command = function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
               },
 
               {
