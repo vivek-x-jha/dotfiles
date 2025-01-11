@@ -105,20 +105,19 @@ return {
     group = augroup 'FilePostAU',
     event = { 'UIEnter', 'BufReadPost', 'BufNewFile' },
     callback = function(args)
-      local g = vim.g
       local file = api.nvim_buf_get_name(args.buf)
       local buftype = api.nvim_get_option_value('buftype', { buf = args.buf })
 
-      if not g.ui_entered and args.event == 'UIEnter' then g.ui_entered = true end
+      if not vim.g.ui_entered and args.event == 'UIEnter' then vim.g.ui_entered = true end
 
-      if file ~= '' and buftype ~= 'nofile' and g.ui_entered then
+      if file ~= '' and buftype ~= 'nofile' and vim.g.ui_entered then
         api.nvim_exec_autocmds('User', { pattern = 'FilePost', modeline = false })
         api.nvim_del_augroup_by_name 'FilePostAU'
 
         vim.schedule(function()
           api.nvim_exec_autocmds('FileType', {})
 
-          if g.editorconfig then require('editorconfig').config(args.buf) end
+          if vim.g.editorconfig then require('editorconfig').config(args.buf) end
         end)
       end
     end,
