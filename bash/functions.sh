@@ -72,6 +72,7 @@ update_feature_branches() {
   [[ $# -eq 0 ]] && branches=(
     bootstrap
     fzf
+    hammerspoon
     nvim
     tmux
     wezterm
