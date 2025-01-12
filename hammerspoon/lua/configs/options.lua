@@ -2,8 +2,8 @@ local theme = require 'colors.sourdiesel'
 
 return {
   toolbar = false,
-  alpha = 0.95,
-  consoleCommandColor = { hex = theme.brightyellow },
+  alpha = 0.98,
+  consoleCommandColor = { hex = theme.green },
   consoleFont = { name = 'JetBrainsMono Nerd Font', size = 15 },
   consolePrintColor = { hex = theme.brightmagenta },
   consoleResultColor = { hex = theme.red },
