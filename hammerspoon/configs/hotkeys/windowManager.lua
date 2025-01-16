@@ -37,7 +37,7 @@ return {
     command = function()
       local win = hs.window.focusedWindow()
       if win then
-        win:moveToUnit(hs.geometry.rect(0.25, 0, 0.5, 1))
+        win:moveToUnit(hs.geometry.rect(0.25, 0.25, 0.5, 0.5))
       else
         hs.alert.show 'No window to center'
       end
@@ -154,8 +154,8 @@ return {
         win:setFrame {
           x = screenFrame.x + margin,
           y = screenFrame.y + margin,
-          w = screenFrame.w - (2 * margin),
-          h = screenFrame.h - (2 * margin),
+          w = screenFrame.w - (3 * margin),
+          h = screenFrame.h - (3 * margin),
         }
         print('Almost Maximized ' .. win:title())
       else
@@ -165,9 +165,9 @@ return {
   },
 
   {
-    desc = 'Next Display',
+    desc = 'Left Display',
     mods = ctrl_alt_cmd,
-    key = 'Right',
+    key = 'Left',
     command = function()
       local win = hs.window.focusedWindow()
       if win then
@@ -179,9 +179,9 @@ return {
   },
 
   {
-    desc = 'Previous Display',
+    desc = 'Right Display',
     mods = ctrl_alt_cmd,
-    key = 'Left',
+    key = 'Right',
     command = function()
       local win = hs.window.focusedWindow()
       if win then
