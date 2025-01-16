@@ -1,7 +1,10 @@
+local ctrl_alt = { 'ctrl', 'alt' }
+local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
+
 return {
   {
     desc = 'Left Half',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'Left',
     command = function()
       local win = hs.window.focusedWindow()
@@ -15,7 +18,7 @@ return {
 
   {
     desc = 'Right Half',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'Right',
     command = function()
       local win = hs.window.focusedWindow()
@@ -29,7 +32,7 @@ return {
 
   {
     desc = 'Center Half',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'C',
     command = function()
       local win = hs.window.focusedWindow()
@@ -43,7 +46,7 @@ return {
 
   {
     desc = 'Top Half',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'Up',
     command = function()
       local win = hs.window.focusedWindow()
@@ -57,7 +60,7 @@ return {
 
   {
     desc = 'Bottom Half',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'Down',
     command = function()
       local win = hs.window.focusedWindow()
@@ -71,7 +74,7 @@ return {
 
   {
     desc = 'Top Left',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'U',
     command = function()
       local win = hs.window.focusedWindow()
@@ -85,7 +88,7 @@ return {
 
   {
     desc = 'Top Right',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'I',
     command = function()
       local win = hs.window.focusedWindow()
@@ -99,7 +102,7 @@ return {
 
   {
     desc = 'Bottom Left',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'J',
     command = function()
       local win = hs.window.focusedWindow()
@@ -113,7 +116,7 @@ return {
 
   {
     desc = 'Bottom Right',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'K',
     command = function()
       local win = hs.window.focusedWindow()
@@ -127,7 +130,7 @@ return {
 
   {
     desc = 'Maximize',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt,
     key = 'F',
     command = function()
       local win = hs.window.focusedWindow()
@@ -141,7 +144,7 @@ return {
 
   {
     desc = 'Almost Maximize',
-    mods = { 'alt', 'ctrl' },
+    mods = ctrl_alt,
     key = 'A',
     command = function()
       local win = hs.window.focusedWindow()
@@ -163,7 +166,7 @@ return {
 
   {
     desc = 'Next Display',
-    mods = { 'ctrl', 'alt' },
+    mods = ctrl_alt_cmd,
     key = 'Right',
     command = function()
       local win = hs.window.focusedWindow()
@@ -177,7 +180,7 @@ return {
 
   {
     desc = 'Previous Display',
-    mods = { 'ctrl', 'alt', 'cmd' },
+    mods = ctrl_alt_cmd,
     key = 'Left',
     command = function()
       local win = hs.window.focusedWindow()
