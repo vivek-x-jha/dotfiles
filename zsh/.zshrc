@@ -23,31 +23,6 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 [ -d "$(brew --prefix)/share/zsh-completions" ] || brew install zsh-completions
 fpath=("$(brew --prefix)/share/zsh-completions" "$ZDOTDIR/functions" "${fpath[@]}")
 
-# Set color variables
-colors=(
-  0   black         '#cccccc'  '\e[0;30m'
-  1   red           '#ffc7c7'  '\e[0;31m'
-  2   green         '#ceffc9'  '\e[0;32m'
-  3   yellow        '#fdf7cd'  '\e[0;33m'
-  4   blue          '#c4effa'  '\e[0;34m'
-  5   magenta       '#eccef0'  '\e[0;35m'
-  6   cyan          '#8ae7c5'  '\e[0;36m'
-  7   white         '#f4f3f2'  '\e[0;37m'
-
-  8   brightblack   '#5c617d'  '\e[0;90m'
-  9   brightred     '#f096b7'  '\e[0;91m'
-  10  brightgreen   '#d2fd9d'  '\e[0;92m'
-  11  brightyellow  '#f3b175'  '\e[0;93m'
-  12  brightblue    '#80d7fe'  '\e[0;94m'
-  13  brightmagenta '#c9ccfb'  '\e[0;95m'
-  14  brightcyan    '#47e7b1'  '\e[0;96m'
-  15  brightwhite   '#ffffff'  '\e[0;97m'
-
-  248 grey          '#313244'  '\e[38;5;248m'
-  ''  reset         ''           '\e[0m'
-)
-for ((i=1; i<${#colors[@]}; i+=4)); do declare "${colors[i+1]}"="${colors[i+3]}"; done
-
 # Load secrets
 [ -f "$DOT/.env" ] && source "$DOT/.env"
 

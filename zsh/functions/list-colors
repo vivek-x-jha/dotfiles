@@ -1,27 +1,33 @@
 #!/usr/bin/env zsh
 
-local table_width=36
+local colors=(
+  "#cccccc"
+  "#ffc7c7"
+  "#ceffc9"
+  "#fdf7cd"
+  "#c4effa"
+  "#eccef0"
+  "#8ae7c5"
+  "#f4f3f2"
 
-# Create Color Table Header
-print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
+  "#5c617d"
+  "#f096b7"
+  "#d2fd9d"
+  "#f3b175"
+  "#80d7fe"
+  "#c9ccfb"
+  "#47e7b1"
+  "#ffffff"
+)
 
-print_separator
-printf "${white}%-4s %-14s %-8s %-8s${reset}\n" 'VGA' 'COLOR' 'HEX' 'ANSI'
-print_separator
+for hex in "${colors[@]}"; do
+  # Convert hex to RGB
+  local r=${hex[2,3]}; r=$((16#$r))
+  local g=${hex[4,5]}; g=$((16#$g))
+  local b=${hex[6,7]}; b=$((16#$b))
 
-# Create Color Table Rows
-for ((i=1; i<${#colors[@]}; i+=4)); do
-  local vga="${colors[i]}"
-  local name="${colors[i+1]}"
-  local hex="${colors[i+2]}"
-  local ansi="${colors[i+3]}"
+  # Create the ANSI escape sequence for the color
+  local ansi="\e[38;2;${r};${g};${b}m"
 
-  if [[ "$name" == 'reset' ]]; then
-    local linecolor=''
-  else
-    local linecolor=${(P)${:-$name}}
-  fi
-
-  # Indirect Substitution of name as color variable
-  printf "${linecolor}%-4s %-14s %-8s %-8s${reset}\n" "$vga" "$name" "$hex" "$ansi"
+  printf "${ansi}(%s) The quick brown fox jumps over the lazy dog\e[0m\n" "$hex"
 done

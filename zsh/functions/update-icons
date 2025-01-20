@@ -39,10 +39,10 @@ declare -A dir_icons=(
 )
 
 # Create directory-icons table header
-print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-' }
+print_separator() { printf "${BRIGHTBLACK}%-${table_width}s${RESET}\n" | tr ' ' '-' }
 
 print_separator
-printf "%-2s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
+printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
 print_separator
 
 # Sort keys while preserving spaces in the directories
@@ -60,11 +60,11 @@ for dir in "${sorted_dirs[@]}"; do
   basename_icon=$(basename "$icon")
 
   if sudo fileicon set "$dir" "$icon" &>/dev/null; then
-    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" " " "$expanded_dir" "$basename_icon"
+    printf "${GREEN}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" " " "$expanded_dir" "$basename_icon"
   elif [[ $basename_dir == 'Mimestream.app' ]]; then
-    printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" " " "$expanded_dir" "$basename_icon"
+    printf "${GREEN}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" " " "$expanded_dir" "$basename_icon"
   else
-    printf "${red}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n"   " " "$expanded_dir" "$basename_icon"
+    printf "${RED}%-1s ${white}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n"   " " "$expanded_dir" "$basename_icon"
     ((success_count--))
   fi
 
@@ -74,5 +74,5 @@ done
 local fail_count=$(($dir_count-$success_count))
 
 print_separator
-printf "${green}%-2s ${brightblack}%-37s${reset}\n" "$success_count" 'Folder icon(s) updated successfully'
-[ $fail_count -eq 0 ] || printf "${red}%-2s ${brightblack}%-37s${reset}\n" "$fail_count" 'Folder icon(s) failed to update'
+printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$success_count" 'Folder icon(s) updated successfully'
+[ $fail_count -eq 0 ] || printf "${RED}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$fail_count" 'Folder icon(s) failed to update'
