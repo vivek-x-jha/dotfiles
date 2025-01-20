@@ -37,32 +37,37 @@ gsw() {
 
 list_colors() {
 
-  local table_width=36
+  local colors=(
+    "#cccccc"
+    "#ffc7c7"
+    "#ceffc9"
+    "#fdf7cd"
+    "#c4effa"
+    "#eccef0"
+    "#8ae7c5"
+    "#f4f3f2"
 
-  # Create Color Table Header
-  print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
+    "#5c617d"
+    "#f096b7"
+    "#d2fd9d"
+    "#f3b175"
+    "#80d7fe"
+    "#c9ccfb"
+    "#47e7b1"
+    "#ffffff"
+  )
 
-  print_separator
-  printf "${white}%-4s %-14s %-8s %-8s${reset}\n" 'VGA' 'COLOR' 'HEX' 'ANSI'
-  print_separator
+  for hex in "${colors[@]}"; do
+    # Convert hex to RGB
+    local r=$((16#${hex:1:2}))
+    local g=$((16#${hex:3:2}))
+    local b=$((16#${hex:5:2}))
+    
+    # Create the ANSI escape sequence for the color
+    local ansi="\e[38;2;${r};${g};${b}m"
 
-  # Create Color Table Rows
-  for ((i=0; i<${#colors[@]}; i+=4)); do
-    local vga="${colors[i]}"
-    local name="${colors[i+1]}"
-    local hex="${colors[i+2]}"
-    local ansi="${colors[i+3]}"
-
-    if [[ "$name" == 'reset' ]]; then
-      local linecolor=''
-    else
-      local linecolor=${!name}
-    fi
-
-    # Indirect Substitution of name as color variable
-    printf "${linecolor}%-4s %-14s %-8s %-8s${reset}\n" "$vga" "$name" "$hex" "$ansi"
+    printf "${ansi}(%s) The quick brown fox jumps over the lazy dog${RESET}\n" "$hex"
   done
-  echo
 }
 
 update_feature_branches() {
@@ -135,10 +140,10 @@ update_icons() {
   )
 
   # Create Directory-Icons Table Header
-  print_separator() { printf "${brightblack}%-${table_width}s${reset}\n" | tr ' ' '-'; }
+  print_separator() { printf "${BRIGHTBLACK}%-${table_width}s${RESET}\n" | tr ' ' '-'; }
 
   print_separator
-  printf "%-2s ${blue}%-37s ${magenta}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
+  printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${RESET}\n" '' 'App / Directory' '~/Pictures/icons/'
   print_separator
 
   # Sort keys while preserving spaces in the directories
@@ -156,11 +161,11 @@ update_icons() {
     local basename_icon=$(basename "$icon")
 
     if sudo fileicon set "$dir" "$icon" &> /dev/null; then
-      printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
-    elif [[ $basename_dir == 'Mimestream.app' ]]; then
-      printf "${green}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n" "" "$expanded_dir" "$basename_icon"
-    else
-      printf "${red}%-1s ${white}%-37s ${brightmagenta}%-5s${reset}\n"   "" "$expanded_dir" "$basename_icon"
+      printf "${GREEN}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" " " "$expanded_dir" "$basename_icon"
+    elif [[ $basename_dir == 'Mimestream.app' ]]; then                        
+      printf "${GREEN}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" " " "$expanded_dir" "$basename_icon"
+    else                                                                      
+      printf "${RED}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n"   " " "$expanded_dir" "$basename_icon"
       ((success_count--))
     fi
 
@@ -170,8 +175,8 @@ update_icons() {
   local fail_count=$(($dir_count-$success_count))
 
   print_separator
-  printf "${green}%-2s ${brightblack}%-37s ${reset}\n" "$success_count" 'Folder icon(s) updated successfully'
-  [ $fail_count -eq 0 ] || printf "${red}%-2s ${brightblack}%-37s ${reset}\n" "$fail_count" 'Folder icon(s) failed to update'
+  printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s ${RESET}\n" "$success_count" 'Folder icon(s) updated successfully'
+  [ $fail_count -eq 0 ] || printf "${RED}%-2s ${BRIGHTBLACK}%-37s ${RESET}\n" "$fail_count" 'Folder icon(s) failed to update'
   echo
 }
 
