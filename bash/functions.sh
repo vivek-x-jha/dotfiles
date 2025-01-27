@@ -182,19 +182,6 @@ update_icons() {
 }
 
 update_all() {
-  # Keep sudo alive for the duration of the script
-  sudo -v
-  while true; do
-    sudo -n true
-    sleep 60
-  done 2>/dev/null &
-
-  # Store the PID of the keep-alive process
-  sudo_keep_alive_pid=$!
-
-  # Ensure the keep-alive process is killed when the script exits
-  trap "kill $sudo_keep_alive_pid" EXIT
-
   # Run the updates
   update_brew
   update_icons
