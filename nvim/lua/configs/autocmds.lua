@@ -231,8 +231,7 @@ return {
       'BufEnter',
     },
     callback = function(args)
-      local state = require 'ui.state'
-      state.ns = api.nvim_create_namespace 'Colorify'
+      require('ui.state').ns = api.nvim_create_namespace 'Colorify'
 
       if vim.bo[args.buf].bl then require('ui.colorify').attach(args.buf, args.event) end
     end,
