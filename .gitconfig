@@ -12,8 +12,6 @@
 [commit]
 	gpgsign = true
 [core]
-	editor = nvim
-	pager = bat -p
 	sshCommand = ssh -F ~/.dotfiles/ssh/config
 [color]
 	diff = auto
