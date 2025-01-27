@@ -127,6 +127,7 @@ update_icons() {
     /Applications/Tex                      ~/Pictures/icons/tex.png
     /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
     /Applications/WezTerm.app              ~/Pictures/icons/wezterm.png
+    /Applications/WhatsApp.app             ~/Pictures/icons/whatsapp.png
 
     # Folders                              Icons
     ~/Developer                            ~/Pictures/icons/developer.png
