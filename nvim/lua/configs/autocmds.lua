@@ -20,6 +20,7 @@ return {
   },
 
   {
+    enabled = false,
     desc = 'Initialize Showkeys on startup',
     group = augroup 'ShowkeysAU',
     event = 'VimEnter',

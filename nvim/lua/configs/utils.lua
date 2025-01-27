@@ -35,7 +35,6 @@ return {
 
   load = function(self, type)
     local commands = {
-      -- key = config.lua, value = self.<utl-function>
       usercmds = self.create_user_command,
       autocmds = self.create_auto_command,
       mappings = self.set_keymap,
@@ -48,11 +47,15 @@ return {
     local deferred_cmds = {}
 
     for _, cmd in ipairs(cmds) do
-      if cmd.after or type == 'mappings' then
+      if cmd.enabled == false then
+        goto continue
+      elseif cmd.after or type == 'mappings' then
         table.insert(deferred_cmds, cmd)
       else
         commands[type](cmd)
       end
+
+      ::continue::
     end
 
     vim.schedule(function()
