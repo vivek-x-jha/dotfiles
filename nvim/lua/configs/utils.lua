@@ -35,6 +35,7 @@ return {
 
   load = function(self, type)
     local commands = {
+      -- key = config.lua, value = self.<utl-function>
       usercmds = self.create_user_command,
       autocmds = self.create_auto_command,
       mappings = self.set_keymap,
