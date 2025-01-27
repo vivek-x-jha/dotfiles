@@ -1,55 +1,39 @@
-# https://www.gnu.org/software/bash/
-
-# Set History
+# Configure shell history
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
-# Set PATH and FPATH without duplicating any directories
-[[ -z $TMUX ]] || { PATH=''; eval "$(/usr/libexec/path_helper -s)"; }
-[[ $PATH == *$HOMEBREW_BIN* ]] || eval "$($HOMEBREW_BIN/brew shellenv)"
-[[ $PATH == */Library/Frameworks/Python.framework/Versions/3.13/bin* ]] || export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
-[[ $PATH == */Library/TeX/texbin* ]] || export PATH="$PATH:/Library/TeX/texbin"
-[[ $PATH == */Applications/iTerm.app/Contents/Resources/utilities* ]] || export PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
+# Re-initialize PATH in new tmux sessions
+[ -z "$TMUX" ] || source "$DOT/bash/configs/.path"
 
-# Load secrets
+# Initialize secrets
 [ -f "$DOT/.env" ] && source "$DOT/.env"
 
-# Set Shell Options
-shopt -s autocd
-
-# Load shell plugins
-source "$XDG_DATA_HOME/blesh/ble.sh"
-
-# Load prompt theme
-command -v starship &> /dev/null || brew install starship
-eval "$(starship init bash)"
-
-# Load aliases
-source "$DOT/bash/.aliases"
-
-# Load shell functions
-source "$DOT/bash/functions.sh"
-
-# Configure tree and ls: sets LS_COLORS
-command -v gdircolors &> /dev/null || brew install coreutils
+# Configure colorscheme: ls, tree
 eval "$(gdircolors "$DOT/.dircolors")"
 
-# Configure eza: sets EZA_COLORS
+# Configure colorscheme: eza
 source "$DOT/.ezarc"
 
-# Configure grep: sets GREP_COLOR
-source "$DOT/.greprc"
+# Configure shell options
+shopt -s autocd
 
-# Configure fzf and enable shell integration
-command -v fzf &> /dev/null || brew install fzf 
-eval "$(fzf --bash)"
-source "$DOT/.fzfrc"
+# Initialize shell user functions
+source "$DOT/bash/functions.sh"
 
-# Configure atuin
-command -v atuin &>/dev/null || brew install atuin
-eval "$(atuin init bash)"
-bind -x '"\C-e": "__atuin_history"'
-bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'
+# Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
+source "$XDG_DATA_HOME/blesh/ble.sh"
 
-# Configure 1Password plugins
+# Initialize shell aliases
+source "$DOT/bash/configs/.aliases"
+
+# Initialize & configure shell prompt theme
+eval "$(starship init bash)"
+
+# Initialize & configure fuzzy finder
+eval "$(fzf --bash)" && source "$DOT/.fzfrc"
+
+# Initialize & configure shell history manager
+eval "$(atuin init bash)" && { bind -x '"\C-e": "__atuin_history"'; bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'; }
+
+# Initialize shell authentication manager: 1p -> gh
 source "$XDG_CONFIG_HOME/op/plugins.sh"

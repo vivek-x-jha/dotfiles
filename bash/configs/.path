@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+unset PATH
+
+# Construct PATH
+eval "$(/usr/libexec/path_helper -s)"
+eval "$($HOMEBREW_BIN/brew shellenv)"
+
+PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
+PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
+
+export PATH
