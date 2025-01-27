@@ -27,9 +27,8 @@ alias tree='tree -aCI ".git|.github"'
 alias list-path='print -l "${path[@]}"'
 alias list-fpath='print -l "${fpath[@]}"'
 
-alias list-plugins='print -l "${zsh_plugins[@]}" | sort'
-alias list-configs='print -l "${zsh_configs[@]}" | sort'
-alias list-options='print -l "${zsh_options[@]}" | sort'
+alias list-plugins='print -l "${ZPLUGS[@]}" | sort'
+alias list-options='setopt'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 
 alias list-aliases='alias | sort'

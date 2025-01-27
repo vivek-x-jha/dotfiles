@@ -1,25 +1,31 @@
-# https://www.gnu.org/software/bash/
-
 # Dotfiles
 export DOT="$HOME/.dotfiles"
 
-# XDG base directory specification
+# Create file structure: https://specifications.freedesktop.org/basedir-spec/latest/
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# Neovim editing options
-export EDITOR='nvim'
+# Editing and Pagination
+if command -v nvim &>/dev/null; then
+  export EDITOR='nvim'
+else
+  export EDITOR='vim'
+fi
+
 export VISUAL="$EDITOR"
 
-# Homebrew
+command -v bat &>/dev/null && export PAGER='bat -p'
+
+# Supress homebrew hints & dynamically create binary path
 export HOMEBREW_NO_ENV_HINTS=1
+case "$(uname -m)" in
   'arm64' ) export HOMEBREW_BIN='/opt/homebrew/bin' ;;
   'x86_64') export HOMEBREW_BIN='/usr/local/bin'    ;;
 esac
 
-# Tmux plugin manager
+# TMUX plugin manager path
 export TPM="$XDG_CONFIG_HOME/tmux/plugins/tpm"
 
 # History 
@@ -51,8 +57,13 @@ export BRIGHTMAGENTA='\e[0;95m'
 export BRIGHTCYAN='\e[0;96m'
 export BRIGHTWHITE='\e[0;97m'
 
+# Other colors
 export GREY='\e[38;5;248m'
 export RESET='\e[0m'
+export GREP_COLOR="38;5;9"
 
-# User Configurations
-[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
+# Initialize path
+source "$DOT/bash/configs/.path"
+
+# Configure shell options: https://www.gnu.org/software/bash/
+source "$DOT/bash/.bashrc"

@@ -57,8 +57,6 @@
   declare -g POWERLEVEL9K_{LEFT,RIGHT}_SEGMENT_SEPARATOR=        # no end-of-line symbol
   declare -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=           # no segment icons
 
-  declare -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true                # Add an empty line before each prompt except the first
-
   declare -g POWERLEVEL9K_TRANSIENT_PROMPT=always                # enable transient prompt
   declare -g POWERLEVEL9K_INSTANT_PROMPT=quiet                   # supress instant prompt errors
   declare -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true                # prevent option editing on the fly
