@@ -10,6 +10,7 @@ local branches=("$@")
   fzf
   hammerspoon
   nvim
+  shell
   tmux
   wezterm
 )

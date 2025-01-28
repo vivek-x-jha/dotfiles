@@ -79,6 +79,7 @@ update_feature_branches() {
     fzf
     hammerspoon
     nvim
+    shell
     tmux
     wezterm
   )
