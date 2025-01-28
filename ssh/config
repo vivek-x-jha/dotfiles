@@ -1,5 +1,5 @@
 Host *
-  UserKnownHostsFile ~/.dotfiles/ssh/known_hosts
+  UserKnownHostsFile ~/.config/ssh/known_hosts
   SendEnv            LANG LC_*
   AddKeysToAgent     yes
   UseKeychain        yes
