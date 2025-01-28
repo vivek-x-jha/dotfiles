@@ -33,30 +33,37 @@ cp -Rf "$HOME/.dotfiles" "$XDG_CACHE/.dotfiles.bak"
 
 # Link dotfiles and cloud folders
 symlinks=(
-
   .dotfiles/bash/.bash_profile "$HOME"             .bash_profile
   .dotfiles/bash/.bashrc       "$HOME"             .bashrc      
-  .dotfiles/vscode/.vscode     "$HOME"             .vscode    
   .dotfiles/zsh/.zshenv        "$HOME"             .zshenv       
 
   ../.dotfiles/hammerspoon     "$HOME"             .hammerspoon
 
   ../.dotfiles/1Password       "$XDG_CONFIG"       1Password
   ../.dotfiles/atuin           "$XDG_CONFIG"       atuin
+  ../.dotfiles/bash            "$XDG_CONFIG"       bash 
   ../.dotfiles/bat             "$XDG_CONFIG"       bat 
+  ../.dotfiles/brew            "$XDG_CONFIG"       brew 
   ../.dotfiles/btop            "$XDG_CONFIG"       btop
+  ../.dotfiles/dust            "$XDG_CONFIG"       dust
+  ../.dotfiles/eza             "$XDG_CONFIG"       eza 
+  ../.dotfiles/fzf             "$XDG_CONFIG"       fzf 
+  ../.dotfiles/gh              "$XDG_CONFIG"       gh 
   ../.dotfiles/glow            "$XDG_CONFIG"       glow
   ../.dotfiles/karabiner       "$XDG_CONFIG"       karabiner
+  ../.dotfiles/mycli           "$XDG_CONFIG"       mycli
   ../.dotfiles/nvim            "$XDG_CONFIG"       nvim
+  ../.dotfiles/ssh             "$XDG_CONFIG"       ssh
+  ../.dotfiles/task            "$XDG_CONFIG"       task
   ../.dotfiles/tmux            "$XDG_CONFIG"       tmux
   ../.dotfiles/wezterm         "$XDG_CONFIG"       wezterm
   ../.dotfiles/yazi            "$XDG_CONFIG"       yazi
-  ../.dotfiles/.starship.toml  "$XDG_CONFIG"       starship.toml
+  ../.dotfiles/zsh             "$XDG_CONFIG"       zsh 
 
-  ../../.dotfiles/.dust.toml   "$XDG_CONFIG/dust"  config.toml
-  ../../.dotfiles/.gh.yml      "$XDG_CONFIG/gh"    config.yml
-  ../../.dotfiles/.gitconfig   "$XDG_CONFIG/git"   config
-  ../../.dotfiles/.op          "$XDG_CONFIG/op"    plugins.sh
+  ../.dotfiles/starship/config.toml "$XDG_CONFIG"  starship.toml
+
+  ../../.dotfiles/git/.gitconfig "$XDG_CONFIG/git" config
+  ../../.dotfiles/op/plugins.sh  "$XDG_CONFIG/op"  plugins.sh
 
   "$CLOUD/developer"           "$HOME"             Developer
 

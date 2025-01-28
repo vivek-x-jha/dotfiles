@@ -78,7 +78,7 @@ alias gmg='git merge'
 alias czc='cz commit'
 
 # CLI Tools
-alias mycli='mycli --myclirc "$DOT/.myclirc"'
+alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
 alias weather='curl wttr.in'
 alias chatgpt='python3 ~/Developer/chatgpt-cli/chatgpt.py --key=$(python3 ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
 

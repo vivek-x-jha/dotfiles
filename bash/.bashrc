@@ -9,10 +9,7 @@ export HISTTIMEFORMAT="%F %T "
 [ -f "$DOT/.env" ] && source "$DOT/.env"
 
 # Configure colorscheme: ls, tree
-eval "$(gdircolors "$DOT/.dircolors")"
-
-# Configure colorscheme: eza
-source "$DOT/.ezarc"
+eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Configure shell options
 shopt -s autocd
@@ -30,7 +27,7 @@ source "$DOT/bash/configs/.aliases"
 eval "$(starship init bash)"
 
 # Initialize & configure fuzzy finder
-eval "$(fzf --bash)" && source "$DOT/.fzfrc"
+eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
 
 # Initialize & configure shell history manager
 eval "$(atuin init bash)" && { bind -x '"\C-e": "__atuin_history"'; bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'; }
