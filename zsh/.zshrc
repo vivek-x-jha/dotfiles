@@ -13,10 +13,7 @@ SAVEHIST=10000
 [ -f "$DOT/.env" ] && source "$DOT/.env"
 
 # Configure colorscheme: ls, tree
-eval "$(gdircolors "$DOT/.dircolors")"
-
-# Configure colorscheme: eza
-source "$DOT/.ezarc"
+eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Configure shell options
 setopt "$ZOPTS[@]" 
@@ -40,7 +37,7 @@ source "$ZDOTDIR/completions/cache.zsh"
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/themes/.p10k.zsh"
 
 # Initialize & configure fuzzy finder
-source <(fzf --zsh) && source "$DOT/.fzfrc"
+source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
 
 # Initialize & configure shell history manager
 eval "$(atuin init zsh)" && { bindkey '^e' atuin-search; bindkey '^[[A' atuin-up-search }

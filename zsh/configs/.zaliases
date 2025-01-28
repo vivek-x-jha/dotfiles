@@ -24,10 +24,10 @@ alias l='eza --all --long --git --icons=always --group-directories-first'
 alias tree='tree -aCI ".git|.github"'
 
 # Printing Long List Format
-alias list-path='print -l "${path[@]}"'
-alias list-fpath='print -l "${fpath[@]}"'
+alias list-path='print -l "$path[@]"'
+alias list-fpath='print -l "$fpath[@]"'
 
-alias list-plugins='print -l "${ZPLUGS[@]}" | sort'
+alias list-plugins='print -l "$ZPLUGS[@]" | sort'
 alias list-options='setopt'
 alias list-functions='print -l ${(ok)functions[(I)[^_]*]} | sort'
 
@@ -80,7 +80,7 @@ alias gmg='git merge'
 alias czc='cz commit'
 
 # CLI Tools
-alias mycli='mycli --myclirc "$DOT/.myclirc"'
+alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
 alias weather='curl wttr.in'
 alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
 

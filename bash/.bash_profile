@@ -34,9 +34,9 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
-# Python
-export PYTHONUSERDIR="$DOT/python"
-# export PYTHONSTARTUP="$PYTHONUSERDIR/startup.py"
+# Task
+export TASKRC="$XDG_CONFIG_HOME/task/config"
+export TASKDATA="$XDG_DATA_HOME/task"
 
 # Base16 colors
 export BLACK='\e[0;30m'

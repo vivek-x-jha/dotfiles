@@ -13,4 +13,4 @@ brew cleanup
 brew doctor
 
 # Dump the current state of installed packages to a Brewfile
-brew bundle dump --force --file="$DOT/.Brewfile"
+brew bundle dump --force --file="$XDG_CONFIG_HOME/brew/.Brewfile"

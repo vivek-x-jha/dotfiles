@@ -99,7 +99,7 @@ update_brew() {
   brew cu -af
   brew cleanup
   brew doctor
-  brew bundle dump --force --file="$DOT/.Brewfile"
+  brew bundle dump --force --file="$XDG_CONFIG_HOME/brew/.Brewfile"
 }
 update_icons() {
   command -v fileicon &>/dev/null || brew install fileicon

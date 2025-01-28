@@ -34,10 +34,6 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
-# Python
-export PYTHONUSERDIR="$DOT/python"
-# export PYTHONSTARTUP="$PYTHONUSERDIR/startup.py"
-
 # Base16 colors
 export BLACK='\e[0;30m'
 export RED='\e[0;31m'
@@ -62,8 +58,12 @@ export GREY='\e[38;5;248m'
 export RESET='\e[0m'
 export GREP_COLOR="38;5;9"
 
+# Task
+export TASKRC="$XDG_CONFIG_HOME/task/config"
+export TASKDATA="$XDG_DATA_HOME/task"
+
 # Configure shell options: https://zsh.sourceforge.io/
-export ZDOTDIR="$DOT/zsh"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
 export SHELL_SESSIONS_DISABLE=1
 export P10K_INSTA_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
