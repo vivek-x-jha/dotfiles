@@ -49,6 +49,7 @@ symlinks=(
   ../.dotfiles/eza             "$XDG_CONFIG"       eza 
   ../.dotfiles/fzf             "$XDG_CONFIG"       fzf 
   ../.dotfiles/gh              "$XDG_CONFIG"       gh 
+  ../.dotfiles/git             "$XDG_CONFIG"       git 
   ../.dotfiles/glow            "$XDG_CONFIG"       glow
   ../.dotfiles/karabiner       "$XDG_CONFIG"       karabiner
   ../.dotfiles/mycli           "$XDG_CONFIG"       mycli
@@ -61,8 +62,6 @@ symlinks=(
   ../.dotfiles/zsh             "$XDG_CONFIG"       zsh 
 
   ../.dotfiles/starship/config.toml "$XDG_CONFIG"  starship.toml
-
-  ../../.dotfiles/git/.gitconfig "$XDG_CONFIG/git" config
   ../../.dotfiles/op/plugins.sh  "$XDG_CONFIG/op"  plugins.sh
 
   ../../.dotfiles/eza          "$HOME/Library/Application Support" eza
