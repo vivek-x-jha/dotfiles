@@ -12,7 +12,7 @@ SAVEHIST=10000
 # Initialize secrets
 [ -f "$DOT/.env" ] && source "$DOT/.env"
 
-# Configure colorscheme: ls, tree
+# Configure colorscheme: ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Configure shell options
