@@ -40,6 +40,6 @@ if wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'a
 end
 
 -- Style Tweaks
-config.bold_brightens_ansi_colors = 'BrightOnly'
+config.bold_brightens_ansi_colors = false
 
 return config
