@@ -91,6 +91,8 @@ symlinks=(
   ../../.dotfiles/git/.gitconfig "$XDG_CONFIG/git" config
   ../../.dotfiles/op/plugins.sh  "$XDG_CONFIG/op"  plugins.sh
 
+  ../../.dotfiles/eza          "$HOME/Library/Application Support" eza
+
   zsh-autocomplete.plugin.zsh  "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
   zsh-autosuggestions.zsh      "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
   zsh-syntax-highlighting.zsh  "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh

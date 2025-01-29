@@ -34,10 +34,6 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
-# Task
-export TASKRC="$XDG_CONFIG_HOME/task/config"
-export TASKDATA="$XDG_DATA_HOME/task"
-
 # Base16 colors
 export BLACK='\e[0;30m'
 export RED='\e[0;31m'
@@ -61,6 +57,20 @@ export BRIGHTWHITE='\e[0;97m'
 export GREY='\e[38;5;248m'
 export RESET='\e[0m'
 export GREP_COLOR="38;5;9"
+
+# Better LS: Eza
+export EZA_COLORS="\
+nb=00;38;5;0:\
+nk=00;38;5;7:\
+nm=00;38;5;3:\
+ng=00;38;5;1:\
+nt=00;38;5;6:\
+lp=00;38;5;4:\
+"
+
+# Task
+export TASKRC="$XDG_CONFIG_HOME/task/config"
+export TASKDATA="$XDG_DATA_HOME/task"
 
 # Initialize path
 source "$DOT/bash/configs/.path"
