@@ -65,6 +65,8 @@ symlinks=(
   ../../.dotfiles/git/.gitconfig "$XDG_CONFIG/git" config
   ../../.dotfiles/op/plugins.sh  "$XDG_CONFIG/op"  plugins.sh
 
+  ../../.dotfiles/eza          "$HOME/Library/Application Support" eza
+
   "$CLOUD/developer"           "$HOME"             Developer
 
   "../$CLOUD/content"          "$HOME/Movies"      content
