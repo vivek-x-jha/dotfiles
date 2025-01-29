@@ -9,13 +9,17 @@ filekinds:
     foreground: Green
 perms:
   user_read:
-    foreground: 11
+    foreground: Yellow
+    is_bold: true
   user_write:
-    foreground: 09
+    foreground: Red
+    is_bold: true
   user_execute_file:
-    foreground: 10
+    foreground: Green
+    is_bold: true
   user_execute_other:
     foreground: Green
+    is_bold: true
   group_read:
     foreground: Yellow
   group_write:
