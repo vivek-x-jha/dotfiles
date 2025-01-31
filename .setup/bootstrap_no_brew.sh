@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-is_installed() {
-  local cmd="$1"
-  if ! command -v "$cmd" &>/dev/null; then
-    echo "[! $cmd: NOT INSTALLED]"
-    return 1
-  fi
-}
-
 symlink() {
   local src="$1"
   local cwd="$2"
@@ -27,14 +19,6 @@ symlink() {
   echo "[+ Link: $src -> $cwd/$tgt]"
 }
 
-# Test: Xcode installed
-if is_installed xcode-select; then
-  echo "󰓒 INSTALLATION START 󰓒"
-else
-  echo 'Please run: xcode-select --install'
-  exit 1
-fi
-
 # Create Filesystem and Symlinks
 XDG_CONFIG="$HOME/.config"
 XDG_CACHE="$HOME/.cache"
@@ -43,19 +27,11 @@ XDG_STATE="$HOME/.local/state"
 
 # Create xdg & media directories
 directories=(
-
   "$XDG_CACHE"
-
-  "$XDG_CONFIG"
   "$XDG_CONFIG/atuin"
-  "$XDG_CONFIG/dust"
-  "$XDG_CONFIG/gh"
-  "$XDG_CONFIG/git"
   "$XDG_CONFIG/op"
-
   "$XDG_DATA"
   "$XDG_STATE"
-
 )
 for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
@@ -98,41 +74,11 @@ symlinks=(
 )
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
-echo '[ 1/3 Filesystem & Symlinks Created]'
-
-# Setup Git and SSH
-is_installed git || brew install git
-is_installed op  || brew install 1password-cli
-
-op signin
-
-# Prompt for Git configuration details
-echo "Let's configure your Git settings."
-
-read -p "Enter Git user name: " name
-read -p "Enter Git email: "     email
-read -p "Enter 1P vault name: " vault
-read -p "Enter SSH key name: "  key
-
-signingkey="$(op read "op://$vault/$key/public key")"
-
-# Set Global config file with options
-git config --global user.name       "$name"
-git config --global user.email      "$email"
-git config --global user.signingkey "$signingkey"
-
-# Set Allowed Signers
-signers="$HOME/.dotfiles/ssh/allowed_signers"
-echo "$email $signingkey" > "$signers"
-
-echo Updated following:
-echo '  ~/.dotfiles/.gitconfig'
-echo '  ~/.dotfiles/ssh/allowed_signers'
-echo '[ 2/3 Git and SSH Configured]'
 
 # Configure macOS options
 
 # Screenshots
+[ -d "$HOME/Pictures/screenshots" ] || mkdir "$HOME/Pictures/screenshots"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
 
 # Dock 
@@ -149,8 +95,11 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # di
 
 # 3rd Party Apps
 touch "$HOME/.hushlogin"                                                    # surpress iterm2 login message
-bat cache --build                                                           # load bat themes
-echo '[ 3/3 macOS Settings Configured]'
 
-echo "󰓒 INSTALLATION COMPLETE 󰓒"
-cd 
+bat cache --build                                                           # load bat themes
+
+command -v op &>/dev/null || brew install 1password-cli                     # Install 1p cli
+op signin && op vault list
+
+ls -lAh "$XDG_CONFIG"
+cd
