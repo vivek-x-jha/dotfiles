@@ -1,6 +1,3 @@
-# Dotfiles
-export DOT="$HOME/.dotfiles"
-
 # Create file structure: https://specifications.freedesktop.org/basedir-spec/latest/
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -72,8 +69,5 @@ lp=00;38;5;4:\
 export TASKRC="$XDG_CONFIG_HOME/task/config"
 export TASKDATA="$XDG_DATA_HOME/task"
 
-# Initialize path
-source "$DOT/bash/configs/.path"
-
 # Configure shell options: https://www.gnu.org/software/bash/
-source "$DOT/bash/.bashrc"
+source "$XDG_CONFIG_HOME/bash/.bashrc"

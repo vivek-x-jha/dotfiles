@@ -10,7 +10,7 @@ SAVEHIST=10000
 [ -z "$TMUX" ] || source "$ZDOTDIR/.zprofile"
 
 # Initialize secrets
-[ -f "$DOT/.env" ] && source "$DOT/.env"
+[ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
 
 # Configure colorscheme: ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"

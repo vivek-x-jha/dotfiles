@@ -1,6 +1,3 @@
-# Dotfiles
-export DOT="$HOME/.dotfiles"
-
 # Create file structure: https://specifications.freedesktop.org/basedir-spec/latest/
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
