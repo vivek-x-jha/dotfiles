@@ -2,26 +2,27 @@
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
-# Re-initialize PATH in new tmux sessions
-[ -z "$TMUX" ] || source "$DOT/bash/configs/.path"
+# Initialize PATH
+export BDOTDIR="$XDG_CONFIG_HOME/bash"
+source "$BDOTDIR/configs/.path"
 
 # Initialize secrets
-[ -f "$DOT/.env" ] && source "$DOT/.env"
+[ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
 
-# Configure colorscheme: ls, tree
+# Configure colorscheme: ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Configure shell options
 shopt -s autocd
 
 # Initialize shell user functions
-source "$DOT/bash/functions.sh"
+source "$BDOTDIR/functions.sh"
 
 # Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
 source "$XDG_DATA_HOME/blesh/ble.sh"
 
 # Initialize shell aliases
-source "$DOT/bash/configs/.aliases"
+source "$BDOTDIR/configs/.aliases"
 
 # Initialize & configure shell prompt theme
 eval "$(starship init bash)"
