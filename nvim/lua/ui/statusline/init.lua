@@ -22,8 +22,7 @@ return {
     local statusline = {}
 
     for _, mod in ipairs(orders) do
-      -- Directly handle '%=' as a string, otherwise call the module function
-      table.insert(statusline, mod == 'sep' and modules[mod] or modules[mod]())
+      table.insert(statusline, mod == 'sep' and '%=' or modules[mod]())
     end
 
     return table.concat(statusline)
