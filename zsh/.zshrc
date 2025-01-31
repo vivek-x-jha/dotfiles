@@ -7,7 +7,7 @@ HISTSIZE=12000
 SAVEHIST=10000
 
 # Re-initialize PATH and FPATH in new tmux sessions
-[ -z "$TMUX" ] || source "$ZDOTDIR/.zprofile"
+source "$ZDOTDIR/.zprofile"
 
 # Initialize secrets
 [ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
