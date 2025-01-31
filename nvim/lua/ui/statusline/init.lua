@@ -11,9 +11,9 @@ return {
       'diagnostics',
       'file',
       'git_mod',
-      'sep',
+      '%=',
       'lsp_msg',
-      'sep',
+      '%=',
       'cwd',
       'cursor',
     }
@@ -22,7 +22,7 @@ return {
     local statusline = {}
 
     for _, mod in ipairs(orders) do
-      table.insert(statusline, mod == 'sep' and '%=' or modules[mod]())
+      table.insert(statusline, mod == '%=' and mod or modules[mod]())
     end
 
     return table.concat(statusline)
