@@ -29,7 +29,7 @@ border_symbol = "│"
 border_style  = { fg = "#5C617D" }
 
 # Highlighting
-syntect_theme = "~/.dotfiles/yazi/themes/previews/SourDiesel.tmTheme"
+syntect_theme = "~/.config/yazi/themes/previews/SourDiesel.tmTheme"
 
 [status]
 separator_open  = ""
