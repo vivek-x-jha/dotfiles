@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Initialize brew cask upgrade
+brew tap buo/cask-upgrade
+brew install brew-cask-upgrade
+
 symlink() {
   local src="$1"
   local cwd="$2"
@@ -93,13 +97,33 @@ defaults write com.apple.finder QuitMenuItem -bool true                     # qu
 defaults write com.apple.finder AppleShowAllFiles -bool true                # show hidden files
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # disable file ext change warning
 
+# Change git protocol for dotfils
+git -C "$HOME/.dotfiles" remote set-url origin git@github.com:arig07/dotfiles.git
+git -C "$HOME/.dotfiles" remote -v
+
+# Download and install Python 3.13 from source
+PYTHON_PKG_URL="https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg"
+PYTHON_APP_PATH='/Applications/Python 3.13'
+
+if [ ! -d "$PYTHON_APP_PATH" ]; then
+  echo "Python 3.13 not found: Downloading and installing..."
+
+  curl -o '/tmp/python.pkg' "$PYTHON_PKG_URL" || { echo "Python 3.13 download failed"; exit 1; }
+  sudo installer -pkg '/tmp/python.pkg' -target / || { echo "Python 3.13 installation failed"; exit 1; }
+  rm -f '/tmp/python.pkg'
+  
+  echo "Python 3.13 installed successfully in $PYTHON_APP_PATH"
+else
+  echo "Python 3.13 already installed"
+fi
+
 # 3rd Party Apps
 touch "$HOME/.hushlogin"                                                    # surpress iterm2 login message
 
-bat cache --build                                                           # load bat themes
+command -v bat &>/dev/null || brew install bat                              # load bat themes
+bat cache --build
 
 command -v op &>/dev/null || brew install 1password-cli                     # Install 1p cli
 op signin && op vault list
 
-ls -lAh "$XDG_CONFIG"
 cd
