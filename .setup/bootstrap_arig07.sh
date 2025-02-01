@@ -99,7 +99,20 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # di
 
 # Change git protocol for dotfils
 git -C "$HOME/.dotfiles" remote set-url origin git@github.com:arig07/dotfiles.git
-git -C "$HOME/.dotfiles" remote -v
+
+# Set Global config file with options
+name='Ari Ganapathi'
+email='ariganapathi7@gmail.com'
+signingkey='AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5'
+
+signers="$HOME/.dotfiles/ssh/allowed_signers"
+
+git config --global user.name       "$name"
+git config --global user.email      "$email"
+git config --global user.signingkey "$signingkey"
+
+# Set Allowed Signers
+echo "$email $signingkey" > "$signers"
 
 # Download and install Python 3.13 from source
 PYTHON_PKG_URL="https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg"
@@ -117,13 +130,15 @@ else
   echo "Python 3.13 already installed"
 fi
 
-# 3rd Party Apps
-touch "$HOME/.hushlogin"                                                    # surpress iterm2 login message
+# Surpress iterm2 login message
+touch "$HOME/.hushlogin"
 
-command -v bat &>/dev/null || brew install bat                              # load bat themes
+# Load bat themes
+command -v bat &>/dev/null || brew install bat
 bat cache --build
 
-command -v op &>/dev/null || brew install 1password-cli                     # Install 1p cli
-op signin && op vault list
+# Install 1p cli
+command -v op &>/dev/null || brew install 1password-cli
+op signin
 
 cd
