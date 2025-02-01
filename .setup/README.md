@@ -1,44 +1,55 @@
 # Dotfiles Setup Checklist
 
-## Check 1Password SSH Agent Running
-
 ## Resync Dotfiles GitHub Repo
 
-- [ ] Delete: [Ari dotfiles](https://github.com/arig07/dotfiles)
+### Delete: [Ari dotfiles](https://github.com/arig07/dotfiles)
 
-- [ ] Fork: [Vivek dotfiles](https://github.com/vivek-x-jha/dotfiles)
+### Fork: [Vivek dotfiles](https://github.com/vivek-x-jha/dotfiles)
 
-## Edit Files in GitHub
-
-### `git/config`
-
-```ini
-[user]
-name = Ari Ganapathi
-email = ariganapathi7@gmail.com
-signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5
-```
-
-### `ssh/allowed_signers`
-
-```plaintext
-ariganapathi7@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5
-```
+## Check [1Password SSH Agent](https://developer.1password.com/docs/ssh/get-started#step-3-turn-on-the-1password-ssh-agent)
 
 ## Open WezTerm and Install
 
 ```sh
 cd && git clone arig07/dotfiles.git .dotfiles
-./.dotfiles/.setup/bootstrap_no_brew.sh
+./.dotfiles/.setup/bootstrap_ari.sh
+```
+
+## Check Git protocol changed to ssh
+
+```sh
+git -C "$HOME/.dotfiles" remote -v
+```
+
+```sh
+origin  git@github.com:arig07/dotfiles.git (fetch)
+origin  git@github.com:arig07/dotfiles.git (push)
+```
+
+## Check `git config` updated:
+
+```sh
+sed -n '3,6p' "$XDG_CONFIG_HOME/git/config"
+```
+
+```ini
+[user]
+    name = Ari Ganapathi
+    email = ariganapathi7@gmail.com
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5
+```
+
+## Check `ssh allowed_signers` updated:
+
+```sh
+cat "$XDG_CONFIG_HOME/ssh/allowed_signers"
+```
+
+```plaintext
+ariganapathi7@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5
 ```
 
 ## Restart WezTerm & Verify Shell Changes
-
-## Test Dotfiles Git Protocol Changed to SSH
-
-```sh
-cd "$HOME/.dotfiles" && ssh -T git@github.com
-```
 
 ## Authenticate GitHub CLI
 
