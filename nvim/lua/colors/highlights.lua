@@ -5,7 +5,7 @@ local utl = require 'configs.utils'
 return {
   setup = function(opts)
     --- @type boolean, Colorscheme Check if given colorscheme exists
-    local theme_exists, theme = pcall(require, opts.colorscheme)
+    local theme_exists, theme = pcall(require, 'colors.themes.' .. opts.colorscheme)
 
     if not theme_exists then
       --- @type string Errror message when colorscheme unavailable
