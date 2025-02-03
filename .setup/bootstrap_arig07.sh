@@ -1,8 +1,36 @@
 #!/usr/bin/env bash
 
+# -------------------------------- Environment Variables ----------------------------------------
+
+echo "XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=$HOME/.config}"
+echo "XDG_CACHE_HOME=${XDG_CACHE_HOME:=$HOME/.cache}"
+echo "XDG_DATA_HOME=${XDG_DATA_HOME:=$HOME/.local/share}"
+echo "XDG_STATE_HOME=${XDG_STATE_HOME:=$HOME/.local/state}"
+
+# Required 
+read -p 'Git Username: ' GIT_NAME          # Ari Ganapathi
+read -p 'Git Email: ' GIT_EMAIL            # ariganapathi7@gmail.com
+read -p 'Git Signing Key: ' GIT_SIGNINGKEY # AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5
+read -p 'Atuin Username: ' ATUIN_USERNAME  # ariganapathi7
+read -p 'Atuin Email: ' ATUIN_EMAIL        # ariganapathi7@gmail.com
+
+# Optional 
+read -p '1Password Vault name (Press Enter to set to "Private"): ' OP_VAULT # Ari's Passwords
+read -p '1Password Atuin Sync Title (Press Enter to set to "Atuin Sync"): ' ATUIN_OP_TITLE # Atuin Sync
+
+read -p 'Python URL (Press Enter to set to "https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg"): ' PYTHON_URL
+read -p 'Python Download Location (Press Enter to set to "/Applications/Python 3.13"): ' PYTHON_APP_PATH
+
+# -------------------------------- Homebrew Setup ----------------------------------------
+
 # Initialize brew cask upgrade
 brew tap buo/cask-upgrade
 brew install brew-cask-upgrade
+
+# Fix zsh compinit: insecure directories
+# chmod -R go-w "$(brew --prefix)/share"
+
+# -------------------------------- Symlinks & Directories ----------------------------------------
 
 symlink() {
   local src="$1"
@@ -23,52 +51,45 @@ symlink() {
   echo "[+ Link: $src -> $cwd/$tgt]"
 }
 
-# Create Filesystem and Symlinks
-XDG_CONFIG="$HOME/.config"
-XDG_CACHE="$HOME/.cache"
-XDG_DATA="$HOME/.local/share"
-XDG_STATE="$HOME/.local/state"
-
-# Create xdg & media directories
 directories=(
   "$XDG_CACHE"
-  "$XDG_CONFIG/atuin"
-  "$XDG_CONFIG/op"
+  "$XDG_CONFIG_HOME/atuin"
+  "$XDG_CONFIG_HOME/op"
   "$XDG_DATA"
   "$XDG_STATE"
 )
 for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
 symlinks=(
-  .dotfiles/bash/.bash_profile "$HOME"             .bash_profile
-  .dotfiles/bash/.bashrc       "$HOME"             .bashrc      
-  .dotfiles/zsh/.zshenv        "$HOME"             .zshenv       
-  ../.dotfiles/hammerspoon     "$HOME"             .hammerspoon
+  .dotfiles/bash/.bash_profile "$HOME" .bash_profile
+  .dotfiles/bash/.bashrc       "$HOME" .bashrc      
+  .dotfiles/zsh/.zshenv        "$HOME" .zshenv       
+  ../.dotfiles/hammerspoon     "$HOME" .hammerspoon
 
-  ../.dotfiles/1Password       "$XDG_CONFIG"       1Password
-  ../.dotfiles/atuin           "$XDG_CONFIG"       atuin
-  ../.dotfiles/bash            "$XDG_CONFIG"       bash 
-  ../.dotfiles/bat             "$XDG_CONFIG"       bat 
-  ../.dotfiles/brew            "$XDG_CONFIG"       brew 
-  ../.dotfiles/btop            "$XDG_CONFIG"       btop
-  ../.dotfiles/dust            "$XDG_CONFIG"       dust
-  ../.dotfiles/eza             "$XDG_CONFIG"       eza 
-  ../.dotfiles/fzf             "$XDG_CONFIG"       fzf 
-  ../.dotfiles/gh              "$XDG_CONFIG"       gh 
-  ../.dotfiles/git             "$XDG_CONFIG"       git 
-  ../.dotfiles/glow            "$XDG_CONFIG"       glow
-  ../.dotfiles/karabiner       "$XDG_CONFIG"       karabiner
-  ../.dotfiles/mycli           "$XDG_CONFIG"       mycli
-  ../.dotfiles/nvim            "$XDG_CONFIG"       nvim
-  ../.dotfiles/ssh             "$XDG_CONFIG"       ssh
-  ../.dotfiles/task            "$XDG_CONFIG"       task
-  ../.dotfiles/tmux            "$XDG_CONFIG"       tmux
-  ../.dotfiles/wezterm         "$XDG_CONFIG"       wezterm
-  ../.dotfiles/yazi            "$XDG_CONFIG"       yazi
-  ../.dotfiles/zsh             "$XDG_CONFIG"       zsh 
+  ../.dotfiles/1Password "$XDG_CONFIG_HOME" 1Password
+  ../.dotfiles/atuin     "$XDG_CONFIG_HOME" atuin
+  ../.dotfiles/bash      "$XDG_CONFIG_HOME" bash 
+  ../.dotfiles/bat       "$XDG_CONFIG_HOME" bat 
+  ../.dotfiles/brew      "$XDG_CONFIG_HOME" brew 
+  ../.dotfiles/btop      "$XDG_CONFIG_HOME" btop
+  ../.dotfiles/dust      "$XDG_CONFIG_HOME" dust
+  ../.dotfiles/eza       "$XDG_CONFIG_HOME" eza 
+  ../.dotfiles/fzf       "$XDG_CONFIG_HOME" fzf 
+  ../.dotfiles/gh        "$XDG_CONFIG_HOME" gh 
+  ../.dotfiles/git       "$XDG_CONFIG_HOME" git 
+  ../.dotfiles/glow      "$XDG_CONFIG_HOME" glow
+  ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
+  ../.dotfiles/mycli     "$XDG_CONFIG_HOME" mycli
+  ../.dotfiles/nvim      "$XDG_CONFIG_HOME" nvim
+  ../.dotfiles/ssh       "$XDG_CONFIG_HOME" ssh
+  ../.dotfiles/task      "$XDG_CONFIG_HOME" task
+  ../.dotfiles/tmux      "$XDG_CONFIG_HOME" tmux
+  ../.dotfiles/wezterm   "$XDG_CONFIG_HOME" wezterm
+  ../.dotfiles/yazi      "$XDG_CONFIG_HOME" yazi
+  ../.dotfiles/zsh       "$XDG_CONFIG_HOME" zsh 
 
-  ../.dotfiles/starship/config.toml "$XDG_CONFIG"  starship.toml
-  ../../.dotfiles/op/plugins.sh "$XDG_CONFIG/op"   plugins.sh
+  ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME" starship.toml
+  ../../.dotfiles/op/plugins.sh "$XDG_CONFIG_HOME/op"  plugins.sh
 
   ../../.dotfiles/eza          "$HOME/Library/Application Support" eza
 
@@ -79,7 +100,7 @@ symlinks=(
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-# Configure macOS options
+# -------------------------------- Configure macOS options ----------------------------------------
 
 # Screenshots
 [ -d "$HOME/Pictures/screenshots" ] || mkdir "$HOME/Pictures/screenshots"
@@ -97,31 +118,56 @@ defaults write com.apple.finder QuitMenuItem -bool true                     # qu
 defaults write com.apple.finder AppleShowAllFiles -bool true                # show hidden files
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # disable file ext change warning
 
-# Change git protocol for dotfils
+# -------------------------------- Configure Git and GitHub CLI ----------------------------------------
+
+# Change git protocol for dotfiles
 git -C "$HOME/.dotfiles" remote set-url origin git@github.com:arig07/dotfiles.git
 
-# Set Global config file with options
-name='Ari Ganapathi'
-email='ariganapathi7@gmail.com'
-signingkey='AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5'
-
-signers="$HOME/.dotfiles/ssh/allowed_signers"
-
-git config --global user.name       "$name"
-git config --global user.email      "$email"
-git config --global user.signingkey "$signingkey"
+# Set custom git config fields
+git config --global user.name       "$GIT_NAME"
+git config --global user.email      "$GIT_EMAIL"
+git config --global user.signingkey "$GIT_SIGNINGKEY"
 
 # Set Allowed Signers
-echo "$email $signingkey" > "$signers"
+echo "$GIT_EMAIL $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
 
-# Download and install Python 3.13 from source
-PYTHON_PKG_URL="https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg"
-PYTHON_APP_PATH='/Applications/Python 3.13'
+# Authenticate GitHub CLI
+gh auth login
 
+# Update 1Password SSH Agent
+cat <<EOF > "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
+# https://developer.1password.com/docs/ssh/agent/config
+
+[[ssh-keys]]
+item = "GitHub Signing Key"
+vault = "Ari's Passwords"
+EOF
+
+# -------------------------------- Setup Atuin & Sync ----------------------------------------
+
+# Create 1Password item
+command -v op &>/dev/null || brew install 1password-cli
+op signin && op item create \
+    --vault "${OP_VAULT:-Private}" \
+    --category login \
+    --title "${ATUIN_OP_TITLE:-Atuin Sync}" \
+    --generate-password='letters,digits,symbols,32' \
+    "username=$ATUIN_USERNAME" \
+    "email[text]=$ATUIN_EMAIL" \
+    "key[password]=update this with \$(atuin key)" &>/dev/null
+
+# Register Atuin and update 1Password item key
+atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
+op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
+atuin import auto && atuin sync
+
+# -------------------------------- Setup Python ----------------------------------------
+
+# Download and install Python 3.13
 if [ ! -d "$PYTHON_APP_PATH" ]; then
   echo "Python 3.13 not found: Downloading and installing..."
 
-  curl -o '/tmp/python.pkg' "$PYTHON_PKG_URL" || { echo "Python 3.13 download failed"; exit 1; }
+  curl -o '/tmp/python.pkg' "$PYTHON_URL" || { echo "Python 3.13 download failed"; exit 1; }
   sudo installer -pkg '/tmp/python.pkg' -target / || { echo "Python 3.13 installation failed"; exit 1; }
   rm -f '/tmp/python.pkg'
   
@@ -130,15 +176,21 @@ else
   echo "Python 3.13 already installed"
 fi
 
+# -------------------------------- Setup iTerm2 ----------------------------------------
+
 # Surpress iterm2 login message
 touch "$HOME/.hushlogin"
+
+# -------------------------------- Setup Bat ----------------------------------------
 
 # Load bat themes
 command -v bat &>/dev/null || brew install bat
 bat cache --build
 
-# Install 1p cli
-command -v op &>/dev/null || brew install 1password-cli
-op signin
+# -------------------------------- Setup Neovim ----------------------------------------
+
+# Installs lazy.nvim and plugins
+# After installation finishes run :MasonInstall lua-language-server basedpyright
+nvim
 
 cd
