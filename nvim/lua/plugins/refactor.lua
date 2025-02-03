@@ -41,7 +41,7 @@ return {
       vim.schedule(
         function()
           require('colors.highlights').setup {
-            colorscheme = vim.g.colorscheme,
+            colorscheme = 'sourdiesel',
             plugin = 'spectre',
           }
         end

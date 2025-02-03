@@ -1,6 +1,5 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
-vim.g.colorscheme = 'colors.themes.sourdiesel'
 
 -- Load annotations
 require 'types'
@@ -19,7 +18,7 @@ require 'configs.options'
 require('ui.buffers').setup()
 
 -- Load highlights and colorscheme
-require('colors.highlights').setup { colorscheme = vim.g.colorscheme }
+require('colors.highlights').setup { colorscheme = 'sourdiesel' }
 
 -- Load statusline
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
