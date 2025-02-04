@@ -35,11 +35,11 @@
     "controlvolumemousebutton": false,
     "convertshorts": false,
     "customcolors": {
-      "--dimmer-text": "#ade6ad",
-      "--hover-background": "#35373b",
+      "--dimmer-text": "#cccccc",
+      "--hover-background": "#202124",
       "--main-background": "#202124",
-      "--main-color": "#f3b3b6",
-      "--main-text": "#ffffff",
+      "--main-color": "#ceffc9",
+      "--main-text": "#f4f3f2",
       "--second-background": "#202124",
       "--shadow": "#b5c115"
     },
