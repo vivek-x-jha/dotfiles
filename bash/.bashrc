@@ -1,10 +1,11 @@
+export BDOTDIR="$XDG_CONFIG_HOME/bash"
+
 # Configure shell history
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
 # Initialize PATH
-export BDOTDIR="$XDG_CONFIG_HOME/bash"
-source "$BDOTDIR/configs/.path"
+source "$BDOTDIR/configs/path"
 
 # Initialize secrets
 [ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
@@ -22,7 +23,7 @@ source "$BDOTDIR/functions.sh"
 source "$XDG_DATA_HOME/blesh/ble.sh"
 
 # Initialize shell aliases
-source "$BDOTDIR/configs/.aliases"
+source "$BDOTDIR/configs/aliases"
 
 # Initialize & configure shell prompt theme
 eval "$(starship init bash)"

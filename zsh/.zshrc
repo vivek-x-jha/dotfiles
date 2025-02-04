@@ -24,14 +24,8 @@ for fn in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$fn")"; done
 # Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
 for plug in "$ZPLUGS[@]"; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"; done
 
-# Configure shell syntax-highlighting
-source "$ZDOTDIR/configs/.zsh-syntax-highlighting"
-
-# Initialize shell aliases
-source "$ZDOTDIR/configs/.zaliases"
-
-# Initialize shell completions
-source "$ZDOTDIR/completions/cache.zsh"
+# Configure shell aliases, completions, syntax-highlighting
+for cnf in "$ZCONFIGS[@]"; do source "$ZDOTDIR/configs/$cnf"; done
 
 # Initialize & configure shell prompt theme
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/themes/.p10k.zsh"

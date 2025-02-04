@@ -93,3 +93,9 @@ export ZPLUGS=(
   autosuggestions
   syntax-highlighting
 )
+
+export ZCONFIGS=(
+  aliases
+  completions
+  syntax-highlighting
+)
