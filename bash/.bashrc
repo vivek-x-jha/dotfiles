@@ -17,7 +17,7 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 shopt -s autocd
 
 # Initialize shell user functions
-source "$BDOTDIR/functions.sh"
+for fn in "$BDOTDIR/funcs/"*.sh; do source "$fn"; done
 
 # Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
 source "$XDG_DATA_HOME/blesh/ble.sh"

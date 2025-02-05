@@ -19,7 +19,7 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 setopt "$ZOPTS[@]" 
 
 # Lazy load shell user functions
-for fn in "$ZDOTDIR/functions/"*; do autoload -Uz "$(basename "$fn")"; done
+for fn in "$ZFUNCS"/*; do autoload -Uz "$(basename "$fn")"; done
 
 # Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
 for plug in "$ZPLUGS[@]"; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"; done
@@ -28,7 +28,7 @@ for plug in "$ZPLUGS[@]"; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"
 for cnf in "$ZCONFIGS[@]"; do source "$ZDOTDIR/configs/$cnf"; done
 
 # Initialize & configure shell prompt theme
-source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/themes/.p10k.zsh"
+source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/.p10k.zsh"
 
 # Initialize & configure fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
