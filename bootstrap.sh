@@ -1,11 +1,82 @@
 #!/usr/bin/env bash
+# TODO Fix zsh compinit: insecure directories: chmod -R go-w "$(brew --prefix)/share"
 
-# -------------------------------- Environment Variables ----------------------------------------
+echo "󰓒 INSTALLATION START 󰓒"
 
-echo "XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=$HOME/.config}"
-echo "XDG_CACHE_HOME=${XDG_CACHE_HOME:=$HOME/.cache}"
-echo "XDG_DATA_HOME=${XDG_DATA_HOME:=$HOME/.local/share}"
-echo "XDG_STATE_HOME=${XDG_STATE_HOME:=$HOME/.local/state}"
+# -------------------------------- Pre-Installation ----------------------------------------
+
+# Turn on 1Password SSH Agent
+# https://developer.1password.com/docs/ssh/get-started#step-3-turn-on-the-1password-ssh-agent)
+
+# Ensure Xcode installed
+command -v xcode-select &> /dev/null || { echo 'Please run: xcode-select --install'; exit 1; }
+
+echo "󰓒 [1/<steps>] INSTALLING PACKAGE MANAGER 󰓒"
+command -v brew &> /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+# -------------------------------- Install Tools & Apps ----------------------------------------
+
+# Set Homebrew path based on architecture
+case "$(uname -m)" in
+  'arm64' ) `export HOMEBREW_BIN='/opt/homebrew/bin' ;;
+  'x86_64') `export HOMEBREW_BIN='/usr/local/bin' ;;
+         *) echo "[! Unknown architecture - requires arm64 or x86_64]"; exit 1 ;;
+esac
+
+# Load Homebrew env vars and prepend to path in current session
+eval "$("$HOMEBREW_BIN/brew" shellenv)"
+
+echo "󰓒 [2/<steps>] INSTALLING TOOLS & APPS 󰓒"
+read -p 'Install [tools/apps/all] (Press Enter to Skip): ' install_type
+
+brew_install () {
+  local filter="$1"
+  local cmd="$2"
+  local repo='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main'
+
+  case "$install_type" in
+    'all') curl -fsSL "$repo/.Brewfile" | brew bundle --file=- ;;
+        *) curl -fsSL "$repo/.Brewfile" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
+  esac
+} 
+
+case "$install_type" in
+  'all'  ) brew_install ;;
+  'tools') brew_install '^tap '  '-n1 brew tap'
+           brew_install '^brew ' 'brew install' ;;
+  'apps' ) brew_install '^tap '  '-n1 brew tap'
+           brew_install '^brew ' 'brew install --cask' ;;
+esac
+
+echo "󰓒 [3/<steps>] RUNNING HOMEBREW DIAGNOSTICS 󰓒"
+read -p 'Run Homebrew diagnostics and maintenance? [y/n]: ' brew_diagnostics
+
+if [[ "$brew_diagnostics" =~ ^[Yy]$ ]]; then
+  brew upgrade
+  brew cleanup
+  brew doctor
+fi
+
+echo "󰓒 [4/<steps>] INITIALIZING BREW CASK UPGRADE 󰓒"
+brew tap buo/cask-upgrade
+brew install brew-cask-upgrade
+
+read -p 'Run brew cask upgrade? [y/n]: ' brew_cask_upgrade
+[[ "$brew_cask_upgrade" =~ ^[Yy]$ ]] && brew cu -af
+
+# -------------------------------- User Input ----------------------------------------
+echo "󰓒 [5/<steps>] SET ENVIRONMENT 󰓒"
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+echo "XDG_CONFIG_HOME=$XDG_CONFIG_HOME:=$HOME/.config}"
+echo "XDG_CACHE_HOME=$XDG_CACHE_HOME:=$HOME/.cache}"
+echo "XDG_DATA_HOME=$XDG_DATA_HOME:=$HOME/.local/share}"
+echo "XDG_STATE_HOME=$XDG_STATE_HOME:=$HOME/.local/state}"
 
 # Required 
 read -p 'Git Username: ' GIT_NAME          # Ari Ganapathi
@@ -21,16 +92,8 @@ read -p '1Password Atuin Sync Title (Press Enter to set to "Atuin Sync"): ' ATUI
 read -p 'Python URL (Press Enter to set to "https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg"): ' PYTHON_URL
 read -p 'Python Download Location (Press Enter to set to "/Applications/Python 3.13"): ' PYTHON_APP_PATH
 
-# -------------------------------- Homebrew Setup ----------------------------------------
-
-# Initialize brew cask upgrade
-brew tap buo/cask-upgrade
-brew install brew-cask-upgrade
-
-# Fix zsh compinit: insecure directories
-# chmod -R go-w "$(brew --prefix)/share"
-
 # -------------------------------- Symlinks & Directories ----------------------------------------
+echo "󰓒 [6/<steps>] CREATE SYMLINKS & DIRECTORIES 󰓒"
 
 symlink() {
   local src="$1"
@@ -101,6 +164,7 @@ symlinks=(
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
 # -------------------------------- Configure macOS options ----------------------------------------
+echo "󰓒 [7/<steps>] CONFIGURE MACOS OPTIONS 󰓒"
 
 # Screenshots
 [ -d "$HOME/Pictures/screenshots" ] || mkdir "$HOME/Pictures/screenshots"
@@ -119,6 +183,7 @@ defaults write com.apple.finder AppleShowAllFiles -bool true                # sh
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # disable file ext change warning
 
 # -------------------------------- Configure Git and GitHub CLI ----------------------------------------
+echo "󰓒 [8/<steps>] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
 # Change git protocol for dotfiles
 git -C "$HOME/.dotfiles" remote set-url origin git@github.com:arig07/dotfiles.git
@@ -140,10 +205,11 @@ cat <<EOF > "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
 
 [[ssh-keys]]
 item = "GitHub Signing Key"
-vault = "Ari's Passwords"
+vault = "$OP_VAULT"
 EOF
 
 # -------------------------------- Setup Atuin & Sync ----------------------------------------
+echo "󰓒 [9/<steps>] SETUP ATUIN & SYNC 󰓒"
 
 # Create 1Password item
 command -v op &>/dev/null || brew install 1password-cli
@@ -161,7 +227,8 @@ atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
 op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 atuin import auto && atuin sync
 
-# -------------------------------- Setup Python ----------------------------------------
+# -------------------------------- Install Python ----------------------------------------
+echo "󰓒 [10/<steps>] INSTALL PYTHON 󰓒"
 
 # Download and install Python 3.13
 if [ ! -d "$PYTHON_APP_PATH" ]; then
@@ -177,20 +244,23 @@ else
 fi
 
 # -------------------------------- Setup iTerm2 ----------------------------------------
+echo "󰓒 [11/<steps>] SETUP ITERM 󰓒"
 
 # Surpress iterm2 login message
 touch "$HOME/.hushlogin"
 
 # -------------------------------- Setup Bat ----------------------------------------
+echo "󰓒 [12/<steps>] SETUP BAT 󰓒"
 
 # Load bat themes
 command -v bat &>/dev/null || brew install bat
 bat cache --build
 
 # -------------------------------- Setup Neovim ----------------------------------------
+echo "󰓒 [13/<steps>] SETUP NEOVIM 󰓒"
 
 # Installs lazy.nvim and plugins
 # After installation finishes run :MasonInstall lua-language-server basedpyright
-nvim
+cd; nvim
 
-cd
+echo "󰓒 INSTALLATION COMPLETE 󰓒"

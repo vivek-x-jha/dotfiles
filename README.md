@@ -1,30 +1,32 @@
 # Personal Development Environment
 
-Checkout a fast, functional, & fun Terminal environent full of beuatiful and modern IDE features
+A fast, functional, & fun command line based development experience!
+
+Features full of beuatiful and modern IDE tools.
 
 ## Requiements
 
 - [x] macOS (Intel or Apple Silicon)
 - [ ] Linux Distros
 
-## Installation
-
-Run the following:
+# Installation
 
 ```sh
-cd "$HOME"
-git clone https://github.com/vivek-x-jha/dotfiles.git .dotfiles
-./bootstrap.sh
+git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles && ~/.dotfiles/bootstrap.sh
 ```
 
-*Optional:* after installation, run ```rm -rf "$HOME/.dotfiles/.git"``` and begin your own version control!
+## Install Neovim Language Servers
 
-## Post-Installation
+```vim
+:MasonInstall lua-language-server basedpyright
+```
 
-Add alfred workflows
-```op signin```
-always allow for git-osx-keychain
+## Link Apps to Brew
+- Delete manually downloaded versions from `/Applications/` - some app downloads may require sudo authentication
 
+```sh
+brew install --cask 1password alfred alt-tab chatgpt discord font-jetbrains-mono-nerd-font google-chrome hammerspoon iterm2 karabiner-elements postman skim spotify visual-studio-code vlc wezterm zoom
+```
 
 ## Features
 
