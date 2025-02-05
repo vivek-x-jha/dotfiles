@@ -71,6 +71,7 @@ export TASKDATA="$XDG_DATA_HOME/task"
 
 # Configure shell options: https://zsh.sourceforge.io/
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export ZFUNCS="$ZDOTDIR/funcs"
 export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
 export SHELL_SESSIONS_DISABLE=1
 export P10K_INSTA_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
