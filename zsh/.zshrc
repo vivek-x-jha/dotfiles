@@ -25,7 +25,7 @@ for fn in "$ZFUNCS"/*; do autoload -Uz "$(basename "$fn")"; done
 for plug in "$ZPLUGS[@]"; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"; done
 
 # Configure shell aliases, completions, syntax-highlighting
-for cnf in "$ZCONFIGS[@]"; do source "$ZDOTDIR/configs/$cnf"; done
+for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
 
 # Initialize & configure shell prompt theme
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/.p10k.zsh"
