@@ -68,10 +68,8 @@ lp=00;38;5;4:\
 export TASKRC="$XDG_CONFIG_HOME/task/config"
 export TASKDATA="$XDG_DATA_HOME/task"
 
-# Z.lua
+# Z.lua & Zoxide
 export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
-
-# Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # Configure shell options: https://zsh.sourceforge.io/
