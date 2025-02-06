@@ -2,20 +2,14 @@
 # TODO Fix zsh compinit: insecure directories: chmod -R go-w "$(brew --prefix)/share"
 
 echo "󰓒 INSTALLATION START 󰓒"
-
-# -------------------------------- Pre-Installation ----------------------------------------
-
 # Turn on 1Password SSH Agent
 # https://developer.1password.com/docs/ssh/get-started#step-3-turn-on-the-1password-ssh-agent)
 
 # Ensure Xcode installed
 command -v xcode-select &> /dev/null || { echo 'Please run: xcode-select --install'; exit 1; }
 
-echo "󰓒 [1/<steps>] INSTALLING PACKAGE MANAGER 󰓒"
+echo "󰓒 [1/14] INSTALLING PACKAGE MANAGER 󰓒"
 command -v brew &> /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-
-# -------------------------------- Install Tools & Apps ----------------------------------------
 
 # Set Homebrew path based on architecture
 case "$(uname -m)" in
@@ -27,17 +21,15 @@ esac
 # Load Homebrew env vars and prepend to path in current session
 eval "$("$HOMEBREW_BIN/brew" shellenv)"
 
-echo "󰓒 [2/<steps>] INSTALLING TOOLS & APPS 󰓒"
+echo "󰓒 [2/14] INSTALLING TOOLS & APPS 󰓒"
 read -p 'Install [tools/apps/all] (Press Enter to Skip): ' install_type
 
 brew_install () {
-  local filter="$1"
-  local cmd="$2"
-  local repo='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main'
+  local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
 
   case "$install_type" in
-    'all') curl -fsSL "$repo/.Brewfile" | brew bundle --file=- ;;
-        *) curl -fsSL "$repo/.Brewfile" | grep "$filter" | awk '{print $2}' | xargs "$cmd"
+    'all') curl -fsSL "$brewfile" | brew bundle --file=- ;;
+        *) curl -fsSL "$brewfile" | grep "$1" | awk '{print $2}' | xargs "$2" ;;
   esac
 } 
 
@@ -49,7 +41,7 @@ case "$install_type" in
            brew_install '^brew ' 'brew install --cask' ;;
 esac
 
-echo "󰓒 [3/<steps>] RUNNING HOMEBREW DIAGNOSTICS 󰓒"
+echo "󰓒 [3/14] RUNNING HOMEBREW DIAGNOSTICS 󰓒"
 read -p 'Run Homebrew diagnostics and maintenance? [y/n]: ' brew_diagnostics
 
 if [[ "$brew_diagnostics" =~ ^[Yy]$ ]]; then
@@ -58,15 +50,14 @@ if [[ "$brew_diagnostics" =~ ^[Yy]$ ]]; then
   brew doctor
 fi
 
-echo "󰓒 [4/<steps>] INITIALIZING BREW CASK UPGRADE 󰓒"
+echo "󰓒 [4/14] INITIALIZING BREW CASK UPGRADE 󰓒"
 brew tap buo/cask-upgrade
 brew install brew-cask-upgrade
 
 read -p 'Run brew cask upgrade? [y/n]: ' brew_cask_upgrade
 [[ "$brew_cask_upgrade" =~ ^[Yy]$ ]] && brew cu -af
 
-# -------------------------------- User Input ----------------------------------------
-echo "󰓒 [5/<steps>] SET ENVIRONMENT 󰓒"
+echo "󰓒 [5/14] SET ENVIRONMENT 󰓒"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -82,8 +73,8 @@ echo "XDG_STATE_HOME=$XDG_STATE_HOME:=$HOME/.local/state}"
 read -p 'Git Username: ' GIT_NAME          # Ari Ganapathi
 read -p 'Git Email: ' GIT_EMAIL            # ariganapathi7@gmail.com
 read -p 'Git Signing Key: ' GIT_SIGNINGKEY # AAAAC3NzaC1lZDI1NTE5AAAAICWIS35ryEKaOq1XmBr9NoDlS9TeWcb10YsrLJ3m35e5
+read -p 'GitHub User: ' GITHUB_NAME        # arig07
 read -p 'Atuin Username: ' ATUIN_USERNAME  # ariganapathi7
-read -p 'Atuin Email: ' ATUIN_EMAIL        # ariganapathi7@gmail.com
 
 # Optional 
 read -p '1Password Vault name (Press Enter to set to "Private"): ' OP_VAULT # Ari's Passwords
@@ -92,8 +83,7 @@ read -p '1Password Atuin Sync Title (Press Enter to set to "Atuin Sync"): ' ATUI
 read -p 'Python URL (Press Enter to set to "https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg"): ' PYTHON_URL
 read -p 'Python Download Location (Press Enter to set to "/Applications/Python 3.13"): ' PYTHON_APP_PATH
 
-# -------------------------------- Symlinks & Directories ----------------------------------------
-echo "󰓒 [6/<steps>] CREATE SYMLINKS & DIRECTORIES 󰓒"
+echo "󰓒 [6/14] CREATE SYMLINKS & DIRECTORIES 󰓒"
 
 symlink() {
   local src="$1"
@@ -149,6 +139,7 @@ symlinks=(
   ../.dotfiles/tmux      "$XDG_CONFIG_HOME" tmux
   ../.dotfiles/wezterm   "$XDG_CONFIG_HOME" wezterm
   ../.dotfiles/yazi      "$XDG_CONFIG_HOME" yazi
+  ../.dotfiles/youtube   "$XDG_CONFIG_HOME" youtube
   ../.dotfiles/zsh       "$XDG_CONFIG_HOME" zsh 
 
   ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME" starship.toml
@@ -163,8 +154,7 @@ symlinks=(
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-# -------------------------------- Configure macOS options ----------------------------------------
-echo "󰓒 [7/<steps>] CONFIGURE MACOS OPTIONS 󰓒"
+echo "󰓒 [7/14] CONFIGURE MACOS OPTIONS 󰓒"
 
 # Screenshots
 [ -d "$HOME/Pictures/screenshots" ] || mkdir "$HOME/Pictures/screenshots"
@@ -182,11 +172,10 @@ defaults write com.apple.finder QuitMenuItem -bool true                     # qu
 defaults write com.apple.finder AppleShowAllFiles -bool true                # show hidden files
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false  # disable file ext change warning
 
-# -------------------------------- Configure Git and GitHub CLI ----------------------------------------
-echo "󰓒 [8/<steps>] CONFIGURE GIT AND GITHUB CLI 󰓒"
+echo "󰓒 [8/14] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
 # Change git protocol for dotfiles
-git -C "$HOME/.dotfiles" remote set-url origin git@github.com:arig07/dotfiles.git
+git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
 
 # Set custom git config fields
 git config --global user.name       "$GIT_NAME"
@@ -208,8 +197,7 @@ item = "GitHub Signing Key"
 vault = "$OP_VAULT"
 EOF
 
-# -------------------------------- Setup Atuin & Sync ----------------------------------------
-echo "󰓒 [9/<steps>] SETUP ATUIN & SYNC 󰓒"
+echo "󰓒 [9/14] SETUP ATUIN & SYNC 󰓒"
 
 # Create 1Password item
 command -v op &>/dev/null || brew install 1password-cli
@@ -219,48 +207,47 @@ op signin && op item create \
     --title "${ATUIN_OP_TITLE:-Atuin Sync}" \
     --generate-password='letters,digits,symbols,32' \
     "username=$ATUIN_USERNAME" \
-    "email[text]=$ATUIN_EMAIL" \
+    "email[text]=${ATUIN_USERNAME}@gmail.com" \
     "key[password]=update this with \$(atuin key)" &>/dev/null
 
 # Register Atuin and update 1Password item key
-atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
+atuin register -u "$ATUIN_USERNAME" -e "${ATUIN_USERNAME}@gmail.com"
 op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 atuin import auto && atuin sync
 
-# -------------------------------- Install Python ----------------------------------------
-echo "󰓒 [10/<steps>] INSTALL PYTHON 󰓒"
-
 # Download and install Python 3.13
+echo "󰓒 [10/14] INSTALL PYTHON 󰓒"
 if [ ! -d "$PYTHON_APP_PATH" ]; then
   echo "Python 3.13 not found: Downloading and installing..."
 
   curl -o '/tmp/python.pkg' "$PYTHON_URL" || { echo "Python 3.13 download failed"; exit 1; }
   sudo installer -pkg '/tmp/python.pkg' -target / || { echo "Python 3.13 installation failed"; exit 1; }
   rm -f '/tmp/python.pkg'
-  
+
   echo "Python 3.13 installed successfully in $PYTHON_APP_PATH"
 else
   echo "Python 3.13 already installed"
 fi
 
-# -------------------------------- Setup iTerm2 ----------------------------------------
-echo "󰓒 [11/<steps>] SETUP ITERM 󰓒"
-
 # Surpress iterm2 login message
+echo "󰓒 [11/14] SETUP ITERM 󰓒"
 touch "$HOME/.hushlogin"
 
-# -------------------------------- Setup Bat ----------------------------------------
-echo "󰓒 [12/<steps>] SETUP BAT 󰓒"
+echo "󰓒 [12/14] SETUP BAT 󰓒"
 
 # Load bat themes
 command -v bat &>/dev/null || brew install bat
 bat cache --build
 
-# -------------------------------- Setup Neovim ----------------------------------------
-echo "󰓒 [13/<steps>] SETUP NEOVIM 󰓒"
+# Configure touchid for sudo
+echo "󰓒 [13/14] SETUP TOUCHID SUDO 󰓒"
+brew list | grep -q pam-reattach || brew install pam-reattach
+sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
+[[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|/opt/homebrew|/usr/local|g' /etc/pam.d/sudo_local
 
 # Installs lazy.nvim and plugins
-# After installation finishes run :MasonInstall lua-language-server basedpyright
+echo "󰓒 [14/14] SETUP NEOVIM 󰓒"
 cd; nvim
 
+# After installation finishes run :MasonInstall lua-language-server basedpyright
 echo "󰓒 INSTALLATION COMPLETE 󰓒"
