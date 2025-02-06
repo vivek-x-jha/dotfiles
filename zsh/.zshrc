@@ -46,6 +46,6 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Load & configure shell history manager
 eval "$(atuin init zsh)" && { bindkey '^e' atuin-search; bindkey '^[[A' atuin-up-search }
 
-# Load & configure shell working directory manager
-eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh)"
-# eval "$(zoxide init zsh)"
+# Load & configure shell directory navigator (i.e. "jump to") tools
+eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once zsh)"
+eval "$(zoxide init zsh --cmd j)"

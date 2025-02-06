@@ -31,6 +31,6 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Load & configure shell history manager
 eval "$(atuin init bash)" && { bind -x '"\C-e": "__atuin_history"'; bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'; }
 
-# Load & configure shell working directory manager
-eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init bash)"
-# eval "$(zoxide init bash)"
+# Load & configure shell directory navigator (i.e. "jump to") tools
+eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once bash)"
+eval "$(zoxide init bash --cmd j)"
