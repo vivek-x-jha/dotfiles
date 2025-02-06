@@ -18,7 +18,7 @@ update_feature_branches() {
 
   git switch main
 
-  git log -5 --graph --date=format:"%b-%d-%Y" --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
+  git log -5 --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"
 }
 
 update_texlive() {
