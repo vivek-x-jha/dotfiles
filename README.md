@@ -51,7 +51,6 @@ brew install --cask 1password alfred alt-tab chatgpt discord font-jetbrains-mono
 
 1. [Tpm](https://www.github.com/tmux-plugins/tpm)
 1. [Floax](https://github.com/vivek-x-jha/tmux-floax)
-1. [Sessionx](https://github.com/vivek-x-jha/tmux-sessionx)
 1. [Vim-Navigator](https://github.com/vivek-x-jha/tmux-vim-navigator)
 1. [Yank](https://github.com/tmux-plugins/tmux-yank)
 1. [Sensible](https://github.com/tmux-plugins/tmux-sensible)
@@ -63,7 +62,8 @@ brew install --cask 1password alfred alt-tab chatgpt discord font-jetbrains-mono
 Enable authentication using touchid - works in multiplexers like tmux and screen
 
 ```sh
-sudo cp -f "$HOME/.dotfiles/.sudo_local" /etc/pam.d/sudo_local
+brew list | grep -q pam-reattach || brew install pam-reattach
+sudo cp -f ~/.dotfiles/sudo/sudo_local /etc/pam.d/sudo_local
 ```
 
 ### SSH
