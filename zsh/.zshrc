@@ -1,43 +1,51 @@
 # Initialize shell prompt instantly
-[ -r "$P10K_INSTA_PROMPT" ] && source "$P10K_INSTA_PROMPT"
+[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
-# Configure shell history
+# Load api keys
+[ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
+
+# Configure shell opts
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=12000
 SAVEHIST=10000
 
-# Re-initialize PATH and FPATH in new tmux sessions
+setopt alwaystoend
+setopt autocd
+setopt extendedhistory
+setopt histexpiredupsfirst
+setopt histignoredups
+setopt histignorespace
+setopt incappendhistory
+setopt interactivecomments
+setopt sharehistory
+
+# Ensure PATH and FPATH gets set - even in shell interactive mode or tmux
 source "$ZDOTDIR/.zprofile"
 
-# Initialize secrets
-[ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
-
-# Configure colorscheme: ls, tree, eza
-eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
-
-# Configure shell options
-setopt "$ZOPTS[@]" 
-
-# Lazy load shell user functions
-for fn in "$ZFUNCS"/*; do autoload -Uz "$(basename "$fn")"; done
-
-# Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
-for plug in "$ZPLUGS[@]"; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"; done
-
-# Configure shell aliases, completions, syntax-highlighting
-for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
-
-# Initialize & configure shell prompt theme
+# Laad & configure shell prompt string 
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/.p10k.zsh"
 
-# Initialize & configure fuzzy finder
+# Load & configure shell fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
 
-# Initialize & configure shell history manager
-eval "$(atuin init zsh)" && { bindkey '^e' atuin-search; bindkey '^[[A' atuin-up-search }
-
-# Initialize shell authentication manager: 1p -> gh
+# Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
-# Initialize & configure shell working directory manager
-eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh enhanced once)"
+# Lazy load shell functions
+for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
+
+# Load core shell plugins
+for plug in 'autocomplete' 'autopair' 'autosuggestions' 'syntax-highlighting'; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"; done
+
+# Configure shell aliases, completions, & syntax-highlighting
+for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
+
+# Set LS_COLORS: ls, tree, eza
+eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
+
+# Load & configure shell history manager
+eval "$(atuin init zsh)" && { bindkey '^e' atuin-search; bindkey '^[[A' atuin-up-search }
+
+# Load & configure shell working directory manager
+eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init zsh)"
+# eval "$(zoxide init zsh)"

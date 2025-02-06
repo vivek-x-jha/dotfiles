@@ -12,6 +12,6 @@ path=(
 
 fpath=(
   "$(brew --prefix)/share/zsh-completions"
-  "$ZFUNCS"
+  "$ZDOTDIR/funcs"
   "$fpath[@]"
 )

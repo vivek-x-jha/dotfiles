@@ -68,28 +68,14 @@ lp=00;38;5;4:\
 export TASKRC="$XDG_CONFIG_HOME/task/config"
 export TASKDATA="$XDG_DATA_HOME/task"
 
+# Z.lua
+export _ZL_MATCH_MODE=1
+export _ZL_ADD_ONCE=1
+export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
+
+# Zoxide
+export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
+
 # Configure shell options: https://zsh.sourceforge.io/
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export ZFUNCS="$ZDOTDIR/funcs"
-export _ZL_DATA="$XDG_CACHE_HOME/zlua/.zlua"
 export SHELL_SESSIONS_DISABLE=1
-export P10K_INSTA_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
-
-export ZOPTS=(
-  alwaystoend
-  autocd
-  extendedhistory
-  histexpiredupsfirst
-  histignoredups
-  histignorespace
-  incappendhistory
-  interactivecomments
-  sharehistory
-)
-
-export ZPLUGS=(
-  autocomplete
-  autopair
-  autosuggestions
-  syntax-highlighting
-)
