@@ -4,8 +4,8 @@ export BDOTDIR="$XDG_CONFIG_HOME/bash"
 export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
-# Initialize PATH
-source "$BDOTDIR/configs/path"
+# Configure shell aliases & PATH
+for cnf in "$BDOTDIR/configs"/*; do source "$cnf"; done
 
 # Initialize secrets
 [ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
@@ -17,7 +17,7 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 shopt -s autocd
 
 # Initialize shell user functions
-for fn in "$BDOTDIR/funcs/"*.sh; do source "$fn"; done
+for fn in "$BDOTDIR/funcs"/*; do source "$fn"; done
 
 # Initialize shell core plugins: auto-complete, auto-pair, auto-suggestions, syntax-highlighting
 source "$XDG_DATA_HOME/blesh/ble.sh"
