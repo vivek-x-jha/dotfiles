@@ -25,7 +25,7 @@ git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles && ~/.dotfiles
 - Delete manually downloaded versions from `/Applications/` - some app downloads may require sudo authentication
 
 ```sh
-brew install --cask 1password alfred alt-tab chatgpt discord font-jetbrains-mono-nerd-font google-chrome hammerspoon iterm2 karabiner-elements postman skim spotify visual-studio-code vlc wezterm zoom
+brew install --cask 1password alfred alt-tab arc chatgpt discord firefox font-jetbrains-mono-nerd-font google-chrome hammerspoon iterm2 karabiner-elements postman skim spotify visual-studio-code vlc wezterm zoom
 ```
 
 ## Features
@@ -43,7 +43,6 @@ brew install --cask 1password alfred alt-tab chatgpt discord font-jetbrains-mono
 
 ### Neovim
 
-1. [NvChad](https://github.com/NvChad/NvChad)
 1. [Lazy](https://www.github.com/folke/lazy.nvim)
 1. [Harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
 
