@@ -5,7 +5,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # Editing and Pagination
-if command -v nvim &>/dev/null; then
+if command -v nvim &> /dev/null; then
   export EDITOR='nvim'
 else
   export EDITOR='vim'
@@ -13,7 +13,7 @@ fi
 
 export VISUAL="$EDITOR"
 
-command -v bat &>/dev/null && export PAGER='bat -p'
+command -v bat &> /dev/null && export PAGER='bat -p'
 
 # Supress homebrew hints & dynamically create binary path
 export HOMEBREW_NO_ENV_HINTS=1
@@ -67,6 +67,14 @@ lp=00;38;5;4:\
 # Task
 export TASKRC="$XDG_CONFIG_HOME/task/config"
 export TASKDATA="$XDG_DATA_HOME/task"
+
+# Z.lua
+export _ZL_MATCH_MODE=1
+export _ZL_ADD_ONCE=1
+export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
+
+# Zoxide
+export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # Configure shell options: https://www.gnu.org/software/bash/
 source "$XDG_CONFIG_HOME/bash/.bashrc"
