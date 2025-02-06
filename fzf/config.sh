@@ -27,11 +27,13 @@ export FZF_DEFAULT_OPTS="
   --walker-skip    .git,node_modules,target
 "
 
+# Shell integration: project folders/files + preview files
 export FZF_CTRL_T_OPTS="
   --bind           'ctrl-/:change-preview-window(down|hidden|)'
   --preview        'bat -n --color=always {}'
 "
 
+# Shell integration: command history
 export FZF_CTRL_R_OPTS="
   --bind           'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --header         'Press CTRL-Y to copy command into clipboard'
@@ -39,7 +41,16 @@ export FZF_CTRL_R_OPTS="
   --preview-window 'wrap:up:3'
 "
 
+# Shell integration: change directory
 export FZF_ALT_C_OPTS="
   --header         'Change Directory to...'
   --preview        'tree -aCI \".git|.github\" {}'
+"
+
+# Zoxide interactive scored directory window
+# https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
+export _ZO_FZF_OPTS="
+  $FZF_DEFAULT_OPTS 
+  --header 'Jump to...'
+  --preview 'echo {} | cut -f2- | xargs -I{} tree -aCI \".git|.github\" {}'
 "

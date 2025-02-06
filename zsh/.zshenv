@@ -69,8 +69,6 @@ export TASKRC="$XDG_CONFIG_HOME/task/config"
 export TASKDATA="$XDG_DATA_HOME/task"
 
 # Z.lua
-export _ZL_MATCH_MODE=1
-export _ZL_ADD_ONCE=1
 export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
 
 # Zoxide
