@@ -23,8 +23,7 @@ case "$(uname -m)" in
 esac
 
 # TMUX
-export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux"
-export TPM="$TMUX_PLUGIN_MANAGER_PATH/tpm"
+export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 export TMUX_FZF_LAUNCH_KEY='f'
 
 # History 
