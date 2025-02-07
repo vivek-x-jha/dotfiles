@@ -1,14 +1,20 @@
 #!/usr/bin/env zsh
 
 # Editor
-alias v='nvim'
-alias va='nvim $(fd -HItf --exclude .git --exclude .github --exclude Session.vim)'
+alias va='"$EDITOR" $(fd -HItf \
+  --exclude .git \
+  --exclude .github \
+  --exclude Session.vim \
+  --exclude "Icon?")
+'
 alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
-alias vs='nvim -S Session.vim'
-alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
+alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
+alias vs='"$EDITOR" -S Session.vim'
 
 alias vim='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 alias vi='vim'
+
+alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
 # File Navigation & Previewing
 alias -- -="z -"
