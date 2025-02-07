@@ -22,8 +22,9 @@ case "$(uname -m)" in
   'x86_64') export HOMEBREW_BIN='/usr/local/bin'    ;;
 esac
 
-# TMUX plugin manager path
+# TMUX
 export TPM="$XDG_CONFIG_HOME/tmux/plugins/tpm"
+export TMUX_FZF_LAUNCH_KEY='f'
 
 # History 
 export ATUIN_NOBIND='true'
