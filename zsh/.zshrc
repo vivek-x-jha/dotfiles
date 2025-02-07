@@ -35,7 +35,10 @@ source "$XDG_CONFIG_HOME/op/plugins.sh"
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
 # Load core shell plugins
-for plug in 'autocomplete' 'autopair' 'autosuggestions' 'syntax-highlighting'; do source "$(brew --prefix)/share/zsh-$plug/$plug.zsh"; done
+source "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
+source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # Configure shell aliases, completions, & syntax-highlighting
 for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
