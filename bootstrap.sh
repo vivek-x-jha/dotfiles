@@ -113,8 +113,8 @@ while true; do
   PYTHON_VERSION=$PYTHON_VERSION\n\
   PYTHON_APP_PATH=$PYTHON_APP_PATH\n"
 
-  read -p "Re-enter any Environment Variables? [y/n]: " RE_ENTER
-  [[ "$RE_ENTER" =~ ^[Nn]$ ]] && break
+  read -p "Re-enter any Environment Variables? (Press Enter to continue): " RE_ENTER
+  [ -z "$RE_ENTER" ] && break
 done
 
 echo "󰓒 [$step/14] CREATE SYMLINKS & DIRECTORIES 󰓒" && step+=1
