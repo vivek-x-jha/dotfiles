@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 # TODO Fix zsh compinit insecure directories warning: chmod -R go-w "$(brew --prefix)/share"
 
-echo "󰓒 INSTALLATION START 󰓒"
 # Turn on 1Password SSH Agent
 # https://developer.1password.com/docs/ssh/get-started#step-3-turn-on-the-1password-ssh-agent)
 
 # Ensure Xcode installed
 command -v xcode-select &> /dev/null || { echo 'Please run: xcode-select --install'; exit 1; }
 
-echo "󰓒 [1/14] INSTALLING PACKAGE MANAGER 󰓒"
+declare -i step=1
+
+echo "󰓒 INSTALLATION START 󰓒"
+echo "󰓒 [$step/14] INSTALLING PACKAGE MANAGER 󰓒" && step+=1
 command -v brew &> /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Set Homebrew path based on architecture
@@ -43,19 +45,19 @@ case "$install_type" in
            brew_install '^brew ' 'brew install --cask' ;;
 esac
 
-echo "󰓒 [3/14] RUNNING HOMEBREW DIAGNOSTICS 󰓒"
+echo "󰓒 [$step/14] RUNNING HOMEBREW DIAGNOSTICS 󰓒" && step+=1
 if [[ "$brew_diagnostics" =~ ^[Yy]$ ]]; then
   brew upgrade
   brew cleanup
   brew doctor
 fi
 
-echo "󰓒 [4/14] INITIALIZING BREW CASK UPGRADE 󰓒"
+echo "󰓒 [$step/14] INITIALIZING BREW CASK UPGRADE 󰓒" && step+=1
 brew tap buo/cask-upgrade
 brew install brew-cask-upgrade
 [[ "$brew_cask_upgrade" =~ ^[Yy]$ ]] && brew cu -af
 
-echo "󰓒 [5/14] SET ENVIRONMENT 󰓒"
+echo "󰓒 [$step/14] SET ENVIRONMENT 󰓒" && step+=1
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -115,7 +117,7 @@ while true; do
   [[ "$RE_ENTER" =~ ^[Nn]$ ]] && break
 done
 
-echo "󰓒 [6/14] CREATE SYMLINKS & DIRECTORIES 󰓒"
+echo "󰓒 [$step/14] CREATE SYMLINKS & DIRECTORIES 󰓒" && step+=1
 
 symlink() {
   local src="$1"
@@ -189,7 +191,7 @@ symlinks=(
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-echo "󰓒 [7/14] CONFIGURE MACOS OPTIONS 󰓒"
+echo "󰓒 [$step/14] CONFIGURE MACOS OPTIONS 󰓒" && step+=1
 
 echo "opt1: Change default screenshots location to '~/Pictures/screenshots/'"
 [ -d "$HOME/Pictures/screenshots" ] || mkdir "$HOME/Pictures/screenshots"
@@ -219,7 +221,7 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 echo 'opt9: Disable file extension change warning'
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-echo "󰓒 [8/14] CONFIGURE GIT AND GITHUB CLI 󰓒"
+echo "󰓒 [$step/14] CONFIGURE GIT AND GITHUB CLI 󰓒" && step+=1
 
 git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
 
@@ -239,7 +241,7 @@ item = "GitHub Signing Key"
 vault = "$OP_VAULT"
 EOF
 
-echo "󰓒 [9/14] SETUP ATUIN & SYNC 󰓒"
+echo "󰓒 [$step/14] SETUP ATUIN & SYNC 󰓒" && step+=1
 command -v op &> /dev/null || brew install 1password-cli
 op signin && op item create \
     --vault "$OP_VAULT" \
@@ -254,7 +256,7 @@ command -v atuin &> /dev/null || brew install atuin && atuin register -u "$ATUIN
 op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 atuin import auto && atuin sync
 
-echo "󰓒 [10/14] DOWNLOAD AND INSTALL PYTHON 󰓒"
+echo "󰓒 [$step/14] DOWNLOAD AND INSTALL PYTHON 󰓒" && step+=1
 if [ ! -d "$PYTHON_APP_PATH" ]; then
   echo "Python 3.13 not found: Downloading and installing..."
 
@@ -267,19 +269,19 @@ else
   echo "Python $PYTHON_VERSION already installed"
 fi
 
-echo "󰓒 [11/14] SETUP ITERM 󰓒"
+echo "󰓒 [$step/14] SETUP ITERM 󰓒" && step+=1
 touch "$HOME/.hushlogin" && echo 'Created ~/.hushlogin (Surpresses iterm2 login message)' 
 
-echo "󰓒 [12/14] LOAD BAT THEMES 󰓒"
+echo "󰓒 [$step/14] LOAD BAT THEMES 󰓒" && step+=1
 command -v bat &> /dev/null || brew install bat && bat cache --build
 
-echo "󰓒 [13/14] SETUP TOUCHID SUDO 󰓒"
+echo "󰓒 [$step/14] SETUP TOUCHID SUDO 󰓒" && step+=1
 brew list | grep -q pam-reattach || brew install pam-reattach
 sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
 [[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|/opt/homebrew|/usr/local|g' /etc/pam.d/sudo_local
 
 # Installs lazy.nvim and plugins
-echo "󰓒 [14/14] SETUP NEOVIM 󰓒"
+echo "󰓒 [$step/14] SETUP NEOVIM 󰓒" && step+=1
 cd; command -v nvim &> /dev/null || nvim
 
 # After installation finishes run :MasonInstall lua-language-server basedpyright
