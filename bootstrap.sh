@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# TODO Fix zsh compinit: insecure directories: chmod -R go-w "$(brew --prefix)/share"
+# TODO Fix zsh compinit insecure directories warning: chmod -R go-w "$(brew --prefix)/share"
 
 echo "󰓒 INSTALLATION START 󰓒"
 # Turn on 1Password SSH Agent
@@ -135,7 +135,7 @@ symlink() {
 
   echo "[+ Link: $src -> $cwd/$tgt]"
 }
-
+                                              
 directories=(
   "$XDG_CACHE"
   "$XDG_CONFIG_HOME/atuin"
@@ -174,14 +174,17 @@ symlinks=(
   ../.dotfiles/youtube   "$XDG_CONFIG_HOME" youtube
   ../.dotfiles/zsh       "$XDG_CONFIG_HOME" zsh 
 
-  ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME"     starship.toml
-  ../../.dotfiles/op/plugins.sh     "$XDG_CONFIG_HOME/op"  plugins.sh
+  ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME"    starship.toml
+  ../../.dotfiles/op/plugins.sh     "$XDG_CONFIG_HOME/op" plugins.sh
+  ../../.dotfiles/eza "$HOME/Library/Application Support" eza
 
-  ../../.dotfiles/eza          "$HOME/Library/Application Support" eza
-
-  zsh-autocomplete.plugin.zsh  "$(brew --prefix)/share/zsh-autocomplete"        autocomplete.zsh
-  zsh-autosuggestions.zsh      "$(brew --prefix)/share/zsh-autosuggestions"     autosuggestions.zsh
-  zsh-syntax-highlighting.zsh  "$(brew --prefix)/share/zsh-syntax-highlighting" syntax-highlighting.zsh
+  Dropbox/developer      "$HOME"            Developer
+  ../Dropbox/content     "$HOME/Movies"     content
+  ../Dropbox/icons       "$HOME/Pictures"   icons
+  ../Dropbox/screenshots "$HOME/Pictures"   screenshots
+  ../Dropbox/wallpapers  "$HOME/Pictures"   wallpapers
+  ../Dropbox/education   "$HOME/Documents"  education
+  ../Dropbox/finances    "$HOME/Documents"  finances
 )
 
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
