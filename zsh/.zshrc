@@ -31,14 +31,14 @@ source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
-# Lazy load shell functions
-for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
-
 # Load core shell plugins
 source "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
 source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Lazy load shell functions
+for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
 # Configure shell aliases, completions, & syntax-highlighting
 for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
@@ -49,6 +49,6 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Load & configure shell history manager
 eval "$(atuin init zsh)" && { bindkey '^e' atuin-search; bindkey '^[[A' atuin-up-search }
 
-# Load & configure shell directory navigator (i.e. "jump to") tools
+# Load & configure shell directory navigator (i.e. "jump to" tools)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once zsh)"
 eval "$(zoxide init zsh --cmd j)"
