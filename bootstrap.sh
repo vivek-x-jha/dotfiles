@@ -226,7 +226,7 @@ git config --global user.signingkey "$GIT_SIGNINGKEY"
 
 echo "$GIT_EMAIL ssh-ed25519 $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
 
-command -v gh &>/dev/null || brew install gh && gh auth login
+command -v gh &> /dev/null || brew install gh && gh auth login
 
 cat <<EOF > "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
 # https://developer.1password.com/docs/ssh/agent/config
@@ -237,7 +237,7 @@ vault = "$OP_VAULT"
 EOF
 
 echo "󰓒 [9/14] SETUP ATUIN & SYNC 󰓒"
-command -v op &>/dev/null || brew install 1password-cli
+command -v op &> /dev/null || brew install 1password-cli
 op signin && op item create \
     --vault "$OP_VAULT" \
     --category login \
@@ -247,7 +247,7 @@ op signin && op item create \
     "email[text]=$ATUIN_EMAIL" \
     "key[password]=update this with \$(atuin key)" &>/dev/null
 
-command -v atuin &>/dev/null || brew install atuin && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
+command -v atuin &> /dev/null || brew install atuin && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
 op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 atuin import auto && atuin sync
 
@@ -268,7 +268,7 @@ echo "󰓒 [11/14] SETUP ITERM 󰓒"
 touch "$HOME/.hushlogin" && echo 'Created ~/.hushlogin (Surpresses iterm2 login message)' 
 
 echo "󰓒 [12/14] LOAD BAT THEMES 󰓒"
-command -v bat &>/dev/null || brew install bat && bat cache --build
+command -v bat &> /dev/null || brew install bat && bat cache --build
 
 echo "󰓒 [13/14] SETUP TOUCHID SUDO 󰓒"
 brew list | grep -q pam-reattach || brew install pam-reattach
@@ -277,7 +277,7 @@ sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
 
 # Installs lazy.nvim and plugins
 echo "󰓒 [14/14] SETUP NEOVIM 󰓒"
-cd; nvim
+cd; command -v nvim &> /dev/null || nvim
 
 # After installation finishes run :MasonInstall lua-language-server basedpyright
 echo "󰓒 INSTALLATION COMPLETE 󰓒"
