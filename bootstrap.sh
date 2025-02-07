@@ -71,25 +71,25 @@ while true; do
 
   # Optional 
   read -p "GitHub User (Press Enter to set to '$DEFAULT_NAME'): " GITHUB_NAME
-  GITHUB_NAME="${GITHUB_NAME:-$DEFAULT_NAME}"
+  GITHUB_NAME="${GITHUB_NAME:=$DEFAULT_NAME}"
 
   read -p "Atuin Username (Press Enter to set to '$DEFAULT_NAME'): " ATUIN_USERNAME
-  ATUIN_USERNAME="${ATUIN_USERNAME:-$DEFAULT_NAME}"
+  ATUIN_USERNAME="${ATUIN_USERNAME:=$DEFAULT_NAME}"
 
   read -p "Atuin Email (Press Enter to set to '$GIT_EMAIL'): " ATUIN_EMAIL
-  ATUIN_EMAIL="${ATUIN_EMAIL:-$GIT_EMAIL}"
+  ATUIN_EMAIL="${ATUIN_EMAIL:=$GIT_EMAIL}"
 
   read -p "1Password Vault name (Press Enter to set to 'Private'): " OP_VAULT
-  OP_VAULT="${OP_VAULT:-Private}"
+  OP_VAULT="${OP_VAULT:='Private'}"
 
   read -p "1Password Atuin Sync Title (Press Enter to set to 'Atuin Sync'): " ATUIN_OP_TITLE
-  ATUIN_OP_TITLE="${ATUIN_OP_TITLE:-'Atuin Sync'}"
+  ATUIN_OP_TITLE="${ATUIN_OP_TITLE:='Atuin Sync'}"
 
-  read -p "Python URL (Press Enter to set to 'https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg'): " PYTHON_URL
-  PYTHON_URL="${PYTHON_URL:-'https://www.python.org/ftp/python/3.13.1/python-3.13.1-macos11.pkg'}"
+  read -p "Python Version (Press Enter to set to '3.13.2'): " PYTHON_VERSION
+  PYTHON_VERSION="${PYTHON_VERSION:='3.13.2'}"
 
   read -p "Python Download Location (Press Enter to set to '/Applications/Python 3.13'): " PYTHON_APP_PATH
-  PYTHON_APP_PATH="${PYTHON_APP_PATH:-'/Applications/Python 3.13'}"
+  PYTHON_APP_PATH="${PYTHON_APP_PATH:='/Applications/Python 3.13'}"
   
   echo -e "\
   XDG_CONFIG_HOME=$XDG_CONFIG_HOME\n\
@@ -108,7 +108,7 @@ while true; do
   OP_VAULT=$OP_VAULT\n\
   ATUIN_OP_TITLE=$ATUIN_OP_TITLE\n\
   \n\
-  PYTHON_URL=$PYTHON_URL\n\
+  PYTHON_VERSION=$PYTHON_VERSION\n\
   PYTHON_APP_PATH=$PYTHON_APP_PATH\n"
 
   read -p "Re-enter any Environment Variables? [y/n]: " RE_ENTER
@@ -255,13 +255,13 @@ echo "󰓒 [10/14] DOWNLOAD AND INSTALL PYTHON 󰓒"
 if [ ! -d "$PYTHON_APP_PATH" ]; then
   echo "Python 3.13 not found: Downloading and installing..."
 
-  curl -o '/tmp/python.pkg' "$PYTHON_URL" || { echo "Python 3.13 download failed"; exit 1; }
-  sudo installer -pkg '/tmp/python.pkg' -target / || { echo "Python 3.13 installation failed"; exit 1; }
+  curl -o '/tmp/python.pkg' "https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg" || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
+  sudo installer -pkg '/tmp/python.pkg' -target / || { echo "Python $PYTHON_VERSION installation failed"; exit 1; }
   rm -f '/tmp/python.pkg'
 
-  echo "Python 3.13 installed successfully in $PYTHON_APP_PATH"
+  echo "Python $PYTHON_VERSION installed successfully in $PYTHON_APP_PATH"
 else
-  echo "Python 3.13 already installed"
+  echo "Python $PYTHON_VERSION already installed"
 fi
 
 echo "󰓒 [11/14] SETUP ITERM 󰓒"
