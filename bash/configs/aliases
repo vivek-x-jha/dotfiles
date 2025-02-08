@@ -72,7 +72,7 @@ alias update-texlive='update_texlive'
 alias update-all='update_all'
 alias update-feature-branches='update_feature_branches'
 
-# -------------------------------- File Management & Previewing ---------------------------------------
+# -------------------------------- Workspace Management ---------------------------------------
 
 # Create new session
 alias tn='tmux new-session'

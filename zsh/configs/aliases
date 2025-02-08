@@ -63,21 +63,21 @@ alias list-opts='setopt'
 alias list-256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
 alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 
-# -------------------------------- File Management & Previewing ---------------------------------------
+# -------------------------------- Workspace Management ---------------------------------------
 
-# Create new session
+# Create new tmux session
 alias tn='tmux new-session'
 
-# Prints all sessions
+# Prints all tmux sessions
 alias tl='tmux-list-sessions'
 
-# Attach to a session found in tmux-list-sessions 
+# Attach to a tmux session found in tmux-list-sessions 
 alias ta='tmux attach -t'
 
-# Attach to last session, if none then create new one
+# Attach to last tmux session, if none then create new one
 alias t='tmux attach || tmux new-session'
 
-# Kills all sessions
+# Kills all tmux sessions
 alias tks='tmux kill-server'
 
 # -------------------------------- Version Control ---------------------------------------
