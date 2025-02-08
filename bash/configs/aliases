@@ -1,41 +1,69 @@
 #!/usr/bin/env bash
 
-# Editor
-alias va='"$EDITOR" $(fd -HItf \
-  --exclude .git \
-  --exclude .github \
-  --exclude Session.vim \
-  --exclude "Icon?")
-'
-alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
-alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
-alias vs='"$EDITOR" -S Session.vim'
+# -------------------------------- File Editing ---------------------------------------
 
+# Open all files in current directory excluding...
+alias va='$EDITOR $(fd -HItf --exclude .git --exclude .github --exclude Session.vim --exclude "Icon?")'
+
+# Fuzzy Search all files in current directory, then open
+alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
+
+# Open vim/noevim workspace from Session file
+[[ $EDITOR == 'vim' || $EDITOR == 'nvim' ]] && alias vs='$EDITOR -S Session.vim'
+
+# Open vim using viminfo state file
+alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
+
+# Deletes temp file - NOTE this fixes neovim shada error, but unsure why this works...
 alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
-# File Navigation & Previewing
-alias -- -="cd -"
-alias ~="cd $HOME"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ......="cd ../../../../.."
+# -------------------------------- File Management & Previewing ---------------------------------------
 
+# Move up 2 directories
+alias ...="cd ../.."
+
+# NOTE Ctrl + l is usual hotkey for clear ut gets overriden with tmux and nvim
 alias cl='clear'
+
+# Filter input and color with $GREP_COLOR
 alias grep='grep --color=auto'
+
+# List all directory items in long format with git info
 alias l='eza --all --long --git --icons=always --group-directories-first'
+
+# Print all directory items in colored tree format excluding git info
 alias tree='tree -aCI ".git|.github"'
 
-# Printing Long List Format
-alias list-aliases='alias | sort'
-alias list-colors=list_colors
-alias list-dependencies='brew deps --tree --installed'
-alias list-env-vars='env | sort'
-alias list-path='tr ":" "\n" <<< "$PATH"'
-alias list-users='dscl . list /Users | grep -v "^_"'
-alias list-shells='tail -n +5 /etc/shells'
+# Deletion
+alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
+
+# Aggregate number of files
+alias count-files=count_files
+
+# -------------------------------- List Long Functions ---------------------------------------
+
+# Outputs System info
 alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
+alias list-shells='tail -n +5 /etc/shells'
+alias list-users='dscl . list /Users | grep -v "^_"'
+
+# Outputs Homebrew package info
+alias list-deps='brew deps --tree --installed'
+alias list-brew-apps='IN DEVELOPMENT...' # TODO change this
+alias list-brew-cmds='IN DEVELOPMENT...' # TODO change this
+
+# Outputs PATH
+alias list-path='tr ":" "\n" <<< "$PATH"'
+
+# Outputs Shell info
+alias list-alias='alias | sort'
+alias list-vars='env | sort'
+alias list-funcs='IN DEVELOPMENT...' # TODO change this so it filters bash/funcs/*.sh
+alias list-opts='IN DEVELOPMENT...'  # TODO change this so it filters shopt
+
+# Outputs Terminal colors
+alias list-256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
+alias list-colors=list_colors
 
 # Update Management
 alias update-brew='update_brew'
@@ -44,48 +72,60 @@ alias update-texlive='update_texlive'
 alias update-all='update_all'
 alias update-feature-branches='update_feature_branches'
 
-# Deletion
-alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
+# -------------------------------- File Management & Previewing ---------------------------------------
 
-# Tmux
-alias t='tmux attach || tmux new-session'
-alias ta='tmux attach -t'
+# Create new session
 alias tn='tmux new-session'
-alias tks='tmux kill-server'
-alias tl='tmux_list_sessions'
 
-# Git
-alias gst='git status'
-alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"'
-alias gss='git status --short'
-alias grs='git restore'
-alias grst='git restore --staged'
-alias gcmsg='git commit --message'
-alias gcam='git commit --all --message'
-alias gcl='git clone --recurse-submodules'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gp='git push'
-alias gl='git pull'
-alias gf='git fetch'
-alias ga='git add'
-alias gaa='git add --all'
-alias grv='git remote --verbose'
-alias gmv='git mv'
-alias grm='git rm'
-alias gco='git checkout'
-alias gb='git branch'
-alias gmg='git merge'
+# Prints all sessions
+alias tmux-list-sessions=tmux_list_sessions
+alias tl='tmux-list-sessions'
+
+# Attach to a session found in tmux-list-sessions 
+alias ta='tmux attach -t'
+
+# Attach to last session, if none then create new one
+alias t='tmux attach || tmux new-session'
+
+# Kills all sessions
+alias tks='tmux kill-server'
+
+# -------------------------------- Version Control ---------------------------------------
 
 # Commitizen
 alias czc='cz commit'
 
-# CLI Tools
-alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
-alias weather='curl wttr.in'
-alias chatgpt='python3 ~/Developer/chatgpt-cli/chatgpt.py --key=$(python3 ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
+# Git
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gcl='git clone --recurse-submodules'
+alias gco='git checkout'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git pull'
+alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"'
+alias gmg='git merge'
+alias gmv='git mv'
+alias gp='git push'
+alias grm='git rm'
+alias grs='git restore'
+alias grst='git restore --staged'
+alias grv='git remote --verbose'
+alias gst='git status'
 
-# Audio
+# -------------------------------- CLI tools ---------------------------------------
+
+# MySQL launcher
+alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
+
+# Print weather data
+alias weather='curl wttr.in'
+
+# AI launcher
+alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
+
+# Sound toggler
 alias sas-airpods='SwitchAudioSource -s "band4band"'
 alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
 alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'

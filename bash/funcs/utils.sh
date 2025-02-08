@@ -42,7 +42,7 @@ take () {
   cd "$dir"
 }
 
-count-files () (
+count_files () (
   shopt -s nullglob
   local dir=$1
   local files=("$dir"/* "$dir"/.*)
