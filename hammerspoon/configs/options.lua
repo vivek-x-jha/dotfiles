@@ -1,4 +1,4 @@
-local theme = require 'colors.sourdiesel'
+local theme = require 'themes.sourdiesel'
 
 return {
   toolbar = false,
