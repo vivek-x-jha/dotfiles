@@ -5,7 +5,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # Editing and Pagination
-if command -v nvim &> /dev/null; then
+if [[ -f "$XDG_CONFIG_HOME/nvim/init.lua" || -f "$XDG_CONFIG_HOME/nvim/init.vim" ]]; then
   export EDITOR='nvim'
 else
   export EDITOR='vim'
@@ -13,7 +13,7 @@ fi
 
 export VISUAL="$EDITOR"
 
-command -v bat &> /dev/null && export PAGER='bat -p'
+[ -f "$XDG_CONFIG_HOME/bat/config" ] && export PAGER='bat -p'
 
 # Supress homebrew hints & dynamically create binary path
 export HOMEBREW_NO_ENV_HINTS=1
