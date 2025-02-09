@@ -3,7 +3,7 @@ local utl = require 'configs.utils'
 
 local lspservers = {
   'lua_ls',
-  'pyright',
+  'basedpyright',
 }
 
 return {
