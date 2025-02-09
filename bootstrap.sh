@@ -244,13 +244,13 @@ EOF
 echo "󰓒 [$step/14] SETUP ATUIN & SYNC 󰓒" && step+=1
 command -v op &> /dev/null || brew install 1password-cli
 op signin && op item create \
-    --vault "$OP_VAULT" \
-    --category login \
-    --title "$ATUIN_OP_TITLE" \
-    --generate-password='letters,digits,symbols,32' \
-    "username=$ATUIN_USERNAME" \
-    "email[text]=$ATUIN_EMAIL" \
-    "key[password]=update this with \$(atuin key)" &>/dev/null
+  --vault "$OP_VAULT" \
+  --category login \
+  --title "$ATUIN_OP_TITLE" \
+  --generate-password='letters,digits,symbols,32' \
+  "username=$ATUIN_USERNAME" \
+  "email[text]=$ATUIN_EMAIL" \
+  "key[password]=update this with \$(atuin key)" &>/dev/null
 
 command -v atuin &> /dev/null || brew install atuin && atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
 op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
