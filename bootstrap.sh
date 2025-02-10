@@ -238,6 +238,9 @@ cat <<EOF > "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
 
 [[ssh-keys]]
 item = "GitHub Auth Key"
+vault = "$OP_VAULT"
+
+[[ssh-keys]]
 item = "GitHub Signing Key"
 vault = "$OP_VAULT"
 EOF
