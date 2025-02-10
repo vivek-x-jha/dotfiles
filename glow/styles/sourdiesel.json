@@ -18,7 +18,7 @@
   "heading": {
     "block_suffix": "\n",
     "bold": true,
-    "prefix": "󰸖 "
+    "prefix": "> "
   },
   "h1": {
     "color": "#8ae7c5"
