@@ -1,4 +1,9 @@
 # https://developer.1password.com/docs/ssh/agent/config
 
 [[ssh-keys]]
+item = "GitHub Auth Key"
+vault = "Private"
+
+[[ssh-keys]]
+item = "GitHub Signing Key"
 vault = "Private"
