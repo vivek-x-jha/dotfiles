@@ -229,7 +229,7 @@ git config --global user.name       "$GIT_NAME"
 git config --global user.email      "$GIT_EMAIL"
 git config --global user.signingkey "$GIT_SIGNINGKEY"
 
-echo "$GIT_EMAIL ssh-ed25519 $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
+echo "$GIT_EMAIL $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
 
 command -v gh &> /dev/null || brew install gh && gh auth login
 
@@ -237,6 +237,7 @@ cat <<EOF > "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
 # https://developer.1password.com/docs/ssh/agent/config
 
 [[ssh-keys]]
+item = "GitHub Auth Key"
 item = "GitHub Signing Key"
 vault = "$OP_VAULT"
 EOF
@@ -260,9 +261,9 @@ echo "󰓒 [$step/14] DOWNLOAD AND INSTALL PYTHON 󰓒" && step+=1
 if [ ! -d "$PYTHON_APP_PATH" ]; then
   echo "Python 3.13 not found: Downloading and installing..."
 
-  curl -o '/tmp/python.pkg' "https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg" || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
-  sudo installer -pkg '/tmp/python.pkg' -target / || { echo "Python $PYTHON_VERSION installation failed"; exit 1; }
-  rm -f '/tmp/python.pkg'
+  curl -o /tmp/python.pkg "https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg" || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
+  sudo installer -pkg /tmp/python.pkg -target / || { echo "Python $PYTHON_VERSION installation failed"; exit 1; }
+  rm -f /tmp/python.pkg
 
   echo "Python $PYTHON_VERSION installed successfully in $PYTHON_APP_PATH"
 else
