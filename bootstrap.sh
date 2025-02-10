@@ -153,21 +153,22 @@ for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
 symlinks=(
   .dotfiles/bash/.bash_profile "$HOME" .bash_profile
-  .dotfiles/bash/.bashrc       "$HOME" .bashrc      
-  .dotfiles/zsh/.zshenv        "$HOME" .zshenv       
+  .dotfiles/bash/.bashrc       "$HOME" .bashrc
+  .dotfiles/zsh/.zshenv        "$HOME" .zshenv
   ../.dotfiles/hammerspoon     "$HOME" .hammerspoon
 
   ../.dotfiles/1Password "$XDG_CONFIG_HOME" 1Password
   ../.dotfiles/atuin     "$XDG_CONFIG_HOME" atuin
-  ../.dotfiles/bash      "$XDG_CONFIG_HOME" bash 
-  ../.dotfiles/bat       "$XDG_CONFIG_HOME" bat 
-  ../.dotfiles/brew      "$XDG_CONFIG_HOME" brew 
+  ../.dotfiles/bash      "$XDG_CONFIG_HOME" bash
+  ../.dotfiles/bat       "$XDG_CONFIG_HOME" bat
+  ../.dotfiles/blesh     "$XDG_CONFIG_HOME" blesh
+  ../.dotfiles/brew      "$XDG_CONFIG_HOME" brew
   ../.dotfiles/btop      "$XDG_CONFIG_HOME" btop
   ../.dotfiles/dust      "$XDG_CONFIG_HOME" dust
-  ../.dotfiles/eza       "$XDG_CONFIG_HOME" eza 
-  ../.dotfiles/fzf       "$XDG_CONFIG_HOME" fzf 
-  ../.dotfiles/gh        "$XDG_CONFIG_HOME" gh 
-  ../.dotfiles/git       "$XDG_CONFIG_HOME" git 
+  ../.dotfiles/eza       "$XDG_CONFIG_HOME" eza
+  ../.dotfiles/fzf       "$XDG_CONFIG_HOME" fzf
+  ../.dotfiles/gh        "$XDG_CONFIG_HOME" gh
+  ../.dotfiles/git       "$XDG_CONFIG_HOME" git
   ../.dotfiles/glow      "$XDG_CONFIG_HOME" glow
   ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
   ../.dotfiles/mycli     "$XDG_CONFIG_HOME" mycli
@@ -178,7 +179,7 @@ symlinks=(
   ../.dotfiles/wezterm   "$XDG_CONFIG_HOME" wezterm
   ../.dotfiles/yazi      "$XDG_CONFIG_HOME" yazi
   ../.dotfiles/youtube   "$XDG_CONFIG_HOME" youtube
-  ../.dotfiles/zsh       "$XDG_CONFIG_HOME" zsh 
+  ../.dotfiles/zsh       "$XDG_CONFIG_HOME" zsh
 
   ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME"    starship.toml
   ../../.dotfiles/op/plugins.sh     "$XDG_CONFIG_HOME/op" plugins.sh
