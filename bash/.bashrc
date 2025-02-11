@@ -29,7 +29,7 @@ source "$XDG_DATA_HOME/blesh/ble.sh"
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Load & configure shell history manager
-eval "$(atuin init bash)" && { bind -x '"\C-e": "__atuin_history"'; bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'; }
+eval "$(atuin init bash)" && source "$XDG_CONFIG_HOME/atuin/mappings/bash"
 
 # Load & configure shell directory navigator (i.e. "jump to" tools)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once bash)"

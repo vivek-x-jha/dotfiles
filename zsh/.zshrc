@@ -47,7 +47,7 @@ for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Load & configure shell history manager
-eval "$(atuin init zsh)" && { bindkey '^e' atuin-search; bindkey '^[[A' atuin-up-search }
+eval "$(atuin init zsh)" && source "$XDG_CONFIG_HOME/atuin/mappings/zsh"
 
 # Load & configure shell directory navigator (i.e. "jump to" tools)
 eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once zsh)"
