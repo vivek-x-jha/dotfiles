@@ -22,7 +22,7 @@ return {
   },
 
   {
-    desc = '[s]ave file',
+    desc = '[S]ave file',
     mode = { 'n', 'i', 'v' },
     keys = '<C-s>',
     command = '<cmd>w<CR>',
@@ -356,6 +356,14 @@ return {
     mode = 'n',
     keys = '<leader>pt',
     command = '<cmd>Telescope terms<CR>',
+  },
+
+  -- Gitsigns
+  {
+    desc = 'Toggle [g]itsigns current line [b]lame',
+    mode = 'n',
+    keys = '<leader>gb',
+    command = '<cmd>Gitsigns toggle_current_line_blame<CR>',
   },
 
   -- LSP
