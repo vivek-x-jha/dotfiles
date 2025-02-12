@@ -37,8 +37,6 @@ update_icons() {
 
   local table_width=60
   declare -A dir_icons=(
-
-    # Apps                                 Icons
     /Applications/1Password.app            ~/Pictures/icons/1password-macos.png
     /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
     /Applications/Discord.app              ~/Pictures/icons/discord-macos.png
@@ -60,7 +58,6 @@ update_icons() {
     /Applications/WezTerm.app              ~/Pictures/icons/wezterm.png
     /Applications/WhatsApp.app             ~/Pictures/icons/whatsapp.png
 
-    # Folders                              Icons
     ~/Developer                            ~/Pictures/icons/developer.png
     ~/Downloads                            ~/Pictures/icons/download.png
     ~/Dropbox/content                      ~/Pictures/icons/content.png
@@ -68,7 +65,6 @@ update_icons() {
     ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
     ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
     ~/.dotfiles                            ~/Pictures/icons/gear.png
-
   )
 
   # Create Directory-Icons Table Header
