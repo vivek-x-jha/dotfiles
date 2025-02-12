@@ -9,59 +9,75 @@ step=0
 
 ((step++)); echo "󰓒 [$step/14] INSTALLING PACKAGE MANAGER 󰓒"
 
-# Ensure Homebrew installed
+# Install Homebrew
 command -v brew &> /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Set Homebrew path based on architecture
+# Set Homebrew binaries path
 case "$(uname -m)" in
   'arm64' ) export HOMEBREW_BIN='/opt/homebrew/bin' ;;
   'x86_64') export HOMEBREW_BIN='/usr/local/bin' ;;
          *) echo "[! Unknown architecture - requires arm64 or x86_64]"; exit 1 ;;
 esac
 
-# Load Homebrew env vars and prepend to path in current session
+# Prepend Homebrew to PATH
 eval "$("$HOMEBREW_BIN/brew" shellenv)"
 echo "Homebrew successfully installed: HOMEBREW_BIN=$(brew --prefix)/bin"
 
 ((step++)); echo "󰓒 [$step/14] INSTALLING COMMANDS & APPS 󰓒"
 
-# Load Homebrew install vars
-read -p 'Install [all/cmds/apps] (Press Enter to Skip): ' install_type
+# Install commands and apps using Homebrew
+while true; do
+  read -rp 'Install [all/cmds/apps] (<Enter> to Skip): '
 
-brew_install () {
-  local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
+  brew_install () {
+    local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
 
-  case "$install_type" in
-    'all') curl -fsSL "$brewfile" | brew bundle --file=- ;;
-        *) curl -fsSL "$brewfile" | grep "$1" | awk '{print $2}' | xargs "$2" ;;
+    case $REPLY in
+                'all') curl -fsSL "$brewfile" | brew bundle --file=- ;;
+      'cmds' | 'apps') curl -fsSL "$brewfile" | grep "$1" | awk '{print $2}' | xargs "$2" ;;
+    esac
+  }
+
+  case $REPLY in
+    'all')  brew_install
+            break ;;
+    'cmds') brew_install '^tap '  '-n1 brew tap'
+            brew_install '^brew ' 'brew install'
+            break ;;
+    'apps') brew_install '^tap '  '-n1 brew tap'
+            brew_install '^brew ' 'brew install --cask'
+            break ;;
+         *) echo "[ERROR] Invalid input! Please enter 'all', 'cmds', 'apps', or <Enter> to skip." ;;
   esac
-} 
+done
 
-# Install choice
-case "$install_type" in
-  'all' ) brew_install ;;
-  'cmds') brew_install '^tap '  '-n1 brew tap'
-          brew_install '^brew ' 'brew install' ;;
-  'apps') brew_install '^tap '  '-n1 brew tap'
-          brew_install '^brew ' 'brew install --cask' ;;
-esac
+# Run Homebrew utility functions
+while true; do
+  read -rp 'Run Homebrew diagnostics? (<Enter> to Skip): '
+  case $REPLY in
+    [Yy]*) brew upgrade
+           brew cleanup
+           brew doctor 
+           break ;;
+       '') break ;;
+        *) echo "[ERROR] Invalid input! Please enter 'y' or <Enter> to skip." ;;
+  esac
+done
 
-read -p 'Run Homebrew diagnostics? [Y/y] (Press Enter to Skip): ' brew_diagnostics
-((step++))
-if [[ "$brew_diagnostics" =~ ^[Yy]$ ]]; then
-  echo "󰓒 [$step/14] RUNNING HOMEBREW DIAGNOSTICS 󰓒"
-  brew upgrade
-  brew cleanup
-  brew doctor
-else
-  echo "󰓒 [$step/14] SKIPPING HOMEBREW DIAGNOSTICS 󰓒"
-fi
-
-((step++)); echo "󰓒 [$step/14] INITIALIZING BREW CASK UPGRADE 󰓒"
+# Upgrade applications managed by Homebrew
 brew tap buo/cask-upgrade
-read -p 'Run brew cask upgrade? [Y/y] (Press Enter to Skip): ' && [[ $REPLY =~ ^[Yy]$ ]] && brew cu -af
+while true; do
+  read -rp 'Run brew cask upgrade? (<Enter> to Skip): '
+  case $REPLY in
+    [Yy]*) brew cu -af
+           break ;;
+       '') break ;;
+        *) echo "[ERROR] Invalid input! Please enter 'y' or <Enter> to skip." ;;
+  esac
+done
 
 ((step++)); echo "󰓒 [$step/14] SET ENVIRONMENT 󰓒"
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -69,56 +85,63 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 while true; do
   # Required 
-  read -p 'Git Username: '    GIT_NAME
-  read -p 'Git Email: '       GIT_EMAIL
-  read -p 'Git Signing Key: ' GIT_SIGNINGKEY # 1password GitHub Signing Key
+  read -rp 'Git Username: ' GIT_NAME
+  read -rp 'Git Email: ' GIT_EMAIL
+  read -rp 'Git Signing Key: ' GIT_SIGNINGKEY # 1Password GitHub Signing Key
 
-  DEFAULT_NAME="${GIT_EMAIL%@*}"
+  DEFAULT_NAME="${GIT_EMAIL%@*}"  # Extracts username from email
 
   # Optional 
-  read -p "GitHub User (Press Enter to set to '$DEFAULT_NAME'): " GITHUB_NAME
-  GITHUB_NAME="${GITHUB_NAME:=$DEFAULT_NAME}"
+  read -rp "GitHub User (<Enter> to set to '$DEFAULT_NAME'): "
+  GITHUB_NAME="${REPLY:-$DEFAULT_NAME}"
 
-  read -p "Atuin Username (Press Enter to set to '$DEFAULT_NAME'): " ATUIN_USERNAME
-  ATUIN_USERNAME="${ATUIN_USERNAME:=$DEFAULT_NAME}"
+  read -rp "1Password Vault name (<Enter> to set to 'Private'): "
+  OP_VAULT="${REPLY:-Private}"
 
-  read -p "Atuin Email (Press Enter to set to '$GIT_EMAIL'): " ATUIN_EMAIL
-  ATUIN_EMAIL="${ATUIN_EMAIL:=$GIT_EMAIL}"
+  read -rp "1Password Atuin Sync Title (<Enter> to set to 'Atuin Sync'): "
+  ATUIN_OP_TITLE="${REPLY:-Atuin Sync}"
 
-  read -p "1Password Vault name (Press Enter to set to 'Private'): " OP_VAULT
-  OP_VAULT="${OP_VAULT:='Private'}"
+  read -rp "Atuin Username (<Enter> to set to '$DEFAULT_NAME'): "
+  ATUIN_USERNAME="${REPLY:-$DEFAULT_NAME}"
 
-  read -p "1Password Atuin Sync Title (Press Enter to set to 'Atuin Sync'): " ATUIN_OP_TITLE
-  ATUIN_OP_TITLE="${ATUIN_OP_TITLE:='Atuin Sync'}"
+  read -rp "Atuin Email (<Enter> to set to '$GIT_EMAIL'): "
+  ATUIN_EMAIL="${REPLY:-$GIT_EMAIL}"
 
-  read -p "Python Version (Press Enter to set to '3.13.2'): " PYTHON_VERSION
-  PYTHON_VERSION="${PYTHON_VERSION:='3.13.2'}"
+  read -rp "Python Version (<Enter> to set to '3.13.2'): "
+  PYTHON_VERSION="${REPLY:-3.13.2}"
 
-  read -p "Python Download Location (Press Enter to set to '/Applications/Python 3.13'): " PYTHON_APP_PATH
-  PYTHON_APP_PATH="${PYTHON_APP_PATH:='/Applications/Python 3.13'}"
-  
-  echo -e "\
-  XDG_CONFIG_HOME=$XDG_CONFIG_HOME\n\
-  XDG_CACHE_HOME=$XDG_CACHE_HOME\n\
-  XDG_DATA_HOME=$XDG_DATA_HOME\n\
-  XDG_STATE_HOME=$XDG_STATE_HOME\n\
-  \n\
-  GIT_NAME=$GIT_NAME\n\
-  GIT_EMAIL=$GIT_EMAIL\n\
-  GIT_SIGNINGKEY=$GIT_SIGNINGKEY\n\
-  \n\
-  GITHUB_NAME=$GITHUB_NAME\n\
-  ATUIN_USERNAME=$ATUIN_USERNAME\n\
-  ATUIN_EMAIL=$ATUIN_EMAIL\n\
-  \n\
-  OP_VAULT=$OP_VAULT\n\
-  ATUIN_OP_TITLE=$ATUIN_OP_TITLE\n\
-  \n\
-  PYTHON_VERSION=$PYTHON_VERSION\n\
-  PYTHON_APP_PATH=$PYTHON_APP_PATH\n"
+  read -rp "Python Download Location (<Enter> to set to '/Applications/Python 3.13'): "
+  PYTHON_APP_PATH="${REPLY:-/Applications/Python 3.13}"
 
-  read -p "Re-enter any Environment Variables? (Press Enter to continue): " RE_ENTER
-  [ -z "$RE_ENTER" ] && break
+  read -rp "Media directory ~/\$MEDIA (<Enter> to skip): " MEDIA
+
+  cat <<EOF
+-------------- ENVIRONMENT ------------------
+XDG_CONFIG_HOME=$XDG_CONFIG_HOME
+XDG_CACHE_HOME=$XDG_CACHE_HOME
+XDG_DATA_HOME=$XDG_DATA_HOME
+XDG_STATE_HOME=$XDG_STATE_HOME
+
+GIT_NAME=$GIT_NAME
+GIT_EMAIL=$GIT_EMAIL
+GIT_SIGNINGKEY=$GIT_SIGNINGKEY
+
+GITHUB_NAME=$GITHUB_NAME
+OP_VAULT=$OP_VAULT
+
+ATUIN_USERNAME=$ATUIN_USERNAME
+ATUIN_EMAIL=$ATUIN_EMAIL
+ATUIN_OP_TITLE=$ATUIN_OP_TITLE
+
+PYTHON_VERSION=$PYTHON_VERSION
+PYTHON_APP_PATH=$PYTHON_APP_PATH
+
+MEDIA=~/$MEDIA
+---------------------------------------------
+EOF
+
+  read -rp "Re-enter any variables? (<Enter> to continue): "
+  [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
 ((step++)); echo "󰓒 [$step/14] CREATE SYMLINKS & DIRECTORIES 󰓒"
@@ -141,7 +164,8 @@ symlink() {
 
   echo "[+ Link: $src -> $cwd/$tgt]"
 }
-                                              
+
+# Ensure base directories created before symlinking
 directories=(
   "$XDG_CACHE"
   "$XDG_CONFIG_HOME/atuin"
@@ -151,6 +175,7 @@ directories=(
 )
 for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
+# NOTE manage all links - provides fine-grained control over GNU stow
 symlinks=(
   .dotfiles/bash/.bash_profile "$HOME" .bash_profile
   .dotfiles/bash/.bashrc       "$HOME" .bashrc
@@ -185,15 +210,16 @@ symlinks=(
   ../../.dotfiles/op/plugins.sh     "$XDG_CONFIG_HOME/op" plugins.sh
   ../../.dotfiles/eza "$HOME/Library/Application Support" eza
 
-  Dropbox/developer      "$HOME"            Developer
-  ../Dropbox/content     "$HOME/Movies"     content
-  ../Dropbox/icons       "$HOME/Pictures"   icons
-  ../Dropbox/screenshots "$HOME/Pictures"   screenshots
-  ../Dropbox/wallpapers  "$HOME/Pictures"   wallpapers
-  ../Dropbox/education   "$HOME/Documents"  education
-  ../Dropbox/finances    "$HOME/Documents"  finances
+  "$MEDIA/developer"      "$HOME"           Developer
+  "../$MEDIA/content"     "$HOME/Movies"    content
+  "../$MEDIA/icons"       "$HOME/Pictures"  icons
+  "../$MEDIA/screenshots" "$HOME/Pictures"  screenshots
+  "../$MEDIA/wallpapers"  "$HOME/Pictures"  wallpapers
+  "../$MEDIA/education"   "$HOME/Documents" education
+  "../$MEDIA/finances"    "$HOME/Documents" finances
 )
 
+# Safely create links - skips over broken paths
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
 ((step++)); echo "󰓒 [$step/14] CONFIGURE MACOS OPTIONS 󰓒"
@@ -229,14 +255,14 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 ((step++)); echo "󰓒 [$step/14] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
-# Update dotfiles git url to ssh
-git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
-git -C "$HOME/.dotfiles" remote --verbose
-
 # Update git config
 git config --global user.name       "$GIT_NAME"
 git config --global user.email      "$GIT_EMAIL"
 git config --global user.signingkey "$GIT_SIGNINGKEY"
+
+# Update git authentication to ssh
+git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
+git -C "$HOME/.dotfiles" remote --verbose
 
 # Update ssh allowed signers
 echo "$GIT_EMAIL $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
@@ -249,9 +275,10 @@ command -v gh &> /dev/null || brew install gh && gh auth login
 
 ((step++)); echo "󰓒 [$step/14] SETUP ATUIN & SYNC 󰓒"
 
-# Ensure 1password cli installed
+# Install 1password cli
 command -v op &> /dev/null || brew install 1password-cli
 
+# TODO check if there is already an Atuin Sync login item
 # Authenticate 1password & create Atuin Sync login
 op signin &>/dev/null && \
 op item create \
@@ -264,7 +291,7 @@ op item create \
   "key[password]=update this with \$(atuin key)" &>/dev/null && \
 ATUIN_PASSWORD=$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password)
 
-# Ensure Atuin installed
+# Install Atuin
 command -v atuin &> /dev/null || brew install atuin
 
 # Logout of current session before registering
@@ -283,8 +310,9 @@ atuin import auto && atuin sync
 # Downloads & installs Python - cleans installer after finishing
 if [ ! -d "$PYTHON_APP_PATH" ]; then
   echo "Python 3.13 not found: Downloading and installing..."
+  python_link=https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg
 
-  curl -o /tmp/python.pkg "https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg" || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
+  curl -o /tmp/python.pkg $python_link || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
   sudo installer -pkg /tmp/python.pkg -target / || { echo "Python $PYTHON_VERSION installation failed"; exit 1; }
   rm -f /tmp/python.pkg
 
@@ -298,7 +326,7 @@ fi
 echo 'Created ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
-# Need to run this any time bat theme folder changes
+# Need to run rebuild bat cache data any time theme folder changes
 ((step++)); echo "󰓒 [$step/14] LOAD BAT THEMES 󰓒"
 command -v bat &> /dev/null || brew install bat && bat cache --build
 
@@ -312,4 +340,4 @@ sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
 # After installation finishes run :MasonInstall lua-language-server basedpyright
 ((step++)); echo "󰓒 [$step/14] SETUP NEOVIM 󰓒"
 cd; echo "󰓒 INSTALLATION COMPLETE 󰓒"
-command -v nvim &> /dev/null || exec nvim
+command -v nvim &> /dev/null || exec nvim # TODO fix this - seems to be a short lived process that dies once the script finishes
