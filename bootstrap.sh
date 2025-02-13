@@ -2,36 +2,36 @@
 # TODO Fix zsh compinit insecure directories warning: chmod -R go-w "$(brew --prefix)/share"
 
 # Ensure Xcode installed
-command -v xcode-select &> /dev/null || { echo 'Please run: xcode-select --install'; exit 1; }
+command -v xcode-select &> /dev/null || { echo Please run: xcode-select --install; exit 1; }
 
-echo "󰓒 INSTALLATION START 󰓒"
+echo 󰓒 INSTALLATION START 󰓒
 step=0
 
-((step++)); echo "󰓒 [$step/14] INSTALLING PACKAGE MANAGER 󰓒"
+((step++)); echo 󰓒 [$step/12] INSTALLING PACKAGE MANAGER 󰓒
 
-# Install Homebrew
-command -v brew &> /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! command -v brew &> /dev/null; then
+  # Install Homebrew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Set Homebrew binaries path
-case "$(uname -m)" in
-  'arm64' ) export HOMEBREW_BIN='/opt/homebrew/bin' ;;
-  'x86_64') export HOMEBREW_BIN='/usr/local/bin' ;;
-         *) echo "[! Unknown architecture - requires arm64 or x86_64]"; exit 1 ;;
-esac
+  # Prepend Homebrew to PATH
+  case "$(uname -m)" in
+    arm64 ) eval "$('/opt/homebrew/bin/brew' shellenv)" ;;
+    x86_64) eval "$('/usr/local/bin/brew' shellenv)" ;;
+         *) echo [! Unknown architecture - requires arm64 or x86_64]; exit 1 ;;
+  esac
+fi
 
-# Prepend Homebrew to PATH
-eval "$("$HOMEBREW_BIN/brew" shellenv)"
-echo "Homebrew successfully installed: HOMEBREW_BIN=$(brew --prefix)/bin"
+echo Commands successfully installed: $(brew --prefix)
 
-((step++)); echo "󰓒 [$step/14] INSTALLING COMMANDS & APPS 󰓒"
+((step++)); echo "󰓒 [$step/12] INSTALLING COMMANDS & APPS 󰓒"
 
 # Install commands and apps using Homebrew
+brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
+
 while true; do
   read -rp 'Install [all/cmds/apps] (<Enter> to Skip): '
 
   brew_install () {
-    local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
-
     case $REPLY in
                 'all') curl -fsSL "$brewfile" | brew bundle --file=- ;;
       'cmds' | 'apps') curl -fsSL "$brewfile" | grep "$1" | awk '{print $2}' | xargs "$2" ;;
@@ -39,14 +39,11 @@ while true; do
   }
 
   case $REPLY in
-    'all')  brew_install
-            break ;;
+    'all' ) brew_install; break ;;
     'cmds') brew_install '^tap '  '-n1 brew tap'
-            brew_install '^brew ' 'brew install'
-            break ;;
+            brew_install '^brew ' 'brew install'; break ;;
     'apps') brew_install '^tap '  '-n1 brew tap'
-            brew_install '^brew ' 'brew install --cask'
-            break ;;
+            brew_install '^brew ' 'brew install --cask'; break ;;
          *) echo "[ERROR] Invalid input! Please enter 'all', 'cmds', 'apps', or <Enter> to skip." ;;
   esac
 done
@@ -57,8 +54,7 @@ while true; do
   case $REPLY in
     [Yy]*) brew upgrade
            brew cleanup
-           brew doctor 
-           break ;;
+           brew doctor; break ;;
        '') break ;;
         *) echo "[ERROR] Invalid input! Please enter 'y' or <Enter> to skip." ;;
   esac
@@ -76,7 +72,7 @@ while true; do
   esac
 done
 
-((step++)); echo "󰓒 [$step/14] SET ENVIRONMENT 󰓒"
+((step++)); echo "󰓒 [$step/12] SET ENVIRONMENT 󰓒"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -89,11 +85,9 @@ while true; do
   read -rp 'Git Email: ' GIT_EMAIL
   read -rp 'Git Signing Key: ' GIT_SIGNINGKEY # 1Password GitHub Signing Key
 
-  DEFAULT_NAME="${GIT_EMAIL%@*}"  # Extracts username from email
-
   # Optional 
-  read -rp "GitHub User (<Enter> to set to '$DEFAULT_NAME'): "
-  GITHUB_NAME="${REPLY:-$DEFAULT_NAME}"
+  read -rp "GitHub User (<Enter> to set to '${GIT_EMAIL%@*}'): "
+  GITHUB_NAME="${REPLY:-${GIT_EMAIL%@*}}"
 
   read -rp "1Password Vault name (<Enter> to set to 'Private'): "
   OP_VAULT="${REPLY:-Private}"
@@ -101,8 +95,8 @@ while true; do
   read -rp "1Password Atuin Sync Title (<Enter> to set to 'Atuin Sync'): "
   ATUIN_OP_TITLE="${REPLY:-Atuin Sync}"
 
-  read -rp "Atuin Username (<Enter> to set to '$DEFAULT_NAME'): "
-  ATUIN_USERNAME="${REPLY:-$DEFAULT_NAME}"
+  read -rp "Atuin Username (<Enter> to set to '${GIT_EMAIL%@*}'): "
+  ATUIN_USERNAME="${REPLY:-${GIT_EMAIL%@*}}"
 
   read -rp "Atuin Email (<Enter> to set to '$GIT_EMAIL'): "
   ATUIN_EMAIL="${REPLY:-$GIT_EMAIL}"
@@ -144,7 +138,7 @@ EOF
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
-((step++)); echo "󰓒 [$step/14] CREATE SYMLINKS & DIRECTORIES 󰓒"
+((step++)); echo "󰓒 [$step/12] CREATE SYMLINKS & DIRECTORIES 󰓒"
 
 symlink() {
   local src="$1"
@@ -222,7 +216,7 @@ symlinks=(
 # Safely create links - skips over broken paths
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-((step++)); echo "󰓒 [$step/14] CONFIGURE MACOS OPTIONS 󰓒"
+((step++)); echo "󰓒 [$step/12] CONFIGURE MACOS OPTIONS 󰓒"
 num=0
 
 ((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
@@ -253,7 +247,7 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 ((num++)); echo "opt${num}: Disable file extension change warning"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-((step++)); echo "󰓒 [$step/14] CONFIGURE GIT AND GITHUB CLI 󰓒"
+((step++)); echo "󰓒 [$step/12] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
 # Update git config
 git config --global user.name       "$GIT_NAME"
@@ -273,7 +267,7 @@ sed -i '' "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1Pas
 # Authenticate GitHub CLI
 command -v gh &> /dev/null || brew install gh && gh auth login
 
-((step++)); echo "󰓒 [$step/14] SETUP ATUIN & SYNC 󰓒"
+((step++)); echo "󰓒 [$step/12] SETUP ATUIN & SYNC 󰓒"
 
 # Install 1password cli
 command -v op &> /dev/null || brew install 1password-cli
@@ -305,7 +299,7 @@ op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 # Sync shell history & integrate with Atuin history
 atuin import auto && atuin sync
 
-((step++)); echo "󰓒 [$step/14] DOWNLOAD AND INSTALL PYTHON 󰓒"
+((step++)); echo "󰓒 [$step/12] DOWNLOAD AND INSTALL PYTHON 󰓒"
 
 # Downloads & installs Python - cleans installer after finishing
 if [ ! -d "$PYTHON_APP_PATH" ]; then
@@ -327,17 +321,14 @@ echo 'Created ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
 # Need to run rebuild bat cache data any time theme folder changes
-((step++)); echo "󰓒 [$step/14] LOAD BAT THEMES 󰓒"
+((step++)); echo "󰓒 [$step/12] LOAD BAT THEMES 󰓒"
 command -v bat &> /dev/null || brew install bat && bat cache --build
 
 # Ensure touchid possible in interactive mode or tmux
-((step++)); echo "󰓒 [$step/14] SETUP TOUCHID SUDO 󰓒"
+((step++)); echo "󰓒 [$step/12] SETUP TOUCHID SUDO 󰓒"
 brew list | grep -q pam-reattach || brew install pam-reattach
 sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
 [[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|/opt/homebrew|/usr/local|g' /etc/pam.d/sudo_local
 
-# Installs lazy.nvim and plugins
-# After installation finishes run :MasonInstall lua-language-server basedpyright
-((step++)); echo "󰓒 [$step/14] SETUP NEOVIM 󰓒"
-cd; echo "󰓒 INSTALLATION COMPLETE 󰓒"
-command -v nvim &> /dev/null || exec nvim # TODO fix this - seems to be a short lived process that dies once the script finishes
+# After installation finishes run nvim, install packages, and inside run :MasonInstall lua-language-server basedpyright
+cd
