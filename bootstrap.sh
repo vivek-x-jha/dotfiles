@@ -323,8 +323,7 @@ fi
 
 # Hide tty login message for iterm
 ((step++)); echo "󰓒 [$step/14] SURPRESS ITERM2 LOGIN 󰓒"
-echo 'Created ~/.hushlogin'
-touch "$HOME/.hushlogin" 
+touch "$HOME/.hushlogin" && echo 'Created ~/.hushlogin' 
 
 # Need to run rebuild bat cache data any time theme folder changes
 ((step++)); echo "󰓒 [$step/14] LOAD BAT THEMES 󰓒"
@@ -339,5 +338,5 @@ sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
 # Installs lazy.nvim and plugins
 # After installation finishes run :MasonInstall lua-language-server basedpyright
 ((step++)); echo "󰓒 [$step/14] SETUP NEOVIM 󰓒"
-cd; echo "󰓒 INSTALLATION COMPLETE 󰓒"
-command -v nvim &> /dev/null || exec nvim # TODO fix this - seems to be a short lived process that dies once the script finishes
+echo "󰓒 INSTALLATION COMPLETE 󰓒"
+cd
