@@ -7,7 +7,7 @@ command -v xcode-select &> /dev/null || { echo Please run: xcode-select --instal
 echo 󰓒 INSTALLATION START 󰓒
 step=0
 
-((step++)); echo 󰓒 [$step/12] INSTALLING PACKAGE MANAGER 󰓒
+((step++)); echo 󰓒 [$step/11] INSTALLING PACKAGE MANAGER 󰓒
 
 if ! command -v brew &> /dev/null; then
   # Install Homebrew
@@ -23,7 +23,7 @@ fi
 
 echo Commands successfully installed: $(brew --prefix)
 
-((step++)); echo "󰓒 [$step/12] INSTALLING COMMANDS & APPS 󰓒"
+((step++)); echo "󰓒 [$step/11] INSTALLING COMMANDS & APPS 󰓒"
 
 # Install commands and apps using Homebrew
 brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
@@ -72,7 +72,7 @@ while true; do
   esac
 done
 
-((step++)); echo "󰓒 [$step/12] SET ENVIRONMENT 󰓒"
+((step++)); echo "󰓒 [$step/11] SET ENVIRONMENT 󰓒"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -138,7 +138,7 @@ EOF
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
-((step++)); echo "󰓒 [$step/12] CREATE SYMLINKS & DIRECTORIES 󰓒"
+((step++)); echo "󰓒 [$step/11] CREATE SYMLINKS & DIRECTORIES 󰓒"
 
 symlink() {
   local src="$1"
@@ -216,7 +216,7 @@ symlinks=(
 # Safely create links - skips over broken paths
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-((step++)); echo "󰓒 [$step/12] CONFIGURE MACOS OPTIONS 󰓒"
+((step++)); echo "󰓒 [$step/11] CONFIGURE MACOS OPTIONS 󰓒"
 num=0
 
 ((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
@@ -247,7 +247,7 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 ((num++)); echo "opt${num}: Disable file extension change warning"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-((step++)); echo "󰓒 [$step/12] CONFIGURE GIT AND GITHUB CLI 󰓒"
+((step++)); echo "󰓒 [$step/11] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
 # Update git config
 git config --global user.name       "$GIT_NAME"
@@ -267,7 +267,7 @@ sed -i '' "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1Pas
 # Authenticate GitHub CLI
 command -v gh &> /dev/null || brew install gh && gh auth login
 
-((step++)); echo "󰓒 [$step/12] SETUP ATUIN & SYNC 󰓒"
+((step++)); echo "󰓒 [$step/11] SETUP ATUIN & SYNC 󰓒"
 
 # Install 1password cli
 command -v op &> /dev/null || brew install 1password-cli
@@ -299,7 +299,7 @@ op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 # Sync shell history & integrate with Atuin history
 atuin import auto && atuin sync
 
-((step++)); echo "󰓒 [$step/12] DOWNLOAD AND INSTALL PYTHON 󰓒"
+((step++)); echo "󰓒 [$step/11] DOWNLOAD AND INSTALL PYTHON 󰓒"
 
 # Downloads & installs Python - cleans installer after finishing
 if [ ! -d "$PYTHON_APP_PATH" ]; then
@@ -316,19 +316,30 @@ else
 fi
 
 # Hide tty login message for iterm
-((step++)); echo "󰓒 [$step/14] SURPRESS ITERM2 LOGIN 󰓒"
+((step++)); echo "󰓒 [$step/11] SURPRESS ITERM2 LOGIN 󰓒"
 echo 'Created ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
 # Need to run rebuild bat cache data any time theme folder changes
-((step++)); echo "󰓒 [$step/12] LOAD BAT THEMES 󰓒"
+((step++)); echo "󰓒 [$step/11] LOAD BAT THEMES 󰓒"
 command -v bat &> /dev/null || brew install bat && bat cache --build
 
 # Ensure touchid possible in interactive mode or tmux
-((step++)); echo "󰓒 [$step/12] SETUP TOUCHID SUDO 󰓒"
+((step++)); echo "󰓒 [$step/11] SETUP TOUCHID SUDO 󰓒"
 brew list | grep -q pam-reattach || brew install pam-reattach
 sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
-[[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|/opt/homebrew|/usr/local|g' /etc/pam.d/sudo_local
+[[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|opt/homebrew|usr/local|g' /etc/pam.d/sudo_local
 
-# After installation finishes run nvim, install packages, and inside run :MasonInstall lua-language-server basedpyright
 cd
+
+cat <<EOF
+--------------- POST INSTALLATION ---------------
+
+1 Restart terminal emulator
+
+2 Setup Neovim
+- Install Lazy.nvim & plugins: nvim
+- Install Language servers   :MasonInstall lua-language-server basedpyright
+
+2 Setup Karabiner Elements
+EOF
