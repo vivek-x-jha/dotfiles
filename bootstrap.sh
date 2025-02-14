@@ -329,6 +329,7 @@ command -v bat &> /dev/null || brew install bat && bat cache --build
 brew list | grep -q pam-reattach || brew install pam-reattach
 sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
 [[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|opt/homebrew|usr/local|g' /etc/pam.d/sudo_local
+bat /etc/pam.d/sudo_local
 
 cd
 
@@ -338,8 +339,10 @@ cat <<EOF
 1 Restart terminal emulator
 
 2 Setup Neovim
-- Install Lazy.nvim & plugins: nvim
-- Install Language servers   :MasonInstall lua-language-server basedpyright
+- Install plugins:         nvim
+- Quit Lazy installer:     :q
+- Install language servers :MasonInstall lua-language-server basedpyright
+- Quit Neovim:             :qa
 
 2 Setup Karabiner Elements
 EOF
