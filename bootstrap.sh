@@ -79,18 +79,26 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# Install 1password cli and sign-in
+command -v op &> /dev/null || brew install 1password-cli
+op signin
+
 while true; do
   # Required 
   read -rp 'Git Username: ' GIT_NAME
-  read -rp 'Git Email: ' GIT_EMAIL
-  read -rp 'Git Signing Key: ' GIT_SIGNINGKEY # 1Password GitHub Signing Key
+  read -rp 'Git Email: '    GIT_EMAIL
 
   # Optional 
-  read -rp "GitHub User (<Enter> to set to '${GIT_EMAIL%@*}'): "
-  GITHUB_NAME="${REPLY:-${GIT_EMAIL%@*}}"
-
   read -rp "1Password Vault name (<Enter> to set to 'Private'): "
   OP_VAULT="${REPLY:-Private}"
+
+  OP_GIT_SIGNKEY="$(op item get 'GitHub Signing Key' --vault "$OP_VAULT" --field 'public key')" &>/dev/null
+
+  read -rp "Git Signing Key (<Enter> to set to '${OP_GIT_SIGNKEY:0:18} ... ${OP_GIT_SIGNKEY: -10}'): "
+  GIT_SIGNINGKEY="${REPLY:-$OP_GIT_SIGNKEY}"
+
+  read -rp "GitHub User (<Enter> to set to '${GIT_EMAIL%@*}'): "
+  GITHUB_NAME="${REPLY:-${GIT_EMAIL%@*}}"
 
   read -rp "1Password Atuin Sync Title (<Enter> to set to 'Atuin Sync'): "
   ATUIN_OP_TITLE="${REPLY:-Atuin Sync}"
@@ -249,12 +257,12 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 ((step++)); echo "󰓒 [$step/11] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
-# Update git config
+# Update git credentials
 git config --global user.name       "$GIT_NAME"
 git config --global user.email      "$GIT_EMAIL"
 git config --global user.signingkey "$GIT_SIGNINGKEY"
 
-# Update git authentication to ssh
+# Update git authentication to ssh and show fetch/push urls
 git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
 git -C "$HOME/.dotfiles" remote --verbose
 
@@ -267,23 +275,17 @@ sed -i '' "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1Pas
 # Authenticate GitHub CLI
 command -v gh &> /dev/null || brew install gh && gh auth login
 
-((step++)); echo "󰓒 [$step/11] SETUP ATUIN & SYNC 󰓒"
+((step++)); echo "󰓒 [$step/11] SETUP ATUIN SYNC 󰓒"
 
-# Install 1password cli
-command -v op &> /dev/null || brew install 1password-cli
-
-# TODO check if there is already an Atuin Sync login item
-# Authenticate 1password & create Atuin Sync login
-op signin &>/dev/null && \
-op item create \
+# Create Atuin Sync login
+op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
   --vault "$OP_VAULT" \
   --category login \
   --title "$ATUIN_OP_TITLE" \
   --generate-password='letters,digits,symbols,32' \
   "username=$ATUIN_USERNAME" \
   "email[text]=$ATUIN_EMAIL" \
-  "key[password]=update this with \$(atuin key)" &>/dev/null && \
-ATUIN_PASSWORD=$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password)
+  "key[password]=update this with \$(atuin key)" &>/dev/null
 
 # Install Atuin
 command -v atuin &> /dev/null || brew install atuin
@@ -291,13 +293,32 @@ command -v atuin &> /dev/null || brew install atuin
 # Logout of current session before registering
 atuin logout
 atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
-atuin login -u "$ATUIN_USERNAME" -p "$ATUIN_PASSWORD"
+atuin login -u "$ATUIN_USERNAME" -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password)"
+
+# Sync shell history & integrate with Atuin history
+atuin import auto
+atuin sync
 
 # Update Atuin Sync with generated key
 op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 
-# Sync shell history & integrate with Atuin history
-atuin import auto && atuin sync
+((step++)); echo "󰓒 [$step/11] LOAD BAT THEMES 󰓒"
+
+# Need to run rebuild bat cache data any time theme folder changes
+command -v bat &> /dev/null || brew install bat && bat cache --build
+
+((step++)); echo "󰓒 [$step/11] SETUP TOUCHID SUDO 󰓒"
+
+# Install pam-reattach module
+brew list | grep -q pam-reattach || brew install pam-reattach
+
+# Ensure touchid possible in interactive mode or tmux
+echo "# Authenticate with Touch ID - even in tmux
+auth  optional    $(brew --prefix)/lib/pam/pam_reattach.so ignore_ssh
+auth  sufficient  pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
+
+# Show changes to sudo_local
+bat /etc/pam.d/sudo_local
 
 ((step++)); echo "󰓒 [$step/11] DOWNLOAD AND INSTALL PYTHON 󰓒"
 
@@ -320,17 +341,6 @@ fi
 echo 'Created ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
-# Need to run rebuild bat cache data any time theme folder changes
-((step++)); echo "󰓒 [$step/11] LOAD BAT THEMES 󰓒"
-command -v bat &> /dev/null || brew install bat && bat cache --build
-
-# Ensure touchid possible in interactive mode or tmux
-((step++)); echo "󰓒 [$step/11] SETUP TOUCHID SUDO 󰓒"
-brew list | grep -q pam-reattach || brew install pam-reattach
-sudo cp -f "$HOME/.dotfiles/sudo/sudo_local" /etc/pam.d/sudo_local
-[[ "$(uname -m)" == 'x86_64' ]] && sudo sed -i '' 's|opt/homebrew|usr/local|g' /etc/pam.d/sudo_local
-bat /etc/pam.d/sudo_local
-
 cd
 
 cat <<EOF
@@ -344,5 +354,5 @@ cat <<EOF
 - Install language servers :MasonInstall lua-language-server basedpyright
 - Quit Neovim:             :qa
 
-2 Setup Karabiner Elements
+3 Setup Karabiner Elements
 EOF
