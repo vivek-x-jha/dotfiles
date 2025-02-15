@@ -4,7 +4,7 @@ unset PATH
 
 # Construct PATH
 eval "$(/usr/libexec/path_helper -s)"
-eval "$($HOMEBREW_BIN/brew shellenv)"
+[[ -z $HOMEBREW_BIN ]] || eval "$($HOMEBREW_BIN/brew shellenv)"
 
 PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
 PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"

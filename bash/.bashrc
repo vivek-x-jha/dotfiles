@@ -1,3 +1,5 @@
+# https://www.gnu.org/software/bash/
+
 # Load api keys
 [ -f "$HOME/.dotfiles/.env" ] && source "$HOME/.dotfiles/.env"
 

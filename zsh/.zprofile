@@ -2,7 +2,7 @@
 declare -U path=()
 
 eval "$(/usr/libexec/path_helper -s)"
-eval "$($HOMEBREW_BIN/brew shellenv)"
+[[ -z $HOMEBREW_BIN ]] || eval "$($HOMEBREW_BIN/brew shellenv)"
 
 path=(
   "/Library/Frameworks/Python.framework/Versions/3.13/bin"
