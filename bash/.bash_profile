@@ -5,7 +5,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # Editing and Pagination
-if [[ -f "$XDG_CONFIG_HOME/nvim/init.lua" || -f "$XDG_CONFIG_HOME/nvim/init.vim" ]]; then
+if [[ -f $XDG_CONFIG_HOME/nvim/init.lua || -f $XDG_CONFIG_HOME/nvim/init.vim ]]; then
   export EDITOR='nvim'
 else
   export EDITOR='vim'
@@ -13,7 +13,7 @@ fi
 
 export VISUAL="$EDITOR"
 
-[ -f "$XDG_CONFIG_HOME/bat/config" ] && export PAGER='bat -p'
+[[ -f $XDG_CONFIG_HOME/bat/config ]] && export PAGER='bat -p'
 
 # Supress homebrew hints & dynamically create binary path
 export HOMEBREW_NO_ENV_HINTS=1
@@ -56,14 +56,7 @@ export GREY='\e[38;5;248m'
 export RESET='\e[0m'
 export GREP_COLOR="38;5;9"
 export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
-export EZA_COLORS="\
-nb=00;38;5;0:\
-nk=00;38;5;7:\
-nm=00;38;5;3:\
-ng=00;38;5;1:\
-nt=00;38;5;6:\
-lp=00;38;5;4:\
-"
+export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
 
 # Task
 export TASKRC="$XDG_CONFIG_HOME/task/config"
@@ -73,5 +66,5 @@ export TASKDATA="$XDG_DATA_HOME/task"
 export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
-# Configure shell options: https://www.gnu.org/software/bash/
+# Configure shell options
 source "$XDG_CONFIG_HOME/bash/.bashrc"
