@@ -9,7 +9,7 @@ step=0
 
 ((step++)); echo 󰓒 [$step/11] INSTALLING PACKAGE MANAGER 󰓒
 
-if ! command -v brew &> /dev/null; then
+if ! command -v brew &>/dev/null; then
   # Install Homebrew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -44,6 +44,7 @@ while true; do
             brew_install '^brew ' 'brew install'; break ;;
     'apps') brew_install '^tap '  '-n1 brew tap'
             brew_install '^brew ' 'brew install --cask'; break ;;
+        '') break ;;
          *) echo "[ERROR] Invalid input! Please enter 'all', 'cmds', 'apps', or <Enter> to skip." ;;
   esac
 done
@@ -74,13 +75,21 @@ done
 
 ((step++)); echo "󰓒 [$step/11] SET ENVIRONMENT 󰓒"
 
+# XDG directory structure
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# Install 1password cli and sign-in
-command -v op &> /dev/null || brew install 1password-cli
+# Install requirements
+command -v atuin &>/dev/null     || brew install atuin
+command -v bat   &>/dev/null     || brew install bat
+command -v gh    &>/dev/null     || brew install gh
+command -v op    &>/dev/null     || brew install 1password-cli
+command -v perl  &>/dev/null     || brew install perl
+brew list | grep -q pam-reattach || brew install pam-reattach
+
+# Authenticate 1password-cli
 op signin
 
 while true; do
@@ -228,7 +237,7 @@ for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+
 num=0
 
 ((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
-[ -d "$HOME/Pictures/screenshots" ] || mkdir "$HOME/Pictures/screenshots"
+[[ -d $HOME/Pictures/screenshots ]] || mkdir "$HOME/Pictures/screenshots"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
 
 ((num++)); echo "opt${num}: Speed up dock animation"
@@ -270,10 +279,10 @@ git -C "$HOME/.dotfiles" remote --verbose
 echo "$GIT_EMAIL $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
 
 # Update 1password ssh agent: https://developer.1password.com/docs/ssh/agent/config
-sed -i '' "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
+perl -pi -e "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
 
 # Authenticate GitHub CLI
-command -v gh &> /dev/null || brew install gh && gh auth login
+gh auth login
 
 ((step++)); echo "󰓒 [$step/11] SETUP ATUIN SYNC 󰓒"
 
@@ -286,9 +295,6 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "username=$ATUIN_USERNAME" \
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=update this with \$(atuin key)" &>/dev/null
-
-# Install Atuin
-command -v atuin &> /dev/null || brew install atuin
 
 # Logout of current session before registering
 atuin logout
@@ -305,12 +311,9 @@ op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 ((step++)); echo "󰓒 [$step/11] LOAD BAT THEMES 󰓒"
 
 # Need to run rebuild bat cache data any time theme folder changes
-command -v bat &> /dev/null || brew install bat && bat cache --build
+bat cache --build
 
 ((step++)); echo "󰓒 [$step/11] SETUP TOUCHID SUDO 󰓒"
-
-# Install pam-reattach module
-brew list | grep -q pam-reattach || brew install pam-reattach
 
 # Ensure touchid possible in interactive mode or tmux
 echo "# Authenticate with Touch ID - even in tmux
