@@ -61,10 +61,6 @@ export GREP_COLOR="38;5;9"
 export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
 export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
 
-# Task
-export TASKRC="$XDG_CONFIG_HOME/task/config"
-export TASKDATA="$XDG_DATA_HOME/task"
-
 # Z.lua & Zoxide
 export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
