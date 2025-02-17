@@ -37,6 +37,9 @@ alias tree='tree -aCI ".git|.github"'
 # Deletion
 alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
 
+# Fuzzy search man pages
+alias docs='compgen -c | fzf | xargs man'
+
 # -------------------------------- List Long Functions ---------------------------------------
 
 # Outputs System info
