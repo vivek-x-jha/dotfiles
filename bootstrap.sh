@@ -243,6 +243,9 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/screensh
 ((num++)); echo "opt${num}: Speed up dock animation"
 defaults write com.apple.dock autohide-delay -float 0.1
 
+((num++)); echo "opt${num}: Speed up dock animation"
+defaults write com.apple.dock autohide -bool true
+
 ((num++)); echo "opt${num}: Remove dock autohide animation"
 defaults write com.apple.dock autohide-time-modifier -int 0
 
@@ -263,6 +266,8 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 
 ((num++)); echo "opt${num}: Disable file extension change warning"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+killall Dock
 
 ((step++)); echo "󰓒 [$step/11] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
