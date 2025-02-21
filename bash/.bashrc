@@ -36,6 +36,5 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Load & configure shell history manager
 eval "$(atuin init bash)" && source "$XDG_CONFIG_HOME/atuin/mappings/bash"
 
-# Load & configure shell directory navigator (i.e. "jump to" tools)
-eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once bash)"
+# Load & configure shell directory navigator
 eval "$(zoxide init bash --cmd j)"

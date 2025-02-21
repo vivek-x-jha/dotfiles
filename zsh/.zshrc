@@ -25,7 +25,7 @@ setopt sharehistory
 source "$ZDOTDIR/.zprofile"
 
 # Laad & configure shell prompt string 
-source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/.p10k.zsh"
+source "$ZSH_DATA_HOME/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/.p10k.zsh"
 
 # Load & configure shell fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
@@ -34,10 +34,13 @@ source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Load core shell plugins
-source "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-source "$(brew --prefix)/share/zsh-autopair/autopair.zsh"
-source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+zsh_plugins=(
+  zsh-autocomplete/zsh-autocomplete.plugin.zsh
+  zsh-autopair/autopair.zsh
+  zsh-autosuggestions/zsh-autosuggestions.zsh
+  zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+)
+for plugin in "$zsh_plugins[@]"; do source "$ZSH_DATA_HOME/$plugin"; done
 
 # Lazy load shell functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
@@ -51,6 +54,5 @@ eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Load & configure shell history manager
 eval "$(atuin init zsh)" && source "$XDG_CONFIG_HOME/atuin/mappings/zsh"
 
-# Load & configure shell directory navigator (i.e. "jump to" tools)
-eval "$(lua "$(brew --prefix)/share/z.lua/z.lua" --init enhanced once zsh)"
+# Load & configure shell directory navigator
 eval "$(zoxide init zsh --cmd j)"
