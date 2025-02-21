@@ -61,10 +61,10 @@ export GREP_COLOR="38;5;9"
 export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
 export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
 
-# Z.lua & Zoxide
-export _ZL_DATA="$XDG_DATA_HOME/z.lua/.zlua"
+# Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # Configure shell options
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export ZSH_DATA_HOME="$XDG_DATA_HOME/zsh/plugins"
 export SHELL_SESSIONS_DISABLE=1
