@@ -345,9 +345,13 @@ else
 fi
 
 # Hide tty login message for iterm
-((step++)); echo "󰓒 [$step/11] SURPRESS ITERM2 LOGIN 󰓒"
+((step++)); echo "󰓒 [$step/12] SURPRESS ITERM2 LOGIN 󰓒"
 echo 'Created ~/.hushlogin'
 touch "$HOME/.hushlogin" 
+
+((step++)); echo "󰓒 [$step/12] CHANGE SHELL 󰓒"
+for shell in bash zsh; do echo "$(brew --prefix)/bin/$shell" | sudo tee -a /etc/shells; done
+chsh -s "$(brew --prefix)/bin/zsh"
 
 cd
 
