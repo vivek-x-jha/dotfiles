@@ -72,7 +72,7 @@ return {
     -- Surpress when none exist
     if count == 0 then return '' end
 
-    return table.concat { '%#', opts.hl, '#', opts.icon, tostring(count), ' %#Normal#%*' }
+    return table.concat { '%#', opts.hl, '#', opts.icon, tostring(count), ' ', '%#Normal#%*' }
   end,
 
   lsp_diag_disp = function(self, opts)
@@ -87,6 +87,6 @@ return {
     -- Surpress when none exist
     if count == 0 then return '' end
 
-    return table.concat { '%#', opts.hl, '#', opts.icon, ' ', tostring(count), ' %#Normal#%*' }
+    return table.concat { '%#', opts.hl, '#', opts.icon, ' ', tostring(count), ' ', '%#Normal#%*' }
   end,
 }
