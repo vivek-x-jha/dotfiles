@@ -10,7 +10,7 @@ return {
     --- @type string[2] Vim mode and highlight group
     local vmode = utl.modes[vim.api.nvim_get_mode().mode]
 
-    return table.concat { '%#St_', vmode[2], 'mode#', ' ', vmode[1], ' %#Normal#%*' }
+    return table.concat { '%#St_', vmode[2], 'mode#', icn.vim, ' ', vmode[1], ' ', '%#Normal#%*' }
   end,
 
   git_branch = function()
@@ -19,13 +19,13 @@ return {
 
     if not is_repo then return '' end
 
-    return table.concat { '%#St_GitBranch# ', git_status.head, ' %#Normal#%*' }
+    return table.concat { '%#St_GitBranch#', icn.branch, ' ', git_status.head, ' ', '%#Normal#%*' }
   end,
 
   lsp = function()
     if rawget(vim, 'lsp') then
       for _, client in ipairs(vim.lsp.get_clients()) do
-        if client.attached_buffers[utl.stbufnr()] then return table.concat { '%#St_lsp#', icn.gear, ' ', client.name, ' %#Normal#%*' } end
+        if client.attached_buffers[utl.stbufnr()] then return table.concat { '%#St_lsp#', icn.gear, ' ', client.name, ' ', '%#Normal#%*' } end
       end
     end
 
@@ -79,7 +79,7 @@ return {
     --- @type string Highlight and icon conditional on modified buffer
     local highlight = vim.bo.modified and '%#St_filemod#' .. icn.modified or '%#St_file#' .. icon
 
-    return table.concat { highlight, ' ', name, '%#Normal#%* ' }
+    return table.concat { highlight, ' ', name, '%#Normal#%*', ' ' }
   end,
 
   git_mod = function()
@@ -117,11 +117,14 @@ return {
     -- handle nil path
     if not path then return '' end
 
+    -- substitute $HOME with ~
+    path = path:gsub('^' .. vim.env.HOME, '~')
+
     -- truncated cwd
     if #path > col_threshold then path = '.../' .. path:match '([^/\\]+)[/\\]*$' end
 
-    return table.concat { '%#St_cwd# ', path, ' %#Normal#%*' }
+    return table.concat { '%#St_cwd#', icn.folder, ' ', path, ' ', '%#Normal#%*' }
   end,
 
-  cursor = function() return '%#St_cursor#' .. '󰓾 %l:%c' .. '%#Normal#%*' end,
+  cursor = function() return table.concat { '%#St_cursor#', icn.cursor, ' ', '%l:%c', '%#Normal#%*' } end,
 }
