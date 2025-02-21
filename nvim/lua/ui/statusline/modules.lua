@@ -90,19 +90,25 @@ return {
 
     --- @type GitModification[] Table of all git add, changed, and removed modifications
     local statuses = {
-      { cnt = git_status.added, hl = 'St_GitAdded', icon = '+' },
-      { cnt = git_status.changed, hl = 'St_GitChanged', icon = '~' },
-      { cnt = git_status.removed, hl = 'St_GitRemoved', icon = '-' },
+      { cnt = git_status.added, hl = '%#St_GitAdded#', icon = '+' },
+      { cnt = git_status.changed, hl = '%#St_GitChanged#', icon = '~' },
+      { cnt = git_status.removed, hl = '%#St_GitRemoved#', icon = '-' },
     }
 
     --- @type string[] Formatted statusline elements for each modification type
-    local git_mod_result = {}
+    local modifications = {}
 
     for _, mod in ipairs(statuses) do
-      table.insert(git_mod_result, utl.git_mod_display(mod))
+      --- @type integer Number of git modifications
+      local count = mod.cnt or 0
+
+      --- @type string Formatted git modification
+      local formatted_git_mod = table.concat { mod.hl, mod.icon, tostring(count), ' ', '%#Normal#%*' }
+
+      if count > 0 then table.insert(modifications, formatted_git_mod) end
     end
 
-    return table.concat(git_mod_result)
+    return table.concat(modifications)
   end,
 
   lsp_msg = function() return table.concat { '%#St_lspMsg#', utl.state.lsp_msg, '%#Normal#%*' } end,

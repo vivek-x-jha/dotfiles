@@ -24,7 +24,6 @@
 --- @field stbufnr fun(): integer Gets current buffer ID
 --- @field is_activewin fun(): boolean Checks if statusline is on current window
 --- @field gitsigns_status fun(self: StatusLineUtils): boolean, GitSignsStatus Creates gitsigns status table
---- @field git_mod_display fun(opts: GitModification): string Creates a formatted string for git modifications
 --- @field lsp_diag_disp fun(self: StatusLineUtils, opts: LspDiagnostic): string Creates a formatted string for LSP diagnostics
 
 --- @class StatusLineModules
