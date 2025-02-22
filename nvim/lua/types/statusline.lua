@@ -22,9 +22,7 @@
 --- @field state LspMsg Manages state of LSP message(s)
 --- @field modes table Vim mode mappings
 --- @field stbufnr fun(): integer Gets current buffer ID
---- @field is_activewin fun(): boolean Checks if statusline is on current window
 --- @field gitsigns_status fun(self: StatusLineUtils): boolean, GitSignsStatus Creates gitsigns status table
---- @field lsp_diag_disp fun(self: StatusLineUtils, opts: LspDiagnostic): string Creates a formatted string for LSP diagnostics
 
 --- @class StatusLineModules
 --- @field mode fun(): string Creates statusline module: mode indicator
@@ -38,4 +36,5 @@
 --- @field cursor fun(): string Creates statusline module: row and column counter
 
 --- @class StatusLine
+--- @field state LspMsg Aggregates all statusline modules
 --- @field setup fun(): string Aggregates all statusline modules

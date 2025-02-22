@@ -202,17 +202,16 @@ return {
       local progress = ''
 
       --- @type LspMsg
-      local state = require('ui.statusline.utils').state
+      local state = require('ui.statusline').state
 
       if data.percentage then
         local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
         local idx = math.max(1, math.floor(data.percentage / 10))
         local icon = spinners[idx]
-        progress = icon .. ' ' .. data.percentage .. '%% '
+        progress = table.concat { icon, ' ', data.percentage, '%% ' }
       end
 
-      local str = progress .. (data.message or '') .. ' ' .. (data.title or '')
-      state.lsp_msg = data.kind == 'end' and '' or str
+      state.lsp_msg = data.kind == 'end' and '' or table.concat { progress, data.message or '', ' ', data.title or '' }
       vim.cmd.redrawstatus()
     end,
   },
