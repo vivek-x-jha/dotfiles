@@ -501,6 +501,7 @@ return {
       St_GitBehind = { fg = theme.brightblue, bg = theme.background },
       St_GitUntracked = { fg = theme.red, bg = theme.background },
       St_GitBranch = { fg = theme.magenta, bg = theme.background },
+      St_GitConflicted = { fg = theme.brightred, bg = theme.background },
 
       St_NormalMode = { fg = theme.brightblue, bg = theme.background },
       St_VisualMode = { fg = theme.brightcyan, bg = theme.background },

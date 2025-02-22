@@ -16,6 +16,8 @@ return {
   branch = '',
   cursor = '󰆾',
   vim = '',
+  up = '',
+  down = '',
 
   -- lsp diagnostics
   error = '󰯈',
