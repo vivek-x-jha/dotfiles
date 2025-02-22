@@ -239,8 +239,8 @@ local modules = {
     end
 
     local statuses = {
-      { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up },
-      { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down },
+      { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up .. ' ' },
+      { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down .. ' ' },
       { cnt = staged, hl = '%#St_GitAdded#', icon = '+' },
       { cnt = modified, hl = '%#St_GitChanged#', icon = '~' },
       { cnt = untracked, hl = '%#St_GitUntracked#', icon = '?' },
@@ -271,26 +271,36 @@ return {
   state = utl.state,
 
   setup = function()
-    --- @type string[] Order of statusline modules
-    local orders = {
+    --- @type string[] Aggregated statusline modules
+    local statusline = {}
+
+    --- @type boolean flag for terminal mode
+    local is_terminal = vim.api.nvim_get_mode().mode == 't'
+
+    --- @type boolean flag if current buffer is specre search & replace
+    local is_spectre = vim.bo.filetype == 'spectre_panel'
+
+    --- @type string[] statusline elements order when filtered
+    local st_order_filt = { 'mode', '%=', 'cwd', 'cursor' }
+
+    --- @type string[] statusline elements order
+    local st_order = {
       'mode',
-      'cwd',
       'git_branch',
       'git_status',
-      'lsp',
-      'diagnostics',
       'file',
       'git_mod',
       '%=',
       'lsp_msg',
       '%=',
+      'diagnostics',
+      'lsp',
+      'cwd',
       'cursor',
     }
 
-    --- @type string[] Aggregated statusline modules
-    local statusline = {}
-
-    for _, mod in ipairs(orders) do
+    -- Construct the statusline elements
+    for _, mod in ipairs((is_terminal or is_spectre) and st_order_filt or st_order) do
       table.insert(statusline, mod == '%=' and mod or modules[mod]())
     end
 
