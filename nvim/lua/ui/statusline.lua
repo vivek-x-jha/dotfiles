@@ -212,7 +212,7 @@ local modules = {
     if git_dir ~= 'true' then return '' end
 
     --- @type integer Number of changes in various git categories
-    local ahead, behind, staged, modified, untracked = 0, 0, 0, 0, 0
+    local ahead, behind, staged, modified, untracked, conflicted = 0, 0, 0, 0, 0, 0
 
     -- Get ahead/behind info
     local upstream = vim.fn.systemlist('git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null')[1]
@@ -233,15 +233,18 @@ local modules = {
         modified = modified + 1
       elseif code:match '^??' then
         untracked = untracked + 1
+      elseif code:match '^UU' or code:match '^AA' or code:match '^DD' then
+        conflicted = conflicted + 1
       end
     end
 
     local statuses = {
-      { cnt = ahead, hl = '%#St_GitAhead#', icon = '⇡' },
-      { cnt = behind, hl = '%#St_GitBehind#', icon = '⇣' },
+      { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up },
+      { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down },
       { cnt = staged, hl = '%#St_GitAdded#', icon = '+' },
       { cnt = modified, hl = '%#St_GitChanged#', icon = '~' },
       { cnt = untracked, hl = '%#St_GitUntracked#', icon = '?' },
+      { cnt = conflicted, hl = '%#St_GitConflicted#', icon = '!' },
     }
 
     --- @type string[] Formatted statusline elements for each git status category
@@ -271,7 +274,9 @@ return {
     --- @type string[] Order of statusline modules
     local orders = {
       'mode',
+      'cwd',
       'git_branch',
+      'git_status',
       'lsp',
       'diagnostics',
       'file',
@@ -279,8 +284,6 @@ return {
       '%=',
       'lsp_msg',
       '%=',
-      'cwd',
-      'git_status',
       'cursor',
     }
 
