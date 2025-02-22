@@ -206,6 +206,60 @@ local modules = {
     return table.concat { '%#St_cwd#', icons.folder, ' ', path, ' ', '%#Normal#%*' }
   end,
 
+  git_status = function()
+    -- Check if inside a Git repository
+    local git_dir = vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1]
+    if git_dir ~= 'true' then return '' end
+
+    --- @type integer Number of changes in various git categories
+    local ahead, behind, staged, modified, untracked = 0, 0, 0, 0, 0
+
+    -- Get ahead/behind info
+    local upstream = vim.fn.systemlist('git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null')[1]
+    if upstream then
+      local a, b = upstream:match '(%d+)%s+(%d+)'
+      ahead = tonumber(a) or 0
+      behind = tonumber(b) or 0
+    end
+
+    -- Get git status summary
+    local status_output = vim.fn.systemlist 'git status --porcelain=v1 2>/dev/null'
+    for _, line in ipairs(status_output) do
+      local code = line:sub(1, 2)
+
+      if code:match '^M' or code:match '^A' or code:match '^D' then
+        staged = staged + 1
+      elseif code:match '^.M' or code:match '^.D' then
+        modified = modified + 1
+      elseif code:match '^??' then
+        untracked = untracked + 1
+      end
+    end
+
+    local statuses = {
+      { cnt = ahead, hl = '%#St_GitAhead#', icon = '⇡' },
+      { cnt = behind, hl = '%#St_GitBehind#', icon = '⇣' },
+      { cnt = staged, hl = '%#St_GitAdded#', icon = '+' },
+      { cnt = modified, hl = '%#St_GitChanged#', icon = '~' },
+      { cnt = untracked, hl = '%#St_GitUntracked#', icon = '?' },
+    }
+
+    --- @type string[] Formatted statusline elements for each git status category
+    local git_elements = {}
+
+    for _, status in ipairs(statuses) do
+      --- @type integer Number of occurrences for the given Git status
+      local count = status.cnt or 0
+
+      --- @type string Formatted git status element
+      local formatted_git_status = table.concat { status.hl, status.icon, tostring(count), ' ', '%#Normal#%*' }
+
+      if count > 0 then table.insert(git_elements, formatted_git_status) end
+    end
+
+    return table.concat(git_elements)
+  end,
+
   cursor = function() return table.concat { '%#St_cursor#', icons.cursor, ' ', '%l:%c', '%#Normal#%*' } end,
 }
 
@@ -226,6 +280,7 @@ return {
       'lsp_msg',
       '%=',
       'cwd',
+      'git_status',
       'cursor',
     }
 

@@ -33,6 +33,7 @@
 --- @field git_mod fun(): string Creates statusline module: git modification
 --- @field lsp_msg fun(): string Creates statusline module: LSP message
 --- @field cwd fun(): string Creates statusline module: current working directory
+--- @field git_status fun(): string Creates statusline module: project git status
 --- @field cursor fun(): string Creates statusline module: row and column counter
 
 --- @class StatusLine
