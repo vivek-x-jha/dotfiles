@@ -497,6 +497,9 @@ return {
       St_GitAdded = { fg = theme.green, bg = theme.background },
       St_GitChanged = { fg = theme.yellow, bg = theme.background },
       St_GitRemoved = { fg = theme.red, bg = theme.background },
+      St_GitAhead = { fg = theme.brightblue, bg = theme.background },
+      St_GitBehind = { fg = theme.brightblue, bg = theme.background },
+      St_GitUntracked = { fg = theme.red, bg = theme.background },
       St_GitBranch = { fg = theme.magenta, bg = theme.background },
 
       St_NormalMode = { fg = theme.brightblue, bg = theme.background },
