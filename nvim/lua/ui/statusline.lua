@@ -58,12 +58,12 @@ local utl = {
     local buf = vim.b[self:stbufnr()]
 
     --- @type boolean Flag if a git repository
-    local is_repo = true
+    local repo = true
 
     -- Check if it's not a Git repository
-    if not buf.gitsigns_head or buf.gitsigns_git_status then is_repo = false end
+    if not buf.gitsigns_head or buf.gitsigns_git_status then repo = false end
 
-    return is_repo, buf.gitsigns_status_dict
+    return repo, buf.gitsigns_status_dict
   end,
 }
 
@@ -81,11 +81,11 @@ local modules = {
 
   git_branch = function()
     --- @type boolean, GitSignsStatus Git status information for the buffer
-    local is_repo, git_status = utl:gitsigns_status()
+    local repo, git = utl:gitsigns_status()
 
-    if not is_repo then return '' end
+    if not repo then return '' end
 
-    return table.concat { '%#St_GitBranch#', icons.branch, ' ', git_status.head, ' ', '%#Normal#%*' }
+    return table.concat { '%#St_GitBranch#', icons.branch, ' ', git.head, ' ', '%#Normal#%*' }
   end,
 
   lsp = function()
@@ -109,13 +109,13 @@ local modules = {
       { level = 'INFO', hl = '%#St_lspInfo#', icon = icons.info },
     }
 
-    --- @type integer Current buffer id
-    local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
-
     --- @type string[] Formatted statusline elements for each diagnostic
     local diagnostics_result = {}
 
     for _, opts in ipairs(lsp_info) do
+      --- @type integer Current buffer id
+      local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
+
       --- @type integer Number of LSP diagnostics for given `level`
       local count = #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity[opts.level] })
 
@@ -159,15 +159,15 @@ local modules = {
 
   git_diff = function()
     --- @type boolean, GitSignsStatus Git status information for the buffer
-    local is_repo, git_status = utl:gitsigns_status()
+    local repo, git = utl:gitsigns_status()
 
-    if not is_repo then return '' end
+    if not repo then return '' end
 
     --- @type GitModification[] Table of all git add, changed, and removed modifications
     local statuses = {
-      { cnt = git_status.added, hl = '%#St_GitAdded#', icon = '+' },
-      { cnt = git_status.changed, hl = '%#St_GitChanged#', icon = '~' },
-      { cnt = git_status.removed, hl = '%#St_GitRemoved#', icon = '-' },
+      { cnt = git.added, hl = '%#St_GitAdded#', icon = '+' },
+      { cnt = git.changed, hl = '%#St_GitChanged#', icon = '~' },
+      { cnt = git.removed, hl = '%#St_GitRemoved#', icon = '-' },
     }
 
     --- @type string[] Formatted statusline elements for each modification type
@@ -190,7 +190,7 @@ local modules = {
 
   cwd = function()
     --- @type integer Max column size to display full path
-    local col_threshold = 70
+    local threshold = 70
 
     --- @type string|nil Path name to display
     local path = vim.uv.cwd()
@@ -202,7 +202,7 @@ local modules = {
     path = path:gsub('^' .. vim.env.HOME, '~')
 
     -- truncated cwd
-    if #path > col_threshold then path = '.../' .. path:match '([^/\\]+)[/\\]*$' end
+    if #path > threshold then path = '.../' .. path:match '([^/\\]+)[/\\]*$' end
 
     return table.concat { '%#St_cwd#', icons.folder, ' ', path, ' ', '%#Normal#%*' }
   end,
