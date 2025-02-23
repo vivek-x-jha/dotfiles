@@ -157,7 +157,7 @@ local modules = {
     return table.concat { highlight, ' ', name, '%#Normal#%*', ' ' }
   end,
 
-  git_mod = function()
+  git_diff = function()
     --- @type boolean, GitSignsStatus Git status information for the buffer
     local is_repo, git_status = utl:gitsigns_status()
 
@@ -207,6 +207,7 @@ local modules = {
     return table.concat { '%#St_cwd#', icons.folder, ' ', path, ' ', '%#Normal#%*' }
   end,
 
+  -- FIX does not aggregate exactly the same as powerlevel10k git status
   git_status = function()
     -- Check if inside a Git repository
     local git_dir = vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1]
@@ -276,14 +277,14 @@ return {
     local statusline = {}
 
     --- @type boolean flag for terminal mode
-    local is_terminal = vim.api.nvim_get_mode().mode == 't'
+    local termBuf = vim.api.nvim_get_mode().mode == 't'
 
     --- @type boolean flag if current buffer is specre search & replace
-    local is_spectre = vim.bo.filetype == 'spectre_panel'
+    local spectreBuf = vim.bo.filetype == 'spectre_panel'
 
     --- @type string[] Order of statusline modules
-    local module_order = (is_terminal or is_spectre) and { 'mode', '%=', 'cwd', 'cursor' }
-      or { 'mode', 'git_branch', 'git_status', 'file', 'git_mod', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
+    local module_order = (termBuf or spectreBuf) and { 'mode', '%=', 'cwd', 'cursor' }
+      or { 'mode', 'git_branch', 'git_status', 'file', 'git_diff', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
 
     -- Construct the statusline elements
     for _, mod in ipairs(module_order) do

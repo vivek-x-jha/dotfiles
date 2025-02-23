@@ -30,7 +30,7 @@
 --- @field lsp fun(): string Creates statusline module: language server name
 --- @field diagnostics fun(): string Creates statusline module: LSP diagnostics
 --- @field file fun(): string Creates statusline module: current file
---- @field git_mod fun(): string Creates statusline module: git modification
+--- @field git_diff fun(): string Creates statusline module: git diff
 --- @field lsp_msg fun(): string Creates statusline module: LSP message
 --- @field cwd fun(): string Creates statusline module: current working directory
 --- @field git_status fun(): string Creates statusline module: project git status
