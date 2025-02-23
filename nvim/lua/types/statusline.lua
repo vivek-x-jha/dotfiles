@@ -37,5 +37,5 @@
 --- @field cursor fun(): string Creates statusline module: row and column counter
 
 --- @class StatusLine
---- @field state LspMsg Aggregates all statusline modules
+--- @field state LspMsg Table of LSP message(s)
 --- @field setup fun(): string Aggregates all statusline modules
