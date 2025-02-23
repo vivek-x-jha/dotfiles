@@ -1,3 +1,4 @@
+--- @type table Custom icons
 local icons = require 'ui.icons'
 
 --- @type StatusLineUtils Utility functions used to generate statusline modules
@@ -280,27 +281,25 @@ return {
     --- @type boolean flag if current buffer is specre search & replace
     local is_spectre = vim.bo.filetype == 'spectre_panel'
 
-    --- @type string[] statusline elements order when filtered
-    local st_order_filt = { 'mode', '%=', 'cwd', 'cursor' }
-
-    --- @type string[] statusline elements order
-    local st_order = {
-      'mode',
-      'git_branch',
-      'git_status',
-      'file',
-      'git_mod',
-      '%=',
-      'lsp_msg',
-      '%=',
-      'diagnostics',
-      'lsp',
-      'cwd',
-      'cursor',
-    }
+    --- @type string[] Order of statusline modules
+    local module_order = (is_terminal or is_spectre) and { 'mode', '%=', 'cwd', 'cursor' }
+      or {
+        'mode',
+        'git_branch',
+        'git_status',
+        'file',
+        'git_mod',
+        '%=',
+        'lsp_msg',
+        '%=',
+        'diagnostics',
+        'lsp',
+        'cwd',
+        'cursor',
+      }
 
     -- Construct the statusline elements
-    for _, mod in ipairs((is_terminal or is_spectre) and st_order_filt or st_order) do
+    for _, mod in ipairs(module_order) do
       table.insert(statusline, mod == '%=' and mod or modules[mod]())
     end
 
