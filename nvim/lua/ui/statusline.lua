@@ -101,6 +101,9 @@ local modules = {
   diagnostics = function()
     if not rawget(vim, 'lsp') then return '' end
 
+    --- @type string[] Formatted statusline elements for each diagnostic
+    local lsp_diagnostics = {}
+
     --- @type LspDiagnostic[] Table of all LSP diagnostics
     local lsp_info = {
       { level = 'ERROR', hl = '%#St_lspError#', icon = icons.error },
@@ -109,23 +112,20 @@ local modules = {
       { level = 'INFO', hl = '%#St_lspInfo#', icon = icons.info },
     }
 
-    --- @type string[] Formatted statusline elements for each diagnostic
-    local diagnostics_result = {}
-
     for _, opts in ipairs(lsp_info) do
       --- @type integer Current buffer id
-      local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
+      local bufid = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
 
       --- @type integer Number of LSP diagnostics for given `level`
-      local count = #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity[opts.level] })
+      local count = #vim.diagnostic.get(bufid, { severity = vim.diagnostic.severity[opts.level] })
 
       --- @type string Formatted diagnostic entry
-      local formatted_lsp_info = table.concat { opts.hl, opts.icon, ' ', tostring(count), ' ', '%#Normal#%*' }
+      local diagnostic = table.concat { opts.hl, opts.icon, ' ', tostring(count), ' ', '%#Normal#%*' }
 
-      if count > 0 then table.insert(diagnostics_result, formatted_lsp_info) end
+      if count > 0 then table.insert(lsp_diagnostics, diagnostic) end
     end
 
-    return table.concat(diagnostics_result)
+    return table.concat(lsp_diagnostics)
   end,
 
   file = function()
@@ -152,9 +152,9 @@ local modules = {
     local icon = devicons_present and devicons.get_icon(name) or icons.file
 
     --- @type string Highlight and icon conditional on modified buffer
-    local highlight = vim.bo.modified and '%#St_filemod#' .. icons.modified or '%#St_file#' .. icon
+    local hl_icon = vim.bo.modified and '%#St_filemod#' .. icons.modified or '%#St_file#' .. icon
 
-    return table.concat { highlight, ' ', name, '%#Normal#%*', ' ' }
+    return table.concat { hl_icon, ' ', name, '%#Normal#%*', ' ' }
   end,
 
   git_diff = function()
