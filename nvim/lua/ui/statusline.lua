@@ -283,20 +283,7 @@ return {
 
     --- @type string[] Order of statusline modules
     local module_order = (is_terminal or is_spectre) and { 'mode', '%=', 'cwd', 'cursor' }
-      or {
-        'mode',
-        'git_branch',
-        'git_status',
-        'file',
-        'git_mod',
-        '%=',
-        'lsp_msg',
-        '%=',
-        'diagnostics',
-        'lsp',
-        'cwd',
-        'cursor',
-      }
+      or { 'mode', 'git_branch', 'git_status', 'file', 'git_mod', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
 
     -- Construct the statusline elements
     for _, mod in ipairs(module_order) do
