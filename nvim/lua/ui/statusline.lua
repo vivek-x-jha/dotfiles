@@ -80,10 +80,14 @@ local modules = {
   end,
 
   git_branch = function()
-    --- @type boolean, GitSignsStatus Git status information for the buffer
-    local repo, git = utl:gitsigns_status()
+    --- @type table Current buffer options
+    local buf = vim.b[utl.stbufnr()]
 
-    if not repo then return '' end
+    -- Check if it's not a Git repository
+    if not buf.gitsigns_head or buf.gitsigns_git_status then return '' end
+
+    --- @type GitSignsStatus Git status information for the buffer
+    local git = buf.gitsigns_status_dict
 
     return table.concat { '%#St_GitBranch#', icons.branch, ' ', git.head, ' ', '%#Normal#%*' }
   end,
@@ -158,29 +162,32 @@ local modules = {
   end,
 
   git_diff = function()
-    --- @type boolean, GitSignsStatus Git status information for the buffer
-    local repo, git = utl:gitsigns_status()
+    --- @type string[] Formatted statusline elements for each modification type
+    local modifications = {}
 
-    if not repo then return '' end
+    --- @type table Current buffer options
+    local buf = vim.b[utl.stbufnr()]
+
+    -- Check if it's not a Git repository
+    if not buf.gitsigns_head or buf.gitsigns_git_status then return '' end
 
     --- @type GitModification[] Table of all git add, changed, and removed modifications
     local statuses = {
-      { cnt = git.added, hl = '%#St_GitAdded#', icon = '+' },
-      { cnt = git.changed, hl = '%#St_GitChanged#', icon = '~' },
-      { cnt = git.removed, hl = '%#St_GitRemoved#', icon = '-' },
+      { cnt = buf.gitsigns_status_dict.added, hl = '%#St_GitAdded#', icon = '+' },
+      { cnt = buf.gitsigns_status_dict.changed, hl = '%#St_GitChanged#', icon = '~' },
+      { cnt = buf.gitsigns_status_dict.removed, hl = '%#St_GitRemoved#', icon = '-' },
     }
-
-    --- @type string[] Formatted statusline elements for each modification type
-    local modifications = {}
 
     for _, mod in ipairs(statuses) do
       --- @type integer Number of git modifications
       local count = mod.cnt or 0
 
-      --- @type string Formatted git modification
-      local formatted_git_mod = table.concat { mod.hl, mod.icon, tostring(count), ' ', '%#Normal#%*' }
+      if count > 0 then
+        --- @type string Formatted git modification
+        local status = table.concat { mod.hl, mod.icon, tostring(count), ' ', '%#Normal#%*' }
 
-      if count > 0 then table.insert(modifications, formatted_git_mod) end
+        table.insert(modifications, status)
+      end
     end
 
     return table.concat(modifications)
@@ -256,10 +263,12 @@ local modules = {
       --- @type integer Number of occurrences for the given Git status
       local count = status.cnt or 0
 
-      --- @type string Formatted git status element
-      local formatted_git_status = table.concat { status.hl, status.icon, tostring(count), ' ', '%#Normal#%*' }
+      if count > 0 then
+        --- @type string Formatted git status element
+        local formatted_git_status = table.concat { status.hl, status.icon, tostring(count), ' ', '%#Normal#%*' }
 
-      if count > 0 then table.insert(git_elements, formatted_git_status) end
+        table.insert(git_elements, formatted_git_status)
+      end
     end
 
     return table.concat(git_elements)
