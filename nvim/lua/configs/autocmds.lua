@@ -12,10 +12,16 @@ return {
     group = augroup 'DashAU',
     event = 'VimEnter',
     callback = function()
-      local buf_lines = api.nvim_buf_get_lines(0, 0, 1, false)
-      local buf_empty = buf_lines[1] == '' and api.nvim_buf_line_count(0) == 1 and api.nvim_buf_get_name(0) == ''
+      --- @type boolean flag if buffer is empty
+      local emptylines = api.nvim_buf_get_lines(0, 0, 1, false)[1] == ''
 
-      if buf_empty then vim.cmd 'Dashboard' end
+      --- @type boolean flag if rows are empty
+      local emptyrows = api.nvim_buf_line_count(0) == 1
+
+      --- @type boolean flag for untitled buffer
+      local untitled = api.nvim_buf_get_name(0) == ''
+
+      if emptylines and emptyrows and untitled then vim.cmd 'Dashboard' end
     end,
   },
 
