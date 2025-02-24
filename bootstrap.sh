@@ -188,10 +188,10 @@ for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
 # NOTE manage all links - provides fine-grained control over GNU stow
 symlinks=(
+  .dotfiles/hammerspoon        "$HOME" .hammerspoon
   .dotfiles/bash/.bash_profile "$HOME" .bash_profile
   .dotfiles/bash/.bashrc       "$HOME" .bashrc
   .dotfiles/zsh/.zshenv        "$HOME" .zshenv
-  ../.dotfiles/hammerspoon     "$HOME" .hammerspoon
 
   ../.dotfiles/1Password "$XDG_CONFIG_HOME" 1Password
   ../.dotfiles/atuin     "$XDG_CONFIG_HOME" atuin
@@ -210,7 +210,6 @@ symlinks=(
   ../.dotfiles/mycli     "$XDG_CONFIG_HOME" mycli
   ../.dotfiles/nvim      "$XDG_CONFIG_HOME" nvim
   ../.dotfiles/ssh       "$XDG_CONFIG_HOME" ssh
-  ../.dotfiles/task      "$XDG_CONFIG_HOME" task
   ../.dotfiles/tmux      "$XDG_CONFIG_HOME" tmux
   ../.dotfiles/wezterm   "$XDG_CONFIG_HOME" wezterm
   ../.dotfiles/yazi      "$XDG_CONFIG_HOME" yazi
