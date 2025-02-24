@@ -1,71 +1,11 @@
 --- @type table Custom icons
 local icons = require 'ui.icons'
 
---- @type StatusLineUtils Utility functions used to generate statusline modules
-local utl = {
-  state = { lsp_msg = '' },
+--- @type LspMsg Holds any LSP Messages
+local state = { lsp_msg = '' }
 
-  -- 2nd item is highlight groupname St_NormalMode
-  modes = {
-    ['n'] = { 'NORMAL', 'Normal' },
-    ['no'] = { 'NORMAL (no)', 'Normal' },
-    ['nov'] = { 'NORMAL (nov)', 'Normal' },
-    ['noV'] = { 'NORMAL (noV)', 'Normal' },
-    ['noCTRL-V'] = { 'NORMAL', 'Normal' },
-    ['niI'] = { 'NORMAL i', 'Normal' },
-    ['niR'] = { 'NORMAL r', 'Normal' },
-    ['niV'] = { 'NORMAL v', 'Normal' },
-    ['nt'] = { 'NTERMINAL', 'NTerminal' },
-    ['ntT'] = { 'NTERMINAL (ntT)', 'NTerminal' },
-
-    ['v'] = { 'VISUAL', 'Visual' },
-    ['vs'] = { 'V-CHAR (Ctrl O)', 'Visual' },
-    ['V'] = { 'V-LINE', 'Visual' },
-    ['Vs'] = { 'V-LINE', 'Visual' },
-    [''] = { 'V-BLOCK', 'Visual' },
-
-    ['i'] = { 'INSERT', 'Insert' },
-    ['ic'] = { 'INSERT (completion)', 'Insert' },
-    ['ix'] = { 'INSERT completion', 'Insert' },
-
-    ['t'] = { 'TERMINAL', 'Terminal' },
-
-    ['R'] = { 'REPLACE', 'Replace' },
-    ['Rc'] = { 'REPLACE (Rc)', 'Replace' },
-    ['Rx'] = { 'REPLACEa (Rx)', 'Replace' },
-    ['Rv'] = { 'V-REPLACE', 'Replace' },
-    ['Rvc'] = { 'V-REPLACE (Rvc)', 'Replace' },
-    ['Rvx'] = { 'V-REPLACE (Rvx)', 'Replace' },
-
-    ['s'] = { 'SELECT', 'Select' },
-    ['S'] = { 'S-LINE', 'Select' },
-    [''] = { 'S-BLOCK', 'Select' },
-    ['c'] = { 'COMMAND', 'Command' },
-    ['cv'] = { 'COMMAND', 'Command' },
-    ['ce'] = { 'COMMAND', 'Command' },
-    ['cr'] = { 'COMMAND', 'Command' },
-    ['r'] = { 'PROMPT', 'Confirm' },
-    ['rm'] = { 'MORE', 'Confirm' },
-    ['r?'] = { 'CONFIRM', 'Confirm' },
-    ['x'] = { 'CONFIRM', 'Confirm' },
-    ['!'] = { 'SHELL', 'Terminal' },
-  },
-
-  stbufnr = function() return vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0 end,
-
-  gitsigns_status = function(self)
-    --- @type table Current buffer options
-    local buf = vim.b[self:stbufnr()]
-
-    --- @type boolean Flag if a git repository
-    local repo = true
-
-    -- Check if it's not a Git repository
-    if not buf.gitsigns_head or buf.gitsigns_git_status then repo = false end
-
-    return repo, buf.gitsigns_status_dict
-  end,
-}
+--- @type fun(): integer Statusline Buffer id
+local stbufnr = function() return vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0 end
 
 --- Modules to be loaded by statusline
 --- @type StatusLineModules
@@ -73,29 +13,72 @@ local modules = {
   mode = function()
     if not vim.api.nvim_get_current_win() == vim.g.statusline_winid then return '' end
 
+    --- @type string[] 2nd item is highlight groupname St_NormalMode
+    local modes = {
+      ['n'] = { 'NORMAL', 'Normal' },
+      ['no'] = { 'NORMAL (no)', 'Normal' },
+      ['nov'] = { 'NORMAL (nov)', 'Normal' },
+      ['noV'] = { 'NORMAL (noV)', 'Normal' },
+      ['noCTRL-V'] = { 'NORMAL', 'Normal' },
+      ['niI'] = { 'NORMAL i', 'Normal' },
+      ['niR'] = { 'NORMAL r', 'Normal' },
+      ['niV'] = { 'NORMAL v', 'Normal' },
+      ['nt'] = { 'NTERMINAL', 'NTerminal' },
+      ['ntT'] = { 'NTERMINAL (ntT)', 'NTerminal' },
+
+      ['v'] = { 'VISUAL', 'Visual' },
+      ['vs'] = { 'V-CHAR (Ctrl O)', 'Visual' },
+      ['V'] = { 'V-LINE', 'Visual' },
+      ['Vs'] = { 'V-LINE', 'Visual' },
+      [''] = { 'V-BLOCK', 'Visual' },
+
+      ['i'] = { 'INSERT', 'Insert' },
+      ['ic'] = { 'INSERT (completion)', 'Insert' },
+      ['ix'] = { 'INSERT completion', 'Insert' },
+
+      ['t'] = { 'TERMINAL', 'Terminal' },
+
+      ['R'] = { 'REPLACE', 'Replace' },
+      ['Rc'] = { 'REPLACE (Rc)', 'Replace' },
+      ['Rx'] = { 'REPLACEa (Rx)', 'Replace' },
+      ['Rv'] = { 'V-REPLACE', 'Replace' },
+      ['Rvc'] = { 'V-REPLACE (Rvc)', 'Replace' },
+      ['Rvx'] = { 'V-REPLACE (Rvx)', 'Replace' },
+
+      ['s'] = { 'SELECT', 'Select' },
+      ['S'] = { 'S-LINE', 'Select' },
+      [''] = { 'S-BLOCK', 'Select' },
+      ['c'] = { 'COMMAND', 'Command' },
+      ['cv'] = { 'COMMAND', 'Command' },
+      ['ce'] = { 'COMMAND', 'Command' },
+      ['cr'] = { 'COMMAND', 'Command' },
+      ['r'] = { 'PROMPT', 'Confirm' },
+      ['rm'] = { 'MORE', 'Confirm' },
+      ['r?'] = { 'CONFIRM', 'Confirm' },
+      ['x'] = { 'CONFIRM', 'Confirm' },
+      ['!'] = { 'SHELL', 'Terminal' },
+    }
+
     --- @type string[2] Vim mode and highlight group
-    local vmode = utl.modes[vim.api.nvim_get_mode().mode]
+    local vmode = modes[vim.api.nvim_get_mode().mode]
 
     return table.concat { '%#St_', vmode[2], 'mode#', icons.vim, ' ', vmode[1], ' ', '%#Normal#%*' }
   end,
 
   git_branch = function()
     --- @type table Current buffer options
-    local buf = vim.b[utl.stbufnr()]
+    local buf = vim.b[stbufnr()]
 
     -- Check if it's not a Git repository
     if not buf.gitsigns_head or buf.gitsigns_git_status then return '' end
 
-    --- @type GitSignsStatus Git status information for the buffer
-    local git = buf.gitsigns_status_dict
-
-    return table.concat { '%#St_GitBranch#', icons.branch, ' ', git.head, ' ', '%#Normal#%*' }
+    return table.concat { '%#St_GitBranch#', icons.branch, ' ', buf.gitsigns_head, ' ', '%#Normal#%*' }
   end,
 
   lsp = function()
     if rawget(vim, 'lsp') then
       for _, client in ipairs(vim.lsp.get_clients()) do
-        if client.attached_buffers[utl:stbufnr()] then return table.concat { '%#St_lsp#', icons.gear, ' ', client.name, ' ', '%#Normal#%*' } end
+        if client.attached_buffers[stbufnr()] then return table.concat { '%#St_lsp#', icons.gear, ' ', client.name, ' ', '%#Normal#%*' } end
       end
     end
 
@@ -134,7 +117,7 @@ local modules = {
 
   file = function()
     --- @type string Absolute path of current buffer
-    local path = vim.api.nvim_buf_get_name(utl:stbufnr())
+    local path = vim.api.nvim_buf_get_name(stbufnr())
 
     --- @type boolean[] Conditions to suppress file info
     local suppress = {
@@ -166,7 +149,7 @@ local modules = {
     local modifications = {}
 
     --- @type table Current buffer options
-    local buf = vim.b[utl.stbufnr()]
+    local buf = vim.b[stbufnr()]
 
     -- Check if it's not a Git repository
     if not buf.gitsigns_head or buf.gitsigns_git_status then return '' end
@@ -193,7 +176,7 @@ local modules = {
     return table.concat(modifications)
   end,
 
-  lsp_msg = function() return table.concat { '%#St_lspMsg#', utl.state.lsp_msg, '%#Normal#%*' } end,
+  lsp_msg = function() return table.concat { '%#St_lspMsg#', state.lsp_msg, '%#Normal#%*' } end,
 
   cwd = function()
     --- @type integer Max column size to display full path
@@ -279,7 +262,7 @@ local modules = {
 
 --- @type StatusLine Generates all statusline modules and auto commands
 return {
-  state = utl.state,
+  state = state,
 
   setup = function()
     --- @type string[] Aggregated statusline modules

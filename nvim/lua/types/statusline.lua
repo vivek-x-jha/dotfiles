@@ -18,12 +18,6 @@
 --- @field head string Current branch name
 --- @field root string Git repository root directory
 
---- @class StatusLineUtils
---- @field state LspMsg Manages state of LSP message(s)
---- @field modes table Vim mode mappings
---- @field stbufnr fun(): integer Gets current buffer ID
---- @field gitsigns_status fun(self: StatusLineUtils): boolean, GitSignsStatus Creates gitsigns status table
-
 --- @class StatusLineModules
 --- @field mode fun(): string Creates statusline module: mode indicator
 --- @field git_branch fun(): string Creates statusline module: git branch
