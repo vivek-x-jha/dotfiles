@@ -1,4 +1,3 @@
-tap "1password/tap"
 tap "ammarabouzor/tui-journal"
 tap "arl/arl"
 tap "buo/cask-upgrade"
