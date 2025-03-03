@@ -132,3 +132,6 @@ alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Develo
 alias sas-airpods='SwitchAudioSource -s "band4band"'
 alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
 alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
+
+# Remove macOS quarantine flag(s)
+alias fix-spotify='sudo xattr -rd com.apple.quarantine /Applications/Spotify.app'
