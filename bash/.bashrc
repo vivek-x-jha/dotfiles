@@ -8,6 +8,7 @@ export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
 shopt -s autocd
+set -o vi
 
 # Ensure PATH gets set - even in shell interactive mode or tmux
 source "$XDG_CONFIG_HOME/bash/.path"
