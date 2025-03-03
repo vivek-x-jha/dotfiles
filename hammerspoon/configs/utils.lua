@@ -23,7 +23,7 @@ return {
     -- Iterate over files in the hotkey_path
     for file in hs.fs.dir(path) do
       if file:sub(-4) == '.lua' then
-        local module_name = hotkey_path .. '.' .. file:sub(1, -5)
+        local module_name = table.concat { hotkey_path, '.', file:sub(1, -5) }
         local success, mappings = pcall(require, module_name)
 
         if success and type(mappings) == 'table' then
@@ -31,11 +31,11 @@ return {
             if spec.mods and spec.key and spec.desc and spec.command then
               hs.hotkey.bind(spec.mods, spec.key, spec.desc, spec.command)
             else
-              print('Invalid spec in ' .. file .. ': ', hs.inspect(spec))
+              print(table.concat { 'Invalid spec in ', file, ': ', hs.inspect(spec) })
             end
           end
         else
-          print('Failed to load ' .. module_name .. ': ' .. tostring(mappings))
+          print(table.concat { 'Failed to load ', module_name, ': ', tostring(mappings) })
         end
       end
     end
