@@ -5,6 +5,7 @@ return {
     key = 'R',
     command = function()
       hs.reload()
+      hs.console.clearConsole()
       print 'Reloaded ~/.hammerspoon/'
     end,
   },
