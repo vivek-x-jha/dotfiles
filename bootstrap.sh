@@ -178,11 +178,11 @@ symlink() {
 
 # Ensure base directories created before symlinking
 directories=(
-  "$XDG_CACHE"
+  "$XDG_CACHE_HOME"
   "$XDG_CONFIG_HOME/atuin"
   "$XDG_CONFIG_HOME/op"
-  "$XDG_DATA"
-  "$XDG_STATE"
+  "$XDG_DATA_HOME"
+  "$XDG_STATE_HOME"
 )
 for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
