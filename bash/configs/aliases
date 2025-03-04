@@ -22,7 +22,7 @@ alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_S
 # Move up 2 directories
 alias ...="cd ../.."
 
-# NOTE Ctrl + l is usual hotkey for clear ut gets overriden with tmux and nvim
+# NOTE Ctrl + l is usual hotkey for clear but gets overriden with tmux and nvim
 alias cl='clear'
 
 # Filter input and color with $GREP_COLOR
