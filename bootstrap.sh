@@ -180,7 +180,7 @@ symlink() {
 directories=(
   "$XDG_CACHE_HOME"
   "$XDG_CONFIG_HOME/op"
-  "$XDG_DATA_HOME"
+  "$XDG_DATA_HOME/zsh/plugins"
   "$XDG_STATE_HOME"
 )
 for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
