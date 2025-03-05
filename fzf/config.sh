@@ -1,28 +1,30 @@
 #!/usr/bin/env zsh
 # https://junegunn.github.io/fzf/
 
-export FZF_DEFAULT_COMMAND="fd --type f"
+source "$XDG_CONFIG_HOME/fzf/themes/sourdiesel.sh"
+
+export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
 export FZF_DEFAULT_OPTS="
   --color          bg+:-1
-  --color          border:#5c617d
-  --color          fg:#5c617d
-  --color          fg+:#cccccc
+  --color          border:$BRIGHTBLACK_HEX
+  --color          fg:$BRIGHTBLACK_HEX
+  --color          fg+:$BLACK_HEX
   --color          gutter:-1
-  --color          header:#eccef0
+  --color          header:$MAGENTA_HEX
   --color          header:italic
-  --color          hl:#f096b7
-  --color          hl+:#f096b7
-  --color          info:#c9ccfb
-  --color          marker:#f3b175
-  --color          pointer:#d2fd9d
-  --color          prompt:#f3b175
-  --color          spinner:#c4effa
+  --color          hl:$BRIGHTRED_HEX
+  --color          hl+:$BRIGHTRED_HEX
+  --color          info:$BRIGHTMAGENTA_HEX
+  --color          marker:$BRIGHTYELLOW_HEX
+  --color          pointer:$BRIGHTGREEN_HEX
+  --color          prompt:$BRIGHTYELLOW_HEX
+  --color          spinner:$BLUE_HEX
   --header         'Preview File Content'
   --layout         reverse
   --marker         '*'
-  --pointer        ''
-  --prompt         '  '
+  --pointer        '󰶻'
+  --prompt         ' '
   --tmux           center
   --walker-skip    .git,node_modules,target
 "
