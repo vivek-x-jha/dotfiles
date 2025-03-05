@@ -4,6 +4,9 @@ declare -U path=()
 eval "$(/usr/libexec/path_helper -s)"
 [[ -z $HOMEBREW_BIN ]] || eval "$($HOMEBREW_BIN/brew shellenv)"
 
+# Load api keys
+[[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
+
 path=(
   "/Library/Frameworks/Python.framework/Versions/3.13/bin"
   "$path[@]"
