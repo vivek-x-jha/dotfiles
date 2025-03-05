@@ -3,9 +3,6 @@
 # Initialize shell prompt instantly
 [[ -r $XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
-# Load api keys
-[[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
-
 # Configure shell opts
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=12000
