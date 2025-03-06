@@ -35,9 +35,7 @@ config.command_palette_font_size = 16
 config.command_palette_rows = 20
 
 -- Blur only available on MacOS
-if wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin' then
-  config.macos_window_background_blur = 60
-end
+config.macos_window_background_blur = wezterm.target_triple:match 'apple%-darwin' and 60
 
 -- Style Tweaks
 config.bold_brightens_ansi_colors = false
