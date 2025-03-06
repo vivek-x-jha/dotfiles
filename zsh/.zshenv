@@ -35,36 +35,13 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
-# Base16 colors
-export BLACK='\e[0;30m'
-export RED='\e[0;31m'
-export GREEN='\e[0;32m'
-export YELLOW='\e[0;33m'
-export BLUE='\e[0;34m'
-export MAGENTA='\e[0;35m'
-export CYAN='\e[0;36m'
-export WHITE='\e[0;37m'
-
-export BRIGHTBLACK='\e[0;90m'
-export BRIGHTRED='\e[0;91m'
-export BRIGHTGREEN='\e[0;92m'
-export BRIGHTYELLOW='\e[0;93m'
-export BRIGHTBLUE='\e[0;94m'
-export BRIGHTMAGENTA='\e[0;95m'
-export BRIGHTCYAN='\e[0;96m'
-export BRIGHTWHITE='\e[0;97m'
-
-# Other colors
-export GREY='\e[38;5;248m'
-export RESET='\e[0m'
-export GREP_COLOR="38;5;9"
-export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
-export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
+# Colors
+source "$HOME/.dotfiles/.colorscheme"
 
 # Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # Configure shell options
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export ZSH_DATA_HOME="$XDG_DATA_HOME/zsh/plugins"
 export SHELL_SESSIONS_DISABLE=1
+export ZSH_DATA_HOME="$XDG_DATA_HOME/zsh/plugins"
