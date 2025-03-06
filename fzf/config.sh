@@ -1,8 +1,6 @@
 #!/usr/bin/env zsh
 # https://junegunn.github.io/fzf/
 
-source "$XDG_CONFIG_HOME/fzf/themes/sourdiesel.sh"
-
 export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
 export FZF_DEFAULT_OPTS="
