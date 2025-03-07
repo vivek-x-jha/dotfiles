@@ -1,31 +1,48 @@
 -- https://wezfurlong.org/wezterm/
 
+-- Create config table
 local wezterm = require 'wezterm'
-
--- Configuration
 local config = wezterm.config_builder() or {}
 
--- Cross-platform settings
+-- Set terminal colors
 config.color_scheme = 'Sourdiesel'
+
+-- Set font opts
+config.font_size = 15
 config.font = wezterm.font_with_fallback {
   { family = 'JetBrainsMono Nerd Font', weight = 'ExtraLight' }, -- Primary font
   'Menlo', -- macOS fallback
   'DejaVu Sans Mono', -- Linux fallback
   'Consolas', -- Windows fallback
 }
-config.font_size = 15
+
+-- Set cursor opts
 config.cursor_blink_rate = 300
 config.cursor_thickness = 0.25
 config.default_cursor_style = 'BlinkingBlock'
+
+-- Set window opts
 config.window_background_opacity = 0.9
 config.window_close_confirmation = 'NeverPrompt'
 config.window_decorations = 'RESIZE'
+config.window_frame = {
+  border_left_width = 2,
+  border_right_width = 2,
+  border_bottom_height = 2,
+  border_top_height = 2,
+  border_left_color = '#5c617d',
+  border_right_color = '#5c617d',
+  border_bottom_color = '#5c617d',
+  border_top_color = '#5c617d',
+}
 config.window_padding = {
   left = 20,
   right = 15,
   top = 15,
   bottom = 12,
 }
+
+-- Disable title bar
 config.enable_tab_bar = false
 
 -- Command Palette: activate with <Ctrl + Shift + p>
