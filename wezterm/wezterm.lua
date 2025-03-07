@@ -49,10 +49,10 @@ config.window_decorations = 'RESIZE'
 
 -- https://wezterm.org/config/lua/config/window_frame.html?h=window_frame
 config.window_frame = {
-  border_left_width = 2,
-  border_right_width = 2,
-  border_bottom_height = 2,
-  border_top_height = 2,
+  border_left_width = 1,
+  border_right_width = 1,
+  border_bottom_height = 1,
+  border_top_height = 1,
   border_left_color = '#5c617d',
   border_right_color = '#5c617d',
   border_bottom_color = '#5c617d',
