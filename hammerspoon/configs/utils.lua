@@ -33,10 +33,17 @@ return {
 
   move_app = function(app_pos)
     local win = hs.window.focusedWindow()
-    if win then
-      win:moveToUnit(hs.geometry.rect(app_pos.x, app_pos.y, app_pos.w, app_pos.h))
-    else
+
+    if not win then
       hs.alert.show 'No window to move'
+    elseif type(app_pos) == 'string' then
+      if app_pos == 'next' then
+        win:moveToScreen(win:screen():next())
+      elseif app_pos == 'previous' then
+        win:moveToScreen(win:screen():previous())
+      end
+    else
+      win:moveToUnit(hs.geometry.rect(app_pos.x, app_pos.y, app_pos.w, app_pos.h))
     end
   end,
 

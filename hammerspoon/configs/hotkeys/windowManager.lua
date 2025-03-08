@@ -65,6 +65,20 @@ return {
   },
 
   {
+    desc = 'Left Display',
+    mods = { 'ctrl', 'alt', 'cmd' },
+    key = 'Left',
+    command = function() move 'next' end,
+  },
+
+  {
+    desc = 'Right Display',
+    mods = { 'ctrl', 'alt', 'cmd' },
+    key = 'Right',
+    command = function() move 'previous' end,
+  },
+
+  {
     desc = 'Maximize',
     mods = { 'ctrl', 'alt' },
     key = 'F',
@@ -96,34 +110,6 @@ return {
         print('Almost Maximized ' .. win:title())
       else
         hs.alert.show 'No window to almost maximize'
-      end
-    end,
-  },
-
-  {
-    desc = 'Left Display',
-    mods = { 'ctrl', 'alt', 'cmd' },
-    key = 'Left',
-    command = function()
-      local win = hs.window.focusedWindow()
-      if win then
-        win:moveToScreen(win:screen():next())
-      else
-        hs.alert.show 'No window to move to next display'
-      end
-    end,
-  },
-
-  {
-    desc = 'Right Display',
-    mods = { 'ctrl', 'alt', 'cmd' },
-    key = 'Right',
-    command = function()
-      local win = hs.window.focusedWindow()
-      if win then
-        win:moveToScreen(win:screen():previous())
-      else
-        hs.alert.show 'No window to move to previous display'
       end
     end,
   },
