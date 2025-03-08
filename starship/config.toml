@@ -67,3 +67,12 @@ disabled = true
 success_symbol = "[](white)"
 error_symbol = "[](bright-red)"
 vicmd_symbol = "[](yellow)"
+
+[python]
+symbol = ' '  # Ensure single quotes around the symbol
+format = '[$symbol$virtualenv]($style) '
+style = "yellow"
+python_binary = ["python", "python3", "python2"]
+detect_extensions = ["py"]
+detect_files = ["pyproject.toml", "requirements.txt", "setup.py", "Pipfile"]
+detect_folders = [".venv", "venv"]
