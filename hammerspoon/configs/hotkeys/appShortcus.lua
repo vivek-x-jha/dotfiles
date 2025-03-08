@@ -4,7 +4,6 @@ local toggle = require('utils').toggle_app
 local appShortcuts = {
   {
     key = 'w',
-    name = 'WezTerm',
     desc = 'Toggle WezTerm',
     mods = ctrl_alt_cmd,
     command = function() toggle 'WezTerm' end,
@@ -12,7 +11,6 @@ local appShortcuts = {
 
   {
     key = 'a',
-    name = 'Arc',
     desc = 'Toggle Arc Browser',
     mods = ctrl_alt_cmd,
     command = function() toggle 'Arc' end,
@@ -20,7 +18,6 @@ local appShortcuts = {
 
   {
     key = 'm',
-    name = 'Mimestream',
     desc = 'Toggle Mimestream',
     mods = ctrl_alt_cmd,
     command = function() toggle 'Mimestream' end,
@@ -28,7 +25,6 @@ local appShortcuts = {
 
   {
     key = 'p',
-    name = 'Photos',
     desc = 'Toggle Photos',
     mods = ctrl_alt_cmd,
     command = function() toggle 'Photos' end,
