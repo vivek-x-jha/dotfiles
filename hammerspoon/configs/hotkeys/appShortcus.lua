@@ -1,4 +1,5 @@
 local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
+
 local toggle = require('utils').toggle_app
 
 return {
