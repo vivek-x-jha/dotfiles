@@ -1,7 +1,7 @@
 local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
 local toggle = require('utils').toggle_app
 
-local appShortcuts = {
+return {
   {
     key = 'w',
     desc = 'Toggle WezTerm',
@@ -30,5 +30,3 @@ local appShortcuts = {
     command = function() toggle 'Photos' end,
   },
 }
-
-return appShortcuts
