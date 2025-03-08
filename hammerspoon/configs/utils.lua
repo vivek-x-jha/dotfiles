@@ -31,6 +31,15 @@ return {
     end
   end,
 
+  move_app = function(app_pos)
+    local win = hs.window.focusedWindow()
+    if win then
+      win:moveToUnit(hs.geometry.rect(app_pos.x, app_pos.y, app_pos.w, app_pos.h))
+    else
+      hs.alert.show 'No window to move'
+    end
+  end,
+
   bind_hotkeys = function(hotkey_path)
     -- Translate the dot-based hotkey_path into a file path
     local path = hs.configdir .. '/' .. hotkey_path:gsub('%.', '/')
