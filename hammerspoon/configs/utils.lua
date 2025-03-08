@@ -11,6 +11,26 @@ return {
     end
   end,
 
+  toggle_app = function(app_name)
+    local app = hs.application.get(app_name)
+
+    if app and app:isFrontmost() then
+      app:hide()
+    else
+      if not app then
+        hs.application.launchOrFocus(app_name)
+      else
+        app:activate()
+        app:unhide()
+        local win = app:mainWindow()
+        if win then
+          win:raise()
+          win:focus()
+        end
+      end
+    end
+  end,
+
   bind_hotkeys = function(hotkey_path)
     -- Translate the dot-based hotkey_path into a file path
     local path = hs.configdir .. '/' .. hotkey_path:gsub('%.', '/')
