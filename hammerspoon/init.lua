@@ -1,5 +1,4 @@
 -- https://www.hammerspoon.org/docs/
-
 package.path = table.concat { hs.configdir, '/configs/?.lua;', package.path }
 
 -- set hammerspoon theme
