@@ -65,6 +65,13 @@ return {
   },
 
   {
+    desc = 'Maximize',
+    mods = { 'ctrl', 'alt' },
+    key = 'F',
+    command = function() move 'maximize' end,
+  },
+
+  {
     desc = 'Left Display',
     mods = { 'ctrl', 'alt', 'cmd' },
     key = 'Left',
@@ -76,20 +83,6 @@ return {
     mods = { 'ctrl', 'alt', 'cmd' },
     key = 'Right',
     command = function() move 'previous' end,
-  },
-
-  {
-    desc = 'Maximize',
-    mods = { 'ctrl', 'alt' },
-    key = 'F',
-    command = function()
-      local win = hs.window.focusedWindow()
-      if win then
-        win:maximize()
-      else
-        hs.alert.show 'No window to maximize'
-      end
-    end,
   },
 
   {

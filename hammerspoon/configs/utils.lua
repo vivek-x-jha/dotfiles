@@ -41,6 +41,8 @@ return {
         win:moveToScreen(win:screen():next())
       elseif app_pos == 'previous' then
         win:moveToScreen(win:screen():previous())
+      elseif app_pos == 'maximize' then
+        win:maximize()
       end
     else
       win:moveToUnit(hs.geometry.rect(app_pos.x, app_pos.y, app_pos.w, app_pos.h))
