@@ -9,6 +9,7 @@ local appShortcuts = {
     mods = ctrl_alt_cmd,
     command = function() toggle 'WezTerm' end,
   },
+
   {
     key = 'a',
     name = 'Arc',
@@ -16,6 +17,7 @@ local appShortcuts = {
     mods = ctrl_alt_cmd,
     command = function() toggle 'Arc' end,
   },
+
   {
     key = 'm',
     name = 'Mimestream',
@@ -23,6 +25,7 @@ local appShortcuts = {
     mods = ctrl_alt_cmd,
     command = function() toggle 'Mimestream' end,
   },
+
   {
     key = 'p',
     name = 'Photos',
