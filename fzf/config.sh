@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 # https://junegunn.github.io/fzf/
 
+# Define reusable preview commands
+showdir=$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')
+showfile=$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')
+
 export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
 export FZF_DEFAULT_OPTS="
@@ -30,7 +34,7 @@ export FZF_DEFAULT_OPTS="
 # Shell integration: project folders/files + preview files
 export FZF_CTRL_T_OPTS="
   --bind           'ctrl-/:change-preview-window(down|hidden|)'
-  --preview        '[[ -d {} ]] && tree -aCI \".git|.github\" {} || bat -n --color=always {}'
+  --preview        '[[ -d {} ]] && $showdir || $showfile'
 "
 
 # Shell integration: command history
@@ -44,13 +48,13 @@ export FZF_CTRL_R_OPTS="
 # Shell integration: change directory
 export FZF_ALT_C_OPTS="
   --header         'Change Directory to...'
-  --preview        'tree -aCI \".git|.github\" {}'
+  --preview        '$showdir'
 "
 
 # Zoxide interactive scored directory window
 # https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
 export _ZO_FZF_OPTS="
   $FZF_DEFAULT_OPTS 
-  --header 'Jump to...'
-  --preview 'echo {} | cut -f2- | xargs -I{} tree -aCI \".git|.github\" {}'
+  --header         'Jump to...'
+  --preview        'echo {} | cut -f2- | xargs -I{} $showdir'
 "
