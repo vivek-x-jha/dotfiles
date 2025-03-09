@@ -2,8 +2,8 @@
 # https://junegunn.github.io/fzf/
 
 # Define reusable preview commands
-showdir=$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')
-showfile=$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')
+showdir="$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')"
+showfile="$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')"
 
 export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
