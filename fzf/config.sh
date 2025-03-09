@@ -18,7 +18,7 @@ export FZF_DEFAULT_OPTS="
   --color          pointer:$BRIGHTGREEN_HEX
   --color          prompt:$BRIGHTYELLOW_HEX
   --color          spinner:$BLUE_HEX
-  --header         'Preview File Content'
+  --header         'Preview File/Folder Content'
   --layout         reverse
   --marker         '*'
   --pointer        '󰶻'
@@ -30,7 +30,7 @@ export FZF_DEFAULT_OPTS="
 # Shell integration: project folders/files + preview files
 export FZF_CTRL_T_OPTS="
   --bind           'ctrl-/:change-preview-window(down|hidden|)'
-  --preview        'bat -n --color=always {}'
+  --preview        '[[ -d {} ]] && tree -aCI \".git|.github\" {} || bat -n --color=always {}'
 "
 
 # Shell integration: command history
