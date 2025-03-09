@@ -4,6 +4,7 @@
 # Define reusable preview commands
 showdir="$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')"
 showfile="$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')"
+showcmd="$(command -v bat &>/dev/null && echo 'bat --color=always -pl sh' || echo 'cat')"
 
 export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
@@ -41,7 +42,7 @@ export FZF_CTRL_T_OPTS="
 export FZF_CTRL_R_OPTS="
   --bind           'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --header         'Press CTRL-Y to copy command into clipboard'
-  --preview        'echo {2..} | bat --color=always -pl sh'
+  --preview        'echo {2..} | $showcmd'
   --preview-window 'wrap:up:3'
 "
 
