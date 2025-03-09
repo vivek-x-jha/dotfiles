@@ -3,4 +3,4 @@
 # Run the updates
 update-brew
 update-icons
-update-texlive
+# update-texlive
