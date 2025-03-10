@@ -1,7 +1,7 @@
 # https://junegunn.github.io/fzf/
 
 # -------------------------------- Defaults ---------------------------------------
-#
+
 # https://github.com/junegunn/fzf?tab=readme-ov-file#environment-variables
 export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
