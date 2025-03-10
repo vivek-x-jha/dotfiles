@@ -1,8 +1,8 @@
-#!/usr/bin/env zsh
+# https://junegunn.github.io/fzf/
 
 # -------------------------------- Defaults ---------------------------------------
-
-# https://junegunn.github.io/fzf/
+#
+# https://github.com/junegunn/fzf?tab=readme-ov-file#environment-variables
 export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
 export FZF_DEFAULT_OPTS="
@@ -31,18 +31,17 @@ export FZF_DEFAULT_OPTS="
 
 # -------------------------------- Shell Integrations ---------------------------------------
 
-# https://junegunn.github.io/fzf/shell-integration/
 showdir="$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')"
 showfile="$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')"
 showcmd="$(command -v bat &>/dev/null && echo 'bat --color=always -pl sh' || echo 'cat')"
 
-# Files/folders - from current $PWD
+# https://junegunn.github.io/fzf/shell-integration/#ctrl-t
 export FZF_CTRL_T_OPTS="
   --bind           'ctrl-/:change-preview-window(down|hidden|)'
   --preview        '[[ -d {} ]] && $showdir || $showfile'
 "
 
-# Command history
+# https://junegunn.github.io/fzf/shell-integration/#ctrl-r
 export FZF_CTRL_R_OPTS="
   --bind           'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --header         'Press CTRL-Y to copy command into clipboard'
@@ -50,7 +49,7 @@ export FZF_CTRL_R_OPTS="
   --preview-window 'wrap:up:3'
 "
 
-# Change directory
+# https://junegunn.github.io/fzf/shell-integration/#alt-c
 export FZF_ALT_C_OPTS="
   --header         'Change Directory to...'
   --preview        '$showdir'
