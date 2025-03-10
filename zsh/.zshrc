@@ -21,41 +21,39 @@ setopt sharehistory
 # Ensure PATH and FPATH gets set - even in shell interactive mode or tmux
 source "$ZDOTDIR/.zprofile"
 
-# Initialize plugin manager
-source "$XDG_DATA_HOME/zap/zap.zsh"
-
-# Load & configure theme
-plug romkatv/powerlevel10k && plug "$ZDOTDIR/.p10k.zsh"
-
-# Load core plugins
-plug marlonrichert/zsh-autocomplete
-plug hlissner/zsh-autopair
-plug zsh-users/zsh-autosuggestions
-plug zsh-users/zsh-completions
-
-# Lazy load shell functions
-for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
-
-# Load aliases
-plug "$ZDOTDIR/configs/aliases"
-
-# Load completions
-plug "$ZDOTDIR/configs/completions"
-
-# Initialize & configure syntax-highlighting
-plug zsh-users/zsh-syntax-highlighting && plug "$ZDOTDIR/configs/syntax-highlighting"
-
 # Load & configure fuzzy finder
-source <(fzf --zsh) && plug "$XDG_CONFIG_HOME/fzf/config.sh"
-
-# Authenticate github cli with 1password
-plug "$XDG_CONFIG_HOME/op/plugins.sh"
+source <(fzf --zsh)
 
 # Set LS_COLORS: ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Load & configure shell history manager
-eval "$(atuin init zsh)" && plug "$XDG_CONFIG_HOME/atuin/mappings/zsh"
+eval "$(atuin init zsh)"
 
 # Load & configure shell directory navigator
 eval "$(zoxide init zsh --cmd j)"
+
+# Lazy load shell functions
+for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
+
+# Set repos & configurations
+zsh_plugins=(
+  romkatv/powerlevel10k
+  marlonrichert/zsh-autocomplete
+  hlissner/zsh-autopair
+  zsh-users/zsh-autosuggestions
+  zsh-users/zsh-completions
+  zsh-users/zsh-syntax-highlighting
+
+  "$ZDOTDIR/.p10k.zsh"
+  "$ZDOTDIR/configs/aliases"
+  "$ZDOTDIR/configs/completions"
+  "$ZDOTDIR/configs/syntax-highlighting"
+
+  "$XDG_CONFIG_HOME/fzf/config.sh"
+  "$XDG_CONFIG_HOME/op/plugins.sh"
+  "$XDG_CONFIG_HOME/atuin/mappings/zsh"
+)
+
+# Initialize shell plugin manager & load plugins + configs
+source "$XDG_DATA_HOME/zap/zap.zsh" && for tool in "$zsh_plugins[@]"; do plug "$tool"; done
