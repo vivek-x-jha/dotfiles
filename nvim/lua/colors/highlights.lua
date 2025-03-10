@@ -317,19 +317,20 @@ return {
 
       -- Telescope
       TelescopeBorder = { fg = theme.brightblack, bg = theme.background },
-      TelescopeMatching = { fg = theme.brightred, bg = theme.background },
+      TelescopeMatching = { fg = theme.green, bg = theme.background },
       TelescopeNormal = { fg = theme.brightblack, bg = theme.background },
       TelescopeSelection = { fg = theme.black, bg = theme.background },
 
-      TelescopePromptTitle = { fg = theme.brightyellow, bg = theme.background },
+      TelescopePromptTitle = { fg = theme.blue, bg = theme.background },
       -- TelescopePromptBorder = { fg = theme.yellow, bg = theme.background },
       TelescopePromptNormal = { fg = theme.white, bg = theme.background },
-      TelescopePromptPrefix = { fg = theme.brightyellow, bg = theme.background },
+      TelescopePromptPrefix = { fg = theme.magenta, bg = theme.background },
 
-      TelescopeResultsTitle = { fg = theme.brightred, bg = theme.background },
+      TelescopeResultsTitle = { fg = theme.brightgreen, bg = theme.background },
+      TelescopeResultsNumber = { fg = theme.yellow, bg = theme.background },
       -- TelescopeResultsBorder = { fg = theme.magenta, bg = theme.background },
 
-      TelescopePreviewTitle = { fg = theme.brightmagenta, bg = theme.background },
+      TelescopePreviewTitle = { fg = theme.red, bg = theme.background },
       -- TelescopePreviewBorder = { fg = theme.blue, bg = theme.background },
 
       TelescopeResultsDiffAdd = { fg = theme.green, bg = theme.background },
