@@ -33,33 +33,17 @@ export FZF_DEFAULT_OPTS="
 
 showdir="$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')"
 showfile="$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')"
-showcmd="$(command -v bat &>/dev/null && echo 'bat --color=always -pl sh' || echo 'cat')"
 
 # https://junegunn.github.io/fzf/shell-integration/#ctrl-t
-export FZF_CTRL_T_OPTS="
-  --bind           'ctrl-/:change-preview-window(down|hidden|)'
-  --preview        '[[ -d {} ]] && $showdir || $showfile'
-"
+export FZF_CTRL_T_OPTS="--bind 'ctrl-/:change-preview-window(down|hidden|)' --preview '[[ -d {} ]] && $showdir || $showfile'"
 
 # https://junegunn.github.io/fzf/shell-integration/#ctrl-r
-export FZF_CTRL_R_OPTS="
-  --bind           'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-  --header         'Press CTRL-Y to copy command into clipboard'
-  --preview        'echo {2..} | $showcmd'
-  --preview-window 'wrap:up:3'
-"
+export FZF_CTRL_R_OPTS=''
 
 # https://junegunn.github.io/fzf/shell-integration/#alt-c
-export FZF_ALT_C_OPTS="
-  --header         'Change Directory to...'
-  --preview        '$showdir'
-"
+export FZF_ALT_C_OPTS="--header 'Change Directory to...' --preview '$showdir'"
 
 # -------------------------------- 3rd Party Integrations ---------------------------------------
 
 # https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
-export _ZO_FZF_OPTS="
-  $FZF_DEFAULT_OPTS 
-  --header         'Jump to...'
-  --preview        'echo {} | cut -f2- | xargs -I{} $showdir'
-"
+export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header 'Jump to...' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
