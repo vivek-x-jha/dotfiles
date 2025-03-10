@@ -45,9 +45,6 @@ for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 # Shell aliases
 source "$ZDOTDIR/configs/aliases"
 
-# Shell completions
-plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"
-
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
@@ -55,6 +52,9 @@ source "$XDG_CONFIG_HOME/op/plugins.sh"
 plug marlonrichert/zsh-autocomplete
 plug hlissner/zsh-autopair
 plug zsh-users/zsh-autosuggestions
+
+# Shell completions
+plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"
 
 # Shell keybindings
 source "$ZDOTDIR/configs/mappings"
