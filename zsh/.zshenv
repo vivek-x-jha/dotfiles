@@ -35,7 +35,7 @@ export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
 # Colors
-source "$HOME/.dotfiles/.colorscheme"
+source "$HOME/.dotfiles/.colors.sh"
 
 # Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
