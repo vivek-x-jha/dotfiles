@@ -3,11 +3,11 @@ name = "sourdiesel"
 parent = "default"
 
 [colors]
-AlertInfo = "#eccef0"  # Alerting the user at an INFO level
+AlertInfo = "#ffc7c7"  # Alerting the user at an INFO level
 AlertWarn = "#f3b175"  # Alerting the user at a WARN level
 AlertError = "#ceffc9" # Alerting the user at an ERROR level
 Annotation = "#fdf7cd" # Less-critical, supporting text
 Base = "#5c617d"       # Default foreground color
-Guidance = "#c9ccfb"   # Instructing the user as help or context
+Guidance = "#c4effa"   # Instructing the user as help or context
 Important = "#d2fd9d"  # Drawing the user’s attention to information
 Title = "#cccccc"      # Titling a section or view
