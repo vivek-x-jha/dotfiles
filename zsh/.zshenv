@@ -43,6 +43,7 @@ export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # Configure shell options
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export ZSH_DATA_HOME="$XDG_DATA_HOME/zsh/plugins"
 export ZAP_GIT_PREFIX='git@github.com:'
+
+export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 export SHELL_SESSIONS_DISABLE=1
