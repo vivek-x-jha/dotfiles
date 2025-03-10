@@ -1,26 +1,25 @@
 #!/usr/bin/env zsh
 
 local colors=(
-  "#cccccc"
-  "#ffc7c7"
-  "#ceffc9"
-  "#fdf7cd"
-  "#c4effa"
-  "#eccef0"
-  "#8ae7c5"
-  "#f4f3f2"
-
-  "#5c617d"
-  "#f096b7"
-  "#d2fd9d"
-  "#f3b175"
-  "#80d7fe"
-  "#c9ccfb"
-  "#47e7b1"
-  "#ffffff"
+  $BLACK_HEX
+  $RED_HEX
+  $GREEN_HEX
+  $YELLOW_HEX
+  $BLUE_HEX
+  $MAGENTA_HEX
+  $CYAN_HEX
+  $WHITE_HEX
+  $BRIGHTBLACK_HEX
+  $BRIGHTRED_HEX
+  $BRIGHTGREEN_HEX
+  $BRIGHTYELLOW_HEX
+  $BRIGHTBLUE_HEX
+  $BRIGHTMAGENTA_HEX
+  $BRIGHTCYAN_HEX
+  $BRIGHTWHITE_HEX
 )
 
-for hex in "${colors[@]}"; do
+for hex in "$colors[@]"; do
   # Convert hex to RGB
   local r=${hex[2,3]}; r=$((16#$r))
   local g=${hex[4,5]}; g=$((16#$g))
