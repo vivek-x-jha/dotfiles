@@ -28,5 +28,5 @@ for hex in "$colors[@]"; do
   # Create the ANSI escape sequence for the color
   local ansi="\e[38;2;${r};${g};${b}m"
 
-  printf "${ansi}(%s) The quick brown fox jumps over the lazy dog\e[0m\n" "$hex"
+  printf "${ansi}(%s) The quick brown fox jumps over the lazy dog${RESET}\n" "$hex"
 done
