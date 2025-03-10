@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # https://developer.1password.com/docs/cli/
 
 export OP_PLUGIN_ALIASES_SOURCED=1

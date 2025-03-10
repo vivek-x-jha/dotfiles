@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-bind -x '"\C-e": "__atuin_history"'
-bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'

@@ -54,7 +54,6 @@ zsh_plugins=(
 
   "$XDG_CONFIG_HOME/fzf/config.sh"
   "$XDG_CONFIG_HOME/op/plugins.sh"
-  "$XDG_CONFIG_HOME/atuin/mappings/zsh"
 )
 
 # Initialize shell plugin manager & load plugins + configs
