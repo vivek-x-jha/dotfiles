@@ -2,3 +2,7 @@
 
 # Reload zsh
 bindkey -s '^R' 'exec zsh\n'
+
+# Atuin
+bindkey '^e' atuin-search
+bindkey '^[[A' atuin-up-search

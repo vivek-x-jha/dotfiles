@@ -1,4 +1,0 @@
-#!/usr/bin/env zsh
-
-bindkey '^e' atuin-search
-bindkey '^[[A' atuin-up-search

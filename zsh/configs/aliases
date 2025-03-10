@@ -80,9 +80,9 @@ alias ta='tmux attach -t'
 # Attach to last tmux session, if none then create new one
 alias t='tmux attach || tmux new-session'
 
-# Kills all tmux sessions
+# Kill and restart all sessions
 alias tks='tmux kill-server'
-alias tr='tmux kill-server; tmux attach || tmux new-session'
+alias restart-tmux='tmux kill-server; tmux attach || tmux new-session'
 
 # -------------------------------- Version Control ---------------------------------------
 
