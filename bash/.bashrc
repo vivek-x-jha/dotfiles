@@ -10,7 +10,7 @@ set -o vi
 # Ensure PATH gets set - even in shell interactive mode or tmux
 source "$XDG_CONFIG_HOME/bash/.path"
 
-# Load & configure shell fuzzy finder
+# Load & configure fuzzy finder shell bindings
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
 
 # Set LS_COLORS: ls, tree, eza
@@ -22,7 +22,7 @@ eval "$(atuin init bash)"
 # Load & configure shell directory navigator
 eval "$(zoxide init bash --cmd j)"
 
-# Laad & configure shell prompt string 
+# Load & configure shell prompt
 eval "$(starship init bash)"
 
 # Load shell functions

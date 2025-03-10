@@ -1,6 +1,6 @@
 # https://zsh.sourceforge.io/
 
-# Initialize shell prompt instantly
+# Initialize instant prompt 
 [[ -r $XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # Configure shell opts
@@ -21,7 +21,7 @@ setopt sharehistory
 # Ensure PATH and FPATH gets set - even in shell interactive mode or tmux
 source "$ZDOTDIR/.zprofile"
 
-# Load & configure fuzzy finder
+# Load fuzzy finder shell bindings
 source <(fzf --zsh)
 
 # Set LS_COLORS: ls, tree, eza
@@ -33,28 +33,25 @@ eval "$(atuin init zsh)"
 # Load & configure shell directory navigator
 eval "$(zoxide init zsh --cmd j)"
 
-# Lazy load shell functions
+# Load shell functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
-# Set repos & configurations
-zsh_plugins=(
-  romkatv/powerlevel10k
-  marlonrichert/zsh-autocomplete
-  hlissner/zsh-autopair
-  zsh-users/zsh-autosuggestions
-  zsh-users/zsh-completions
-  zsh-users/zsh-syntax-highlighting
+# Load plugins + configs
+source "$XDG_DATA_HOME/zap/zap.zsh"
 
-  "$ZDOTDIR/configs/aliases"
-  "$ZDOTDIR/configs/completions"
-  "$ZDOTDIR/configs/mappings"
-  "$ZDOTDIR/configs/syntax-highlighting"
+plug romkatv/powerlevel10k                  # Load shell prompt
+plug marlonrichert/zsh-autocomplete         # Load autocomplete
+plug hlissner/zsh-autopair                  # Load auopair
+plug zsh-users/zsh-autosuggestions          # Load autosuggestions 
+plug zsh-users/zsh-completions              # Load completions
+plug zsh-users/zsh-syntax-highlighting      # Load syntax-highlighting
 
-  "$ZDOTDIR/themes/p10k-sourdiesel.zsh"
+plug "$ZDOTDIR/configs/aliases"             # Load aliases
+plug "$ZDOTDIR/configs/completions"         # Load completions
+plug "$ZDOTDIR/configs/mappings"            # Load keybindings
+plug "$ZDOTDIR/configs/syntax-highlighting" # Configure syntax-highlighting
 
-  "$XDG_CONFIG_HOME/fzf/config.sh"
-  "$XDG_CONFIG_HOME/op/plugins.sh"
-)
+plug "$ZDOTDIR/themes/p10k-sourdiesel.zsh"  # Configure shell prompt
 
-# Initialize shell plugin manager & load plugins + configs
-source "$XDG_DATA_HOME/zap/zap.zsh" && for tool in "$zsh_plugins[@]"; do plug "$tool"; done
+plug "$XDG_CONFIG_HOME/fzf/config.sh"       # Configure fuzzy finder 
+plug "$XDG_CONFIG_HOME/op/plugins.sh"       # Authenticate github cli with 1p
