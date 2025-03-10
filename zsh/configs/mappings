@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+# Reload zsh
+bindkey -s '^R' 'exec zsh\n'
