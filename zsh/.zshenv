@@ -30,7 +30,6 @@ export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 export TMUX_FZF_LAUNCH_KEY='f'
 
 # History 
-export ATUIN_NOBIND='true'
 export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"

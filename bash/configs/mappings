@@ -4,5 +4,7 @@
 bind -x '"\C-r": exec bash'
 
 # Atuin
-bind -x '"\C-e": "__atuin_history"'
-bind -x '"\e[A": "__atuin_history --shell-up-key-binding"'
+bind -x '"\C-e": __atuin_history'
+
+bind -x '"\e[A": __atuin_history --shell-up-key-binding'
+bind -x '"\eOA": __atuin_history --shell-up-key-binding'
