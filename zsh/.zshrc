@@ -47,6 +47,7 @@ zsh_plugins=(
 
   "$ZDOTDIR/configs/aliases"
   "$ZDOTDIR/configs/completions"
+  "$ZDOTDIR/configs/mappings"
   "$ZDOTDIR/configs/syntax-highlighting"
 
   "$ZDOTDIR/themes/p10k-sourdiesel.zsh"
