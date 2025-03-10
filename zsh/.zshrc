@@ -21,35 +21,41 @@ setopt sharehistory
 # Ensure PATH and FPATH gets set - even in shell interactive mode or tmux
 source "$ZDOTDIR/.zprofile"
 
-# Laad & configure shell prompt string 
-source "$ZSH_DATA_HOME/powerlevel10k/powerlevel10k.zsh-theme" && source "$ZDOTDIR/.p10k.zsh"
+# Initialize plugin manager
+source "$XDG_DATA_HOME/zap/zap.zsh"
 
-# Load & configure shell fuzzy finder
-source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
+# Load & configure theme
+plug romkatv/powerlevel10k && plug "$ZDOTDIR/.p10k.zsh"
 
-# Authenticate github cli with 1password
-source "$XDG_CONFIG_HOME/op/plugins.sh"
-
-# Load core shell plugins
-zsh_plugins=(
-  zsh-autocomplete/zsh-autocomplete.plugin.zsh
-  zsh-autopair/autopair.zsh
-  zsh-autosuggestions/zsh-autosuggestions.zsh
-  zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-)
-for plugin in "$zsh_plugins[@]"; do source "$ZSH_DATA_HOME/$plugin"; done
+# Load core plugins
+plug marlonrichert/zsh-autocomplete
+plug hlissner/zsh-autopair
+plug zsh-users/zsh-autosuggestions
+plug zsh-users/zsh-completions
 
 # Lazy load shell functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
-# Configure shell aliases, completions, & syntax-highlighting
-for cnf in "$ZDOTDIR/configs"/*; do source "$cnf"; done
+# Load aliases
+plug "$ZDOTDIR/configs/aliases"
+
+# Load completions
+plug "$ZDOTDIR/configs/completions"
+
+# Initialize & configure syntax-highlighting
+plug zsh-users/zsh-syntax-highlighting && plug "$ZDOTDIR/configs/syntax-highlighting"
+
+# Load & configure fuzzy finder
+source <(fzf --zsh) && plug "$XDG_CONFIG_HOME/fzf/config.sh"
+
+# Authenticate github cli with 1password
+plug "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Set LS_COLORS: ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Load & configure shell history manager
-eval "$(atuin init zsh)" && source "$XDG_CONFIG_HOME/atuin/mappings/zsh"
+eval "$(atuin init zsh)" && plug "$XDG_CONFIG_HOME/atuin/mappings/zsh"
 
 # Load & configure shell directory navigator
 eval "$(zoxide init zsh --cmd j)"
