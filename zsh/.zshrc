@@ -1,9 +1,9 @@
 # https://zsh.sourceforge.io/
 
-# Initialize instant prompt 
+# Instant Prompt 
 [[ -r $XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
-# Configure shell opts
+# Shell Opts
 HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=12000
 SAVEHIST=10000
@@ -18,40 +18,46 @@ setopt incappendhistory
 setopt interactivecomments
 setopt sharehistory
 
-# Ensure PATH and FPATH gets set - even in shell interactive mode or tmux
+# Set PATH + FPATH & load secrets
 source "$ZDOTDIR/.zprofile"
 
-# Load fuzzy finder shell bindings
-source <(fzf --zsh)
+# Fzf shell bindings
+source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
 
-# Set LS_COLORS: ls, tree, eza
+# Color ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-# Load & configure shell history manager
-eval "$(atuin init zsh)"
+# Shell history TUI
+eval "$(atuin init zsh --disable-up-arrow --disable-ctrl-r)"
 
-# Load & configure shell directory navigator
+# Directory Autojumper
 eval "$(zoxide init zsh --cmd j)"
 
-# Load shell functions
-for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
-
-# Load plugins + configs
+# Shell plugin manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
-plug romkatv/powerlevel10k                  # Load shell prompt
-plug marlonrichert/zsh-autocomplete         # Load autocomplete
-plug hlissner/zsh-autopair                  # Load auopair
-plug zsh-users/zsh-autosuggestions          # Load autosuggestions 
-plug zsh-users/zsh-completions              # Load completions
-plug zsh-users/zsh-syntax-highlighting      # Load syntax-highlighting
+# Shell prompt
+plug romkatv/powerlevel10k && source "$ZDOTDIR/themes/p10k-sourdiesel.zsh"
 
-plug "$ZDOTDIR/configs/aliases"             # Load aliases
-plug "$ZDOTDIR/configs/completions"         # Load completions
-plug "$ZDOTDIR/configs/mappings"            # Load keybindings
-plug "$ZDOTDIR/configs/syntax-highlighting" # Configure syntax-highlighting
+# Shell functions
+for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
-plug "$ZDOTDIR/themes/p10k-sourdiesel.zsh"  # Configure shell prompt
+# Shell aliases
+source "$ZDOTDIR/configs/aliases"
 
-plug "$XDG_CONFIG_HOME/fzf/config.sh"       # Configure fuzzy finder 
-plug "$XDG_CONFIG_HOME/op/plugins.sh"       # Authenticate github cli with 1p
+# Shell completions
+plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"
+
+# Authenticate github cli with 1password
+source "$XDG_CONFIG_HOME/op/plugins.sh"
+
+# Shell "auto" plugins
+plug marlonrichert/zsh-autocomplete
+plug hlissner/zsh-autopair
+plug zsh-users/zsh-autosuggestions
+
+# Shell keybindings
+source "$ZDOTDIR/configs/mappings"
+
+# Syntax-highlighting
+plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/configs/syntax-highlighting"
