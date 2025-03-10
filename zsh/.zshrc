@@ -45,10 +45,11 @@ zsh_plugins=(
   zsh-users/zsh-completions
   zsh-users/zsh-syntax-highlighting
 
-  "$ZDOTDIR/.p10k.zsh"
   "$ZDOTDIR/configs/aliases"
   "$ZDOTDIR/configs/completions"
   "$ZDOTDIR/configs/syntax-highlighting"
+
+  "$ZDOTDIR/themes/p10k-sourdiesel.zsh"
 
   "$XDG_CONFIG_HOME/fzf/config.sh"
   "$XDG_CONFIG_HOME/op/plugins.sh"
