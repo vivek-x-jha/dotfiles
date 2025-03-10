@@ -289,17 +289,8 @@ gh auth login
 
 ((step++)); echo "󰓒 [$step/14] INSTALL SHELL PLUGINS 󰓒"
 
-# Install zsh core plugins
-zsh_plugin_repos=(
-  romkatv/powerlevel10k
-  zsh-users/zsh-autocomplete
-  hlissner/zsh-autopair
-  zsh-users/zsh-autosuggestions
-  zsh-users/zsh-completions
-  zsh-users/zsh-syntax-highlighting
-)
-
-for plugin in "$zsh_plugin_repos[@]"; do gh repo clone "$plugin" "$XDG_DATA_HOME/zsh/plugins/$(basename "$plugin")"; done
+# Install zsh plugin anager zap
+[[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
 
 # Build blesh
 git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
