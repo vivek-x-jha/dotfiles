@@ -11,19 +11,18 @@ export FZF_DEFAULT_OPTS="
   --color          fg:$BRIGHTBLACK_HEX
   --color          fg+:$BLACK_HEX
   --color          gutter:-1
-  --color          header:$MAGENTA_HEX
-  --color          header:italic
-  --color          hl:$BRIGHTRED_HEX
-  --color          hl+:$BRIGHTRED_HEX
-  --color          info:$BRIGHTMAGENTA_HEX
-  --color          marker:$BRIGHTYELLOW_HEX
-  --color          pointer:$BRIGHTGREEN_HEX
-  --color          prompt:$BRIGHTYELLOW_HEX
-  --color          spinner:$BLUE_HEX
+  --color          header:italic:$BLUE_HEX
+  --color          hl:$GREEN_HEX
+  --color          hl+:bold:$GREEN_HEX
+  --color          info:$RED_HEX
+  --color          marker:$CYAN_HEX
+  --color          pointer:$YELLOW_HEX
+  --color          prompt:$MAGENTA_HEX
+  --color          spinner:$CYAN_HEX
   --header         'Preview File/Folder Content'
   --layout         reverse
-  --marker         '*'
-  --pointer        '󰶻'
+  --marker         ' '
+  --pointer        ''
   --prompt         ' '
   --tmux           center
   --walker-skip    .git,node_modules,target
