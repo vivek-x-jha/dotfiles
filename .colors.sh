@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # Base16 colors
 export BLACK='\e[0;30m'
 export RED='\e[0;31m'
@@ -41,7 +39,7 @@ export BRIGHTWHITE_HEX='#ffffff'
 # Other colors
 export GREY='\e[38;5;248m'
 export RESET='\e[0m'
-export GREP_COLOR="38;5;9"
+export GREP_COLOR="1;38;5;2"
 export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
 export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
 
