@@ -49,6 +49,23 @@ return {
     end
   end,
 
+  move_max_app = function(appName, screen)
+    local app = hs.application.get(appName)
+    if app then
+      app:activate() -- Brings the app to the foreground
+      local win = app:mainWindow()
+      if win then
+        win:moveToScreen(screen)
+        win:maximize()
+        win:focus() -- Ensure the window is visible and active
+      else
+        hs.alert.show(appName .. ' has no open window')
+      end
+    else
+      hs.alert.show(appName .. ' not running')
+    end
+  end,
+
   bind_hotkeys = function(hotkey_path)
     -- Translate the dot-based hotkey_path into a file path
     local path = hs.configdir .. '/' .. hotkey_path:gsub('%.', '/')
