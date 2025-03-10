@@ -289,7 +289,7 @@ gh auth login
 
 ((step++)); echo "󰓒 [$step/14] INSTALL SHELL PLUGINS 󰓒"
 
-# Install zsh plugin anager zap
+# Install zsh plugin manager zap
 [[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
 
 # Build blesh
