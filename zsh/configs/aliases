@@ -82,6 +82,7 @@ alias t='tmux attach || tmux new-session'
 
 # Kills all tmux sessions
 alias tks='tmux kill-server'
+alias tr='tmux kill-server; tmux attach || tmux new-session'
 
 # -------------------------------- Version Control ---------------------------------------
 
