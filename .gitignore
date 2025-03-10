@@ -25,6 +25,9 @@ Sessionx.vim
 *.bak
 *~
 
+# Logs
+*.log
+
 # Auto-generated tag files
 tags
 
