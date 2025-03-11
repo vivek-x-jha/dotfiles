@@ -2,7 +2,7 @@
 # TODO Fix zsh compinit insecure directories warning: chmod -R go-w "$(brew --prefix)/share"
 
 # Ensure Xcode installed
-command -v xcode-select &> /dev/null || { echo Please run: xcode-select --install; exit 1; }
+command -v xcode-select &>/dev/null || { echo Please run: xcode-select --install; exit 1; }
 
 echo 󰓒 INSTALLATION START 󰓒
 step=0
