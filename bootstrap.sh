@@ -368,7 +368,7 @@ for shell in bash zsh; do
   grep -qxF "$shell_path" /etc/shells || echo "$shell_path" | sudo tee -a /etc/shells
 done
 
-chsh -s "$(brew --prefix)/bin/zsh"
+chsh -s "$shell_path"
 
 ((step++)); echo "󰓒 [$step/14] HAMMERSPOON SETUP 󰓒"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
