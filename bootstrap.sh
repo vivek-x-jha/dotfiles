@@ -299,7 +299,6 @@ rm -rf ble.sh
 
 ((step++)); echo "󰓒 [$step/14] SETUP ATUIN SYNC 󰓒"
 
-# Create Atuin Sync login
 op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
   --vault "$OP_VAULT" \
   --category login \
@@ -307,19 +306,25 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   --generate-password='letters,digits,symbols,32' \
   "username=$ATUIN_USERNAME" \
   "email[text]=$ATUIN_EMAIL" \
-  "key[password]=update this with \$(atuin key)" &>/dev/null
+  "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-# Logout of current session before registering
-atuin logout
+# Create Atuin Sync login
 atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
-atuin login -u "$ATUIN_USERNAME" -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password)"
+
+# Update Atuin Sync with generated key
+op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
+
+# Ensure authenticated as atuin user - NOTE is idempotent
+atuin status | grep -q "$ATUIN_USERNAME" || (
+  atuin logout
+  atuin login -u "$ATUIN_USERNAME" \
+              -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password --reveal)" \
+              -k "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields key --reveal)"
+) >/dev/null
 
 # Sync shell history & integrate with Atuin history
 atuin import auto
 atuin sync
-
-# Update Atuin Sync with generated key
-op item edit "$ATUIN_OP_TITLE" "key=$(atuin key)"
 
 ((step++)); echo "󰓒 [$step/14] LOAD BAT THEMES 󰓒"
 
