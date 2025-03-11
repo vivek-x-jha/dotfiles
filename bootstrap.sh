@@ -40,8 +40,8 @@ while true; do
 
   case $REPLY in
     'all' ) brew_install; break ;;
-    'cmds') brew_install '^tap '  '-n1 brew tap'; brew_install '^brew ' 'brew install'; break ;;
-    'apps') brew_install '^tap '  '-n1 brew tap'; brew_install '^brew ' 'brew reinstall --cask'; break ;;
+    'cmds') brew_install '^tap ' '-n1 brew tap'; brew_install '^brew ' 'brew install'; break ;;
+    'apps') brew_install '^tap ' '-n1 brew tap'; brew_install '^brew ' 'brew reinstall --cask'; break ;;
         '') break ;;
          *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'cmds', 'apps', OR <Enter> TO SKIP." ;;
   esac
@@ -364,6 +364,8 @@ for shell in bash zsh; do
 done
 
 chsh -s "$shell_path"
+echo "CURRENT SHELL IS $(basename "$SHELL")"
+echo "SHELL=$shell_path"
 
 ((step++)); echo "󰓒 [$step/14] HAMMERSPOON SETUP 󰓒"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
