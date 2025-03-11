@@ -23,7 +23,7 @@ export FZF_DEFAULT_OPTS="
   --layout         reverse
   --marker         ' '
   --pointer        ''
-  --prompt         ' '
+  --prompt         '  '
   --tmux           center
   --walker-skip    .git,node_modules,target
 "
