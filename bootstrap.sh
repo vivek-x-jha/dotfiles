@@ -17,11 +17,11 @@ if ! command -v brew &>/dev/null; then
   case "$(uname -m)" in
     arm64 ) eval "$('/opt/homebrew/bin/brew' shellenv)" ;;
     x86_64) eval "$('/usr/local/bin/brew' shellenv)" ;;
-         *) echo [! Unknown architecture - requires arm64 or x86_64]; exit 1 ;;
+         *) echo [ERROR] UNKNOWN ARCHITECTURE - REQUIRES 'arm64' OR 'x86_64'.; exit 1 ;;
   esac
 fi
 
-echo Commands successfully installed: $(brew --prefix)
+echo COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)
 
 ((step++)); echo "󰓒 [$step/14] INSTALLING COMMANDS & APPS 󰓒"
 
@@ -29,7 +29,7 @@ echo Commands successfully installed: $(brew --prefix)
 brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
 
 while true; do
-  read -rp 'Install [all/cmds/apps] (<Enter> to Skip): '
+  read -rp 'INSTALL [all/cmds/apps] (<Enter> TO SKIP): '
 
   brew_install () {
     case $REPLY in
@@ -40,36 +40,31 @@ while true; do
 
   case $REPLY in
     'all' ) brew_install; break ;;
-    'cmds') brew_install '^tap '  '-n1 brew tap'
-            brew_install '^brew ' 'brew install'; break ;;
-    'apps') brew_install '^tap '  '-n1 brew tap'
-            brew_install '^brew ' 'brew install --cask'; break ;;
+    'cmds') brew_install '^tap '  '-n1 brew tap'; brew_install '^brew ' 'brew install'; break ;;
+    'apps') brew_install '^tap '  '-n1 brew tap'; brew_install '^brew ' 'brew reinstall --cask'; break ;;
         '') break ;;
-         *) echo "[ERROR] Invalid input! Please enter 'all', 'cmds', 'apps', or <Enter> to skip." ;;
+         *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'cmds', 'apps', OR <Enter> TO SKIP." ;;
   esac
 done
 
 # Run Homebrew utility functions
 while true; do
-  read -rp 'Run Homebrew diagnostics? (<Enter> to Skip): '
+  read -rp 'CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): '
   case $REPLY in
-    [Yy]*) brew upgrade
-           brew cleanup
-           brew doctor; break ;;
+    [Yy]*) brew cleanup; brew doctor; break ;;
        '') break ;;
-        *) echo "[ERROR] Invalid input! Please enter 'y' or <Enter> to skip." ;;
+        *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
   esac
 done
 
-# Upgrade applications managed by Homebrew
+# Upgrade commands & applications managed by Homebrew
 brew tap buo/cask-upgrade
 while true; do
-  read -rp 'Run brew cask upgrade? (<Enter> to Skip): '
+  read -rp 'UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): '
   case $REPLY in
-    [Yy]*) brew cu -af
-           break ;;
+    [Yy]*) brew upgrade; brew cu -af; break ;;
        '') break ;;
-        *) echo "[ERROR] Invalid input! Please enter 'y' or <Enter> to skip." ;;
+        *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
   esac
 done
 
@@ -94,8 +89,8 @@ op signin
 
 while true; do
   # Required 
-  read -rp 'Git Username: ' GIT_NAME
-  read -rp 'Git Email: '    GIT_EMAIL
+  read -rp 'Please enter your Git Username: ' GIT_NAME
+  read -rp 'Please enter your Git Email: '    GIT_EMAIL
 
   # Optional 
   read -rp "1Password Vault name (<Enter> to set to 'Private'): "
@@ -151,7 +146,7 @@ MEDIA=~/$MEDIA
 ---------------------------------------------
 EOF
 
-  read -rp "Re-enter any variables? (<Enter> to continue): "
+  read -rp "RE-ENTER ANY VARIABLES? (<Enter> TO CONTINUE): "
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
@@ -345,21 +340,21 @@ bat /etc/pam.d/sudo_local
 
 # Downloads & installs Python - cleans installer after finishing
 if [ ! -d "$PYTHON_APP_PATH" ]; then
-  echo "Python 3.13 not found: Downloading and installing..."
+  echo "PYTHON 3.13 NOT FOUND: DOWNLOADING AND INSTALLING..."
   python_link=https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg
 
   curl -o /tmp/python.pkg $python_link || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
   sudo installer -pkg /tmp/python.pkg -target / || { echo "Python $PYTHON_VERSION installation failed"; exit 1; }
   rm -f /tmp/python.pkg
 
-  echo "Python $PYTHON_VERSION installed successfully in $PYTHON_APP_PATH"
+  echo "PYTHON $PYTHON_VERSION INSTALLED SUCCESSFULLY IN $PYTHON_APP_PATH"
 else
-  echo "Python $PYTHON_VERSION already installed"
+  echo "PYTHON $PYTHON_VERSION ALREADY INSTALLED"
 fi
 
 # Hide tty login message for iterm
 ((step++)); echo "󰓒 [$step/14] SURPRESS ITERM2 LOGIN 󰓒"
-echo 'Created ~/.hushlogin'
+echo 'CREATED ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
 ((step++)); echo "󰓒 [$step/14] CHANGE SHELL 󰓒"
@@ -372,7 +367,7 @@ chsh -s "$shell_path"
 
 ((step++)); echo "󰓒 [$step/14] HAMMERSPOON SETUP 󰓒"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
-echo 'Go to System Settings > Privacy & Security > Accessibility, ensure Hammerspoon is listed and enabled'
+echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
 
 cd
 
