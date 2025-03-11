@@ -1,10 +1,4 @@
 #!/usr/bin/env zsh
 
 # Reload zsh
-bindkey -s '^r' 'exec zsh\n'
-
-# Atuin
-bindkey '^e' atuin-search
-
-bindkey '^[[A' atuin-up-search
-bindkey '^[OA' atuin-up-search
+bindkey -s '^e' 'exec zsh\n'

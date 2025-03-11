@@ -10,18 +10,6 @@ set -o vi
 # Set PATH + FPATH & load secrets
 source "$XDG_CONFIG_HOME/bash/.path"
 
-# Fzf shell bindings
-eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
-
-# Color ls, tree, eza
-eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
-
-# Shell history TUI
-eval "$(atuin init bash --disable-up-arrow --disable-ctrl-r)"
-
-# Directory Autojumper
-eval "$(zoxide init bash --cmd j)"
-
 # Shell prompt
 eval "$(starship init bash)"
 
@@ -34,8 +22,20 @@ source "$XDG_CONFIG_HOME/bash/configs/aliases"
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
+# Shell "auto" plugins + completions + syntax-highlighting
+source "$XDG_DATA_HOME/blesh/ble.sh"
+
+# Color ls, tree, eza
+eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
+
+# Fzf shell bindings
+eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
+
+# Shell history TUI
+eval "$(atuin init bash)"
+
+# Directory Autojumper
+eval "$(zoxide init bash --cmd j)"
+
 # Shell keybindings
 source "$XDG_CONFIG_HOME/bash/configs/mappings"
-
-# Shell "auto" plugins + syntax-highlighting
-source "$XDG_DATA_HOME/blesh/ble.sh"
