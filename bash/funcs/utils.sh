@@ -63,7 +63,9 @@ tmux_list_sessions () {
 gsw () {
   # Function overload for git switch fuzzy finding
   if (( $# == 0 )) && command -v fzf; then
-    git switch $(git branch | fzf --header 'Switch Local  ')
+    git switch $(git branch | fzf --header 'Switch Local  ' \
+                                  --preview 'git show --color=always $(echo {} | awk "{print \$1}")'
+    )
   else
     git switch "$@"
   fi
