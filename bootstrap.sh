@@ -363,7 +363,11 @@ echo 'Created ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
 ((step++)); echo "󰓒 [$step/14] CHANGE SHELL 󰓒"
-for shell in bash zsh; do echo "$(brew --prefix)/bin/$shell" | sudo tee -a /etc/shells; done
+for shell in bash zsh; do
+  shell_path="$(brew --prefix)/bin/$shell"
+  grep -qxF "$shell_path" /etc/shells || echo "$shell_path" | sudo tee -a /etc/shells
+done
+
 chsh -s "$(brew --prefix)/bin/zsh"
 
 ((step++)); echo "󰓒 [$step/14] HAMMERSPOON SETUP 󰓒"
