@@ -41,8 +41,6 @@ source "$HOME/.dotfiles/.colors.sh"
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # Configure shell options
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export ZAP_GIT_PREFIX='git@github.com:'
-
-export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 export SHELL_SESSIONS_DISABLE=1
+export ZAP_GIT_PREFIX='git@github.com:'
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"

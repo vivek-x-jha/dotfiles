@@ -21,23 +21,11 @@ setopt sharehistory
 # Set PATH + FPATH & load secrets
 source "$ZDOTDIR/.zprofile"
 
-# Fzf shell bindings
-source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
-
-# Color ls, tree, eza
-eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
-
-# Shell history TUI
-eval "$(atuin init zsh --disable-up-arrow --disable-ctrl-r)"
-
-# Directory Autojumper
-eval "$(zoxide init zsh --cmd j)"
-
 # Shell plugin manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
 # Shell prompt
-plug romkatv/powerlevel10k && source "$ZDOTDIR/themes/p10k-sourdiesel.zsh"
+plug romkatv/powerlevel10k && source "$ZDOTDIR/themes/.p10k-sourdiesel.zsh"
 
 # Shell functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
@@ -56,8 +44,20 @@ plug zsh-users/zsh-autosuggestions
 # Shell completions
 plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"
 
-# Shell keybindings
-source "$ZDOTDIR/configs/mappings"
-
 # Syntax-highlighting
 plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/configs/syntax-highlighting"
+
+# Color ls, tree, eza
+eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
+
+# Fzf shell bindings
+source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
+
+# Shell history TUI
+eval "$(atuin init zsh)"
+
+# Directory Autojumper
+eval "$(zoxide init zsh --cmd j)"
+
+# Shell keybindings
+source "$ZDOTDIR/configs/mappings"
