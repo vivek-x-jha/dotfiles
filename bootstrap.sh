@@ -309,7 +309,9 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
 # Create Atuin Sync login
-atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL"
+atuin register -u "$ATUIN_USERNAME" \
+               -e "$ATUIN_EMAIL" \
+               -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password --reveal)"
 
 # Update Atuin Sync with generated key
 op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
