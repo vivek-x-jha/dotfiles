@@ -309,9 +309,9 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-atuin register -u "$ATUIN_USERNAME" \
-               -e "$ATUIN_EMAIL" \
-               -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password --reveal)"
+op_get_atuin() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal }
+
+atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(op_get_atuin password)"
 
 # Update Atuin Sync with generated key
 op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
@@ -319,9 +319,7 @@ op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
 # Ensure authenticated as atuin user - NOTE is idempotent
 atuin status | grep -q "$ATUIN_USERNAME" || (
   atuin logout
-  atuin login -u "$ATUIN_USERNAME" \
-              -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password --reveal)" \
-              -k "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields key --reveal)"
+  atuin login -u "$ATUIN_USERNAME" -p "$(op_get_atuin password)" -k "$(op_get_atuin key)"
 ) >/dev/null
 
 # Sync shell history & integrate with Atuin history
