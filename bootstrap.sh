@@ -299,6 +299,7 @@ rm -rf ble.sh
 
 ((step++)); echo "󰓒 [$step/14] SETUP ATUIN SYNC 󰓒"
 
+# Create atuin login
 op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
   --vault "$OP_VAULT" \
   --category login \
@@ -308,7 +309,6 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-# Create Atuin Sync login
 atuin register -u "$ATUIN_USERNAME" \
                -e "$ATUIN_EMAIL" \
                -p "$(op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields password --reveal)"
