@@ -14,7 +14,8 @@ source "$XDG_CONFIG_HOME/bash/.path"
 eval "$(starship init bash)"
 
 # Shell functions
-for fn in "$XDG_CONFIG_HOME/bash/funcs"/*; do source "$fn"; done
+source "$XDG_CONFIG_HOME/bash/funcs/utils.sh"
+source "$XDG_CONFIG_HOME/bash/funcs/update.sh"
 
 # Shell aliases
 source "$XDG_CONFIG_HOME/bash/configs/aliases"

@@ -3,7 +3,11 @@
 # -------------------------------- Defaults ---------------------------------------
 
 # https://github.com/junegunn/fzf?tab=readme-ov-file#environment-variables
-export FZF_DEFAULT_COMMAND="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
+if command -v fd &>/dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f'
+else
+  export FZF_DEFAULT_COMMAND='find . -type f'
+fi
 
 export FZF_DEFAULT_OPTS="
   --color          bg+:-1
