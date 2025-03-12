@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
+# TODO fix so reload clears variables from current shell - issue with bind -x
 # Reload bash
-bind -x '"\C-e": exec bash'
+bind -x '"\C-e": "exec '"$(brew --prefix)"'/bin/bash\n"'
