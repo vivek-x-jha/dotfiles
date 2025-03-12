@@ -11,12 +11,12 @@ step=0
 
 if ! command -v brew &>/dev/null; then
   # Install Homebrew
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Prepend Homebrew to PATH
   case "$(uname -m)" in
-    arm64 ) eval "$('/opt/homebrew/bin/brew' shellenv)" ;;
-    x86_64) eval "$('/usr/local/bin/brew' shellenv)" ;;
+    arm64 ) eval "$(/opt/homebrew/bin/brew shellenv)" ;;
+    x86_64) eval "$(/usr/local/bin/brew shellenv)" ;;
          *) echo "[ERROR] UNKNOWN ARCHITECTURE - REQUIRES 'arm64' OR 'x86_64'."; exit 1 ;;
   esac
 fi
