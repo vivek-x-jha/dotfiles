@@ -4,12 +4,12 @@ A fast, functional, & fun command line based development experience!
 
 Features full of beuatiful and modern IDE tools.
 
-## Requiements
+## Requirements
 
 - [x] macOS (Intel or Apple Silicon)
 - [ ] Linux Distros
 
-# Installation
+## Installation
 
 ```sh
 git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles && ~/.dotfiles/bootstrap.sh
@@ -18,14 +18,7 @@ git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles && ~/.dotfiles
 ## Install Neovim Language Servers
 
 ```vim
-:MasonInstall lua-language-server basedpyright
-```
-
-## Link Apps to Brew
-- Delete manually downloaded versions from `/Applications/` - some app downloads may require sudo authentication
-
-```sh
-brew install --cask 1password alfred alt-tab arc chatgpt discord firefox font-jetbrains-mono-nerd-font google-chrome hammerspoon iterm2 karabiner-elements postman skim spotify visual-studio-code vlc wezterm zoom
+:MasonInstall basedpyright bash-language-server lua-language-server shellcheck stylua
 ```
 
 ## Features
