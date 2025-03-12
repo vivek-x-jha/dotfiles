@@ -7,7 +7,7 @@ command -v xcode-select &>/dev/null || { echo Please run: xcode-select --install
 echo 󰓒 INSTALLATION START 󰓒
 step=0
 
-((step++)); echo 󰓒 [$step/14] INSTALLING PACKAGE MANAGER 󰓒
+((step++)); echo 󰓒 [$step/13] INSTALLING PACKAGE MANAGER 󰓒
 
 if ! command -v brew &>/dev/null; then
   # Install Homebrew
@@ -17,13 +17,13 @@ if ! command -v brew &>/dev/null; then
   case "$(uname -m)" in
     arm64 ) eval "$('/opt/homebrew/bin/brew' shellenv)" ;;
     x86_64) eval "$('/usr/local/bin/brew' shellenv)" ;;
-         *) echo [ERROR] UNKNOWN ARCHITECTURE - REQUIRES 'arm64' OR 'x86_64'.; exit 1 ;;
+         *) echo "[ERROR] UNKNOWN ARCHITECTURE - REQUIRES 'arm64' OR 'x86_64'."; exit 1 ;;
   esac
 fi
 
-echo COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)
+echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
 
-((step++)); echo "󰓒 [$step/14] INSTALLING COMMANDS & APPS 󰓒"
+((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
 # Install commands and apps using Homebrew
 brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
@@ -68,7 +68,7 @@ while true; do
   esac
 done
 
-((step++)); echo "󰓒 [$step/14] SET ENVIRONMENT 󰓒"
+((step++)); echo "󰓒 [$step/13] SET ENVIRONMENT 󰓒"
 
 # XDG directory structure
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -150,7 +150,7 @@ EOF
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
-((step++)); echo "󰓒 [$step/14] CREATE SYMLINKS & DIRECTORIES 󰓒"
+((step++)); echo "󰓒 [$step/13] CREATE SYMLINKS & DIRECTORIES 󰓒"
 
 symlink() {
   local src="$1"
@@ -158,8 +158,7 @@ symlink() {
   local tgt="$3"
   
   # Test: Valid Current Working Dir
-  [ -d "$cwd" ] || return 1
-  cd "$cwd"
+  cd "$cwd" &>/devl/null || return 1
 
   # Test: Valid Source File/Folder
   [ -e "$src" ] || return 1
@@ -178,7 +177,8 @@ directories=(
   "$XDG_DATA_HOME/zsh/plugins"
   "$XDG_STATE_HOME"
 )
-for dir in "$directories[@]"; do [ -d "$dir" ] || mkdir -p "$dir"; done
+
+for dir in "${directories[@]}"; do [ -d "$dir" ] || mkdir -p "$dir"; done
 
 # NOTE manage all links - provides fine-grained control over GNU stow
 symlinks=(
@@ -226,7 +226,7 @@ symlinks=(
 # Safely create links - skips over broken paths
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-((step++)); echo "󰓒 [$step/14] CONFIGURE MACOS OPTIONS 󰓒"
+((step++)); echo "󰓒 [$step/13] CONFIGURE MACOS OPTIONS 󰓒"
 num=0
 
 ((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
@@ -262,7 +262,7 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 killall Dock
 
-((step++)); echo "󰓒 [$step/14] CONFIGURE GIT AND GITHUB CLI 󰓒"
+((step++)); echo "󰓒 [$step/13] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
 # Update git credentials
 git config --global user.name       "$GIT_NAME"
@@ -282,7 +282,7 @@ perl -pi -e "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1P
 # Authenticate GitHub CLI
 gh auth login
 
-((step++)); echo "󰓒 [$step/14] INSTALL SHELL PLUGINS 󰓒"
+((step++)); echo "󰓒 [$step/13] INSTALL SHELL PLUGINS 󰓒"
 
 # Install zsh plugin manager zap
 [[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
@@ -292,7 +292,7 @@ git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyo
 make -C ble.sh install PREFIX="$HOME/.local"
 rm -rf ble.sh
 
-((step++)); echo "󰓒 [$step/14] SETUP ATUIN SYNC 󰓒"
+((step++)); echo "󰓒 [$step/13] SETUP ATUIN SYNC 󰓒"
 
 # Create atuin login
 op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
@@ -304,7 +304,7 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-op_get_atuin() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal }
+op_get_atuin() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal; }
 
 atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(op_get_atuin password)"
 
@@ -321,12 +321,12 @@ atuin status | grep -q "$ATUIN_USERNAME" || (
 atuin import auto
 atuin sync
 
-((step++)); echo "󰓒 [$step/14] LOAD BAT THEMES 󰓒"
+((step++)); echo "󰓒 [$step/13] LOAD BAT THEMES 󰓒"
 
 # Rebuild bat cache any time theme folder changes
 bat cache --build
 
-((step++)); echo "󰓒 [$step/14] SETUP TOUCHID SUDO 󰓒"
+((step++)); echo "󰓒 [$step/13] SETUP TOUCHID SUDO 󰓒"
 
 # Ensure touchid possible in interactive mode or tmux
 echo "# Authenticate with Touch ID - even in tmux
@@ -336,28 +336,12 @@ auth  sufficient  pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
 # Show changes to sudo_local
 bat /etc/pam.d/sudo_local
 
-((step++)); echo "󰓒 [$step/14] DOWNLOAD AND INSTALL PYTHON 󰓒"
-
-# Downloads & installs Python - cleans installer after finishing
-if [ ! -d "$PYTHON_APP_PATH" ]; then
-  echo "PYTHON 3.13 NOT FOUND: DOWNLOADING AND INSTALLING..."
-  python_link=https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-macos11.pkg
-
-  curl -o /tmp/python.pkg $python_link || { echo "Python $PYTHON_VERSION download failed"; exit 1; }
-  sudo installer -pkg /tmp/python.pkg -target / || { echo "Python $PYTHON_VERSION installation failed"; exit 1; }
-  rm -f /tmp/python.pkg
-
-  echo "PYTHON $PYTHON_VERSION INSTALLED SUCCESSFULLY IN $PYTHON_APP_PATH"
-else
-  echo "PYTHON $PYTHON_VERSION ALREADY INSTALLED"
-fi
-
 # Hide tty login message for iterm
-((step++)); echo "󰓒 [$step/14] SURPRESS ITERM2 LOGIN 󰓒"
+((step++)); echo "󰓒 [$step/13] SURPRESS ITERM2 LOGIN 󰓒"
 echo 'CREATED ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
-((step++)); echo "󰓒 [$step/14] CHANGE SHELL 󰓒"
+((step++)); echo "󰓒 [$step/13] CHANGE SHELL 󰓒"
 for shell in bash zsh; do
   shell_path="$(brew --prefix)/bin/$shell"
   grep -qxF "$shell_path" /etc/shells || echo "$shell_path" | sudo tee -a /etc/shells
@@ -367,11 +351,11 @@ chsh -s "$shell_path"
 echo "CURRENT SHELL IS $(basename "$SHELL")"
 echo "SHELL=$shell_path"
 
-((step++)); echo "󰓒 [$step/14] HAMMERSPOON SETUP 󰓒"
+((step++)); echo "󰓒 [$step/13] HAMMERSPOON SETUP 󰓒"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
 echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
 
-cd
+cd || exit
 
 cat <<EOF
 --------------- POST INSTALLATION ---------------
