@@ -7,11 +7,7 @@ eval "$(/usr/libexec/path_helper -s)"
 # Load api keys
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
 
-path=(
-  "/Library/Frameworks/Python.framework/Versions/3.13/bin"
-  "$path[@]"
-  "/Applications/iTerm.app/Contents/Resources/utilities"
-)
+path+=("/Applications/iTerm.app/Contents/Resources/utilities")
 
 fpath=(
   "$ZSH_DATA_HOME/zsh-completions/src"

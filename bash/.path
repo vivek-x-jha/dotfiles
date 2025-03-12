@@ -9,7 +9,6 @@ eval "$(/usr/libexec/path_helper -s)"
 # Load api keys
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
 
-PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH"
 PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 
 export PATH
