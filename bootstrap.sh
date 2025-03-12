@@ -356,7 +356,7 @@ cat <<EOF
 2 Setup Neovim
 - Install plugins:         nvim
 - Quit Lazy installer:     :q
-- Install language servers :MasonInstall lua-language-server basedpyright
+- Install language servers :MasonInstall basedpyright bash-language-server lua-language-server shellcheck stylua
 - Quit Neovim:             :qa
 
 3 Setup Karabiner Elements
