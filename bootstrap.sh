@@ -149,13 +149,13 @@ symlink() {
   local tgt="$3"
   
   # Test: Valid Current Working Dir
-  cd "$cwd" &>/devl/null || return 1
+  cd "$cwd" &>/dev/null || return 1
 
   # Test: Valid Source File/Folder
-  [ -e "$src" ] || return 1
+  [[ -e $src ]] || return 1
 
   # Link Source to Target - remove original if directory
-  [ -d "$tgt" ] && rm -rf "$tgt"
+  [[ -d $tgt ]] && rm -rf "$tgt"
   ln -sf "$src" "$tgt"
 
   echo "[+ Link: $src -> $cwd/$tgt]"
@@ -295,9 +295,9 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-op_get_atuin() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal; }
+op_fetch() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal; }
 
-atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(op_get_atuin password)"
+atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(op_fetch password)"
 
 # Update Atuin Sync with generated key
 op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
@@ -305,7 +305,7 @@ op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
 # Ensure authenticated as atuin user - NOTE is idempotent
 atuin status | grep -q "$ATUIN_USERNAME" || (
   atuin logout
-  atuin login -u "$ATUIN_USERNAME" -p "$(op_get_atuin password)" -k "$(op_get_atuin key)"
+  atuin login -u "$ATUIN_USERNAME" -p "$(op_fetch password)" -k "$(op_fetch key)"
 ) >/dev/null
 
 # Sync shell history & integrate with Atuin history
