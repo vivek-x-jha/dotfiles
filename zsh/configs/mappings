@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
 # Reload zsh
-bindkey -s '^e' 'exec zsh\n'
+bindkey -s '^e' 'exec "$(brew --prefix)/bin/zsh"\n'
