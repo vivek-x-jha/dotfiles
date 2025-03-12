@@ -13,8 +13,6 @@ fi
 
 export VISUAL="$EDITOR"
 
-export GLOB_PATTERN="**/*@(.sh|.inc|.bash|.command|.zsh|zshrc|zshenv|zprofile|zsh_*)"
-
 if [[ -f $XDG_CONFIG_HOME/bat/config ]]; then
   export PAGER='bat -p'
   export MANPAGER="sh -c 'col -bx | bat -pl man --paging=always --theme=sourdiesel'"
