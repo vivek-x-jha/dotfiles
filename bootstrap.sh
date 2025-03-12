@@ -113,12 +113,6 @@ while true; do
   read -rp "Atuin Email (<Enter> to set to '$GIT_EMAIL'): "
   ATUIN_EMAIL="${REPLY:-$GIT_EMAIL}"
 
-  read -rp "Python Version (<Enter> to set to '3.13.2'): "
-  PYTHON_VERSION="${REPLY:-3.13.2}"
-
-  read -rp "Python Download Location (<Enter> to set to '/Applications/Python 3.13'): "
-  PYTHON_APP_PATH="${REPLY:-/Applications/Python 3.13}"
-
   read -rp "Media directory ~/\$MEDIA (<Enter> to skip): " MEDIA
 
   cat <<EOF
@@ -138,9 +132,6 @@ OP_VAULT=$OP_VAULT
 ATUIN_USERNAME=$ATUIN_USERNAME
 ATUIN_EMAIL=$ATUIN_EMAIL
 ATUIN_OP_TITLE=$ATUIN_OP_TITLE
-
-PYTHON_VERSION=$PYTHON_VERSION
-PYTHON_APP_PATH=$PYTHON_APP_PATH
 
 MEDIA=~/$MEDIA
 ---------------------------------------------
