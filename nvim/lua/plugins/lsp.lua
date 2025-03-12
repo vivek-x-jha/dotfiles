@@ -2,8 +2,9 @@ local icn = require 'ui.icons'
 local utl = require 'configs.utils'
 
 local lspservers = {
-  'lua_ls',
   'basedpyright',
+  'bashls',
+  'lua_ls',
 }
 
 return {
