@@ -9,7 +9,7 @@ update_brew() {
 }
 
 update_icons() {
-  command -v fileicon &>/dev/null || brew install fileicon
+command -v fileicon &> /dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1; }
 
   local table_width=60
   declare -A dir_icons=(
@@ -76,7 +76,7 @@ update_icons() {
   done
 
   # Footer
-  local fail_count=$(($dir_count-$success_count))
+  local fail_count=$(( dir_count - success_count ))
 
   print_separator
   printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s ${RESET}\n" "$success_count" 'Folder icon(s) updated successfully'
