@@ -27,7 +27,6 @@ update_icons() {
     /Applications/Neovim-iTerm.app         ~/Pictures/icons/neovim-iterm.png
     /Applications/Neovim-Wezterm.app       ~/Pictures/icons/neovim-wezterm.png
     /Applications/Postman.app              ~/Pictures/icons/postman.png
-    /Applications/Python\ 3.13             ~/Pictures/icons/python.png
     /Applications/Slack.app                ~/Pictures/icons/slack.png
     /Applications/Spotify.app              ~/Pictures/icons/spotify.png
     /Applications/Tex                      ~/Pictures/icons/tex.png
