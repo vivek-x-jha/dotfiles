@@ -9,29 +9,29 @@ step=0
 
 ((step++)); echo 󰓒 [$step/13] INSTALLING PACKAGE MANAGER 󰓒
 
-if ! command -v brew &>/dev/null; then
-  # Install Homebrew
-  [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install Homebrew
+[[ $(uname -s) == Darwin ]] &&
+[[ $(uname -m) =~ ^(arm64|x86_64)$ ]] &&
+! command -v brew &>/dev/null && {
+  [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || 
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Prepend Homebrew to PATH
-  case "$(uname -m)" in
+  case $(uname -m) in
     arm64 ) eval "$(/opt/homebrew/bin/brew shellenv)" ;;
     x86_64) eval "$(/usr/local/bin/brew shellenv)" ;;
-         *) echo "[ERROR] UNKNOWN ARCHITECTURE - REQUIRES 'arm64' OR 'x86_64'."; exit 1 ;;
   esac
-fi
-
-echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
+}
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
 # Install commands and apps using Homebrew
-brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
-
 while true; do
   read -rp 'INSTALL [all/cmds/apps] (<Enter> TO SKIP): '
 
   brew_install () {
+    local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
+
     case $REPLY in
                 'all') curl -fsSL "$brewfile" | brew bundle --file=- ;;
       'cmds' | 'apps') curl -fsSL "$brewfile" | grep "$1" | awk '{print $2}' | xargs "$2" ;;
@@ -46,6 +46,17 @@ while true; do
          *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'cmds', 'apps', OR <Enter> TO SKIP." ;;
   esac
 done
+
+# Ensure bootstrap requirements installed
+command -v atuin &>/dev/null     || brew install atuin
+command -v bat   &>/dev/null     || brew install bat
+command -v gawk  &>/dev/null     || brew install gawk
+command -v gh    &>/dev/null     || brew install gh
+command -v op    &>/dev/null     || brew install 1password-cli
+command -v perl  &>/dev/null     || brew install perl
+brew list | grep -q pam-reattach || brew install pam-reattach
+
+echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
 
 # Run Homebrew utility functions
 while true; do
@@ -75,15 +86,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
-
-# Install requirements
-command -v atuin &>/dev/null     || brew install atuin
-command -v bat   &>/dev/null     || brew install bat
-command -v gawk  &>/dev/null     || brew install gawk
-command -v gh    &>/dev/null     || brew install gh
-command -v op    &>/dev/null     || brew install 1password-cli
-command -v perl  &>/dev/null     || brew install perl
-brew list | grep -q pam-reattach || brew install pam-reattach
 
 # Authenticate 1password-cli
 op signin
