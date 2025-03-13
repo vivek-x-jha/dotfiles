@@ -272,7 +272,13 @@ echo "$GIT_EMAIL $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
 perl -pi -e "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
 
 # Authenticate GitHub CLI
+cd "$HOME/.dotfiles" || return 1
+
 gh auth login
+gh repo set-default "$GITHUB_NAME/dotfiles"
+
+rm -f "$HOME/.dotfiles/gh/hosts.yml"
+git add --all
 
 ((step++)); echo "󰓒 [$step/13] INSTALL SHELL PLUGINS 󰓒"
 
