@@ -1,46 +1,44 @@
 #!/usr/bin/env zsh
 
 # Create directory-icons association
-command -v fileicon &> /dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1 }
+command -v fileicon &> /dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1; }
 
 local table_width=60
 declare -A dir_icons=(
-  /Applications/1Password.app            ~/Pictures/icons/1password-macos.png
-  /Applications/foobarz.app              ~/Pictures/icons/foobarz.png
-  /Applications/ChatGPT.app              ~/Pictures/icons/chatgpt.png
-  /Applications/Discord.app              ~/Pictures/icons/discord-macos.png
-  /Applications/Docker.app               ~/Pictures/icons/docker.png
-  /Applications/Figma.app                ~/Pictures/icons/figma.png
-  /Applications/Firefox.app              ~/Pictures/icons/firefox-macos.png
-  /Applications/Google\ Chrome.app       ~/Pictures/icons/chrome.png
-  /Applications/iTerm.app                ~/Pictures/icons/iterm2.png
-  /Applications/iTermAI.app              ~/Pictures/icons/ai-brain.png
-  /Applications/KeyCastr.app             ~/Pictures/icons/keycastr.png
-  /Applications/Mimestream.app           ~/Pictures/icons/gmail.png
-  /Applications/Neovim-iTerm.app         ~/Pictures/icons/neovim-iterm.png
-  /Applications/Neovim-Wezterm.app       ~/Pictures/icons/neovim-wezterm.png
-  /Applications/Postman.app              ~/Pictures/icons/postman.png
-  /Applications/Slack.app                ~/Pictures/icons/slack.png
-  /Applications/Spotify.app              ~/Pictures/icons/spotify.png
-  /Applications/Tex                      ~/Pictures/icons/tex.png
-  /Applications/Visual\ Studio\ Code.app ~/Pictures/icons/vscode.png
-  /Applications/WezTerm.app              ~/Pictures/icons/wezterm.png
-  /Applications/WhatsApp.app             ~/Pictures/icons/whatsapp.png
-
-  ~/Developer                            ~/Pictures/icons/developer.png
-  ~/Downloads                            ~/Pictures/icons/download.png
-  ~/Dropbox/content                      ~/Pictures/icons/content.png
-  ~/Pictures/icons                       ~/Pictures/icons/png.png
-  ~/Pictures/screenshots                 ~/Pictures/icons/screenshot.png
-  ~/Pictures/wallpapers                  ~/Pictures/icons/wallpaper.png
-  ~/.dotfiles                            ~/Pictures/icons/gear.png
+  [/Applications/1Password.app]=~/Pictures/icons/1password-macos.png
+  [/Applications/ChatGPT.app]=~/Pictures/icons/chatgpt.png
+  [/Applications/Discord.app]=~/Pictures/icons/discord-macos.png
+  [/Applications/Docker.app]=~/Pictures/icons/docker.png
+  [/Applications/Figma.app]=~/Pictures/icons/figma.png
+  [/Applications/Firefox.app]=~/Pictures/icons/firefox-macos.png
+  [/Applications/Google\ Chrome.app]=~/Pictures/icons/chrome.png
+  [/Applications/iTerm.app]=~/Pictures/icons/iterm2.png
+  [/Applications/iTermAI.app]=~/Pictures/icons/ai-brain.png
+  [/Applications/KeyCastr.app]=~/Pictures/icons/keycastr.png
+  [/Applications/Mimestream.app]=~/Pictures/icons/gmail.png
+  [/Applications/Neovim-iTerm.app]=~/Pictures/icons/neovim-iterm.png
+  [/Applications/Neovim-Wezterm.app]=~/Pictures/icons/neovim-wezterm.png
+  [/Applications/Postman.app]=~/Pictures/icons/postman.png
+  [/Applications/Slack.app]=~/Pictures/icons/slack.png
+  [/Applications/Spotify.app]=~/Pictures/icons/spotify.png
+  [/Applications/Tex]=~/Pictures/icons/tex.png
+  [/Applications/Visual\ Studio\ Code.app]=~/Pictures/icons/vscode.png
+  [/Applications/WezTerm.app]=~/Pictures/icons/wezterm.png
+  [/Applications/WhatsApp.app]=~/Pictures/icons/whatsapp.png
+  [~/Developer]=~/Pictures/icons/developer.png
+  [~/Downloads]=~/Pictures/icons/download.png
+  [~/Dropbox/content]=~/Pictures/icons/content.png
+  [~/Pictures/icons]=~/Pictures/icons/png.png
+  [~/Pictures/screenshots]=~/Pictures/icons/screenshot.png
+  [~/Pictures/wallpapers]=~/Pictures/icons/wallpaper.png
+  [~/.dotfiles]=~/Pictures/icons/gear.png
 )
 
-# Create directory-icons table header
-print_separator() { printf "${BRIGHTBLACK}%-${table_width}s${RESET}\n" | tr ' ' '-' }
+# Create Directory-Icons Table Header
+print_separator() { printf "${BRIGHTBLACK}%-${table_width}s${RESET}\n" | tr ' ' '-'; }
 
 print_separator
-printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${reset}\n" '' 'App / Directory' '~/Pictures/icons/'
+printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${RESET}\n" '' 'App / Directory' \~/Pictures/icons/
 print_separator
 
 # Sort keys while preserving spaces in the directories
@@ -50,22 +48,21 @@ local dir_count="${#sorted_dirs[@]}"
 local success_count=$dir_count
 
 # Create Directory-Icons Table Rows
+local icon directory
+
 for dir in "${sorted_dirs[@]}"; do
-
   icon=${dir_icons[$dir]}
-  expanded_dir=$(echo "$dir" | sed "s|^$HOME|~|")  # Replace $HOME with ~ for output
-  basename_dir=$(basename "$expanded_dir")
-  basename_icon=$(basename "$icon")
+  directory=${dir/#$HOME/\~}
 
-  if sudo fileicon set "$dir" "$icon" &>/dev/null; then
-    printf "${GREEN}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" " " "$expanded_dir" "$basename_icon"
-  elif [[ $basename_dir == 'Mimestream.app' ]]; then
-    printf "${GREEN}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" " " "$expanded_dir" "$basename_icon"
+  # Function to print the status of setting file icons
+  print_status() { printf "${1}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" "$2" "$directory" "$(basename "$icon")"; }
+
+  if sudo fileicon set "$dir" "$icon" &> /dev/null || [[ $(basename "$directory") == 'Mimestream.app' ]]; then
+    print_status "${GREEN}" " "
   else
-    printf "${RED}%-1s ${white}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n"   " " "$expanded_dir" "$basename_icon"
+    print_status "${RED}" " "
     ((success_count--))
   fi
-
 done
 
 # Footer
