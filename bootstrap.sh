@@ -79,6 +79,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # Install requirements
 command -v atuin &>/dev/null     || brew install atuin
 command -v bat   &>/dev/null     || brew install bat
+command -v gawk  &>/dev/null     || brew install gawk
 command -v gh    &>/dev/null     || brew install gh
 command -v op    &>/dev/null     || brew install 1password-cli
 command -v perl  &>/dev/null     || brew install perl
