@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
+# Reset PATH
 unset PATH
-
-# Construct PATH
 eval "$(/usr/libexec/path_helper -s)"
+
+# Prepend homebrew to PATH
 [[ -z $HOMEBREW_BIN ]] || eval "$("$HOMEBREW_BIN/brew" shellenv)"
 
-# Load api keys
+# Load secrets
+# shellcheck disable=SC1091
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
 
+# Append iTerm uilities to PATH
 PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
-
 export PATH

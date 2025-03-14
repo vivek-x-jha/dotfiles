@@ -1,16 +1,16 @@
-# Construct PATH and FPATH
+# Reset PATH
 declare -U path=()
-
 eval "$(/usr/libexec/path_helper -s)"
-[[ -z $HOMEBREW_BIN ]] || eval "$($HOMEBREW_BIN/brew shellenv)"
 
-# Load api keys
+# Prepend homebrew to PATH
+[[ -z $HOMEBREW_BIN ]] || eval "$("$HOMEBREW_BIN/brew" shellenv)"
+
+# Load secrets
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
 
+# Append iTerm uilities to PATH
 path+=("/Applications/iTerm.app/Contents/Resources/utilities")
 
-fpath=(
-  "$ZSH_DATA_HOME/zsh-completions/src"
-  "$ZDOTDIR/funcs"
-  "$fpath[@]"
-)
+# Prepend Zsh completions and functions to FPATH
+fpath=("$ZSH_DATA_HOME/zsh-completions/src" "$ZDOTDIR/funcs" "$fpath[@]")
+export FPATH

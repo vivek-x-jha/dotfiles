@@ -24,6 +24,7 @@ source "$XDG_CONFIG_HOME/bash/configs/aliases"
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Shell "auto" plugins + completions + syntax-highlighting
+# shellcheck disable=SC1091
 source "$XDG_DATA_HOME/blesh/ble.sh"
 
 # Color ls, tree, eza
