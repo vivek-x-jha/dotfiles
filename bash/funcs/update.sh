@@ -30,7 +30,6 @@ update_icons() {
     [/Applications/Postman.app]=~/Pictures/icons/postman.png
     [/Applications/Slack.app]=~/Pictures/icons/slack.png
     [/Applications/Spotify.app]=~/Pictures/icons/spotify.png
-    [/Applications/Tex]=~/Pictures/icons/tex.png
     [/Applications/Visual\ Studio\ Code.app]=~/Pictures/icons/vscode.png
     [/Applications/WezTerm.app]=~/Pictures/icons/wezterm.png
     [/Applications/WhatsApp.app]=~/Pictures/icons/whatsapp.png
