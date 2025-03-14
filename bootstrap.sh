@@ -109,15 +109,11 @@ brew list --cask | grep -q mactex-no-gui        || brew install --cask mactex-no
 [[ -d /Applications/Dropbox.app ]]              || brew install --cask dropbox
 [[ -d /Applications/Image2Icon.app ]]           || brew install --cask image2icon
 [[ -d /Applications/Mimestream.app ]]           || brew install --cask mimestream
-[[ -d /Applications/Notion.app ]]               || brew install --cask notion
 [[ -d /Applications/Notion\ Calendar.app ]]     || brew install --cask notion-calendar
-[[ -d /Applications/OpenEmu.app ]]              || brew install --cask openemu
 [[ -d /Applications/Slack.app ]]                || brew install --cask slack
 [[ -d /Applications/Spotify.app ]]              || brew install --cask spotify
-[[ -d /Applications/TradingView.app ]]          || brew install --cask tradingview
 [[ -d /Applications/WhatsApp.app ]]             || brew install --cask whatsapp
 [[ -d /Applications/thinkorswim.app ]]          || brew install --cask thinkorswim
-[[ -d /Applications/zoom.us.app ]]              || brew install --cask zoom
 
 echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
 
