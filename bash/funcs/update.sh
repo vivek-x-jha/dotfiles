@@ -1,11 +1,24 @@
 #!/usrr/bin/env bash
 
-update_brew() {
-  brew upgrade
-  brew cu -af
-  brew cleanup
-  brew doctor
-  brew bundle dump --force --file="$XDG_CONFIG_HOME/brew/.Brewfile"
+update_feature_branches() {
+  local branches=("$@")
+
+  # Default branches
+  [[ $# -eq 0 ]] && branches=(
+    bootstrap
+    fzf
+    hammerspoon
+    nvim
+    shell
+    tmux
+    wezterm
+  )
+
+  for branch in "${branches[@]}"; do git switch "feature/$branch" && git merge main; done
+
+  git switch main
+
+  git log -5 --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"
 }
 
 update_icons() {
@@ -81,34 +94,19 @@ update_icons() {
   [ $fail_count -eq 0 ] || printf "${RED}%-2s ${BRIGHTBLACK}%-37s ${RESET}\n" "$fail_count" 'Folder icon(s) failed to update'
 }
 
-update_texlive() {
-  sudo tlmgr update --self --all
-}
-
 update_all() {
-  # Run the updates
-  update_brew
+  # Run homebrew command and cask updates
+  brew upgrade
+  brew cu -af
+
+  # Run homebrew utilities
+  brew cleanup
+  brew doctor
+  brew bundle dump --force --file="$XDG_CONFIG_HOME/brew/.Brewfile"
+
+  # Customize app icon for any upgraded cask
   update_icons
-  update_texlive
-}
 
-update_feature_branches() {
-  local branches=("$@")
-
-  # Default branches
-  [[ $# -eq 0 ]] && branches=(
-    bootstrap
-    fzf
-    hammerspoon
-    nvim
-    shell
-    tmux
-    wezterm
-  )
-
-  for branch in "${branches[@]}"; do git switch "feature/$branch" && git merge main; done
-
-  git switch main
-
-  git log -5 --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"
+  # Update Tex Live Utility
+  # sudo tlmgr update --self --all
 }
