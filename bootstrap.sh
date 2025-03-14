@@ -25,28 +25,6 @@ step=0
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
-# Install commands and apps using Homebrew
-while true; do
-  read -rp 'INSTALL [all/cmds/apps] (<Enter> TO SKIP): '
-
-  brew_install () {
-    local brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/brew/.Brewfile'
-
-    case $REPLY in
-                'all') curl -fsSL "$brewfile" | brew bundle --file=- ;;
-      'cmds' | 'apps') curl -fsSL "$brewfile" | grep "$1" | awk '{print $2}' | xargs "$2" ;;
-    esac
-  }
-
-  case $REPLY in
-    'all' ) brew_install; break ;;
-    'cmds') brew_install '^tap ' '-n1 brew tap'; brew_install '^brew ' 'brew install'; break ;;
-    'apps') brew_install '^tap ' '-n1 brew tap'; brew_install '^brew ' 'brew reinstall --cask'; break ;;
-        '') break ;;
-         *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'cmds', 'apps', OR <Enter> TO SKIP." ;;
-  esac
-done
-
 # Ensure bootstrap requirements installed
 command -v atuin      &>/dev/null || brew install atuin
 command -v bash       &>/dev/null || brew install bash
@@ -79,59 +57,55 @@ command -v zsh        &>/dev/null || brew install zsh
 
 brew list | grep -q pam-reattach  || brew install pam-reattach
 
-# Security casks
-command -v op &>/dev/null                           || brew install --cask 1password-cli
-[[ -d /Applications/1Password.app ]]                || brew install --cask 1password
-
-# Programming casks
-[[ -d /Applications/iTerm.app ]]                    || brew install --cask iterm2
-[[ -d /Applications/WezTerm.app ]]                  || brew install --cask wezterm
-[[ -d /Applications/Cursor.app ]]                   || brew install --cask cursor
-[[ -d /Applications/Docker.app ]]                   || brew install --cask docker
-[[ -d /Applications/Hammerspoon.app ]]              || brew install --cask hammerspoon
-[[ -d /Applications/Karabiner-Elements.app ]]       || brew install --cask karabiner-elements
-[[ -d /Applications/Visual\ Studio\ Code.app ]]     || brew install --cask visual-studio-code
-brew list --cask | grep -q mactex-no-gui            || brew install --cask mactex-no-gui
-# Tools casks
-[[ -d /Applications/Alfred.app ]]                   || brew install --cask alfred
-[[ -d /Applications/Alt\ Tab.app ]]                 || brew install --cask alt-tab
-[[ -d /Applications/ChatGPT.app ]]                  || brew install --cask chatgpt
-[[ -d /Applications/CleanShot\ X.app ]]             || brew install --cask cleanshot
-[[ -d /Applications/Doll.app ]]                     || brew install --cask doll
-[[ -d /Applications/KeyCastr.app ]]                 || brew install --cask keycastr
-
-# Media casks
-[[ -d /Applications/Discord.app ]]                  || brew install --cask discord
-[[ -d /Applications/Dropbox.app ]]                  || brew install --cask dropbox
-[[ -d /Applications/Image2Icon.app ]]               || brew install --cask image2icon
-[[ -d /Applications/Mimestream.app ]]               || brew install --cask mimestream
-[[ -d /Applications/OpenEmu.app ]]                  || brew install --cask openemu
-[[ -d /Applications/Skim.app ]]                     || brew install --cask skim
-[[ -d /Applications/Slack.app ]]                    || brew install --cask slack
-[[ -d /Applications/Spotify.app ]]                  || brew install --cask spotify
-[[ -d /Applications/VLC.app ]]                      || brew install --cask vlc
-[[ -d /Applications/WhatsApp.app ]]                 || brew install --cask whatsapp
-[[ -d /Applications/zoom.us.app ]]                  || brew install --cask zoom
-
-# Web casks
-[[ -d /Applications/Arc.app ]]                      || brew install --cask arc
-[[ -d /Applications/Firefox.app ]]                  || brew install --cask firefox
-[[ -d /Applications/Google\ Chrome.app ]]           || brew install --cask google-chrome
-[[ -d /Applications/Postman.app ]]                  || brew install --cask postman
-
-# Design casks
-[[ -d /Applications/Figma.app ]]                    || brew install --cask figma
-
-# Finance casks
-[[ -d /Applications/thinkorswim.app ]]              || brew install --cask thinkorswim
-[[ -d /Applications/TradingView.app ]]              || brew install --cask tradingview
-
 # Font casks
 brew list font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-jetbrains-mono-nerd-font
 
-# 2nd brain casks
-[[ -d /Applications/Notion.app ]]                   || brew install --cask notion
-[[ -d /Applications/Notion\ Calendar.app ]]         || brew install --cask notion-calendar
+# Security casks
+command -v op &>/dev/null                       || brew install --cask 1password-cli
+[[ -d /Applications/1Password.app ]]            || brew install --cask 1password
+
+# Programming casks
+[[ -d /Applications/Cursor.app ]]               || brew install --cask cursor
+[[ -d /Applications/Docker.app ]]               || brew install --cask docker
+[[ -d /Applications/Hammerspoon.app ]]          || brew install --cask hammerspoon
+[[ -d /Applications/iTerm.app ]]                || brew install --cask iterm2
+[[ -d /Applications/Karabiner-Elements.app ]]   || brew install --cask karabiner-elements
+[[ -d /Applications/Postman.app ]]              || brew install --cask postman
+[[ -d /Applications/Visual\ Studio\ Code.app ]] || brew install --cask visual-studio-code
+[[ -d /Applications/WezTerm.app ]]              || brew install --cask wezterm
+
+brew list --cask | grep -q mactex-no-gui        || brew install --cask mactex-no-gui
+
+# Tools casks
+[[ -d /Applications/Alfred.app ]]               || brew install --cask alfred
+[[ -d /Applications/Alt\ Tab.app ]]             || brew install --cask alt-tab
+[[ -d /Applications/ChatGPT.app ]]              || brew install --cask chatgpt
+[[ -d /Applications/CleanShot\ X.app ]]         || brew install --cask cleanshot
+[[ -d /Applications/Doll.app ]]                 || brew install --cask doll
+[[ -d /Applications/KeyCastr.app ]]             || brew install --cask keycastr
+
+# Web & Media casks
+[[ -d /Applications/Arc.app ]]                  || brew install --cask arc
+[[ -d /Applications/Figma.app ]]                || brew install --cask figma
+[[ -d /Applications/Firefox.app ]]              || brew install --cask firefox
+[[ -d /Applications/Google\ Chrome.app ]]       || brew install --cask google-chrome
+[[ -d /Applications/Skim.app ]]                 || brew install --cask skim
+[[ -d /Applications/VLC.app ]]                  || brew install --cask vlc
+
+# Optional casks
+[[ -d /Applications/Discord.app ]]              || brew install --cask discord
+[[ -d /Applications/Dropbox.app ]]              || brew install --cask dropbox
+[[ -d /Applications/Image2Icon.app ]]           || brew install --cask image2icon
+[[ -d /Applications/Mimestream.app ]]           || brew install --cask mimestream
+[[ -d /Applications/Notion.app ]]               || brew install --cask notion
+[[ -d /Applications/Notion\ Calendar.app ]]     || brew install --cask notion-calendar
+[[ -d /Applications/OpenEmu.app ]]              || brew install --cask openemu
+[[ -d /Applications/Slack.app ]]                || brew install --cask slack
+[[ -d /Applications/Spotify.app ]]              || brew install --cask spotify
+[[ -d /Applications/TradingView.app ]]          || brew install --cask tradingview
+[[ -d /Applications/WhatsApp.app ]]             || brew install --cask whatsapp
+[[ -d /Applications/thinkorswim.app ]]          || brew install --cask thinkorswim
+[[ -d /Applications/zoom.us.app ]]              || brew install --cask zoom
 
 echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
 
