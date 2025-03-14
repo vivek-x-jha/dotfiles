@@ -18,12 +18,8 @@ if [[ -f $XDG_CONFIG_HOME/bat/config ]]; then
   export MANPAGER="sh -c 'col -bx | bat -pl man --paging=always --theme=sourdiesel'"
 fi
 
-# Supress homebrew hints & dynamically create binary path
+# Supress homebrew hints
 export HOMEBREW_NO_ENV_HINTS=1
-case "$(uname -m)" in
-  'arm64' ) export HOMEBREW_BIN='/opt/homebrew/bin' ;;
-  'x86_64') export HOMEBREW_BIN='/usr/local/bin'    ;;
-esac
 
 # TMUX
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
