@@ -25,35 +25,47 @@ step=0
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
+# cmd -> homebrew package name
+declare -A packages=(
+  [atuin]=atuin
+  [bash]=bash
+  [bat]=bat
+  [btop]=btop
+  [code]=code
+  [commitizen]=commitizen
+  [dust]=dust
+  [eza]=eza
+  [fd]=fd
+  [fileicon]=fileicon
+  [fzf]=fzf
+  [gawk]=gawk
+  [gdircolors]=coreutils
+  [gh]=gh
+  [git]=git
+  [glow]=glow
+  [mycli]=mycli
+  [mysql]=mysql
+  [neovim]=neovim
+  [node]=node
+  [op]=1password-cli
+  [perl]=perl
+  [rainfrog]=rainfrog
+  [ripgrep]=ripgrep
+  [shellcheck]=shellcheck
+  [starship]=starship
+  [tealdeer]=tealdeer
+  [tmux]=tmux
+  [tree]=tree
+  [uv]=uv
+  [wezterm]=wezterm
+  [yazi]=yazi
+  [zoxide]=zoxide
+  [zsh]=zsh
+  [SwitchAudioSource]=switchaudio-osx
+)
+
 # Ensure bootstrap requirements installed
-command -v atuin      &>/dev/null || brew install atuin
-command -v bash       &>/dev/null || brew install bash
-command -v bat        &>/dev/null || brew install bat
-command -v btop       &>/dev/null || brew install btop
-command -v code       &>/dev/null || brew install code
-command -v dust       &>/dev/null || brew install dust
-command -v eza        &>/dev/null || brew install eza
-command -v fd         &>/dev/null || brew install fd
-command -v fileicon   &>/dev/null || brew install fileicon
-command -v fzf        &>/dev/null || brew install fzf
-command -v gawk       &>/dev/null || brew install gawk
-command -v gdircolors &>/dev/null || brew install coreutils
-command -v gh         &>/dev/null || brew install gh
-command -v git        &>/dev/null || brew install git
-command -v glow       &>/dev/null || brew install glow
-command -v mycli      &>/dev/null || brew install mycli
-command -v mysql      &>/dev/null || brew install mysql
-command -v neovim     &>/dev/null || brew install neovim
-command -v node       &>/dev/null || brew install node
-command -v op         &>/dev/null || brew install 1password-cli
-command -v perl       &>/dev/null || brew install perl
-command -v starship   &>/dev/null || brew install starship
-command -v tmux       &>/dev/null || brew install tmux
-command -v tree       &>/dev/null || brew install tree
-command -v wezterm    &>/dev/null || brew install wezterm
-command -v yazi       &>/dev/null || brew install yazi
-command -v zoxide     &>/dev/null || brew install zoxide
-command -v zsh        &>/dev/null || brew install zsh
+for cmd in "${!packages[@]}"; do command -v "$cmd" &>/dev/null || brew install "${packages[$cmd]}"; done
 
 brew list | grep -q pam-reattach  || brew install pam-reattach
 
