@@ -48,13 +48,90 @@ while true; do
 done
 
 # Ensure bootstrap requirements installed
-command -v atuin &>/dev/null     || brew install atuin
-command -v bat   &>/dev/null     || brew install bat
-command -v gawk  &>/dev/null     || brew install gawk
-command -v gh    &>/dev/null     || brew install gh
-command -v op    &>/dev/null     || brew install 1password-cli
-command -v perl  &>/dev/null     || brew install perl
-brew list | grep -q pam-reattach || brew install pam-reattach
+command -v atuin      &>/dev/null || brew install atuin
+command -v bash       &>/dev/null || brew install bash
+command -v bat        &>/dev/null || brew install bat
+command -v btop       &>/dev/null || brew install btop
+command -v code       &>/dev/null || brew install code
+command -v dust       &>/dev/null || brew install dust
+command -v eza        &>/dev/null || brew install eza
+command -v fd         &>/dev/null || brew install fd
+command -v fileicon   &>/dev/null || brew install fileicon
+command -v fzf        &>/dev/null || brew install fzf
+command -v gawk       &>/dev/null || brew install gawk
+command -v gdircolors &>/dev/null || brew install coreutils
+command -v gh         &>/dev/null || brew install gh
+command -v git        &>/dev/null || brew install git
+command -v glow       &>/dev/null || brew install glow
+command -v mycli      &>/dev/null || brew install mycli
+command -v mysql      &>/dev/null || brew install mysql
+command -v neovim     &>/dev/null || brew install neovim
+command -v node       &>/dev/null || brew install node
+command -v op         &>/dev/null || brew install 1password-cli
+command -v perl       &>/dev/null || brew install perl
+command -v starship   &>/dev/null || brew install starship
+command -v tmux       &>/dev/null || brew install tmux
+command -v tree       &>/dev/null || brew install tree
+command -v wezterm    &>/dev/null || brew install wezterm
+command -v yazi       &>/dev/null || brew install yazi
+command -v zoxide     &>/dev/null || brew install zoxide
+command -v zsh        &>/dev/null || brew install zsh
+
+brew list | grep -q pam-reattach  || brew install pam-reattach
+
+# Security casks
+command -v op &>/dev/null                           || brew install --cask 1password-cli
+[[ -d /Applications/1Password.app ]]                || brew install --cask 1password
+
+# Programming casks
+[[ -d /Applications/iTerm.app ]]                    || brew install --cask iterm2
+[[ -d /Applications/WezTerm.app ]]                  || brew install --cask wezterm
+[[ -d /Applications/Cursor.app ]]                   || brew install --cask cursor
+[[ -d /Applications/Docker.app ]]                   || brew install --cask docker
+[[ -d /Applications/Hammerspoon.app ]]              || brew install --cask hammerspoon
+[[ -d /Applications/Karabiner-Elements.app ]]       || brew install --cask karabiner-elements
+[[ -d /Applications/Visual\ Studio\ Code.app ]]     || brew install --cask visual-studio-code
+brew list --cask | grep -q mactex-no-gui            || brew install --cask mactex-no-gui
+# Tools casks
+[[ -d /Applications/Alfred.app ]]                   || brew install --cask alfred
+[[ -d /Applications/Alt\ Tab.app ]]                 || brew install --cask alt-tab
+[[ -d /Applications/ChatGPT.app ]]                  || brew install --cask chatgpt
+[[ -d /Applications/CleanShot\ X.app ]]             || brew install --cask cleanshot
+[[ -d /Applications/Doll.app ]]                     || brew install --cask doll
+[[ -d /Applications/KeyCastr.app ]]                 || brew install --cask keycastr
+
+# Media casks
+[[ -d /Applications/Discord.app ]]                  || brew install --cask discord
+[[ -d /Applications/Dropbox.app ]]                  || brew install --cask dropbox
+[[ -d /Applications/Image2Icon.app ]]               || brew install --cask image2icon
+[[ -d /Applications/Mimestream.app ]]               || brew install --cask mimestream
+[[ -d /Applications/OpenEmu.app ]]                  || brew install --cask openemu
+[[ -d /Applications/Skim.app ]]                     || brew install --cask skim
+[[ -d /Applications/Slack.app ]]                    || brew install --cask slack
+[[ -d /Applications/Spotify.app ]]                  || brew install --cask spotify
+[[ -d /Applications/VLC.app ]]                      || brew install --cask vlc
+[[ -d /Applications/WhatsApp.app ]]                 || brew install --cask whatsapp
+[[ -d /Applications/zoom.us.app ]]                  || brew install --cask zoom
+
+# Web casks
+[[ -d /Applications/Arc.app ]]                      || brew install --cask arc
+[[ -d /Applications/Firefox.app ]]                  || brew install --cask firefox
+[[ -d /Applications/Google\ Chrome.app ]]           || brew install --cask google-chrome
+[[ -d /Applications/Postman.app ]]                  || brew install --cask postman
+
+# Design casks
+[[ -d /Applications/Figma.app ]]                    || brew install --cask figma
+
+# Finance casks
+[[ -d /Applications/thinkorswim.app ]]              || brew install --cask thinkorswim
+[[ -d /Applications/TradingView.app ]]              || brew install --cask tradingview
+
+# Font casks
+brew list font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-jetbrains-mono-nerd-font
+
+# 2nd brain casks
+[[ -d /Applications/Notion.app ]]                   || brew install --cask notion
+[[ -d /Applications/Notion\ Calendar.app ]]         || brew install --cask notion-calendar
 
 echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
 
