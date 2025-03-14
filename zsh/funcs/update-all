@@ -1,6 +1,16 @@
 #!/usr/bin/env zsh
 
-# Run the updates
-update-brew
+# Run homebrew command and cask updates
+brew upgrade
+brew cu -af
+
+# Run homebrew utilities
+brew cleanup
+brew doctor
+brew bundle dump --force --file="$XDG_CONFIG_HOME/brew/.Brewfile"
+
+# Customize app icon for any upgraded cask
 update-icons
-# update-texlive
+
+# Update Tex Live Utility
+# sudo tlmgr update --self --all
