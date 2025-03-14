@@ -35,6 +35,7 @@ export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
 
 # Colors
+# shellcheck disable=SC1091
 source "$HOME/.dotfiles/.colors.sh"
 
 # Zoxide
