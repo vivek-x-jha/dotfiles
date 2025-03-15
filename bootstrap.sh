@@ -109,7 +109,7 @@ while true; do
   case $REPLY in
         all) for app in "${optional_casks[@]}"; do brew reinstall --cask "$app"; done; break ;;
        some) read -rp 'ENTER SPACE-SEPARATED CASKS TO INSTALL: '
-             for app in $REPLY; do  brew reinstall --cask "$app"; done; break ;;
+             for app in $REPLY; do brew reinstall --cask "$app"; done; break ;;
          '') break ;;
           *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'some', OR <Enter> TO SKIP." ;;
   esac
