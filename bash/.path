@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# Reset PATH
-unset PATH
-eval "$(/usr/libexec/path_helper -s)"
+# Reset default PATH
+unset PATH; eval "$(/usr/libexec/path_helper -s)"
 
 # Prepend homebrew to PATH
 eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || eval "$(/usr/local/bin/brew shellenv)"
@@ -12,5 +11,4 @@ eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || eval "$(/usr/local/bin/
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
 
 # Append iTerm uilities to PATH
-PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
-export PATH
+PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"; export PATH
