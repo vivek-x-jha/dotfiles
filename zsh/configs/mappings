@@ -2,3 +2,6 @@
 
 # Reload zsh
 bindkey -s '^e' 'exec "$(brew --prefix)/bin/zsh"\n'
+
+# Clear screen
+bindkey -s '^[l' 'clear\n'
