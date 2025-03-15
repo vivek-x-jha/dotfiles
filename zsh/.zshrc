@@ -1,7 +1,7 @@
 # https://zsh.sourceforge.io/
 
 # Instant Prompt 
-[[ -r "$ZCACHE_PROMPT" ]] && source "$ZCACHE_PROMPT"
+[[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # History Opts
 HISTFILE="$XDG_STATE_HOME/zsh/.zsh_history"

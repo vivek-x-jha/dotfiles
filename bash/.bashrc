@@ -2,7 +2,7 @@
 
 # Load shell environment variables
 # shellcheck disable=SC1091
-[[ -z $XDG_CONFIG_HOME ]] && source "$HOME/.config/zsh/.zshenv"
+source "$HOME/.config/zsh/.zshenv"
 
 # History Opts
 export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"

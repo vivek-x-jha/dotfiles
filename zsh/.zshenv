@@ -6,7 +6,6 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 # Configure shell options
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export ZCACHE_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 export ZAP_GIT_PREFIX='git@github.com:'
 export SHELL_SESSIONS_DISABLE=1
 
