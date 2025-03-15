@@ -14,9 +14,9 @@ return {
       end
 
       -- Move apps to their respective screens and make them visible
+      workspace('Arc', screens[3])
       workspace('ChatGPT', screens[2])
       workspace('WezTerm', screens[1])
-      workspace('Arc', screens[3])
     end,
   },
 }
