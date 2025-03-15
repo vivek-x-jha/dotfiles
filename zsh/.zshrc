@@ -1,35 +1,41 @@
 # https://zsh.sourceforge.io/
 
 # Instant Prompt 
-[[ -r $XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+[[ -r "$inst_prompt" ]] && source "$inst_prompt"
 
-# Shell Opts
-HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"; HISTSIZE=12000; SAVEHIST=10000
+# History Opts
+HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
+HISTSIZE=12000
+SAVEHIST=10000
 
-setopt alwaystoend autocd extendedhistory histexpiredupsfirst histignoredups histignorespace incappendhistory interactivecomments sharehistory
+setopt extendedhistory histexpiredupsfirst histignoredups histignorespace incappendhistory sharehistory
 
-# Set PATH + FPATH & load secrets
+# Zsh Opts
+setopt autocd interactivecomments 
+
+# PATH + Secrets
 source "$ZDOTDIR/.zprofile"
 
-# Shell plugin manager
+# Plugin Manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
-# Shell prompt
+# Prompt
 plug romkatv/powerlevel10k && source "$ZDOTDIR/themes/.p10k-sourdiesel.zsh"
 
-# Shell functions
+# Functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
-# Shell aliases
+# Aliases
 source "$ZDOTDIR/configs/aliases"
 
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
-# Shell "auto" plugins
+# Auto-plugins
 plug marlonrichert/zsh-autocomplete; plug hlissner/zsh-autopair; plug zsh-users/zsh-autosuggestions
 
-# Shell completions
+# Completions
 plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"
 
 # Syntax-highlighting
@@ -38,14 +44,14 @@ plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/configs/syntax-highli
 # Color ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-# Fzf shell bindings
+# Fuzzy Finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
 
-# Shell history TUI
+# History TUI
 eval "$(atuin init zsh)"
 
-# Directory Autojumper
+# Directory Jumper
 eval "$(zoxide init zsh --cmd j)"
 
-# Shell keybindings
+# Keybindings
 source "$ZDOTDIR/configs/mappings"
