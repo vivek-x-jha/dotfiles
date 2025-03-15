@@ -10,17 +10,10 @@ step=0
 ((step++)); echo 󰓒 [$step/13] INSTALLING PACKAGE MANAGER 󰓒
 
 # Install Homebrew
-[[ $(uname -s) == Darwin ]] &&
-[[ $(uname -m) =~ ^(arm64|x86_64)$ ]] &&
-! command -v brew &>/dev/null && {
+[[ $(uname -s) == Darwin ]] && ! command -v brew &>/dev/null && { 
   [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  # Prepend Homebrew to PATH
-  case $(uname -m) in
-    arm64 ) eval "$(/opt/homebrew/bin/brew shellenv)" ;;
-    x86_64) eval "$(/usr/local/bin/brew shellenv)" ;;
-  esac
+  eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || eval "$(/usr/local/bin/brew shellenv)"
 }
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
