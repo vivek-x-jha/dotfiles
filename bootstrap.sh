@@ -17,88 +17,84 @@ step=0
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
-# cmd -> homebrew package name
-declare -A packages=(
-  [atuin]=atuin
-  [bash]=bash
-  [bat]=bat
-  [btop]=btop
-  [code]=code
-  [commitizen]=commitizen
-  [dust]=dust
-  [eza]=eza
-  [fd]=fd
-  [fileicon]=fileicon
-  [fzf]=fzf
-  [gawk]=gawk
-  [gdircolors]=coreutils
-  [gh]=gh
-  [git]=git
-  [glow]=glow
-  [mycli]=mycli
-  [mysql]=mysql
-  [neovim]=neovim
-  [node]=node
-  [op]=1password-cli
-  [perl]=perl
-  [rainfrog]=rainfrog
-  [ripgrep]=ripgrep
-  [shellcheck]=shellcheck
-  [starship]=starship
-  [tealdeer]=tealdeer
-  [tmux]=tmux
-  [tree]=tree
-  [uv]=uv
-  [wezterm]=wezterm
-  [yazi]=yazi
-  [zoxide]=zoxide
-  [zsh]=zsh
-  [SwitchAudioSource]=switchaudio-osx
+packages=(
+  atuin
+  bash
+  bat
+  btop
+  code
+  commitizen
+  dust
+  eza
+  fd
+  fileicon
+  fzf
+  gawk
+  coreutils
+  gh
+  git
+  glow
+  mycli
+  mysql
+  neovim
+  node
+  1password-cli
+  perl
+  rainfrog
+  ripgrep
+  shellcheck
+  starship
+  tealdeer
+  tmux
+  tree
+  uv
+  wezterm
+  yazi
+  zoxide
+  zsh
+  switchaudio-osx
 )
 
-# Declare an associative array of app paths and their corresponding Homebrew cask names
-declare -A casks=(
-  [/Applications/1Password.app]=1password
-  [/Applications/Cursor.app]=cursor
-  [/Applications/Docker.app]=docker
-  [/Applications/Hammerspoon.app]=hammerspoon
-  [/Applications/iTerm.app]=iterm2
-  [/Applications/Karabiner-Elements.app]=karabiner-elements
-  [/Applications/Postman.app]=postman
-  ["/Applications/Visual Studio Code.app"]=visual-studio-code
-  [/Applications/WezTerm.app]=wezterm
-  [/Applications/Alfred.app]=alfred
-  ["/Applications/Alt Tab.app"]=alt-tab
-  [/Applications/ChatGPT.app]=chatgpt
-  ["/Applications/CleanShot X.app"]=cleanshot
-  [/Applications/Doll.app]=doll
-  [/Applications/KeyCastr.app]=keycastr
-  [/Applications/Arc.app]=arc
-  [/Applications/Figma.app]=figma
-  [/Applications/Firefox.app]=firefox
-  ["/Applications/Google Chrome.app"]=google-chrome
-  [/Applications/Skim.app]=skim
-  [/Applications/VLC.app]=vlc
-  [/Applications/Discord.app]=discord
-  [/Applications/Spotify.app]=spotify
+casks=(
+  1password
+  cursor
+  docker
+  hammerspoon
+  iterm2
+  karabiner-elements
+  postman
+  visual-studio-code
+  wezterm
+  alfred
+  alt-tab
+  chatgpt
+  cleanshot
+  doll
+  keycastr
+  arc
+  figma
+  firefox
+  google-chrome
+  skim
+  vlc
+  discord
+  spotify
 )
 
-declare -A optional_casks=(
-  [/Applications/Dropbox.app]=dropbox
-  [/Applications/Image2Icon.app]=image2icon
-  [/Applications/Mimestream.app]=mimestream
-  ["/Applications/Notion Calendar.app"]=notion-calendar
-  [/Applications/Slack.app]=slack
-  [/Applications/WhatsApp.app]=whatsapp
-  [/Applications/thinkorswim.app]=thinkorswim
+optional_casks=(
+  dropbox
+  image2icon
+  mimestream
+  notion-calendar
+  slack
+  whatsapp
+  thinkorswim
 )
 
 # Ensure bootstrap requirements installed
-echo 'INSTALLING REQUIRED PACKAGES'
-for cmd in "${!packages[@]}"; do command -v "$cmd" &>/dev/null || brew install "${packages[$cmd]}"; done
-
-echo 'INSTALLING REQUIRED APPS'
-for app in "${!casks[@]}"; do brew reinstall --cask "${casks[$app]}"; done
+echo 'INSTALLING REQUIRED PACKAGES & APPS'
+for cmd in "${packages[@]}"; do brew list | grep -q "$cmd" || brew install "$cmd"; done
+for app in "${casks[@]}"; do brew reinstall --cask "$app"; done
 
 # Ensure binaries without cli commands installed
 brew list        | grep -q pam-reattach             || brew install pam-reattach
@@ -108,13 +104,13 @@ brew list font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-
 # Install optional casks
 while true; do
   echo 'OPTIONAL CASKS TO DOWNLOAD:'
-  for app in "${!optional_casks[@]}"; do echo "${optional_casks[$app]}"; done
+  for app in "${optional_casks[@]}"; do echo "$app"; done
   read -rp 'INSTALL OPTIONAL CASKS? (all/some/<Enter> TO SKIP): '
   case $REPLY in
-        all) for app in "${!optional_casks[@]}"; do brew reinstall --cask "${optional_casks[$app]}"; done; break ;;
+        all) for app in "${optional_casks[@]}"; do brew reinstall --cask "$app"; done; break ;;
        some) read -rp 'ENTER SPACE-SEPARATED CASKS TO INSTALL: '
              for app in $REPLY; do  brew reinstall --cask "$app"; done; break ;;
-    none|'') break ;;
+         '') break ;;
           *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'some', OR <Enter> TO SKIP." ;;
   esac
 done
