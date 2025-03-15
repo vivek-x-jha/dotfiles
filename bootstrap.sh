@@ -22,41 +22,48 @@ packages=(
   bash
   bat
   btop
-  code
   commitizen
+  coreutils
   dust
   eza
   fd
   fileicon
   fzf
   gawk
-  coreutils
   gh
   git
   glow
+  jq
+  less
+  llm
   mycli
   mysql
   neovim
   node
-  1password-cli
+  pam-reattach
+  pandoc
   perl
+  pkgconf
   rainfrog
+  rename
   ripgrep
   shellcheck
   starship
+  switchaudio-osx
   tealdeer
   tmux
+  tokei
   tree
   uv
-  wezterm
+  wget
   yazi
   zoxide
   zsh
-  switchaudio-osx
 )
 
 casks=(
   1password
+  1password-cli
   cursor
   docker
   hammerspoon
@@ -79,6 +86,7 @@ casks=(
   vlc
   discord
   spotify
+  wezterm
 )
 
 optional_casks=(
