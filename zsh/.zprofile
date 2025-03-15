@@ -3,10 +3,7 @@ declare -U path=()
 eval "$(/usr/libexec/path_helper -s)"
 
 # Prepend homebrew to PATH
-case $(uname -m) in
-  arm64 ) eval "$(/opt/homebrew/bin/brew shellenv)" ;;
-  x86_64) eval "$(/usr/local/bin/brew shellenv)" ;;
-esac
+eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || eval "$(/usr/local/bin/brew shellenv)"
 
 # Load secrets
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
