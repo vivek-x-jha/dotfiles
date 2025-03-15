@@ -5,5 +5,6 @@
 bind -x '"\C-e": "exec '"$(brew --prefix)"'/bin/bash\n"'
 
 # Clear screen
+# TODO fix so clear screen works from vim mode
 bind -m vi-insert '"\eL": clear-screen'
 bind -m vi-command '"\eL": clear-screen'
