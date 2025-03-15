@@ -236,11 +236,14 @@ symlink() {
 directories=(
   "$XDG_CACHE_HOME"
   "$XDG_CONFIG_HOME/op"
-  "$XDG_DATA_HOME/zsh/plugins"
-  "$XDG_STATE_HOME"
+  "$XDG_DATA_HOME/zoxide"
+  "$XDG_STATE_HOME/less"
+  "$XDG_STATE_HOME/mycli"
+  "$XDG_STATE_HOME/mysql"
+  "$XDG_STATE_HOME/python"
 )
 
-for dir in "${directories[@]}"; do [ -d "$dir" ] || mkdir -p "$dir"; done
+mkdir -p "${directories[@]}"
 
 # NOTE manage all links - provides fine-grained control over GNU stow
 symlinks=(
