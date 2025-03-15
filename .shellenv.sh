@@ -6,7 +6,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 # Set default editor
 export EDITOR=vim
-[[ -f $XDG_CONFIG_HOME/nvim/init.lua || -f $XDG_CONFIG_HOME/nvim/init.vim ]] && EDITOR=nvim
+[[ -f $XDG_CONFIG_HOME/nvim/init.lua || -f $XDG_CONFIG_HOME/nvim/init.vim ]] && export EDITOR=nvim
 
 # Set graphical editor
 export VISUAL="$EDITOR"
