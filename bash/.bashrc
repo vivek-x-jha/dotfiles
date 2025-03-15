@@ -18,7 +18,8 @@ source "$XDG_CONFIG_HOME/bash/.path"
 eval "$(starship init bash)"
 
 # Functions
-source "$XDG_CONFIG_HOME/bash/funcs/utils.sh" && source "$XDG_CONFIG_HOME/bash/funcs/update.sh"
+source "$XDG_CONFIG_HOME/bash/funcs/utils.sh"
+source "$XDG_CONFIG_HOME/bash/funcs/update.sh"
 
 # Aliases
 source "$XDG_CONFIG_HOME/bash/configs/aliases"
