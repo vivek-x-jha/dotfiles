@@ -4,19 +4,9 @@
 [[ -r $XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # Shell Opts
-HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
-HISTSIZE=12000
-SAVEHIST=10000
+HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"; HISTSIZE=12000; SAVEHIST=10000
 
-setopt alwaystoend
-setopt autocd
-setopt extendedhistory
-setopt histexpiredupsfirst
-setopt histignoredups
-setopt histignorespace
-setopt incappendhistory
-setopt interactivecomments
-setopt sharehistory
+setopt alwaystoend autocd extendedhistory histexpiredupsfirst histignoredups histignorespace incappendhistory interactivecomments sharehistory
 
 # Set PATH + FPATH & load secrets
 source "$ZDOTDIR/.zprofile"
@@ -37,9 +27,7 @@ source "$ZDOTDIR/configs/aliases"
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Shell "auto" plugins
-plug marlonrichert/zsh-autocomplete
-plug hlissner/zsh-autopair
-plug zsh-users/zsh-autosuggestions
+plug marlonrichert/zsh-autocomplete; plug hlissner/zsh-autopair; plug zsh-users/zsh-autosuggestions
 
 # Shell completions
 plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"

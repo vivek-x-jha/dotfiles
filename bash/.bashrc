@@ -1,11 +1,9 @@
 # https://www.gnu.org/software/bash/
 
 # Shell Opts
-export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
-export HISTTIMEFORMAT="%F %T "
+export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"; export HISTTIMEFORMAT="%F %T "
 
-shopt -s autocd
-set -o vi
+shopt -s autocd; set -o vi
 
 # Set PATH + FPATH & load secrets
 source "$XDG_CONFIG_HOME/bash/.path"
@@ -14,8 +12,7 @@ source "$XDG_CONFIG_HOME/bash/.path"
 eval "$(starship init bash)"
 
 # Shell functions
-source "$XDG_CONFIG_HOME/bash/funcs/utils.sh"
-source "$XDG_CONFIG_HOME/bash/funcs/update.sh"
+source "$XDG_CONFIG_HOME/bash/funcs/utils.sh" && source "$XDG_CONFIG_HOME/bash/funcs/update.sh"
 
 # Shell aliases
 source "$XDG_CONFIG_HOME/bash/configs/aliases"
