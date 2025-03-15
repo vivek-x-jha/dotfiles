@@ -4,19 +4,18 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# Editing and Pagination
-if [[ -f $XDG_CONFIG_HOME/nvim/init.lua || -f $XDG_CONFIG_HOME/nvim/init.vim ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='vim'
-fi
+# Set default editor
+export EDITOR=vim
+[[ -f $XDG_CONFIG_HOME/nvim/init.lua || -f $XDG_CONFIG_HOME/nvim/init.vim ]] && EDITOR=nvim
 
+# Set graphical editor
 export VISUAL="$EDITOR"
 
-if [[ -f $XDG_CONFIG_HOME/bat/config ]]; then
+# Set default pagination
+[[ -f $XDG_CONFIG_HOME/bat/config ]] && {
   export PAGER='bat -p'
   export MANPAGER="sh -c 'col -bx | bat -pl man --paging=always --theme=sourdiesel'"
-fi
+}
 
 # Supress homebrew hints
 export HOMEBREW_NO_ENV_HINTS=1
