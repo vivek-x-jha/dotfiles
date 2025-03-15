@@ -65,7 +65,6 @@ brew list | grep -q pam-reattach  || brew install pam-reattach
 brew list font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-jetbrains-mono-nerd-font
 
 # Security casks
-command -v op &>/dev/null                       || brew install --cask 1password-cli
 [[ -d /Applications/1Password.app ]]            || brew install --cask 1password
 
 # Programming casks
