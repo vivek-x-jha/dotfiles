@@ -236,7 +236,9 @@ symlink() {
 directories=(
   "$XDG_CACHE_HOME"
   "$XDG_CONFIG_HOME/op"
+  "$XDG_DATA_HOME/bash"
   "$XDG_DATA_HOME/zoxide"
+  "$XDG_DATA_HOME/zsh"
   "$XDG_STATE_HOME/less"
   "$XDG_STATE_HOME/mycli"
   "$XDG_STATE_HOME/mysql"

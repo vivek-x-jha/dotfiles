@@ -1,11 +1,10 @@
 # https://zsh.sourceforge.io/
 
 # Instant Prompt 
-inst_prompt="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
-[[ -r "$inst_prompt" ]] && source "$inst_prompt"
+[[ -r "$ZCACHE_PROMPT" ]] && source "$ZCACHE_PROMPT"
 
 # History Opts
-HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
+HISTFILE="$XDG_STATE_HOME/zsh/.zsh_history"
 HISTSIZE=12000
 SAVEHIST=10000
 
