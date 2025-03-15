@@ -6,6 +6,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 # Configure shell options
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export ZCACHE_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 export ZAP_GIT_PREFIX='git@github.com:'
 export SHELL_SESSIONS_DISABLE=1
 
@@ -32,13 +33,11 @@ export TMUX_FZF_LAUNCH_KEY='f'
 # Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
-# Language defaults
-export PYTHON_HISTORY="$XDG_STATE_HOME/python/history"
-
 # History 
-export LESSHISTFILE="$XDG_STATE_HOME/less/.lesshst"
+export LESSHISTFILE="$XDG_STATE_HOME/less/.less_history"
 export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"
-export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli-history"
+export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"
+export PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"
 
 # Base16 colors
 export BLACK='\e[0;30m'

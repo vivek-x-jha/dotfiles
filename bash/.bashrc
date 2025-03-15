@@ -5,7 +5,7 @@
 [[ -z $XDG_CONFIG_HOME ]] && source "$HOME/.config/zsh/.zshenv"
 
 # History Opts
-export HISTFILE="$XDG_CACHE_HOME/bash/.bash_history"
+export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
 # Bash Opts
