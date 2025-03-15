@@ -32,10 +32,13 @@ export TMUX_FZF_LAUNCH_KEY='f'
 # Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
+# Language defaults
+export PYTHON_HISTORY="$XDG_STATE_HOME/python/history"
+
 # History 
-export LESSHISTFILE="$XDG_CACHE_HOME/less/.lesshst"
-export MYSQL_HISTFILE="$XDG_CACHE_HOME/mysql/.mysql_history"
-export MYCLI_HISTFILE="$XDG_CACHE_HOME/mycli/.mycli-history"
+export LESSHISTFILE="$XDG_STATE_HOME/less/.lesshst"
+export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"
+export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli-history"
 
 # Base16 colors
 export BLACK='\e[0;30m'
