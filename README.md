@@ -15,6 +15,16 @@ Features full of beuatiful and modern IDE tools.
 git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles && ~/.dotfiles/bootstrap.sh
 ```
 
+Open a new terminal emulator window for changes to take effect!
+
+## 💡 TIP: Test GitHub Signing & Auth Key
+
+To verify that your **GitHub Signing Key** and **GitHub Auth Key** are working correctly, run the following command:
+
+```sh
+cd "$HOME/.dotfiles.git" && git commit -m "$USER fork begins!" && git push && glg -5
+```
+
 ## Install Neovim Language Servers
 
 ```vim
