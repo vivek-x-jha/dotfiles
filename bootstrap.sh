@@ -97,8 +97,8 @@ for cmd in "${packages[@]}"; do brew list | grep -q "$cmd" || brew install "$cmd
 for app in "${casks[@]}"; do brew reinstall --cask "$app"; done
 
 # Ensure binaries without cli commands installed
-brew list        | grep -q pam-reattach             || brew install pam-reattach
-brew list --cask | grep -q mactex-no-gui            || brew install --cask mactex-no-gui
+brew list | grep -q pam-reattach || brew install pam-reattach
+brew list --cask | grep -q mactex-no-gui || brew install --cask mactex-no-gui
 brew list font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-jetbrains-mono-nerd-font
 
 # Install optional casks
