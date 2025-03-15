@@ -12,7 +12,7 @@ Features full of beuatiful and modern IDE tools.
 ## Installation
 
 ```sh
-git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles && ~/.dotfiles/bootstrap.sh
+git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles" && "$HOME/.dotfiles/bootstrap.sh"
 ```
 
 Open a new terminal emulator window for changes to take effect!
