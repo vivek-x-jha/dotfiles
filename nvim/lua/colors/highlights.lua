@@ -67,7 +67,7 @@ return {
       CursorLineFold = { fg = theme.brightmagenta, bg = theme.background },
 
       LineNr = { fg = theme.brightblack },
-      FloatBorder = { fg = theme.brightmagenta },
+      FloatBorder = { fg = theme.brightblack },
       FloatTitle = { fg = theme.magenta },
       Macro = { fg = theme.white },
       MatchParen = { link = 'MatchWord' },
