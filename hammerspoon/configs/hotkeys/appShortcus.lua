@@ -16,10 +16,24 @@ return {
   },
 
   {
-    key = 'm',
-    desc = 'Toggle Mimestream',
+    key = 'g',
+    desc = 'Toggle Gmail Client',
     mods = HYPER,
     command = function() toggle 'Mimestream' end,
+  },
+
+  {
+    key = 'k',
+    desc = 'Toggle Karabiner-Elements',
+    mods = HYPER,
+    command = function() toggle 'Karabiner-Elements' end,
+  },
+
+  {
+    key = 'm',
+    desc = 'Toggle Messages',
+    mods = HYPER,
+    command = function() toggle 'Messages' end,
   },
 
   {
@@ -45,9 +59,9 @@ return {
 
   {
     key = 't',
-    desc = 'Toggle Messages',
+    desc = 'Toggle WhatsApp',
     mods = HYPER,
-    command = function() toggle 'Messages' end,
+    command = function() toggle 'WhatsApp' end,
   },
 
   {
