@@ -3,22 +3,22 @@
 list_colors () {
 
   local colors=(
-    $BLACK_HEX
-    $RED_HEX
-    $GREEN_HEX
-    $YELLOW_HEX
-    $BLUE_HEX
-    $MAGENTA_HEX
-    $CYAN_HEX
-    $WHITE_HEX
-    $BRIGHTBLACK_HEX
-    $BRIGHTRED_HEX
-    $BRIGHTGREEN_HEX
-    $BRIGHTYELLOW_HEX
-    $BRIGHTBLUE_HEX
-    $BRIGHTMAGENTA_HEX
-    $BRIGHTCYAN_HEX
-    $BRIGHTWHITE_HEX
+    "$BLACK_HEX"
+    "$RED_HEX"
+    "$GREEN_HEX"
+    "$YELLOW_HEX"
+    "$BLUE_HEX"
+    "$MAGENTA_HEX"
+    "$CYAN_HEX"
+    "$WHITE_HEX"
+    "$BRIGHTBLACK_HEX"
+    "$BRIGHTRED_HEX"
+    "$BRIGHTGREEN_HEX"
+    "$BRIGHTYELLOW_HEX"
+    "$BRIGHTBLUE_HEX"
+    "$BRIGHTMAGENTA_HEX"
+    "$BRIGHTCYAN_HEX"
+    "$BRIGHTWHITE_HEX"
   )
 
   for hex in "${colors[@]}"; do
@@ -34,12 +34,7 @@ list_colors () {
   done
 }
 
-take () {
-  local dir="$1"
-
-  [ -d "$dir" ] || mkdir -p "$dir"
-  cd "$dir"
-}
+take () { mkdir -p "$1" && cd "$1" || return; }
 
 count_files () (
   shopt -s nullglob
@@ -63,9 +58,7 @@ tmux_list_sessions () {
 gsw () {
   # Function overload for git switch fuzzy finding
   if (( $# == 0 )) && command -v fzf; then
-    git switch $(git branch | fzf --header 'Switch Local  ' \
-                                  --preview 'git show --color=always $(echo {} | awk "{print \$1}")'
-    )
+    git switch $(git branch | fzf --header 'Switch Local  ' --preview 'git show --color=always "$(echo {} | awk "{print \$1}")"')
   else
     git switch "$@"
   fi

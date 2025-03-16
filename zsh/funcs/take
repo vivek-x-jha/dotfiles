@@ -1,6 +1,3 @@
 #!/usr/bin/env zsh
 
-local dir="$1"
-
-[ -d "$dir" ] || mkdir -p "$dir"
-cd "$dir"
+mkdir -p "$1" && cd "$1" || return
