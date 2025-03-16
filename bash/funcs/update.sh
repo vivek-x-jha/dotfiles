@@ -23,7 +23,7 @@ update_feature_branches() {
 
 update_icons() {
   # Create directory-icons association
-  command -v fileicon &> /dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1; }
+  command -v fileicon &>/dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1; }
 
   local table_width=60
   declare -A dir_icons=(
