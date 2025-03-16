@@ -1,8 +1,8 @@
-local workspace = require('configs.utils').move_max_app
+local workspace = require('utils').move_max_app
 
 return {
   {
-    key = '0',
+    key = '1',
     desc = 'Set Workspace: ChatGPT -> WezTerm -> Arc',
     mods = HYPER,
     command = function()

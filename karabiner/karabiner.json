@@ -8,6 +8,24 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Remap Right Shift to Control + Option + Command",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_shift",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control",
+                                        "modifiers": ["left_option", "left_command"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Change CAPS to CTRL if pressed with other keys, to ESC if pressed alone.",
                         "manipulators": [
                             {
