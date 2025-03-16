@@ -43,9 +43,7 @@ count_files () (
   echo "${#files[@]}"
 )
 
-combinepdf () {
-  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"
-}
+combinepdf () { gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"; }
 
 tmux_list_sessions () {
   # TODO standardize with header
@@ -53,13 +51,4 @@ tmux_list_sessions () {
   printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
   print "·······································"} \
   { printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
-}
-
-gsw () {
-  # Function overload for git switch fuzzy finding
-  if (( $# == 0 )) && command -v fzf; then
-    git switch $(git branch | fzf --header 'Switch Local  ' --preview 'git show --color=always "$(echo {} | awk "{print \$1}")"')
-  else
-    git switch "$@"
-  fi
 }
