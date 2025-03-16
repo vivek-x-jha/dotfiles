@@ -72,22 +72,14 @@ alias update-icons='update_icons'
 
 # -------------------------------- Workspace Management ---------------------------------------
 
-# Create new session
-alias tn='tmux new-session'
-
-# Prints all sessions
-alias tmux-list-sessions=tmux_list_sessions
-alias tl='tmux-list-sessions'
-
-# Attach to a session found in tmux-list-sessions 
-alias ta='tmux attach -t'
-
 # Attach to last session, if none then create new one
 alias t='tmux attach || tmux new-session'
 
 # Kill and restart all sessions
-alias tks='tmux kill-server'
 alias restart-tmux='tmux kill-server &>/dev/null; (tmux attach || tmux new-session ) &>/dev/null'
+
+# Prints all sessions
+alias list-tmux-sessions=list_tmux_sessions
 
 # -------------------------------- Version Control ---------------------------------------
 
