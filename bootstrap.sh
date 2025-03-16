@@ -47,7 +47,6 @@ packages=(
   rainfrog
   rename
   ripgrep
-  shellcheck
   starship
   switchaudio-osx
   tealdeer
