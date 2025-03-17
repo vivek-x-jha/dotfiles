@@ -970,7 +970,7 @@ bleopt prompt_ps1_transient=always
 ## graphic styles for basic faces.  The supported schemes are found in the
 ## subdirectory "contrib/scheme".  The default value is "default".
 
-#bleopt color_scheme=base16
+bleopt color_scheme=catppuccin_mocha
 
 
 ## The following settings specify graphic styles of corresponding faces.  Faces
