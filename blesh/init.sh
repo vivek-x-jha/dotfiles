@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# -*- mode: sh; mode: sh-bash -*-
+# https://github.com/akinomyoga/ble.sh?tab=readme-ov-file#2-basic-settings
 
 ## This is a template for "~/.blerc".
 ##
