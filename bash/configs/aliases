@@ -62,7 +62,7 @@ alias list-funcs='IN DEVELOPMENT...' # TODO change this so it filters bash/funcs
 alias list-opts='IN DEVELOPMENT...'  # TODO change this so it filters shopt
 
 # Outputs Terminal colors
-alias list-256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
+alias list-256=ble-color-show
 alias list-colors=list_colors
 
 # Update Management
