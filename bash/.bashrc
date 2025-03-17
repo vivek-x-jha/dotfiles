@@ -21,15 +21,15 @@ eval "$(starship init bash)"
 # shellcheck source=/dev/null
 for fn in "$XDG_CONFIG_HOME/bash/funcs/"*.sh; do source "$fn"; done
 
-# Aliases
-source "$XDG_CONFIG_HOME/bash/configs/aliases"
-
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Auto-plugins + Completions + Syntax-highlighting
 # shellcheck disable=SC1091
 source "$XDG_DATA_HOME/blesh/ble.sh"
+
+# Aliases
+source "$XDG_CONFIG_HOME/bash/configs/aliases"
 
 # Color ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
