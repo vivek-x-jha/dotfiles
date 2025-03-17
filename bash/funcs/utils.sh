@@ -11,7 +11,7 @@ count_files () (
   echo "${#files[@]}"
 )
 
-list-tmux-sessions () {
+list_tmux_sessions () {
   # TODO standardize with header
   tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
   printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \

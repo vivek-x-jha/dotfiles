@@ -1,65 +1,19 @@
 #!/usr/bin/env bash
 
-# -------------------------------- File Editing ---------------------------------------
-
-# Open all files in current directory excluding...
-alias va='$EDITOR $(fd -HItf --exclude .git --exclude .github --exclude Session.vim --exclude "Icon?")'
-
-# Fuzzy Search all files in current directory, then open
-alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
-
-# Open vim/noevim workspace from Session file
-[[ $EDITOR == 'vim' || $EDITOR == 'nvim' ]] && alias vs='$EDITOR -S Session.vim'
-
-# Open vim using viminfo state file
-alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
-
-# Deletes temp file - NOTE this fixes neovim shada error, but unsure why this works...
-alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
-
-# -------------------------------- File Management & Previewing ---------------------------------------
-
-# Move up 2 directories
-alias ...="cd ../.."
-
-# Filter input and color with $GREP_COLOR
-alias grep='grep --color=auto'
-
-# List all directory items in long format with git info
-alias l='eza --all --long --git --icons=always --group-directories-first'
-
-# Print all directory items in colored tree format excluding git info
-alias tree='tree -aCI ".git|.github"'
-
-# Deletion
-alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
-
-# Fuzzy search man pages
-alias docs='compgen -c | fzf | xargs man'
+# shellcheck disable=SC1091
+source "$ZDOTDIR/configs/aliases"
+unalias list-fpath
+unalias list-highlighter
 
 # Aggregate number of files
 alias count-files=count_files
-
-# -------------------------------- List Long Functions ---------------------------------------
-
-# Outputs System info
-alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
-alias list-shells='tail -n +5 /etc/shells'
-alias list-users='dscl . list /Users | grep -v "^_"'
-
-# Outputs Homebrew package info
-alias list-deps='brew deps --tree --installed'
-alias list-brew-apps='IN DEVELOPMENT...' # TODO change this
-alias list-brew-cmds='IN DEVELOPMENT...' # TODO change this
 
 # Outputs PATH
 alias list-path='tr ":" "\n" <<< "$PATH"'
 
 # Outputs Shell info
-alias list-alias='alias | sort'
-alias list-vars='env | sort'
-alias list-funcs='IN DEVELOPMENT...' # TODO change this so it filters bash/funcs/*.sh
-alias list-opts='IN DEVELOPMENT...'  # TODO change this so it filters shopt
+alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
+alias list-opts='shopt -p'
 
 # Outputs Terminal colors
 alias list-256=ble-color-show
@@ -70,8 +24,6 @@ alias update-all='update_all'
 alias update-feature-branches='update_feature_branches'
 alias update-icons='update_icons'
 
-# -------------------------------- Workspace Management ---------------------------------------
-
 # Attach to last session, if none then create new one
 alias t='tmux attach || tmux new-session'
 
@@ -80,47 +32,3 @@ alias restart-tmux='tmux kill-server &>/dev/null; (tmux attach || tmux new-sessi
 
 # Prints all sessions
 alias list-tmux-sessions=list_tmux_sessions
-
-# -------------------------------- Version Control ---------------------------------------
-
-# Commitizen
-alias czc='cz commit'
-
-# Git
-alias ga='git add'
-alias gaa='git add --all'
-alias gb='git branch'
-alias gcl='git clone --recurse-submodules'
-alias gco='git checkout'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gl='git pull'
-alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"'
-alias gmg='git merge'
-alias gmv='git mv'
-alias gp='git push'
-alias grm='git rm'
-alias grs='git restore'
-alias grst='git restore --staged'
-alias grv='git remote --verbose'
-alias gst='git status'
-alias gsw='git switch "$(git branch --format="%(refname:short)" | fzf --header "Switch Local  " --preview "git show --color=always {1}" | xargs)"'
-
-# -------------------------------- CLI tools ---------------------------------------
-
-# MySQL launcher
-alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
-
-# Print weather data
-alias weather='curl wttr.in'
-
-# AI launcher
-alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
-
-# Sound toggler
-alias sas-airpods='SwitchAudioSource -s "band4band"'
-alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
-alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
-
-# Remove macOS quarantine flag(s)
-alias fix-spotify='sudo xattr -rd com.apple.quarantine /Applications/Spotify.app'
