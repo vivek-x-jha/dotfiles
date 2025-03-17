@@ -44,6 +44,7 @@ packages=(
   pandoc
   perl
   pkgconf
+  protobuf
   rainfrog
   rename
   ripgrep
