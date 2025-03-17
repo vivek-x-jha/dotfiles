@@ -5,3 +5,15 @@ bindkey -s '^e' 'exec "$(brew --prefix)/bin/zsh"\n'
 
 # Clear screen
 bindkey -s '^[l' 'clear\n'
+
+# Atuin vim mode
+bindkey '^r' atuin-search
+
+bindkey '^[[A' atuin-up-search
+bindkey '^[OA' atuin-up-search
+
+bindkey -M viins '^r' atuin-search
+bindkey -M vicmd '^r' atuin-search
+
+bindkey -M viins '^[[A' atuin-up-search
+bindkey -M vicmd '^[OA' atuin-up-search

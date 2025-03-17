@@ -32,6 +32,7 @@ common_subcommands = [
 common_prefix = ["sudo"]
 
 [keys]
+enable = false
 
 [sync]
 records = true
