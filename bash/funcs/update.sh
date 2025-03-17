@@ -20,7 +20,7 @@ update_feature_branches() {
   done
 
   # Return to main branch
-  git switch "$default"
+  git switch "$default" &>/dev/null
 }
 
 update_icons() {

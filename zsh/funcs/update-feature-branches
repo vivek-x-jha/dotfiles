@@ -16,7 +16,7 @@ for branch in "${branches[@]}"; do
 
   # Print success message after switching
   printf "${GREEN}  ${RESET}${CYAN}%s${RESET} -> ${MAGENTA}${default}${RESET}\n" "$branch"
-
-  # Return to main branch
-  git switch "$default"
 done
+
+# Return to main branch
+git switch "$default" &>/dev/null
