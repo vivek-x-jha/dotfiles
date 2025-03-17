@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# load shared aliases from zsh
+# Load shared aliases from zsh
 # shellcheck disable=SC1091
 source "$ZDOTDIR/configs/aliases"
 
