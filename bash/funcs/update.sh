@@ -3,22 +3,20 @@
 update_feature_branches() {
   local branches=("$@")
 
-  # Default branches
-  [[ $# -eq 0 ]] && branches=(
-    bootstrap
-    fzf
-    hammerspoon
-    nvim
-    shell
-    tmux
-    wezterm
-  )
+  # Dynamically fetch feature branches if no arguments are provided
+  [[ $# -eq 0 ]] && mapfile -t branches < <(git branch --format='%(refname:short)' | grep '^feature/')
 
-  for branch in "${branches[@]}"; do git switch "feature/$branch" && git merge main; done
+  for branch in "${branches[@]}"; do
+    # Check if branch exists
+    git branch --format='%(refname:short)' | grep -Fxq "$branch" || { printf "${RED} '%s' not found${RESET} - run ${GREEN}'git branch'${RESET} to show available branches\n" "$branch"; continue; }
 
-  git switch main
+    # Perfom merge
+    git switch "$branch" &>/dev/null 
+    git merge main &>/dev/null
 
-  git log -5 --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"
+    # Print success message after switching
+    printf "${GREEN}  ${RESET}${CYAN}%s${RESET} -> ${MAGENTA}main${RESET}\n" "$branch"
+  done
 }
 
 update_icons() {
