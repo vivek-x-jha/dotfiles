@@ -1,6 +1,7 @@
 #!/usrr/bin/env bash
 
 update_feature_branches() {
+  local default=main
   local branches=("$@")
 
   # Dynamically fetch feature branches if no arguments are provided
@@ -8,15 +9,18 @@ update_feature_branches() {
 
   for branch in "${branches[@]}"; do
     # Check if branch exists
-    git branch --format='%(refname:short)' | grep -Fxq "$branch" || { printf "${RED} '%s' not found${RESET} - run ${GREEN}'git branch'${RESET} to show available branches\n" "$branch"; continue; }
+    git branch --format='%(refname:short)' | grep -Fxq "$branch" || { printf "${RED}  '%s' not found${RESET} - run ${GREEN}'git branch'${RESET} to show available branches\n" "$branch"; continue; }
 
     # Perfom merge
-    git switch "$branch" &>/dev/null 
-    git merge main &>/dev/null
+    git switch "$branch" &>/dev/null
+    git merge "$default" &>/dev/null
 
     # Print success message after switching
-    printf "${GREEN}  ${RESET}${CYAN}%s${RESET} -> ${MAGENTA}main${RESET}\n" "$branch"
+    printf "${GREEN}  ${RESET}${CYAN}%s${RESET} -> ${MAGENTA}${default}${RESET}\n" "$branch"
   done
+
+  # Return to main branch
+  git switch "$default"
 }
 
 update_icons() {
