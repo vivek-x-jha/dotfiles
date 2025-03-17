@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-# TODO fix so reload clears variables from current shell - issue with bind -x
 # Reload bash
-bind -x '"\C-e": "exec '"$(brew --prefix)"'/bin/bash\n"'
+bind -x '"\C-e": "exec '"$(brew --prefix)"'/bin/bash"'
 
 # Clear screen
 # TODO fix so clear screen works from vim mode
-bind -m vi-insert '"\eL": clear-screen'
-bind -m vi-command '"\eL": clear-screen'
+bind -x '"^[l": "clear-screen\n"'
+
+# Atuin search in vim mode
+bind -m vi-command '"\C-r": "i__atuin_history\n"'
+bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
+bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
