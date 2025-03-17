@@ -115,12 +115,9 @@ alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
 # Remove macOS quarantine flag(s)
 alias fix-spotify='sudo xattr -rd com.apple.quarantine /Applications/Spotify.app'
 
-# -------------------------------- Extension Aliases ---------------------------------------
+# -------------------------------- Suffix Aliases ---------------------------------------
 
-# special aliases that are triggered when a file name is passed as the command
-# Ex: if the pdf file extension is aliased to `acroread` (a popular Linux pdf reader), when running `file.pdf` that file will be open with `acroread`
-
-command -v autoload &>/dev/null && autoload -Uz is-at-least && if is-at-least 4.2.0; then
+command -v autoload &>/dev/null && autoload -Uz is-at-least && is-at-least 4.2.0 && {
   # Images
   _image_fts=(jpg jpeg png gif mng tiff tif xpm)
   for ft in $_image_fts; do alias -s $ft='open -a Preview'; done
@@ -133,7 +130,7 @@ command -v autoload &>/dev/null && autoload -Uz is-at-least && if is-at-least 4.
   alias -s pdf='open -a Skim'
 
   # Compressed
-  alias -s zip="unzip -l" # Lists files inside a .zip file
-  alias -s tar="tar tf"   # Lists files inside a .tar file
-  alias -s tar.gz="echo " # Lists files inside a .tar.gz file
-fi
+  alias -s zip='unzip -l'
+  alias -s tar='tar tf'
+  alias -s tar.gz='echo '
+}
