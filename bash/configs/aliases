@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
+# load shared aliases from zsh
 # shellcheck disable=SC1091
 source "$ZDOTDIR/configs/aliases"
-unalias list-fpath
-unalias list-highlighter
 
 # Aggregate number of files
 alias count-files=count_files
@@ -19,16 +18,10 @@ alias list-opts='shopt -p'
 alias list-256=ble-color-show
 alias list-colors=list_colors
 
+# Prints all sessions
+alias list-tmux-sessions=list_tmux_sessions
+
 # Update Management
 alias update-all='update_all'
 alias update-feature-branches='update_feature_branches'
 alias update-icons='update_icons'
-
-# Attach to last session, if none then create new one
-alias t='tmux attach || tmux new-session'
-
-# Kill and restart all sessions
-alias restart-tmux='tmux kill-server &>/dev/null; (tmux attach || tmux new-session ) &>/dev/null'
-
-# Prints all sessions
-alias list-tmux-sessions=list_tmux_sessions

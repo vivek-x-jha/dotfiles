@@ -25,9 +25,6 @@ plug romkatv/powerlevel10k && source "$ZDOTDIR/themes/.p10k-sourdiesel.zsh"
 # Functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 
-# Aliases
-source "$ZDOTDIR/configs/aliases"
-
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
@@ -39,6 +36,9 @@ plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completio
 
 # Syntax-highlighting
 plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/configs/syntax-highlighting"
+
+# Aliases
+source "$ZDOTDIR/configs/aliases"
 
 # Color ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME/eza/.dircolors")"

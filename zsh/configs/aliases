@@ -49,19 +49,26 @@ alias list-deps='brew deps --tree --installed'
 alias list-apps='brew list --cask | xargs -n1'
 alias list-cmds='brew list --formula | xargs -n1'
 
-# Outputs PATH and FPATH
-alias list-path='print -l "${path[@]}"'
-alias list-fpath='print -l "${fpath[@]}"'
-
-# Outputs Shell info
+# Outputs Aliases & Environment Variables
 alias list-alias='alias | sort'
 alias list-vars='env | sort'
-alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
-alias list-opts='setopt'
 
-# Outputs Terminal colors and syntax-highlighting info
-alias list-256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
-alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
+[[ -n $ZSH_VERSION ]] && {
+
+  # Outputs PATH and FPATH
+  alias list-path='print -l "${path[@]}"'
+  alias list-fpath='print -l ${fpath[@]}'
+
+  # Outputs Shell functions and setings
+  alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
+  alias list-opts='setopt'
+
+  # Outputs Terminal colors
+  alias list-256='for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+"\n"}; done'
+}
+
+# Outputs syntax-highlighting info
+[[ -n $ZSH_HIGHLIGHT_STYLES ]] && alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
 
 # -------------------------------- Workspace Management ---------------------------------------
 
