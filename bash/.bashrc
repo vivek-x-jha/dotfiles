@@ -32,7 +32,10 @@ source "$XDG_CONFIG_HOME/op/plugins.sh"
 source "$XDG_CONFIG_HOME/bash/configs/aliases"
 
 # Color ls, tree, eza
-eval "$(gdircolors "$DIRCOLORS" || dircolors "$DIRCOLORS")"
+eval "$(gdircolors "$XDG_CONFIG_HOME"/eza/.dircolors || dircolors "$XDG_CONFIG_HOME"/eza/.dircolors)"
+
+# LS_COLORS generator
+alias reload-lscolors=''
 
 # Fuzzy Finder
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"

@@ -15,7 +15,7 @@ alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
 alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 
 # Deletes temp file - NOTE this fixes neovim shada error, but unsure why this works...
-alias refresh-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
+alias reload-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
 # -------------------------------- File Management & Previewing ---------------------------------------
 
@@ -76,7 +76,7 @@ alias list-vars='env | sort'
 alias t='tmux attach || tmux new-session'
 
 # Kill and restart all sessions
-alias restart-tmux='tmux kill-server &>/dev/null; tmux attach &>/dev/null || tmux new-session &>/dev/null'
+alias reload-tmux='tmux kill-server &>/dev/null; tmux attach &>/dev/null || tmux new-session &>/dev/null'
 
 # -------------------------------- Version Control ---------------------------------------
 
