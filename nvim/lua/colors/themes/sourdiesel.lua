@@ -20,7 +20,7 @@ return {
   brightwhite = os.getenv 'BRIGHTWHITE_HEX',
 
   -- Extras
-  background = os.getenv 'BACKGROUND_HEX',
+  background = os.getenv 'NVIM_BG',
   grey = os.getenv 'GREY_HEX',
   dark = os.getenv 'DARK_HEX',
 }

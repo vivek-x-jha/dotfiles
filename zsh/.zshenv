@@ -79,11 +79,13 @@ export BRIGHTWHITE_HEX='#ffffff'
 # Other colors
 export GREY='\e[38;5;248m'
 export RESET='\e[0m'
-export GREP_COLOR="1;38;5;2"
-export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
-export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
-
-# Other colors hexcodes
-export BACKGROUND_HEX='NONE'
 export GREY_HEX='#313244'
 export DARK_HEX='#1b1c28'
+
+export NVIM_BG='NONE'
+
+export GREP_COLOR="1;38;5;2"
+export GIT_PRETTY="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"
+
+export DIRCOLORS="$XDG_CONFIG_HOME/eza/.dircolors" 
+export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"

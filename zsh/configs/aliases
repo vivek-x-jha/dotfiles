@@ -76,7 +76,7 @@ alias list-vars='env | sort'
 alias t='tmux attach || tmux new-session'
 
 # Kill and restart all sessions
-alias restart-tmux='tmux kill-server &>/dev/null; (tmux attach || tmux new-session ) &>/dev/null'
+alias restart-tmux='tmux kill-server &>/dev/null; tmux attach &>/dev/null || tmux new-session &>/dev/null'
 
 # -------------------------------- Version Control ---------------------------------------
 
