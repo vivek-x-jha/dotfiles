@@ -28,6 +28,7 @@ bleopt exec_elapsed_mark=
 #bleopt complete_menu_filter=1
 
 bleopt complete_menu_color_match=on
+bleopt exec_errexit_mark=
 
 # Syntax Highlighting
 ble-face -s argument_error 'fg=#ffc7c7'
