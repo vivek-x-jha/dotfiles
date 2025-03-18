@@ -4,12 +4,16 @@
 # shellcheck disable=SC1091
 source "$HOME/.config/zsh/.zshenv"
 
+# Bash Line Editor
+[[ $- == *i* ]] && source "$XDG_DATA_HOME/blesh/ble.sh" --noattach
+
 # History Opts
 export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
 # Bash Opts
-shopt -s autocd; set -o vi
+shopt -s autocd
+set -o vi
 
 # PATH + Secrets
 source "$XDG_CONFIG_HOME/bash/.path"
@@ -23,10 +27,6 @@ for fn in "$XDG_CONFIG_HOME/bash/funcs/"*.sh; do source "$fn"; done
 
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
-
-# Auto-plugins + Completions + Syntax-highlighting
-# shellcheck disable=SC1091
-source "$XDG_DATA_HOME/blesh/ble.sh"
 
 # Aliases
 source "$XDG_CONFIG_HOME/bash/configs/aliases"
@@ -45,3 +45,6 @@ eval "$(zoxide init bash --cmd j)"
 
 # Keybindings
 source "$XDG_CONFIG_HOME/bash/configs/mappings"
+
+# Auto-plugins + Completions + Syntax-highlighting
+[[ ! ${BLE_VERSION-} ]] || ble-attach
