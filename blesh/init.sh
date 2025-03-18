@@ -20,7 +20,7 @@ bleopt prompt_ps1_transient=always
 ## percentage of the CPU core usage in integer, which can be calculated by
 ## "(usr+sys)*100/real".  The other values are all in unit of milliseconds.
 
-#bleopt exec_elapsed_mark=$'\e[94m[ble: elapsed %s (CPU %s%%)]\e[m'
+bleopt exec_elapsed_mark=
 #bleopt exec_elapsed_enabled='usr+sys>=10000'
 
 #bleopt complete_auto_complete=1
@@ -30,7 +30,7 @@ bleopt prompt_ps1_transient=always
 bleopt complete_menu_color_match=on
 
 # Syntax Highlighting
-ble-face -s argument_error 'bg=#ffc7c7,fg=#5c617d'
+ble-face -s argument_error 'fg=#ffc7c7'
 ble-face -s argument_option 'fg=#f3b175'
 ble-face -s auto_complete 'fg=#5c617d'
 ble-face -s cmdinfo_cd_cdpath 'fg=#80d7fe,bg=#5c617d,italic'
@@ -68,7 +68,7 @@ ble-face -s syntax_expr 'fg=#c9ccfb'
 ble-face -s syntax_function_name 'fg=#c9ccfb'
 ble-face -s syntax_glob 'fg=#f3b175'
 ble-face -s syntax_history_expansion 'fg=#c9ccfb,italic'
-ble-face -s syntax_param_expansion 'fg=#ffc7c7'
+ble-face -s syntax_param_expansion 'fg=#cccccc,bold'
 ble-face -s syntax_quotation 'fg=#fdf7cd'
 ble-face -s syntax_tilde 'fg=#c9ccfb'
 ble-face -s syntax_varname 'fg=#f4f3f2'
