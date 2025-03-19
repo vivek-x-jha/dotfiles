@@ -1,7 +1,6 @@
 return {
   'MunifTanjim/nui.nvim',
   'nvim-lua/plenary.nvim',
-  'nvim-tree/nvim-web-devicons',
   'nvzone/menu',
   { 'nvzone/minty', cmd = { 'Huefy', 'Shades' } },
   'nvzone/volt',
