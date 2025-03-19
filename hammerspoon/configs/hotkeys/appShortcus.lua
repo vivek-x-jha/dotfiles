@@ -65,6 +65,13 @@ return {
   },
 
   {
+    key = 'v',
+    desc = 'Toggle VLC',
+    mods = HYPER,
+    command = function() toggle 'VLC' end,
+  },
+
+  {
     key = 'w',
     desc = 'Toggle WezTerm',
     mods = HYPER,
