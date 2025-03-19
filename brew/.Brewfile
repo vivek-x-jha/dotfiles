@@ -28,7 +28,7 @@ brew "jq"
 brew "less"
 brew "llm"
 brew "mycli"
-brew "mysql"
+brew "mysql", restart_service: :changed
 brew "neovim"
 brew "node"
 brew "pam-reattach"
