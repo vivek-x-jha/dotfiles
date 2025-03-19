@@ -1,7 +1,10 @@
 #!/usr/bin/env zsh
 
 # Reload zsh
-bindkey -s '^e' 'exec "$(brew --prefix)/bin/zsh"\n'
+bindkey -s '^o' 'exec "$(brew --prefix)/bin/zsh"\n'
+
+# Autosuggestions
+bindkey '^e' autosuggest-accept
 
 # Clear screen
 bindkey -s '^[l' 'clear\n'

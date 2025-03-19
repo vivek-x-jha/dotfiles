@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Reload bash
-bind -x '"\C-e": "exec '"$(brew --prefix)"'/bin/bash"'
+bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
 
 # Clear screen
 # TODO fix so clear screen works from vim mode
