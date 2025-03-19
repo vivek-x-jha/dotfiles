@@ -1,8 +1,8 @@
 return {
   -- https://github.com/ibhagwan/fzf-lua
   {
-    lazy = false,
     'ibhagwan/fzf-lua',
+    lazy = false,
     opts = {},
   },
 
