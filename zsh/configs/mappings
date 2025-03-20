@@ -3,8 +3,9 @@
 # Reload zsh
 bindkey -s '^o' 'exec "$(brew --prefix)/bin/zsh"\n'
 
-# Autosuggestions
+# https://github.com/zsh-users/zsh-autosuggestions?tab=readme-ov-file#key-bindings
 bindkey '^e' autosuggest-accept
+bindkey '^y' autosuggest-execute
 
 # Clear screen
 bindkey -s '^[l' 'clear\n'
