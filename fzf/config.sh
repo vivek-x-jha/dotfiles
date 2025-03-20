@@ -60,7 +60,7 @@ export FZF_DEFAULT_OPTS="
 "
 
 # https://junegunn.github.io/fzf/shell-integration/#alt-c
-export FZF_ALT_C_OPTS="--header 'builtin cd --' --border-label ' 󰉖 change dir: project '"
+export FZF_ALT_C_OPTS="--header 'builtin cd --' --border-label ' 󰉖 subdirectory '"
 
 # https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
-export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header 'zoxide query --interactive' --border-label ' 󰉖 change dir: universal ' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
+export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header 'zoxide query --interactive' --border-label ' 󰉖 jump list ' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
