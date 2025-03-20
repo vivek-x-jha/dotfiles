@@ -7,6 +7,9 @@ bindkey -s '^o' 'exec "$(brew --prefix)/bin/zsh"\n'
 bindkey '^e' autosuggest-accept
 bindkey '^y' autosuggest-execute
 
+# Zoxide
+bindkey -s '^p' 'ji\n'
+
 # Clear screen
 bindkey -s '^[l' 'clear\n'
 
