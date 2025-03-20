@@ -21,8 +21,8 @@ export FZF_DEFAULT_OPTS="
   --color label:$MAGENTA_HEX
 
   --header 'Preview File/Folder Content'
-  --header-label ' Description '
-  --color header:$WHITE_HEX
+  --header-label ' Action '
+  --color header:$BLUE_HEX
   --color header-border:$BRIGHTBLACK_HEX
   --color header-label:$YELLOW_HEX
 
@@ -30,7 +30,7 @@ export FZF_DEFAULT_OPTS="
   --color preview-border:$BRIGHTBLACK_HEX
   --color preview-label:$BRIGHTMAGENTA_HEX
 
-  --input-label ' Input '
+  --input-label ' Search '
   --color input:$BLACK_HEX
   --color input-border:$BRIGHTBLACK_HEX
   --color input-label:$RED_HEX
@@ -71,9 +71,9 @@ export FZF_CTRL_R_OPTS="--bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+ab
 "
 
 # https://junegunn.github.io/fzf/shell-integration/#alt-c
-export FZF_ALT_C_OPTS="--header 'Change Directory to...' --preview '$showdir'"
+export FZF_ALT_C_OPTS="--header '󰉖 cd' --preview '$showdir'"
 
 # -------------------------------- 3rd Party Integrations ---------------------------------------
 
 # https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
-export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header 'Jump to...' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
+export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header '󰉖 cd: Zoxide' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
