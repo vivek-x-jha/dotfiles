@@ -14,28 +14,29 @@ export FZF_DEFAULT_OPTS="
   --header-first
   --padding 1,2
   --walker-skip .git,node_modules,target
+  --no-bold
 
   --border-label ' Fuzzy Search '
   --color border:$BRIGHTBLACK_HEX
-  --color label:$RED_HEX
+  --color label:$MAGENTA_HEX
 
   --header 'Preview File/Folder Content'
   --header-label ' Description '
-  --color header:$BRIGHTBLUE_HEX
+  --color header:$WHITE_HEX
   --color header-border:$BRIGHTBLACK_HEX
-  --color header-label:$BLUE_HEX
+  --color header-label:$YELLOW_HEX
 
   --preview-label ' Preview '
   --color preview-border:$BRIGHTBLACK_HEX
-  --color preview-label:$MAGENTA_HEX
+  --color preview-label:$BRIGHTMAGENTA_HEX
 
   --input-label ' Input '
   --color input:$BLACK_HEX
   --color input-border:$BRIGHTBLACK_HEX
-  --color input-label:$YELLOW_HEX
-  --color prompt:$BRIGHTYELLOW_HEX
+  --color input-label:$RED_HEX
+  --color prompt:$RED_HEX
   --color spinner:$CYAN_HEX
-  --color info:$BRIGHTYELLOW_HEX
+  --color info:$RED_HEX
   --prompt '  '
 
   --list-label ' Results '
@@ -44,11 +45,11 @@ export FZF_DEFAULT_OPTS="
   --color marker:$CYAN_HEX
   --color pointer:$GREEN_HEX
   --color fg:$BRIGHTBLACK_HEX
-  --color fg+:$BLACK_HEX
+  --color fg+:$WHITE_HEX
   --color bg+:-1
   --color gutter:-1
-  --color hl:$RED_HEX
-  --color hl+:bold:$GREEN_HEX
+  --color hl:$BLACK_HEX
+  --color hl+:$GREEN_HEX
   --marker ' '
   --pointer '󰓒'
 "
