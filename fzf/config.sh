@@ -19,12 +19,12 @@ export FZF_DEFAULT_OPTS="
   --walker-skip .git,node_modules,target
   --no-bold
 
-  --border-label ' $HOMEBREW_PREFIX/bin/fzf '
+  --border-label '  $HOMEBREW_PREFIX/bin/fzf '
   --color border:$BRIGHTBLACK_HEX
   --color label:$MAGENTA_HEX
 
   --header-label ' command '
-  --header ' $FZF_DEFAULT_COMMAND'
+  --header '$FZF_DEFAULT_COMMAND'
   --color header:$YELLOW_HEX
   --color header-border:$BRIGHTBLACK_HEX
   --color header-label:$BLUE_HEX
@@ -60,7 +60,7 @@ export FZF_DEFAULT_OPTS="
 "
 
 # https://junegunn.github.io/fzf/shell-integration/#alt-c
-export FZF_ALT_C_OPTS="--header '󰉖 cd'"
+export FZF_ALT_C_OPTS="--header 'builtin cd --' --border-label ' 󰉖 $HOMEBREW_PREFIX/bin/fzf '"
 
 # https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
-export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header '󰉖 zoxide query --interactive' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
+export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --header 'zoxide query --interactive' --border-label ' 󰉖 $HOMEBREW_PREFIX/bin/fzf ' --preview 'echo {} | cut -f2- | xargs -I{} $showdir'"
