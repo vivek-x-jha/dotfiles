@@ -102,7 +102,7 @@ alias grst='git restore --staged'
 alias grv='git remote --verbose'
 alias gst='git status'
 
-alias gsw='git branch --format="%(refname:short)" | fzf --header "git switch" --border-label "  $HOMEBREW_PREFIX/bin/fzf " --preview "git show --color=always {1}" | xargs -r git switch'
+alias gsw='git branch --format="%(refname:short)" | fzf --header "git switch" --border-label "  local branches " --preview "git show --color=always {1}" | xargs -r git switch'
 
 # -------------------------------- CLI tools ---------------------------------------
 
