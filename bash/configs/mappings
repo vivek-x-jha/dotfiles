@@ -3,6 +3,10 @@
 # Reload bash
 bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
 
+# Zoxide
+# TODO fix so selection does not die in the subshell
+bind -x '"\C-p": "ji"'
+
 # Clear screen
 # TODO fix so clear screen works from vim mode
 bind -x '"^[l": "clear-screen\n"'
