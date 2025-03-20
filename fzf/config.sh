@@ -8,43 +8,49 @@ command -v fd &>/dev/null && export FZF_DEFAULT_COMMAND='fd --type f'
 
 export FZF_DEFAULT_OPTS="
   --style full
-  --border --padding 1,2
-  --border-label ' Fuzzy Search '
-  --input-label ' Input '
-  --header-label ' Operation '
-  --preview-label ' Preview '
-  --list-label ' Results '
-  --color border:$BRIGHTBLACK_HEX
-  --color label:$BRIGHTMAGENTA_HEX
-  --color preview-border:$BLUE_HEX
-  --color preview-label:$BLUE_HEX
-  --color list-border:$GREEN_HEX
-  --color list-label:$GREEN_HEX
-  --color input-border:$YELLOW_HEX
-  --color input-label:$YELLOW_HEX
-  --color header-border:$RED_HEX
-  --color header-label:$RED_HEX
+  --layout reverse
+  --tmux center
+  --border
   --header-first
+  --padding 1,2
+  --walker-skip .git,node_modules,target
 
-  --color          bg+:-1
-  --color          fg:$BRIGHTBLACK_HEX
-  --color          fg+:$BLACK_HEX
-  --color          gutter:-1
-  --color          header:$WHITE_HEX
-  --color          hl:$GREEN_HEX
-  --color          hl+:bold:$GREEN_HEX
-  --color          info:$BRIGHTYELLOW_HEX
-  --color          marker:$CYAN_HEX
-  --color          pointer:$YELLOW_HEX
-  --color          prompt:$BRIGHTYELLOW_HEX
-  --color          spinner:$CYAN_HEX
-  --header         'Preview File/Folder Content'
-  --layout         reverse
-  --marker         ' '
-  --pointer        ''
-  --prompt         '  '
-  --tmux           center
-  --walker-skip    .git,node_modules,target
+  --border-label ' Fuzzy Search '
+  --color border:$BRIGHTBLACK_HEX
+  --color label:$RED_HEX
+
+  --header 'Preview File/Folder Content'
+  --header-label ' Description '
+  --color header:$BRIGHTBLUE_HEX
+  --color header-border:$BRIGHTBLACK_HEX
+  --color header-label:$BLUE_HEX
+
+  --preview-label ' Preview '
+  --color preview-border:$BRIGHTBLACK_HEX
+  --color preview-label:$MAGENTA_HEX
+
+  --input-label ' Input '
+  --color input:$BLACK_HEX
+  --color input-border:$BRIGHTBLACK_HEX
+  --color input-label:$YELLOW_HEX
+  --color prompt:$BRIGHTYELLOW_HEX
+  --color spinner:$CYAN_HEX
+  --color info:$BRIGHTYELLOW_HEX
+  --prompt '  '
+
+  --list-label ' Results '
+  --color list-border:$BRIGHTBLACK_HEX
+  --color list-label:$GREEN_HEX
+  --color marker:$CYAN_HEX
+  --color pointer:$GREEN_HEX
+  --color fg:$BRIGHTBLACK_HEX
+  --color fg+:$BLACK_HEX
+  --color bg+:-1
+  --color gutter:-1
+  --color hl:$RED_HEX
+  --color hl+:bold:$GREEN_HEX
+  --marker ' '
+  --pointer '󰓒'
 "
 
 # -------------------------------- Shell Integrations ---------------------------------------
