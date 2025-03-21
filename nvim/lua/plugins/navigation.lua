@@ -2,6 +2,7 @@ return {
   -- https://github.com/ibhagwan/fzf-lua
   {
     'ibhagwan/fzf-lua',
+    lazy = false,
     keys = {
       { '<leader>ff', '<cmd>FzfLua files<CR>', { desc = '[F]ind [F]iles' } },
       { '<leader>fo', '<cmd>FzfLua oldfiles<CR>', { desc = '[R]ecent [B]uffers' } },
