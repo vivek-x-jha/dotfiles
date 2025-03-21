@@ -3,6 +3,14 @@ return {
   {
     'ibhagwan/fzf-lua',
     lazy = false,
+    keys = {
+      { '<leader>ff', '<cmd>FzfLua files<CR>', { desc = 'Find files' } },
+      { '<leader>fb', '<cmd>FzfLua buffers<CR>', { desc = 'Find buffers' } },
+      { '<leader>fo', '<cmd>FzfLua oldfiles<CR>', { desc = 'Recent buffers' } },
+      { '<leader>fc:', '<cmd>FzfLua command_history<cr>', { desc = 'Find commands' } },
+      { '<leader>fn', '<cmd>FzfLua commands<cr>', { desc = 'Find Neovim commands' } },
+      { '<leader>fx', '<cmd>FzfLua autocmds<cr>', { desc = 'Find Neovim Auto Commands' } },
+    },
     opts = {},
   },
 
@@ -23,41 +31,6 @@ return {
       { '<c-l>', '<cmd>TmuxNavigateRight<CR>', { desc = 'switch window right' } },
       { '<c-\\>', '<cmd>TmuxNavigatePrevious<CR>', { desc = 'switch last window' } },
     },
-  },
-
-  -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2
-  {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-  },
-
-  -- https://github.com/nvim-telescope/telescope.nvim
-  {
-    'nvim-telescope/telescope.nvim',
-    lazy = false, --TODO figure out why this is needed
-    opts = function()
-      local actions = require 'telescope.actions'
-
-      return {
-        defaults = {
-          prompt_prefix = '   ',
-          selection_caret = ' ',
-          entry_prefix = ' ',
-          sorting_strategy = 'ascending',
-          layout_config = {
-            horizontal = {
-              prompt_position = 'top',
-              preview_width = 0.55,
-            },
-            width = 0.87,
-            height = 0.80,
-          },
-          mappings = {
-            n = { ['q'] = actions.close },
-          },
-        },
-      }
-    end,
   },
 
   -- https://github.com/nvim-tree/nvim-tree.lua

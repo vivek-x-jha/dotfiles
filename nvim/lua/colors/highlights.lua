@@ -315,27 +315,11 @@ return {
       NvimTreeGitRenamed = { link = 'NvimTreeGitStaged' },
       NvimTreeGitIgnored = { fg = theme.brightblack, italic = true },
 
-      -- Telescope
-      TelescopeBorder = { fg = theme.brightblack, bg = theme.background },
-      TelescopeMatching = { fg = theme.green, bg = theme.background },
-      TelescopeNormal = { fg = theme.brightblack, bg = theme.background },
-      TelescopeSelection = { fg = theme.black, bg = theme.background },
-
-      TelescopePromptTitle = { fg = theme.blue, bg = theme.background },
-      -- TelescopePromptBorder = { fg = theme.yellow, bg = theme.background },
-      TelescopePromptNormal = { fg = theme.white, bg = theme.background },
-      TelescopePromptPrefix = { fg = theme.magenta, bg = theme.background },
-
-      TelescopeResultsTitle = { fg = theme.brightgreen, bg = theme.background },
-      TelescopeResultsNumber = { fg = theme.yellow, bg = theme.background },
-      -- TelescopeResultsBorder = { fg = theme.magenta, bg = theme.background },
-
-      TelescopePreviewTitle = { fg = theme.red, bg = theme.background },
-      -- TelescopePreviewBorder = { fg = theme.blue, bg = theme.background },
-
-      TelescopeResultsDiffAdd = { fg = theme.green, bg = theme.background },
-      TelescopeResultsDiffChange = { fg = theme.yellow, bg = theme.background },
-      TelescopeResultsDiffDelete = { fg = theme.red, bg = theme.background },
+      -- Fzf-lua
+      FzfLuaTitle = { fg = theme.magenta },
+      FzfLuaBorder = { fg = theme.brightblack },
+      FzfLuaPreviewTitle = { fg = theme.brightmagenta },
+      FzfLuaPreviewBorder = { fg = theme.brightblack },
 
       ---------------------------- Notifications ----------------------------------
 
