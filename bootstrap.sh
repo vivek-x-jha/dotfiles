@@ -51,7 +51,6 @@ binaries=(
   keycastr
   less
   llm
-  
   mycli
   mysql
   neovim
@@ -83,21 +82,21 @@ binaries=(
   zsh
 )
 
-optional=(dropbox image2icon mimestream notion-calendar slack thinkorswim whatsapp)
-
 # Ensure bootstrap requirements installed
 echo 'INSTALLING REQUIRED PACKAGES & APPS'
 for bin in "${binaries[@]}"; do brew list "$bin" &>/dev/null || brew reinstall "$bin"; done
 
+optional=(dropbox image2icon mimestream notion-calendar slack thinkorswim whatsapp)
+
 # Install optional casks
 while true; do
   echo 'OPTIONAL CASKS TO DOWNLOAD:'
-  for app in "${optional[@]}"; do echo "$app"; done
+  for bin in "${optional[@]}"; do echo "$bin"; done
   read -rp 'INSTALL OPTIONAL APPS? (all/some/<Enter> TO SKIP): '
   case $REPLY in
-        all) for app in "${optional[@]}"; do brew reinstall "$app"; done; break ;;
+        all) for bin in "${optional[@]}"; do brew reinstall "$bin"; done; break ;;
        some) read -rp 'ENTER SPACE-SEPARATED CASKS TO INSTALL: '
-             for app in $REPLY; do brew reinstall "$app"; done; break ;;
+             for bin in $REPLY; do brew reinstall "$bin"; done; break ;;
          '') break ;;
           *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'some', OR <Enter> TO SKIP." ;;
   esac
