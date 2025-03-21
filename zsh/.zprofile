@@ -1,5 +1,6 @@
 # Reset default PATH
-declare -U path=(); eval "$(/usr/libexec/path_helper -s)"
+declare -U path=()
+eval "$(/usr/libexec/path_helper -s)"
 
 # Prepend homebrew to PATH
 eval "$(/opt/homebrew/bin/brew shellenv &>/dev/null)" || eval "$(/usr/local/bin/brew shellenv)"
@@ -11,4 +12,5 @@ eval "$(/opt/homebrew/bin/brew shellenv &>/dev/null)" || eval "$(/usr/local/bin/
 path+=("/Applications/iTerm.app/Contents/Resources/utilities")
 
 # Prepend Zsh completions and functions to FPATH
-fpath=("$ZSH_DATA_HOME/zsh-completions/src" "$ZDOTDIR/funcs" "$fpath[@]"); export FPATH
+fpath=("$ZSH_DATA_HOME/zsh-completions/src" "$ZDOTDIR/funcs" "$fpath[@]")
+export FPATH
