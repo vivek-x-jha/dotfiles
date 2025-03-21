@@ -33,7 +33,7 @@ local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   { txt = icn.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = 'FzfLua files' },
   { txt = icn.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = 'FzfLua oldfiles' },
-  { txt = icn.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fx', cmd = 'FzfLua autocmds' },
+  { txt = icn.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fa', cmd = 'FzfLua autocmds' },
   {
     txt = icn.gear .. '  Settings',
     hl = 'DashSettings',
