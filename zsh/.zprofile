@@ -1,9 +1,8 @@
 # Reset default PATH
-declare -U path=()
-eval "$(/usr/libexec/path_helper -s)"
+declare -U path=() && eval "$(/usr/libexec/path_helper -s)"
 
 # Prepend homebrew to PATH
-eval "$(/opt/homebrew/bin/brew shellenv &>/dev/null)" || eval "$(/usr/local/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null)" || eval "$(/usr/local/bin/brew shellenv)"
 
 # Load secrets
 [[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
