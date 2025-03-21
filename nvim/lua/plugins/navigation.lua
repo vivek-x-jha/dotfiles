@@ -4,12 +4,15 @@ return {
     'ibhagwan/fzf-lua',
     lazy = false,
     keys = {
+      { '<leader>fw', '<cmd>FzfLua live_grep<CR>', { desc = 'Find words' } },
       { '<leader>ff', '<cmd>FzfLua files<CR>', { desc = 'Find files' } },
       { '<leader>fb', '<cmd>FzfLua buffers<CR>', { desc = 'Find buffers' } },
       { '<leader>fo', '<cmd>FzfLua oldfiles<CR>', { desc = 'Recent buffers' } },
       { '<leader>fc:', '<cmd>FzfLua command_history<cr>', { desc = 'Find commands' } },
       { '<leader>fn', '<cmd>FzfLua commands<cr>', { desc = 'Find Neovim commands' } },
       { '<leader>fx', '<cmd>FzfLua autocmds<cr>', { desc = 'Find Neovim Auto Commands' } },
+
+      { '<leader>gs', '<cmd>FzfLua git_branches<CR>', { desc = 'Switch branches' } },
     },
     opts = {},
   },

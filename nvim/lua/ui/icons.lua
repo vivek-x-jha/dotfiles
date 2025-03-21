@@ -18,10 +18,14 @@ return {
   vim = '',
   up = '',
   down = '',
+  recent = '',
+  search = '',
+  fuzzy = '',
+  cmd_hist = '',
 
   -- lsp diagnostics
   error = '󰯈',
-  warn = '',
+  warn = '',
   hint = '',
   info = '',
 

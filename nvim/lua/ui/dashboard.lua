@@ -3,6 +3,8 @@ local utl = {}
 local api = vim.api
 local g = vim.g
 
+local icn = require 'ui.icons'
+
 local header = {
   '                                                       ',
   ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
@@ -29,10 +31,19 @@ local buttons = {
   },
 
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
-  { txt = '  Find File', hl = 'DashFindFile', keys = 'ff', cmd = 'Telescope find_files' },
-  { txt = '  Find Word', hl = 'DashFindWord', keys = 'fw', cmd = 'Telescope live_grep' },
-  { txt = '  Recent Files', hl = 'DashRecentFiles', keys = 'fo', cmd = 'Telescope oldfiles' },
-  { txt = '  Settings', hl = 'DashSettings', keys = 's', cmd = 'edit ~/.config/nvim/init.lua' },
+  { txt = icn.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = 'FzfLua files' },
+  { txt = icn.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = 'FzfLua oldfiles' },
+  { txt = icn.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fx', cmd = 'FzfLua autocmds' },
+  {
+    txt = icn.gear .. '  Settings',
+    hl = 'DashSettings',
+    keys = 's',
+    cmd = table.concat { 'edit ', os.getenv 'XDG_CONFIG_HOME', '/nvim/init.lua' },
+  },
+  { txt = icn.fuzzy .. '  Search Word', hl = 'DashWord', keys = 'fw', cmd = 'FzfLua live_grep' },
+  { txt = icn.cmd_hist .. '  Command History', hl = 'DashCmdHist', keys = 'fc', cmd = 'FzfLua command_history' },
+  { txt = icn.file .. '  Buffers', hl = 'DashBuffers', keys = 'fb', cmd = 'FzfLua buffers' },
+  { txt = icn.vim .. '  Neovim Commands', hl = 'DashNvimCmds', keys = 'fn', cmd = 'FzfLua commands' },
 }
 
 utl.remap = function(keys, action, buf)

@@ -290,13 +290,17 @@ return {
       IncSearch = { fg = theme.brightyellow, bg = theme.grey, bold = true },
 
       -- Dashboard
-      DashAscii = { fg = theme.magenta },
-      DashFindFile = { fg = theme.brightyellow },
-      DashFindWord = { fg = theme.brightred },
-      DashRecentFiles = { fg = theme.blue },
-      DashPlugins = { fg = theme.brightgreen },
+      DashAscii = { fg = theme.brightmagenta },
       DashLine = { fg = theme.black },
-      DashSettings = { fg = theme.brightmagenta },
+      DashPlugins = { fg = theme.brightyellow },
+      DashFiles = { fg = theme.red },
+      DashRecent = { fg = theme.green },
+      DashTrigger = { fg = theme.yellow },
+      DashSettings = { fg = theme.blue },
+      DashWord = { fg = theme.magenta },
+      DashCmdHist = { fg = theme.cyan },
+      DashBuffers = { fg = theme.white },
+      DashNvimCmds = { fg = theme.brightblue },
 
       -- Nvim-Tree
       NvimTreeNormal = { fg = theme.black },
