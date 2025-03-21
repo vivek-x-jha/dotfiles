@@ -14,25 +14,44 @@ eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shell
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
-packages=(
+binaries=(
+  1password
+  1password-cli
+  alfred
+  alt-tab
+  arc
   atuin
   bash
   bat
   btop
+  chatgpt
+  cleanshot
   commitizen
   coreutils
+  cursor
+  discord
+  docker
+  doll
   dust
   eza
   fd
+  figma
   fileicon
+  firefox
   fzf
   gawk
   gh
   git
   glow
+  google-chrome
+  hammerspoon
+  iterm2
   jq
+  karabiner-elements
+  keycastr
   less
   llm
+  
   mycli
   mysql
   neovim
@@ -41,10 +60,13 @@ packages=(
   pandoc
   perl
   pkgconf
+  postman
   protobuf
   rainfrog
   rename
   ripgrep
+  skim
+  spotify
   starship
   switchaudio-osx
   tealdeer
@@ -52,69 +74,30 @@ packages=(
   tokei
   tree
   uv
+  visual-studio-code
+  vlc
+  wezterm
   wget
   yazi
   zoxide
   zsh
 )
 
-casks=(
-  1password
-  1password-cli
-  alfred
-  alt-tab
-  arc
-  chatgpt
-  cleanshot
-  cursor
-  discord
-  docker
-  doll
-  figma
-  firefox
-  google-chrome
-  hammerspoon
-  iterm2
-  karabiner-elements
-  keycastr
-  postman
-  skim
-  spotify
-  visual-studio-code
-  vlc
-  wezterm
-)
-
-optional_casks=(
-  dropbox
-  image2icon
-  mimestream
-  notion-calendar
-  slack
-  thinkorswim
-  whatsapp
-)
+optional=(dropbox image2icon mimestream notion-calendar slack thinkorswim whatsapp)
 
 # Ensure bootstrap requirements installed
 echo 'INSTALLING REQUIRED PACKAGES & APPS'
-for cmd in "${packages[@]}"; do brew list "$cmd" &>/dev/null || brew install "$cmd"; done
-for app in "${casks[@]}"; do brew reinstall --cask "$app"; done
-
-# Ensure binaries without cli commands installed
-brew list pam-reattach &>/dev/null || brew install pam-reattach
-brew list mactex-no-gui &>/dev/null || brew install --cask mactex-no-gui
-brew tap homebrew/cask-fonts
-brew list font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-jetbrains-mono-nerd-font
+for bin in "${binaries[@]}"; do brew list "$bin" &>/dev/null || brew reinstall "$bin"; done
 
 # Install optional casks
 while true; do
   echo 'OPTIONAL CASKS TO DOWNLOAD:'
-  for app in "${optional_casks[@]}"; do echo "$app"; done
-  read -rp 'INSTALL OPTIONAL CASKS? (all/some/<Enter> TO SKIP): '
+  for app in "${optional[@]}"; do echo "$app"; done
+  read -rp 'INSTALL OPTIONAL APPS? (all/some/<Enter> TO SKIP): '
   case $REPLY in
-        all) for app in "${optional_casks[@]}"; do brew reinstall --cask "$app"; done; break ;;
+        all) for app in "${optional[@]}"; do brew reinstall "$app"; done; break ;;
        some) read -rp 'ENTER SPACE-SEPARATED CASKS TO INSTALL: '
-             for app in $REPLY; do brew reinstall --cask "$app"; done; break ;;
+             for app in $REPLY; do brew reinstall "$app"; done; break ;;
          '') break ;;
           *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'some', OR <Enter> TO SKIP." ;;
   esac
