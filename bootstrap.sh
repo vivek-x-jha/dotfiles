@@ -64,28 +64,27 @@ packages=(
 casks=(
   1password
   1password-cli
-  cursor
-  docker
-  hammerspoon
-  iterm2
-  karabiner-elements
-  postman
-  visual-studio-code
-  wezterm
   alfred
   alt-tab
+  arc
   chatgpt
   cleanshot
+  cursor
+  discord
+  docker
   doll
-  keycastr
-  arc
   figma
   firefox
   google-chrome
+  hammerspoon
+  iterm2
+  karabiner-elements
+  keycastr
+  postman
   skim
-  vlc
-  discord
   spotify
+  visual-studio-code
+  vlc
   wezterm
 )
 
@@ -95,8 +94,8 @@ optional_casks=(
   mimestream
   notion-calendar
   slack
-  whatsapp
   thinkorswim
+  whatsapp
 )
 
 # Ensure bootstrap requirements installed
