@@ -22,6 +22,9 @@ return {
   search = '',
   fuzzy = '',
   cmd_hist = '',
+  git = '',
+  log = '',
+  status = '󰦒',
 
   -- lsp diagnostics
   error = '󰯈',

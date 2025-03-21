@@ -301,6 +301,10 @@ return {
       DashCmdHist = { fg = theme.cyan },
       DashBuffers = { fg = theme.white },
       DashNvimCmds = { fg = theme.brightblue },
+      DashGitFiles = { fg = theme.brightred },
+      DashGitLog = { fg = theme.brightgreen },
+      DashGitStatus = { fg = theme.brightcyan },
+      DashGitSwitch = { fg = theme.brightwhite },
 
       -- Nvim-Tree
       NvimTreeNormal = { fg = theme.black },
