@@ -1,7 +1,6 @@
 tap "ammarabouzor/tui-journal"
 tap "arl/arl"
 tap "buo/cask-upgrade"
-tap "homebrew/bundle"
 tap "koekeishiya/formulae"
 tap "mikesmithgh/git-prompt-string"
 tap "nikitabobko/tap"
