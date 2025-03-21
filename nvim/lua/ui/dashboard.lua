@@ -44,6 +44,10 @@ local buttons = {
   { txt = icn.cmd_hist .. '  Command History', hl = 'DashCmdHist', keys = 'fc', cmd = 'FzfLua command_history' },
   { txt = icn.file .. '  Buffers', hl = 'DashBuffers', keys = 'fb', cmd = 'FzfLua buffers' },
   { txt = icn.vim .. '  Neovim Commands', hl = 'DashNvimCmds', keys = 'fn', cmd = 'FzfLua commands' },
+  { txt = icn.git .. '  Git Files', hl = 'DashGitFiles', keys = 'fg', cmd = 'FzfLua git_files' },
+  { txt = icn.log .. '  Git Log', hl = 'DashGitLog', keys = 'glg', cmd = 'FzfLua git_commits' },
+  { txt = icn.status .. '  Git Status', hl = 'DashGitStatus', keys = 'gst', cmd = 'FzfLua git_status' },
+  { txt = icn.branch .. '  Git Switch', hl = 'DashGitSwitch', keys = 'gsw', cmd = 'FzfLua git_branches' },
 }
 
 utl.remap = function(keys, action, buf)
