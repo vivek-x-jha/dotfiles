@@ -56,6 +56,7 @@ while true; do
 done
 
 # Upgrade commands & applications managed by Homebrew
+nikitabobko/tap
 brew tap buo/cask-upgrade
 while true; do
   read -rp 'UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): '
