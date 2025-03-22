@@ -14,20 +14,22 @@ eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shell
 
 ((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
 
-binaries=(1password 1password-cli alfred alt-tab arc atuin bash bat btop chatgpt cleanshot commitizen \
+# Ensure bootstrap requirements installed
+echo 'INSTALLING REQUIRED PACKAGES & APPS'
+
+binaries=(
+  1password 1password-cli alfred alt-tab arc atuin bash bat btop chatgpt cleanshot commitizen \
   coreutils cursor discord docker doll dust eza fd figma fileicon firefox fzf gawk gh git glow \
   google-chrome hammerspoon iterm2 jq karabiner-elements keycastr less llm mycli mysql neovim node \
   pam-reattach pandoc perl pkgconf postman protobuf rainfrog rename ripgrep skim spotify starship \
   switchaudio-osx tealdeer tmux tokei tree uv visual-studio-code vlc wezterm wget yazi zoxide zsh
 )
 
-# Ensure bootstrap requirements installed
-echo 'INSTALLING REQUIRED PACKAGES & APPS'
 for bin in "${binaries[@]}"; do brew list "$bin" &>/dev/null || brew reinstall "$bin"; done
 
+# Install optional casks
 optional=(dropbox image2icon mimestream notion-calendar slack thinkorswim whatsapp)
 
-# Install optional casks
 while true; do
   echo 'OPTIONAL CASKS TO DOWNLOAD:'
   for bin in "${optional[@]}"; do echo "$bin"; done
