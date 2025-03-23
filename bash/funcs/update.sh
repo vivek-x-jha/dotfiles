@@ -105,7 +105,7 @@ update_all() {
   # Run homebrew utilities
   brew cleanup
   brew doctor
-  brew bundle dump --force --file="$XDG_CONFIG_HOME/brew/.Brewfile"
+  brew bundle dump --force --file="${1:-$HOME/.dotfiles/Brewfile}"
 
   # Customize app icon for any upgraded cask
   update_icons
