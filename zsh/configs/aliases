@@ -8,9 +8,6 @@ alias va='$EDITOR $(fd -HItf --exclude .git --exclude .github --exclude Session.
 # Fuzzy Search all files in current directory, then open
 alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
 
-# Open vim/noevim workspace from Session file
-[[ $EDITOR == vim || $EDITOR == nvim ]] && alias vs='$EDITOR -S Session.vim'
-
 # Open vim using viminfo state file
 alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 
