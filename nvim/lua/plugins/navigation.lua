@@ -27,6 +27,14 @@ return {
           title_flags = false,
         },
       },
+      git = {
+        branches = {
+          no_header = true,
+          winopts = {
+            title = '  branches ',
+          },
+        },
+      },
     },
   },
 
