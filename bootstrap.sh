@@ -17,33 +17,23 @@ eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shell
 # Ensure bootstrap requirements installed
 echo 'INSTALLING REQUIRED PACKAGES & APPS'
 
-binaries=(
-  1password 1password-cli alfred alt-tab arc atuin bash bat btop chatgpt cleanshot commitizen \
-  coreutils cursor discord docker doll dust eza fd figma fileicon firefox fzf gawk gh git glow \
-  google-chrome hammerspoon iterm2 jq karabiner-elements keycastr less llm mycli mysql neovim node \
-  pam-reattach pandoc perl pkgconf postman protobuf rainfrog rename ripgrep skim spotify starship \
-  switchaudio-osx tealdeer tmux tokei tree uv visual-studio-code vlc wezterm wget yazi zoxide zsh
-)
-
-for bin in "${binaries[@]}"; do brew list "$bin" &>/dev/null || brew reinstall "$bin"; done
-
-# Install optional casks
-optional=(dropbox image2icon mimestream notion-calendar slack thinkorswim whatsapp)
-
 while true; do
-  echo 'OPTIONAL CASKS TO DOWNLOAD:'
-  for bin in "${optional[@]}"; do echo "$bin"; done
-  read -rp 'INSTALL OPTIONAL APPS? (all/some/<Enter> TO SKIP): '
+  read -rp 'INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): '
   case $REPLY in
-        all) for bin in "${optional[@]}"; do brew reinstall "$bin"; done; break ;;
-       some) read -rp 'ENTER SPACE-SEPARATED CASKS TO INSTALL: '
-             for bin in $REPLY; do brew reinstall "$bin"; done; break ;;
-         '') break ;;
-          *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'all', 'some', OR <Enter> TO SKIP." ;;
+    [Yy]*)
+      read -rp 'ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): ' brewfile
+      [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
+
+      echo "USING BREWFILE: $brewfile"
+
+      [[ $brewfile =~ ^https?:// ]] && { curl -fsSL "$brewfile" | brew bundle --file=-; break; }
+      [[ -f $brewfile ]] && { brew bundle --file="$brewfile"; break; }
+
+      echo "[ERROR] INVALID PATH OR URL: $brewfile"; break ;;
+    '') break ;;
+     *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
   esac
 done
-
-echo "COMMANDS SUCCESSFULLY INSTALLED: $(brew --prefix)"
 
 # Run Homebrew utility functions
 while true; do
@@ -56,8 +46,6 @@ while true; do
 done
 
 # Upgrade commands & applications managed by Homebrew
-nikitabobko/tap
-brew tap buo/cask-upgrade
 while true; do
   read -rp 'UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): '
   case $REPLY in
@@ -178,7 +166,6 @@ symlinks=(
   ../.dotfiles/bash        "$XDG_CONFIG_HOME" bash
   ../.dotfiles/bat         "$XDG_CONFIG_HOME" bat
   ../.dotfiles/blesh       "$XDG_CONFIG_HOME" blesh
-  ../.dotfiles/brew        "$XDG_CONFIG_HOME" brew
   ../.dotfiles/btop        "$XDG_CONFIG_HOME" btop
   ../.dotfiles/dust        "$XDG_CONFIG_HOME" dust
   ../.dotfiles/eza         "$XDG_CONFIG_HOME" eza
