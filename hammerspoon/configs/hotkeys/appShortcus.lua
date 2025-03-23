@@ -16,6 +16,13 @@ return {
   },
 
   {
+    key = 'd',
+    desc = 'Toggle Docker Desktop',
+    mods = HYPER,
+    command = function() toggle 'Docker Desktop' end,
+  },
+
+  {
     key = 'g',
     desc = 'Toggle Gmail Client',
     mods = HYPER,
