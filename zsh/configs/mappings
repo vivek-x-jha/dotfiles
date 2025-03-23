@@ -11,8 +11,7 @@ bindkey '^y' autosuggest-execute
 bindkey -s '^p' 'ji\n'
 
 # Neovim
-bindkey -s '^n' '"$EDITOR"\n'
-bindkey -s '^s' '"$EDITOR" -S Session.vim\n'
+bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
 
 # Clear screen
 bindkey -s '^[l' 'clear\n'

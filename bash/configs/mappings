@@ -4,8 +4,7 @@
 bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
 
 # Reload bash
-bind -x '"\C-n": '"$EDITOR"
-bind -x '"\C-s": '"$EDITOR"' -S Session.vim'
+bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
 
 # Zoxide
 # TODO fix so selection does not die in the subshell
