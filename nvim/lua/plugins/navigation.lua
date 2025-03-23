@@ -7,7 +7,7 @@ return {
       { '<leader>fo', '<cmd>FzfLua oldfiles<CR>', { desc = '[R]ecent [B]uffers' } },
       { '<leader>fa', '<cmd>FzfLua autocmds<cr>', { desc = '[F]ind Neovim [A]uto-commands' } },
       { '<leader>fw', '<cmd>FzfLua live_grep<CR>', { desc = '[F]ind [W]ord' } },
-      { '<leader>fc:', '<cmd>FzfLua command_history<cr>', { desc = '[F]ind [C]ommands' } },
+      { '<leader>fc', '<cmd>FzfLua command_history<cr>', { desc = '[F]ind [C]ommands' } },
       { '<leader>fb', '<cmd>FzfLua buffers<CR>', { desc = '[F]ind [B]uffers' } },
       { '<leader>fn', '<cmd>FzfLua commands<cr>', { desc = '[F]ind Neovim [C]ommands' } },
       { '<leader>fg', '<cmd>FzfLua git_files<cr>', { desc = '[F]ind [G]it Files' } },
