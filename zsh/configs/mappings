@@ -10,6 +10,10 @@ bindkey '^y' autosuggest-execute
 # Zoxide
 bindkey -s '^p' 'ji\n'
 
+# Neovim
+bindkey -s '^n' '"$EDITOR"\n'
+bindkey -s '^s' '"$EDITOR" -S Session.vim\n'
+
 # Clear screen
 bindkey -s '^[l' 'clear\n'
 
