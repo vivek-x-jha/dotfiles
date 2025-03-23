@@ -1,4 +1,4 @@
-#!/usrr/bin/env bash
+#!/usr/bin/env bash
 
 update_feature_branches() {
   local default=main
