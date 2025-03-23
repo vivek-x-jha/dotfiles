@@ -6,22 +6,20 @@ command -v xcode-select &>/dev/null || { echo Please run: xcode-select --install
 echo 󰓒 INSTALLATION START 󰓒
 step=0
 
-((step++)); echo 󰓒 [$step/13] INSTALLING PACKAGE MANAGER 󰓒
+((step++)); echo "󰓒 [$step/12] INSTALLING COMMANDS & APPS 󰓒"
 
 # Install Homebrew
+echo "󰓒 [$step.1/13] INSTALLING PACKAGE MANAGER 󰓒"
 [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+echo 'HOMEBREW INSTALLED!'
 
-((step++)); echo "󰓒 [$step/13] INSTALLING COMMANDS & APPS 󰓒"
-
-# Ensure bootstrap requirements installed
-echo 'INSTALLING REQUIRED PACKAGES & APPS'
-
+# Install all formulae and casks
 while true; do
-  read -rp 'INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): '
+  read -rp "󰓒 [$step.2/13] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*)
-      read -rp 'ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): ' brewfile
+      read -rp "󰓒 [$step.2.1/13] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
       [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
 
       echo "USING BREWFILE: $brewfile"
@@ -37,7 +35,7 @@ done
 
 # Run Homebrew utility functions
 while true; do
-  read -rp 'CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): '
+  read -rp "󰓒 [$step.3/13] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*) brew cleanup; brew doctor; break ;;
        '') break ;;
@@ -47,7 +45,7 @@ done
 
 # Upgrade commands & applications managed by Homebrew
 while true; do
-  read -rp 'UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): '
+  read -rp "󰓒 [$step.4/13] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*) brew upgrade; brew cu -af; break ;;
        '') break ;;
@@ -55,7 +53,7 @@ while true; do
   esac
 done
 
-((step++)); echo "󰓒 [$step/13] SET ENVIRONMENT 󰓒"
+((step++)); echo "󰓒 [$step/12] SET ENVIRONMENT 󰓒"
 
 # XDG directory structure
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -120,7 +118,7 @@ EOF
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
-((step++)); echo "󰓒 [$step/13] CREATE SYMLINKS & DIRECTORIES 󰓒"
+((step++)); echo "󰓒 [$step/12] CREATE SYMLINKS & DIRECTORIES 󰓒"
 
 symlink() {
   local src="$1"
@@ -200,7 +198,7 @@ symlinks=(
 # Safely create links - skips over broken paths
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-((step++)); echo "󰓒 [$step/13] CONFIGURE MACOS OPTIONS 󰓒"
+((step++)); echo "󰓒 [$step/12] CONFIGURE MACOS OPTIONS 󰓒"
 num=0
 
 ((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
@@ -236,7 +234,7 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 killall Dock
 
-((step++)); echo "󰓒 [$step/13] CONFIGURE GIT AND GITHUB CLI 󰓒"
+((step++)); echo "󰓒 [$step/12] CONFIGURE GIT AND GITHUB CLI 󰓒"
 
 # Update git credentials
 git config --global user.name       "$GIT_NAME"
@@ -262,7 +260,7 @@ gh repo set-default "$GITHUB_NAME/dotfiles"
 rm -f "$HOME/.dotfiles/gh/hosts.yml"
 git add --all
 
-((step++)); echo "󰓒 [$step/13] INSTALL SHELL PLUGINS 󰓒"
+((step++)); echo "󰓒 [$step/12] INSTALL SHELL PLUGINS 󰓒"
 
 # Install zsh plugin manager zap
 [[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
@@ -272,7 +270,7 @@ git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyo
 make -C ble.sh install PREFIX="$HOME/.local"
 rm -rf ble.sh
 
-((step++)); echo "󰓒 [$step/13] SETUP ATUIN SYNC 󰓒"
+((step++)); echo "󰓒 [$step/12] SETUP ATUIN SYNC 󰓒"
 
 # Create atuin login
 op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
@@ -284,7 +282,7 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-op_fetch() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal; }
+op_fetch () { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal; }
 
 atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(op_fetch password)"
 
@@ -301,12 +299,12 @@ atuin status | grep -q "$ATUIN_USERNAME" || (
 atuin import auto
 atuin sync
 
-((step++)); echo "󰓒 [$step/13] LOAD BAT THEMES 󰓒"
+((step++)); echo "󰓒 [$step/12] LOAD BAT THEMES 󰓒"
 
 # Rebuild bat cache any time theme folder changes
 bat cache --build
 
-((step++)); echo "󰓒 [$step/13] SETUP TOUCHID SUDO 󰓒"
+((step++)); echo "󰓒 [$step/12] SETUP TOUCHID SUDO 󰓒"
 
 # Ensure touchid possible in interactive mode or tmux
 echo "# Authenticate with Touch ID - even in tmux
@@ -317,11 +315,11 @@ auth  sufficient  pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
 bat /etc/pam.d/sudo_local
 
 # Hide tty login message for iterm
-((step++)); echo "󰓒 [$step/13] SURPRESS ITERM2 LOGIN 󰓒"
+((step++)); echo "󰓒 [$step/12] SURPRESS ITERM2 LOGIN 󰓒"
 echo 'CREATED ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
-((step++)); echo "󰓒 [$step/13] CHANGE SHELL 󰓒"
+((step++)); echo "󰓒 [$step/12] CHANGE SHELL 󰓒"
 for shell in bash zsh; do
   shell_path="$(brew --prefix)/bin/$shell"
   grep -qxF "$shell_path" /etc/shells || echo "$shell_path" | sudo tee -a /etc/shells
@@ -331,7 +329,7 @@ chsh -s "$shell_path"
 echo "CURRENT SHELL IS $(basename "$SHELL")"
 echo "SHELL=$shell_path"
 
-((step++)); echo "󰓒 [$step/13] HAMMERSPOON SETUP 󰓒"
+((step++)); echo "󰓒 [$step/12] HAMMERSPOON SETUP 󰓒"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
 echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
 
