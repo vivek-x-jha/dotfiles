@@ -1,18 +1,6 @@
-return {
-  -- https://github.com/folke/which-key.nvim
-  -- TODO create standardized groups and icons (mostly in mappings)
-  {
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
-    keys = { '<leader>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
-    cmd = 'WhichKey',
-    opts = {
-      preset = 'helix',
-      delay = 500,
-    },
-  },
+-- https://github.com/nvzone/showkeys
 
-  -- https://github.com/nvzone/showkeys
+return {
   {
     'nvzone/showkeys',
     cmd = { 'ShowkeysToggle' },
