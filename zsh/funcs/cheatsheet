@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# Define column widths
+local key_width=13
+local desc_width=35
+local cmd_width=40
+local table_width=$((key_width + desc_width + cmd_width + 2)) # +2 for spacing
+
+# Print separator line that matches column layout
+print_separator() {
+  printf "${BRIGHTBLACK}%-${table_width}s${RESET}\n" '' | tr ' ' '-'
+}
+
+print_separator
+printf "${YELLOW}%-13s ${BLUE}%-35s ${GREEN}%-40s${RESET}\n" 'Key' 'Desc' 'Cmd'
+print_separator
+
+# Flat array of bindings in the format 'KEY>:Description:Command'
+local bindings=(
+  '<A-L>:clear terminal screen:clear'
+  '<A-C>:jump to subdirectory:builtin cd --'
+  '<C-E>:select autosuggestion:autosuggest-accept'
+  '<C-R>:search shell command history:atuin-search'
+  '<C-T>:fuzzy search files/directories:fzf'
+  '<C-Y>:run autosuggestion:autosuggest-execute'
+  '<C-U>:delete chars left of cursor:unix-line-discard'
+  '<C-I>:accept autocomplete:fzf-completion'
+  '<C-O>:reload shell:exec '"$(brew --prefix)/bin/${ZSH_VERSION:+zsh}${BASH_VERSION:+bash}"
+  '<C-P>:search frequent directories:zoxide query --interactive'
+  '<C-A>:invoke tmux hotkey:tmux prefix'
+  '<C-D>:end input:logout'
+  '<C-Z>:suspend process (restart with fg):kill -TSTP <pid>'
+  '<C-C>:interrupt process:kill -INT <pid>'
+  '<C-N>:open previous neovim session:nvim -S'
+  '<Up>:search shell last command history:atuin-up-search'
+)
+
+# Color names mapped to base16 (you must have these env vars)
+local -a colornames=(
+  BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE
+  BRIGHTBLACK BRIGHTRED BRIGHTGREEN BRIGHTYELLOW BRIGHTBLUE BRIGHTMAGENTA BRIGHTCYAN BRIGHTWHITE
+)
+
+local i=1
+for binding in "${bindings[@]}"; do
+  local colorname="${colornames[$((i % 17))]}"
+  local color="${(P)colorname}"
+  echo -e "${color}${binding}${RESET}"
+  ((i++))
+done | awk -F ':' -v k="$key_width" -v d="$desc_width" -v c="$cmd_width" '
+  {
+    printf "%-*s %-*s %-*s\n", k, $1, d, $2, c, ($3 ? $3 : "")
+  }'
