@@ -20,23 +20,77 @@ return {
     opts = {
       fzf_opts = {},
       files = {
-        header = false,
+        header = 'fd --type f',
         winopts = {
-          title = table.concat { ' ', icn.file, ' Files ' },
+          title = table.concat { ' ', icn.search, ' files ' },
+          title_flags = false,
+        },
+      },
+      oldfiles = {
+        header = ':FzfLua oldfiles',
+        winopts = {
+          title = table.concat { ' ', icn.recent, ' recent files ' },
+          title_flags = false,
+        },
+      },
+      autocmds = {
+        header = ':autocmd',
+        winopts = {
+          title = table.concat { ' ', icn.warn, ' event triggers ' },
+          title_flags = false,
+        },
+      },
+      grep = {
+        header = 'rg --vimgrep',
+        winopts = {
+          title = table.concat { ' ', icn.fuzzy, ' fuzzy search' },
+          title_flags = false,
+        },
+      },
+      command_history = {
+        header = ':history',
+        winopts = {
+          title = table.concat { ' ', icn.cmd_hist, ' command history ' },
+          title_flags = false,
+        },
+      },
+      buffers = {
+        header = ':ls',
+        winopts = {
+          title = table.concat { ' ', icn.file, ' buffers ' },
+          title_flags = false,
+        },
+      },
+      commands = {
+        header = ':command',
+        winopts = {
+          title = table.concat { ' ', icn.vim, ' commands ' },
           title_flags = false,
         },
       },
       git = {
+        files = {
+          header = 'git ls-files',
+          winopts = {
+            title = table.concat { ' ', icn.git, ' ', icn.file, ' files (git) ' },
+          },
+        },
         branches = {
           header = 'git switch',
           winopts = {
-            title = '  branches ',
+            title = table.concat { ' ', icn.branch, ' branches ' },
           },
         },
         status = {
           header = 'git status',
           winopts = {
-            title = '  status ',
+            title = table.concat { ' ', icn.status, ' git status ' },
+          },
+        },
+        commits = {
+          header = 'git log --oneline',
+          winopts = {
+            title = table.concat { ' ', icn.log, '  git commits ' },
           },
         },
       },
