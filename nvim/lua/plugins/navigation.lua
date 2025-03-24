@@ -18,10 +18,9 @@ return {
       { '<leader>gsw', '<cmd>FzfLua git_branches<cr>', { desc = '[G]it [S]witch' } },
     },
     opts = {
-      fzf_opts = {
-        ['--no-header'] = '',
-      },
+      fzf_opts = {},
       files = {
+        header = false,
         winopts = {
           title = table.concat { ' ', icn.file, ' Files ' },
           title_flags = false,
@@ -29,9 +28,15 @@ return {
       },
       git = {
         branches = {
-          no_header = true,
+          header = 'git switch',
           winopts = {
             title = '  branches ',
+          },
+        },
+        status = {
+          header = 'git status',
+          winopts = {
+            title = '  status ',
           },
         },
       },

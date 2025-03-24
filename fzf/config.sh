@@ -25,28 +25,28 @@ export FZF_DEFAULT_OPTS="
 
   --header-label ' command '
   --header '$FZF_DEFAULT_COMMAND'
-  --color header:$YELLOW_HEX
+  --color header:$GREEN_HEX
   --color header-border:$BRIGHTBLACK_HEX
-  --color header-label:$BLUE_HEX
+  --color header-label:$RED_HEX
 
-  --preview-label ' preview: C-/ '
+  --preview-label ' preview '
   --preview '[[ -d {} ]] && $showdir || $showfile'
   --bind 'ctrl-/:change-preview-window(hidden|)'
   --color preview-border:$BRIGHTBLACK_HEX
-  --color preview-label:$BRIGHTMAGENTA_HEX
+  --color preview-label:$CYAN_HEX
 
   --input-label ' query '
   --color query:$WHITE_HEX
   --color input-border:$BRIGHTBLACK_HEX
-  --color input-label:$RED_HEX
-  --color prompt:$RED_HEX
+  --color input-label:$BLUE_HEX
+  --color prompt:$BLUE_HEX
   --color spinner:$CYAN_HEX
-  --color info:$RED_HEX
+  --color info:$BRIGHTMAGENTA_HEX
   --prompt '  '
 
   --list-label ' results '
   --color list-border:$BRIGHTBLACK_HEX
-  --color list-label:$GREEN_HEX
+  --color list-label:$YELLOW_HEX
   --color marker:$CYAN_HEX
   --color pointer:$GREEN_HEX
   --color fg:$BRIGHTBLACK_HEX
