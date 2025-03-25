@@ -68,18 +68,14 @@ count_files () (
 list_tmux_sessions () {
   local session
   session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --header="tmux switch/attach" \
+    fzf --header="tmux attach[switch]" \
         --border-label="  sessions " \
-        --preview='tmux list-windows -t {}' \
-        --preview-window=up:wrap:60%)
+        --no-preview)
 
   [ -z "$session" ] && return 0
 
-  if [ -n "$TMUX" ]; then
-    tmux switch-client -t "$session"
-  else
-    tmux attach-session -t "$session"
-  fi
+  [ -n "$TMUX" ] && tmux switch-client -t "$session" && exit
+  tmux attach-session -t "$session"
 }
 
 list_colors () {
