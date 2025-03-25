@@ -6,7 +6,7 @@ cheatsheet () {
   # Define column widths
   local key_width=13
   local desc_width=35
-  local cmd_width=40
+  local cmd_width=20
   local table_width=$((key_width + desc_width + cmd_width + 2)) # +2 for spacing
 
   # Print separator line that matches column layout
@@ -15,7 +15,7 @@ cheatsheet () {
   }
 
   print_separator
-  printf "${YELLOW}%-13s ${BLUE}%-35s ${GREEN}%-40s${RESET}\n" 'Key' 'Desc' 'Cmd'
+  printf "${YELLOW}%-6s ${BLUE}%-35s ${GREEN}%-40s${RESET}\n" 'Key' 'Desc' 'Cmd'
   print_separator
 
   # Flat array of bindings in the format 'KEY>:Description:Command'
