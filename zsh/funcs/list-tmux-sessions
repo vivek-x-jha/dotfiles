@@ -1,7 +1,16 @@
 #!/usr/bin/env zsh
 
-# TODO standardize with header
-tmux list-sessions | awk -F '[ :()]+' 'BEGIN { \
-printf "%-13s %-5s %-25s\n", "Session", "Win", "Date Created"; \
-print "·······································"} \
-{ printf "%-13s %-5s %s %s %s (%s:%s)\n", $1, $2, $6, $7, $11, $8, $9 }'
+local session
+session=$(tmux list-sessions -F "#{session_name}" | \
+  fzf --header="tmux switch/attach" \
+      --border-label="  sessions " \
+      --preview='tmux list-windows -t {}' \
+      --preview-window=up:wrap:60%)
+
+[ -z "$session" ] && return 0
+
+if [ -n "$TMUX" ]; then
+  tmux switch-client -t "$session"
+else
+  tmux attach-session -t "$session"
+fi
