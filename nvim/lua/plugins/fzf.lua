@@ -19,7 +19,14 @@ return {
       { '<leader>gsw', '<cmd>FzfLua git_branches<cr>', { desc = '[G]it [S]witch' } },
     },
     opts = {
-      fzf_opts = {},
+      winopts = {
+        preview = {
+          winopts = {
+            number = false,
+          },
+        },
+      },
+
       files = {
         header = 'fd --type f',
         winopts = {
@@ -30,6 +37,8 @@ return {
 
       oldfiles = {
         header = ':FzfLua oldfiles',
+        include_current_session = true,
+        cwd_only = true,
         winopts = {
           title = table.concat { ' ', icn.recent, ' recent files ' },
           title_flags = false,

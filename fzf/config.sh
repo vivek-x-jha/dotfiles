@@ -1,7 +1,7 @@
 # https://junegunn.github.io/fzf/
 
 showdir="$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')"
-showfile="$(command -v bat &>/dev/null && echo 'bat -n --color=always {}' || echo 'cat {}')"
+showfile="$(command -v bat &>/dev/null && echo 'bat -p --color=always {}' || echo 'cat {}')"
 
 # -------------------------------- Defaults ---------------------------------------
 
