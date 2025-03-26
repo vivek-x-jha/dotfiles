@@ -22,6 +22,13 @@ return {
   },
 
   {
+    desc = 'Clear notifications',
+    mode = 'n',
+    keys = '<leader>nd',
+    command = '<cmd>NoiceDismiss<CR>',
+  },
+
+  {
     desc = '[S]ave file',
     mode = { 'n', 'i', 'v' },
     keys = '<C-s>',
