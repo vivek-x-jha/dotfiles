@@ -23,6 +23,7 @@ return {
         preview = {
           winopts = {
             number = false,
+            signcolumn = 'yes',
           },
         },
       },
@@ -79,28 +80,28 @@ return {
 
       git = {
         files = {
-          header = ':!git ls-files',
+          header = ':!git ls-files --exclude-standard',
           winopts = {
             title = table.concat { ' ', icn.git, ' ', icn.file, ' files (git) ' },
           },
         },
 
         branches = {
-          header = ':!git switch',
+          header = ':!git branch --all --color && git switch',
           winopts = {
             title = table.concat { ' ', icn.branch, ' branches ' },
           },
         },
 
         status = {
-          header = ':!git status',
+          header = ':!git -c color.status=false --no-optional-locks status --porcelain=v1 -u',
           winopts = {
             title = table.concat { ' ', icn.status, ' git status ' },
           },
         },
 
         commits = {
-          header = ':!git log --oneline --date=relative',
+          header = ':!git log --color --pretty=format:"..."',
           winopts = {
             title = table.concat { ' ', icn.log, '  git commits ' },
           },
