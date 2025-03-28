@@ -1,6 +1,5 @@
--- https://github.com/folke/noice.nvim
 -- TODO update colorscheme
-
+-- https://github.com/folke/noice.nvim
 return {
   'folke/noice.nvim',
   event = 'VeryLazy',

@@ -1,5 +1,4 @@
 -- https://github.com/HakonHarnes/img-clip.nvim
-
 return {
   'HakonHarnes/img-clip.nvim',
   event = 'VeryLazy',

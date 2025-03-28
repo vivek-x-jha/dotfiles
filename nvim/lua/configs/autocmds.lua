@@ -68,27 +68,6 @@ return {
   },
 
   {
-    desc = 'Disable cursorline in terminal buffers',
-    group = augroup { 'TermAU', false },
-    event = 'TermOpen',
-    callback = function() vim.wo.cursorline = false end,
-  },
-
-  {
-    desc = 'Re-enable cursorline after leaving terminal buffers',
-    group = augroup { 'TermAU', false },
-    event = 'TermLeave',
-    callback = function() vim.wo.cursorline = true end,
-  },
-
-  {
-    desc = 'Save terminal state on close',
-    group = augroup { 'TermAU', false },
-    event = 'TermClose',
-    callback = function(args) require('ui.terminal').save(args.buf, nil) end,
-  },
-
-  {
     desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
     group = augroup 'TreeAU',
     event = {
