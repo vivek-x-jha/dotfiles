@@ -1,3 +1,4 @@
+-- https://github.com/akinsho/toggleterm.nvim
 return {
   'akinsho/toggleterm.nvim',
   lazy = false,
@@ -15,7 +16,7 @@ return {
       border = 'curved',
       title = vim.fn.expand '$SHELL', -- Set terminal title to the shell
       title_pos = 'center', -- Position title in the center      width = math.floor(vim.o.columns * 0.8),
-      width = math.floor(vim.o.columns * 0.8),
+      width = math.floor(vim.o.columns * 0.6),
       height = math.floor(vim.o.lines * 0.6),
       row = math.floor((vim.o.lines - (vim.o.lines * 0.6)) / 2),
       col = math.floor((vim.o.columns - (vim.o.columns * 0.8)) / 2),

@@ -1,7 +1,6 @@
--- https://github.com/ibhagwan/fzf-lua
-
 local icn = require 'ui.icons'
 
+-- https://github.com/ibhagwan/fzf-lua
 return {
   {
     'ibhagwan/fzf-lua',

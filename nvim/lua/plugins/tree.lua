@@ -1,7 +1,6 @@
--- https://github.com/nvim-tree/nvim-tree.lua
-
 local icn = require 'ui.icons'
 
+-- https://github.com/nvim-tree/nvim-tree.lua
 return {
   'nvim-tree/nvim-tree.lua',
   cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },

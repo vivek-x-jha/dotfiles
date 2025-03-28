@@ -1,5 +1,4 @@
 -- https://github.com/yetone/avante.nvim
-
 return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
