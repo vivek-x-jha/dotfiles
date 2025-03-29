@@ -5,7 +5,7 @@ return {
   config = function()
     local icn = require 'ui.icons'
     local utl = require 'configs.utils'
-    local lsp_servers = vim.fn.stdpath 'config' .. '/lua/lsp'
+    local servers = vim.fn.stdpath 'config' .. '/lua/lsp'
 
     -- configure diagnostics
     vim.diagnostic.config {
@@ -23,7 +23,7 @@ return {
     }
 
     -- configure language servers
-    for _, server in ipairs(utl.filenames(lsp_servers)) do
+    for _, server in ipairs(utl.filenames(servers)) do
       require('lspconfig')[server].setup {
         on_attach = function(_, bufnr)
           local mappings = {
