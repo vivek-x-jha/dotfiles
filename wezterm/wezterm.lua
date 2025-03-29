@@ -41,17 +41,7 @@ config.default_cursor_style = 'BlinkingBlock'
 -- Set window opts
 config.enable_tab_bar = false
 
-if wezterm.target_triple:match 'apple%-darwin' then
-  config.macos_window_background_blur = 60
-
-  config.keys = {
-    {
-      key = 'f',
-      mods = 'CMD|CTRL',
-      action = wezterm.action.ToggleFullScreen,
-    },
-  }
-end
+config.macos_window_background_blur = wezterm.target_triple:match 'apple%-darwin' and 60
 
 config.window_background_opacity = 0.9
 
