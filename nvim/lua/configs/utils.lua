@@ -33,6 +33,27 @@ return {
     vim.api.nvim_create_user_command(name, cmd, opts)
   end,
 
+  filenames = function(folder)
+    local uv = vim.loop
+    local files = {}
+    local fd = uv.fs_opendir(folder, nil, 50)
+    if fd then
+      while true do
+        local dir_entries = uv.fs_readdir(fd)
+        if not dir_entries then break end
+        for _, entry in ipairs(dir_entries) do
+          if entry.type == 'file' and entry.name:match '%.lua$' then
+            -- Use vim.fn to strip extension
+            local basename = vim.fn.fnamemodify(entry.name, ':r')
+            table.insert(files, basename)
+          end
+        end
+      end
+      uv.fs_closedir(fd)
+    end
+    return files
+  end,
+
   load = function(self, type)
     local commands = {
       usercmds = self.create_user_command,

@@ -1,17 +1,12 @@
-local icn = require 'ui.icons'
-local utl = require 'configs.utils'
-
-local lspservers = {
-  'basedpyright',
-  'bashls',
-  'lua_ls',
-}
-
 -- https://github.com/neovim/nvim-lspconfig
 return {
   'neovim/nvim-lspconfig',
   event = 'User FilePost',
   config = function()
+    local icn = require 'ui.icons'
+    local utl = require 'configs.utils'
+    local servers = utl.filenames(vim.fn.stdpath 'config' .. '/lua/lsp')
+
     -- configure diagnostics
     vim.diagnostic.config {
       virtual_text = { prefix = icn.virtualcircle },
@@ -28,7 +23,7 @@ return {
     }
 
     -- configure language servers
-    for _, server in ipairs(lspservers) do
+    for _, server in ipairs(servers) do
       require('lspconfig')[server].setup {
         on_attach = function(_, bufnr)
           local mappings = {
