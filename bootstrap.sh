@@ -9,33 +9,29 @@ step=0
 ((step++)); echo "󰓒 [$step/12] INSTALLING COMMANDS & APPS 󰓒"
 
 # Install Homebrew
-echo "󰓒 [$step.1/13] INSTALLING PACKAGE MANAGER 󰓒"
+echo "󰓒 [$step.1/12] INSTALLING PACKAGE MANAGER 󰓒"
 [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 echo 'HOMEBREW INSTALLED!'
 
 # Install all formulae and casks
 while true; do
-  read -rp "󰓒 [$step.2/13] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): "
+  read -rp "󰓒 [$step.2/12] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): "
   case $REPLY in
-    [Yy]*)
-      read -rp "󰓒 [$step.2.1/13] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
-      [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
-
-      echo "USING BREWFILE: $brewfile"
-
-      [[ $brewfile =~ ^https?:// ]] && { curl -fsSL "$brewfile" | brew bundle --file=-; break; }
-      [[ -f $brewfile ]] && { brew bundle --file="$brewfile"; break; }
-
-      echo "[ERROR] INVALID PATH OR URL: $brewfile"; break ;;
-    '') break ;;
-     *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
+    [Yy]*) read -rp "󰓒 [$step.2.1/12] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
+           [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
+           echo "USING BREWFILE: $brewfile"
+           [[ $brewfile =~ ^https?:// ]] && { curl -fsSL "$brewfile" | brew bundle --file=-; break; }
+           [[ -f $brewfile ]] && { brew bundle --file="$brewfile"; break; }
+           echo "[ERROR] INVALID PATH OR URL: $brewfile"; break ;;
+       '') break ;;
+        *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
   esac
 done
 
 # Run Homebrew utility functions
 while true; do
-  read -rp "󰓒 [$step.3/13] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
+  read -rp "󰓒 [$step.3/12] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*) brew cleanup; brew doctor; break ;;
        '') break ;;
@@ -45,7 +41,7 @@ done
 
 # Upgrade commands & applications managed by Homebrew
 while true; do
-  read -rp "󰓒 [$step.4/13] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): "
+  read -rp "󰓒 [$step.4/12] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*) brew upgrade; brew cu -af; break ;;
        '') break ;;
