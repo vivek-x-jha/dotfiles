@@ -1,5 +1,6 @@
 local buf = require 'ui.buffers'
 local nvtree = require('nvim-tree.api').tree
+local term = require 'ui.terminal'
 
 --- Keymaps Table to be scheduled for remappings:
 ---
@@ -249,6 +250,41 @@ return {
     mode = 't',
     keys = '<C-x>',
     command = '<C-\\><C-N>',
+  },
+
+  {
+    desc = 'Open [h]orizontal terminal',
+    mode = 'n',
+    keys = '<leader>h',
+    command = function() term.open { pos = 'sp' } end,
+  },
+
+  {
+    desc = 'Open [v]ertical terminal',
+    mode = 'n',
+    keys = '<leader>v',
+    command = function() term.open { pos = 'vsp' } end,
+  },
+
+  {
+    desc = 'Toggle [v]ertical terminal',
+    mode = { 'n', 't' },
+    keys = '<A-v>',
+    command = function() term.toggle { pos = 'vsp', id = 'vtoggleTerm' } end,
+  },
+
+  {
+    desc = 'Toggle [h]orizontal terminal',
+    mode = { 'n', 't' },
+    keys = '<A-h>',
+    command = function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end,
+  },
+
+  {
+    desc = 'Toggle [f]loating terminal',
+    mode = { 'n', 't' },
+    keys = '<A-i>',
+    command = function() term.toggle { pos = 'float', id = 'floatTerm' } end,
   },
 
   -- Gitsigns
