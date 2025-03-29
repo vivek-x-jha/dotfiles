@@ -49,15 +49,22 @@ return {
     end
   end,
 
-  move_max_app = function(appName, screen)
+  move_almost_max_app = function(appName, screen)
     local app = hs.application.get(appName)
     if app then
       app:activate() -- Brings the app to the foreground
       local win = app:mainWindow()
       if win then
         win:moveToScreen(screen)
-        win:maximize()
         win:focus() -- Ensure the window is visible and active
+        local screenFrame = win:screen():frame()
+        local margin = 50
+        win:setFrame {
+          x = screenFrame.x + margin,
+          y = screenFrame.y + margin,
+          w = screenFrame.w - (2 * margin),
+          h = screenFrame.h - (2 * margin),
+        }
       else
         hs.alert.show(appName .. ' has no open window')
       end
