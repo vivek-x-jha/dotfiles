@@ -93,12 +93,12 @@ return {
       local win = hs.window.focusedWindow()
       if win then
         local screenFrame = win:screen():frame()
-        local margin = 30 -- Adjust this value for the desired margin size
+        local margin = 50
         win:setFrame {
           x = screenFrame.x + margin,
           y = screenFrame.y + margin,
-          w = screenFrame.w - (3 * margin),
-          h = screenFrame.h - (3 * margin),
+          w = screenFrame.w - (2 * margin),
+          h = screenFrame.h - (2 * margin),
         }
         print('Almost Maximized ' .. win:title())
       else
