@@ -35,4 +35,3 @@
 --- @field load fun(self: Utils, type: string): nil Remaps key sequence
 --- @field set_keymap fun(opts: KeyMap): nil Remaps key sequence
 --- @field set_hlgroups fun(hlgroups: table): nil Sets highlight groups
---- @field set_terminal_colors fun(theme: Colorscheme): nil Sets terminal colors based on theme
