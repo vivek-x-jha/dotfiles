@@ -55,10 +55,10 @@ config.window_frame = {
   border_bottom_height = 1,
   border_top_height = 1,
 
-  border_left_color = config.colors.ansi[1],
-  border_right_color = config.colors.ansi[1],
-  border_bottom_color = config.colors.ansi[1],
-  border_top_color = config.colors.ansi[1],
+  border_left_color = config.colors.brights[1],
+  border_right_color = config.colors.brights[1],
+  border_bottom_color = config.colors.brights[1],
+  border_top_color = config.colors.brights[1],
 }
 
 -- https://wezterm.org/config/lua/config/window_padding.html?h=window_padd
