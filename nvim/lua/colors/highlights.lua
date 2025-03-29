@@ -7,18 +7,22 @@ return {
     --- @type boolean, Colorscheme Check if given colorscheme exists
     local theme_exists, theme = pcall(require, 'colors.themes.' .. opts.colorscheme)
 
+    -- Theme not found error message
     if not theme_exists then
-      --- @type string Errror message when colorscheme unavailable
-      local err_msg = table.concat {
-        'Highlights not loaded! Cannot load "~/.config/nvim/lua/',
-        string.gsub(opts.colorscheme, '%.', '/'),
-        '.lua"',
-      }
-
-      vim.notify(err_msg, vim.log.levels.ERROR)
+      vim.notify(
+        table.concat {
+          'Highlights not loaded! Cannot load "',
+          vim.fn.stdpath('config'):gsub(vim.fn.expand '$HOME', '~'),
+          '/lua/colors/themes/',
+          opts.colorscheme,
+          '.lua"',
+        },
+        vim.log.levels.ERROR
+      )
       return
     end
 
+    -- Neovim terminal font colors
     utl.set_terminal_colors(theme)
 
     ---------------------------- Spectre ----------------------------------
