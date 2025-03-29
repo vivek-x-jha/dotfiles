@@ -21,8 +21,17 @@ while true; do
     [Yy]*) read -rp "󰓒 [$step.2.1/12] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
            [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
            echo "USING BREWFILE: $brewfile"
+
+           # Expand ~ or $HOME if present
+           [[ $brewfile =~ ^~ ]] && brewfile="${HOME}${brewfile:1}"
+           brewfile="${brewfile/#\~/$HOME}"
+
+           # Handle URLs
            [[ $brewfile =~ ^https?:// ]] && { curl -fsSL "$brewfile" | brew bundle --file=-; break; }
+
+           # Check for local file existence after path expansion
            [[ -f $brewfile ]] && { brew bundle --file="$brewfile"; break; }
+
            echo "[ERROR] INVALID PATH OR URL: $brewfile"; break ;;
        '') break ;;
         *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
