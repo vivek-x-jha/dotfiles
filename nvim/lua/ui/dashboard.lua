@@ -34,7 +34,7 @@ local buttons = {
   { txt = icn.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = 'lua require("fzf-lua").files()' },
   { txt = icn.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = 'lua require("fzf-lua").oldfiles()' },
   { txt = icn.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fa', cmd = 'lua require("fzf-lua").autocmds()' },
-  { txt = icn.gear .. '  Settings', hl = 'DashSettings', keys = 's', cmd = table.concat { 'edit ', os.getenv 'XDG_CONFIG_HOME', '/nvim/init.lua' } },
+  { txt = icn.gear .. '  Settings', hl = 'DashSettings', keys = 's', cmd = table.concat { 'edit ', vim.fn.stdpath 'config', '/init.lua' } },
   { txt = icn.fuzzy .. '  Search Word', hl = 'DashWord', keys = 'fw', cmd = 'lua require("fzf-lua").live_grep()' },
   { txt = icn.cmd_hist .. '  Command History', hl = 'DashCmdHist', keys = 'fc', cmd = 'lua require("fzf-lua").command_history()' },
   { txt = icn.file .. '  Buffers', hl = 'DashBuffers', keys = 'fb', cmd = 'lua require("fzf-lua").buffers()' },
