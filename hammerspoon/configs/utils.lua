@@ -1,5 +1,5 @@
 return {
-  set_console = function(opts_path)
+  setConsole = function(opts_path)
     local options = require(opts_path)
 
     for setting, opts in pairs(options) do
@@ -11,7 +11,7 @@ return {
     end
   end,
 
-  toggle_app = function(app_name)
+  toggleApp = function(app_name)
     local app = hs.application.get(app_name)
 
     if app and app:isFrontmost() then
@@ -31,7 +31,7 @@ return {
     end
   end,
 
-  move_app = function(app_pos)
+  moveApp = function(app_pos)
     local win = hs.window.focusedWindow()
 
     if not win then
@@ -49,7 +49,7 @@ return {
     end
   end,
 
-  move_almost_max_app = function(appName, screen)
+  positionApp = function(appName, screen)
     local app = hs.application.get(appName)
     if app then
       app:activate() -- Brings the app to the foreground
@@ -73,7 +73,7 @@ return {
     end
   end,
 
-  bind_hotkeys = function(hotkey_path)
+  bindHotkeys = function(hotkey_path)
     -- Translate the dot-based hotkey_path into a file path
     local path = hs.configdir .. '/' .. hotkey_path:gsub('%.', '/')
 

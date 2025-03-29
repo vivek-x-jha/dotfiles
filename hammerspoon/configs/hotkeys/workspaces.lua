@@ -1,9 +1,9 @@
-local workspace = require('utils').move_almost_max_app
+local utl = require 'utils'
 
 return {
   {
     key = '1',
-    desc = 'Set Workspace: ChatGPT -> WezTerm -> Arc',
+    desc = 'Set utl.positionApp: ChatGPT -> WezTerm -> Arc',
     mods = HYPER,
     command = function()
       -- Get all screens
@@ -14,9 +14,9 @@ return {
       end
 
       -- Move apps to their respective screens and make them visible
-      workspace('Arc', screens[3])
-      workspace('ChatGPT', screens[2])
-      workspace('WezTerm', screens[1])
+      utl.positionApp('Arc', screens[3])
+      utl.positionApp('ChatGPT', screens[2])
+      utl.positionApp('WezTerm', screens[1])
     end,
   },
 }
