@@ -1,4 +1,4 @@
-local workspace = require('utils').move_max_app
+local workspace = require('utils').move_almost_max_app
 
 return {
   {
