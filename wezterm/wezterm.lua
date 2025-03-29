@@ -2,9 +2,6 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder() or {}
 
-local border_thick = 2
-local border_color = '#5c617d'
-
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
 config.bold_brightens_ansi_colors = false
 config.colors = {
@@ -22,8 +19,8 @@ config.colors = {
 }
 
 -- Command Palette: activate with <Ctrl + Shift + p>
-config.command_palette_fg_color = '#cdd6f4'
-config.command_palette_bg_color = '#212030'
+config.command_palette_fg_color = config.colors.cursor_bg
+config.command_palette_bg_color = config.colors.background
 config.command_palette_font_size = 16
 config.command_palette_rows = 20
 
@@ -63,15 +60,15 @@ config.window_decorations = 'RESIZE'
 
 -- https://wezterm.org/config/lua/config/window_frame.html?h=window_frame
 config.window_frame = {
-  border_left_width = border_thick,
-  border_right_width = border_thick,
-  border_bottom_height = border_thick,
-  border_top_height = border_thick,
+  border_left_width = 1,
+  border_right_width = 1,
+  border_bottom_height = 1,
+  border_top_height = 1,
 
-  border_left_color = border_color,
-  border_right_color = border_color,
-  border_bottom_color = border_color,
-  border_top_color = border_color,
+  border_left_color = config.colors.ansi[1],
+  border_right_color = config.colors.ansi[1],
+  border_bottom_color = config.colors.ansi[1],
+  border_top_color = config.colors.ansi[1],
 }
 
 -- https://wezterm.org/config/lua/config/window_padding.html?h=window_padd
