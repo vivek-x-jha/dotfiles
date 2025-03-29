@@ -34,6 +34,5 @@
 --- @field filenames fun(folder: string): string[] Creates array of all lua files in given folder
 --- @field load fun(self: Utils, type: string): nil Remaps key sequence
 --- @field set_keymap fun(opts: KeyMap): nil Remaps key sequence
---- @field set_rtp fun(lazypath: string): nil Sets runtime path (rtp) and clones lazy.nvim repo if not present
 --- @field set_hlgroups fun(hlgroups: table): nil Sets highlight groups
 --- @field set_terminal_colors fun(theme: Colorscheme): nil Sets terminal colors based on theme

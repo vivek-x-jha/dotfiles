@@ -98,34 +98,6 @@ return {
     vim.keymap.set(mode, keys, command, opts)
   end,
 
-  set_rtp = function(lazypath)
-    -- Bootstrap lazy if not installed
-    if not vim.uv.fs_stat(lazypath) then
-      local out = vim.fn.system {
-        'git',
-        'clone',
-        '--filter=blob:none',
-        '--branch=stable',
-        'https://github.com/folke/lazy.nvim.git',
-        lazypath,
-      }
-
-      if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({
-          { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-          { out, 'WarningMsg' },
-          { '\nPress any key to exit...' },
-        }, true, {})
-
-        vim.fn.getchar()
-        os.exit(1)
-      end
-    end
-
-    -- Prepend lazy to rtp
-    vim.opt.rtp:prepend(lazypath)
-  end,
-
   set_hlgroups = function(hlgroups)
     for hlgroup, hlopts in pairs(hlgroups) do
       vim.api.nvim_set_hl(0, hlgroup, hlopts)
