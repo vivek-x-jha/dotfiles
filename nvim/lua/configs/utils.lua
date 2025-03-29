@@ -103,27 +103,4 @@ return {
       vim.api.nvim_set_hl(0, hlgroup, hlopts)
     end
   end,
-
-  set_terminal_colors = function(theme)
-    for i, color in ipairs {
-      'black',
-      'red',
-      'green',
-      'yellow',
-      'blue',
-      'magenta',
-      'cyan',
-      'white',
-      'brightblack',
-      'brightred',
-      'brightgreen',
-      'brightyellow',
-      'brightblue',
-      'brightmagenta',
-      'brightcyan',
-      'brightwhite',
-    } do
-      vim.g['terminal_color_' .. (i - 1)] = theme[color]
-    end
-  end,
 }

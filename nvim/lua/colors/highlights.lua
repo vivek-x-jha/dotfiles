@@ -22,8 +22,31 @@ return {
       return
     end
 
-    -- Neovim terminal font colors
-    utl.set_terminal_colors(theme)
+    ---------------------------- Terminal ----------------------------------
+
+    --- @type string[16] Neovim terminal font color
+    local base16 = {
+      'black',
+      'red',
+      'green',
+      'yellow',
+      'blue',
+      'magenta',
+      'cyan',
+      'white',
+      'brightblack',
+      'brightred',
+      'brightgreen',
+      'brightyellow',
+      'brightblue',
+      'brightmagenta',
+      'brightcyan',
+      'brightwhite',
+    }
+
+    for i, color in ipairs(base16) do
+      vim.g['terminal_color_' .. (i - 1)] = theme[color]
+    end
 
     ---------------------------- Spectre ----------------------------------
     if opts.plugin == 'spectre' then
