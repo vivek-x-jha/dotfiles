@@ -34,7 +34,7 @@
 	old = red
 	meta = black
 	new = green
-	frag = blue
+	frag = yellow
 	context = brightblack
 [color "decorate"]
 	HEAD = brightgreen
