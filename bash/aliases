@@ -2,7 +2,7 @@
 
 # Load shared aliases from zsh
 # shellcheck disable=SC1091
-source "$ZDOTDIR/configs/aliases"
+source "$ZDOTDIR/aliases"
 
 # Aggregate number of files
 alias count-files=count_files
