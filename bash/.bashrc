@@ -29,7 +29,7 @@ for fn in "$XDG_CONFIG_HOME/bash/funcs/"*.sh; do source "$fn"; done
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Aliases
-source "$XDG_CONFIG_HOME/bash/configs/aliases"
+source "$XDG_CONFIG_HOME/bash/aliases"
 
 # Color ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME"/eza/.dircolors || dircolors "$XDG_CONFIG_HOME"/eza/.dircolors)"
@@ -47,7 +47,7 @@ eval "$(atuin init bash)"
 eval "$(zoxide init bash --cmd j)"
 
 # Keybindings
-source "$XDG_CONFIG_HOME/bash/configs/mappings"
+source "$XDG_CONFIG_HOME/bash/mappings"
 
 # Auto-plugins + Completions + Syntax-highlighting
 [[ ! ${BLE_VERSION-} ]] || ble-attach
