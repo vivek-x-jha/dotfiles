@@ -32,13 +32,13 @@ source "$XDG_CONFIG_HOME/op/plugins.sh"
 plug marlonrichert/zsh-autocomplete; plug hlissner/zsh-autopair; plug zsh-users/zsh-autosuggestions
 
 # Completions
-plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/configs/completions"
+plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/completions"
 
 # Syntax-highlighting
-plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/configs/syntax-highlighting"
+plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/syntax-highlighting"
 
 # Aliases
-source "$ZDOTDIR/configs/aliases"
+source "$ZDOTDIR/aliases"
 
 # Color ls, tree, eza
 eval "$(gdircolors "$XDG_CONFIG_HOME"/eza/.dircolors || dircolors "$XDG_CONFIG_HOME"/eza/.dircolors)"
@@ -53,4 +53,4 @@ eval "$(atuin init zsh)"
 eval "$(zoxide init zsh --cmd j)"
 
 # Keybindings
-source "$ZDOTDIR/configs/mappings"
+source "$ZDOTDIR/mappings"
