@@ -1,5 +1,3 @@
-local fn = vim.fn
-
 return {
   Lua = {
     diagnostics = {
@@ -7,11 +5,11 @@ return {
     },
     workspace = {
       library = {
-        fn.expand '$VIMRUNTIME/lua',
-        fn.expand '$VIMRUNTIME/lua/vim/lsp',
-        fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
+        vim.fn.expand '$VIMRUNTIME/lua',
+        vim.fn.expand '$VIMRUNTIME/lua/vim/lsp',
+        vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
         '${3rd}/luv/library',
-        fn.expand '~/.hammerspoon/Spoons/EmmyLua.spoon/annotations', -- Add EmmyLua annotations
+        vim.fn.expand(vim.fn.stdpath 'config' .. '/hammerspoon/Spoons/EmmyLua.spoon/annotations'),
       },
       maxPreload = 100000,
       preloadFileSize = 10000,
