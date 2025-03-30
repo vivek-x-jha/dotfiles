@@ -38,6 +38,9 @@ while true; do
   esac
 done
 
+# Update Brewfile
+brew bundle dump --force --file="$HOME/.dotfiles/Brewfile"
+
 # Run Homebrew utility functions
 while true; do
   read -rp "󰓒 [$step.3/12] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
