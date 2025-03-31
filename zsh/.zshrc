@@ -20,7 +20,7 @@ source "$ZDOTDIR/.zprofile"
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
 # Prompt
-plug romkatv/powerlevel10k && source "$ZDOTDIR/themes/.p10k-sourdiesel.zsh"
+plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
 
 # Functions
 for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
