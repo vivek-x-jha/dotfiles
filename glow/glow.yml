@@ -1,7 +1,7 @@
 # https://github.com/charmbracelet/glow/blob/master/README.md
 
 # style name or JSON path (default "auto")
-style: "$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
+style: glow/styles/sourdiesel.json
 # mouse support (TUI-mode only)
 mouse: true
 # use pager to display markdown
