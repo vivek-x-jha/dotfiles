@@ -2,12 +2,17 @@
 
 clear
 
+# Set color vars
+RED='\e[0;31m'
+YELLOW='\e[0;33m'
 CYAN='\e[0;36m'
+WHITE='\e[0;37m'
 PURPLE='\e[0;95m'
+
 RESET='\e[0m'
 
 # Ensure Xcode installed
-command -v xcode-select &>/dev/null || { echo Please run: xcode-select --install; exit 1; }
+command -v xcode-select &>/dev/null || { echo -e "${RED}Please run: xcode-select --install${RESET}"; exit 1; }
 
 echo -e "${CYAN}󰓒 INSTALLATION START 󰓒${RESET}"
 step=0
@@ -22,9 +27,9 @@ echo 'HOMEBREW INSTALLED!'
 
 # Install all formulae and casks
 while true; do
-  read -rp "${CYAN}󰓒 [$step.2/12] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): "
+  read -rp "${CYAN}󰓒 [$step.2/12] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): ${RESET}"
   case $REPLY in
-    [Yy]*) read -rp "${CYAN}󰓒 [$step.2.1/12] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
+    [Yy]*) read -rp "${CYAN}󰓒 [$step.2.1/12] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): ${RESET}" brewfile
            [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
            echo "USING BREWFILE: $brewfile"
 
@@ -38,9 +43,9 @@ while true; do
            # Check for local file existence after path expansion
            [[ -f $brewfile ]] && { brew bundle --file="$brewfile"; break; }
 
-           echo "[ERROR] INVALID PATH OR URL: $brewfile"; break ;;
+           echo -e "${RED}[ERROR] INVALID PATH OR URL: ${YELLOW}$brewfile${RESET}"; break ;;
        '') break ;;
-        *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
+        *) echo -e "${RED}[ERROR] INVALID INPUT! ${YELLOW}PLEASE ENTER 'y' OR <Enter> TO SKIP.${RESET}" ;;
   esac
 done
 
@@ -49,21 +54,21 @@ brew bundle dump --force --file="$HOME/.dotfiles/Brewfile"
 
 # Run Homebrew utility functions
 while true; do
-  read -rp "${CYAN}󰓒 [$step.3/12] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
+  read -rp "${CYAN}󰓒 [$step.3/12] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): ${RESET}"
   case $REPLY in
     [Yy]*) brew cleanup; brew doctor; break ;;
        '') break ;;
-        *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
+        *) echo -e "${RED}[ERROR] INVALID INPUT! ${YELLOW}PLEASE ENTER 'y' OR <Enter> TO SKIP.${RESET}" ;;
   esac
 done
 
 # Upgrade commands & applications managed by Homebrew
 while true; do
-  read -rp "${CYAN}󰓒 [$step.4/12] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): "
+  read -rp "${CYAN}󰓒 [$step.4/12] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): ${RESET}"
   case $REPLY in
     [Yy]*) brew upgrade; brew cu -af; break ;;
        '') break ;;
-        *) echo "[ERROR] INVALID INPUT! PLEASE ENTER 'y' OR <Enter> TO SKIP." ;;
+        *) echo -e "${RED}[ERROR] INVALID INPUT! ${YELLOW}PLEASE ENTER 'y' OR <Enter> TO SKIP.${RESET}" ;;
   esac
 done
 
@@ -80,31 +85,31 @@ op signin
 
 while true; do
   # Required 
-  read -rp 'Please enter your Git Username: ' GIT_NAME
-  read -rp 'Please enter your Git Email: '    GIT_EMAIL
+  read -rp "${WHITE}Please enter your Git Username: ${RESET}" GIT_NAME
+  read -rp "${WHITE}Please enter your Git Email: ${RESET}"    GIT_EMAIL
 
   # Optional 
-  read -rp "1Password Vault name (<Enter> to set to 'Private'): "
+  read -rp "${WHITE}1Password Vault name (<Enter> to set to 'Private'): ${RESET}"
   OP_VAULT="${REPLY:-Private}"
 
   OP_GIT_SIGNKEY="$(op item get 'GitHub Signing Key' --vault "$OP_VAULT" --field 'public key')" &>/dev/null
 
-  read -rp "Git Signing Key (<Enter> to set to '${OP_GIT_SIGNKEY:0:18} ... ${OP_GIT_SIGNKEY: -10}'): "
+  read -rp "${WHITE}Git Signing Key (<Enter> to set to '${OP_GIT_SIGNKEY:0:18} ... ${OP_GIT_SIGNKEY: -10}'): ${RESET}"
   GIT_SIGNINGKEY="${REPLY:-$OP_GIT_SIGNKEY}"
 
-  read -rp "GitHub User (<Enter> to set to '${GIT_EMAIL%@*}'): "
+  read -rp "${WHITE}GitHub User (<Enter> to set to '${GIT_EMAIL%@*}'): ${RESET}"
   GITHUB_NAME="${REPLY:-${GIT_EMAIL%@*}}"
 
-  read -rp "1Password Atuin Sync Title (<Enter> to set to 'Atuin Sync'): "
+  read -rp "${WHITE}1Password Atuin Sync Title (<Enter> to set to 'Atuin Sync'): ${RESET}"
   ATUIN_OP_TITLE="${REPLY:-Atuin Sync}"
 
-  read -rp "Atuin Username (<Enter> to set to '${GIT_EMAIL%@*}'): "
+  read -rp "${WHITE}Atuin Username (<Enter> to set to '${GIT_EMAIL%@*}'): ${RESET}"
   ATUIN_USERNAME="${REPLY:-${GIT_EMAIL%@*}}"
 
-  read -rp "Atuin Email (<Enter> to set to '$GIT_EMAIL'): "
+  read -rp "${WHITE}Atuin Email (<Enter> to set to '$GIT_EMAIL'): ${RESET}"
   ATUIN_EMAIL="${REPLY:-$GIT_EMAIL}"
 
-  read -rp "Media directory ~/\$MEDIA (<Enter> to skip): " MEDIA
+  read -rp "${WHITE}Media directory ~/\$MEDIA (<Enter> to skip): ${RESET}" MEDIA
 
   cat <<EOF
 -------------- ENVIRONMENT ------------------
@@ -128,7 +133,7 @@ MEDIA=~/$MEDIA
 ---------------------------------------------
 EOF
 
-  read -rp "RE-ENTER ANY VARIABLES? (<Enter> TO CONTINUE): "
+  read -rp "${YELLOW}RE-ENTER ANY VARIABLES? (<Enter> TO CONTINUE): ${RESET}"
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
