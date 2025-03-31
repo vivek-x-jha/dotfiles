@@ -3,6 +3,7 @@
 clear
 
 CYAN='\e[0;36m'
+PURPLE='\e[0;95m'
 RESET='\e[0m'
 
 # Ensure Xcode installed
@@ -214,35 +215,35 @@ for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+
 ((step++)); echo -e "${CYAN}󰓒 [$step/12] CONFIGURE MACOS OPTIONS 󰓒${RESET}"
 num=0
 
-((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
+((num++)); echo -e "${PURPLE}opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
 [[ -d $HOME/Pictures/screenshots ]] || mkdir "$HOME/Pictures/screenshots"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
 
-((num++)); echo "opt${num}: Speed up dock animation"
+((num++)); echo -e "${PURPLE}opt${num}: Speed up dock animation"
 defaults write com.apple.dock autohide-delay -float 0.1
 
-((num++)); echo "opt${num}: Speed up dock animation"
+((num++)); echo -e "${PURPLE}opt${num}: Speed up dock animation"
 defaults write com.apple.dock autohide -bool true
 
-((num++)); echo "opt${num}: Remove dock autohide animation"
+((num++)); echo -e "${PURPLE}opt${num}: Remove dock autohide animation"
 defaults write com.apple.dock autohide-time-modifier -int 0
 
-((num++)); echo "opt${num}: Show app switcher on all screens"
+((num++)); echo -e "${PURPLE}opt${num}: Show app switcher on all screens"
 defaults write com.apple.dock appswitcher-all-displays -bool true
 
-((num++)); echo "opt${num}: Shorten Mission Control animation"
+((num++)); echo -e "${PURPLE}opt${num}: Shorten Mission Control animation"
 defaults write com.apple.dock expose-animation-duration -float 0.1
 
-((num++)); echo "opt${num}: Use list view in Finder"
+((num++)); echo -e "${PURPLE}opt${num}: Use list view in Finder"
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
-((num++)); echo "opt${num}: Enable quitting Finder via ⌘ + Q"
+((num++)); echo -e "${PURPLE}opt${num}: Enable quitting Finder via ⌘ + Q"
 defaults write com.apple.finder QuitMenuItem -bool true
 
-((num++)); echo "opt${num}: Show hidden files in Finder"
+((num++)); echo -e "${PURPLE}opt${num}: Show hidden files in Finder"
 defaults write com.apple.finder AppleShowAllFiles -bool true
 
-((num++)); echo "opt${num}: Disable file extension change warning"
+((num++)); echo -e "${PURPLE}opt${num}: Disable file extension change warning"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 killall Dock
