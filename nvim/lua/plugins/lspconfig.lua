@@ -9,7 +9,10 @@ return {
 
     -- configure diagnostics
     vim.diagnostic.config {
-      virtual_text = { prefix = icn.virtualcircle },
+      virtual_text = {
+        current_line = true,
+        prefix = icn.virtualcircle,
+      },
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = icn.error,
