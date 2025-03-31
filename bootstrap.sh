@@ -1,24 +1,29 @@
 #!/usr/bin/env bash
 
+clear
+
+CYAN='\e[0;36m'
+RESET='\e[0m'
+
 # Ensure Xcode installed
 command -v xcode-select &>/dev/null || { echo Please run: xcode-select --install; exit 1; }
 
-echo 󰓒 INSTALLATION START 󰓒
+echo -e "${CYAN}󰓒 INSTALLATION START 󰓒${RESET}"
 step=0
 
-((step++)); echo "󰓒 [$step/12] INSTALLING COMMANDS & APPS 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] INSTALLING COMMANDS & APPS 󰓒${RESET}"
 
 # Install Homebrew
-echo "󰓒 [$step.1/12] INSTALLING PACKAGE MANAGER 󰓒"
+echo -e "${CYAN}󰓒 [$step.1/12] INSTALLING PACKAGE MANAGER 󰓒${RESET}"
 [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]] || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 echo 'HOMEBREW INSTALLED!'
 
 # Install all formulae and casks
 while true; do
-  read -rp "󰓒 [$step.2/12] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): "
+  read -rp "${CYAN}󰓒 [$step.2/12] INSTALL PACKAGES & APPS FROM BREWFILE? (<Enter> TO SKIP): "
   case $REPLY in
-    [Yy]*) read -rp "󰓒 [$step.2.1/12] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
+    [Yy]*) read -rp "${CYAN}󰓒 [$step.2.1/12] ENTER BREWFILE PATH OR URL (<Enter> TO USE DEFAULT): " brewfile
            [[ -z $brewfile ]] && brewfile='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
            echo "USING BREWFILE: $brewfile"
 
@@ -43,7 +48,7 @@ brew bundle dump --force --file="$HOME/.dotfiles/Brewfile"
 
 # Run Homebrew utility functions
 while true; do
-  read -rp "󰓒 [$step.3/12] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
+  read -rp "${CYAN}󰓒 [$step.3/12] CHECK HOMEBREW HEALTH? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*) brew cleanup; brew doctor; break ;;
        '') break ;;
@@ -53,7 +58,7 @@ done
 
 # Upgrade commands & applications managed by Homebrew
 while true; do
-  read -rp "󰓒 [$step.4/12] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): "
+  read -rp "${CYAN}󰓒 [$step.4/12] UPDATE HOMEBREW COMMANDS & APPS? (<Enter> TO SKIP): "
   case $REPLY in
     [Yy]*) brew upgrade; brew cu -af; break ;;
        '') break ;;
@@ -61,7 +66,7 @@ while true; do
   esac
 done
 
-((step++)); echo "󰓒 [$step/12] SET ENVIRONMENT 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] SET ENVIRONMENT 󰓒${RESET}"
 
 # XDG directory structure
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -126,7 +131,7 @@ EOF
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
-((step++)); echo "󰓒 [$step/12] CREATE SYMLINKS & DIRECTORIES 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] CREATE SYMLINKS & DIRECTORIES 󰓒${RESET}"
 
 symlink() {
   local src="$1"
@@ -206,7 +211,7 @@ symlinks=(
 # Safely create links - skips over broken paths
 for ((i=0; i<${#symlinks[@]}; i+=3)); do symlink "${symlinks[i]}" "${symlinks[i+1]}" "${symlinks[i+2]}"; done
 
-((step++)); echo "󰓒 [$step/12] CONFIGURE MACOS OPTIONS 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] CONFIGURE MACOS OPTIONS 󰓒${RESET}"
 num=0
 
 ((num++)); echo "opt${num}: Change default screenshots location to ~/Pictures/screenshots/"
@@ -242,7 +247,7 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 killall Dock
 
-((step++)); echo "󰓒 [$step/12] CONFIGURE GIT AND GITHUB CLI 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] CONFIGURE GIT AND GITHUB CLI 󰓒${RESET}"
 
 # Update git credentials
 git config --global user.name       "$GIT_NAME"
@@ -251,7 +256,7 @@ git config --global user.signingkey "$GIT_SIGNINGKEY"
 
 # Update git authentication to ssh and show fetch/push urls
 git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
-git -C "$HOME/.dotfiles" remote --verbose
+git -C "$HOME/.dotfiles" remote add upstream git@github.com:vivek-x-jha/dotfiles.git
 
 # Update ssh allowed signers
 echo "$GIT_EMAIL $GIT_SIGNINGKEY" > "$XDG_CONFIG_HOME/ssh/allowed_signers"
@@ -268,7 +273,7 @@ gh repo set-default "$GITHUB_NAME/dotfiles"
 rm -f "$HOME/.dotfiles/gh/hosts.yml"
 git add --all
 
-((step++)); echo "󰓒 [$step/12] INSTALL SHELL PLUGINS 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] INSTALL SHELL PLUGINS 󰓒${RESET}"
 
 # Install zsh plugin manager zap
 [[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
@@ -278,7 +283,7 @@ git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyo
 make -C ble.sh install PREFIX="$HOME/.local"
 rm -rf ble.sh
 
-((step++)); echo "󰓒 [$step/12] SETUP ATUIN SYNC 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] SETUP ATUIN SYNC 󰓒${RESET}"
 
 # Create atuin login
 op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
@@ -307,12 +312,12 @@ atuin status | grep -q "$ATUIN_USERNAME" || (
 atuin import auto
 atuin sync
 
-((step++)); echo "󰓒 [$step/12] LOAD BAT THEMES 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] LOAD BAT THEMES 󰓒${RESET}"
 
 # Rebuild bat cache any time theme folder changes
 bat cache --build
 
-((step++)); echo "󰓒 [$step/12] SETUP TOUCHID SUDO 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] SETUP TOUCHID SUDO 󰓒${RESET}"
 
 # Ensure touchid possible in interactive mode or tmux
 echo "# Authenticate with Touch ID - even in tmux
@@ -323,11 +328,11 @@ auth  sufficient  pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
 bat /etc/pam.d/sudo_local
 
 # Hide tty login message for iterm
-((step++)); echo "󰓒 [$step/12] SURPRESS ITERM2 LOGIN 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] SURPRESS ITERM2 LOGIN 󰓒${RESET}"
 echo 'CREATED ~/.hushlogin'
 touch "$HOME/.hushlogin" 
 
-((step++)); echo "󰓒 [$step/12] CHANGE SHELL 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] CHANGE SHELL 󰓒${RESET}"
 for shell in bash zsh; do
   shell_path="$(brew --prefix)/bin/$shell"
   grep -qxF "$shell_path" /etc/shells || echo "$shell_path" | sudo tee -a /etc/shells
@@ -337,7 +342,7 @@ chsh -s "$shell_path"
 echo "CURRENT SHELL IS $(basename "$SHELL")"
 echo "SHELL=$shell_path"
 
-((step++)); echo "󰓒 [$step/12] HAMMERSPOON SETUP 󰓒"
+((step++)); echo -e "${CYAN}󰓒 [$step/12] HAMMERSPOON SETUP 󰓒${RESET}"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
 echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
 
