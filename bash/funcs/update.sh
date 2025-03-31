@@ -81,7 +81,7 @@ update_icons() {
     # Function to print the status of setting file icons
     print_status() { printf "${1}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" "$2" "$directory" "$(basename "$icon")"; }
 
-    if sudo fileicon set "$dir" "$icon" &> /dev/null || [[ $(basename "$directory") == 'Mimestream.app' ]]; then
+    if sudo fileicon set "$dir" "$icon" &>/dev/null || [[ $(basename "$directory") == 'Mimestream.app' ]]; then
       print_status "${GREEN}" " "
     else
       print_status "${RED}" " "

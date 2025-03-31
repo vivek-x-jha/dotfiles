@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Create directory-icons association
-command -v fileicon &> /dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1; }
+command -v fileicon &>/dev/null || { printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."; return 1; }
 
 local table_width=60
 declare -A dir_icons=(
@@ -57,7 +57,7 @@ for dir in "${sorted_dirs[@]}"; do
   # Function to print the status of setting file icons
   print_status() { printf "${1}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" "$2" "$directory" "$(basename "$icon")"; }
 
-  if sudo fileicon set "$dir" "$icon" &> /dev/null || [[ $(basename "$directory") == 'Mimestream.app' ]]; then
+  if sudo fileicon set "$dir" "$icon" &>/dev/null || [[ $(basename "$directory") == 'Mimestream.app' ]]; then
     print_status "${GREEN}" " "
   else
     print_status "${RED}" " "
