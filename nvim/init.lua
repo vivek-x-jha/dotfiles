@@ -7,7 +7,7 @@ require 'types'
 --- @type Utils Load configuration functions
 local utl = require 'configs.utils'
 
--- @type string Lazy install path
+--- @type string Lazy install path
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
 -- Bootstrap lazy if not installed
@@ -38,6 +38,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load plugins
 require('lazy').setup(require 'configs.lazy')
+
+-- Load LSP
+require 'configs.lsp'
 
 -- Load options
 require 'configs.options'
