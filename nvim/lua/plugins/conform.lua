@@ -5,6 +5,9 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { 'stylua' },
+      bash = { 'shfmt' },
+      sh = { 'shfmt' },
+      zsh = { 'shfmt' },
       -- python = { 'ruff?' },
     },
     format_on_save = {
