@@ -1,6 +1,7 @@
 -- https://github.com/neovim/nvim-lspconfig
 return {
   'neovim/nvim-lspconfig',
+  enabled = false,
   event = 'User FilePost',
   config = function()
     local icn = require 'ui.icons'
@@ -9,10 +10,9 @@ return {
 
     -- configure diagnostics
     vim.diagnostic.config {
-      virtual_text = {
-        current_line = true,
-        prefix = icn.virtualcircle,
-      },
+      float = { border = 'single' },
+      severity_sort = true,
+
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = icn.error,
@@ -21,8 +21,15 @@ return {
           [vim.diagnostic.severity.INFO] = icn.info,
         },
       },
-      severity_sort = true,
-      float = { border = 'single' },
+
+      virtual_lines = {
+        current_line = true,
+      },
+
+      virtual_text = {
+        current_line = true,
+        prefix = icn.virtualcircle,
+      },
     }
 
     -- configure language servers
