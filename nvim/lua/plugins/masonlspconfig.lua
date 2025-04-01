@@ -1,10 +1,9 @@
-local utl = require 'configs.utils'
-local servers = vim.fn.stdpath 'config' .. '/lua/lsp'
+local servers = require('configs.utils').filenames(vim.fn.stdpath 'config' .. '/lsp')
 
 -- https://github.com/williamboman/mason-lspconfig.nvim
 return {
   'williamboman/mason-lspconfig.nvim',
   opts = {
-    ensure_installed = utl.filenames(servers),
+    ensure_installed = servers,
   },
 }
