@@ -4,7 +4,7 @@ return {
   {
     key = '1',
     desc = 'Set Single Monitor Workspace',
-    mods = HYPER,
+    mods = { 'ctrl', 'alt', 'cmd' },
     command = function()
       local screens = hs.screen.allScreens()
 
@@ -25,7 +25,7 @@ return {
   {
     key = '2',
     desc = 'Set 2 External Monitor Workspace',
-    mods = HYPER,
+    mods = { 'ctrl', 'alt', 'cmd' },
     command = function()
       -- Get all screens
       local screens = hs.screen.allScreens()
