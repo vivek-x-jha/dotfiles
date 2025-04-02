@@ -1,3 +1,4 @@
+-- TODO fix MasonInstallAll
 local conform_exists, conform = pcall(require, 'conform')
 local lint_exists, lint = pcall(require, 'lint')
 local _, mason_registry = pcall(require, 'mason-registry')
@@ -51,8 +52,6 @@ return {
     command = function()
       local pkgs = {}
       local tools = {}
-
-      vim.list_extend(tools, require('lspconfig.util').available_servers())
 
       if conform_exists then
         for _, v in ipairs(conform.list_all_formatters()) do
