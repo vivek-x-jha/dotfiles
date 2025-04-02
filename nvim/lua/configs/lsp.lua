@@ -17,8 +17,6 @@ local on_attach = function(bufnr)
   map('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, 'LSP: Format Document')
 
   -- Diagnostics
-  map('n', '[d', vim.diagnostic.goto_prev, 'Diagnostic: Previous')
-  map('n', ']d', vim.diagnostic.goto_next, 'Diagnostic: Next')
   map('n', '<leader>e', vim.diagnostic.open_float, 'Diagnostic: Open Float')
   map('n', '<leader>q', vim.diagnostic.setloclist, 'Diagnostic: Set Loclist')
 end
