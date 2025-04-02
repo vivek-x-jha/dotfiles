@@ -34,23 +34,21 @@ return {
   end,
 
   filenames = function(folder)
-    local uv = vim.loop
     local files = {}
-    local fd = uv.fs_opendir(folder, nil, 50)
-    if fd then
-      while true do
-        local dir_entries = uv.fs_readdir(fd)
-        if not dir_entries then break end
-        for _, entry in ipairs(dir_entries) do
-          if entry.type == 'file' and entry.name:match '%.lua$' then
-            -- Use vim.fn to strip extension
-            local basename = vim.fn.fnamemodify(entry.name, ':r')
-            table.insert(files, basename)
-          end
+    local fd = assert(vim.uv.fs_opendir(folder))
+
+    while true do
+      local dir_entries = vim.uv.fs_readdir(fd)
+      if not dir_entries then break end
+      for _, entry in ipairs(dir_entries) do
+        if entry.type == 'file' and entry.name:match '%.lua$' then
+          local basename = vim.fn.fnamemodify(entry.name, ':r')
+          table.insert(files, basename)
         end
       end
-      uv.fs_closedir(fd)
     end
+
+    vim.uv.fs_closedir(fd)
     return files
   end,
 
