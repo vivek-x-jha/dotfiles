@@ -1,8 +1,7 @@
 # https://zsh.sourceforge.io/
 
 # Instant Prompt 
-# shellcheck source=/dev/null
-# shellcheck disable=SC2296
+# shellcheck disable=SC2296 source=/dev/null
 [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # History Opts
@@ -34,7 +33,9 @@ for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Auto-plugins
-plug marlonrichert/zsh-autocomplete; plug hlissner/zsh-autopair; plug zsh-users/zsh-autosuggestions
+plug marlonrichert/zsh-autocomplete
+plug hlissner/zsh-autopair
+plug zsh-users/zsh-autosuggestions
 
 # Completions
 plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/completions"
