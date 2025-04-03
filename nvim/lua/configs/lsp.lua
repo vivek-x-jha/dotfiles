@@ -1,5 +1,4 @@
 local icn = require 'ui.icons'
-local servers = require('configs.utils').filenames(vim.fn.stdpath 'config' .. '/lsp')
 
 -- on_attach to set LSP keymaps
 local on_attach = function(bufnr)
@@ -45,7 +44,22 @@ vim.diagnostic.config {
   },
 }
 
--- Initialize language servers
-for _, server in ipairs(servers) do
-  vim.lsp.enable(server)
+local servers = {}
+local fd = assert(vim.uv.fs_opendir(vim.fn.stdpath 'config' .. '/lsp'))
+
+-- Add names of all lang servers in user's LSP rtp
+while true do
+  local dir_entries = vim.uv.fs_readdir(fd)
+  if not dir_entries then break end
+  for _, entry in ipairs(dir_entries) do
+    if entry.type == 'file' and entry.name:match '%.lua$' then
+      local basename = vim.fn.fnamemodify(entry.name, ':r')
+      table.insert(servers, basename)
+    end
+  end
 end
+
+vim.uv.fs_closedir(fd)
+
+-- Initialize language servers
+vim.lsp.enable(servers)

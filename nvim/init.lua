@@ -55,6 +55,34 @@ require('colors.highlights').setup { colorscheme = 'sourdiesel' }
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
 -- Load & schedule commands and key mappings
-utl:load 'usercmds'
-utl:load 'autocmds'
-utl:load 'mappings'
+for _, type in ipairs { 'usercmds', 'autocmds', 'mappings' } do
+  local commands = {
+    usercmds = utl.create_user_command,
+    autocmds = utl.create_auto_command,
+    mappings = utl.set_keymap,
+  }
+
+  --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings
+  local cmds = require('configs.' .. type)
+
+  --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings to be scheduled
+  local deferred_cmds = {}
+
+  for _, cmd in ipairs(cmds) do
+    if cmd.enabled == false then
+      goto continue
+    elseif cmd.after or type == 'mappings' then
+      table.insert(deferred_cmds, cmd)
+    else
+      commands[type](cmd)
+    end
+
+    ::continue::
+  end
+
+  vim.schedule(function()
+    for _, cmd in ipairs(deferred_cmds) do
+      commands[type](cmd)
+    end
+  end)
+end
