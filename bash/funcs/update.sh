@@ -39,7 +39,6 @@ update_icons() {
   dir_icons=(
     "/Applications/1Password.app" "$HOME/Pictures/icons/1password-macos.png"
     "/Applications/ChatGPT.app" "$HOME/Pictures/icons/chatgpt.png"
-    "/Applications/Cursor.app" "$HOME/Pictures/icons/cursor-ai-macos.png"
     "/Applications/Discord.app" "$HOME/Pictures/icons/discord-macos.png"
     "/Applications/Docker.app" "$HOME/Pictures/icons/docker.png"
     "/Applications/Figma.app" "$HOME/Pictures/icons/figma.png"
