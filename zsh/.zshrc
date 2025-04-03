@@ -46,7 +46,7 @@ plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/syntax-highlighting"
 source "$ZDOTDIR/aliases"
 
 # Color ls, tree, eza
-eval "$(gdircolors "$XDG_CONFIG_HOME"/eza/.dircolors || dircolors "$XDG_CONFIG_HOME"/eza/.dircolors)"
+eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy Finder
 # shellcheck source=/dev/null
