@@ -31,7 +31,5 @@
 --- @field create_auto_group fun(opts: string|AutoGroup): integer Converts autocommand group name to ID and clears old group commands
 --- @field create_auto_command fun(opts: AutoCmd): nil Creates and configures autocommand
 --- @field create_user_command fun(opts: UserCmd): nil Creates and configures user command
---- @field filenames fun(folder: string): string[] Creates array of all lua files in given folder
---- @field load fun(self: Utils, type: string): nil Remaps key sequence
 --- @field set_keymap fun(opts: KeyMap): nil Remaps key sequence
 --- @field set_hlgroups fun(hlgroups: table): nil Sets highlight groups

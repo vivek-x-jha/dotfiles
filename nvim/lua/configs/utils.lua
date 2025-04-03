@@ -33,57 +33,6 @@ return {
     vim.api.nvim_create_user_command(name, cmd, opts)
   end,
 
-  filenames = function(folder)
-    local files = {}
-    local fd = assert(vim.uv.fs_opendir(folder))
-
-    while true do
-      local dir_entries = vim.uv.fs_readdir(fd)
-      if not dir_entries then break end
-      for _, entry in ipairs(dir_entries) do
-        if entry.type == 'file' and entry.name:match '%.lua$' then
-          local basename = vim.fn.fnamemodify(entry.name, ':r')
-          table.insert(files, basename)
-        end
-      end
-    end
-
-    vim.uv.fs_closedir(fd)
-    return files
-  end,
-
-  load = function(self, type)
-    local commands = {
-      usercmds = self.create_user_command,
-      autocmds = self.create_auto_command,
-      mappings = self.set_keymap,
-    }
-
-    --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings
-    local cmds = require('configs.' .. type)
-
-    --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings to be scheduled
-    local deferred_cmds = {}
-
-    for _, cmd in ipairs(cmds) do
-      if cmd.enabled == false then
-        goto continue
-      elseif cmd.after or type == 'mappings' then
-        table.insert(deferred_cmds, cmd)
-      else
-        commands[type](cmd)
-      end
-
-      ::continue::
-    end
-
-    vim.schedule(function()
-      for _, cmd in ipairs(deferred_cmds) do
-        commands[type](cmd)
-      end
-    end)
-  end,
-
   set_keymap = function(opts)
     local mode = opts.mode
     local keys = opts.keys
