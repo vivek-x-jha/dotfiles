@@ -28,6 +28,9 @@ alias l='eza --all --long --git --icons=always --group-directories-first'
 # Print all directory items in colored tree format excluding git info
 alias tree='tree -aCI ".git|.github"'
 
+# On Macos merge namespaces of dircolors and gdircolors
+[[ $(uname) == Darwin ]] && alias dircolors='gdircolors'
+
 # Deletion
 alias delete-ds-store='fd -HI .DS_Store / -x rm -f {} &>/dev/null'
 
