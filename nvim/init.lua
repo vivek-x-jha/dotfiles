@@ -1,11 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
--- Load annotations
-require 'types.buffers'
-require 'types.colors'
-require 'types.statusline'
-
 -- Lazy install path
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
@@ -48,7 +43,7 @@ require 'configs.options'
 require('ui.buffers').setup()
 
 -- Load highlights and colorscheme
-require('colors.highlights').setup { colorscheme = 'sourdiesel' }
+require('configs.highlights').setup()
 
 -- Load statusline
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
