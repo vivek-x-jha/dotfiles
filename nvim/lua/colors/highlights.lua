@@ -1,6 +1,3 @@
---- @type Utils
-local utl = require 'configs.utils'
-
 --- @type Highlight Configuration of highlight groups and colorscheme
 return {
   setup = function(opts)
@@ -24,7 +21,6 @@ return {
 
     ---------------------------- Terminal ----------------------------------
 
-    --- @type string[16] Neovim terminal font color
     local base16 = {
       'black',
       'red',
@@ -50,7 +46,7 @@ return {
 
     ---------------------------- Spectre ----------------------------------
     if opts.plugin == 'spectre' then
-      utl.set_hlgroups {
+      for group, options in pairs {
         SpectreHeader = { fg = theme.brightmagenta, bg = theme.background, bold = true },
         SpectreBody = { fg = theme.black, bg = theme.background, bold = true },
         SpectreFile = { fg = theme.yellow, bg = theme.background },
@@ -58,11 +54,14 @@ return {
         SpectreSearch = { fg = theme.brightred, bg = theme.grey },
         SpectreBorder = { fg = theme.brightblack, bg = theme.background },
         SpectreReplace = { fg = theme.brightgreen, bg = theme.grey },
-      }
+      } do
+        vim.api.nvim_set_hl(0, group, options)
+      end
+
       return
     end
 
-    utl.set_hlgroups {
+    for group, options in pairs {
       ---------------------------- Defaults ----------------------------------
 
       Added = { fg = theme.green },
@@ -632,6 +631,8 @@ return {
       DevIconSvelte = { fg = theme.red },
       DevIconJava = { fg = theme.brightyellow },
       DevIconDart = { fg = theme.cyan },
-    }
+    } do
+      vim.api.nvim_set_hl(0, group, options)
+    end
   end,
 }

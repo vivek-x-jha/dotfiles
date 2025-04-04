@@ -2,12 +2,11 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
 -- Load annotations
-require 'types'
+require 'types.buffers'
+require 'types.colors'
+require 'types.statusline'
 
---- @type Utils Load configuration functions
-local utl = require 'configs.utils'
-
---- @type string Lazy install path
+-- Lazy install path
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
 -- Bootstrap lazy if not installed
@@ -54,35 +53,8 @@ require('colors.highlights').setup { colorscheme = 'sourdiesel' }
 -- Load statusline
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
--- Load & schedule commands and key mappings
-for _, type in ipairs { 'usercmds', 'autocmds', 'mappings' } do
-  local commands = {
-    usercmds = utl.create_user_command,
-    autocmds = utl.create_auto_command,
-    mappings = utl.set_keymap,
-  }
+-- Load & schedule auto commands
+require 'configs.autocmds'
 
-  --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings
-  local cmds = require('configs.' .. type)
-
-  --- @type AutoCmd[]|UserCmd[]|KeyMap[] Auto/User commands or keymappings to be scheduled
-  local deferred_cmds = {}
-
-  for _, cmd in ipairs(cmds) do
-    if cmd.enabled == false then
-      goto continue
-    elseif cmd.after or type == 'mappings' then
-      table.insert(deferred_cmds, cmd)
-    else
-      commands[type](cmd)
-    end
-
-    ::continue::
-  end
-
-  vim.schedule(function()
-    for _, cmd in ipairs(deferred_cmds) do
-      commands[type](cmd)
-    end
-  end)
-end
+-- Schedule keymaps
+vim.schedule(function() require 'configs.mappings' end)
