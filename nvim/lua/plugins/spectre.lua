@@ -10,6 +10,7 @@ return {
         }
       end
     )
+
     return {
       result_padding = '',
       default = {
