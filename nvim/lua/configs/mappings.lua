@@ -1,5 +1,3 @@
-local buf = require 'ui.buffers'
-local nvtree = require('nvim-tree.api').tree
 local term = require 'ui.terminal'
 
 -- General mappings
@@ -49,18 +47,18 @@ end, { desc = 'Save workspace config' })
 
 -- Buffers
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
-vim.keymap.set('n', '<tab>', buf.next, { desc = 'Next buffer' })
-vim.keymap.set('n', '<S-tab>', buf.prev, { desc = 'Prev buffer' })
-vim.keymap.set('n', '<leader>x', buf.close, { desc = 'Close buffer' })
+vim.keymap.set('n', '<tab>', require('ui.buffers').next, { desc = 'Next buffer' })
+vim.keymap.set('n', '<S-tab>', require('ui.buffers').prev, { desc = 'Prev buffer' })
+vim.keymap.set('n', '<leader>x', require('ui.buffers').close, { desc = 'Close buffer' })
 
 -- NvimTree
 vim.keymap.set('n', '<C-n>', function()
-  nvtree.toggle { focus = false }
+  require('nvim-tree.api').tree.toggle { focus = false }
   vim.cmd 'wincmd ='
 end, { desc = 'Toggle file explorer' })
 
 vim.keymap.set('n', '<leader>e', function()
-  nvtree.open()
+  require('nvim-tree.api').tree.open()
   vim.cmd 'wincmd ='
 end, { desc = 'Focus file [e]xplorer' })
 
