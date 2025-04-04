@@ -1,14 +1,23 @@
 --- @type table Custom icons
 local icons = require 'ui.icons'
 
---- @type LspMsg Holds any LSP Messages
-local state = { lsp_msg = '' }
+--- @type table Store state of any LSP messages
+local lspmsg = { lsp_msg = '' }
 
 --- @type fun(): integer Statusline Buffer id
 local stbufnr = function() return vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0 end
 
---- Modules to be loaded by statusline
---- @type StatusLineModules
+--- @class StatusLineModules
+--- @field mode fun(): string Creates statusline module: mode indicator
+--- @field git_branch fun(): string Creates statusline module: git branch
+--- @field lsp fun(): string Creates statusline module: language server name
+--- @field diagnostics fun(): string Creates statusline module: LSP diagnostics
+--- @field file fun(): string Creates statusline module: current file
+--- @field git_diff fun(): string Creates statusline module: git diff
+--- @field lsp_msg fun(): string Creates statusline module: LSP message
+--- @field cwd fun(): string Creates statusline module: current working directory
+--- @field git_status fun(): string Creates statusline module: project git status
+--- @field cursor fun(): string Creates statusline module: row and column counter
 local modules = {
   mode = function()
     if not vim.api.nvim_get_current_win() == vim.g.statusline_winid then return '' end
@@ -91,7 +100,7 @@ local modules = {
     --- @type string[] Formatted statusline elements for each diagnostic
     local lsp_diagnostics = {}
 
-    --- @type LspDiagnostic[] Table of all LSP diagnostics
+    --- @type table LSP diagnostics
     local lsp_info = {
       { level = 'ERROR', hl = '%#St_lspError#', icon = icons.error },
       { level = 'WARN', hl = '%#St_lspWarning#', icon = icons.warn },
@@ -154,7 +163,7 @@ local modules = {
     -- Check if it's not a Git repository
     if not buf.gitsigns_head or buf.gitsigns_git_status then return '' end
 
-    --- @type GitModification[] Table of all git add, changed, and removed modifications
+    --- @type table All git add, changed, and removed modifications
     local statuses = {
       { cnt = buf.gitsigns_status_dict.added, hl = '%#St_GitAdded#', icon = '+' },
       { cnt = buf.gitsigns_status_dict.changed, hl = '%#St_GitChanged#', icon = '~' },
@@ -176,7 +185,7 @@ local modules = {
     return table.concat(modifications)
   end,
 
-  lsp_msg = function() return table.concat { '%#St_lspMsg#', state.lsp_msg, '%#Normal#%*' } end,
+  lsp_msg = function() return table.concat { '%#St_lspMsg#', lspmsg.lsp_msg, '%#Normal#%*' } end,
 
   cwd = function()
     --- @type integer Max column size to display full path
@@ -230,6 +239,7 @@ local modules = {
       end
     end
 
+    --- @type table All Git statuses counts, highlights, and icons
     local statuses = {
       { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up .. ' ' },
       { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down .. ' ' },
@@ -260,9 +270,10 @@ local modules = {
   cursor = function() return table.concat { '%#St_cursor#', icons.cursor, ' ', '%l:%c', '%#Normal#%*' } end,
 }
 
---- @type StatusLine Generates all statusline modules and auto commands
+--- @class StatusLine
+--- @field setup fun(): string Aggregates all statusline modules
 return {
-  state = state,
+  state = lspmsg,
 
   setup = function()
     --- @type string[] Aggregated statusline modules

@@ -1,5 +1,0 @@
----@class Buffer
----@field setup fun(): nil Initializes and stores listed buffers in a tab-local variable
----@field next fun(): nil Switches to the next buffer in the tab's buffer list
----@field prev fun(): nil Switches to the previous buffer in the tab's buffer list
----@field close fun(bufnr?: integer): nil Closes the specified buffer, or the current buffer if none is specified
