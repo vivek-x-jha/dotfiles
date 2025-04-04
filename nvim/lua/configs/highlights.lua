@@ -36,7 +36,7 @@ return {
     })
 
     ---------------------------- Spectre ----------------------------------
-    if opts and opts == 'spectre' then
+    if opts == 'spectre' then
       for group, options in pairs {
         SpectreHeader = { fg = thm.brightmagenta, bg = thm.background, bold = true },
         SpectreBody = { fg = thm.black, bg = thm.background, bold = true },
