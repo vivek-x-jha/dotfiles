@@ -28,7 +28,7 @@ return {
       end
 
       for _, v in pairs(tools) do
-        table.insert(pkgs, require('ui.masonames')[v])
+        table.insert(pkgs, require('configs.masonames')[v])
       end
 
       vim.cmd 'Mason'
