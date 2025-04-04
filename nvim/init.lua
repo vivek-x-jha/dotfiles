@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
--- Lazy install path
+--- @type string Set path to lazy repo
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
 -- Bootstrap lazy if not installed
