@@ -20,6 +20,11 @@ local on_attach = function(bufnr)
   map('n', '<leader>q', vim.diagnostic.setloclist, 'Diagnostic: Set Loclist')
 end
 
+-- Configure global LSP opts
+vim.lsp.config('*', {
+  capabilities = require('blink.cmp').get_lsp_capabilities(),
+})
+
 -- Configure diagnostics
 vim.diagnostic.config {
   float = { border = 'single' },
