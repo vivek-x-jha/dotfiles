@@ -8,7 +8,7 @@ return {
       bash = { 'shfmt' },
       sh = { 'shfmt' },
       zsh = { 'shfmt' },
-      -- python = { 'ruff?' },
+      python = { 'ruff' },
     },
     format_on_save = {
       timeout_ms = 500,
