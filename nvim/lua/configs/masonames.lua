@@ -97,7 +97,7 @@ return {
   lemminx = 'lemminx',
   lexical = 'lexical',
   ltex = 'ltex-ls',
-  lua_ls = 'lua-language-server',
+  luals = 'lua-language-server',
   luau_lsp = 'luau-lsp',
   lwc_ls = 'lwc-language-server',
   markdown_oxide = 'markdown-oxide',
