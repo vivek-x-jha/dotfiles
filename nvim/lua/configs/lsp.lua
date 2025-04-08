@@ -68,3 +68,47 @@ vim.uv.fs_closedir(fd)
 
 -- Initialize language servers
 vim.lsp.enable(servers)
+
+-- Install all language servers, formatters, and linters
+vim.api.nvim_create_user_command('MasonInstallAll', function()
+  local conform_exists, conform = pcall(require, 'conform')
+  local mason_mappings = require 'configs.masonames'
+  local mason_registry = require 'mason-registry'
+
+  local pkgs = {}
+  local packages = {}
+
+  -- Add language servers
+  for _, server in ipairs(servers) do
+    table.insert(pkgs, server)
+  end
+
+  -- Add linters
+  for _, linter in ipairs { 'shellcheck' } do
+    table.insert(pkgs, linter)
+  end
+
+  -- Add formatters
+  if conform_exists then
+    for _, v in ipairs(conform.list_all_formatters()) do
+      local fmts = vim.split(v.name:gsub(',', ''), '%s+')
+      vim.list_extend(pkgs, fmts)
+    end
+  end
+
+  -- Map to mason names
+  for _, pkg in ipairs(pkgs) do
+    table.insert(packages, mason_mappings[pkg])
+  end
+
+  -- Open Mason UI
+  vim.cmd 'Mason'
+
+  -- Install all packages
+  mason_registry.refresh(function()
+    for _, p in ipairs(packages) do
+      local pkg = mason_registry.get_package(p)
+      if not pkg:is_installed() then pkg:install() end
+    end
+  end)
+end, { desc = 'Install all language servers' })
