@@ -49,10 +49,10 @@ vim.diagnostic.config {
   },
 }
 
+-- Add names of all lang servers in user's LSP rtp
 local servers = {}
 local fd = assert(vim.uv.fs_opendir(vim.fn.stdpath 'config' .. '/lsp'))
 
--- Add names of all lang servers in user's LSP rtp
 while true do
   local dir_entries = vim.uv.fs_readdir(fd)
   if not dir_entries then break end
@@ -66,49 +66,29 @@ end
 
 vim.uv.fs_closedir(fd)
 
--- Initialize language servers
-vim.lsp.enable(servers)
+local packages = servers
+
+-- Add linters
+vim.list_extend(packages, { 'shellcheck' })
+
+-- Add formatters
+local conform_exists, conform = pcall(require, 'conform')
+if conform_exists then
+  for _, v in ipairs(conform.list_all_formatters()) do
+    vim.list_extend(packages, vim.split(v.name:gsub(',', ''), '%s+'))
+  end
+end
 
 -- Install all language servers, formatters, and linters
-vim.api.nvim_create_user_command('MasonInstallAll', function()
-  local conform_exists, conform = pcall(require, 'conform')
-  local mason_mappings = require 'configs.masonames'
-  local mason_registry = require 'mason-registry'
+local mason_registry = require 'mason-registry'
+mason_registry.refresh(function()
+  for _, p in ipairs(packages) do
+    local mason_pkg = assert(require('configs.masonames')[p])
+    local pkg = mason_registry.get_package(mason_pkg)
 
-  local pkgs = {}
-  local packages = {}
-
-  -- Add language servers
-  for _, server in ipairs(servers) do
-    table.insert(pkgs, server)
+    if not pkg:is_installed() then pkg:install() end
   end
+end)
 
-  -- Add linters
-  for _, linter in ipairs { 'shellcheck' } do
-    table.insert(pkgs, linter)
-  end
-
-  -- Add formatters
-  if conform_exists then
-    for _, v in ipairs(conform.list_all_formatters()) do
-      local fmts = vim.split(v.name:gsub(',', ''), '%s+')
-      vim.list_extend(pkgs, fmts)
-    end
-  end
-
-  -- Map to mason names
-  for _, pkg in ipairs(pkgs) do
-    table.insert(packages, mason_mappings[pkg])
-  end
-
-  -- Open Mason UI
-  vim.cmd 'Mason'
-
-  -- Install all packages
-  mason_registry.refresh(function()
-    for _, p in ipairs(packages) do
-      local pkg = mason_registry.get_package(p)
-      if not pkg:is_installed() then pkg:install() end
-    end
-  end)
-end, { desc = 'Install all language servers' })
+-- Initialize language servers
+vim.lsp.enable(servers)
