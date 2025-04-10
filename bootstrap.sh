@@ -370,17 +370,3 @@ defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammer
 echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
 
 cd || exit
-
-cat <<EOF
---------------- POST INSTALLATION ---------------
-
-1 Restart terminal emulator
-
-2 Setup Neovim
-- Install plugins:         nvim
-- Quit Lazy installer:     :q
-- Install language servers :MasonInstall basedpyright bash-language-server lua-language-server shellcheck stylua
-- Quit Neovim:             :qa
-
-3 Setup Karabiner Elements
-EOF
