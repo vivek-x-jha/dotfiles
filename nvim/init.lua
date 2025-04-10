@@ -52,4 +52,4 @@ vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 require 'configs.autocmds'
 
 -- Schedule keymaps
-vim.schedule(function() require 'configs.mappings' end)
+vim.schedule(function() require 'configs.keymaps' end)
