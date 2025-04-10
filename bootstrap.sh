@@ -346,9 +346,7 @@ echo -e "${CYAN}󰓒 [$((++step))/12] SETUP TOUCHID SUDO 󰓒${RESET}"
 echo "# Authenticate with Touch ID - even in tmux
 auth  optional    $(brew --prefix)/lib/pam/pam_reattach.so ignore_ssh
 auth  sufficient  pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
-
-# Show changes to sudo_local
-bat /etc/pam.d/sudo_local
+echo 'UPDATED /etc/pam.d/sudo_local'
 
 # Hide tty login message for iterm
 echo -e "${CYAN}󰓒 [$((++step))/12] SURPRESS ITERM2 LOGIN 󰓒${RESET}"
