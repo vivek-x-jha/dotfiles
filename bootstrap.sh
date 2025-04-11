@@ -168,8 +168,8 @@ symlink() {
   # Test: Valid Source File/Folder
   [[ -e $src ]] || return 1
 
-  # Link Source to Target - remove original if directory
-  [[ -d $tgt ]] && rm -rf "$tgt"
+  # Link Source to Target - backup original if directory
+  [[ -d $tgt ]] && mv -f "$tgt" "${tgt}.bak"
   ln -sf "$src" "$tgt"
 
   echo "[+ Link: $src -> $cwd/$tgt]"
