@@ -22,6 +22,6 @@ alias list-colors=list_colors
 alias list-tmux-sessions=list_tmux_sessions
 
 # Update Management
-alias update-all='update_all'
-alias update-feature-branches='update_feature_branches'
-alias update-icons='update_icons'
+alias update-all=update_all
+alias update-feature-branches=update_feature_branches
+alias update-icons=update_icons
