@@ -318,9 +318,16 @@ op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create 
   "email[text]=$ATUIN_EMAIL" \
   "key[password]=<Update with \$(atuin key)>" &>/dev/null
 
-op_fetch() { op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" --fields "$1" --reveal; }
+# Get 1password field like password or key
+getop() {
+  local field="$1"
+  op item get "$ATUIN_OP_TITLE" \
+    --vault "$OP_VAULT" \
+    --fields "$field" \
+    --reveal
+}
 
-atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(op_fetch password)"
+atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$(getop password)"
 
 # Update Atuin Sync with generated key
 op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
@@ -328,7 +335,7 @@ op item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)"
 # Ensure authenticated as atuin user - NOTE is idempotent
 atuin status | grep -q "$ATUIN_USERNAME" || (
   atuin logout
-  atuin login -u "$ATUIN_USERNAME" -p "$(op_fetch password)" -k "$(op_fetch key)"
+  atuin login -u "$ATUIN_USERNAME" -p "$(getop password)" -k "$(getop key)"
 ) >/dev/null
 
 # Sync shell history & integrate with Atuin history
