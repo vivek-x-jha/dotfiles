@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-take () { mkdir -p "$1" && cd "$1" || return; }
+take() { mkdir -p "$1" && cd "$1" || return; }
 
-cheatsheet () {
+cheatsheet() {
   # Define column widths
   local key_width=13
   local desc_width=35
@@ -47,7 +47,7 @@ cheatsheet () {
   local i=0
   for binding in "${bindings[@]}"; do
     local colorname="${colornames[$((i % 17))]}"
-    local color="${!colorname}"  # Bash-style indirect reference
+    local color="${!colorname}" # Bash-style indirect reference
     printf "%b\n" "${color}${binding}${RESET}"
     ((i++))
   done | awk -F ':' -v k="$key_width" -v d="$desc_width" -v c="$cmd_width" '
@@ -56,29 +56,29 @@ cheatsheet () {
     }'
 }
 
-combinepdf () { gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"; }
+combinepdf() { gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$1" "${@:2}"; }
 
-count_files () (
+count_files() (
   shopt -s nullglob
   local dir=$1
   local files=("$dir"/* "$dir"/.*)
   echo "${#files[@]}"
 )
 
-list_tmux_sessions () {
+list_tmux_sessions() {
   local session
-  session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --header="tmux attach[switch]" \
-        --border-label="  sessions " \
-        --no-preview)
+  session=$(tmux list-sessions -F "#{session_name}" | fzf \
+    --header="tmux switch/attach" \
+    --border-label="  sessions " \
+    --no-preview)
 
-  [ -z "$session" ] && return 0
+  [[ -z $session ]] && return 0
 
-  [ -n "$TMUX" ] && tmux switch-client -t "$session" && exit
+  [[ -n $TMUX ]] && tmux switch-client -t "$session" && exit
   tmux attach-session -t "$session"
 }
 
-list_colors () {
+list_colors() {
 
   local colors=(
     "$BLACK_HEX"
@@ -104,7 +104,7 @@ list_colors () {
     local r=$((16#${hex:1:2}))
     local g=$((16#${hex:3:2}))
     local b=$((16#${hex:5:2}))
-    
+
     # Create the ANSI escape sequence for the color
     local ansi="\e[38;2;${r};${g};${b}m"
 
