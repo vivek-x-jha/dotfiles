@@ -4,24 +4,26 @@
 # shellcheck disable=SC1091
 source "$ZDOTDIR/aliases"
 
-# Aggregate number of files
-alias count-files=count_files
-
-# Outputs PATH
-alias list-path='tr ":" "\n" <<< "$PATH"'
-
-# Outputs Shell info
+# Overrides
 alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
 alias list-opts='shopt -p'
+alias list-path='tr ":" "\n" <<< "$PATH"'
 
-# Outputs Terminal colors
-alias list-256=ble-color-show
-alias list-colors=list_colors
+# Sync zsh funcs with bash
+funcs=(
+  cheatsheet
+  combinepdf # TODO need to test this
+  count-files
+  list-256
+  list-colors
+  list-tmux-sessions
+  take # TODO fix this - argument not passing properly
+  update-all
+  update-feature-branches
+  update-icons
+)
 
-# Prints all sessions
-alias list-tmux-sessions=list_tmux_sessions
-
-# Update Management
-alias update-all=update_all
-alias update-feature-branches=update_feature_branches
-alias update-icons=update_icons
+for fn in "${funcs[@]}"; do
+  printf -v cmd "alias %s='zsh -ic %q'" "$fn" "$fn"
+  eval "$cmd"
+done

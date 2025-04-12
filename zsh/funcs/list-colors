@@ -19,11 +19,11 @@ local colors=(
   "$BRIGHTWHITE_HEX"
 )
 
-for hex in "$colors[@]"; do
+for hex in "${colors[@]}"; do
   # Convert hex to RGB
-  local r=${hex[2,3]}; r=$((16#$r))
-  local g=${hex[4,5]}; g=$((16#$g))
-  local b=${hex[6,7]}; b=$((16#$b))
+  local r=$((16#${hex:1:2}))
+  local g=$((16#${hex:3:2}))
+  local b=$((16#${hex:5:2}))
 
   # Create the ANSI escape sequence for the color
   local ansi="\e[38;2;${r};${g};${b}m"
