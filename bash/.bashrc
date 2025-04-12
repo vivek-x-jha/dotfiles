@@ -2,7 +2,7 @@
 
 # Load shell environment variables
 # shellcheck disable=SC1091
-source "$HOME/.config/zsh/.zshenv"
+source "$HOME/.zshenv"
 
 # Bash Line Editor
 [[ $- == *i* ]] && source "$XDG_DATA_HOME/blesh/ble.sh" --noattach
@@ -20,10 +20,6 @@ source "$XDG_CONFIG_HOME/bash/.path"
 
 # Prompt
 eval "$(starship init bash)"
-
-# Functions
-# shellcheck source=/dev/null
-for fn in "$XDG_CONFIG_HOME/bash/funcs/"*.sh; do source "$fn"; done
 
 # Authenticate github cli with 1password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
