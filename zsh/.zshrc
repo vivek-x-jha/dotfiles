@@ -33,6 +33,7 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
 {
   local XDG_CACHE_HOME="$XDG_CACHE_HOME/p10k"
   plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
+  export XDG_CACHE_HOME="$HOME/.cache"
 }
 
 # Auto-complete
