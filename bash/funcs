@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Create array of functions in $ZDOTDIR/funcs
+funcs=()
+while IFS= read -r -d '' path; do
+  fn="${path##*/}"
+  [[ $fn == .* ]] && continue # skip hidden files
+  funcs+=("$fn")
+done < <(find "$ZDOTDIR/funcs" -type f -maxdepth 1 -print0)
+
+# Load all functions as zsh interactive commands
+for fn in "${funcs[@]}"; do
+  {
+    [[ $fn == take ]] && eval "$fn() { mkdir -p \"\$1\" && cd \"\$1\"; }"
+  } || eval "$fn() { zsh -ic '$fn \"\$@\"' $fn \"\$@\"; }"
+done

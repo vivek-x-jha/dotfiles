@@ -7,7 +7,7 @@ bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
 bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
 
 # Zoxide
-# TODO fix so selection does not die in the subshell
+# TODO fix so does not need an extra enter at end
 bind -x '"\C-p": "ji"'
 
 # Clear screen
