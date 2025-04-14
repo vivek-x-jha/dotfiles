@@ -40,33 +40,33 @@ alias docs='compgen -c | fzf | xargs man'
 # -------------------------------- List Long Functions ---------------------------------------
 
 # Outputs System info
-alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
+alias list-path='tr ":" "\n" <<< "$PATH"'
 alias list-shells='tail -n +5 /etc/shells'
+alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias list-users='dscl . list /Users | grep -v "^_"'
 
 # Outputs Homebrew package info
-alias list-deps='brew deps --tree --installed'
 alias list-apps='brew list --cask | xargs -n1'
 alias list-cmds='brew list --formula | xargs -n1'
+alias list-deps='brew deps --tree --installed'
 
 # Outputs Aliases & Environment Variables
 alias list-alias='alias | sort'
 alias list-vars='env | sort'
 
-# Outputs Functions, Options, PATH and FPATH
-if [[ -n $ZSH_VERSION ]]; then
-  alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
+# Outputs Zsh options + functions + FPATH + syntax-highlighting
+[[ -n $ZSH_VERSION ]] && {
   alias list-opts='setopt'
-  alias list-path='print -l "${path[@]}"'
+  alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
   alias list-fpath='print -l ${fpath[@]}'
-elif [[ -n $BASH_VERSION ]]; then
-  alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
-  alias list-opts='shopt -p'
-  alias list-path='tr ":" "\n" <<< "$PATH"'
-fi
+  alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
+}
 
-# Outputs syntax-highlighting info
-[[ -n $ZSH_HIGHLIGHT_STYLES ]] && alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
+# Outputs Bash options + functions
+[[ -n $BASH_VERSION ]] && {
+  alias list-opts='shopt -p'
+  alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
+}
 
 # -------------------------------- Workspace Management ---------------------------------------
 
