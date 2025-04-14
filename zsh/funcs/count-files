@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
-local dir=$1
+# Should emulate behavior of: ls -A "$1" | wc -l
+local dir="${1:-$PWD}"
 local files=("$dir"/*(N) "$dir"/.*(N))
-echo "${#files[@]}"
+
+echo $#files

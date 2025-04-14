@@ -1,29 +1,8 @@
 #!/usr/bin/env bash
 
 # Load shared aliases from zsh
-# shellcheck disable=SC1091
 source "$ZDOTDIR/aliases"
 
 # Overrides
 alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
 alias list-opts='shopt -p'
-alias list-path='tr ":" "\n" <<< "$PATH"'
-
-# Sync zsh funcs with bash
-funcs=(
-  cheatsheet
-  combinepdf # TODO need to test this
-  count-files
-  list-256
-  list-colors
-  list-tmux-sessions
-  take # TODO fix this - argument not passing properly
-  update-all
-  update-feature-branches
-  update-icons
-)
-
-for fn in "${funcs[@]}"; do
-  printf -v cmd "alias %s='zsh -ic %q'" "$fn" "$fn"
-  eval "$cmd"
-done

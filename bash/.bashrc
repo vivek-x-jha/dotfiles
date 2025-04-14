@@ -1,27 +1,30 @@
 # https://www.gnu.org/software/bash/
-
-# Load shell environment variables
 # shellcheck disable=SC1091
+
+# Environment
 source "$HOME/.zshenv"
 
-# Bash Line Editor
+# Plugin Manager
 [[ $- == *i* ]] && source "$XDG_DATA_HOME/blesh/ble.sh" --noattach
 
-# History Opts
+# History
 export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
-# Bash Opts
+# Options
 shopt -s autocd
 set -o vi
 
 # PATH + Secrets
-source "$XDG_CONFIG_HOME/bash/.path"
+source "$ZDOTDIR/.zprofile"
 
 # Prompt
 eval "$(starship init bash)"
 
-# Authenticate github cli with 1password
+# Functions
+source "$XDG_CONFIG_HOME/bash/funcs"
+
+# Authenticate CLI tools w/ 1Password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Aliases
@@ -30,17 +33,13 @@ source "$XDG_CONFIG_HOME/bash/aliases"
 # Color ls, tree, eza
 eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-# Fuzzy Finder
+# Fuzzy Finders
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
-
-# History TUI
 eval "$(atuin init bash)"
-
-# Directory Jumper
 eval "$(zoxide init bash --cmd j)"
 
 # Keybindings
-source "$XDG_CONFIG_HOME/bash/mappings"
+source "$XDG_CONFIG_HOME/bash/keymaps"
 
-# Auto-plugins + Completions + Syntax-highlighting
+# Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach

@@ -1,47 +1,54 @@
 # https://zsh.sourceforge.io/
+# shellcheck shell=zsh
 
-# Instant Prompt 
-# shellcheck disable=SC2296 source=/dev/null
-[[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+# Instant Prompt
+_p10k_inst_prompt="$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh"
+[[ -r $_p10k_inst_prompt ]] && source "$_p10k_inst_prompt"
 
-# History Opts
+# History
 HISTFILE="$XDG_STATE_HOME/zsh/.zsh_history"
 HISTSIZE=12000
-# shellcheck disable=SC2034
 SAVEHIST=10000
 
-setopt extendedhistory histexpiredupsfirst histignoredups histignorespace incappendhistory sharehistory
-
-# Zsh Opts
-setopt autocd interactivecomments 
+# Options
+zsh_opts=(
+  extendedhistory
+  histexpiredupsfirst
+  histignoredups
+  histignorespace
+  incappendhistory
+  sharehistory
+  autocd
+  interactivecomments
+)
+setopt "${zsh_opts[@]}"
 
 # PATH + Secrets
 source "$ZDOTDIR/.zprofile"
 
 # Plugin Manager
-# shellcheck disable=SC1091
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
 # Prompt
-# shellcheck disable=SC1094
-plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
+{
+  local XDG_CACHE_HOME="$XDG_CACHE_HOME/p10k"
+  plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
+}
 
-# Functions
-for fn in "$ZDOTDIR/funcs"/*; do autoload -Uz "$(basename "$fn")"; done
-
-# Authenticate github cli with 1password
-source "$XDG_CONFIG_HOME/op/plugins.sh"
-
-# Auto-plugins
+# Plugins
 plug marlonrichert/zsh-autocomplete
 plug hlissner/zsh-autopair
 plug zsh-users/zsh-autosuggestions
+plug zsh-users/zsh-completions && source "$ZDOTDIR/completions"
+plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/highlights"
 
-# Completions
-plug zsh-users/zsh-completions && source "$XDG_CONFIG_HOME/zsh/completions"
+# Functions
+fpath=("$ZDOTDIR/funcs" "${fpath[@]}")
+export FPATH
+for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 
-# Syntax-highlighting
-plug zsh-users/zsh-syntax-highlighting && source "$ZDOTDIR/syntax-highlighting"
+# Authenticate CLI tools w/ 1Password
+source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Aliases
 source "$ZDOTDIR/aliases"
@@ -49,15 +56,10 @@ source "$ZDOTDIR/aliases"
 # Color ls, tree, eza
 eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-# Fuzzy Finder
-# shellcheck source=/dev/null
+# Fuzzy Finders
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
-
-# History TUI
 eval "$(atuin init zsh)"
-
-# Directory Jumper
 eval "$(zoxide init zsh --cmd j)"
 
 # Keybindings
-source "$ZDOTDIR/mappings"
+source "$ZDOTDIR/keymaps"
