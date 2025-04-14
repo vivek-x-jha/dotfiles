@@ -22,13 +22,24 @@ source "$ZDOTDIR/.zprofile"
 eval "$(starship init bash)"
 
 # Functions
-source "$XDG_CONFIG_HOME/bash/funcs"
+while IFS= read -r -d '' path; do
+  fn="${path##*/}"
+
+  # skip hidden files
+  [[ $fn == .* ]] && continue
+
+  # handle any funcs that use cd
+  [[ $fn == take ]] && eval "$fn() { mkdir -p \"\$1\" && cd \"\$1\"; }" && continue
+
+  # load func as zsh interactive commands
+  eval "$fn() { zsh -ic '$fn \"\$@\"' $fn \"\$@\"; }"
+done < <(find "$ZDOTDIR/funcs" -type f -maxdepth 1 -print0)
 
 # Authenticate CLI tools w/ 1Password
 source "$XDG_CONFIG_HOME/op/plugins.sh"
 
 # Aliases
-source "$XDG_CONFIG_HOME/bash/aliases"
+source "$ZDOTDIR/aliases"
 
 # Color ls, tree, eza
 eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
@@ -39,7 +50,13 @@ eval "$(atuin init bash)"
 eval "$(zoxide init bash --cmd j)"
 
 # Keybindings
-source "$XDG_CONFIG_HOME/bash/keymaps"
+bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
+bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
+bind -x '"\C-p": "ji"' # Zoxide interactive TODO fix so does not need an extra enter at end
+bind -x '"\el": clear'
+bind -m vi-command '"\C-r": "i__atuin_history\n"'
+bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
+bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
 
 # Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach

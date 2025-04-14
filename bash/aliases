@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# Load shared aliases from zsh
-source "$ZDOTDIR/aliases"
-
-# Overrides
-alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
-alias list-opts='shopt -p'

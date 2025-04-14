@@ -53,13 +53,17 @@ alias list-cmds='brew list --formula | xargs -n1'
 alias list-alias='alias | sort'
 alias list-vars='env | sort'
 
-# Outputs PATH and FPATH
-alias list-path='tr ":" "\n" <<< "$PATH"'
-[[ -n $ZSH_VERSION ]] && alias list-fpath='print -l ${fpath[@]}'
-
-# Outputs Shell functions and setings
-alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
-alias list-opts='setopt'
+# Outputs Functions, Options, PATH and FPATH
+if [[ -n $ZSH_VERSION ]]; then
+  alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
+  alias list-opts='setopt'
+  alias list-path='print -l "${path[@]}"'
+  alias list-fpath='print -l ${fpath[@]}'
+elif [[ -n $BASH_VERSION ]]; then
+  alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
+  alias list-opts='shopt -p'
+  alias list-path='tr ":" "\n" <<< "$PATH"'
+fi
 
 # Outputs syntax-highlighting info
 [[ -n $ZSH_HIGHLIGHT_STYLES ]] && alias list-highlighter='print -raC2 - "${(@kvq+)ZSH_HIGHLIGHT_STYLES}" | sort'
