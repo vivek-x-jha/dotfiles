@@ -44,19 +44,23 @@ source "$ZDOTDIR/aliases"
 # Color ls, tree, eza
 eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-# Fuzzy Finders
+# Fuzzy finder
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
-eval "$(atuin init bash)"
-eval "$(zoxide init bash --cmd j)"
+
+# Command history
+eval "$(atuin init bash)" && {
+  bind -m vi-command '"\C-r": "i__atuin_history\n"'
+  bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
+  bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
+}
+
+# Directory jumper
+eval "$(zoxide init bash --cmd j)" && bind '"\C-p": "ji\n"'
 
 # Keybindings
 bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
-bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
-bind -x '"\C-p": "ji"' # Zoxide interactive TODO fix so does not need an extra enter at end
 bind -x '"\el": clear'
-bind -m vi-command '"\C-r": "i__atuin_history\n"'
-bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
-bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
+bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
 
 # Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach

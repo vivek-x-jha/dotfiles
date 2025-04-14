@@ -35,10 +35,17 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
   plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
 }
 
-# Auto-plugins
+# Auto-complete
 plug marlonrichert/zsh-autocomplete
+
+# Auto-pairs
 plug hlissner/zsh-autopair
+
+# Auto-suggestions
+# https://github.com/zsh-users/zsh-autosuggestions?tab=readme-ov-file#key-bindings
 plug zsh-users/zsh-autosuggestions
+bindkey '^e' autosuggest-accept
+bindkey '^y' autosuggest-execute
 
 # Completions
 plug zsh-users/zsh-completions
@@ -60,73 +67,74 @@ source "$ZDOTDIR/aliases"
 # Color ls, tree, eza
 eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-# Fuzzy Finders
+# Fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"
-eval "$(atuin init zsh)"
-eval "$(zoxide init zsh --cmd j)"
 
-# Reload zsh
-bindkey -s '^o' 'exec "$(brew --prefix)/bin/zsh"\n'
+# Command history
+eval "$(atuin init zsh)" && {
+  bindkey -M vicmd '^r' atuin-search
+  bindkey -M vicmd '^[[A' atuin-up-search
+  bindkey -M vicmd '^[OA' atuin-up-search
+}
+
+# Directory jumper
+eval "$(zoxide init zsh --cmd j)" && bindkey -s '^p' 'ji\n'
 
 # Keybindings
-# https://github.com/zsh-users/zsh-autosuggestions?tab=readme-ov-file#key-bindings
-bindkey '^e' autosuggest-accept
-bindkey '^y' autosuggest-execute
+bindkey -s '^o' 'exec "$(brew --prefix)/bin/zsh"\n'
 bindkey -s '^[l' 'clear\n'
-bindkey -s '^p' 'ji\n' # Zoxide interactive
 bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
-bindkey -M vicmd '^r' atuin-search
-bindkey -M vicmd '^[[A' atuin-up-search
-bindkey -M vicmd '^[OA' atuin-up-search
 
 # Syntax-highlighting
 plug zsh-users/zsh-syntax-highlighting
 
-ZSH_HIGHLIGHT_STYLES['unknown-token']=fg=red
-ZSH_HIGHLIGHT_STYLES['reserved-word']=fg=magenta
-ZSH_HIGHLIGHT_STYLES['alias']=fg=green
-ZSH_HIGHLIGHT_STYLES['suffix-alias']=fg=green
-ZSH_HIGHLIGHT_STYLES['global-alias']=fg=green
-ZSH_HIGHLIGHT_STYLES['builtin']=fg=green
-ZSH_HIGHLIGHT_STYLES['function']=fg=green
-ZSH_HIGHLIGHT_STYLES['command']=fg=green
-ZSH_HIGHLIGHT_STYLES['precommand']=fg=magenta
-ZSH_HIGHLIGHT_STYLES['commandseparator']=fg=black
-ZSH_HIGHLIGHT_STYLES['hashed-command']=fg=black
-ZSH_HIGHLIGHT_STYLES['autodirectory']=fg=blue
-ZSH_HIGHLIGHT_STYLES['path']=fg=blue
-ZSH_HIGHLIGHT_STYLES['path_pathseparator']=fg=black
-ZSH_HIGHLIGHT_STYLES['path_prefix']=fg=red
-ZSH_HIGHLIGHT_STYLES['path_prefix_pathseparator']=
-ZSH_HIGHLIGHT_STYLES['globbing']=fg=white
-ZSH_HIGHLIGHT_STYLES['history-expansion']=fg=magenta
-ZSH_HIGHLIGHT_STYLES['command-substitution']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['command-substitution-unquoted']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['command-substitution-quoted']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['command-substitution-delimiter']=fg=blue
-ZSH_HIGHLIGHT_STYLES['command-substitution-delimiter-unquoted']=fg=blue
-ZSH_HIGHLIGHT_STYLES['command-substitution-delimiter-quoted']=fg=blue
-ZSH_HIGHLIGHT_STYLES['process-substitution']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['process-substitution-delimiter']=fg=blue
-ZSH_HIGHLIGHT_STYLES['arithmetic-expansion']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['single-hyphen-option']=fg=11
-ZSH_HIGHLIGHT_STYLES['double-hyphen-option']=fg=11
-ZSH_HIGHLIGHT_STYLES['back-quoted-argument']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['back-quoted-argument-unclosed']=fg=red
-ZSH_HIGHLIGHT_STYLES['back-quoted-argument-delimiter']=fg=blue
-ZSH_HIGHLIGHT_STYLES['single-quoted-argument']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['single-quoted-argument-unclosed']=fg=red
-ZSH_HIGHLIGHT_STYLES['double-quoted-argument']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['double-quoted-argument-unclosed']=fg=red
-ZSH_HIGHLIGHT_STYLES['dollar-quoted-argument']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['dollar-quoted-argument-unclosed']=fg=red
-ZSH_HIGHLIGHT_STYLES['rc-quote']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['dollar-double-quoted-argument']=fg=black,bold
-ZSH_HIGHLIGHT_STYLES['back-double-quoted-argument']=fg=black,bold
-ZSH_HIGHLIGHT_STYLES['back-dollar-quoted-argument']=fg=black,bold
-ZSH_HIGHLIGHT_STYLES['assign']=fg=white
-ZSH_HIGHLIGHT_STYLES['redirection']=fg=white
-ZSH_HIGHLIGHT_STYLES['comment']=fg=black
-ZSH_HIGHLIGHT_STYLES['named-fd']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['numeric-fd']=fg=yellow
-ZSH_HIGHLIGHT_STYLES['arg0']=fg=yellow
+ZSH_HIGHLIGHT_STYLES=(
+  ['unknown-token']='fg=red'
+  ['reserved-word']='fg=magenta'
+  ['alias']='fg=green'
+  ['suffix-alias']='fg=green'
+  ['global-alias']='fg=green'
+  ['builtin']='fg=green'
+  ['function']='fg=green'
+  ['command']='fg=green'
+  ['precommand']='fg=magenta'
+  ['commandseparator']='fg=black'
+  ['hashed-command']='fg=black'
+  ['autodirectory']='fg=blue'
+  ['path']='fg=blue'
+  ['path_pathseparator']='fg=black'
+  ['path_prefix']='fg=red'
+  ['path_prefix_pathseparator']=''
+  ['globbing']='fg=white'
+  ['history-expansion']='fg=magenta'
+  ['command-substitution']='fg=yellow'
+  ['command-substitution-unquoted']='fg=yellow'
+  ['command-substitution-quoted']='fg=yellow'
+  ['command-substitution-delimiter']='fg=blue'
+  ['command-substitution-delimiter-unquoted']='fg=blue'
+  ['command-substitution-delimiter-quoted']='fg=blue'
+  ['process-substitution']='fg=yellow'
+  ['process-substitution-delimiter']='fg=blue'
+  ['arithmetic-expansion']='fg=yellow'
+  ['single-hyphen-option']='fg=11'
+  ['double-hyphen-option']='fg=11'
+  ['back-quoted-argument']='fg=yellow'
+  ['back-quoted-argument-unclosed']='fg=red'
+  ['back-quoted-argument-delimiter']='fg=blue'
+  ['single-quoted-argument']='fg=yellow'
+  ['single-quoted-argument-unclosed']='fg=red'
+  ['double-quoted-argument']='fg=yellow'
+  ['double-quoted-argument-unclosed']='fg=red'
+  ['dollar-quoted-argument']='fg=yellow'
+  ['dollar-quoted-argument-unclosed']='fg=red'
+  ['rc-quote']='fg=yellow'
+  ['dollar-double-quoted-argument']='fg=black,bold'
+  ['back-double-quoted-argument']='fg=black,bold'
+  ['back-dollar-quoted-argument']='fg=black,bold'
+  ['assign']='fg=white'
+  ['redirection']='fg=white'
+  ['comment']='fg=black'
+  ['named-fd']='fg=yellow'
+  ['numeric-fd']='fg=yellow'
+  ['arg0']='fg=yellow'
+)
