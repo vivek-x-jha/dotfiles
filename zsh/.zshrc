@@ -88,9 +88,7 @@ bindkey -s '^[l' 'clear\n'
 bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
 
 # Syntax-highlighting
-plug zsh-users/zsh-syntax-highlighting
-
-ZSH_HIGHLIGHT_STYLES=(
+plug zsh-users/zsh-syntax-highlighting && ZSH_HIGHLIGHT_STYLES=(
   ['unknown-token']='fg=red'
   ['reserved-word']='fg=magenta'
   ['alias']='fg=green'
