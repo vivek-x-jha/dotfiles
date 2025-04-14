@@ -43,15 +43,17 @@ plug hlissner/zsh-autopair
 
 # Auto-suggestions
 # https://github.com/zsh-users/zsh-autosuggestions?tab=readme-ov-file#key-bindings
-plug zsh-users/zsh-autosuggestions
-bindkey '^e' autosuggest-accept
-bindkey '^y' autosuggest-execute
+plug zsh-users/zsh-autosuggestions && {
+  bindkey '^e' autosuggest-accept
+  bindkey '^y' autosuggest-execute
+}
 
 # Completions
-plug zsh-users/zsh-completions
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
-zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.dotfiles/ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+plug zsh-users/zsh-completions && {
+  zstyle ':completion:*' use-cache on
+  zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+  zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.dotfiles/ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+}
 
 # Functions
 fpath=("$ZDOTDIR/funcs" "${fpath[@]}")
