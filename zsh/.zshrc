@@ -61,9 +61,6 @@ fpath=("$ZDOTDIR/funcs" "${fpath[@]}")
 export FPATH
 for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 
-# Authenticate CLI tools w/ 1Password
-source "$XDG_CONFIG_HOME/op/plugins.sh"
-
 # Aliases
 source "$ZDOTDIR/aliases"
 

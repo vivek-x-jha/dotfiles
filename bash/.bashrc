@@ -35,9 +35,6 @@ while IFS= read -r -d '' path; do
   eval "$fn() { zsh -ic '$fn \"\$@\"' $fn \"\$@\"; }"
 done < <(find "$ZDOTDIR/funcs" -type f -maxdepth 1 -print0)
 
-# Authenticate CLI tools w/ 1Password
-source "$XDG_CONFIG_HOME/op/plugins.sh"
-
 # Aliases
 source "$ZDOTDIR/aliases"
 
