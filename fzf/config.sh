@@ -2,12 +2,12 @@
 
 showdir="$(command -v tree &>/dev/null && echo 'tree -aCI ".git|.github" {}' || echo 'ls -lAh {}')"
 showfile="$(command -v bat &>/dev/null && echo 'bat --color=always --style=changes {}' || echo 'cat {}')"
+findfile="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
 # -------------------------------- Defaults ---------------------------------------
 
 # https://github.com/junegunn/fzf?tab=readme-ov-file#environment-variables
-export FZF_DEFAULT_COMMAND='find . -type f'
-command -v fd &>/dev/null && export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND="$findfile"
 
 export FZF_DEFAULT_OPTS="
   --style full
