@@ -100,7 +100,11 @@ alias gsw='git branch --format="%(refname:short)" | fzf --header "git switch" --
 alias gh="op plugin run -- gh"
 
 # MySQL launcher
-alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
+alias mycli-dev='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u mubuntu -p"$(op item get '\''MySQL User: mubuntu'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
+alias mysql-dev='mysql -u mubuntu -p"$(op item get '\''MySQL User: mubuntu'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
+
+alias mycli-root='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u root -p"$(op item get '\''MySQL Root'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
+alias mysql-root='mysql -u root -p"$(op item get '\''MySQL Root'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
 
 # Print weather data
 alias weather='curl wttr.in'
