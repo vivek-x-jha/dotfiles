@@ -96,6 +96,9 @@ alias gsw='git branch --format="%(refname:short)" | fzf --header "git switch" --
 
 # -------------------------------- CLI tools ---------------------------------------
 
+# 1Password CLI authenticator
+alias gh="op plugin run -- gh"
+
 # MySQL launcher
 alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config"'
 
