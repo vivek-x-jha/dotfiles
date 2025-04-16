@@ -67,23 +67,23 @@ end
 vim.uv.fs_closedir(fd)
 
 -- Install all language servers, formatters, and linters
-local ensure_installed = function(packages)
+local ensure_installed = function(tools)
   -- Add linters
-  vim.list_extend(packages, { 'shellcheck' })
+  vim.list_extend(tools, { 'shellcheck' })
 
   -- Add formatters
   local conform_exists, conform = pcall(require, 'conform')
   if conform_exists then
     for _, v in ipairs(conform.list_all_formatters()) do
-      vim.list_extend(packages, vim.split(v.name:gsub(',', ''), '%s+'))
+      vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
     end
   end
 
-  local mason_registry = require 'mason-registry'
-  mason_registry.refresh(function()
-    for _, p in ipairs(packages) do
-      local mason_pkg = assert(require('configs.masonames')[p])
-      local pkg = mason_registry.get_package(mason_pkg)
+  local registry = require 'mason-registry'
+  registry.refresh(function()
+    for _, tool in ipairs(tools) do
+      local tool_kebab = assert(require('configs.masonames')[tool])
+      local pkg = registry.get_package(tool_kebab)
 
       if not pkg:is_installed() then pkg:install() end
     end
