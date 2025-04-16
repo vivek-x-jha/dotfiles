@@ -1,95 +1,77 @@
-local icn = require 'ui.icons'
+-- https://neovim.io/doc/user/lsp.html
+return {
+  setup = function(opts)
+    opts = opts or {}
+    local icn = require 'ui.icons'
+    local tools = {}
 
--- on_attach to set LSP keymaps
-local on_attach = function(bufnr)
-  local map = function(mode, lhs, rhs, desc) vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc }) end
+    -- Configure autocompletions
+    vim.lsp.config('*', {
+      capabilities = require('blink.cmp').get_lsp_capabilities(),
+    })
 
-  -- LSP functionality
-  map('n', 'gd', vim.lsp.buf.definition, 'LSP: Go to Definition')
-  map('n', 'gD', vim.lsp.buf.declaration, 'LSP: Go to Declaration')
-  map('n', 'gi', vim.lsp.buf.implementation, 'LSP: Go to Implementation')
-  map('n', 'gr', vim.lsp.buf.references, 'LSP: Go to References')
-  map('n', 'K', vim.lsp.buf.hover, 'LSP: Hover Documentation')
-  map('n', '<C-k>', vim.lsp.buf.signature_help, 'LSP: Signature Help')
-  map('n', '<leader>rn', vim.lsp.buf.rename, 'LSP: Rename Symbol')
-  map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'LSP: Code Action')
-  map('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, 'LSP: Format Document')
+    -- Configure diagnostics
+    vim.diagnostic.config {
+      float = { border = 'single' },
+      severity_sort = true,
 
-  -- Diagnostics
-  map('n', '<leader>e', vim.diagnostic.open_float, 'Diagnostic: Open Float')
-  map('n', '<leader>q', vim.diagnostic.setloclist, 'Diagnostic: Set Loclist')
-end
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = icn.error,
+          [vim.diagnostic.severity.WARN] = icn.warn,
+          [vim.diagnostic.severity.HINT] = icn.hint,
+          [vim.diagnostic.severity.INFO] = icn.info,
+        },
+      },
 
--- Configure global LSP opts
-vim.lsp.config('*', {
-  capabilities = require('blink.cmp').get_lsp_capabilities(),
-})
+      virtual_lines = {
+        current_line = true,
+      },
 
--- Configure diagnostics
-vim.diagnostic.config {
-  float = { border = 'single' },
-  severity_sort = true,
+      virtual_text = {
+        current_line = true,
+        prefix = icn.virtualcircle,
+      },
+    }
 
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = icn.error,
-      [vim.diagnostic.severity.WARN] = icn.warn,
-      [vim.diagnostic.severity.HINT] = icn.hint,
-      [vim.diagnostic.severity.INFO] = icn.info,
-    },
-  },
+    -- Add servers in ~/.config/nvim/lsp
+    local fd = assert(vim.uv.fs_opendir(vim.fn.stdpath 'config' .. '/lsp'))
 
-  virtual_lines = {
-    current_line = true,
-  },
+    while true do
+      local dir_entries = vim.uv.fs_readdir(fd)
+      if not dir_entries then break end
+      for _, entry in ipairs(dir_entries) do
+        if entry.type == 'file' and entry.name:match '%.lua$' then
+          local basename = vim.fn.fnamemodify(entry.name, ':r')
+          table.insert(tools, basename)
+        end
+      end
+    end
 
-  virtual_text = {
-    current_line = true,
-    prefix = icn.virtualcircle,
-  },
+    vim.uv.fs_closedir(fd)
+
+    -- Add linters
+    vim.list_extend(tools, opts.linters or {})
+
+    -- Add formatters
+    local conform_exists, conform = pcall(require, 'conform')
+    if conform_exists then
+      for _, v in ipairs(conform.list_all_formatters()) do
+        vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
+      end
+    end
+
+    -- Install all language servers, formatters, and linters
+    local registry = require 'mason-registry'
+    registry.refresh(function()
+      for _, tool in ipairs(tools) do
+        local tool_kebab = assert(require('configs.masonames')[tool])
+        local pkg = registry.get_package(tool_kebab)
+
+        if not pkg:is_installed() then pkg:install() end
+      end
+    end)
+
+    vim.lsp.enable(tools)
+  end,
 }
-
--- Add names of all lang servers in user's LSP rtp
-local servers = {}
-local fd = assert(vim.uv.fs_opendir(vim.fn.stdpath 'config' .. '/lsp'))
-
-while true do
-  local dir_entries = vim.uv.fs_readdir(fd)
-  if not dir_entries then break end
-  for _, entry in ipairs(dir_entries) do
-    if entry.type == 'file' and entry.name:match '%.lua$' then
-      local basename = vim.fn.fnamemodify(entry.name, ':r')
-      table.insert(servers, basename)
-    end
-  end
-end
-
-vim.uv.fs_closedir(fd)
-
--- Install all language servers, formatters, and linters
-local ensure_installed = function(tools)
-  -- Add linters
-  vim.list_extend(tools, { 'shellcheck' })
-
-  -- Add formatters
-  local conform_exists, conform = pcall(require, 'conform')
-  if conform_exists then
-    for _, v in ipairs(conform.list_all_formatters()) do
-      vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
-    end
-  end
-
-  local registry = require 'mason-registry'
-  registry.refresh(function()
-    for _, tool in ipairs(tools) do
-      local tool_kebab = assert(require('configs.masonames')[tool])
-      local pkg = registry.get_package(tool_kebab)
-
-      if not pkg:is_installed() then pkg:install() end
-    end
-  end)
-end
-
--- Initialize language servers
-ensure_installed(servers)
-vim.lsp.enable(servers)

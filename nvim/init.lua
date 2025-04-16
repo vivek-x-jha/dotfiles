@@ -34,7 +34,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup(require 'configs.lazy')
 
 -- Load LSP
-require 'configs.lsp'
+require('configs.lsp').setup { linters = { 'shellcheck' } }
 
 -- Load options
 require 'configs.options'
