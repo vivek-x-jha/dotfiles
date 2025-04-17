@@ -124,7 +124,7 @@ for _, keymap in ipairs {
       if vim.g.dashboard_displayed then
         require('ui.buffers').close()
       else
-        require('ui.dashboard').open()
+        require('ui.dashboard').setup()
       end
     end,
     { desc = 'Toggle Dashboard' },
