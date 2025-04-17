@@ -5,11 +5,7 @@ local sep = is_windows and '\\' or '/'
 local delim = is_windows and ';' or ':'
 local masonbin = { vim.fn.stdpath 'data', 'mason', 'bin' }
 
-vim.env.PATH = table.concat {
-  table.concat(masonbin, sep),
-  delim,
-  vim.env.PATH,
-}
+vim.env.PATH = table.concat(masonbin, sep) .. delim .. vim.env.PATH
 
 -------------------------- Disable Providers -----------------------------
 

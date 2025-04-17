@@ -30,14 +30,14 @@ end
 -- Prepend lazy to rtp
 vim.opt.rtp:prepend(lazypath)
 
+-- Load options
+require 'configs.options'
+
 -- Load plugins
 require('lazy').setup(require 'configs.lazy')
 
 -- Load LSP
 require('configs.lsp').setup { linters = { 'shellcheck' } }
-
--- Load options
-require 'configs.options'
 
 -- Load buffer manager
 require('ui.buffers').setup()
