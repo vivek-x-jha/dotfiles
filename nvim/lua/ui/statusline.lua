@@ -116,7 +116,7 @@ local modules = {
       local count = #vim.diagnostic.get(bufid, { severity = vim.diagnostic.severity[opts.level] })
 
       --- @type string Formatted diagnostic entry
-      local diagnostic = table.concat { opts.hl, opts.icon, ' ', tostring(count), ' ', '%#Normal#%*' }
+      local diagnostic = table.concat { opts.hl, opts.icon, ' ', count, ' ', '%#Normal#%*' }
 
       if count > 0 then table.insert(lsp_diagnostics, diagnostic) end
     end
@@ -176,7 +176,7 @@ local modules = {
 
       if count > 0 then
         --- @type string Formatted git modification
-        local status = table.concat { mod.hl, mod.icon, tostring(count), ' ', '%#Normal#%*' }
+        local status = table.concat { mod.hl, mod.icon, count, ' ', '%#Normal#%*' }
 
         table.insert(modifications, status)
       end
@@ -258,7 +258,7 @@ local modules = {
 
       if count > 0 then
         --- @type string Formatted git status element
-        local formatted_git_status = table.concat { status.hl, status.icon, tostring(count), ' ', '%#Normal#%*' }
+        local formatted_git_status = table.concat { status.hl, status.icon, count, ' ', '%#Normal#%*' }
 
         table.insert(git_elements, formatted_git_status)
       end
@@ -272,28 +272,30 @@ local modules = {
 
 --- @class StatusLine
 --- @field setup fun(): string Aggregates all statusline modules
-return {
-  state = lspmsg,
+local M = {}
 
-  setup = function()
-    --- @type string[] Aggregated statusline modules
-    local statusline = {}
+M.state = lspmsg
 
-    --- @type boolean flag for terminal mode
-    local termBuf = vim.api.nvim_get_mode().mode == 't'
+M.setup = function()
+  --- @type string[] Aggregated statusline modules
+  local statusline = {}
 
-    --- @type boolean flag if current buffer is specre search & replace
-    local spectreBuf = vim.bo.filetype == 'spectre_panel'
+  --- @type boolean flag for terminal mode
+  local is_term_buf = vim.api.nvim_get_mode().mode == 't'
 
-    --- @type string[] Order of statusline modules
-    local module_order = (termBuf or spectreBuf) and { 'mode', '%=', 'cwd', 'cursor' }
-      or { 'mode', 'git_branch', 'git_status', 'file', 'git_diff', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
+  --- @type boolean flag if current buffer is specre search & replace
+  local is_spectre_buf = vim.bo.filetype == 'spectre_panel'
 
-    -- Construct the statusline elements
-    for _, mod in ipairs(module_order) do
-      table.insert(statusline, mod == '%=' and mod or modules[mod]())
-    end
+  --- @type string[] Order of statusline modules
+  local module_order = (is_term_buf or is_spectre_buf) and { 'mode', '%=', 'cwd', 'cursor' }
+    or { 'mode', 'git_branch', 'git_status', 'file', 'git_diff', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
 
-    return table.concat(statusline)
-  end,
-}
+  -- Construct the statusline elements
+  for _, mod in ipairs(module_order) do
+    table.insert(statusline, mod == '%=' and mod or modules[mod]())
+  end
+
+  return table.concat(statusline)
+end
+
+return M

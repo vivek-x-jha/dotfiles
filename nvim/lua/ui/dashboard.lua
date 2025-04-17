@@ -65,7 +65,7 @@ utl.btn_gap = function(txt1, txt2, max_str_w)
   return txt1 .. spacing .. txt2
 end
 
-M.open = function(buf, win, action)
+M.setup = function(buf, win, action)
   buf = buf or api.nvim_create_buf(false, true)
   win = win or api.nvim_get_current_win()
   action = action or 'open'
@@ -210,7 +210,7 @@ M.open = function(buf, win, action)
     group = group_id,
     callback = function()
       vim.bo[g.dashboard_buf].ma = true
-      require('ui.dashboard').open(g.dashboard_buf, g.dashboard_win, 'redraw')
+      require('ui.dashboard').setup(g.dashboard_buf, g.dashboard_win, 'redraw')
     end,
   })
 end

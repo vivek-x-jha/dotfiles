@@ -23,7 +23,7 @@ for _, trigger in ipairs {
         local emptyrows = vim.api.nvim_buf_line_count(0) == 1
         local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-        if emptylines and emptyrows and untitled then require('ui.dashboard').open() end
+        if emptylines and emptyrows and untitled then require('ui.dashboard').setup() end
       end,
     },
   },
