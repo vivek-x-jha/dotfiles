@@ -236,14 +236,14 @@ return {
       ---------------------------- LSP ----------------------------------
 
       -- Completions
-      BlinkCmpMenu = { fg = thm.black, bg = thm.dark },
-      BlinkCmpMenuBorder = { bg = thm.brightblack },
+      BlinkCmpMenu = { fg = thm.brightblack },
+      BlinkCmpMenuBorder = { fg = thm.brightblack },
       BlinkCmpMenuSelection = { fg = thm.cyan, bold = true },
       BlinkCmpScrollBarThumb = { fg = thm.grey },
-      BlinkCmpScrollBarGutter = { fg = thm.black },
+      BlinkCmpScrollBarGutter = { fg = thm.grey },
       BlinkCmpLabel = { fg = thm.white },
-      BlinkCmpLabelDeprecated = { fg = thm.brightblack, strikethrough = true },
-      BlinkCmpLabelMatch = { fg = thm.purple },
+      BlinkCmpLabelDeprecated = { fg = thm.red, strikethrough = true },
+      BlinkCmpLabelMatch = { fg = thm.magenta },
       BlinkCmpLabelDetail = { fg = thm.brightblack },
       BlinkCmpLabelDescription = { fg = thm.brightblack },
 
