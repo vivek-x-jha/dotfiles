@@ -35,7 +35,6 @@ M.setup = function(opts)
       col = 0.25,
       width = 0.5,
       height = 0.4,
-      border = 'single',
     }
 
     local newopts = vim.tbl_deep_extend('force', default_float_opts, opts.float_opts or {})

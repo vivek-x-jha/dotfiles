@@ -76,6 +76,7 @@ vim.o.splitright = true -- new vertical splits to the right
 vim.o.timeoutlen = 400 -- keymap timeout
 vim.o.undofile = true -- persistent undo
 vim.o.updatetime = 250 -- swap write & CursorHold delay
+vim.o.winborder = 'single'
 
 -- Load plugins
 local lazyopts = require 'configs.lazy'
