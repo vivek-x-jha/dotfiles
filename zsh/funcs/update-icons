@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Check for 'fileicon' binary
 command -v fileicon &>/dev/null || {
@@ -20,7 +20,6 @@ dir_icons=(
   "/Applications/iTerm.app" "$HOME/Pictures/icons/iterm2.png"
   "/Applications/iTermAI.app" "$HOME/Pictures/icons/ai-brain.png"
   "/Applications/KeyCastr.app" "$HOME/Pictures/icons/keycastr.png"
-  "/Applications/Mimestream.app" "$HOME/Pictures/icons/gmail.png"
   "/Applications/Neovim-iTerm.app" "$HOME/Pictures/icons/neovim-iterm.png"
   "/Applications/Neovim-Wezterm.app" "$HOME/Pictures/icons/neovim-wezterm.png"
   "/Applications/Postman.app" "$HOME/Pictures/icons/postman.png"
@@ -57,13 +56,14 @@ for ((i = 1; i < ${#dir_icons[@]}; i += 2)); do
     printf "${1}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" "$2" "$short_dir" "$(basename "$icon")"
   }
 
-  if sudo fileicon set "$dir" "$icon" &>/dev/null || [[ $(basename "$dir") == 'Mimestream.app' ]]; then
-    print_status "${GREEN}" " "
-    ((success++))
-  else
+  fileicon set "$dir" "$icon" &>/dev/null || {
     print_status "${RED}" " "
     ((fail++))
-  fi
+    continue
+  }
+
+  print_status "${GREEN}" " "
+  ((success++))
 done
 
 # Create Footer
