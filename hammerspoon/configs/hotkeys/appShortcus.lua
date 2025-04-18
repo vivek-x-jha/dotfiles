@@ -24,9 +24,9 @@ return {
 
   {
     key = 'g',
-    desc = 'Toggle Gmail Client',
+    desc = 'Toggle Google Chrome',
     mods = { 'ctrl', 'alt', 'cmd' },
-    command = function() utl.toggleApp 'Mimestream' end,
+    command = function() utl.toggleApp 'Google Chrome' end,
   },
 
   {
