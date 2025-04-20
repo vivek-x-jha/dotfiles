@@ -1,4 +1,4 @@
--- https://cmp.saghen.dev/installation.html
+-- https://cmp.saghen.dev/installation#lazy-nvim
 return {
   'saghen/blink.cmp',
   version = '1.*',
