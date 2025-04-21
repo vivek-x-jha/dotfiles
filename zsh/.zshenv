@@ -25,9 +25,6 @@ export VISUAL="$EDITOR"
 # Supress homebrew hints
 export HOMEBREW_NO_ENV_HINTS=1
 
-# 1Password CLI authenticator
-export OP_PLUGIN_ALIASES_SOURCED=1
-
 # TMUX
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 export TMUX_FZF_LAUNCH_KEY='f'
