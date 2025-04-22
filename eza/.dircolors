@@ -45,18 +45,19 @@ STICKY 00;38;5;50
 *prompt-21 00;38;5;1
 
 # ················································································
-# Ignore, Temp, Worskpaces [BLACK]
+# Ignore, Temp, Worskpaces [BLACK + BRIGHT-BLACK]
 # ················································································
-*DS_Store 00;38;5;0
 *ignore 00;38;5;0
-*gitmodules 00;38;5;0
-*hushlogin 00;38;5;0
-*swp 00;38;5;0
-*code-workspace 00;38;5;0
-*editorconfig 00;38;5;0
-*gitattributes 00;38;5;0
-*revision-hash 00;38;5;0
-*Session.vim 00;38;5;0
+
+*DS_Store 00;38;5;8
+*gitmodules 00;38;5;8
+*hushlogin 00;38;5;8
+*swp 00;38;5;8
+*code-workspace 00;38;5;8
+*editorconfig 00;38;5;8
+*gitattributes 00;38;5;8
+*revision-hash 00;38;5;8
+*Session.vim 00;38;5;8
 
 # ················································································
 # Binaries [GREEN]
