@@ -1,13 +1,10 @@
-local augroup = vim.api.nvim_create_augroup
-local ls = require 'luasnip'
-
 for _, trigger in ipairs {
   -- -- Showkeys
   -- {
   --   'VimEnter',
   --   {
   --     desc = 'Initialize Showkeys on startup',
-  --     group = augroup('ShowkeysAU', {}),
+  --     group = vim.api.nvim_create_augroup('ShowkeysAU', {}),
   --     callback = function() vim.cmd 'ShowkeysToggle' end,
   --   },
   -- },
@@ -17,7 +14,7 @@ for _, trigger in ipairs {
     'VimEnter',
     {
       desc = 'Display Dashboard on blank startup',
-      group = augroup('DashAU', {}),
+      group = vim.api.nvim_create_augroup('DashAU', {}),
       callback = function()
         local emptylines = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] == ''
         local emptyrows = vim.api.nvim_buf_line_count(0) == 1
@@ -33,7 +30,7 @@ for _, trigger in ipairs {
     'TextYankPost',
     {
       desc = 'Highlight when yanking (copying) text',
-      group = augroup('YankAU', {}),
+      group = vim.api.nvim_create_augroup('YankAU', {}),
       callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
     },
   },
@@ -43,7 +40,7 @@ for _, trigger in ipairs {
     'FileType',
     {
       desc = 'Hide line numbers for Spectre',
-      group = augroup('SpectreAU', {}),
+      group = vim.api.nvim_create_augroup('SpectreAU', {}),
       pattern = 'spectre_panel',
       callback = function()
         vim.opt_local.number = false
@@ -57,7 +54,7 @@ for _, trigger in ipairs {
     'BufWinEnter',
     {
       desc = 'Load folds when opening file',
-      group = augroup('FoldsAU', { clear = false }),
+      group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
       pattern = { '*.*' },
       command = 'silent! loadview',
     },
@@ -67,7 +64,7 @@ for _, trigger in ipairs {
     'BufWinLeave',
     {
       desc = 'Save folds when closing file',
-      group = augroup('FoldsAU', { clear = false }),
+      group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
       pattern = { '*.*' },
       command = 'mkview',
     },
@@ -86,7 +83,7 @@ for _, trigger in ipairs {
     },
     {
       desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
-      group = augroup('TreeAU', {}),
+      group = vim.api.nvim_create_augroup('TreeAU', {}),
       pattern = '*',
       callback = function()
         local nvt = require('nvim-tree.api').tree
@@ -100,7 +97,7 @@ for _, trigger in ipairs {
     { 'UIEnter', 'BufReadPost', 'BufNewFile' },
     {
       desc = 'Wait to load user events on non-empty buffers',
-      group = augroup('FilePostAU', {}),
+      group = vim.api.nvim_create_augroup('FilePostAU', {}),
       callback = function(args)
         local file = vim.api.nvim_buf_get_name(args.buf)
         local buftype = vim.api.nvim_get_option_value('buftype', { buf = args.buf })
@@ -125,7 +122,7 @@ for _, trigger in ipairs {
     { 'BufAdd', 'BufEnter', 'tabnew' },
     {
       desc = 'Manages tab-local buffer lists and tracks buffer history for dynamic navigation and cleanup',
-      group = augroup('BufferAU', {}),
+      group = vim.api.nvim_create_augroup('BufferAU', {}),
       callback = function(args)
         local bufs = vim.t.bufs
         local is_curbuf = vim.api.nvim_get_current_buf() == args.buf
@@ -163,7 +160,7 @@ for _, trigger in ipairs {
     'BufDelete',
     {
       desc = 'Remove deleted buffer from buffer list',
-      group = augroup('BufferAU', {}),
+      group = vim.api.nvim_create_augroup('BufferAU', {}),
       callback = function(args)
         for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
           local bufs = vim.t[tab].bufs
@@ -186,7 +183,7 @@ for _, trigger in ipairs {
     'FileType',
     {
       desc = 'Prevents quickfix buffers from appearing in buffer lists',
-      group = augroup('BufferAU', {}),
+      group = vim.api.nvim_create_augroup('BufferAU', {}),
       pattern = 'qf',
       callback = function() vim.opt_local.buflisted = false end,
     },
@@ -196,8 +193,10 @@ for _, trigger in ipairs {
     'InsertLeave',
     {
       desc = 'Reset Snippet',
-      group = augroup('LuaSnipAU', {}),
+      group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
       callback = function()
+        local ls = require 'luasnip'
+
         if ls.session.current_nodes[vim.api.nvim_get_current_buf()] and not ls.session.jump_active then ls.unlink_current() end
       end,
     },
@@ -208,7 +207,7 @@ for _, trigger in ipairs {
     'LspProgress',
     {
       desc = 'Show LSP Progress bar',
-      group = augroup('LspProgressAU', {}),
+      group = vim.api.nvim_create_augroup('LspProgressAU', {}),
       pattern = { 'begin', 'end' },
       callback = function(args)
         local data = args.data.params.value
@@ -254,7 +253,7 @@ vim.schedule(function()
       },
       {
         desc = 'Initialize Colorify Virtual Text',
-        group = augroup('ColorifyAU', {}),
+        group = vim.api.nvim_create_augroup('ColorifyAU', {}),
         callback = function(args)
           require('ui.state').ns = vim.api.nvim_create_namespace 'Colorify'
 
@@ -267,7 +266,7 @@ vim.schedule(function()
       'LspAttach',
       {
         desc = 'Initialize LSP config',
-        group = augroup('LspAttachAU', {}),
+        group = vim.api.nvim_create_augroup('LspAttachAU', {}),
         callback = function(args)
           local lsp = vim.lsp
           --- @type vim.lsp.Client|nil LSP client object
@@ -278,7 +277,7 @@ vim.schedule(function()
             local signatureProvider = client.server_capabilities.signatureHelpProvider
 
             if signatureProvider and signatureProvider.triggerCharacters then
-              local lsp_sig_au = augroup('LspSignatureAU', { clear = false })
+              local lsp_sig_au = vim.api.nvim_create_augroup('LspSignatureAU', { clear = false })
               --- @type string[] Trigger characters
               local triggers = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
 
