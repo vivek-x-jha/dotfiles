@@ -1,4 +1,4 @@
--- Establish leader key
+-- Set leader key(s)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
@@ -27,16 +27,18 @@ if not vim.uv.fs_stat(lazypath) then
   end
 end
 
--- Prepend lazy to rtp
+-- Prepend lazy to nvim runtime path
 vim.opt.rtp:prepend(lazypath)
 
--- Prepend mason to PATH
+-- Prepend mason to $PATH
 local is_windows = vim.fn.has 'win32' ~= 0
 local sep = is_windows and '\\' or '/'
-local delim = is_windows and ';' or ':'
-local masonbin = { vim.fn.stdpath 'data', 'mason', 'bin' }
 
-vim.env.PATH = table.concat(masonbin, sep) .. delim .. vim.env.PATH
+vim.env.PATH = table.concat {
+  table.concat({ vim.fn.stdpath 'data', 'mason', 'bin' }, sep),
+  is_windows and ';' or ':',
+  vim.env.PATH,
+}
 
 -- Disable providers
 vim.g.loaded_node_provider = 0
@@ -79,11 +81,14 @@ vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
 
 -- Load plugins
-local lazyopts = require 'configs.lazy'
-require('lazy').setup(lazyopts)
+require('lazy').setup(require 'configs.lazy')
 
 -- Load LSP
-require('configs.lsp').setup { linters = { 'shellcheck' } }
+require('configs.lsp').setup {
+  servers = table.concat { vim.fn.stdpath 'config', sep, 'lsp' },
+  linters = { 'shellcheck' },
+  formatters = require('conform').list_all_formatters(),
+}
 
 -- Load buffer manager
 require('ui.buffers').setup()

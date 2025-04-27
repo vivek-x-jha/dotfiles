@@ -36,7 +36,7 @@ M.setup = function(opts)
   }
 
   -- Add servers in ~/.config/nvim/lsp
-  local fd = assert(vim.uv.fs_opendir(vim.fn.stdpath 'config' .. '/lsp'))
+  local fd = assert(vim.uv.fs_opendir(opts.servers))
 
   while true do
     local dir_entries = vim.uv.fs_readdir(fd)
@@ -52,14 +52,11 @@ M.setup = function(opts)
   vim.uv.fs_closedir(fd)
 
   -- Add linters
-  vim.list_extend(tools, opts.linters or {})
+  vim.list_extend(tools, opts.linters)
 
   -- Add formatters
-  local conform_exists, conform = pcall(require, 'conform')
-  if conform_exists then
-    for _, v in ipairs(conform.list_all_formatters()) do
-      vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
-    end
+  for _, v in ipairs(opts.formatters) do
+    vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
   end
 
   -- Install all language servers, formatters, and linters
