@@ -281,7 +281,7 @@ M.setup = function()
   local statusline = {}
 
   --- @type boolean flag for terminal mode
-  local is_term_buf = vim.api.nvim_get_mode().mode == 't'
+  local is_term_buf = vim.tbl_contains({ 't', 'nt' }, vim.api.nvim_get_mode().mode)
 
   --- @type boolean flag if current buffer is specre search & replace
   local is_spectre_buf = vim.bo.filetype == 'spectre_panel'
