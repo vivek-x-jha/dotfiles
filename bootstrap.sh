@@ -278,8 +278,9 @@ git config --global user.email "$GIT_EMAIL"
 git config --global user.signingkey "$GIT_SIGNINGKEY"
 
 # Update git authentication to ssh and show fetch/push urls
-git -C "$HOME/.dotfiles" remote set-url origin "git@github.com:$GITHUB_NAME/dotfiles.git"
-git -C "$HOME/.dotfiles" remote add upstream git@github.com:vivek-x-jha/dotfiles.git
+github="git@github.com:$GITHUB_NAME/dotfiles.git"
+git -C "$HOME/.dotfiles" remote set-url origin "$github"
+[[ $GITHUB_NAME == vivek-x-jha ]] || git -C "$HOME/.dotfiles" remote add upstream "$github"
 
 # Update ssh allowed signers
 echo "$GIT_EMAIL $GIT_SIGNINGKEY" >"$XDG_CONFIG_HOME/ssh/allowed_signers"
