@@ -74,7 +74,7 @@ return {
   grammarly = 'grammarly-languageserver',
   graphql = 'graphql-language-service-cli',
   groovyls = 'groovy-language-server',
-  harper_ls = 'harper-ls',
+  harperls = 'harper-ls',
   haxe_language_server = 'haxe-language-server',
   hdl_checker = 'hdl-checker',
   helm_ls = 'helm-ls',
