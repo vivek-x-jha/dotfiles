@@ -49,16 +49,19 @@ config.window_close_confirmation = 'NeverPrompt'
 config.window_decorations = 'RESIZE'
 
 -- https://wezterm.org/config/lua/config/window_frame.html?h=window_frame
-config.window_frame = {
-  border_left_width = 1,
-  border_right_width = 1,
-  border_bottom_height = 1,
-  border_top_height = 1,
+local border_thickness = 1
+local brightblack = config.colors.brights[1]
 
-  border_left_color = config.colors.brights[1],
-  border_right_color = config.colors.brights[1],
-  border_bottom_color = config.colors.brights[1],
-  border_top_color = config.colors.brights[1],
+config.window_frame = {
+  border_left_width = border_thickness,
+  border_right_width = border_thickness,
+  border_bottom_height = border_thickness,
+  border_top_height = border_thickness,
+
+  border_left_color = brightblack,
+  border_right_color = brightblack,
+  border_bottom_color = brightblack,
+  border_top_color = brightblack,
 }
 
 -- https://wezterm.org/config/lua/config/window_padding.html?h=window_padd
