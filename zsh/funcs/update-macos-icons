@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+# Finder location: "/System/Library/CoreServices/Finder.app/Contents"
 local src="/System/Applications/$1.app/Contents"
 local tgt="$HOME/Applications/$1.app"
 
