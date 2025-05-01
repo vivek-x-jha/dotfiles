@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+local src="/System/Applications/$1.app/Contents"
+local tgt="$HOME/Applications/$1.app"
+
+mkdir -p "$tgt"
+ln -s "$src" "$tgt"
+fileicon set "$tgt" "$HOME/Pictures/icons/$2.png"
