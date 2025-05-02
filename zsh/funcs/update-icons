@@ -13,6 +13,7 @@ dir_icons=(
   "/Applications/1Password.app" "$HOME/Pictures/icons/1password-macos.png"
   "/Applications/ChatGPT.app" "$HOME/Pictures/icons/chatgpt.png"
   "/Applications/Discord.app" "$HOME/Pictures/icons/discord-macos.png"
+  "/Applications/Dropbox.app" "$HOME/Pictures/icons/dropbox.png"
   "/Applications/Figma.app" "$HOME/Pictures/icons/figma.png"
   "/Applications/Firefox.app" "$HOME/Pictures/icons/firefox-macos.png"
   "/Applications/Google Chrome.app" "$HOME/Pictures/icons/chrome.png"
