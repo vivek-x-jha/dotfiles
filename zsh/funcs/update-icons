@@ -23,6 +23,7 @@ dir_icons=(
   "/Applications/Neovim-Wezterm.app" "$HOME/Pictures/icons/neovim-wezterm.png"
   "/Applications/Postman.app" "$HOME/Pictures/icons/postman.png"
   "/Applications/Slack.app" "$HOME/Pictures/icons/slack.png"
+  "/Applications/Skim.app" "$HOME/Pictures/icons/skim.png"
   "/Applications/Spotify.app" "$HOME/Pictures/icons/spotify.png"
   "/Applications/Visual Studio Code.app" "$HOME/Pictures/icons/vscode.png"
   "/Applications/WezTerm.app" "$HOME/Pictures/icons/wezterm.png"

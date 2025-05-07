@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Ensure fileicon installed
-command -v fileiconn || {
+command -v fileicon &>/dev/null || {
   echo 'fileicon not found'
   return 1
 }
