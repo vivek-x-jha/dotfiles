@@ -2,8 +2,7 @@
 # shellcheck shell=zsh
 
 # Instant Prompt
-_p10k_inst_prompt="$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh"
-[[ -r $_p10k_inst_prompt ]] && source "$_p10k_inst_prompt"
+source "$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh" 2>/dev/null
 
 # History
 HISTFILE="$XDG_STATE_HOME/zsh/.zsh_history"
