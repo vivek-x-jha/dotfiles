@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+local brewfile="${1:-$HOME/.dotfiles/Brewfile}"
+
 # Run homebrew command and cask updates
 brew upgrade
 brew cu -af
@@ -7,7 +9,7 @@ brew cu -af
 # Run homebrew utilities
 brew cleanup
 brew doctor
-brew bundle dump --force --file="${1:-$HOME/.dotfiles/Brewfile}"
+brew bundle dump --force --file="$brewfile"
 
 # Customize app icon for any upgraded cask
 update-icons
