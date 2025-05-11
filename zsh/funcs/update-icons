@@ -50,25 +50,27 @@ print_separator
 local success=0 fail=0
 
 for ((i = 1; i < ${#dir_icons[@]}; i += 2)); do
-  dir="${dir_icons[i]}"
-  icon="${dir_icons[i + 1]}"
-  short_dir="${dir/#$HOME/~}"
+  local dir="$dir_icons[i]"
+  local icon="$dir_icons[i + 1]"
 
   print_status() {
-    printf "${1}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" "$2" "$short_dir" "$(basename "$icon")"
+    local highlight="${1}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}"
+    local status_icon="$2"
+
+    printf "$highlight\n" "$status_icon" "${dir/#$HOME/~}" "${icon:t}"
   }
 
   fileicon set "$dir" "$icon" &>/dev/null || {
-    print_status "${RED}" " "
+    print_status "$RED" " "
     ((fail++))
     continue
   }
 
-  print_status "${GREEN}" " "
+  print_status "$GREEN" " "
   ((success++))
 done
 
 # Create Footer
 print_separator
-printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "${success:-0}" 'Folder icon(s) updated successfully'
+printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$success" 'Folder icon(s) updated successfully'
 (($fail == 0)) || printf "${RED}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$fail" 'Folder icon(s) failed to update'
