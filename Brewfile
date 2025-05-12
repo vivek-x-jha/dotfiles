@@ -1,5 +1,5 @@
 tap "buo/cask-upgrade"
-brew "atuin"
+brew "atuin", restart_service: :changed
 brew "bash"
 brew "libssh2"
 brew "libgit2"
