@@ -37,6 +37,7 @@ return {
       -- Move apps to their respective screens and make them visible
       utl.positionApp('Arc', screens[3])
       utl.positionApp('ChatGPT', screens[2])
+      utl.moveApp 'maximize'
       utl.positionApp('WezTerm', screens[1])
     end,
   },
