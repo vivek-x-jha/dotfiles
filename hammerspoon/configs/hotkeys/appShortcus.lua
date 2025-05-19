@@ -23,6 +23,13 @@ return {
   },
 
   {
+    key = 'e',
+    desc = 'Toggle Notion Calendar',
+    mods = { 'ctrl', 'alt', 'cmd' },
+    command = function() utl.toggleApp 'Notion Calendar' end,
+  },
+
+  {
     key = 'g',
     desc = 'Toggle Google Chrome',
     mods = { 'ctrl', 'alt', 'cmd' },
@@ -45,9 +52,9 @@ return {
 
   {
     key = 'n',
-    desc = 'Toggle Notion Calendar',
+    desc = 'Toggle Notes',
     mods = { 'ctrl', 'alt', 'cmd' },
-    command = function() utl.toggleApp 'Notion Calendar' end,
+    command = function() utl.toggleApp 'Notes' end,
   },
 
   {
@@ -55,6 +62,13 @@ return {
     desc = 'Toggle Photos',
     mods = { 'ctrl', 'alt', 'cmd' },
     command = function() utl.toggleApp 'Photos' end,
+  },
+
+  {
+    key = 'r',
+    desc = 'Toggle Reminders',
+    mods = { 'ctrl', 'alt', 'cmd' },
+    command = function() utl.toggleApp 'Reminders' end,
   },
 
   {
