@@ -2,7 +2,7 @@ return {
   {
     desc = 'Reload Config!',
     mods = { 'cmd', 'alt', 'ctrl' },
-    key = 'R',
+    key = 'h',
     command = function()
       hs.reload()
       hs.console.clearConsole()
