@@ -30,6 +30,13 @@ return {
   },
 
   {
+    key = 'f',
+    desc = 'Toggle Messenger',
+    mods = { 'ctrl', 'alt', 'cmd' },
+    command = function() utl.toggleApp 'Messenger' end,
+  },
+
+  {
     key = 'g',
     desc = 'Toggle Google Chrome',
     mods = { 'ctrl', 'alt', 'cmd' },
