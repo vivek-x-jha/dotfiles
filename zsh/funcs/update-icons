@@ -19,6 +19,7 @@ dir_icons=(
   "/Applications/iTerm.app" "$HOME/Pictures/icons/iterm2.png"
   "/Applications/iTermAI.app" "$HOME/Pictures/icons/ai-brain.png"
   "/Applications/KeyCastr.app" "$HOME/Pictures/icons/keycastr.png"
+  "/Applications/Messenger.app" "$HOME/Pictures/icons/messenger.png"
   "/Applications/Neovim-iTerm.app" "$HOME/Pictures/icons/neovim-iterm.png"
   "/Applications/Neovim-Wezterm.app" "$HOME/Pictures/icons/neovim-wezterm.png"
   "/Applications/Postman.app" "$HOME/Pictures/icons/postman.png"
