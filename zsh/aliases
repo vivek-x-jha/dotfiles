@@ -44,6 +44,7 @@ alias list-path='tr ":" "\n" <<< "$PATH"'
 alias list-shells='tail -n +5 /etc/shells'
 alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias list-users='dscl . list /Users | grep -v "^_"'
+alias list-real-users='dscl . list /Users UniqueID | awk '\''$2 >= 501 { print $1 }'\'''
 
 # Outputs Homebrew package info
 alias list-apps='brew list --cask | xargs -n1'
