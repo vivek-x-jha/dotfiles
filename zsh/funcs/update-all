@@ -14,5 +14,8 @@ brew bundle dump --force --file="$brewfile"
 # Customize app icon for any upgraded cask
 update-icons
 
+# Update zsh plugin manager zap and all plugins
+zap update all
+
 # Update Tex Live Utility
 # sudo tlmgr update --self --all
