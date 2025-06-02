@@ -1,21 +1,27 @@
 #!/usr/bin/env zsh
 
+# Asynchronously delete all .DS_Store files system-wide (non-blocking)
+fd -HI .DS_Store / -x rm -f {} &>/dev/null &
+
+# Set Brewfile path or fallback to default
 local brewfile="${1:-$HOME/.dotfiles/Brewfile}"
 
-# Run homebrew command and cask updates
+# Homebrew: upgrade formulae and casks
 brew upgrade
 brew cu -af
 
-# Run homebrew utilities
+# Homebrew: clean up and verify
 brew cleanup
 brew doctor
+
+# Re-dump current brew bundle (force overwrite)
 brew bundle dump --force --file="$brewfile"
 
-# Customize app icon for any upgraded cask
+# Post-brew: update icons for any newly installed or updated apps
 update-icons
 
-# Update zsh plugin manager zap and all plugins
+# Zsh plugin manager: update zap & plugins
 zap update all
 
-# Update Tex Live Utility
+# Optional: Update TeX Live Utility (uncomment if used)
 # sudo tlmgr update --self --all
