@@ -99,7 +99,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # Authenticate 1password-cli
-op signin
+command -v op &>/dev/null && op signin
 
 while true; do
   # Required
