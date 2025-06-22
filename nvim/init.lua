@@ -101,6 +101,7 @@ vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
 -- Load event triggers (some deferred)
 require 'configs.autocmds'
+vim.api.nvim_create_user_command('UpdateAll', function() vim.cmd 'Lazy update | MasonUpdate' end, {})
 
 -- Load keymaps (deferred)
 vim.schedule(function() require 'configs.keymaps' end)
