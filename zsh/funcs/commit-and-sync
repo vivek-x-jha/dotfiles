@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+git add --all &&
+  cz commit &&
+  git push &&
+  update-feature-branches
