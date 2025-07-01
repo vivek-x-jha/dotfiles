@@ -10,8 +10,9 @@ export ZAP_GIT_PREFIX='git@github.com:'
 export SHELL_SESSIONS_DISABLE=1
 
 # Set default editor
-export EDITOR=vim
-[[ -f $XDG_CONFIG_HOME/nvim/init.lua || -f $XDG_CONFIG_HOME/nvim/init.vim ]] && export EDITOR=nvim
+{
+  [[ -e $XDG_CONFIG_HOME/nvim/init.lua || -e $XDG_CONFIG_HOME/nvim/init.vim ]] && export EDITOR=nvim
+} || export EDITOR=vim
 
 # Set graphical editor
 export VISUAL="$EDITOR"
