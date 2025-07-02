@@ -1,8 +1,11 @@
 # Reset default PATH
 unset PATH && eval "$(/usr/libexec/path_helper -s)"
 
-# Prepend homebrew to PATH
-eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+# Prepend homebrew & coreutils to PATH on MacOS
+[[ $(uname) == Darwin ]] && {
+  eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+  PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+}
 
 # Load secrets
 # shellcheck disable=SC1091
