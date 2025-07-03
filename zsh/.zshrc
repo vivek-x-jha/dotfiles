@@ -10,17 +10,13 @@ HISTSIZE=12000
 SAVEHIST=10000
 
 # Options
-zsh_opts=(
-  extendedhistory
-  histexpiredupsfirst
-  histignoredups
-  histignorespace
-  incappendhistory
-  sharehistory
-  autocd
-  interactivecomments
-)
-setopt "${zsh_opts[@]}"
+setopt extendedhistory
+setopt histexpiredupsfirst
+setopt histignoredups
+setopt histignorespace
+setopt incappendhistory
+setopt sharehistory
+setopt autocd
 
 # PATH + Secrets
 source "$ZDOTDIR/.zprofile"
