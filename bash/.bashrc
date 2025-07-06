@@ -39,7 +39,7 @@ done < <(find "$ZDOTDIR/funcs" -type f -maxdepth 1 -print0)
 source "$ZDOTDIR/aliases"
 
 # Color ls, tree, eza
-eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
+eval "$($(command -v dircolors || command -v gdircolors) "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"

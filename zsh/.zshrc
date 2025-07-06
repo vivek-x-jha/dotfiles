@@ -60,7 +60,7 @@ for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 source "$ZDOTDIR/aliases"
 
 # Color ls, tree, eza
-eval "$(dircolors "$XDG_CONFIG_HOME/eza/.dircolors")"
+eval "$($(command -v dircolors || command -v gdircolors) "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/config.sh"

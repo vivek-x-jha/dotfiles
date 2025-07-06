@@ -8,9 +8,6 @@
   # Prepend homebrew to PATH
   eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 
-  # Prepend GNU coreutils to PATH
-  PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-
   # Add iTerm uilities to PATH
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 
