@@ -55,7 +55,7 @@ eval "$(atuin init bash)" && {
 eval "$(zoxide init bash --cmd j)" && bind '"\C-p": "ji\n"'
 
 # Keybindings
-bind -x '"\C-o": "exec '"$(brew --prefix)"'/bin/bash"'
+bind -x '"\C-o": "exec '"$(which bash)"'"'
 bind -x '"\el": clear'
 bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
 
