@@ -76,7 +76,7 @@ eval "$(atuin init zsh)" && {
 eval "$(zoxide init zsh --cmd j)" && bindkey -s '^p' 'ji\n'
 
 # Keybindings
-bindkey -s '^o' 'exec "$(brew --prefix)/bin/zsh"\n'
+bindkey -s '^o' 'exec "$(which zsh)"\n'
 bindkey -s '^[l' 'clear\n'
 bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
 

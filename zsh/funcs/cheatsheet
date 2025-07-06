@@ -25,7 +25,7 @@ local bindings=(
   '<C-Y>:run autosuggestion:autosuggest-execute'
   '<C-U>:delete chars left of cursor:unix-line-discard'
   '<C-I>:accept autocomplete:fzf-completion'
-  '<C-O>:reload shell:exec '"$(brew --prefix)/bin/${ZSH_VERSION:+zsh}${BASH_VERSION:+bash}"
+  '<C-O>:reload shell:exec '"$SHELL"
   '<C-P>:search frequent directories:zoxide query --interactive'
   '<C-A>:invoke tmux hotkey:tmux prefix'
   '<C-D>:end input:logout'
