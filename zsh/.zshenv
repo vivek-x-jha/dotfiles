@@ -10,9 +10,7 @@ export ZAP_GIT_PREFIX='git@github.com:'
 export SHELL_SESSIONS_DISABLE=1
 
 # Set default editor
-{
-  [[ -e $XDG_CONFIG_HOME/nvim/init.lua || -e $XDG_CONFIG_HOME/nvim/init.vim ]] && export EDITOR=nvim
-} || export EDITOR=vim
+export EDITOR=nvim
 
 # Set graphical editor
 export VISUAL="$EDITOR"
@@ -22,9 +20,6 @@ export VISUAL="$EDITOR"
   export PAGER='bat -p'
   export MANPAGER="sh -c 'col -bx | bat -pl man --paging=always --theme=sourdiesel'"
 }
-
-# Supress homebrew hints
-export HOMEBREW_NO_ENV_HINTS=1
 
 # TMUX
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
