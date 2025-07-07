@@ -6,7 +6,7 @@
   eval "$(/usr/libexec/path_helper -s)"
 
   # Prepend homebrew to PATH
-  eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+  eval "$("$([[ $(uname -m) == arm64 ]] && echo /opt/homebrew || echo /usr/local)"/bin/brew shellenv)"
 
   # Add iTerm uilities to PATH
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
