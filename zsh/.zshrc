@@ -18,9 +18,6 @@ setopt incappendhistory
 setopt sharehistory
 setopt autocd
 
-# PATH + Secrets
-source "$ZDOTDIR/.zprofile"
-
 # Plugin Manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
