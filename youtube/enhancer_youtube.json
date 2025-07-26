@@ -1,5 +1,5 @@
 {
-  "version": "3.0.5",
+  "version": "3.0.9",
   "settings": {
     "applyvideofilters": false,
     "backdropcolor": "#000000",
@@ -53,6 +53,30 @@
     "executescript": false,
     "expanddescription": false,
     "filter": "none",
+    "griditemsperrow": {
+      "channel": {
+        "shorts": {
+          "apply": true,
+          "count": 8
+        },
+        "videos": {
+          "apply": true,
+          "count": 6
+        }
+      },
+      "posts": {
+        "apply": true,
+        "count": 6
+      },
+      "shorts": {
+        "apply": true,
+        "count": 10
+      },
+      "videos": {
+        "apply": true,
+        "count": 4
+      }
+    },
     "hidecardsendscreens": false,
     "hidechat": false,
     "hidecomments": false,
@@ -70,7 +94,7 @@
     "pauseforegroundtab": false,
     "pausevideos": true,
     "popuplayersize": "640x360",
-    "previousversion": "3.0.4",
+    "previousversion": "3.0.8",
     "qualityembeds": "highres",
     "qualityembedsfullscreen": "hd1080",
     "qualityplaylists": "highres",
@@ -88,7 +112,7 @@
     "theatermode": false,
     "theme": "youtube-deep-dark-custom",
     "themevariant": "dark-aqua.css",
-    "update": 1737452507160,
+    "update": 1752087357843,
     "vendorthemevariant": "youtube-deep-dark-vertex-dark.css",
     "videofilters": {
       "blur": 0,
