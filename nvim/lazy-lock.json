@@ -1,9 +1,9 @@
 {
   "LuaSnip": { "branch": "master", "commit": "458560534a73f7f8d7a11a146c801db00b081df0" },
-  "avante.nvim": { "branch": "main", "commit": "1830917cebe4c9d1d3029a03d029fe9ce8680e42" },
+  "avante.nvim": { "branch": "main", "commit": "6c2a785ebb296ca7ce7db622c12338a6c4b80310" },
   "blink.cmp": { "branch": "main", "commit": "bae4bae0eedd1fa55f34b685862e94a222d5c6f8" },
   "conform.nvim": { "branch": "master", "commit": "a6f5bdb78caa305496357d17e962bbc4c0b392e2" },
-  "copilot.lua": { "branch": "master", "commit": "f22d869b9544fce7b25fdc7dd2e3a9b760485154" },
+  "copilot.lua": { "branch": "master", "commit": "4c98663ba12db653bc1127ed4c124cdde89f8ca8" },
   "dressing.nvim": { "branch": "master", "commit": "3a45525bb182730fe462325c99395529308f431e" },
   "fzf-lua": { "branch": "main", "commit": "47b85a25c0c0b2c20b4e75199ed01bb71e7814f5" },
   "gitsigns.nvim": { "branch": "main", "commit": "7010000889bfb6c26065e0b0f7f1e6aa9163edd9" },
