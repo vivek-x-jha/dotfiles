@@ -3,6 +3,13 @@ local utl = require 'utils'
 return {
   {
     key = 'a',
+    desc = 'Toggle Anki',
+    mods = { 'ctrl', 'alt', 'cmd' },
+    command = function() utl.toggleApp 'Arc' end,
+  },
+
+  {
+    key = 'b',
     desc = 'Toggle Arc Browser',
     mods = { 'ctrl', 'alt', 'cmd' },
     command = function() utl.toggleApp 'Arc' end,
