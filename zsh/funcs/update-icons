@@ -11,6 +11,7 @@ table_width=60
 # Directory - Icons
 dir_icons=(
   "/Applications/1Password.app" "$HOME/Pictures/icons/1password-macos.png"
+  "/Applications/Anki.app" "$HOME/Pictures/icons/anki.png"
   "/Applications/ChatGPT.app" "$HOME/Pictures/icons/chatgpt.png"
   "/Applications/Discord.app" "$HOME/Pictures/icons/discord-macos.png"
   "/Applications/Figma.app" "$HOME/Pictures/icons/figma.png"
