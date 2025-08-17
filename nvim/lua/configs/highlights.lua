@@ -391,20 +391,6 @@ return {
       WhichKeyGroup = { fg = thm.yellow },
       WhichKeyValue = { fg = thm.brightmagenta },
 
-      -- Avante
-      AvanteTitle = { fg = thm.brightgreen, bg = thm.background },
-      AvanteReversedTitle = { fg = thm.background, bg = thm.background },
-      AvanteSubtitle = { fg = thm.brightblue, bg = thm.background },
-      AvanteReversedSubtitle = { fg = thm.background, bg = thm.brightblue },
-      AvanteThirdTitle = { fg = thm.brightyellow, bg = thm.background },
-      AvanteReversedThirdTitle = { fg = thm.background, bg = thm.brightyellow },
-      AvanteConflictCurrent = { fg = thm.brightred, bg = thm.background },
-      AvanteConflictIncoming = { fg = thm.brightcyan, bg = thm.background },
-      AvanteConflictCurrentLabel = { fg = thm.brightred, bg = thm.brightblack },
-      AvanteConflictIncomingLabel = { fg = thm.brightcyan, bg = thm.brightblack },
-      AvantePopupHint = { fg = thm.brightyellow, bg = thm.background },
-      AvanteInlineHint = { fg = thm.brightcyan, bg = thm.background },
-
       ---------------------------- Productivity ----------------------------------
 
       -- Git
