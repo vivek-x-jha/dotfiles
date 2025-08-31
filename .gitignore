@@ -1,16 +1,23 @@
-# Poject
+# Project
+.env
+
+codex/*
+!codex/config.toml
+
 karabiner/assets
 karabiner/automatic_backups
 
+# Python Projects
+.python-version
+*__pycache__
+
 # Databases
 *.sqlite3
-
-# Program Settings
-.env
 *.sock
+
+# Workspace Configs
 .DS_Store
 *.code-workspace
-*__pycache__
 
 # Swap
 [._]*.s[a-v][a-z]

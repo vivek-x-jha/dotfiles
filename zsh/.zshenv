@@ -34,6 +34,9 @@ export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"
 
+# AI
+export CODEX_HOME="$XDG_CONFIG_HOME/codex"
+
 # Base16 colors
 export BLACK='\e[0;30m'
 export RED='\e[0;31m'
