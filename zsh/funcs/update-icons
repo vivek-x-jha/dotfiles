@@ -63,12 +63,12 @@ for ((i = 1; i < ${#dir_icons[@]}; i += 2)); do
   }
 
   fileicon set "$dir" "$icon" &>/dev/null || {
-    print_status "$RED" " "
+    print_status "$RED" "✘"
     ((fail++))
     continue
   }
 
-  print_status "$GREEN" " "
+  print_status "$GREEN" "✔"
   ((success++))
 done
 
