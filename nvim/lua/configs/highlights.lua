@@ -2,38 +2,45 @@
 --- @field setup fun(opts?: string): nil
 return {
   setup = function(opts)
+    -- expects env vars:
+    --   <COLOR>_HEX for all (BLACK_HEX, RED_HEX, ..., BRIGHTWHITE_HEX,
+    --   GREY_HEX, DARK_HEX, BACKGROUND_HEX)
+
     local thm = {}
-    local b16 = {
-      { 'black', os.getenv 'BLACK_HEX' },
-      { 'red', os.getenv 'RED_HEX' },
-      { 'green', os.getenv 'GREEN_HEX' },
-      { 'yellow', os.getenv 'YELLOW_HEX' },
-      { 'blue', os.getenv 'BLUE_HEX' },
-      { 'magenta', os.getenv 'MAGENTA_HEX' },
-      { 'cyan', os.getenv 'CYAN_HEX' },
-      { 'white', os.getenv 'WHITE_HEX' },
-      { 'brightblack', os.getenv 'BRIGHTBLACK_HEX' },
-      { 'brightred', os.getenv 'BRIGHTRED_HEX' },
-      { 'brightgreen', os.getenv 'BRIGHTGREEN_HEX' },
-      { 'brightyellow', os.getenv 'BRIGHTYELLOW_HEX' },
-      { 'brightblue', os.getenv 'BRIGHTBLUE_HEX' },
-      { 'brightmagenta', os.getenv 'BRIGHTMAGENTA_HEX' },
-      { 'brightcyan', os.getenv 'BRIGHTCYAN_HEX' },
-      { 'brightwhite', os.getenv 'BRIGHTWHITE_HEX' },
+
+    local colors = {
+      -- 16 ANSI slots
+      'black',
+      'red',
+      'green',
+      'yellow',
+      'blue',
+      'magenta',
+      'cyan',
+      'white',
+      'brightblack',
+      'brightred',
+      'brightgreen',
+      'brightyellow',
+      'brightblue',
+      'brightmagenta',
+      'brightcyan',
+      'brightwhite',
+
+      -- extras
+      'background',
+      'dark',
+      'grey',
     }
 
-    ---------------------------- Terminal ---------------------------------------
-    for i, color in ipairs(b16) do
-      vim.g['terminal_color_' .. (i - 1)] = assert(color[2], string.upper(color[1]) .. '_HEX not set!')
-      thm[color[1]] = color[2]
-    end
+    for i, color in ipairs(colors) do
+      local env = color:upper() .. '_HEX'
+      local hex = assert(os.getenv(env), env .. ' not set!') -- expects env vars: <COLOR>_HEX (i.e. BLACK_HEX)
+      thm[color] = hex
 
-    ---------------------------- Theme Extras ---------------------------------------
-    thm = vim.tbl_deep_extend('force', thm, {
-      background = os.getenv 'NVIM_BG',
-      grey = os.getenv 'GREY_HEX',
-      dark = os.getenv 'DARK_HEX',
-    })
+      -- Only set first 15 colors for terminal
+      if i <= 16 then vim.g['terminal_color_' .. (i - 1)] = hex end
+    end
 
     ---------------------------- Spectre ----------------------------------
     if opts == 'spectre' then
