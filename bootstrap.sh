@@ -202,6 +202,7 @@ symlinks=(
   ../.dotfiles/bat "$XDG_CONFIG_HOME" bat
   ../.dotfiles/blesh "$XDG_CONFIG_HOME" blesh
   ../.dotfiles/btop "$XDG_CONFIG_HOME" btop
+  ../.dotfiles/codex "$XDG_CONFIG_HOME" codex
   ../.dotfiles/dust "$XDG_CONFIG_HOME" dust
   ../.dotfiles/eza "$XDG_CONFIG_HOME" eza
   ../.dotfiles/fzf "$XDG_CONFIG_HOME" fzf
