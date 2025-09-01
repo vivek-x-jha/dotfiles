@@ -2,10 +2,6 @@
 --- @field setup fun(opts?: string): nil
 return {
   setup = function(opts)
-    -- expects env vars:
-    --   <COLOR>_HEX for all (BLACK_HEX, RED_HEX, ..., BRIGHTWHITE_HEX,
-    --   GREY_HEX, DARK_HEX, BACKGROUND_HEX)
-
     local thm = {}
 
     local colors = {
@@ -38,7 +34,7 @@ return {
       local hex = assert(os.getenv(env), env .. ' not set!') -- expects env vars: <COLOR>_HEX (i.e. BLACK_HEX)
       thm[color] = hex
 
-      -- Only set first 15 colors for terminal
+      -- Set terminal colors
       if i <= 16 then vim.g['terminal_color_' .. (i - 1)] = hex end
     end
 
