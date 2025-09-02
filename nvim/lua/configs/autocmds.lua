@@ -1,4 +1,4 @@
-for _, trigger in ipairs {
+local aucmds = {
   -- -- Showkeys
   -- {
   --   'VimEnter',
@@ -234,13 +234,15 @@ for _, trigger in ipairs {
       end,
     },
   },
-} do
+}
+
+for _, trigger in ipairs(aucmds) do
   vim.api.nvim_create_autocmd(unpack(trigger))
 end
 
 -- Autocommands to be delayed on main loop
 vim.schedule(function()
-  for _, trigger in ipairs {
+  local later_aucmds = {
     {
       {
         'TextChanged',
@@ -310,7 +312,9 @@ vim.schedule(function()
         end,
       },
     },
-  } do
+  }
+
+  for _, trigger in ipairs(later_aucmds) do
     vim.api.nvim_create_autocmd(unpack(trigger))
   end
 end)
