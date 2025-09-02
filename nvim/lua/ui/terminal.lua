@@ -1,3 +1,4 @@
+local M = {}
 vim.g.terminals = {}
 
 -- used for initially resizing terms
@@ -13,8 +14,6 @@ local utl = {
 
   format_cmd = function(cmd) return type(cmd) == 'string' and cmd or cmd() end,
 }
-
-local M = {}
 
 M.save = function(index, val)
   local terms_list = vim.g.terminals

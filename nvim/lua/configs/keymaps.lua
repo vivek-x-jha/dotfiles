@@ -1,6 +1,6 @@
 local term = require 'ui.terminal'
 
-for _, keymap in ipairs {
+local mappings = {
   -- General mappings
   { 'n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' } },
   { 'n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' } },
@@ -129,6 +129,8 @@ for _, keymap in ipairs {
     end,
     { desc = 'Toggle Dashboard' },
   },
-} do
+}
+
+for _, keymap in ipairs(mappings) do
   vim.keymap.set(unpack(keymap))
 end

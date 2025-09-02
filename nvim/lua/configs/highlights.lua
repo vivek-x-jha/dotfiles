@@ -40,22 +40,18 @@ return {
 
     ---------------------------- Spectre ----------------------------------
     if opts == 'spectre' then
-      for group, options in pairs {
-        SpectreHeader = { fg = thm.brightmagenta, bg = thm.background, bold = true },
-        SpectreBody = { fg = thm.black, bg = thm.background, bold = true },
-        SpectreFile = { fg = thm.yellow, bg = thm.background },
-        SpectreDir = { fg = thm.blue, bg = thm.background },
-        SpectreSearch = { fg = thm.brightred, bg = thm.grey },
-        SpectreBorder = { fg = thm.brightblack, bg = thm.background },
-        SpectreReplace = { fg = thm.brightgreen, bg = thm.grey },
-      } do
-        vim.api.nvim_set_hl(0, group, options)
-      end
+      vim.api.nvim_set_hl(0, 'SpectreHeader', { fg = thm.brightmagenta, bg = thm.background, bold = true })
+      vim.api.nvim_set_hl(0, 'SpectreBody', { fg = thm.black, bg = thm.background, bold = true })
+      vim.api.nvim_set_hl(0, 'SpectreFile', { fg = thm.yellow, bg = thm.background })
+      vim.api.nvim_set_hl(0, 'SpectreDir', { fg = thm.blue, bg = thm.background })
+      vim.api.nvim_set_hl(0, 'SpectreSearch', { fg = thm.brightred, bg = thm.grey })
+      vim.api.nvim_set_hl(0, 'SpectreBorder', { fg = thm.brightblack, bg = thm.background })
+      vim.api.nvim_set_hl(0, 'SpectreReplace', { fg = thm.brightgreen, bg = thm.grey })
 
       return
     end
 
-    for group, options in pairs {
+    local highlights = {
       ---------------------------- Defaults ----------------------------------
 
       Added = { fg = thm.green },
@@ -616,7 +612,9 @@ return {
       DevIconSvelte = { fg = thm.red },
       DevIconJava = { fg = thm.brightyellow },
       DevIconDart = { fg = thm.cyan },
-    } do
+    }
+
+    for group, options in pairs(highlights) do
       vim.api.nvim_set_hl(0, group, options)
     end
   end,
