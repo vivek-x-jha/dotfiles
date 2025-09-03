@@ -280,15 +280,6 @@ vim.schedule(function()
 
             if signatureProvider and signatureProvider.triggerCharacters then
               local lsp_sig_au = vim.api.nvim_create_augroup('LspSignatureAU', { clear = false })
-              --- @type string[] Trigger characters
-              local triggers = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
-
-              lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
-                border = 'rounded',
-                focusable = false,
-                silent = true,
-                max_height = 7,
-              })
 
               vim.api.nvim_clear_autocmds { group = lsp_sig_au, buffer = args.buf }
 
@@ -301,6 +292,9 @@ vim.schedule(function()
                   local pos = vim.api.nvim_win_get_cursor(0)[2]
                   local prev_char = cur_line:sub(pos - 1, pos - 1)
                   local cur_char = cur_line:sub(pos, pos)
+
+                  --- @type string[] Trigger characters
+                  local triggers = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
 
                   for _, char in ipairs(triggers) do
                     if cur_char == char or prev_char == char then lsp.buf.signature_help() end
