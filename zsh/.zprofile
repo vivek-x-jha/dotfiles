@@ -12,9 +12,12 @@
 
   # Add iTerm uilities to PATH
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
-
-  export PATH
 }
+
+# Add nvim-bin to PATH
+PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
+
+export PATH
 
 # Load secrets
 # shellcheck disable=SC1091
