@@ -18,7 +18,7 @@ command -v xcode-select &>/dev/null || {
 }
 
 echo -e "${CYAN}󰓒 INSTALLATION START 󰓒${RESET}"
-echo -e "${CYAN}󰓒 [$((++step))/12] INSTALLING COMMANDS & APPS 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] INSTALLING COMMANDS & APPS 󰓒${RESET}"
 
 # Install Homebrew
 echo -e "${CYAN}󰓒 [${step}.1/12] INSTALLING PACKAGE MANAGER 󰓒${RESET}"
@@ -90,7 +90,7 @@ while true; do
   esac
 done
 
-echo -e "${CYAN}󰓒 [$((++step))/12] SET ENVIRONMENT 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] SET ENVIRONMENT 󰓒${RESET}"
 
 # XDG directory structure
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -155,7 +155,7 @@ EOF
   [[ -z $REPLY || ! $REPLY =~ ^[Yy]$ ]] && break
 done
 
-echo -e "${CYAN}󰓒 [$((++step))/12] CREATE SYMLINKS & DIRECTORIES 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] CREATE SYMLINKS & DIRECTORIES 󰓒${RESET}"
 
 symlink() {
   local src="$1"
@@ -236,7 +236,7 @@ symlinks=(
 # Safely create links - skips over broken paths
 for ((i = 0; i < ${#symlinks[@]}; i += 3)); do symlink "${symlinks[i]}" "${symlinks[i + 1]}" "${symlinks[i + 2]}"; done
 
-echo -e "${CYAN}󰓒 [$((++step))/12] CONFIGURE MACOS OPTIONS 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] CONFIGURE MACOS OPTIONS 󰓒${RESET}"
 
 echo -e "${PURPLE}opt$((++num)): Change default screenshots location to ~/Pictures/screenshots/"
 [[ -d $HOME/Pictures/screenshots ]] || mkdir "$HOME/Pictures/screenshots"
@@ -271,7 +271,7 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 killall Dock
 
-echo -e "${CYAN}󰓒 [$((++step))/12] CONFIGURE GIT AND GITHUB CLI 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] CONFIGURE GIT AND GITHUB CLI 󰓒${RESET}"
 
 # Update git credentials
 git config --global user.name "$GIT_NAME"
@@ -298,7 +298,7 @@ gh repo set-default "$GITHUB_NAME/dotfiles"
 rm -f "$HOME/.dotfiles/gh/hosts.yml"
 git add --all
 
-echo -e "${CYAN}󰓒 [$((++step))/12] INSTALL SHELL PLUGINS 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] INSTALL SHELL PLUGINS 󰓒${RESET}"
 
 # Install zsh plugin manager zap
 [[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
@@ -308,7 +308,7 @@ git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyo
 make -C ble.sh install PREFIX="$HOME/.local"
 rm -rf ble.sh
 
-echo -e "${CYAN}󰓒 [$((++step))/12] SETUP ATUIN SYNC 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] SETUP ATUIN SYNC 󰓒${RESET}"
 
 # Create atuin login
 op item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null || op item create \
@@ -344,12 +344,12 @@ atuin status | grep -q "$ATUIN_USERNAME" || (
 atuin import auto
 atuin sync
 
-echo -e "${CYAN}󰓒 [$((++step))/12] LOAD BAT THEMES 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] LOAD BAT THEMES 󰓒${RESET}"
 
 # Rebuild bat cache any time theme folder changes
 bat cache --build
 
-echo -e "${CYAN}󰓒 [$((++step))/12] SETUP TOUCHID SUDO 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] SETUP TOUCHID SUDO 󰓒${RESET}"
 
 # Ensure touchid possible in interactive mode or tmux
 echo "# Authenticate with Touch ID - even in tmux
@@ -358,11 +358,11 @@ auth  sufficient  pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
 echo 'UPDATED /etc/pam.d/sudo_local'
 
 # Hide tty login message for iterm
-echo -e "${CYAN}󰓒 [$((++step))/12] SURPRESS ITERM2 LOGIN 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] SURPRESS ITERM2 LOGIN 󰓒${RESET}"
 echo 'CREATED ~/.hushlogin'
 touch "$HOME/.hushlogin"
 
-echo -e "${CYAN}󰓒 [$((++step))/12] CHANGE SHELL 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] CHANGE SHELL 󰓒${RESET}"
 for shell in bash zsh; do
   shell_path="$(brew --prefix)/bin/$shell"
   grep -qxF "$shell_path" /etc/shells || echo "$shell_path" | sudo tee -a /etc/shells
@@ -372,8 +372,13 @@ chsh -s "$shell_path"
 echo "CURRENT SHELL IS $(basename "$SHELL")"
 echo "SHELL=$shell_path"
 
-echo -e "${CYAN}󰓒 [$((++step))/12] HAMMERSPOON SETUP 󰓒${RESET}"
+echo -e "${CYAN}󰓒 [$((++step))/13] HAMMERSPOON SETUP 󰓒${RESET}"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
 echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
+
+echo -e "${CYAN}󰓒 [$((++step))/13] NEOVIM VERSION MANAGER 󰓒${RESET}"
+bob install nightly
+bob install stable
+bob use stable
 
 cd || exit
