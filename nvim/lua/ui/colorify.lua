@@ -46,7 +46,7 @@ utl.lsp_var = function(buf, line, min, max)
 
   for _, client in pairs(vim.lsp.get_clients { bufnr = buf }) do
     if client.server_capabilities.colorProvider then
-      client.request('textDocument/documentColor', param, function(_err, resp, _ctx, _cfg)
+      client:request('textDocument/documentColor', param, function(_, resp)
         if resp and line then resp = vim.tbl_filter(function(v) return v.range['start'].line == line end, resp) end
 
         if resp and min then resp = vim.tbl_filter(function(v) return v.range['start'].line >= min and v.range['end'].line <= max end, resp) end
