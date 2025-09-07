@@ -7,6 +7,10 @@ vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Clear notif
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = '[S]ave file' })
 vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
 
+if (vim.version().major > 0) or (vim.version().minor >= 12) then
+  vim.keymap.set('n', '<C-r>', '<cmd>restart<CR>', { desc = 'Reinitialize Neovim' })
+end
+
 -- Toggle line numbers
 vim.keymap.set('n', '<leader>n', '<cmd>set nu!<CR>', { desc = 'Toggle line number' })
 vim.keymap.set('n', '<leader>rn', '<cmd>set rnu!<CR>', { desc = 'Toggle relative number' })
