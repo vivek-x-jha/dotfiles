@@ -1,5 +1,3 @@
-local buff = require 'ui.buffers'
-local spec = require 'spectre'
 local term = require 'ui.terminal'
 
 -- General mappings
@@ -53,9 +51,7 @@ end, { desc = 'Save workspace config' })
 
 -- Buffers
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
-vim.keymap.set('n', '<tab>', buff.next, { desc = 'Next buffer' })
-vim.keymap.set('n', '<S-tab>', buff.prev, { desc = 'Prev buffer' })
-vim.keymap.set('n', '<leader>x', buff.close, { desc = 'Close buffer' })
+vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close buffer' })
 
 -- NvimTree
 vim.keymap.set('n', '<C-n>', function()
@@ -86,27 +82,13 @@ vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagn
 vim.keymap.set('n', '<leader>wK', '<cmd>WhichKey <CR>', { desc = 'Toggle all [w]hichkey [K]eymaps' })
 vim.keymap.set('n', '<leader>wk', function() vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ') end, { desc = 'Search [w]hich[k]ey' })
 
--- Showkeys
-vim.keymap.set('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', { desc = 'Toggle [s]how[k]eys' })
-
 -- Conform
 vim.keymap.set('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })
 
 -- Spectre
-vim.keymap.set('n', '<leader>S', function() spec.toggle() end, { desc = 'Toggle [S]earch & Replace' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sw', function()
-  if vim.fn.mode() == 'v' then
-    spec.open_visual()
-  else
-    spec.open_visual { select_word = true }
-  end
-end, { desc = '[s]earch current [w]ord' })
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', { desc = 'Toggle [S]pectre' })
+vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = '[S]earch current [w]ord' })
+vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = '[S]earch current [w]ord' })
 
 -- Dashboard
-vim.keymap.set('n', '<leader>da', function()
-  if vim.g.dashboard_displayed then
-    buff.close()
-  else
-    require('ui.dashboard').setup()
-  end
-end, { desc = 'Toggle Dashboard' })
+vim.keymap.set('n', '<leader>da', function() require('ui.dashboard').setup() end, { desc = 'Toggle Dashboard' })
