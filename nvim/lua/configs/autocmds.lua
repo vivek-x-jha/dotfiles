@@ -18,6 +18,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 })
 
+-- Highlight color strings with virtual text
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    vim.schedule(function() require('nvim-highlight-colors').turnOn() end)
+  end,
+})
+
 -- Hide line numbers in Spectre
 vim.api.nvim_create_autocmd('FileType', {
   desc = 'Hide line numbers for Spectre',
@@ -192,25 +199,6 @@ vim.api.nvim_create_autocmd('LspProgress', {
 ------------------------------------ Later Autocommands --------------------------------------
 
 vim.schedule(function()
-  -- Initialize Virtual Text
-  vim.api.nvim_create_autocmd({
-    'TextChanged',
-    'TextChangedI',
-    'TextChangedP',
-    'VimResized',
-    'LspAttach',
-    'WinScrolled',
-    'BufEnter',
-  }, {
-    desc = 'Initialize Colorify Virtual Text',
-    group = vim.api.nvim_create_augroup('ColorifyAU', {}),
-    callback = function(args)
-      require('ui.state').ns = vim.api.nvim_create_namespace 'Colorify'
-
-      if vim.bo[args.buf].bl then require('ui.colorify').attach(args.buf, args.event) end
-    end,
-  })
-
   -- Initialize LSP on insert mode
   vim.api.nvim_create_autocmd('LspAttach', {
     desc = 'Initialize LSP config',
