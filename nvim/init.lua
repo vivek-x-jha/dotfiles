@@ -51,6 +51,7 @@ vim.opt.fillchars = { eob = ' ' } -- remove trailing ~ on buffers
 vim.opt.guicursor = 'n-v-c:block-blinkwait300-blinkon200-blinkoff150,i-ci:ver25-blinkwait300-blinkon200-blinkoff150' -- enable blinking cursor
 vim.opt.shortmess:append 'sI' -- disable nvim intro
 vim.opt.whichwrap:append '<>[]hl' -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches EOL or BOL
+vim.opt.termguicolors = true -- Ensure termguicolors is enabled if not already
 
 -- Set global opts
 vim.o.number = true -- print line number in front of each line
@@ -89,9 +90,6 @@ require('configs.lsp').setup {
   linters = { 'shellcheck' },
   formatters = require('conform').list_all_formatters(),
 }
-
--- Load buffer manager
-require('ui.buffers').setup()
 
 -- Load colors
 require('configs.highlights').setup()
