@@ -1,3 +1,5 @@
+local buff = require 'ui.buffers'
+local spec = require 'spectre'
 local term = require 'ui.terminal'
 
 -- General mappings
@@ -8,7 +10,7 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = '[S]ave file' 
 vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
 
 if (vim.version().major > 0) or (vim.version().minor >= 12) then
-  vim.keymap.set('n', '<C-r>', '<cmd>restart<CR>', { desc = 'Reinitialize Neovim' })
+  vim.keymap.set('n', '<leader>rr', '<cmd>restart<CR>', { desc = 'Reinitialize Neovim' })
 end
 
 -- Toggle line numbers
@@ -51,9 +53,9 @@ end, { desc = 'Save workspace config' })
 
 -- Buffers
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
-vim.keymap.set('n', '<tab>', require('ui.buffers').next, { desc = 'Next buffer' })
-vim.keymap.set('n', '<S-tab>', require('ui.buffers').prev, { desc = 'Prev buffer' })
-vim.keymap.set('n', '<leader>x', require('ui.buffers').close, { desc = 'Close buffer' })
+vim.keymap.set('n', '<tab>', buff.next, { desc = 'Next buffer' })
+vim.keymap.set('n', '<S-tab>', buff.prev, { desc = 'Prev buffer' })
+vim.keymap.set('n', '<leader>x', buff.close, { desc = 'Close buffer' })
 
 -- NvimTree
 vim.keymap.set('n', '<C-n>', function()
@@ -91,19 +93,19 @@ vim.keymap.set('n', '<leader>sk', '<cmd>ShowkeysToggle<CR>', { desc = 'Toggle [s
 vim.keymap.set('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })
 
 -- Spectre
-vim.keymap.set('n', '<leader>S', function() require('spectre').toggle() end, { desc = 'Toggle [S]earch & Replace' })
+vim.keymap.set('n', '<leader>S', function() spec.toggle() end, { desc = 'Toggle [S]earch & Replace' })
 vim.keymap.set({ 'n', 'v' }, '<leader>sw', function()
   if vim.fn.mode() == 'v' then
-    require('spectre').open_visual()
+    spec.open_visual()
   else
-    require('spectre').open_visual { select_word = true }
+    spec.open_visual { select_word = true }
   end
 end, { desc = '[s]earch current [w]ord' })
 
 -- Dashboard
 vim.keymap.set('n', '<leader>da', function()
   if vim.g.dashboard_displayed then
-    require('ui.buffers').close()
+    buff.close()
   else
     require('ui.dashboard').setup()
   end
