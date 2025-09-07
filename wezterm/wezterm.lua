@@ -3,19 +3,48 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder() or {}
 
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
+local env = {}
+local f = io.open(os.getenv 'HOME' .. '/.config/zsh/.zshenv', 'r')
+if f then
+  for line in f:lines() do
+    -- Only match exports ending in _HEX
+    local key, val = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+    if key and val then env[key] = val end
+  end
+  f:close()
+end
+
 config.bold_brightens_ansi_colors = false
 config.colors = {
-  ansi = { '#cccccc', '#ffc7c7', '#ceffc9', '#fdf7cd', '#c4effa', '#eccef0', '#8ae7c5', '#f4f3f2' },
+  ansi = {
+    env.BLACK_HEX,
+    env.RED_HEX,
+    env.GREEN_HEX,
+    env.YELLOW_HEX,
+    env.BLUE_HEX,
+    env.MAGENTA_HEX,
+    env.CYAN_HEX,
+    env.WHITE_HEX,
+  },
   background = '#212030',
-  brights = { '#5c617d', '#f096b7', '#d2fd9d', '#f3b175', '#80d7fe', '#c9ccfb', '#47e7b1', '#ffffff' },
+  brights = {
+    env.BRIGHTBLACK_HEX,
+    env.BRIGHTRED_HEX,
+    env.BRIGHTGREEN_HEX,
+    env.BRIGHTYELLOW_HEX,
+    env.BRIGHTBLUE_HEX,
+    env.BRIGHTMAGENTA_HEX,
+    env.BRIGHTCYAN_HEX,
+    env.BRIGHTWHITE_HEX,
+  },
   compose_cursor = '#f2cdcd',
   cursor_bg = '#cdd6f4',
-  cursor_border = '#f4f3f2',
-  cursor_fg = '#313244',
-  foreground = '#f4f3f2',
-  selection_bg = '#5c617d',
-  selection_fg = '#f4f3f2',
-  split = '#5c617d',
+  cursor_border = env.WHITE_HEX,
+  cursor_fg = env.GREY_HEX,
+  foreground = env.WHITE_HEX,
+  selection_bg = env.BRIGHTBLACK_HEX,
+  selection_fg = env.WHITE_HEX,
+  split = env.BRIGHTBLACK_HEX,
 }
 
 -- Command Palette: activate with <Ctrl + Shift + p>
