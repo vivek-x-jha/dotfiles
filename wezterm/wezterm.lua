@@ -2,49 +2,57 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder() or {}
 
--- https://wezterm.org/config/appearance.html#defining-your-own-colors
-local env = {}
-local f = io.open(os.getenv 'HOME' .. '/.config/zsh/.zshenv', 'r')
-if f then
-  for line in f:lines() do
-    -- Only match exports ending in _HEX
-    local key, val = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
-    if key and val then env[key] = val end
+-- Load base16 colors from $HOME/.zshenv
+local thm = {}
+local env_path = os.getenv 'HOME' .. '/.zshenv'
+local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
+
+for line in f:lines() do
+  -- Only match exports ending in _HEX
+  local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+  if color and hex then
+    -- Drop the _HEX suffix and lowercase it
+    color = color:match('^(.-)_HEX$'):lower()
+    thm[color] = hex
   end
-  f:close()
 end
 
+f:close()
+
+-- https://wezterm.org/config/appearance.html#defining-your-own-colors
 config.bold_brightens_ansi_colors = false
 config.colors = {
   ansi = {
-    env.BLACK_HEX,
-    env.RED_HEX,
-    env.GREEN_HEX,
-    env.YELLOW_HEX,
-    env.BLUE_HEX,
-    env.MAGENTA_HEX,
-    env.CYAN_HEX,
-    env.WHITE_HEX,
+    thm.black,
+    thm.red,
+    thm.green,
+    thm.yellow,
+    thm.blue,
+    thm.magenta,
+    thm.cyan,
+    thm.white,
   },
-  background = '#212030',
+
   brights = {
-    env.BRIGHTBLACK_HEX,
-    env.BRIGHTRED_HEX,
-    env.BRIGHTGREEN_HEX,
-    env.BRIGHTYELLOW_HEX,
-    env.BRIGHTBLUE_HEX,
-    env.BRIGHTMAGENTA_HEX,
-    env.BRIGHTCYAN_HEX,
-    env.BRIGHTWHITE_HEX,
+    thm.brightblack,
+    thm.brightred,
+    thm.brightgreen,
+    thm.brightyellow,
+    thm.brightblue,
+    thm.brightmagenta,
+    thm.brightcyan,
+    thm.brightwhite,
   },
+
+  background = '#212030',
   compose_cursor = '#f2cdcd',
   cursor_bg = '#cdd6f4',
-  cursor_border = env.WHITE_HEX,
-  cursor_fg = env.GREY_HEX,
-  foreground = env.WHITE_HEX,
-  selection_bg = env.BRIGHTBLACK_HEX,
-  selection_fg = env.WHITE_HEX,
-  split = env.BRIGHTBLACK_HEX,
+  cursor_border = thm.white,
+  cursor_fg = thm.grey,
+  foreground = thm.white,
+  selection_bg = thm.brightblack,
+  selection_fg = thm.white,
+  split = thm.brightblack,
 }
 
 -- Command Palette: activate with <Ctrl + Shift + p>
