@@ -39,6 +39,7 @@ return {
     end
 
     ---------------------------- Spectre ----------------------------------
+
     if opts == 'spectre' then
       vim.api.nvim_set_hl(0, 'SpectreHeader', { fg = thm.brightmagenta, bg = thm.background, bold = true })
       vim.api.nvim_set_hl(0, 'SpectreBody', { fg = thm.black, bg = thm.background, bold = true })
@@ -51,571 +52,565 @@ return {
       return
     end
 
-    local highlights = {
-      ---------------------------- Defaults ----------------------------------
-
-      Added = { fg = thm.green },
-      Changed = { fg = thm.yellow },
-      ColorColumn = { bg = thm.black },
-      Comment = { fg = thm.brightblack, italic = true },
-      Conceal = { bg = thm.background },
-      Debug = { fg = thm.white },
-      DevIconDefault = { fg = thm.red },
-      Directory = { fg = thm.blue },
-      Error = { fg = thm.black, bg = thm.background },
-      ErrorMsg = { fg = thm.red, bg = thm.background },
-      Exception = { fg = thm.magenta },
-
-      -- Cursor
-      Cursor = { fg = thm.black, bg = thm.grey },
-      CursorColumn = { bg = thm.grey },
-      CursorLine = { bg = thm.grey },
-      CursorLineNr = { fg = thm.brightmagenta },
-
-      -- QuickFix
-      qfLineNr = { fg = thm.brightyellow, bg = thm.background },
-      qfFileName = { fg = thm.black, bg = thm.background },
-      QuickFixLine = { bold = true, bg = thm.grey },
-
-      -- Folds
-      Folded = { fg = thm.black, bg = thm.background, italic = true },
-      FoldColumn = { fg = thm.brightblue, bg = thm.background },
-      CursorLineFold = { fg = thm.brightmagenta, bg = thm.background },
-
-      LineNr = { fg = thm.brightblack },
-      FloatBorder = { fg = thm.brightblack },
-      FloatTitle = { fg = thm.magenta },
-      Macro = { fg = thm.white },
-      MatchParen = { link = 'MatchWord' },
-      MatchWord = { bg = thm.grey, fg = thm.brightred },
-      ModeMsg = { fg = thm.green },
-      MoreMsg = { fg = thm.green },
-      NonText = { fg = thm.black },
-      Normal = { fg = thm.white, bg = thm.background },
-      NormalFloat = { bg = thm.background },
-      NvimInternalError = { fg = thm.red },
-
-      Pmenu = { bg = thm.dark },
-      PmenuSbar = { bg = thm.dark },
-      PmenuSel = { fg = thm.brightgreen, bg = thm.grey },
-      PmenuThumb = { bg = thm.background },
-
-      Question = { fg = thm.blue },
-      Removed = { fg = thm.red },
-      SignColumn = { fg = thm.black },
-      SpecialKey = { fg = thm.black },
-      Substitute = { fg = thm.brightred, bg = thm.grey },
-      Title = { fg = thm.blue },
-      TooLong = { fg = thm.white },
-      Visual = { bg = thm.grey },
-      VisualNOS = { fg = thm.white },
-      WarningMsg = { fg = thm.white, bg = thm.background },
-      WildMenu = { fg = thm.yellow, bg = thm.grey },
-      WinBar = { bg = thm.background },
-      WinBarNC = { bg = thm.background },
-      WinSeparator = { fg = thm.brightblack },
-      healthSuccess = { bg = thm.green, fg = thm.black },
-      YankFlash = { fg = thm.brightyellow, bg = thm.grey },
-
-      ---------------------------- Syntax ----------------------------------
-
-      Boolean = { fg = thm.red },
-      Character = { fg = thm.cyan },
-      Conditional = { fg = thm.magenta },
-      Constant = { fg = thm.black },
-      Define = { fg = thm.magenta, sp = 'none' },
-      Delimiter = { fg = thm.cyan },
-      Float = { fg = thm.brightyellow },
-      Variable = { fg = thm.black },
-      Function = { fg = thm.blue },
-      Identifier = { fg = thm.red, sp = 'none' },
-      Include = { fg = thm.brightmagenta },
-      Keyword = { fg = thm.magenta },
-      Label = { fg = thm.yellow },
-      Number = { fg = thm.brightyellow },
-      Operator = { fg = thm.black, sp = 'none' },
-      PreProc = { fg = thm.yellow },
-      Repeat = { fg = thm.yellow },
-      Special = { fg = thm.blue },
-      SpecialChar = { fg = thm.cyan },
-      Statement = { fg = thm.magenta },
-      StorageClass = { fg = thm.yellow },
-      String = { fg = thm.green },
-      Structure = { fg = thm.red },
-      Tag = { fg = thm.brightyellow },
-      Todo = { fg = thm.cyan },
-      Type = { fg = thm.yellow, sp = 'none' },
-      Typedef = { fg = thm.yellow },
-
-      -- Treesitter
-      ['@variable'] = { fg = thm.black },
-      ['@variable.builtin'] = { fg = thm.yellow },
-      ['@variable.parameter'] = { fg = thm.white },
-      ['@variable.member'] = { fg = thm.white },
-      ['@variable.member.key'] = { fg = thm.white },
-
-      ['@module'] = { fg = thm.white },
-      -- ["@module.builtin"] = { fg = thm.white },
-
-      ['@constant'] = { fg = thm.white },
-      ['@constant.builtin'] = { fg = thm.yellow },
-      ['@constant.macro'] = { fg = thm.white },
-
-      ['@string'] = { fg = thm.green },
-      ['@string.regex'] = { fg = thm.cyan },
-      ['@string.escape'] = { fg = thm.cyan },
-      ['@character'] = { fg = thm.white },
-      -- ["@character.special"] = { fg = thm.white },
-      ['@number'] = { fg = thm.red },
-      ['@number.float'] = { fg = thm.red },
-
-      ['@annotation'] = { fg = thm.black },
-      ['@attribute'] = { fg = thm.yellow },
-      ['@error'] = { fg = thm.white },
-
-      ['@keyword.exception'] = { fg = thm.white },
-      ['@keyword'] = { fg = thm.magenta },
-      ['@keyword.function'] = { fg = thm.magenta },
-      ['@keyword.return'] = { fg = thm.magenta },
-      ['@keyword.operator'] = { fg = thm.magenta },
-      ['@keyword.import'] = { link = 'Include' },
-      ['@keyword.conditional'] = { fg = thm.magenta },
-      ['@keyword.conditional.ternary'] = { fg = thm.magenta },
-      ['@keyword.repeat'] = { fg = thm.yellow },
-      ['@keyword.storage'] = { fg = thm.yellow },
-      ['@keyword.directive.define'] = { fg = thm.magenta },
-      ['@keyword.directive'] = { fg = thm.yellow },
-
-      ['@function'] = { fg = thm.blue },
-      ['@function.builtin'] = { fg = thm.blue },
-      ['@function.macro'] = { fg = thm.white },
-      ['@function.call'] = { fg = thm.blue },
-      ['@function.method'] = { fg = thm.blue },
-      ['@function.method.call'] = { fg = thm.blue },
-      ['@constructor'] = { fg = thm.cyan },
-
-      ['@operator'] = { fg = thm.black },
-      ['@reference'] = { fg = thm.black },
-      ['@punctuation.bracket'] = { fg = thm.black },
-      ['@punctuation.delimiter'] = { fg = thm.black },
-      ['@symbol'] = { fg = thm.green },
-      ['@tag'] = { fg = thm.yellow },
-      ['@tag.attribute'] = { fg = thm.white },
-      ['@tag.delimiter'] = { fg = thm.black },
-      ['@text'] = { fg = thm.black },
-      ['@text.emphasis'] = { fg = thm.yellow },
-      ['@text.strike'] = { fg = thm.black, strikethrough = true },
-      ['@type.builtin'] = { fg = thm.yellow },
-      ['@definition'] = { sp = thm.grey, underline = true },
-      ['@scope'] = { bold = true },
-      ['@property'] = { fg = thm.white },
-
-      ['@markup.heading'] = { fg = thm.blue },
-      ['@markup.raw'] = { fg = thm.yellow },
-      ['@markup.link'] = { fg = thm.white },
-      ['@markup.link.url'] = { fg = thm.yellow, underline = true },
-      ['@markup.link.label'] = { fg = thm.cyan },
-      ['@markup.list'] = { fg = thm.white },
-      ['@markup.strong'] = { bold = true },
-      ['@markup.underline'] = { underline = true },
-      ['@markup.italic'] = { italic = true },
-      ['@markup.strikethrough'] = { strikethrough = true },
-      ['@markup.quote'] = { bg = thm.red },
-
-      ['@comment'] = { fg = thm.brightblack, italic = true },
-      ['@comment.todo'] = { fg = thm.brightblue },
-      ['@comment.warning'] = { fg = thm.brightyellow },
-      ['@comment.note'] = { fg = thm.brightcyan },
-      ['@comment.danger'] = { fg = thm.brightred },
-
-      ['@diff.plus'] = { fg = thm.green },
-      ['@diff.minus'] = { fg = thm.red },
-      ['@diff.delta'] = { fg = thm.black },
-
-      ---------------------------- LSP ----------------------------------
-
-      -- Completions
-      BlinkCmpMenu = { fg = thm.brightblack },
-      BlinkCmpMenuBorder = { fg = thm.brightblack },
-      BlinkCmpMenuSelection = { fg = thm.cyan, bold = true },
-      BlinkCmpScrollBarThumb = { fg = thm.grey },
-      BlinkCmpScrollBarGutter = { fg = thm.grey },
-      BlinkCmpLabel = { fg = thm.white },
-      BlinkCmpLabelDeprecated = { fg = thm.red, strikethrough = true },
-      BlinkCmpLabelMatch = { fg = thm.magenta },
-      BlinkCmpLabelDetail = { fg = thm.brightblack },
-      BlinkCmpLabelDescription = { fg = thm.brightblack },
-
-      BlinkCmpKindText = { fg = thm.white },
-      BlinkCmpKindMethod = { fg = thm.brightblue },
-      BlinkCmpKindFunction = { fg = thm.blue },
-      BlinkCmpKindConstructor = { fg = thm.cyan },
-      BlinkCmpKindField = { fg = thm.brightmagenta },
-      BlinkCmpKindVariable = { fg = thm.magenta },
-      BlinkCmpKindClass = { fg = thm.yellow },
-      BlinkCmpKindInterface = { fg = thm.brightyellow },
-      BlinkCmpKindModule = { fg = thm.brightgreen },
-      BlinkCmpKindProperty = { fg = thm.green },
-      BlinkCmpKindUnit = { fg = thm.brightwhite },
-      BlinkCmpKindValue = { fg = thm.cyan },
-      BlinkCmpKindEnum = { fg = thm.brightred },
-      BlinkCmpKindKeyword = { fg = thm.red },
-      BlinkCmpKindSnippet = { fg = thm.brightcyan },
-      BlinkCmpKindColor = { fg = thm.brightblue },
-      BlinkCmpKindFile = { fg = thm.brightblack },
-      BlinkCmpKindReference = { fg = thm.brightmagenta },
-      BlinkCmpKindFolder = { fg = thm.brightblack },
-      BlinkCmpKindEnumMember = { fg = thm.brightred },
-      BlinkCmpKindConstant = { fg = thm.brightcyan },
-      BlinkCmpKindStruct = { fg = thm.yellow },
-      BlinkCmpKindEvent = { fg = thm.brightgreen },
-      BlinkCmpKindOperator = { fg = thm.green },
-      BlinkCmpKindTypeParameter = { fg = thm.brightblue },
-
-      BlinkCmpSource = { fg = thm.cyan },
-      BlinkCmpGhostText = { fg = thm.brightblack },
-      BlinkCmpDoc = { fg = thm.white, bg = thm.dark },
-      BlinkCmpDocBorder = { fg = thm.brightblack },
-      BlinkCmpDocSeparator = { fg = thm.brightblack },
-      BlinkCmpDocCursorLine = { bg = thm.brightblack },
-      BlinkCmpSignatureHelp = { fg = thm.white, bg = thm.dark },
-      BlinkCmpSignatureHelpBorder = { fg = thm.brightblack },
-      BlinkCmpSignatureHelpActiveParameter = { fg = thm.yellow, bold = true },
-
-      -- Mason
-      MasonHeader = { fg = thm.brightmagenta },
-      MasonHighlight = { fg = thm.blue },
-      MasonHighlightBlock = { fg = thm.brightgreen },
-      MasonHighlightBlockBold = { link = 'MasonHighlightBlock' },
-      MasonHeaderSecondary = { link = 'MasonHighlightBlock' },
-      MasonMuted = { fg = thm.grey },
-      MasonMutedBlock = { fg = thm.black },
-
-      -- Lspconfig
-      LspReferenceText = { bg = thm.grey },
-      LspReferenceRead = { bg = thm.grey },
-      LspReferenceWrite = { bg = thm.grey },
-
-      DiagnosticError = { fg = thm.brightred },
-      DiagnosticWarn = { fg = thm.brightyellow },
-      DiagnosticHint = { fg = thm.brightmagenta },
-      DiagnosticInfo = { fg = thm.brightblue },
-
-      LspSignatureActiveParameter = { fg = thm.black, bg = thm.green },
-      LspInlayHint = { fg = thm.grey },
-
-      ---------------------------- Search and Refactor ----------------------------------
-
-      Search = { fg = thm.brightred, bg = thm.grey, bold = true },
-      CurSearch = { fg = thm.brightcyan, bg = thm.grey, bold = true },
-      IncSearch = { fg = thm.brightyellow, bg = thm.grey, bold = true },
-
-      -- Dashboard
-      DashAscii = { fg = thm.brightmagenta },
-      DashLine = { fg = thm.black },
-      DashPlugins = { fg = thm.brightyellow },
-      DashFiles = { fg = thm.red },
-      DashRecent = { fg = thm.green },
-      DashTrigger = { fg = thm.yellow },
-      DashSettings = { fg = thm.blue },
-      DashWord = { fg = thm.magenta },
-      DashCmdHist = { fg = thm.cyan },
-      DashBuffers = { fg = thm.white },
-      DashNvimCmds = { fg = thm.brightblue },
-      DashGitFiles = { fg = thm.brightred },
-      DashGitLog = { fg = thm.brightgreen },
-      DashGitStatus = { fg = thm.brightcyan },
-      DashGitSwitch = { fg = thm.brightwhite },
-
-      -- Nvim-Tree
-      NvimTreeNormal = { fg = thm.black },
-      NvimTreeCursorLine = { bg = thm.grey, bold = true },
-      NvimTreeFileName = { fg = thm.black },
-      NvimTreeExecFile = { fg = thm.brightgreen },
-      NvimTreeSpecialFile = { fg = thm.brightyellow },
-      NvimTreeFolderIcon = { fg = thm.blue },
-      NvimTreeIndentMarker = { fg = thm.brightmagenta },
-      NvimTreeSymlink = { fg = thm.yellow },
-      NvimTreeSymlinkFolderName = { fg = thm.yellow },
-      NvimTreeModifiedIcon = { fg = thm.red },
-      NvimTreeGitNew = { fg = thm.red },
-      NvimTreeGitDirty = { fg = thm.yellow },
-      NvimTreeGitStaged = { fg = thm.green },
-      NvimTreeGitRenamed = { link = 'NvimTreeGitStaged' },
-      NvimTreeGitIgnored = { fg = thm.brightblack, italic = true },
-
-      -- Fzf-lua
-      FzfLuaTitle = { fg = thm.magenta },
-      FzfLuaBorder = { fg = thm.brightblack },
-      FzfLuaPreviewTitle = { fg = thm.brightmagenta },
-      FzfLuaPreviewBorder = { fg = thm.brightblack },
-
-      ---------------------------- Notifications ----------------------------------
-
-      -- Noice
-      NoiceCmdlinePopupBorder = { fg = thm.brightgreen, bg = thm.background },
-      NoiceCmdlinePopupTitle = { fg = thm.brightgreen, bg = thm.background },
-      -- NoicePop = { fg = thm.black },
-      NoicePopupmenuSelected = { fg = thm.green, bg = thm.grey },
-      NoiceCmdlineIcon = { fg = thm.blue, bg = thm.background },
-
-      -- Notify
-      NotifyERRORBorder = { fg = thm.brightred, bg = thm.background },
-      NotifyERRORIcon = { fg = thm.brightred, bg = thm.background },
-      NotifyERRORTitle = { fg = thm.brightred, bg = thm.background },
-
-      NotifyWARNBorder = { fg = thm.brightyellow, bg = thm.background },
-      NotifyWARNIcon = { fg = thm.brightyellow, bg = thm.background },
-      NotifyWARNTitle = { fg = thm.brightyellow, bg = thm.background },
-
-      NotifyINFOBorder = { fg = thm.brightblue, bg = thm.background },
-      NotifyINFOIcon = { fg = thm.brightblue, bg = thm.background },
-      NotifyINFOTitle = { fg = thm.brightblue, bg = thm.background },
-
-      NotifyDEBUGBorder = { fg = thm.brightmagenta, bg = thm.background },
-      NotifyDEBUGIcon = { fg = thm.brightmagenta, bg = thm.background },
-      NotifyDEBUGTitle = { fg = thm.brightmagenta, bg = thm.background },
-
-      NotifyTRACEBorder = { fg = thm.brightcyan, bg = thm.background },
-      NotifyTRACEIcon = { fg = thm.brightcyan, bg = thm.background },
-      NotifyTRACETitle = { fg = thm.brightcyan, bg = thm.background },
-
-      ---------------------------- Meta Assistance ----------------------------------
-
-      -- WhichKey
-      WhichKey = { fg = thm.magenta },
-      WhichKeyBorder = { fg = thm.brightblack },
-      WhichKeySeparator = { fg = thm.black },
-      WhichKeyDesc = { fg = thm.blue },
-      WhichKeyGroup = { fg = thm.yellow },
-      WhichKeyValue = { fg = thm.brightmagenta },
-
-      ---------------------------- Productivity ----------------------------------
-
-      -- Git
-      diffOldFile = { fg = thm.brightred },
-      diffNewFile = { fg = thm.brightgreen },
-      DiffAdd = { fg = thm.green },
-      DiffAdded = { fg = thm.green },
-      DiffChange = { fg = thm.yellow },
-      DiffChangeDelete = { fg = thm.red },
-      DiffModified = { fg = thm.yellow },
-      DiffDelete = { fg = thm.red },
-      DiffRemoved = { fg = thm.red },
-      DiffText = { fg = thm.white, bg = thm.grey },
-
-      gitcommitOverflow = { fg = thm.red },
-      gitcommitSummary = { fg = thm.green },
-      gitcommitComment = { fg = thm.grey },
-      gitcommitUntracked = { fg = thm.grey },
-      gitcommitDiscarded = { fg = thm.grey },
-      gitcommitSelected = { fg = thm.grey },
-      gitcommitHeader = { fg = thm.brightmagenta },
-      gitcommitSelectedType = { fg = thm.blue },
-      gitcommitUnmergedType = { fg = thm.blue },
-      gitcommitDiscardedType = { fg = thm.blue },
-      gitcommitBranch = { fg = thm.yellow, bold = true },
-      gitcommitUntrackedFile = { fg = thm.yellow },
-      gitcommitUnmergedFile = { fg = thm.red, bold = true },
-      gitcommitDiscardedFile = { fg = thm.red, bold = true },
-      gitcommitSelectedFile = { fg = thm.green, bold = true },
-
-      -- Lazy
-      LazyH1 = { fg = thm.brightcyan, bold = true },
-      LazyBorder = { fg = thm.brightblack },
-      LazyButton = { fg = thm.brightblack },
-      LazyButtonActive = { fg = thm.white, bold = true },
-      LazyH2 = { fg = thm.magenta, bold = true },
-      LazyReasonPlugin = { fg = thm.red },
-      LazyValue = { fg = thm.cyan },
-      LazyDir = { fg = thm.blue },
-      LazyUrl = { fg = thm.red },
-      LazyCommit = { fg = thm.green },
-      LazyNoCond = { fg = thm.red },
-      LazyReasonFt = { fg = thm.brightmagenta },
-      LazyOperator = { fg = thm.white },
-      LazyReasonKeys = { fg = thm.cyan },
-      LazyTaskOutput = { fg = thm.white },
-      LazyCommitIssue = { fg = thm.magenta },
-      LazyReasonEvent = { fg = thm.yellow },
-      LazyReasonStart = { fg = thm.white },
-      LazyReasonRuntime = { fg = thm.brightyellow },
-      LazyReasonCmd = { fg = thm.yellow },
-      LazyReasonSource = { fg = thm.cyan },
-      LazyReasonImport = { fg = thm.white },
-      LazyProgressDone = { fg = thm.green },
-      LazySpecial = { fg = thm.green },
-
-      -- Indent Blankline
-      IblIndent = { fg = thm.brightblack },
-      IblWhitespace = { fg = thm.grey },
-      IblScope = { fg = thm.brightmagenta },
-
-      -- Todo
-      TodoBgFix = { fg = thm.grey, bg = thm.red, bold = true },
-      TodoBgHack = { fg = thm.grey, bg = thm.brightyellow, bold = true },
-      TodoBgNote = { fg = thm.grey, bg = thm.white, bold = true },
-      TodoBgPerf = { fg = thm.grey, bg = thm.brightmagenta, bold = true },
-      TodoBgTest = { fg = thm.grey, bg = thm.brightmagenta, bold = true },
-      TodoBgTodo = { fg = thm.grey, bg = thm.yellow, bold = true },
-      TodoBgWarn = { fg = thm.brightyellow, bold = true },
-      TodoFgFix = { fg = thm.red },
-      TodoFgHack = { fg = thm.brightyellow },
-      TodoFgNote = { fg = thm.white },
-      TodoFgPerf = { fg = thm.brightmagenta },
-      TodoFgTest = { fg = thm.brightmagenta },
-      TodoFgTodo = { fg = thm.yellow },
-      TodoFgWarn = { fg = thm.brightyellow },
-      TodoSignFix = { link = 'TodoFgFix' },
-      TodoSignHack = { link = 'TodoFgHack' },
-      TodoSignNote = { link = 'TodoFgNote' },
-      TodoSignPerf = { link = 'TodoFgPerf' },
-      TodoSignTest = { link = 'TodoFgTest' },
-      TodoSignTodo = { link = 'TodoFgTodo' },
-      TodoSignWarn = { link = 'TodoFgWarn' },
-
-      ---------------------------- UI and Status ----------------------------------
-
-      -- StatusLine
-      StatusLine = { fg = thm.yellow, bg = thm.background },
-
-      StText = { fg = thm.brightgreen, bg = thm.background },
-
-      St_file = { fg = thm.black, bg = thm.background },
-      St_filemod = { fg = thm.red, bold = true, underline = true },
-      St_cursor = { fg = thm.black, bg = thm.background },
-      St_cwd = { fg = thm.blue, bg = thm.background },
-      St_ft = { fg = thm.brightblue, bg = thm.background },
-
-      St_lspMsg = { fg = thm.brightyellow, bg = thm.background },
-      St_lspError = { fg = thm.brightred, bg = thm.background },
-      St_lspWarning = { fg = thm.brightyellow, bg = thm.background },
-      St_lspHints = { fg = thm.brightmagenta, bg = thm.background },
-      St_lspInfo = { fg = thm.brightblue, bg = thm.background },
-      St_lsp = { fg = thm.cyan, bg = thm.background },
-
-      St_GitAdded = { fg = thm.green, bg = thm.background },
-      St_GitChanged = { fg = thm.yellow, bg = thm.background },
-      St_GitRemoved = { fg = thm.red, bg = thm.background },
-      St_GitAhead = { fg = thm.brightblue, bg = thm.background },
-      St_GitBehind = { fg = thm.brightblue, bg = thm.background },
-      St_GitUntracked = { fg = thm.red, bg = thm.background },
-      St_GitBranch = { fg = thm.magenta, bg = thm.background },
-      St_GitConflicted = { fg = thm.brightred, bg = thm.background },
-
-      St_NormalMode = { fg = thm.brightblue, bg = thm.background },
-      St_VisualMode = { fg = thm.brightcyan, bg = thm.background },
-      St_InsertMode = { fg = thm.brightred, bg = thm.background },
-      St_TerminalMode = { fg = thm.brightgreen, bg = thm.background },
-      St_NTerminalMode = { fg = thm.yellow, bg = thm.background },
-      St_ReplaceMode = { fg = thm.brightyellow, bg = thm.background },
-      St_ConfirmMode = { fg = thm.cyan, bg = thm.background },
-      St_CommandMode = { fg = thm.brightgreen, bg = thm.background },
-      St_SelectMode = { fg = thm.blue, bg = thm.background },
-
-      -- Render-markdown
-      RenderMarkdownCode = { bg = thm.dark },
-      RenderMarkdownCodeInline = { fg = thm.brightred },
-      RenderMarkdownH1Bg = { fg = thm.cyan, bold = true },
-      markdownh1 = { fg = thm.cyan, bold = true },
-      markdownh2 = { fg = thm.magenta, bold = true },
-      markdownh3 = { fg = thm.blue, bold = true },
-      markdownh4 = { fg = thm.white, bold = true },
-      markdownh5 = { fg = thm.black, bold = true },
-      markdownh6 = { fg = thm.brightblack, bold = true },
-
-      -- Code
-      -- markdowncode = { fg = thm.brightred, bg = thm.dark },
-      markdowncodeblock = { fg = thm.brightyellow },
-      markdowncodedelimiter = { fg = thm.brightblack },
-
-      -- Links
-      markdownurl = { fg = thm.brightblack, underline = true },
-      markdownlinktext = { fg = thm.yellow, underline = true },
-      markdownlinkdelimiter = { fg = thm.blue },
-
-      -- Emphasis and Formatting
-      markdownitalic = { fg = thm.yellow, italic = true },
-      markdownbold = { fg = thm.red, bold = true },
-      markdownbolditalic = { fg = thm.cyan, bold = true, italic = true },
-      markdownstrike = { fg = thm.brightblue, strikethrough = true },
-
-      -- Blockquotes and Rules
-      markdownblockquote = { fg = thm.brightblack, italic = true },
-      markdownrule = { fg = thm.brightblack },
-
-      -- Lists
-      markdownlistmarker = { fg = thm.white },
-      markdowntable = { fg = thm.blue },
-
-      -- Tasks
-      markdowntaskchecked = { fg = thm.brightgreen },
-      markdowntaskunchecked = { fg = thm.brightblack },
-
-      -- Highlight Groups for Code Syntax
-      markdowncomment = { fg = thm.brightblack },
-      markdowncommentpreproc = { fg = thm.brightcyan },
-      markdownkeyword = { fg = thm.magenta },
-      markdownkeywordtype = { fg = thm.blue },
-      markdownoperator = { fg = thm.black },
-      markdownpunctuation = { fg = thm.white },
-
-      -- String and Literals
-      markdownstring = { fg = thm.green },
-      markdownstringescape = { fg = thm.brightcyan },
-
-      -- Errors and Inserts
-      markdownerror = { fg = thm.white, bg = thm.brightred },
-      markdowninsert = { fg = thm.brightgreen },
-      markdowndelete = { fg = thm.red },
-
-      -- Special Elements
-      markdowndefinitionterm = { fg = thm.brightmagenta },
-      markdowndefinitiondescription = { fg = thm.white },
-      markdownenumeration = { fg = thm.blue },
-
-      -- Images
-      markdownimage = { fg = thm.brightblack, underline = true },
-      markdownimagetext = { fg = thm.yellow },
-
-      -- Devicons
-      DevIconc = { fg = thm.blue },
-      DevIconcss = { fg = thm.blue },
-      DevIcondeb = { fg = thm.cyan },
-      DevIconDockerfile = { fg = thm.cyan },
-      DevIconhtml = { fg = thm.brightred },
-      DevIconjpeg = { fg = thm.magenta },
-      DevIconjpg = { fg = thm.magenta },
-      DevIconjs = { fg = thm.yellow },
-      DevIconkt = { fg = thm.brightyellow },
-      DevIconlock = { fg = thm.red },
-      DevIconlua = { fg = thm.blue },
-      DevIconmp3 = { fg = thm.white },
-      DevIconmp4 = { fg = thm.white },
-      DevIconout = { fg = thm.white },
-      DevIconpng = { fg = thm.magenta },
-      DevIconpy = { fg = thm.cyan },
-      DevIcontoml = { fg = thm.blue },
-      DevIconts = { fg = thm.brightcyan },
-      DevIconttf = { fg = thm.white },
-      DevIconrb = { fg = thm.magenta },
-      DevIconrpm = { fg = thm.brightyellow },
-      DevIconvue = { fg = thm.brightgreen },
-      DevIconwoff = { fg = thm.white },
-      DevIconwoff2 = { fg = thm.white },
-      DevIconxz = { fg = thm.yellow },
-      DevIconzip = { fg = thm.yellow },
-      DevIconZig = { fg = thm.brightyellow },
-      DevIconMd = { fg = thm.blue },
-      DevIconTSX = { fg = thm.blue },
-      DevIconJSX = { fg = thm.blue },
-      DevIconSvelte = { fg = thm.red },
-      DevIconJava = { fg = thm.brightyellow },
-      DevIconDart = { fg = thm.cyan },
-    }
-
-    for group, options in pairs(highlights) do
-      vim.api.nvim_set_hl(0, group, options)
-    end
+    ---------------------------- Defaults ----------------------------------
+
+    vim.api.nvim_set_hl(0, 'Added', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'Changed', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'ColorColumn', { bg = thm.black })
+    vim.api.nvim_set_hl(0, 'Comment', { fg = thm.brightblack, italic = true })
+    vim.api.nvim_set_hl(0, 'Conceal', { bg = thm.background })
+    vim.api.nvim_set_hl(0, 'Debug', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconDefault', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'Directory', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'Error', { fg = thm.black, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'ErrorMsg', { fg = thm.red, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'Exception', { fg = thm.magenta })
+
+    -- Cursor
+    vim.api.nvim_set_hl(0, 'Cursor', { fg = thm.black, bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'CursorColumn', { bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'CursorLine', { bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = thm.brightmagenta })
+
+    -- QuickFix
+    vim.api.nvim_set_hl(0, 'qfLineNr', { fg = thm.brightyellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'qfFileName', { fg = thm.black, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'QuickFixLine', { bold = true, bg = thm.grey })
+
+    -- Folds
+    vim.api.nvim_set_hl(0, 'Folded', { fg = thm.black, bg = thm.background, italic = true })
+    vim.api.nvim_set_hl(0, 'FoldColumn', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'CursorLineFold', { fg = thm.brightmagenta, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'LineNr', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'FloatTitle', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'Macro', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'MatchParen', { link = 'MatchWord' })
+    vim.api.nvim_set_hl(0, 'MatchWord', { bg = thm.grey, fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'ModeMsg', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'MoreMsg', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'NonText', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'Normal', { fg = thm.white, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NvimInternalError', { fg = thm.red })
+
+    vim.api.nvim_set_hl(0, 'Pmenu', { bg = thm.dark })
+    vim.api.nvim_set_hl(0, 'PmenuSbar', { bg = thm.dark })
+    vim.api.nvim_set_hl(0, 'PmenuSel', { fg = thm.brightgreen, bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'PmenuThumb', { bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'Question', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'Removed', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'SignColumn', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'SpecialKey', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'Substitute', { fg = thm.brightred, bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'Title', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'TooLong', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'Visual', { bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'VisualNOS', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'WarningMsg', { fg = thm.white, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'WildMenu', { fg = thm.yellow, bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'WinBar', { bg = thm.background })
+    vim.api.nvim_set_hl(0, 'WinBarNC', { bg = thm.background })
+    vim.api.nvim_set_hl(0, 'WinSeparator', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'healthSuccess', { bg = thm.green, fg = thm.black })
+    vim.api.nvim_set_hl(0, 'YankFlash', { fg = thm.brightyellow, bg = thm.grey })
+
+    ---------------------------- Syntax ----------------------------------
+
+    vim.api.nvim_set_hl(0, 'Boolean', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'Character', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'Conditional', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'Constant', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'Define', { fg = thm.magenta, sp = 'none' })
+    vim.api.nvim_set_hl(0, 'Delimiter', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'Float', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'Variable', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'Function', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'Identifier', { fg = thm.red, sp = 'none' })
+    vim.api.nvim_set_hl(0, 'Include', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'Keyword', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'Label', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'Number', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'Operator', { fg = thm.black, sp = 'none' })
+    vim.api.nvim_set_hl(0, 'PreProc', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'Repeat', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'Special', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'SpecialChar', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'Statement', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'StorageClass', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'String', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'Structure', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'Tag', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'Todo', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'Type', { fg = thm.yellow, sp = 'none' })
+    vim.api.nvim_set_hl(0, 'Typedef', { fg = thm.yellow })
+
+    -- Treesitter
+    vim.api.nvim_set_hl(0, '@variable', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@variable.builtin', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@variable.parameter', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@variable.member', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@variable.member.key', { fg = thm.white })
+
+    vim.api.nvim_set_hl(0, '@module', { fg = thm.white })
+    -- vim.api.nvim_set_hl(0, '@module.builtin', { fg = thm.white })
+
+    vim.api.nvim_set_hl(0, '@constant', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@constant.builtin', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@constant.macro', { fg = thm.white })
+
+    vim.api.nvim_set_hl(0, '@string', { fg = thm.green })
+    vim.api.nvim_set_hl(0, '@string.regex', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, '@string.escape', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, '@character', { fg = thm.white })
+    -- vim.api.nvim_set_hl(0, '@character.special', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@number', { fg = thm.red })
+    vim.api.nvim_set_hl(0, '@number.float', { fg = thm.red })
+
+    vim.api.nvim_set_hl(0, '@annotation', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@attribute', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@error', { fg = thm.white })
+
+    vim.api.nvim_set_hl(0, '@keyword.exception', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@keyword', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.function', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.return', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.operator', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.import', { link = 'Include' })
+    vim.api.nvim_set_hl(0, '@keyword.conditional', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.conditional.ternary', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.repeat', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@keyword.storage', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@keyword.directive.define', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, '@keyword.directive', { fg = thm.yellow })
+
+    vim.api.nvim_set_hl(0, '@function', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, '@function.builtin', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, '@function.macro', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@function.call', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, '@function.method', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, '@function.method.call', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, '@constructor', { fg = thm.cyan })
+
+    vim.api.nvim_set_hl(0, '@operator', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@reference', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@punctuation.bracket', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@punctuation.delimiter', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@symbol', { fg = thm.green })
+    vim.api.nvim_set_hl(0, '@tag', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@tag.attribute', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@tag.delimiter', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@text', { fg = thm.black })
+    vim.api.nvim_set_hl(0, '@text.emphasis', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@text.strike', { fg = thm.black, strikethrough = true })
+    vim.api.nvim_set_hl(0, '@type.builtin', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@definition', { sp = thm.grey, underline = true })
+    vim.api.nvim_set_hl(0, '@scope', { bold = true })
+    vim.api.nvim_set_hl(0, '@property', { fg = thm.white })
+
+    vim.api.nvim_set_hl(0, '@markup.heading', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, '@markup.raw', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, '@markup.link', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@markup.link.url', { fg = thm.yellow, underline = true })
+    vim.api.nvim_set_hl(0, '@markup.link.label', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, '@markup.list', { fg = thm.white })
+    vim.api.nvim_set_hl(0, '@markup.strong', { bold = true })
+    vim.api.nvim_set_hl(0, '@markup.underline', { underline = true })
+    vim.api.nvim_set_hl(0, '@markup.italic', { italic = true })
+    vim.api.nvim_set_hl(0, '@markup.strikethrough', { strikethrough = true })
+    vim.api.nvim_set_hl(0, '@markup.quote', { bg = thm.red })
+
+    vim.api.nvim_set_hl(0, '@comment', { fg = thm.brightblack, italic = true })
+    vim.api.nvim_set_hl(0, '@comment.todo', { fg = thm.brightblue })
+    vim.api.nvim_set_hl(0, '@comment.warning', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, '@comment.note', { fg = thm.brightcyan })
+    vim.api.nvim_set_hl(0, '@comment.danger', { fg = thm.brightred })
+
+    vim.api.nvim_set_hl(0, '@diff.plus', { fg = thm.green })
+    vim.api.nvim_set_hl(0, '@diff.minus', { fg = thm.red })
+    vim.api.nvim_set_hl(0, '@diff.delta', { fg = thm.black })
+
+    ---------------------------- LSP ----------------------------------
+
+    -- Completions
+    vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpMenuSelection', { fg = thm.cyan, bold = true })
+    vim.api.nvim_set_hl(0, 'BlinkCmpScrollBarThumb', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'BlinkCmpScrollBarGutter', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'BlinkCmpLabel', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'BlinkCmpLabelDeprecated', { fg = thm.red, strikethrough = true })
+    vim.api.nvim_set_hl(0, 'BlinkCmpLabelMatch', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'BlinkCmpLabelDetail', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpLabelDescription', { fg = thm.brightblack })
+
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindText', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindMethod', { fg = thm.brightblue })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindFunction', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindConstructor', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindField', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindVariable', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindClass', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindInterface', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindModule', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindProperty', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindUnit', { fg = thm.brightwhite })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindValue', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindEnum', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindKeyword', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindSnippet', { fg = thm.brightcyan })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindColor', { fg = thm.brightblue })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindFile', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindReference', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindFolder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindEnumMember', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindConstant', { fg = thm.brightcyan })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindStruct', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindEvent', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindOperator', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'BlinkCmpKindTypeParameter', { fg = thm.brightblue })
+
+    vim.api.nvim_set_hl(0, 'BlinkCmpSource', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'BlinkCmpGhostText', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpDoc', { fg = thm.white, bg = thm.dark })
+    vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpDocSeparator', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpDocCursorLine', { bg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelp', { fg = thm.white, bg = thm.dark })
+    vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelpBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'BlinkCmpSignatureHelpActiveParameter', { fg = thm.yellow, bold = true })
+
+    -- Mason
+    vim.api.nvim_set_hl(0, 'MasonHeader', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'MasonHighlight', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'MasonHighlightBlock', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'MasonHighlightBlockBold', { link = 'MasonHighlightBlock' })
+    vim.api.nvim_set_hl(0, 'MasonHeaderSecondary', { link = 'MasonHighlightBlock' })
+    vim.api.nvim_set_hl(0, 'MasonMuted', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'MasonMutedBlock', { fg = thm.black })
+
+    -- Lspconfig
+    vim.api.nvim_set_hl(0, 'LspReferenceText', { bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'LspReferenceRead', { bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'LspReferenceWrite', { bg = thm.grey })
+
+    vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = thm.brightblue })
+
+    vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = thm.black, bg = thm.green })
+    vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = thm.grey })
+
+    ---------------------------- Search and Refactor ----------------------------------
+
+    vim.api.nvim_set_hl(0, 'Search', { fg = thm.brightred, bg = thm.grey, bold = true })
+    vim.api.nvim_set_hl(0, 'CurSearch', { fg = thm.brightcyan, bg = thm.grey, bold = true })
+    vim.api.nvim_set_hl(0, 'IncSearch', { fg = thm.brightyellow, bg = thm.grey, bold = true })
+
+    -- Dashboard
+    vim.api.nvim_set_hl(0, 'DashAscii', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'DashLine', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'DashPlugins', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'DashFiles', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'DashRecent', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'DashTrigger', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'DashSettings', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DashWord', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'DashCmdHist', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'DashBuffers', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DashNvimCmds', { fg = thm.brightblue })
+    vim.api.nvim_set_hl(0, 'DashGitFiles', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'DashGitLog', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'DashGitStatus', { fg = thm.brightcyan })
+    vim.api.nvim_set_hl(0, 'DashGitSwitch', { fg = thm.brightwhite })
+
+    -- Nvim-Tree
+    vim.api.nvim_set_hl(0, 'NvimTreeNormal', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', { bg = thm.grey, bold = true })
+    vim.api.nvim_set_hl(0, 'NvimTreeFileName', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'NvimTreeExecFile', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'NvimTreeSpecialFile', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'NvimTreeFolderIcon', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'NvimTreeSymlink', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'NvimTreeSymlinkFolderName', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'NvimTreeModifiedIcon', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'NvimTreeGitNew', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'NvimTreeGitDirty', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'NvimTreeGitStaged', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'NvimTreeGitRenamed', { link = 'NvimTreeGitStaged' })
+    vim.api.nvim_set_hl(0, 'NvimTreeGitIgnored', { fg = thm.brightblack, italic = true })
+
+    -- Fzf-lua
+    vim.api.nvim_set_hl(0, 'FzfLuaTitle', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'FzfLuaBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'FzfLuaPreviewTitle', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'FzfLuaPreviewBorder', { fg = thm.brightblack })
+
+    ---------------------------- Notifications ----------------------------------
+
+    -- Noice
+    vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { fg = thm.brightgreen, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupTitle', { fg = thm.brightgreen, bg = thm.background })
+    -- vim.api.nvim_set_hl(0, 'NoicePop', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'NoicePopupmenuSelected', { fg = thm.green, bg = thm.grey })
+    vim.api.nvim_set_hl(0, 'NoiceCmdlineIcon', { fg = thm.blue, bg = thm.background })
+
+    -- Notify
+    vim.api.nvim_set_hl(0, 'NotifyERRORBorder', { fg = thm.brightred, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyERRORIcon', { fg = thm.brightred, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyERRORTitle', { fg = thm.brightred, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'NotifyWARNBorder', { fg = thm.brightyellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyWARNIcon', { fg = thm.brightyellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyWARNTitle', { fg = thm.brightyellow, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'NotifyINFOBorder', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyINFOIcon', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyINFOTitle', { fg = thm.brightblue, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'NotifyDEBUGBorder', { fg = thm.brightmagenta, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyDEBUGIcon', { fg = thm.brightmagenta, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyDEBUGTitle', { fg = thm.brightmagenta, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'NotifyTRACEBorder', { fg = thm.brightcyan, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyTRACEIcon', { fg = thm.brightcyan, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'NotifyTRACETitle', { fg = thm.brightcyan, bg = thm.background })
+
+    ---------------------------- Meta Assistance ----------------------------------
+
+    -- WhichKey
+    vim.api.nvim_set_hl(0, 'WhichKey', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'WhichKeyBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'WhichKeySeparator', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'WhichKeyDesc', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'WhichKeyGroup', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'WhichKeyValue', { fg = thm.brightmagenta })
+
+    ---------------------------- Productivity ----------------------------------
+
+    -- Git
+    vim.api.nvim_set_hl(0, 'diffOldFile', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'diffNewFile', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'DiffAdded', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'DiffChange', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'DiffChangeDelete', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'DiffModified', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'DiffRemoved', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'DiffText', { fg = thm.white, bg = thm.grey })
+
+    vim.api.nvim_set_hl(0, 'gitcommitOverflow', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'gitcommitSummary', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'gitcommitComment', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'gitcommitUntracked', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'gitcommitDiscarded', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'gitcommitSelected', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'gitcommitHeader', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'gitcommitSelectedType', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'gitcommitUnmergedType', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'gitcommitDiscardedType', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'gitcommitBranch', { fg = thm.yellow, bold = true })
+    vim.api.nvim_set_hl(0, 'gitcommitUntrackedFile', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'gitcommitUnmergedFile', { fg = thm.red, bold = true })
+    vim.api.nvim_set_hl(0, 'gitcommitDiscardedFile', { fg = thm.red, bold = true })
+    vim.api.nvim_set_hl(0, 'gitcommitSelectedFile', { fg = thm.green, bold = true })
+
+    -- Lazy
+    vim.api.nvim_set_hl(0, 'LazyH1', { fg = thm.brightcyan, bold = true })
+    vim.api.nvim_set_hl(0, 'LazyBorder', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'LazyButton', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'LazyButtonActive', { fg = thm.white, bold = true })
+    vim.api.nvim_set_hl(0, 'LazyH2', { fg = thm.magenta, bold = true })
+    vim.api.nvim_set_hl(0, 'LazyReasonPlugin', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'LazyValue', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'LazyDir', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'LazyUrl', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'LazyCommit', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'LazyNoCond', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'LazyReasonFt', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'LazyOperator', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'LazyReasonKeys', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'LazyTaskOutput', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'LazyCommitIssue', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'LazyReasonEvent', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'LazyReasonStart', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'LazyReasonRuntime', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'LazyReasonCmd', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'LazyReasonSource', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'LazyReasonImport', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'LazyProgressDone', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'LazySpecial', { fg = thm.green })
+
+    -- Indent Blankline
+    vim.api.nvim_set_hl(0, 'IblIndent', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'IblWhitespace', { fg = thm.grey })
+    vim.api.nvim_set_hl(0, 'IblScope', { fg = thm.brightmagenta })
+
+    -- Todo
+    vim.api.nvim_set_hl(0, 'TodoBgFix', { fg = thm.grey, bg = thm.red, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoBgHack', { fg = thm.grey, bg = thm.brightyellow, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoBgNote', { fg = thm.grey, bg = thm.white, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoBgPerf', { fg = thm.grey, bg = thm.brightmagenta, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoBgTest', { fg = thm.grey, bg = thm.brightmagenta, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoBgTodo', { fg = thm.grey, bg = thm.yellow, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoBgWarn', { fg = thm.brightyellow, bold = true })
+    vim.api.nvim_set_hl(0, 'TodoFgFix', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'TodoFgHack', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'TodoFgNote', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'TodoFgPerf', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'TodoFgTest', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'TodoFgTodo', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'TodoFgWarn', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'TodoSignFix', { link = 'TodoFgFix' })
+    vim.api.nvim_set_hl(0, 'TodoSignHack', { link = 'TodoFgHack' })
+    vim.api.nvim_set_hl(0, 'TodoSignNote', { link = 'TodoFgNote' })
+    vim.api.nvim_set_hl(0, 'TodoSignPerf', { link = 'TodoFgPerf' })
+    vim.api.nvim_set_hl(0, 'TodoSignTest', { link = 'TodoFgTest' })
+    vim.api.nvim_set_hl(0, 'TodoSignTodo', { link = 'TodoFgTodo' })
+    vim.api.nvim_set_hl(0, 'TodoSignWarn', { link = 'TodoFgWarn' })
+
+    ---------------------------- UI and Status ----------------------------------
+
+    -- StatusLine
+    vim.api.nvim_set_hl(0, 'StatusLine', { fg = thm.yellow, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'StText', { fg = thm.brightgreen, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'St_file', { fg = thm.black, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_filemod', { fg = thm.red, bold = true, underline = true })
+    vim.api.nvim_set_hl(0, 'St_cursor', { fg = thm.black, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_cwd', { fg = thm.blue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_ft', { fg = thm.brightblue, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'St_lspMsg', { fg = thm.brightyellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_lspError', { fg = thm.brightred, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_lspWarning', { fg = thm.brightyellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_lspHints', { fg = thm.brightmagenta, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_lspInfo', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_lsp', { fg = thm.cyan, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'St_GitAdded', { fg = thm.green, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitChanged', { fg = thm.yellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitRemoved', { fg = thm.red, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitAhead', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitBehind', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitUntracked', { fg = thm.red, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitBranch', { fg = thm.magenta, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_GitConflicted', { fg = thm.brightred, bg = thm.background })
+
+    vim.api.nvim_set_hl(0, 'St_NormalMode', { fg = thm.brightblue, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_VisualMode', { fg = thm.brightcyan, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_InsertMode', { fg = thm.brightred, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_TerminalMode', { fg = thm.brightgreen, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_NTerminalMode', { fg = thm.yellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_ReplaceMode', { fg = thm.brightyellow, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_ConfirmMode', { fg = thm.cyan, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_CommandMode', { fg = thm.brightgreen, bg = thm.background })
+    vim.api.nvim_set_hl(0, 'St_SelectMode', { fg = thm.blue, bg = thm.background })
+
+    -- Render-markdown
+    vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = thm.dark })
+    vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', { fg = thm.cyan, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownh1', { fg = thm.cyan, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownh2', { fg = thm.magenta, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownh3', { fg = thm.blue, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownh4', { fg = thm.white, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownh5', { fg = thm.black, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownh6', { fg = thm.brightblack, bold = true })
+
+    -- Code
+    -- vim.api.nvim_set_hl(0, 'markdowncode', { fg = thm.brightred, bg = thm.dark })
+    vim.api.nvim_set_hl(0, 'markdowncodeblock', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'markdowncodedelimiter', { fg = thm.brightblack })
+
+    -- Links
+    vim.api.nvim_set_hl(0, 'markdownurl', { fg = thm.brightblack, underline = true })
+    vim.api.nvim_set_hl(0, 'markdownlinktext', { fg = thm.yellow, underline = true })
+    vim.api.nvim_set_hl(0, 'markdownlinkdelimiter', { fg = thm.blue })
+
+    -- Emphasis and Formatting
+    vim.api.nvim_set_hl(0, 'markdownitalic', { fg = thm.yellow, italic = true })
+    vim.api.nvim_set_hl(0, 'markdownbold', { fg = thm.red, bold = true })
+    vim.api.nvim_set_hl(0, 'markdownbolditalic', { fg = thm.cyan, bold = true, italic = true })
+    vim.api.nvim_set_hl(0, 'markdownstrike', { fg = thm.brightblue, strikethrough = true })
+
+    -- Blockquotes and Rules
+    vim.api.nvim_set_hl(0, 'markdownblockquote', { fg = thm.brightblack, italic = true })
+    vim.api.nvim_set_hl(0, 'markdownrule', { fg = thm.brightblack })
+
+    -- Lists
+    vim.api.nvim_set_hl(0, 'markdownlistmarker', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'markdowntable', { fg = thm.blue })
+
+    -- Tasks
+    vim.api.nvim_set_hl(0, 'markdowntaskchecked', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'markdowntaskunchecked', { fg = thm.brightblack })
+
+    -- Highlight Groups for Code Syntax
+    vim.api.nvim_set_hl(0, 'markdowncomment', { fg = thm.brightblack })
+    vim.api.nvim_set_hl(0, 'markdowncommentpreproc', { fg = thm.brightcyan })
+    vim.api.nvim_set_hl(0, 'markdownkeyword', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'markdownkeywordtype', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'markdownoperator', { fg = thm.black })
+    vim.api.nvim_set_hl(0, 'markdownpunctuation', { fg = thm.white })
+
+    -- String and Literals
+    vim.api.nvim_set_hl(0, 'markdownstring', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'markdownstringescape', { fg = thm.brightcyan })
+
+    -- Errors and Inserts
+    vim.api.nvim_set_hl(0, 'markdownerror', { fg = thm.white, bg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'markdowninsert', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'markdowndelete', { fg = thm.red })
+
+    -- Special Elements
+    vim.api.nvim_set_hl(0, 'markdowndefinitionterm', { fg = thm.brightmagenta })
+    vim.api.nvim_set_hl(0, 'markdowndefinitiondescription', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'markdownenumeration', { fg = thm.blue })
+
+    -- Images
+    vim.api.nvim_set_hl(0, 'markdownimage', { fg = thm.brightblack, underline = true })
+    vim.api.nvim_set_hl(0, 'markdownimagetext', { fg = thm.yellow })
+
+    -- Devicons
+    vim.api.nvim_set_hl(0, 'DevIconc', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIconcss', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIcondeb', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'DevIconDockerfile', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'DevIconhtml', { fg = thm.brightred })
+    vim.api.nvim_set_hl(0, 'DevIconjpeg', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'DevIconjpg', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'DevIconjs', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'DevIconkt', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'DevIconlock', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'DevIconlua', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIconmp3', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconmp4', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconout', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconpng', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'DevIconpy', { fg = thm.cyan })
+    vim.api.nvim_set_hl(0, 'DevIcontoml', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIconts', { fg = thm.brightcyan })
+    vim.api.nvim_set_hl(0, 'DevIconttf', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconrb', { fg = thm.magenta })
+    vim.api.nvim_set_hl(0, 'DevIconrpm', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'DevIconvue', { fg = thm.brightgreen })
+    vim.api.nvim_set_hl(0, 'DevIconwoff', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconwoff2', { fg = thm.white })
+    vim.api.nvim_set_hl(0, 'DevIconxz', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'DevIconzip', { fg = thm.yellow })
+    vim.api.nvim_set_hl(0, 'DevIconZig', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'DevIconMd', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIconTSX', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIconJSX', { fg = thm.blue })
+    vim.api.nvim_set_hl(0, 'DevIconSvelte', { fg = thm.red })
+    vim.api.nvim_set_hl(0, 'DevIconJava', { fg = thm.brightyellow })
+    vim.api.nvim_set_hl(0, 'DevIconDart', { fg = thm.cyan })
   end,
 }
