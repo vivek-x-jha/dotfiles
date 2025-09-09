@@ -1,5 +1,5 @@
 -- https://lazy.folke.io/configuration
-local icn = require 'ui.icons'
+local icn = require 'icons'
 
 return {
   defaults = {

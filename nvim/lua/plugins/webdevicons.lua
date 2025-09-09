@@ -1,4 +1,4 @@
-local icn = require 'ui.icons'
+local icn = require 'icons'
 
 -- https://github.com/nvim-tree/nvim-web-devicons
 return {
