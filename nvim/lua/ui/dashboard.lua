@@ -1,4 +1,4 @@
-local icn = require 'ui.icons'
+local icn = require 'icons'
 local M = {}
 local utl = {}
 

@@ -1,5 +1,5 @@
 --- @type table Custom icons
-local icons = require 'ui.icons'
+local icons = require 'icons'
 
 --- @type table Store state of any LSP messages
 local lspmsg = { lsp_msg = '' }

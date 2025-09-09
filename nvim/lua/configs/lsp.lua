@@ -3,7 +3,7 @@ local M = {}
 
 M.setup = function(opts)
   opts = opts or {}
-  local icn = require 'ui.icons'
+  local icn = require 'icons'
   local tools = {}
 
   -- Configure autocompletions
@@ -61,9 +61,11 @@ M.setup = function(opts)
 
   -- Install all language servers, formatters, and linters
   local registry = require 'mason-registry'
+  local mappings = require 'masonames'
+
   registry.refresh(function()
     for _, tool in ipairs(tools) do
-      local tool_kebab = assert(require('configs.masonames')[tool])
+      local tool_kebab = assert(mappings[tool])
       local pkg = registry.get_package(tool_kebab)
 
       if not pkg:is_installed() then pkg:install() end
