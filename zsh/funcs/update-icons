@@ -2,7 +2,7 @@
 
 # Check for 'fileicon' binary
 command -v fileicon &>/dev/null || {
-  printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "" "'fileicon' dependency not found" " - please install or check in \$PATH."
+  printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "✘" "'fileicon' dependency not found" " - please install or check in \$PATH."
   return 1
 }
 
