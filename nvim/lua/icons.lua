@@ -7,7 +7,7 @@ return {
 
   -- general
   bell = ' ',
-  checkmark = ' ',
+  checkmark = '✔',
   dotted_circle = '󱥸 ',
   download = ' ',
   file = '',
