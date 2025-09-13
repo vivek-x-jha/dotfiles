@@ -22,7 +22,7 @@ local modules = {
   mode = function()
     if not vim.api.nvim_get_current_win() == vim.g.statusline_winid then return '' end
 
-    --- @type string[] 2nd item is highlight groupname St_NormalMode
+    --- @type table<string, { [1]: string, [2]: string }> 2nd item is highlight groupname St_NormalMode
     local modes = {
       ['n'] = { 'NORMAL', 'Normal' },
       ['no'] = { 'NORMAL (no)', 'Normal' },
@@ -68,7 +68,7 @@ local modules = {
       ['!'] = { 'SHELL', 'Terminal' },
     }
 
-    --- @type string[2] Vim mode and highlight group
+    --- @type { [1]: string, [2]: string } Vim mode, highlight group
     local vmode = modes[vim.api.nvim_get_mode().mode]
 
     return table.concat { '%#St_', vmode[2], 'mode#', icons.vim, ' ', vmode[1], ' ', '%#Normal#%*' }
@@ -100,7 +100,7 @@ local modules = {
     --- @type string[] Formatted statusline elements for each diagnostic
     local lsp_diagnostics = {}
 
-    --- @type table LSP diagnostics
+    --- @type { [1]: table, [2]: table, [3]: table, [4]: table  } LSP diagnostics
     local lsp_info = {
       { level = 'ERROR', hl = '%#St_lspError#', icon = icons.error },
       { level = 'WARN', hl = '%#St_lspWarning#', icon = icons.warn },
@@ -163,7 +163,7 @@ local modules = {
     -- Check if it's not a Git repository
     if not buf.gitsigns_head or buf.gitsigns_git_status then return '' end
 
-    --- @type table All git add, changed, and removed modifications
+    --- @type { [1]: table, [2]: table, [3]: table } All git add, changed, and removed modifications
     local statuses = {
       { cnt = buf.gitsigns_status_dict.added, hl = '%#St_GitAdded#', icon = '+' },
       { cnt = buf.gitsigns_status_dict.changed, hl = '%#St_GitChanged#', icon = '~' },
@@ -210,6 +210,7 @@ local modules = {
   git_status = function()
     -- Check if inside a Git repository
     local git_dir = vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1]
+
     if git_dir ~= 'true' then return '' end
 
     --- @type integer Number of changes in various git categories
@@ -217,6 +218,7 @@ local modules = {
 
     -- Get ahead/behind info
     local upstream = vim.fn.systemlist('git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null')[1]
+
     if upstream then
       local a, b = upstream:match '(%d+)%s+(%d+)'
       ahead = tonumber(a) or 0
@@ -225,6 +227,7 @@ local modules = {
 
     -- Get git status summary
     local status_output = vim.fn.systemlist 'git status --porcelain=v1 2>/dev/null'
+
     for _, line in ipairs(status_output) do
       local code = line:sub(1, 2)
 
@@ -239,7 +242,7 @@ local modules = {
       end
     end
 
-    --- @type table All Git statuses counts, highlights, and icons
+    --- @type { [1]: table, [2]: table, [3]: table, [4]: table, [5]: table, [6]: table } All Git statuses counts, highlights, and icons
     local statuses = {
       { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up .. ' ' },
       { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down .. ' ' },
