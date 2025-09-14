@@ -2,16 +2,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
--- Prepend mason to $PATH
-local is_windows = vim.fn.has 'win32' ~= 0
-local sep = is_windows and '\\' or '/'
-
-vim.env.PATH = table.concat {
-  table.concat({ vim.fn.stdpath 'data', 'mason', 'bin' }, sep),
-  is_windows and ';' or ':',
-  vim.env.PATH,
-}
-
 -- Disable providers
 vim.g.loaded_node_provider = 0
 vim.g.loaded_python3_provider = 0
@@ -52,6 +42,13 @@ vim.o.timeoutlen = 400 -- keymap timeout
 vim.o.undofile = true -- persistent undo
 vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
+
+-- Prepend Mason to $PATH
+local mason_bin = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
+local is_in_path = vim.env.PATH:find(vim.pesc(mason_bin), 1, true)
+local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
+
+if not is_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
 
 -- Load plugins
 local plugins = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'plugins')
