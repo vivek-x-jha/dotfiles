@@ -380,16 +380,6 @@ return {
     vim.api.nvim_set_hl(0, 'NotifyTRACEIcon', { fg = thm.brightcyan, bg = thm.background })
     vim.api.nvim_set_hl(0, 'NotifyTRACETitle', { fg = thm.brightcyan, bg = thm.background })
 
-    ---------------------------- Meta Assistance ----------------------------------
-
-    -- WhichKey
-    vim.api.nvim_set_hl(0, 'WhichKey', { fg = thm.magenta })
-    vim.api.nvim_set_hl(0, 'WhichKeyBorder', { fg = thm.brightblack })
-    vim.api.nvim_set_hl(0, 'WhichKeySeparator', { fg = thm.black })
-    vim.api.nvim_set_hl(0, 'WhichKeyDesc', { fg = thm.blue })
-    vim.api.nvim_set_hl(0, 'WhichKeyGroup', { fg = thm.yellow })
-    vim.api.nvim_set_hl(0, 'WhichKeyValue', { fg = thm.brightmagenta })
-
     ---------------------------- Productivity ----------------------------------
 
     -- Git
@@ -420,59 +410,10 @@ return {
     vim.api.nvim_set_hl(0, 'gitcommitDiscardedFile', { fg = thm.red, bold = true })
     vim.api.nvim_set_hl(0, 'gitcommitSelectedFile', { fg = thm.green, bold = true })
 
-    -- Lazy
-    vim.api.nvim_set_hl(0, 'LazyH1', { fg = thm.brightcyan, bold = true })
-    vim.api.nvim_set_hl(0, 'LazyBorder', { fg = thm.brightblack })
-    vim.api.nvim_set_hl(0, 'LazyButton', { fg = thm.brightblack })
-    vim.api.nvim_set_hl(0, 'LazyButtonActive', { fg = thm.white, bold = true })
-    vim.api.nvim_set_hl(0, 'LazyH2', { fg = thm.magenta, bold = true })
-    vim.api.nvim_set_hl(0, 'LazyReasonPlugin', { fg = thm.red })
-    vim.api.nvim_set_hl(0, 'LazyValue', { fg = thm.cyan })
-    vim.api.nvim_set_hl(0, 'LazyDir', { fg = thm.blue })
-    vim.api.nvim_set_hl(0, 'LazyUrl', { fg = thm.red })
-    vim.api.nvim_set_hl(0, 'LazyCommit', { fg = thm.green })
-    vim.api.nvim_set_hl(0, 'LazyNoCond', { fg = thm.red })
-    vim.api.nvim_set_hl(0, 'LazyReasonFt', { fg = thm.brightmagenta })
-    vim.api.nvim_set_hl(0, 'LazyOperator', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'LazyReasonKeys', { fg = thm.cyan })
-    vim.api.nvim_set_hl(0, 'LazyTaskOutput', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'LazyCommitIssue', { fg = thm.magenta })
-    vim.api.nvim_set_hl(0, 'LazyReasonEvent', { fg = thm.yellow })
-    vim.api.nvim_set_hl(0, 'LazyReasonStart', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'LazyReasonRuntime', { fg = thm.brightyellow })
-    vim.api.nvim_set_hl(0, 'LazyReasonCmd', { fg = thm.yellow })
-    vim.api.nvim_set_hl(0, 'LazyReasonSource', { fg = thm.cyan })
-    vim.api.nvim_set_hl(0, 'LazyReasonImport', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'LazyProgressDone', { fg = thm.green })
-    vim.api.nvim_set_hl(0, 'LazySpecial', { fg = thm.green })
-
     -- Indent Blankline
     vim.api.nvim_set_hl(0, 'IblIndent', { fg = thm.brightblack })
     vim.api.nvim_set_hl(0, 'IblWhitespace', { fg = thm.grey })
     vim.api.nvim_set_hl(0, 'IblScope', { fg = thm.brightmagenta })
-
-    -- Todo
-    vim.api.nvim_set_hl(0, 'TodoBgFix', { fg = thm.grey, bg = thm.red, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoBgHack', { fg = thm.grey, bg = thm.brightyellow, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoBgNote', { fg = thm.grey, bg = thm.white, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoBgPerf', { fg = thm.grey, bg = thm.brightmagenta, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoBgTest', { fg = thm.grey, bg = thm.brightmagenta, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoBgTodo', { fg = thm.grey, bg = thm.yellow, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoBgWarn', { fg = thm.brightyellow, bold = true })
-    vim.api.nvim_set_hl(0, 'TodoFgFix', { fg = thm.red })
-    vim.api.nvim_set_hl(0, 'TodoFgHack', { fg = thm.brightyellow })
-    vim.api.nvim_set_hl(0, 'TodoFgNote', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'TodoFgPerf', { fg = thm.brightmagenta })
-    vim.api.nvim_set_hl(0, 'TodoFgTest', { fg = thm.brightmagenta })
-    vim.api.nvim_set_hl(0, 'TodoFgTodo', { fg = thm.yellow })
-    vim.api.nvim_set_hl(0, 'TodoFgWarn', { fg = thm.brightyellow })
-    vim.api.nvim_set_hl(0, 'TodoSignFix', { link = 'TodoFgFix' })
-    vim.api.nvim_set_hl(0, 'TodoSignHack', { link = 'TodoFgHack' })
-    vim.api.nvim_set_hl(0, 'TodoSignNote', { link = 'TodoFgNote' })
-    vim.api.nvim_set_hl(0, 'TodoSignPerf', { link = 'TodoFgPerf' })
-    vim.api.nvim_set_hl(0, 'TodoSignTest', { link = 'TodoFgTest' })
-    vim.api.nvim_set_hl(0, 'TodoSignTodo', { link = 'TodoFgTodo' })
-    vim.api.nvim_set_hl(0, 'TodoSignWarn', { link = 'TodoFgWarn' })
 
     ---------------------------- UI and Status ----------------------------------
 
@@ -512,71 +453,6 @@ return {
     vim.api.nvim_set_hl(0, 'St_ConfirmMode', { fg = thm.cyan, bg = thm.background })
     vim.api.nvim_set_hl(0, 'St_CommandMode', { fg = thm.brightgreen, bg = thm.background })
     vim.api.nvim_set_hl(0, 'St_SelectMode', { fg = thm.blue, bg = thm.background })
-
-    -- Render-markdown
-    vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = thm.dark })
-    vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { fg = thm.brightred })
-    vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', { fg = thm.cyan, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownh1', { fg = thm.cyan, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownh2', { fg = thm.magenta, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownh3', { fg = thm.blue, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownh4', { fg = thm.white, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownh5', { fg = thm.black, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownh6', { fg = thm.brightblack, bold = true })
-
-    -- Code
-    -- vim.api.nvim_set_hl(0, 'markdowncode', { fg = thm.brightred, bg = thm.dark })
-    vim.api.nvim_set_hl(0, 'markdowncodeblock', { fg = thm.brightyellow })
-    vim.api.nvim_set_hl(0, 'markdowncodedelimiter', { fg = thm.brightblack })
-
-    -- Links
-    vim.api.nvim_set_hl(0, 'markdownurl', { fg = thm.brightblack, underline = true })
-    vim.api.nvim_set_hl(0, 'markdownlinktext', { fg = thm.yellow, underline = true })
-    vim.api.nvim_set_hl(0, 'markdownlinkdelimiter', { fg = thm.blue })
-
-    -- Emphasis and Formatting
-    vim.api.nvim_set_hl(0, 'markdownitalic', { fg = thm.yellow, italic = true })
-    vim.api.nvim_set_hl(0, 'markdownbold', { fg = thm.red, bold = true })
-    vim.api.nvim_set_hl(0, 'markdownbolditalic', { fg = thm.cyan, bold = true, italic = true })
-    vim.api.nvim_set_hl(0, 'markdownstrike', { fg = thm.brightblue, strikethrough = true })
-
-    -- Blockquotes and Rules
-    vim.api.nvim_set_hl(0, 'markdownblockquote', { fg = thm.brightblack, italic = true })
-    vim.api.nvim_set_hl(0, 'markdownrule', { fg = thm.brightblack })
-
-    -- Lists
-    vim.api.nvim_set_hl(0, 'markdownlistmarker', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'markdowntable', { fg = thm.blue })
-
-    -- Tasks
-    vim.api.nvim_set_hl(0, 'markdowntaskchecked', { fg = thm.brightgreen })
-    vim.api.nvim_set_hl(0, 'markdowntaskunchecked', { fg = thm.brightblack })
-
-    -- Highlight Groups for Code Syntax
-    vim.api.nvim_set_hl(0, 'markdowncomment', { fg = thm.brightblack })
-    vim.api.nvim_set_hl(0, 'markdowncommentpreproc', { fg = thm.brightcyan })
-    vim.api.nvim_set_hl(0, 'markdownkeyword', { fg = thm.magenta })
-    vim.api.nvim_set_hl(0, 'markdownkeywordtype', { fg = thm.blue })
-    vim.api.nvim_set_hl(0, 'markdownoperator', { fg = thm.black })
-    vim.api.nvim_set_hl(0, 'markdownpunctuation', { fg = thm.white })
-
-    -- String and Literals
-    vim.api.nvim_set_hl(0, 'markdownstring', { fg = thm.green })
-    vim.api.nvim_set_hl(0, 'markdownstringescape', { fg = thm.brightcyan })
-
-    -- Errors and Inserts
-    vim.api.nvim_set_hl(0, 'markdownerror', { fg = thm.white, bg = thm.brightred })
-    vim.api.nvim_set_hl(0, 'markdowninsert', { fg = thm.brightgreen })
-    vim.api.nvim_set_hl(0, 'markdowndelete', { fg = thm.red })
-
-    -- Special Elements
-    vim.api.nvim_set_hl(0, 'markdowndefinitionterm', { fg = thm.brightmagenta })
-    vim.api.nvim_set_hl(0, 'markdowndefinitiondescription', { fg = thm.white })
-    vim.api.nvim_set_hl(0, 'markdownenumeration', { fg = thm.blue })
-
-    -- Images
-    vim.api.nvim_set_hl(0, 'markdownimage', { fg = thm.brightblack, underline = true })
-    vim.api.nvim_set_hl(0, 'markdownimagetext', { fg = thm.yellow })
 
     -- Devicons
     vim.api.nvim_set_hl(0, 'DevIconc', { fg = thm.blue })

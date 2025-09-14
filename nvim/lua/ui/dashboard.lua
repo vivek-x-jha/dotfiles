@@ -29,7 +29,7 @@ local header = {
 
 local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
-  { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
+  -- { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   { txt = icn.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = fzf 'files' },
   { txt = icn.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = fzf 'oldfiles' },
