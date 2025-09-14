@@ -2,13 +2,6 @@ local icn = require 'icons'
 local M = {}
 local utl = {}
 
----Format plugin statistics from lazy.nvim
----@return string -- "  Loaded 20/30 plugins in 50ms"
-local plugin_stats = function()
-  local stats = require('lazy').stats()
-  return table.concat { '  Loaded ', stats.loaded, '/', stats.count, ' plugins in ', math.floor(stats.startuptime), 'ms' }
-end
-
 ---Create an fzf-lua command string
 ---@param cmd string  -- the fzf-lua method name (e.g., "files", "buffers")
 ---@return string -- a Lua command string to run
