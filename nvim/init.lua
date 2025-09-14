@@ -45,10 +45,10 @@ vim.o.winborder = 'single'
 
 -- Prepend Mason to $PATH
 local mason_bin = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
-local is_in_path = vim.env.PATH:find(vim.pesc(mason_bin), 1, true)
+local mason_in_path = vim.env.PATH:find(vim.pesc(mason_bin), 1, true)
 local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
 
-if not is_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
+if not mason_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
 
 -- Load vendor plugins
 local plugins = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'plugins')
