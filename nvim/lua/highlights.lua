@@ -29,7 +29,7 @@ return {
       'grey',
     }
 
-    for i, color in ipairs(colors) do
+    for _, color in ipairs(colors) do
       local env = color:upper() .. '_HEX'
       local hex = assert(os.getenv(env), env .. ' not set!') -- expects env vars: <COLOR>_HEX (i.e. BLACK_HEX)
       thm[color] = hex
@@ -240,14 +240,21 @@ return {
     vim.api.nvim_set_hl(0, 'NvimTreeSymlink', { fg = thm.yellow })
     vim.api.nvim_set_hl(0, 'NvimTreeSymlinkFolderName', { fg = thm.yellow })
     vim.api.nvim_set_hl(0, 'NvimTreeModifiedIcon', { fg = thm.red })
+
     vim.api.nvim_set_hl(0, 'NvimTreeGitFileNewHl', { fg = thm.red })
     vim.api.nvim_set_hl(0, 'NvimTreeGitNewIcon', { link = 'NvimTreeGitFileNewHl' })
+
     vim.api.nvim_set_hl(0, 'NvimTreeGitFileDirtyHl', { fg = thm.yellow })
     vim.api.nvim_set_hl(0, 'NvimTreeGitDirtyIcon', { link = 'NvimTreeGitFileDirtyHl' })
+
+    vim.api.nvim_set_hl(0, 'NvimTreeGitFileRenamedHl', { fg = thm.green })
+    vim.api.nvim_set_hl(0, 'NvimTreeGitRenamedIcon', { link = 'NvimTreeGitFileRenamedHl' })
+
     vim.api.nvim_set_hl(0, 'NvimTreeGitFileStagedHl', { fg = thm.green })
     vim.api.nvim_set_hl(0, 'NvimTreeGitStagedIcon', { link = 'NvimTreeGitFileStagedHl' })
-    vim.api.nvim_set_hl(0, 'NvimTreeGitRenamed', { link = 'NvimTreeGitFileStagedHl' })
-    vim.api.nvim_set_hl(0, 'NvimTreeGitIgnored', { fg = thm.brightblack, italic = true })
+
+    vim.api.nvim_set_hl(0, 'NvimTreeGitDeletedIcon', { fg = thm.green })
+
     vim.api.nvim_set_hl(0, 'NvimTreeWindowPicker', { fg = thm.brightcyan, bg = thm.dark, bold = true })
 
     -- Fzf-lua
