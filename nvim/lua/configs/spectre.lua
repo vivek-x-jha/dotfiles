@@ -3,7 +3,7 @@ vim.pack.add {
   'https://github.com/nvim-lua/plenary.nvim',
 }
 
-vim.schedule(function() require('configs.highlights').setup 'spectre' end)
+vim.schedule(function() require('highlights').setup 'spectre' end)
 
 require('spectre').setup {
   result_padding = '',
