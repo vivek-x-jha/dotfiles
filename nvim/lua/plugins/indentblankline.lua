@@ -1,7 +1,5 @@
--- https://github.com/lukas-reineke/indent-blankline.nvim
-return {
-  'lukas-reineke/indent-blankline.nvim',
-  event = 'User FilePost',
-  main = 'ibl',
-  opts = { indent = { char = '┊' } },
+vim.pack.add { 'https://github.com/lukas-reineke/indent-blankline.nvim' }
+
+require('ibl').setup {
+  indent = { char = '┊' },
 }

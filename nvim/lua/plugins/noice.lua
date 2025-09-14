@@ -1,20 +1,48 @@
--- TODO update colorscheme
--- https://github.com/folke/noice.nvim
-return {
-  'folke/noice.nvim',
-  event = 'VeryLazy',
-  opts = {
-    lsp = {
-      override = {
-        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-        ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = true,
-      },
-      signature = { enabled = false },
+vim.pack.add {
+  'https://github.com/rcarriga/nvim-notify',
+  'https://github.com/folke/noice.nvim',
+  'https://github.com/MunifTanjim/nui.nvim',
+  'https://github.com/nvim-treesitter/nvim-treesitter',
+}
+
+require('nvim-treesitter.configs').setup {
+  ensure_installed = {
+    'bash',
+    'fish',
+    'lua',
+    'luadoc',
+    'markdown',
+    'printf',
+    'toml',
+    'vim',
+    'vimdoc',
+    'yaml',
+  },
+  highlight = {
+    enable = true,
+    use_languagetree = true,
+  },
+  indent = { enable = true },
+}
+
+require('notify').setup {
+  background_colour = '#000000',
+  fps = 60,
+  stages = 'fade',
+}
+vim.notify = require 'notify'
+
+require('noice').setup {
+  lsp = {
+    override = {
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true,
     },
-    presets = {
-      command_palette = true,
-      long_message_to_split = true,
-    },
+    signature = { enabled = false },
+  },
+  presets = {
+    command_palette = true,
+    long_message_to_split = true,
   },
 }

@@ -2,8 +2,8 @@ local term = require 'ui.terminal'
 
 -- General mappings
 vim.keymap.set('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
-vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Clear notifications' })
+vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = '[S]ave file' })
 vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
 
@@ -42,27 +42,14 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 -- Sessions
-vim.keymap.set('n', '<leader>ob', '<cmd>Obsession<CR>', { desc = 'Toggle [ob]session' })
 vim.keymap.set('n', '<leader>oo', function()
-  vim.cmd 'silent! Obsession'
-  vim.cmd 'silent! Obsession'
+  vim.cmd 'silent! mksession! Session.vim'
   vim.notify('Updating workspace state: Session.vim', vim.log.levels.INFO)
 end, { desc = 'Save workspace config' })
 
 -- Buffers
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
 vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close buffer' })
-
--- NvimTree
-vim.keymap.set('n', '<C-n>', function()
-  require('nvim-tree.api').tree.toggle { focus = false }
-  vim.cmd 'wincmd ='
-end, { desc = 'Toggle file explorer' })
-
-vim.keymap.set('n', '<leader>e', function()
-  require('nvim-tree.api').tree.open()
-  vim.cmd 'wincmd ='
-end, { desc = 'Focus file [e]xplorer' })
 
 -- Terminal
 vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
@@ -72,23 +59,8 @@ vim.keymap.set({ 'n', 't' }, '<A-v>', function() term.toggle { pos = 'vsp', id =
 vim.keymap.set({ 'n', 't' }, '<A-h>', function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end, { desc = 'Toggle [h]orizontal terminal' })
 vim.keymap.set({ 'n', 't' }, '<A-i>', function() term.toggle { pos = 'float', id = 'floatTerm' } end, { desc = 'Toggle [f]loating terminal' })
 
--- Gitsigns
-vim.keymap.set('n', '<leader>gb', '<cmd>Gitsigns toggle_current_line_blame<CR>', { desc = 'Toggle [g]itsigns current line [b]lame' })
-
 -- LSP
 vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })
-
--- WhichKey
-vim.keymap.set('n', '<leader>wK', '<cmd>WhichKey <CR>', { desc = 'Toggle all [w]hichkey [K]eymaps' })
-vim.keymap.set('n', '<leader>wk', function() vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ') end, { desc = 'Search [w]hich[k]ey' })
-
--- Conform
-vim.keymap.set('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })
-
--- Spectre
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', { desc = 'Toggle [S]pectre' })
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = '[S]earch current [w]ord' })
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = '[S]earch current [w]ord' })
 
 -- Dashboard
 vim.keymap.set('n', '<leader>da', function() require('ui.dashboard').setup() end, { desc = 'Toggle Dashboard' })

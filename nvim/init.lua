@@ -2,34 +2,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
--- Bootstrap lazy if not installed
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-
-if not vim.uv.fs_stat(lazypath) then
-  local out = vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    '--branch=stable',
-    'https://github.com/folke/lazy.nvim.git',
-    lazypath,
-  }
-
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out, 'WarningMsg' },
-      { '\nPress any key to exit...' },
-    }, true, {})
-
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
-
--- Prepend lazy to nvim runtime path
-vim.opt.rtp:prepend(lazypath)
-
 -- Prepend mason to $PATH
 local is_windows = vim.fn.has 'win32' ~= 0
 local sep = is_windows and '\\' or '/'
@@ -82,7 +54,15 @@ vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
 
 -- Load plugins
-require('lazy').setup(require 'configs.lazy')
+local plugins = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'plugins')
+
+for name, kind in vim.fs.dir(plugins) do
+  if kind == 'file' and name:sub(-4) == '.lua' and name ~= 'init.lua' then
+    local mod = 'plugins.' .. name:sub(1, -5)
+    local ok, err = pcall(require, mod)
+    if not ok then vim.schedule(function() vim.notify(('failed loading %s: %s'):format(mod, err), vim.log.levels.WARN) end) end
+  end
+end
 
 -- Load LSP
 require('configs.lsp').setup {
@@ -99,7 +79,6 @@ vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
 -- Load event triggers (some deferred)
 require 'configs.autocmds'
-vim.api.nvim_create_user_command('UpdateAll', function() vim.cmd 'Lazy update | MasonUpdate' end, {})
 
 -- Load keymaps (deferred)
 vim.schedule(function() require 'configs.keymaps' end)
