@@ -50,12 +50,16 @@ local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
 
 if not is_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
 
--- Load plugins
+-- Load vendor plugins
 local plugins = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'plugins')
 
 for name, kind in vim.fs.dir(plugins) do
   if kind == 'file' and name:sub(-4) == '.lua' then require('plugins.' .. name:sub(1, -5)) end
 end
+
+-- Lazy load local plugins
+vim.cmd.packadd 'dashboard'
+vim.cmd.packadd 'terminal'
 
 -- Load LSP
 require('configs.lsp').setup { ensure_installed = { 'shellcheck' } }
@@ -63,9 +67,6 @@ require('configs.lsp').setup { ensure_installed = { 'shellcheck' } }
 -- Load colors
 vim.cmd.colorscheme 'sourdiesel'
 require('configs.highlights').setup()
-
--- Load statusline
-vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
 -- Load event triggers (some deferred)
 require 'configs.autocmds'

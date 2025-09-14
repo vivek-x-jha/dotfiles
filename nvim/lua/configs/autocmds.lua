@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-    if emptylines and emptyrows and untitled then require('ui.dashboard').setup() end
+    if emptylines and emptyrows and untitled then require('dashboard').setup() end
   end,
 })
 
@@ -176,7 +176,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
     local data = args.data.params.value
     local progress = ''
 
-    local state = require('ui.statusline').state
+    local state = require('statusline').state
 
     if data.percentage then
       local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }

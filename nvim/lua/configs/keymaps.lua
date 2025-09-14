@@ -1,4 +1,4 @@
-local term = require 'ui.terminal'
+local term = require 'terminal'
 
 -- General mappings
 vim.keymap.set('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
@@ -63,4 +63,4 @@ vim.keymap.set({ 'n', 't' }, '<A-i>', function() term.toggle { pos = 'float', id
 vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })
 
 -- Dashboard
-vim.keymap.set('n', '<leader>da', function() require('ui.dashboard').setup() end, { desc = 'Toggle Dashboard' })
+vim.keymap.set('n', '<leader>da', function() require('dashboard').setup() end, { desc = 'Toggle Dashboard' })
