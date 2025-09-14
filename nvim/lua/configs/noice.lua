@@ -1,10 +1,3 @@
-vim.pack.add {
-  'https://github.com/rcarriga/nvim-notify',
-  'https://github.com/folke/noice.nvim',
-  'https://github.com/MunifTanjim/nui.nvim',
-  'https://github.com/nvim-treesitter/nvim-treesitter',
-}
-
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
     'bash',

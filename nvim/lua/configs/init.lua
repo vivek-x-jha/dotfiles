@@ -1,11 +1,36 @@
--- Prepend Mason to $PATH
-local mason_bin = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
-local mason_in_path = vim.env.PATH:find(vim.pesc(mason_bin), 1, true)
-local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
+-- Load plugins
+local repos = {
+  'windwp/nvim-autopairs',
+  'saghen/blink.cmp',
+  'L3MON4D3/LuaSnip',
+  'stevearc/conform.nvim',
+  'ibhagwan/fzf-lua',
+  'lewis6991/gitsigns.nvim',
+  'brenoprata10/nvim-highlight-colors',
+  'lukas-reineke/indent-blankline.nvim',
+  'williamboman/mason.nvim',
+  'rcarriga/nvim-notify',
+  'folke/noice.nvim',
+  'MunifTanjim/nui.nvim',
+  'nvim-treesitter/nvim-treesitter',
+  'nvim-pack/nvim-spectre',
+  'nvim-lua/plenary.nvim',
+  'kylechui/nvim-surround',
+  'christoomey/vim-tmux-navigator',
+  'nvim-tree/nvim-tree.lua',
+  'nvim-tree/nvim-web-devicons',
+}
 
-if not mason_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
+local gh = 'https://github.com/'
+local specs = {}
 
--- Load vendor plugins
+for _, repo in ipairs(repos) do
+  table.insert(specs, gh .. repo)
+end
+
+vim.pack.add(specs)
+
+-- Configure plugins in $XDG_CONFIG_HOME/nvim/lua/configs/
 local configs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'configs')
 
 for name, kind in vim.fs.dir(configs) do

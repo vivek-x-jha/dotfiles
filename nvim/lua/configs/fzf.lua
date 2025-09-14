@@ -1,5 +1,3 @@
-vim.pack.add { 'https://github.com/ibhagwan/fzf-lua' }
-
 local icn = require 'icons'
 
 require('fzf-lua').setup {
