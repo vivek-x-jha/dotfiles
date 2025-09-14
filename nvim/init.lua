@@ -61,6 +61,7 @@ end
 require('configs.lsp').setup { ensure_installed = { 'shellcheck' } }
 
 -- Load colors
+vim.cmd.colorscheme 'sourdiesel'
 require('configs.highlights').setup()
 
 -- Load statusline
