@@ -15,13 +15,13 @@ local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
 
 if not mason_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
 
--- Load settings
+-- Load global and scoped settings
 require 'options'
 
--- Load plugins
+-- Load and configure plugins
 require 'configs'
 
--- Load lsp + linters + formatters
+-- Load language servers + linters + formatters
 require('lsp').setup { ensure_installed = { 'shellcheck' } }
 
 -- Set colorscheme
@@ -31,5 +31,5 @@ require('highlights').setup()
 -- Set event triggers
 require 'autocmds'
 
--- Deferred load key mappings
+-- Set key mappings - deferred to prevent being overwritten
 vim.schedule(function() require 'keymaps' end)
