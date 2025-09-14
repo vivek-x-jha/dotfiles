@@ -2,7 +2,6 @@
 local M = {}
 
 M.setup = function(opts)
-  opts = opts or {}
   local icn = require 'icons'
   local tools = {}
 
@@ -35,29 +34,22 @@ M.setup = function(opts)
     },
   }
 
-  -- Add servers in ~/.config/nvim/lsp
-  local fd = assert(vim.uv.fs_opendir(opts.servers))
+  -- Add servers in ~/.config/nvim/lsp/
+  local servers = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
 
-  while true do
-    local dir_entries = vim.uv.fs_readdir(fd)
-    if not dir_entries then break end
-    for _, entry in ipairs(dir_entries) do
-      if entry.type == 'file' and entry.name:match '%.lua$' then
-        local basename = vim.fn.fnamemodify(entry.name, ':r')
-        table.insert(tools, basename)
-      end
-    end
+  for name, kind in vim.fs.dir(servers) do
+    if kind == 'file' and name:sub(-4) == '.lua' then table.insert(tools, name:sub(1, -5)) end
   end
-
-  vim.uv.fs_closedir(fd)
-
-  -- Add linters
-  vim.list_extend(tools, opts.linters)
 
   -- Add formatters
-  for _, v in ipairs(opts.formatters) do
+  local formatters = require('conform').list_all_formatters()
+
+  for _, v in ipairs(formatters) do
     vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
   end
+
+  -- Add linters
+  vim.list_extend(tools, opts.ensure_installed or {})
 
   -- Install all language servers, formatters, and linters
   local registry = require 'mason-registry'
