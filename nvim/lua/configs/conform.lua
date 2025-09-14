@@ -1,5 +1,3 @@
-vim.pack.add { 'https://github.com/stevearc/conform.nvim' }
-
 require('conform').setup {
   format_on_save = { timeout_ms = 500, lsp_format = 'fallback' },
 
@@ -13,9 +11,7 @@ require('conform').setup {
 }
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-  callback = function(args)
-    require('conform').format { bufnr = args.buf }
-  end,
+  callback = function(args) require('conform').format { bufnr = args.buf } end,
 })
 
 vim.keymap.set('n', '<leader>fm', function() require('conform').format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })

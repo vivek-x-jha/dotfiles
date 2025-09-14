@@ -1,8 +1,3 @@
-vim.pack.add {
-  'https://github.com/saghen/blink.cmp',
-  'https://github.com/L3MON4D3/LuaSnip',
-}
-
 -- LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
 for _, style in ipairs { 'vscode', 'snipmate', 'lua' } do
   require('luasnip.loaders.from_' .. style).lazy_load()
