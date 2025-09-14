@@ -57,19 +57,11 @@ vim.o.winborder = 'single'
 local plugins = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'plugins')
 
 for name, kind in vim.fs.dir(plugins) do
-  if kind == 'file' and name:sub(-4) == '.lua' and name ~= 'init.lua' then
-    local mod = 'plugins.' .. name:sub(1, -5)
-    local ok, err = pcall(require, mod)
-    if not ok then vim.schedule(function() vim.notify(('failed loading %s: %s'):format(mod, err), vim.log.levels.WARN) end) end
-  end
+  if kind == 'file' and name:sub(-4) == '.lua' then require('plugins.' .. name:sub(1, -5)) end
 end
 
 -- Load LSP
-require('configs.lsp').setup {
-  servers = table.concat { vim.fn.stdpath 'config', sep, 'lsp' },
-  linters = { 'shellcheck' },
-  formatters = require('conform').list_all_formatters(),
-}
+require('configs.lsp').setup { ensure_installed = { 'shellcheck' } }
 
 -- Load colors
 require('configs.highlights').setup()
