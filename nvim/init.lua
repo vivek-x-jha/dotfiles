@@ -416,8 +416,6 @@ end)
 ------------------------------------ [6/6] Key Mappings (Deferred) ------------------------------------
 
 vim.schedule(function()
-  local term = require 'terminal'
-
   -- General mappings
   vim.keymap.set('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
   vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Clear notifications' })
@@ -470,6 +468,8 @@ vim.schedule(function()
   vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close buffer' })
 
   -- Terminal
+  local term = require 'terminal'
+
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
   vim.keymap.set('n', '<leader>h', function() term.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
   vim.keymap.set('n', '<leader>v', function() term.open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
