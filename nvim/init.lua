@@ -13,7 +13,10 @@ local mason_bin = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
 local mason_in_path = vim.env.PATH:find(vim.pesc(mason_bin), 1, true)
 local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
 
-if not mason_in_path then vim.env.PATH = table.concat({ mason_bin, vim.env.PATH }, path_sep) end
+if not mason_in_path then vim.env.PATH = mason_bin .. path_sep .. vim.env.PATH end
+
+-- Set colorscheme
+vim.cmd.colorscheme 'sourdiesel'
 
 -- Load global and scoped settings
 require 'options'
@@ -23,10 +26,6 @@ require 'configs'
 
 -- Load language servers + linters + formatters
 require('lsp').setup { ensure_installed = { 'shellcheck' } }
-
--- Set colorscheme
-vim.cmd.colorscheme 'sourdiesel'
-require('highlights').setup()
 
 -- Set event triggers
 require 'autocmds'
