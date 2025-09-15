@@ -1,142 +1,485 @@
 local M = {}
+local thm = {}
 
-local function hi(group, spec) vim.api.nvim_set_hl(0, group, spec) end
+local colors = {
+  -- 16 ANSI slots
+  'black',
+  'red',
+  'green',
+  'yellow',
+  'blue',
+  'magenta',
+  'cyan',
+  'white',
+  'brightblack',
+  'brightred',
+  'brightgreen',
+  'brightyellow',
+  'brightblue',
+  'brightmagenta',
+  'brightcyan',
+  'brightwhite',
 
-local function build_theme()
-  local thm = {}
-  local colors = {
-    -- 16 ANSI slots
-    'black',
-    'red',
-    'green',
-    'yellow',
-    'blue',
-    'magenta',
-    'cyan',
-    'white',
-    'brightblack',
-    'brightred',
-    'brightgreen',
-    'brightyellow',
-    'brightblue',
-    'brightmagenta',
-    'brightcyan',
-    'brightwhite',
-    -- extras
-    'background',
-    'dark',
-    'grey',
-  }
+  -- extras
+  'background',
+  'dark',
+  'grey',
+}
 
-  for i, name in ipairs(colors) do
-    local env = name:upper() .. '_HEX'
-    local hex = assert(os.getenv(env), env .. ' not set!')
-    thm[name] = hex
-    if i <= 16 then vim.g['terminal_color_' .. (i - 1)] = hex end
-  end
-
-  return thm
+for _, color in ipairs(colors) do
+  local env = color:upper() .. '_HEX'
+  local hex = assert(os.getenv(env), env .. ' not set!')
+  thm[color] = hex
 end
 
-M.setup = function()
-  local thm = build_theme()
-
-  --------------------------------------------------------------------------
-  -- Defaults
-  --------------------------------------------------------------------------
-  hi('Added', { fg = thm.green })
-  hi('Changed', { fg = thm.yellow })
-  hi('ColorColumn', { bg = thm.black })
-  hi('Comment', { fg = thm.brightblack, italic = true })
-  hi('Conceal', { bg = thm.background })
-  hi('Debug', { fg = thm.white })
-  hi('DevIconDefault', { fg = thm.red })
-  hi('Directory', { fg = thm.blue })
-  hi('Error', { fg = thm.black, bg = thm.background })
-  hi('ErrorMsg', { fg = thm.red, bg = thm.background })
-  hi('Exception', { fg = thm.magenta })
+local highlights = {
+  ---------------------------- Defaults ----------------------------------
+  Added = { fg = thm.green },
+  Changed = { fg = thm.yellow },
+  ColorColumn = { bg = thm.black },
+  Comment = { fg = thm.brightblack, italic = true },
+  Conceal = { bg = thm.background },
+  Debug = { fg = thm.white },
+  DevIconDefault = { fg = thm.red },
+  Directory = { fg = thm.blue },
+  Error = { fg = thm.black, bg = thm.background },
+  ErrorMsg = { fg = thm.red, bg = thm.background },
+  Exception = { fg = thm.magenta },
 
   -- Cursor
-  hi('Cursor', { fg = thm.black, bg = thm.grey })
-  hi('CursorColumn', { bg = thm.grey })
-  hi('CursorLine', { bg = thm.grey })
-  hi('CursorLineNr', { fg = thm.brightmagenta })
+  Cursor = { fg = thm.black, bg = thm.grey },
+  CursorColumn = { bg = thm.grey },
+  CursorLine = { bg = thm.grey },
+  CursorLineNr = { fg = thm.brightmagenta },
 
   -- QuickFix
-  hi('qfLineNr', { fg = thm.brightyellow, bg = thm.background })
-  hi('qfFileName', { fg = thm.black, bg = thm.background })
-  hi('QuickFixLine', { bold = true, bg = thm.grey })
+  qfLineNr = { fg = thm.brightyellow, bg = thm.background },
+  qfFileName = { fg = thm.black, bg = thm.background },
+  QuickFixLine = { bold = true, bg = thm.grey },
 
   -- Folds
-  hi('Folded', { fg = thm.black, bg = thm.background, italic = true })
-  hi('FoldColumn', { fg = thm.brightblue, bg = thm.background })
-  hi('CursorLineFold', { fg = thm.brightmagenta, bg = thm.background })
+  Folded = { fg = thm.black, bg = thm.background, italic = true },
+  FoldColumn = { fg = thm.brightblue, bg = thm.background },
+  CursorLineFold = { fg = thm.brightmagenta, bg = thm.background },
 
-  hi('LineNr', { fg = thm.brightblack })
-  hi('FloatBorder', { fg = thm.brightblack })
-  hi('FloatTitle', { fg = thm.magenta })
-  hi('Macro', { fg = thm.white })
-  hi('MatchParen', { link = 'MatchWord' })
-  hi('MatchWord', { bg = thm.grey, fg = thm.brightred })
-  hi('ModeMsg', { fg = thm.green })
-  hi('MoreMsg', { fg = thm.green })
-  hi('NonText', { fg = thm.black })
-  hi('Normal', { fg = thm.white, bg = thm.background })
-  hi('NormalFloat', { bg = thm.background })
-  hi('NvimInternalError', { fg = thm.red })
+  LineNr = { fg = thm.brightblack },
+  FloatBorder = { fg = thm.brightblack },
+  FloatTitle = { fg = thm.magenta },
+  Macro = { fg = thm.white },
+  MatchWord = { bg = thm.grey, fg = thm.brightred },
+  MatchParen = { link = 'MatchWord' },
+  ModeMsg = { fg = thm.green },
+  MoreMsg = { fg = thm.green },
+  NonText = { fg = thm.black },
+  Normal = { fg = thm.white, bg = thm.background },
+  NormalFloat = { bg = thm.background },
+  NvimInternalError = { fg = thm.red },
 
-  hi('Pmenu', { bg = thm.dark })
-  hi('PmenuSbar', { bg = thm.dark })
-  hi('PmenuSel', { fg = thm.brightgreen, bg = thm.grey })
-  hi('PmenuThumb', { bg = thm.background })
+  Pmenu = { bg = thm.dark },
+  PmenuSbar = { bg = thm.dark },
+  PmenuSel = { fg = thm.brightgreen, bg = thm.grey },
+  PmenuThumb = { bg = thm.background },
 
-  hi('Question', { fg = thm.blue })
-  hi('Removed', { fg = thm.red })
-  hi('SignColumn', { fg = thm.black })
-  hi('SpecialKey', { fg = thm.black })
-  hi('Substitute', { fg = thm.brightred, bg = thm.grey })
-  hi('Title', { fg = thm.blue })
-  hi('TooLong', { fg = thm.white })
-  hi('Visual', { bg = thm.grey })
-  hi('VisualNOS', { fg = thm.white })
-  hi('WarningMsg', { fg = thm.white, bg = thm.background })
-  hi('WildMenu', { fg = thm.yellow, bg = thm.grey })
-  hi('WinBar', { bg = thm.background })
-  hi('WinBarNC', { bg = thm.background })
-  hi('WinSeparator', { fg = thm.brightblack })
-  hi('healthSuccess', { bg = thm.green, fg = thm.black })
-  hi('YankFlash', { fg = thm.brightyellow, bg = thm.grey })
+  Question = { fg = thm.blue },
+  Removed = { fg = thm.red },
+  SignColumn = { fg = thm.black },
+  SpecialKey = { fg = thm.black },
+  Substitute = { fg = thm.brightred, bg = thm.grey },
+  Title = { fg = thm.blue },
+  TooLong = { fg = thm.white },
+  Visual = { bg = thm.grey },
+  VisualNOS = { fg = thm.white },
+  WarningMsg = { fg = thm.white, bg = thm.background },
+  WildMenu = { fg = thm.yellow, bg = thm.grey },
+  WinBar = { bg = thm.background },
+  WinBarNC = { bg = thm.background },
+  WinSeparator = { fg = thm.brightblack },
+  healthSuccess = { bg = thm.green, fg = thm.black },
+  YankFlash = { fg = thm.brightyellow, bg = thm.grey },
 
-  --------------------------------------------------------------------------
-  -- Syntax
-  --------------------------------------------------------------------------
-  hi('Boolean', { fg = thm.red })
-  hi('Character', { fg = thm.cyan })
-  hi('Conditional', { fg = thm.magenta })
-  hi('Constant', { fg = thm.black })
-  hi('Define', { fg = thm.magenta, sp = 'none' })
-  hi('Delimiter', { fg = thm.cyan })
-  hi('Float', { fg = thm.brightyellow })
-  hi('Variable', { fg = thm.black })
-  hi('Function', { fg = thm.blue })
-  hi('Identifier', { fg = thm.red, sp = 'none' })
-  hi('Include', { fg = thm.brightmagenta })
-  hi('Keyword', { fg = thm.magenta })
-  hi('Label', { fg = thm.yellow })
-  hi('Number', { fg = thm.brightyellow })
-  hi('Operator', { fg = thm.black, sp = 'none' })
-  hi('PreProc', { fg = thm.yellow })
-  hi('Repeat', { fg = thm.yellow })
-  hi('Special', { fg = thm.blue })
-  hi('SpecialChar', { fg = thm.cyan })
-  hi('Statement', { fg = thm.magenta })
-  hi('StorageClass', { fg = thm.yellow })
-  hi('String', { fg = thm.green })
-  hi('Structure', { fg = thm.red })
-  hi('Tag', { fg = thm.brightyellow })
-  hi('Todo', { fg = thm.cyan })
-  hi('Type', { fg = thm.yellow, sp = 'none' })
-  hi('Typedef', { fg = thm.yellow })
+  ------------------------------- Syntax ----------------------------------
+  Boolean = { fg = thm.red },
+  Character = { fg = thm.cyan },
+  Conditional = { fg = thm.magenta },
+  Constant = { fg = thm.black },
+  Define = { fg = thm.magenta, sp = 'none' },
+  Delimiter = { fg = thm.cyan },
+  Float = { fg = thm.brightyellow },
+  Variable = { fg = thm.black },
+  Function = { fg = thm.blue },
+  Identifier = { fg = thm.red, sp = 'none' },
+  Include = { fg = thm.brightmagenta },
+  Keyword = { fg = thm.magenta },
+  Label = { fg = thm.yellow },
+  Number = { fg = thm.brightyellow },
+  Operator = { fg = thm.black, sp = 'none' },
+  PreProc = { fg = thm.yellow },
+  Repeat = { fg = thm.yellow },
+  Special = { fg = thm.blue },
+  SpecialChar = { fg = thm.cyan },
+  Statement = { fg = thm.magenta },
+  StorageClass = { fg = thm.yellow },
+  String = { fg = thm.green },
+  Structure = { fg = thm.red },
+  Tag = { fg = thm.brightyellow },
+  Todo = { fg = thm.cyan },
+  Type = { fg = thm.yellow, sp = 'none' },
+  Typedef = { fg = thm.yellow },
+
+  ---------------------------- Spectre ----------------------------------
+  SpectreHeader = { fg = thm.brightmagenta, bg = thm.background, bold = true },
+  SpectreBody = { fg = thm.black, bg = thm.background, bold = true },
+  SpectreFile = { fg = thm.yellow, bg = thm.background },
+  SpectreDir = { fg = thm.blue, bg = thm.background },
+  SpectreSearch = { fg = thm.brightred, bg = thm.grey },
+  SpectreBorder = { fg = thm.brightblack, bg = thm.background },
+  SpectreReplace = { fg = thm.brightgreen, bg = thm.grey },
+
+  ---------------------------- Treesitter --------------------------------
+  ['@variable'] = { fg = thm.black },
+  ['@variable.builtin'] = { fg = thm.yellow },
+  ['@variable.parameter'] = { fg = thm.white },
+  ['@variable.member'] = { fg = thm.white },
+  ['@variable.member.key'] = { fg = thm.white },
+
+  ['@module'] = { fg = thm.white },
+  -- ['@module.builtin']        = { fg = thm.white },
+
+  ['@constant'] = { fg = thm.white },
+  ['@constant.builtin'] = { fg = thm.yellow },
+  ['@constant.macro'] = { fg = thm.white },
+
+  ['@string'] = { fg = thm.green },
+  ['@string.regex'] = { fg = thm.cyan },
+  ['@string.escape'] = { fg = thm.cyan },
+  ['@character'] = { fg = thm.white },
+  -- ['@character.special']      = { fg = thm.white },
+  ['@number'] = { fg = thm.red },
+  ['@number.float'] = { fg = thm.red },
+
+  ['@annotation'] = { fg = thm.black },
+  ['@attribute'] = { fg = thm.yellow },
+  ['@error'] = { fg = thm.white },
+
+  ['@keyword.exception'] = { fg = thm.white },
+  ['@keyword'] = { fg = thm.magenta },
+  ['@keyword.function'] = { fg = thm.magenta },
+  ['@keyword.return'] = { fg = thm.magenta },
+  ['@keyword.operator'] = { fg = thm.magenta },
+  ['@keyword.import'] = { link = 'Include' },
+  ['@keyword.conditional'] = { fg = thm.magenta },
+  ['@keyword.conditional.ternary'] = { fg = thm.magenta },
+  ['@keyword.repeat'] = { fg = thm.yellow },
+  ['@keyword.storage'] = { fg = thm.yellow },
+  ['@keyword.directive.define'] = { fg = thm.magenta },
+  ['@keyword.directive'] = { fg = thm.yellow },
+
+  ['@function'] = { fg = thm.blue },
+  ['@function.builtin'] = { fg = thm.blue },
+  ['@function.macro'] = { fg = thm.white },
+  ['@function.call'] = { fg = thm.blue },
+  ['@function.method'] = { fg = thm.blue },
+  ['@function.method.call'] = { fg = thm.blue },
+  ['@constructor'] = { fg = thm.cyan },
+
+  ['@operator'] = { fg = thm.black },
+  ['@reference'] = { fg = thm.black },
+  ['@punctuation.bracket'] = { fg = thm.black },
+  ['@punctuation.delimiter'] = { fg = thm.black },
+  ['@symbol'] = { fg = thm.green },
+  ['@tag'] = { fg = thm.yellow },
+  ['@tag.attribute'] = { fg = thm.white },
+  ['@tag.delimiter'] = { fg = thm.black },
+  ['@text'] = { fg = thm.black },
+  ['@text.emphasis'] = { fg = thm.yellow },
+  ['@text.strike'] = { fg = thm.black, strikethrough = true },
+  ['@type.builtin'] = { fg = thm.yellow },
+  ['@definition'] = { sp = thm.grey, underline = true },
+  ['@scope'] = { bold = true },
+  ['@property'] = { fg = thm.white },
+
+  ['@markup.heading'] = { fg = thm.blue },
+  ['@markup.raw'] = { fg = thm.yellow },
+  ['@markup.link'] = { fg = thm.white },
+  ['@markup.link.url'] = { fg = thm.yellow, underline = true },
+  ['@markup.link.label'] = { fg = thm.cyan },
+  ['@markup.list'] = { fg = thm.white },
+  ['@markup.strong'] = { bold = true },
+  ['@markup.underline'] = { underline = true },
+  ['@markup.italic'] = { italic = true },
+  ['@markup.strikethrough'] = { strikethrough = true },
+  ['@markup.quote'] = { bg = thm.red },
+
+  ['@comment'] = { fg = thm.brightblack, italic = true },
+  ['@comment.todo'] = { fg = thm.brightblue },
+  ['@comment.warning'] = { fg = thm.brightyellow },
+  ['@comment.note'] = { fg = thm.brightcyan },
+  ['@comment.danger'] = { fg = thm.brightred },
+
+  ['@diff.plus'] = { fg = thm.green },
+  ['@diff.minus'] = { fg = thm.red },
+  ['@diff.delta'] = { fg = thm.black },
+
+  ---------------------------- LSP / Completions -------------------------
+  BlinkCmpMenu = { fg = thm.brightblack },
+  BlinkCmpMenuBorder = { fg = thm.brightblack },
+  BlinkCmpMenuSelection = { fg = thm.cyan, bold = true },
+  BlinkCmpScrollBarThumb = { fg = thm.grey },
+  BlinkCmpScrollBarGutter = { fg = thm.grey },
+  BlinkCmpLabel = { fg = thm.white },
+  BlinkCmpLabelDeprecated = { fg = thm.red, strikethrough = true },
+  BlinkCmpLabelMatch = { fg = thm.magenta },
+  BlinkCmpLabelDetail = { fg = thm.brightblack },
+  BlinkCmpLabelDescription = { fg = thm.brightblack },
+
+  BlinkCmpKindText = { fg = thm.white },
+  BlinkCmpKindMethod = { fg = thm.brightblue },
+  BlinkCmpKindFunction = { fg = thm.blue },
+  BlinkCmpKindConstructor = { fg = thm.cyan },
+  BlinkCmpKindField = { fg = thm.brightmagenta },
+  BlinkCmpKindVariable = { fg = thm.magenta },
+  BlinkCmpKindClass = { fg = thm.yellow },
+  BlinkCmpKindInterface = { fg = thm.brightyellow },
+  BlinkCmpKindModule = { fg = thm.brightgreen },
+  BlinkCmpKindProperty = { fg = thm.green },
+  BlinkCmpKindUnit = { fg = thm.brightwhite },
+  BlinkCmpKindValue = { fg = thm.cyan },
+  BlinkCmpKindEnum = { fg = thm.brightred },
+  BlinkCmpKindKeyword = { fg = thm.red },
+  BlinkCmpKindSnippet = { fg = thm.brightcyan },
+  BlinkCmpKindColor = { fg = thm.brightblue },
+  BlinkCmpKindFile = { fg = thm.brightblack },
+  BlinkCmpKindReference = { fg = thm.brightmagenta },
+  BlinkCmpKindFolder = { fg = thm.brightblack },
+  BlinkCmpKindEnumMember = { fg = thm.brightred },
+  BlinkCmpKindConstant = { fg = thm.brightcyan },
+  BlinkCmpKindStruct = { fg = thm.yellow },
+  BlinkCmpKindEvent = { fg = thm.brightgreen },
+  BlinkCmpKindOperator = { fg = thm.green },
+  BlinkCmpKindTypeParameter = { fg = thm.brightblue },
+
+  BlinkCmpSource = { fg = thm.cyan },
+  BlinkCmpGhostText = { fg = thm.brightblack },
+  BlinkCmpDoc = { fg = thm.white, bg = thm.dark },
+  BlinkCmpDocBorder = { fg = thm.brightblack },
+  BlinkCmpDocSeparator = { fg = thm.brightblack },
+  BlinkCmpDocCursorLine = { bg = thm.brightblack },
+  BlinkCmpSignatureHelp = { fg = thm.white, bg = thm.dark },
+  BlinkCmpSignatureHelpBorder = { fg = thm.brightblack },
+  BlinkCmpSignatureHelpActiveParameter = { fg = thm.yellow, bold = true },
+
+  MasonHeader = { fg = thm.brightmagenta },
+  MasonHighlight = { fg = thm.blue },
+  MasonHighlightBlock = { fg = thm.brightgreen },
+  MasonHighlightBlockBold = { link = 'MasonHighlightBlock' },
+  MasonHeaderSecondary = { link = 'MasonHighlightBlock' },
+  MasonMuted = { fg = thm.grey },
+  MasonMutedBlock = { fg = thm.black },
+
+  LspReferenceText = { bg = thm.grey },
+  LspReferenceRead = { bg = thm.grey },
+  LspReferenceWrite = { bg = thm.grey },
+
+  DiagnosticError = { fg = thm.brightred },
+  DiagnosticWarn = { fg = thm.brightyellow },
+  DiagnosticHint = { fg = thm.brightmagenta },
+  DiagnosticInfo = { fg = thm.brightblue },
+
+  LspSignatureActiveParameter = { fg = thm.black, bg = thm.green },
+  LspInlayHint = { fg = thm.grey },
+
+  ---------------------------- Search / Refactor --------------------------
+  Search = { fg = thm.brightred, bg = thm.grey, bold = true },
+  CurSearch = { fg = thm.brightcyan, bg = thm.grey, bold = true },
+  IncSearch = { fg = thm.brightyellow, bg = thm.grey, bold = true },
+
+  ---------------------------- Dashboard ----------------------------------
+  DashAscii = { fg = thm.brightmagenta },
+  DashLine = { fg = thm.black },
+  DashPlugins = { fg = thm.brightyellow },
+  DashFiles = { fg = thm.red },
+  DashRecent = { fg = thm.green },
+  DashTrigger = { fg = thm.yellow },
+  DashSettings = { fg = thm.blue },
+  DashWord = { fg = thm.magenta },
+  DashCmdHist = { fg = thm.cyan },
+  DashBuffers = { fg = thm.white },
+  DashNvimCmds = { fg = thm.brightblue },
+  DashGitFiles = { fg = thm.brightred },
+  DashGitLog = { fg = thm.brightgreen },
+  DashGitStatus = { fg = thm.brightcyan },
+  DashGitSwitch = { fg = thm.brightwhite },
+
+  ---------------------------- Nvim-Tree ----------------------------------
+  NvimTreeNormal = { fg = thm.black },
+  NvimTreeCursorLine = { bg = thm.grey, bold = true },
+  NvimTreeFileName = { fg = thm.black },
+  NvimTreeExecFile = { fg = thm.brightgreen },
+  NvimTreeSpecialFile = { fg = thm.brightyellow },
+  NvimTreeFolderIcon = { fg = thm.blue },
+  NvimTreeIndentMarker = { fg = thm.brightmagenta },
+  NvimTreeSymlink = { fg = thm.yellow },
+  NvimTreeSymlinkFolderName = { fg = thm.yellow },
+  NvimTreeModifiedIcon = { fg = thm.red },
+
+  NvimTreeGitFileNewHl = { fg = thm.red },
+  NvimTreeGitNewIcon = { link = 'NvimTreeGitFileNewHl' },
+
+  NvimTreeGitFileDirtyHl = { fg = thm.yellow },
+  NvimTreeGitDirtyIcon = { link = 'NvimTreeGitFileDirtyHl' },
+
+  NvimTreeGitFileRenamedHl = { fg = thm.green },
+  NvimTreeGitRenamedIcon = { link = 'NvimTreeGitFileRenamedHl' },
+
+  NvimTreeGitFileStagedHl = { fg = thm.green },
+  NvimTreeGitStagedIcon = { link = 'NvimTreeGitFileStagedHl' },
+
+  NvimTreeGitDeletedIcon = { fg = thm.green },
+
+  NvimTreeWindowPicker = { fg = thm.brightcyan, bg = thm.dark, bold = true },
+
+  ---------------------------- Fzf-lua ------------------------------------
+  FzfLuaTitle = { fg = thm.magenta },
+  FzfLuaBorder = { fg = thm.brightblack },
+  FzfLuaPreviewTitle = { fg = thm.brightmagenta },
+  FzfLuaPreviewBorder = { fg = thm.brightblack },
+
+  ---------------------------- Notifications ------------------------------
+  NoiceCmdlinePopupBorder = { fg = thm.brightgreen, bg = thm.background },
+  NoiceCmdlinePopupTitle = { fg = thm.brightgreen, bg = thm.background },
+  NoicePopupmenuSelected = { fg = thm.green, bg = thm.grey },
+  NoiceCmdlineIcon = { fg = thm.blue, bg = thm.background },
+
+  NotifyERRORBorder = { fg = thm.brightred, bg = thm.background },
+  NotifyERRORIcon = { fg = thm.brightred, bg = thm.background },
+  NotifyERRORTitle = { fg = thm.brightred, bg = thm.background },
+
+  NotifyWARNBorder = { fg = thm.brightyellow, bg = thm.background },
+  NotifyWARNIcon = { fg = thm.brightyellow, bg = thm.background },
+  NotifyWARNTitle = { fg = thm.brightyellow, bg = thm.background },
+
+  NotifyINFOBorder = { fg = thm.brightblue, bg = thm.background },
+  NotifyINFOIcon = { fg = thm.brightblue, bg = thm.background },
+  NotifyINFOTitle = { fg = thm.brightblue, bg = thm.background },
+
+  NotifyDEBUGBorder = { fg = thm.brightmagenta, bg = thm.background },
+  NotifyDEBUGIcon = { fg = thm.brightmagenta, bg = thm.background },
+  NotifyDEBUGTitle = { fg = thm.brightmagenta, bg = thm.background },
+
+  NotifyTRACEBorder = { fg = thm.brightcyan, bg = thm.background },
+  NotifyTRACEIcon = { fg = thm.brightcyan, bg = thm.background },
+  NotifyTRACETitle = { fg = thm.brightcyan, bg = thm.background },
+
+  ---------------------------- Productivity (Git) -------------------------
+  diffOldFile = { fg = thm.brightred },
+  diffNewFile = { fg = thm.brightgreen },
+  DiffAdd = { fg = thm.green },
+  DiffAdded = { fg = thm.green },
+  DiffChange = { fg = thm.yellow },
+  DiffChangeDelete = { fg = thm.red },
+  DiffModified = { fg = thm.yellow },
+  DiffDelete = { fg = thm.red },
+  DiffRemoved = { fg = thm.red },
+  DiffText = { fg = thm.white, bg = thm.grey },
+
+  gitcommitOverflow = { fg = thm.red },
+  gitcommitSummary = { fg = thm.green },
+  gitcommitComment = { fg = thm.grey },
+  gitcommitUntracked = { fg = thm.grey },
+  gitcommitDiscarded = { fg = thm.grey },
+  gitcommitSelected = { fg = thm.grey },
+  gitcommitHeader = { fg = thm.brightmagenta },
+  gitcommitSelectedType = { fg = thm.blue },
+  gitcommitUnmergedType = { fg = thm.blue },
+  gitcommitDiscardedType = { fg = thm.blue },
+  gitcommitBranch = { fg = thm.yellow, bold = true },
+  gitcommitUntrackedFile = { fg = thm.yellow },
+  gitcommitUnmergedFile = { fg = thm.red, bold = true },
+  gitcommitDiscardedFile = { fg = thm.red, bold = true },
+  gitcommitSelectedFile = { fg = thm.green, bold = true },
+
+  ---------------------------- Indent Blankline ---------------------------
+  IblIndent = { fg = thm.brightblack },
+  IblWhitespace = { fg = thm.grey },
+  IblScope = { fg = thm.brightmagenta },
+
+  ---------------------------- UI / StatusLine ----------------------------
+  StatusLine = { fg = thm.yellow, bg = thm.background },
+
+  StText = { fg = thm.brightgreen, bg = thm.background },
+
+  St_file = { fg = thm.black, bg = thm.background },
+  St_filemod = { fg = thm.red, bold = true, underline = true },
+  St_cursor = { fg = thm.black, bg = thm.background },
+  St_cwd = { fg = thm.blue, bg = thm.background },
+  St_ft = { fg = thm.brightblue, bg = thm.background },
+
+  St_lspMsg = { fg = thm.brightyellow, bg = thm.background },
+  St_lspError = { fg = thm.brightred, bg = thm.background },
+  St_lspWarning = { fg = thm.brightyellow, bg = thm.background },
+  St_lspHints = { fg = thm.brightmagenta, bg = thm.background },
+  St_lspInfo = { fg = thm.brightblue, bg = thm.background },
+  St_lsp = { fg = thm.cyan, bg = thm.background },
+
+  St_GitAdded = { fg = thm.green, bg = thm.background },
+  St_GitChanged = { fg = thm.yellow, bg = thm.background },
+  St_GitRemoved = { fg = thm.red, bg = thm.background },
+  St_GitAhead = { fg = thm.brightblue, bg = thm.background },
+  St_GitBehind = { fg = thm.brightblue, bg = thm.background },
+  St_GitUntracked = { fg = thm.red, bg = thm.background },
+  St_GitBranch = { fg = thm.magenta, bg = thm.background },
+  St_GitConflicted = { fg = thm.brightred, bg = thm.background },
+
+  St_NormalMode = { fg = thm.brightblue, bg = thm.background },
+  St_VisualMode = { fg = thm.brightcyan, bg = thm.background },
+  St_InsertMode = { fg = thm.brightred, bg = thm.background },
+  St_TerminalMode = { fg = thm.brightgreen, bg = thm.background },
+  St_NTerminalMode = { fg = thm.yellow, bg = thm.background },
+  St_ReplaceMode = { fg = thm.brightyellow, bg = thm.background },
+  St_ConfirmMode = { fg = thm.cyan, bg = thm.background },
+  St_CommandMode = { fg = thm.brightgreen, bg = thm.background },
+  St_SelectMode = { fg = thm.blue, bg = thm.background },
+
+  ---------------------------- Devicons -----------------------------------
+  DevIconc = { fg = thm.blue },
+  DevIconcss = { fg = thm.blue },
+  DevIcondeb = { fg = thm.cyan },
+  DevIconDockerfile = { fg = thm.cyan },
+  DevIconhtml = { fg = thm.brightred },
+  DevIconjpeg = { fg = thm.magenta },
+  DevIconjpg = { fg = thm.magenta },
+  DevIconjs = { fg = thm.yellow },
+  DevIconkt = { fg = thm.brightyellow },
+  DevIconlock = { fg = thm.red },
+  DevIconlua = { fg = thm.blue },
+  DevIconmp3 = { fg = thm.white },
+  DevIconmp4 = { fg = thm.white },
+  DevIconout = { fg = thm.white },
+  DevIconpng = { fg = thm.magenta },
+  DevIconpy = { fg = thm.cyan },
+  DevIcontoml = { fg = thm.blue },
+  DevIconts = { fg = thm.brightcyan },
+  DevIconttf = { fg = thm.white },
+  DevIconrb = { fg = thm.magenta },
+  DevIconrpm = { fg = thm.brightyellow },
+  DevIconvue = { fg = thm.brightgreen },
+  DevIconwoff = { fg = thm.white },
+  DevIconwoff2 = { fg = thm.white },
+  DevIconxz = { fg = thm.yellow },
+  DevIconzip = { fg = thm.yellow },
+  DevIconZig = { fg = thm.brightyellow },
+  DevIconMd = { fg = thm.blue },
+  DevIconTSX = { fg = thm.blue },
+  DevIconJSX = { fg = thm.blue },
+  DevIconSvelte = { fg = thm.red },
+  DevIconJava = { fg = thm.brightyellow },
+  DevIconDart = { fg = thm.cyan },
+}
+
+M.setup = function()
+  for group, opts in pairs(highlights) do
+    vim.api.nvim_set_hl(0, group, opts)
+  end
 end
 
 return M
