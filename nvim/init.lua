@@ -95,7 +95,7 @@ vim.pack.add(specs)
 local configs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'configs')
 
 for name, kind in vim.fs.dir(configs) do
-  local is_lua_config = kind == 'file' and name:sub(-4) == '.lua' and name ~= 'init.lua'
+  local is_lua_config = kind == 'file' and name:sub(-4) == '.lua'
   local plugin = 'configs.' .. name:sub(1, -5)
 
   if is_lua_config then require(plugin) end
