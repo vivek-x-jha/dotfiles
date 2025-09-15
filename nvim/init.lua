@@ -14,8 +14,9 @@ vim.g.loaded_ruby_provider = 0
 vim.opt.fillchars = { eob = ' ' } -- remove trailing ~ on buffers
 vim.opt.guicursor = 'n-v-c:block-blinkwait300-blinkon200-blinkoff150,i-ci:ver25-blinkwait300-blinkon200-blinkoff150' -- enable blinking cursor
 vim.opt.shortmess:append 'sI' -- disable nvim intro
-vim.opt.whichwrap:append '<>[]hl' -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches EOL or BOL
+vim.opt.swapfile = false -- disable swap files
 vim.opt.termguicolors = true -- Ensure termguicolors is enabled if not already
+vim.opt.whichwrap:append '<>[]hl' -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches EOL or BOL
 
 -- Set global opts
 vim.o.number = true -- print line number in front of each line
