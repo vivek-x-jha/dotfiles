@@ -1,4 +1,10 @@
 require('nvim-treesitter.configs').setup {
+  -- LuaLS type (TSConfig) expects these keys; set them explicitly:
+  modules = {},
+  sync_install = false,
+  ignore_install = {},
+  auto_install = false,
+
   ensure_installed = {
     'bash',
     'fish',
@@ -18,14 +24,19 @@ require('nvim-treesitter.configs').setup {
   indent = { enable = true },
 }
 
-require('notify').setup {
+-- notify
+local notify = require 'notify' ---@type any  -- quiets “undefined field setup”
+notify.setup {
   background_colour = '#000000',
   fps = 60,
   stages = 'fade',
 }
-vim.notify = require 'notify'
 
-require('noice').setup {
+vim.notify = notify
+
+-- noice
+local noice = require 'noice' ---@type any
+noice.setup {
   lsp = {
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
