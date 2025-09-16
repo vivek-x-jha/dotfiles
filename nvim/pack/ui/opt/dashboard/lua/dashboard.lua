@@ -203,7 +203,7 @@ M.setup = function(buf, win, action)
     group = group_id,
     callback = function()
       vim.bo[vim.g.dashboard_buf].ma = true
-      require('ui.dashboard').setup(vim.g.dashboard_buf, vim.g.dashboard_win, 'redraw')
+      require('dashboard').setup(vim.g.dashboard_buf, vim.g.dashboard_win, 'redraw')
     end,
   })
 end

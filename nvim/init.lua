@@ -101,12 +101,39 @@ vim.cmd.packadd 'terminal'
 
 ------------------------------------ [4/6] LSP ------------------------------------
 
+local blink = require 'blink.cmp'
+local conform = require 'conform'
 local icn = require 'icons'
-local linters = { 'shellcheck' }
+local mnames = require 'masonames'
+local mr = require 'mason-registry'
+
 local tools = {}
+local linters = { 'shellcheck' }
+local formatters = conform.list_all_formatters()
+local servers = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
+
+-- Ensure linters + formatters + servers installed
+vim.list_extend(tools, linters)
+
+for _, v in ipairs(formatters) do
+  vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
+end
+
+for name, kind in vim.fs.dir(servers) do
+  if kind == 'file' and name:sub(-4) == '.lua' then table.insert(tools, name:sub(1, -5)) end
+end
+
+mr.refresh(function()
+  for _, tool in ipairs(tools) do
+    local tool_kebab = assert(mnames[tool])
+    local pkg = mr.get_package(tool_kebab)
+
+    if not pkg:is_installed() then pkg:install() end
+  end
+end)
 
 -- Configure autocompletions
-vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities() })
+vim.lsp.config('*', { capabilities = blink.get_lsp_capabilities() })
 
 -- Configure diagnostics
 vim.diagnostic.config {
@@ -132,36 +159,7 @@ vim.diagnostic.config {
   },
 }
 
--- Add servers in ~/.config/nvim/lsp/
-local servers = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
-
-for name, kind in vim.fs.dir(servers) do
-  if kind == 'file' and name:sub(-4) == '.lua' then table.insert(tools, name:sub(1, -5)) end
-end
-
--- Add formatters
-local formatters = require('conform').list_all_formatters()
-
-for _, v in ipairs(formatters) do
-  vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
-end
-
--- Add linters
-vim.list_extend(tools, linters)
-
--- Install all language servers, formatters, and linters
-local mappings = require 'masonames'
-local registry = require 'mason-registry'
-
-registry.refresh(function()
-  for _, tool in ipairs(tools) do
-    local tool_kebab = assert(mappings[tool])
-    local pkg = registry.get_package(tool_kebab)
-
-    if not pkg:is_installed() then pkg:install() end
-  end
-end)
-
+-- Enable LSP
 vim.lsp.enable(tools)
 
 ------------------------------------ [5/6] Auto-Commands (Event Triggers) ------------------------------------
@@ -410,16 +408,7 @@ end)
 ------------------------------------ [6/6] Key Mappings (Deferred) ------------------------------------
 
 vim.schedule(function()
-  -- General mappings
   vim.keymap.set('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
-  vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Clear notifications' })
-  vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
-  vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = '[S]ave file' })
-  vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
-
-  if (vim.version().major > 0) or (vim.version().minor >= 12) then
-    vim.keymap.set('n', '<leader>rr', '<cmd>restart<CR>', { desc = 'Reinitialize Neovim' })
-  end
 
   -- Toggle line numbers
   vim.keymap.set('n', '<leader>n', '<cmd>set nu!<CR>', { desc = 'Toggle line number' })
@@ -452,6 +441,8 @@ vim.schedule(function()
   vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
   -- Sessions
+  vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = '[S]ave file' })
+  vim.keymap.set('n', '<leader>rr', '<cmd>restart<CR>', { desc = 'Reinitialize Neovim' })
   vim.keymap.set('n', '<leader>oo', function()
     vim.cmd 'silent! mksession! Session.vim'
     vim.notify('Updating workspace state: Session.vim', vim.log.levels.INFO)
@@ -460,6 +451,9 @@ vim.schedule(function()
   -- Buffers
   vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
   vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close buffer' })
+  vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
+  vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Clear notifications' })
+  vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
   -- Terminal
   local term = require 'terminal'
