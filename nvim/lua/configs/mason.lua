@@ -1,7 +1,6 @@
 local icn = require 'icons'
 
 require('mason').setup {
-  PATH = 'skip',
   ui = {
     icons = {
       package_pending = icn.download,
@@ -9,5 +8,6 @@ require('mason').setup {
       package_uninstalled = icn.dotted_circle,
     },
   },
+
   max_concurrent_installers = 10,
 }

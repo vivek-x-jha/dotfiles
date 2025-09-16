@@ -53,13 +53,6 @@ vim.cmd.colorscheme 'sourdiesel'
 
 ------------------------------------ [3/6] Plugins ------------------------------------
 
--- Prepend Mason to $PATH
-local mason_bin = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
-local mason_in_path = vim.env.PATH:find(vim.pesc(mason_bin), 1, true)
-local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
-
-if not mason_in_path then vim.env.PATH = mason_bin .. path_sep .. vim.env.PATH end
-
 -- Load plugins
 local repos = {
   'windwp/nvim-autopairs',
