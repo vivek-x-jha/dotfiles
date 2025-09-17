@@ -54,36 +54,44 @@ vim.cmd.colorscheme 'sourdiesel'
 ------------------------------------ [3/6] Plugins ------------------------------------
 
 -- Load plugins
-local repos = {
-  'windwp/nvim-autopairs',
-  'saghen/blink.cmp',
-  'L3MON4D3/LuaSnip',
-  'stevearc/conform.nvim',
-  'ibhagwan/fzf-lua',
-  'lewis6991/gitsigns.nvim',
-  'brenoprata10/nvim-highlight-colors',
-  'lukas-reineke/indent-blankline.nvim',
-  'williamboman/mason.nvim',
-  'rcarriga/nvim-notify',
-  'folke/noice.nvim',
-  'MunifTanjim/nui.nvim',
-  'nvim-treesitter/nvim-treesitter',
-  'nvim-pack/nvim-spectre',
-  'nvim-lua/plenary.nvim',
-  'kylechui/nvim-surround',
-  'christoomey/vim-tmux-navigator',
-  'nvim-tree/nvim-tree.lua',
-  'nvim-tree/nvim-web-devicons',
+vim.pack.add {
+  -- 🔧 Editing
+  { src = 'https://github.com/windwp/nvim-autopairs' },
+  { src = 'https://github.com/saghen/blink.cmp' },
+  { src = 'https://github.com/L3MON4D3/LuaSnip' }, -- used by blink for lua snippets
+  { src = 'https://github.com/kylechui/nvim-surround' },
+
+  -- 📝 Formatting / Linting
+  { src = 'https://github.com/stevearc/conform.nvim' },
+  { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
+
+  -- 🔍 Search / Replace
+  { src = 'https://github.com/nvim-pack/nvim-spectre' },
+  { src = 'https://github.com/nvim-lua/plenary.nvim' }, -- dependency of spectre
+
+  -- 🪄 UI Enhancements
+  { src = 'https://github.com/folke/noice.nvim' },
+  { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- dependency of noice
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' }, -- used by noice for syntax parsing
+  { src = 'https://github.com/rcarriga/nvim-notify' },
+  { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
+
+  -- 🌲 File Explorer
+  { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
+  { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- used by tree and statusline
+
+  -- 🌀 Git
+  { src = 'https://github.com/lewis6991/gitsigns.nvim' },
+
+  -- 🔎 Fuzzy Finder
+  { src = 'https://github.com/ibhagwan/fzf-lua' },
+
+  -- 🧰 LSP / Tools
+  { src = 'https://github.com/williamboman/mason.nvim' },
+
+  -- 🪟 Navigation
+  { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
-
-local gh = 'https://github.com/'
-local specs = {}
-
-for _, repo in ipairs(repos) do
-  table.insert(specs, gh .. repo)
-end
-
-vim.pack.add(specs)
 
 -- Configure plugins in $XDG_CONFIG_HOME/nvim/lua/configs/*lua
 local configs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'configs')
