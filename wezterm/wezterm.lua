@@ -44,9 +44,9 @@ config.colors = {
     thm.brightwhite,
   },
 
-  background = '#212030',
-  compose_cursor = '#f2cdcd',
-  cursor_bg = '#cdd6f4',
+  background = thm.wezterm_bg,
+  compose_cursor = thm.brightred,
+  cursor_bg = thm.brightmagenta,
   cursor_border = thm.white,
   cursor_fg = thm.grey,
   foreground = thm.white,

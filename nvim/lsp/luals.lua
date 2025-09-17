@@ -1,5 +1,7 @@
-local lua_paths = vim.api.nvim_get_runtime_file('', true)
-table.insert(lua_paths, vim.fs.joinpath(vim.fn.stdpath 'config', 'lua'))
+local rtp = vim.api.nvim_get_runtime_file('', true)
+local nvim_lua = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua')
+
+table.insert(rtp, nvim_lua)
 
 return {
   cmd = { 'lua-language-server' },
@@ -9,7 +11,7 @@ return {
   settings = {
     Lua = {
       workspace = {
-        library = lua_paths,
+        library = rtp,
       },
     },
   },
