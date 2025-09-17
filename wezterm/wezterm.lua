@@ -2,22 +2,28 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder() or {}
 
--- Load base16 colors from $HOME/.zshenv
-local thm = {}
-local env_path = os.getenv 'HOME' .. '/.zshenv'
-local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
+-- Load colors from $HOME/.zshenv
+local hex_from_zsh = function()
+  local palette = {}
+  local env_path = os.getenv 'HOME' .. '/.zshenv'
+  local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
 
-for line in f:lines() do
-  -- Only match exports ending in _HEX
-  local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
-  if color and hex then
-    -- Drop the _HEX suffix and lowercase it
-    color = color:match('^(.-)_HEX$'):lower()
-    thm[color] = hex
+  for line in f:lines() do
+    -- Only match exports ending in _HEX
+    local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+    if color and hex then
+      -- Drop the _HEX suffix and lowercase it
+      color = color:match('^(.-)_HEX$'):lower()
+      palette[color] = hex
+    end
   end
+
+  f:close()
+
+  return palette
 end
 
-f:close()
+local thm = hex_from_zsh()
 
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
 config.bold_brightens_ansi_colors = false
