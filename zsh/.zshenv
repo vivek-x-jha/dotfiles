@@ -78,9 +78,11 @@ export BRIGHTMAGENTA_HEX='#c9ccfb'
 export BRIGHTCYAN_HEX='#47e7b1'
 export BRIGHTWHITE_HEX='#ffffff'
 
-export BACKGROUND_HEX='NONE' # Used for Neovim background
 export DARK_HEX='#1b1c28'
 export GREY_HEX='#313244'
+
+export NVIM_BG_HEX='NONE'
+export WEZTERM_BG_HEX='#212030'
 
 # Application colors
 export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
