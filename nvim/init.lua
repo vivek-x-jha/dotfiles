@@ -107,6 +107,9 @@ end
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'terminal'
 
+-- Update all plugins
+vim.api.nvim_create_user_command('PackUpdateAll', function() vim.pack.update() end, { desc = 'Update all plugins' })
+
 ------------------------------------ [4/6] LSP ------------------------------------
 
 local blink = require 'blink.cmp'
