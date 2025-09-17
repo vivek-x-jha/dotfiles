@@ -93,15 +93,19 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
--- Configure plugins in $XDG_CONFIG_HOME/nvim/lua/configs/*lua
-local configs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'configs')
-
-for name, kind in vim.fs.dir(configs) do
-  local is_lua_config = kind == 'file' and name:sub(-4) == '.lua'
-  local plugin = 'configs.' .. name:sub(1, -5)
-
-  if is_lua_config then require(plugin) end
-end
+-- Configure plugins
+require 'configs.autopairs'
+require 'configs.blink'
+require 'configs.conform'
+require 'configs.fzf'
+require 'configs.gitsigns'
+require 'configs.highlight-colors'
+require 'configs.indentblankline'
+require 'configs.mason'
+require 'configs.noice'
+require 'configs.spectre'
+require 'configs.surround'
+require 'configs.tree'
 
 -- Lazy load local plugins
 vim.cmd.packadd 'dashboard'
