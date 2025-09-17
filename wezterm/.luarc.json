@@ -1,6 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "Lua.runtime.version": "LuaJIT",
-  "Lua.workspace.library": ["${workspaceFolder}"],
-  "Lua.workspace.checkThirdParty": false
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.workspace.maxPreload": 2000,
+  "Lua.workspace.preloadFileSize": 150,
+  "Lua.format.enable": false,
+  "Lua.telemetry.enable": false
 }
