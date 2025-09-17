@@ -94,18 +94,395 @@ vim.pack.add {
 }
 
 -- Configure plugins
-require 'configs.autopairs'
-require 'configs.blink'
-require 'configs.conform'
-require 'configs.fzf'
-require 'configs.gitsigns'
-require 'configs.highlight-colors'
-require 'configs.indentblankline'
-require 'configs.mason'
-require 'configs.noice'
-require 'configs.spectre'
-require 'configs.surround'
-require 'configs.tree'
+local blink = require 'blink.cmp'
+local conform = require 'conform'
+local gs = require 'gitsigns'
+local icn = require 'icons'
+local mason = require 'mason'
+local mnames = require 'masonames'
+local mr = require 'mason-registry'
+local spectre = require 'spectre'
+
+-- Autopair quotes, paranthesis, brackets, braces
+require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
+
+-- LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
+for _, style in ipairs { 'vscode', 'snipmate', 'lua' } do
+  require('luasnip.loaders.from_' .. style).lazy_load()
+end
+
+require('luasnip').setup { history = true, updateevents = 'TextChanged,TextChangedI' }
+
+-- Autocompletion: https://cmp.saghen.dev/installation
+require('blink.cmp').setup {
+  keymap = { preset = 'default' },
+  appearance = { nerd_font_variant = 'mono' },
+
+  completion = {
+    documentation = { auto_show = false },
+    menu = {
+      draw = {
+        components = {
+          kind_icon = {
+            text = function(ctx)
+              -- default kind icon
+              local icon = ctx.kind_icon
+              -- colorized kind for LSP items via nvim-highlight-colors (if present)
+              if ctx.item.source_name == 'LSP' then
+                local ok, nhc = pcall(require, 'nvim-highlight-colors')
+                if ok then
+                  local color_item = nhc.format(ctx.item.documentation, { kind = ctx.kind })
+                  if color_item and color_item.abbr ~= '' then icon = color_item.abbr end
+                end
+              end
+              return icon .. ctx.icon_gap
+            end,
+            highlight = function(ctx)
+              -- default highlight group
+              local hl = 'BlinkCmpKind' .. ctx.kind
+              -- colorized highlight (if available)
+              if ctx.item.source_name == 'LSP' then
+                local ok, nhc = pcall(require, 'nvim-highlight-colors')
+                if ok then
+                  local color_item = nhc.format(ctx.item.documentation, { kind = ctx.kind })
+                  if color_item and color_item.abbr_hl_group then hl = color_item.abbr_hl_group end
+                end
+              end
+              return hl
+            end,
+          },
+        },
+      },
+    },
+  },
+
+  snippets = { preset = 'luasnip' },
+
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+  },
+
+  fuzzy = {
+    implementation = 'prefer_rust_with_warning',
+    prebuilt_binaries = {
+      force_version = 'v1.6.0', -- TODO find way to make this dynamic
+    },
+  },
+}
+
+-- Formatters
+conform.setup {
+  format_on_save = { timeout_ms = 500, lsp_format = 'fallback' },
+
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    python = { 'ruff' },
+    bash = { 'shfmt' },
+    zsh = { 'shfmt' },
+    sh = { 'shfmt' },
+  },
+}
+
+vim.api.nvim_create_autocmd('BufWritePre', { callback = function(args) conform.format { bufnr = args.buf } end })
+vim.keymap.set('n', '<leader>fm', function() conform.format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })
+
+-- Multi Modal Picker
+require('fzf-lua').setup {
+  winopts = {
+    preview = {
+      winopts = {
+        number = false,
+        signcolumn = 'yes',
+      },
+    },
+  },
+
+  files = {
+    header = 'fd --type f',
+    winopts = {
+      title = table.concat { ' ', icn.search, ' files ' },
+      title_flags = false,
+    },
+  },
+
+  oldfiles = {
+    header = ':FzfLua oldfiles',
+    include_current_session = true,
+    cwd_only = true,
+    winopts = {
+      title = table.concat { ' ', icn.recent, ' recent files ' },
+      title_flags = false,
+    },
+  },
+
+  autocmds = {
+    header = ':autocmd',
+    winopts = {
+      title = table.concat { ' ', icn.warn, ' event triggers ' },
+      title_flags = false,
+    },
+  },
+
+  buffers = {
+    header = ':ls',
+    winopts = {
+      title = table.concat { ' ', icn.file, ' buffers ' },
+      title_flags = false,
+    },
+  },
+
+  commands = {
+    header = ':command',
+    winopts = {
+      title = table.concat { ' ', icn.vim, ' commands ' },
+      title_flags = false,
+    },
+  },
+
+  command_history = {
+    header = ':history',
+    winopts = {
+      title = table.concat { ' ', icn.cmd_hist, ' command history ' },
+      title_flags = false,
+    },
+  },
+
+  git = {
+    files = {
+      header = ':!git ls-files --exclude-standard',
+      winopts = {
+        title = table.concat { ' ', icn.git, ' ', icn.file, ' files (git) ' },
+      },
+    },
+
+    branches = {
+      header = ':!git branch --all --color && git switch',
+      winopts = {
+        title = table.concat { ' ', icn.branch, ' branches ' },
+      },
+    },
+
+    status = {
+      header = ':!git -c color.status=false --no-optional-locks status --porcelain=v1 -u',
+      winopts = {
+        title = table.concat { ' ', icn.status, ' git status ' },
+      },
+    },
+
+    commits = {
+      header = ':!git log --color --pretty=format:"..."',
+      winopts = {
+        title = table.concat { ' ', icn.log, '  git commits ' },
+      },
+    },
+  },
+
+  grep = {
+    header = ':!rg --vimgrep',
+    winopts = {
+      title = table.concat { ' ', icn.fuzzy, ' fuzzy search' },
+      title_flags = false,
+    },
+  },
+}
+
+vim.keymap.set('n', '<leader>ff', '<cmd>FzfLua files<CR>', { desc = '[F]ind [F]iles' })
+vim.keymap.set('n', '<leader>fo', '<cmd>FzfLua oldfiles<CR>', { desc = '[R]ecent [B]uffers' })
+vim.keymap.set('n', '<leader>fa', '<cmd>FzfLua autocmds<CR>', { desc = '[F]ind Neovim [A]uto-commands' })
+vim.keymap.set('n', '<leader>fw', '<cmd>FzfLua live_grep<CR>', { desc = '[F]ind [W]ord' })
+vim.keymap.set('n', '<leader>fc', '<cmd>FzfLua command_history<CR>', { desc = '[F]ind [C]ommands' })
+vim.keymap.set('n', '<leader>fb', '<cmd>FzfLua buffers<CR>', { desc = '[F]ind [B]uffers' })
+vim.keymap.set('n', '<leader>fn', '<cmd>FzfLua commands<CR>', { desc = '[F]ind Neovim [C]ommands' })
+vim.keymap.set('n', '<leader>fg', '<cmd>FzfLua git_files<CR>', { desc = '[F]ind [G]it Files' })
+vim.keymap.set('n', '<leader>glg', '<cmd>FzfLua git_commits<CR>', { desc = '[G]it [L]og Graph' })
+vim.keymap.set('n', '<leader>gst', '<cmd>FzfLua git_status<CR>', { desc = '[G]it [St]atus' })
+vim.keymap.set('n', '<leader>gsw', '<cmd>FzfLua git_branches<CR>', { desc = '[G]it [S]witch' })
+
+-- Git buffer icons
+local signs = {
+  add = { text = '+' },
+  change = { text = '~' },
+  delete = { text = 'x' },
+  topdelete = { text = 'x' },
+  changedelete = { text = 'x' },
+  untracked = { text = '?' },
+}
+
+gs.setup { signs = signs, signs_staged = signs }
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = function(args) gs.attach(args.buf) end })
+
+vim.keymap.set('n', '<leader>gb', function() gs.toggle_current_line_blame() end, { desc = 'Toggle [g]itsigns current line [b]lame' })
+
+-- Color Previews
+require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icn.virtual_block }
+
+-- Markers for indentation
+require('ibl').setup { indent = { char = '┊' } }
+
+-- LSP tool manager
+mason.setup {
+  ui = {
+    icons = {
+      package_pending = icn.download,
+      package_installed = icn.checkmark,
+      package_uninstalled = icn.dotted_circle,
+    },
+  },
+
+  max_concurrent_installers = 10,
+}
+
+-- Syntax Highlighting
+require('nvim-treesitter.configs').setup {
+  -- LuaLS type (TSConfig) expects these keys; set them explicitly:
+  modules = {},
+  sync_install = false,
+  ignore_install = {},
+  auto_install = false,
+
+  ensure_installed = {
+    'bash',
+    'fish',
+    'lua',
+    'luadoc',
+    'markdown',
+    'printf',
+    'toml',
+    'vim',
+    'vimdoc',
+    'yaml',
+  },
+  highlight = {
+    enable = true,
+    use_languagetree = true,
+  },
+  indent = { enable = true },
+}
+
+-- UI for pop-ups
+local notify = require 'notify' ---@type any  -- quiets “undefined field setup”
+notify.setup {
+  background_colour = '#000000',
+  fps = 60,
+  stages = 'fade',
+}
+
+vim.notify = notify
+
+-- Notification + Cmd Line UI Manager
+local noice = require 'noice' ---@type any
+noice.setup {
+  lsp = {
+    override = {
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true,
+    },
+    signature = { enabled = false },
+  },
+  presets = {
+    command_palette = true,
+    long_message_to_split = true,
+  },
+}
+
+-- Search & Replace
+spectre.setup { result_padding = '', default = { replace = { cmd = 'sed' } } }
+
+vim.keymap.set('n', '<leader>S', function() spectre.toggle() end, { desc = 'Toggle [S]pectre' })
+vim.keymap.set('n', '<leader>sw', function() spectre.open_visual { select_word = true } end, { desc = '[S]earch current [w]ord' })
+vim.keymap.set('v', '<leader>sw', function() spectre.open_visual() end, { desc = '[S]earch current [w]ord' })
+
+-- Auto bracket/paranthesis/quote wrapping
+require('nvim-surround').setup()
+
+-- Additional Icon set
+require('nvim-web-devicons').setup {
+  override = {
+    default_icon = { icon = icn.completions.File, name = 'Default' },
+    js = { icon = icn.javascript, name = 'js' },
+    ts = { icon = icn.typescript, name = 'ts' },
+    lock = { icon = icn.lock, name = 'lock' },
+    ['robots.txt'] = { icon = icn.robot, name = 'robots' },
+  },
+}
+
+-- File Explorer
+require('nvim-tree').setup {
+  hijack_cursor = true,
+  disable_netrw = true,
+  sync_root_with_cwd = true,
+  view = { preserve_window_proportions = true },
+
+  renderer = {
+    root_folder_label = false,
+    special_files = { 'README.md' },
+    highlight_git = true,
+    highlight_diagnostics = true,
+    highlight_modified = 'icon',
+
+    indent_markers = {
+      enable = true,
+      icons = {
+        edge = '┊',
+        item = '┊',
+      },
+    },
+
+    icons = {
+      modified_placement = 'signcolumn',
+      diagnostics_placement = 'before',
+      glyphs = {
+        modified = icn.modified,
+        folder = {
+          default = '󰉖',
+          empty = '󱧹',
+          empty_open = '󰷏',
+          open = '󰷏',
+          symlink = '󱉆',
+        },
+        git = {
+          renamed = '𝙍',
+          staged = '+',
+          unmerged = '!',
+          unstaged = '~',
+          untracked = '?',
+          ignored = '',
+          deleted = '✘',
+        },
+      },
+    },
+  },
+
+  update_focused_file = { enable = true },
+
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true,
+    icons = {
+      hint = icn.hint,
+      info = icn.info,
+      warning = icn.warn,
+      error = icn.error,
+    },
+  },
+
+  modified = { enable = true },
+  filters = { git_ignored = false },
+  live_filter = { prefix = ' ' },
+  help = { sort_by = 'desc' },
+}
+
+vim.keymap.set('n', '<C-n>', function()
+  require('nvim-tree.api').tree.toggle { focus = false }
+  vim.cmd 'wincmd ='
+end, { desc = 'Toggle file explorer' })
+
+vim.keymap.set('n', '<leader>e', function()
+  require('nvim-tree.api').tree.open()
+  vim.cmd 'wincmd ='
+end, { desc = 'Focus file [e]xplorer' })
 
 -- Lazy load local plugins
 vim.cmd.packadd 'dashboard'
@@ -115,12 +492,6 @@ vim.cmd.packadd 'terminal'
 vim.api.nvim_create_user_command('PackUpdateAll', function() vim.pack.update() end, { desc = 'Update all plugins' })
 
 ------------------------------------ [4/6] LSP ------------------------------------
-
-local blink = require 'blink.cmp'
-local conform = require 'conform'
-local icn = require 'icons'
-local mnames = require 'masonames'
-local mr = require 'mason-registry'
 
 local tools = {}
 local linters = { 'shellcheck' }
