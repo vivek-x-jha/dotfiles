@@ -1,39 +1,31 @@
 local M = {}
-local thm = {}
 
-local colors = {
-  -- 16 ANSI slots
-  'black',
-  'red',
-  'green',
-  'yellow',
-  'blue',
-  'magenta',
-  'cyan',
-  'white',
-  'brightblack',
-  'brightred',
-  'brightgreen',
-  'brightyellow',
-  'brightblue',
-  'brightmagenta',
-  'brightcyan',
-  'brightwhite',
+-- Load colors from $HOME/.zshenv
+local hex_from_zsh = function()
+  local palette = {}
+  local env_path = os.getenv 'HOME' .. '/.zshenv'
+  local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
 
-  -- extras
-  'nvim_bg',
-  'dark',
-  'grey',
-}
+  for line in f:lines() do
+    -- Only match exports ending in _HEX
+    local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+    if color and hex then
+      -- Drop the _HEX suffix and lowercase it
+      color = color:match('^(.-)_HEX$'):lower()
+      palette[color] = hex
+    end
+  end
 
-for _, color in ipairs(colors) do
-  local env = color:upper() .. '_HEX'
-  local hex = assert(os.getenv(env), env .. ' not set!')
-  thm[color] = hex
+  f:close()
+
+  return palette
 end
+
+local thm = hex_from_zsh()
 
 local highlights = {
   ---------------------------- Defaults ----------------------------------
+
   Added = { fg = thm.green },
   Changed = { fg = thm.yellow },
   ColorColumn = { bg = thm.black },
@@ -98,6 +90,7 @@ local highlights = {
   YankFlash = { fg = thm.brightyellow, bg = thm.grey },
 
   ------------------------------- Syntax ----------------------------------
+
   Boolean = { fg = thm.red },
   Character = { fg = thm.cyan },
   Conditional = { fg = thm.magenta },
@@ -108,7 +101,7 @@ local highlights = {
   Variable = { fg = thm.black },
   Function = { fg = thm.blue },
   Identifier = { fg = thm.red, sp = 'none' },
-  Include = { fg = thm.brightmagenta },
+  Include = { fg = thm.magenta },
   Keyword = { fg = thm.magenta },
   Label = { fg = thm.yellow },
   Number = { fg = thm.brightyellow },
