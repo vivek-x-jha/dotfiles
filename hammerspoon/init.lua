@@ -53,11 +53,14 @@ local app_hotkeys = {
   a = 'Anki',
   b = 'Arc',
   c = 'ChatGPT',
-  d = 'Docker Desktop',
+  d = 'Discord',
   e = 'Notion Calendar',
   f = 'Messenger',
   g = 'Google Chrome',
+  i = 'Image2Icon',
+  j = 'Hammerspoon',
   k = 'Karabiner-Elements',
+  l = 'Slack',
   m = 'Messages',
   n = 'Notes',
   p = 'Photos',
@@ -66,6 +69,7 @@ local app_hotkeys = {
   t = 'WhatsApp',
   v = 'VLC',
   w = 'WezTerm',
+  x = 'System Settings',
 }
 
 for key, app in pairs(app_hotkeys) do
