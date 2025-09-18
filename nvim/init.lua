@@ -585,6 +585,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Highlight color strings with virtual text
 vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Highlight color strings with virtual text',
+  group = vim.api.nvim_create_augroup('ColorifyAU', {}),
   callback = function()
     vim.schedule(function() highlight_colors.turnOn() end)
   end,
