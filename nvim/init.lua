@@ -53,7 +53,7 @@ vim.cmd.colorscheme 'sourdiesel'
 
 ------------------------------------ [3/6] Plugins ------------------------------------
 
--- Load plugins
+-- Install plugins
 vim.pack.add {
   -- 🔧 Editing
   { src = 'https://github.com/windwp/nvim-autopairs' },
@@ -93,26 +93,41 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
--- Configure plugins
+-- Load plugins
+local icn = require 'icons'
+local masonames = require 'masonames'
+
+local autopairs = require 'nvim-autopairs'
 local blink = require 'blink.cmp'
 local conform = require 'conform'
 local fzf = require 'fzf-lua'
-local gs = require 'gitsigns'
-local icn = require 'icons'
+local gitsigns = require 'gitsigns'
+local highlight_colors = require 'nvim-highlight-colors'
+local ibl = require 'ibl'
+local luasnip = require 'luasnip'
+local luasnip_lua = require 'luasnip.loaders.from_lua'
+local luasnip_snipmate = require 'luasnip.loaders.from_snipmate'
+local luasnip_vscode = require 'luasnip.loaders.from_vscode'
 local mason = require 'mason'
-local mnames = require 'masonames'
-local mr = require 'mason-registry'
+local mason_registry = require 'mason-registry'
+local noice = require 'noice' ---@type any  -- quiets “undefined field setup”
+local notify = require 'notify' ---@type any  -- quiets “undefined field setup”
 local spectre = require 'spectre'
+local surround = require 'nvim-surround'
+local tree = require 'nvim-tree'
+local tree_api = require 'nvim-tree.api'
+local treesitter = require 'nvim-treesitter.configs'
+local web_devicons = require 'nvim-web-devicons'
 
 -- Autopair quotes, paranthesis, brackets, braces
-require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
+autopairs.setup { fast_wrap = {}, disable_filetype = { 'vim' } }
 
 -- LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
-require('luasnip.loaders.from_vscode').lazy_load()
-require('luasnip.loaders.from_snipmate').lazy_load()
-require('luasnip.loaders.from_lua').lazy_load()
+luasnip_vscode.lazy_load()
+luasnip_snipmate.lazy_load()
+luasnip_lua.lazy_load()
 
-require('luasnip').setup { history = true, updateevents = 'TextChanged,TextChangedI' }
+luasnip.setup { history = true, updateevents = 'TextChanged,TextChangedI' }
 
 -- Autocompletion: https://cmp.saghen.dev/installation
 blink.setup {
@@ -309,17 +324,16 @@ local signs = {
   untracked = { text = '?' },
 }
 
-gs.setup { signs = signs, signs_staged = signs }
+gitsigns.setup { signs = signs, signs_staged = signs }
 
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = function(args) gs.attach(args.buf) end })
-
-vim.keymap.set('n', '<leader>gb', function() gs.toggle_current_line_blame() end, { desc = 'Toggle [g]itsigns current line [b]lame' })
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = function(args) gitsigns.attach(args.buf) end })
+vim.keymap.set('n', '<leader>gb', function() gitsigns.toggle_current_line_blame() end, { desc = 'Toggle [g]itsigns current line [b]lame' })
 
 -- Color Previews
-require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icn.virtual_block }
+highlight_colors.setup { render = 'virtual', virtual_symbol = icn.virtual_block }
 
 -- Markers for indentation
-require('ibl').setup { indent = { char = '┊' } }
+ibl.setup { indent = { char = '┊' } }
 
 -- LSP tool manager
 mason.setup {
@@ -335,7 +349,7 @@ mason.setup {
 }
 
 -- Syntax Highlighting
-require('nvim-treesitter.configs').setup {
+treesitter.setup {
   -- LuaLS type (TSConfig) expects these keys; set them explicitly:
   modules = {},
   sync_install = false,
@@ -362,7 +376,6 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- UI for pop-ups
-local notify = require 'notify' ---@type any  -- quiets “undefined field setup”
 notify.setup {
   background_colour = '#000000',
   fps = 60,
@@ -372,7 +385,6 @@ notify.setup {
 vim.notify = notify
 
 -- Notification + Cmd Line UI Manager
-local noice = require 'noice' ---@type any
 noice.setup {
   lsp = {
     override = {
@@ -396,10 +408,10 @@ vim.keymap.set('n', '<leader>sw', function() spectre.open_visual { select_word =
 vim.keymap.set('v', '<leader>sw', function() spectre.open_visual() end, { desc = '[S]earch current [w]ord' })
 
 -- Auto bracket/paranthesis/quote wrapping
-require('nvim-surround').setup()
+surround.setup()
 
 -- Additional Icon set
-require('nvim-web-devicons').setup {
+web_devicons.setup {
   override = {
     default_icon = { icon = icn.completions.File, name = 'Default' },
     js = { icon = icn.javascript, name = 'js' },
@@ -410,7 +422,7 @@ require('nvim-web-devicons').setup {
 }
 
 -- File Explorer
-require('nvim-tree').setup {
+tree.setup {
   hijack_cursor = true,
   disable_netrw = true,
   sync_root_with_cwd = true,
@@ -476,12 +488,12 @@ require('nvim-tree').setup {
 }
 
 vim.keymap.set('n', '<C-n>', function()
-  require('nvim-tree.api').tree.toggle { focus = false }
+  tree_api.tree.toggle { focus = false }
   vim.cmd 'wincmd ='
 end, { desc = 'Toggle file explorer' })
 
 vim.keymap.set('n', '<leader>e', function()
-  require('nvim-tree.api').tree.open()
+  tree_api.tree.open()
   vim.cmd 'wincmd ='
 end, { desc = 'Focus file [e]xplorer' })
 
@@ -489,8 +501,8 @@ end, { desc = 'Focus file [e]xplorer' })
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'terminal'
 
--- Update all plugins
-vim.api.nvim_create_user_command('PackUpdateAll', function() vim.pack.update() end, { desc = 'Update all plugins' })
+local dashboard = require 'dashboard'
+local term = require 'terminal'
 
 ------------------------------------ [4/6] LSP ------------------------------------
 
@@ -510,10 +522,10 @@ for name, kind in vim.fs.dir(servers) do
   if kind == 'file' and name:sub(-4) == '.lua' then table.insert(tools, name:sub(1, -5)) end
 end
 
-mr.refresh(function()
+mason_registry.refresh(function()
   for _, tool in ipairs(tools) do
-    local tool_kebab = assert(mnames[tool])
-    local pkg = mr.get_package(tool_kebab)
+    local tool_kebab = assert(masonames[tool])
+    local pkg = mason_registry.get_package(tool_kebab)
 
     if not pkg:is_installed() then pkg:install() end
   end
@@ -560,7 +572,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-    if emptylines and emptyrows and untitled then require('dashboard').setup() end
+    if emptylines and emptyrows and untitled then dashboard.setup() end
   end,
 })
 
@@ -574,7 +586,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Highlight color strings with virtual text
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    vim.schedule(function() require('nvim-highlight-colors').turnOn() end)
+    vim.schedule(function() highlight_colors.turnOn() end)
   end,
 })
 
@@ -619,8 +631,7 @@ vim.api.nvim_create_autocmd({
   group = vim.api.nvim_create_augroup('TreeAU', {}),
   pattern = '*',
   callback = function()
-    local nvt = require('nvim-tree.api').tree
-    if nvt.is_visible() then nvt.reload() end
+    if tree_api.tree.is_visible() then tree_api.tree.reload() end
   end,
 })
 
@@ -714,9 +725,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   desc = 'Reset Snippet',
   group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
   callback = function()
-    local ls = require 'luasnip'
-
-    if ls.session.current_nodes[vim.api.nvim_get_current_buf()] and not ls.session.jump_active then ls.unlink_current() end
+    if luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] and not luasnip.session.jump_active then luasnip.unlink_current() end
   end,
 })
 
@@ -729,7 +738,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
     local data = args.data.params.value
     local progress = ''
 
-    local state = require('statusline').state
+    local stl = require 'statusline'
 
     if data.percentage then
       local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
@@ -738,7 +747,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
       progress = table.concat { icon, ' ', data.percentage, '%% ' }
     end
 
-    state.lsp_msg = data.kind == 'end' and '' or table.concat {
+    stl.state.lsp_msg = data.kind == 'end' and '' or table.concat {
       progress,
       data.message or '',
       ' ',
@@ -843,8 +852,6 @@ vim.schedule(function()
   vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
   -- Terminal
-  local term = require 'terminal'
-
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
   vim.keymap.set('n', '<leader>h', function() term.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
   vim.keymap.set('n', '<leader>v', function() term.open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
@@ -856,5 +863,5 @@ vim.schedule(function()
   vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })
 
   -- Dashboard
-  vim.keymap.set('n', '<leader>da', function() require('dashboard').setup() end, { desc = 'Toggle Dashboard' })
+  vim.keymap.set('n', '<leader>da', function() dashboard.setup() end, { desc = 'Toggle Dashboard' })
 end)
