@@ -93,16 +93,16 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
--- Lazy load local plugins
+-- Load local plugins
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'terminal'
 
 local dashboard = require 'dashboard'
 local statusline = require 'statusline'
-local term = require 'terminal'
+local terminal = require 'terminal'
 
 -- Load lua modules
-local icn = require 'icons'
+local icons = require 'icons'
 local masonames = require 'masonames'
 
 -- Load vendor plugins
@@ -225,7 +225,7 @@ fzf.setup {
   files = {
     header = 'fd --type f',
     winopts = {
-      title = table.concat { ' ', icn.search, ' files ' },
+      title = table.concat { ' ', icons.search, ' files ' },
       title_flags = false,
     },
   },
@@ -235,7 +235,7 @@ fzf.setup {
     include_current_session = true,
     cwd_only = true,
     winopts = {
-      title = table.concat { ' ', icn.recent, ' recent files ' },
+      title = table.concat { ' ', icons.recent, ' recent files ' },
       title_flags = false,
     },
   },
@@ -243,7 +243,7 @@ fzf.setup {
   autocmds = {
     header = ':autocmd',
     winopts = {
-      title = table.concat { ' ', icn.warn, ' event triggers ' },
+      title = table.concat { ' ', icons.warn, ' event triggers ' },
       title_flags = false,
     },
   },
@@ -251,7 +251,7 @@ fzf.setup {
   buffers = {
     header = ':ls',
     winopts = {
-      title = table.concat { ' ', icn.file, ' buffers ' },
+      title = table.concat { ' ', icons.file, ' buffers ' },
       title_flags = false,
     },
   },
@@ -259,7 +259,7 @@ fzf.setup {
   commands = {
     header = ':command',
     winopts = {
-      title = table.concat { ' ', icn.vim, ' commands ' },
+      title = table.concat { ' ', icons.vim, ' commands ' },
       title_flags = false,
     },
   },
@@ -267,7 +267,7 @@ fzf.setup {
   command_history = {
     header = ':history',
     winopts = {
-      title = table.concat { ' ', icn.cmd_hist, ' command history ' },
+      title = table.concat { ' ', icons.cmd_hist, ' command history ' },
       title_flags = false,
     },
   },
@@ -276,28 +276,28 @@ fzf.setup {
     files = {
       header = ':!git ls-files --exclude-standard',
       winopts = {
-        title = table.concat { ' ', icn.git, ' ', icn.file, ' files (git) ' },
+        title = table.concat { ' ', icons.git, ' ', icons.file, ' files (git) ' },
       },
     },
 
     branches = {
       header = ':!git branch --all --color && git switch',
       winopts = {
-        title = table.concat { ' ', icn.branch, ' branches ' },
+        title = table.concat { ' ', icons.branch, ' branches ' },
       },
     },
 
     status = {
       header = ':!git -c color.status=false --no-optional-locks status --porcelain=v1 -u',
       winopts = {
-        title = table.concat { ' ', icn.status, ' git status ' },
+        title = table.concat { ' ', icons.status, ' git status ' },
       },
     },
 
     commits = {
       header = ':!git log --color --pretty=format:"..."',
       winopts = {
-        title = table.concat { ' ', icn.log, '  git commits ' },
+        title = table.concat { ' ', icons.log, '  git commits ' },
       },
     },
   },
@@ -305,7 +305,7 @@ fzf.setup {
   grep = {
     header = ':!rg --vimgrep',
     winopts = {
-      title = table.concat { ' ', icn.fuzzy, ' fuzzy search' },
+      title = table.concat { ' ', icons.fuzzy, ' fuzzy search' },
       title_flags = false,
     },
   },
@@ -339,7 +339,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = functi
 vim.keymap.set('n', '<leader>gb', function() gitsigns.toggle_current_line_blame() end, { desc = 'Toggle [g]itsigns current line [b]lame' })
 
 -- Color Previews
-highlight_colors.setup { render = 'virtual', virtual_symbol = icn.virtual_block }
+highlight_colors.setup { render = 'virtual', virtual_symbol = icons.virtual_block }
 
 -- Markers for indentation
 ibl.setup { indent = { char = '┊' } }
@@ -348,9 +348,9 @@ ibl.setup { indent = { char = '┊' } }
 mason.setup {
   ui = {
     icons = {
-      package_pending = icn.download,
-      package_installed = icn.checkmark,
-      package_uninstalled = icn.dotted_circle,
+      package_pending = icons.download,
+      package_installed = icons.checkmark,
+      package_uninstalled = icons.dotted_circle,
     },
   },
 
@@ -422,11 +422,11 @@ surround.setup()
 -- Additional Icon set
 web_devicons.setup {
   override = {
-    default_icon = { icon = icn.completions.File, name = 'Default' },
-    js = { icon = icn.javascript, name = 'js' },
-    ts = { icon = icn.typescript, name = 'ts' },
-    lock = { icon = icn.lock, name = 'lock' },
-    ['robots.txt'] = { icon = icn.robot, name = 'robots' },
+    default_icon = { icon = icons.completions.File, name = 'Default' },
+    js = { icon = icons.javascript, name = 'js' },
+    ts = { icon = icons.typescript, name = 'ts' },
+    lock = { icon = icons.lock, name = 'lock' },
+    ['robots.txt'] = { icon = icons.robot, name = 'robots' },
   },
 }
 
@@ -456,7 +456,7 @@ tree.setup {
       modified_placement = 'signcolumn',
       diagnostics_placement = 'before',
       glyphs = {
-        modified = icn.modified,
+        modified = icons.modified,
         folder = {
           default = '󰉖',
           empty = '󱧹',
@@ -483,10 +483,10 @@ tree.setup {
     enable = true,
     show_on_dirs = true,
     icons = {
-      hint = icn.hint,
-      info = icn.info,
-      warning = icn.warn,
-      error = icn.error,
+      hint = icons.hint,
+      info = icons.info,
+      warning = icons.warn,
+      error = icons.error,
     },
   },
 
@@ -543,10 +543,10 @@ vim.diagnostic.config {
 
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = icn.error,
-      [vim.diagnostic.severity.WARN] = icn.warn,
-      [vim.diagnostic.severity.HINT] = icn.hint,
-      [vim.diagnostic.severity.INFO] = icn.info,
+      [vim.diagnostic.severity.ERROR] = icons.error,
+      [vim.diagnostic.severity.WARN] = icons.warn,
+      [vim.diagnostic.severity.HINT] = icons.hint,
+      [vim.diagnostic.severity.INFO] = icons.info,
     },
   },
 
@@ -556,7 +556,7 @@ vim.diagnostic.config {
 
   virtual_text = {
     current_line = true,
-    prefix = icn.virtualcircle,
+    prefix = icons.virtualcircle,
   },
 }
 
@@ -856,11 +856,11 @@ vim.schedule(function()
 
   -- Terminal
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
-  vim.keymap.set('n', '<leader>h', function() term.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
-  vim.keymap.set('n', '<leader>v', function() term.open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
-  vim.keymap.set({ 'n', 't' }, '<A-v>', function() term.toggle { pos = 'vsp', id = 'vtoggleTerm' } end, { desc = 'Toggle [v]ertical terminal' })
-  vim.keymap.set({ 'n', 't' }, '<A-h>', function() term.toggle { pos = 'sp', id = 'htoggleTerm' } end, { desc = 'Toggle [h]orizontal terminal' })
-  vim.keymap.set({ 'n', 't' }, '<A-i>', function() term.toggle { pos = 'float', id = 'floatTerm' } end, { desc = 'Toggle [f]loating terminal' })
+  vim.keymap.set('n', '<leader>h', function() terminal.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
+  vim.keymap.set('n', '<leader>v', function() terminal.open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
+  vim.keymap.set({ 'n', 't' }, '<A-v>', function() terminal.toggle { pos = 'vsp', id = 'vtoggleTerm' } end, { desc = 'Toggle [v]ertical terminal' })
+  vim.keymap.set({ 'n', 't' }, '<A-h>', function() terminal.toggle { pos = 'sp', id = 'htoggleTerm' } end, { desc = 'Toggle [h]orizontal terminal' })
+  vim.keymap.set({ 'n', 't' }, '<A-i>', function() terminal.toggle { pos = 'float', id = 'floatTerm' } end, { desc = 'Toggle [f]loating terminal' })
 
   -- LSP
   vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })

@@ -42,10 +42,12 @@ hs.console.windowBackgroundColor { hex = thm.dark }
 local ctrl_alt = { 'ctrl', 'alt' }
 local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
 
-hs.hotkey.bind(ctrl_alt_cmd, 'h', 'Reload Config!', function()
+local reload = function()
   hs.reload()
   hs.console.clearConsole()
-end)
+end
+
+hs.hotkey.bind(ctrl_alt_cmd, 'h', 'Reload Config!', reload)
 
 ------------------------------------ App Launcher hotkeys ------------------------------------
 
@@ -72,25 +74,27 @@ local app_hotkeys = {
   x = 'System Settings',
 }
 
-for key, app in pairs(app_hotkeys) do
-  hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, function()
-    local appObj = hs.application.get(app)
-    if appObj and appObj:isFrontmost() then
-      appObj:hide()
+local toggle = function(app)
+  local appObj = hs.application.get(app)
+  if appObj and appObj:isFrontmost() then
+    appObj:hide()
+  else
+    if not appObj then
+      hs.application.launchOrFocus(app)
     else
-      if not appObj then
-        hs.application.launchOrFocus(app)
-      else
-        appObj:activate()
-        appObj:unhide()
-        local win = appObj:mainWindow()
-        if win then
-          win:raise()
-          win:focus()
-        end
+      appObj:activate()
+      appObj:unhide()
+      local win = appObj:mainWindow()
+      if win then
+        win:raise()
+        win:focus()
       end
     end
-  end)
+  end
+end
+
+for key, app in pairs(app_hotkeys) do
+  hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, function() toggle(app) end)
 end
 
 ------------------------------------ Window Manager hotkeys ------------------------------------
