@@ -1,15 +1,16 @@
 -- https://www.hammerspoon.org/docs/
 
------------------------------------- Console options ------------------------------------
-
--- Load colors from $HOME/.zshenv
+--- Read hex color env vars from ~/.zshenv and build a palette table.
+--- Expected lines look like: `export RED_HEX='#ff0000'`
+--- Suffix `_HEX` is stripped and keys are lowercased (e.g., "RED_HEX" -> "red").
+--- @return table<string, string> palette  # map of color name -> '#rrggbb'
 local hex_from_zsh = function()
-  local palette = {}
+  local palette = {} ---@type table<string, string>
   local env_path = os.getenv 'HOME' .. '/.zshenv'
   local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
 
   for line in f:lines() do
-    -- Only match exports ending in _HEX
+    -- Only match exports ending in _HEX, capturing NAME_HEX and the hex value
     local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
     if color and hex then
       -- Drop the _HEX suffix and lowercase it
@@ -19,63 +20,37 @@ local hex_from_zsh = function()
   end
 
   f:close()
-
   return palette
 end
 
-local thm = hex_from_zsh()
-
+-- Set console theme
 hs.console.alpha(0.98)
-hs.console.consoleCommandColor { hex = thm.green }
+hs.console.consoleCommandColor { hex = hex_from_zsh().green }
 hs.console.consoleFont { name = 'JetBrainsMono Nerd Font', size = 15 }
-hs.console.consolePrintColor { hex = thm.brightmagenta }
-hs.console.consoleResultColor { hex = thm.red }
+hs.console.consolePrintColor { hex = hex_from_zsh().brightmagenta }
+hs.console.consoleResultColor { hex = hex_from_zsh().red }
 hs.console.darkMode(true)
-hs.console.inputBackgroundColor { hex = thm.dark }
-hs.console.outputBackgroundColor { hex = thm.dark }
+hs.console.inputBackgroundColor { hex = hex_from_zsh().dark }
+hs.console.outputBackgroundColor { hex = hex_from_zsh().dark }
 hs.console.titleVisibility 'hidden'
 hs.console.toolbar(nil)
-hs.console.windowBackgroundColor { hex = thm.dark }
+hs.console.windowBackgroundColor { hex = hex_from_zsh().dark }
 
------------------------------------- Reload hotkey ------------------------------------
-
-local ctrl_alt = { 'ctrl', 'alt' }
-local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
-
-local reload = function()
+--- Reload Hammerspoon and clear the console for a clean slate.
+--- Side effects: reloads config, clears console output.
+local hs_reload = function()
   hs.reload()
   hs.console.clearConsole()
 end
 
-hs.hotkey.bind(ctrl_alt_cmd, 'h', 'Reload Config!', reload)
-
------------------------------------- App Launcher hotkeys ------------------------------------
-
-local app_hotkeys = {
-  a = 'Anki',
-  b = 'Arc',
-  c = 'ChatGPT',
-  d = 'Discord',
-  e = 'Notion Calendar',
-  f = 'Messenger',
-  g = 'Google Chrome',
-  i = 'Image2Icon',
-  j = 'Hammerspoon',
-  k = 'Karabiner-Elements',
-  l = 'Slack',
-  m = 'Messages',
-  n = 'Notes',
-  p = 'Photos',
-  r = 'Reminders',
-  s = 'Spotify',
-  t = 'WhatsApp',
-  v = 'VLC',
-  w = 'WezTerm',
-  x = 'System Settings',
-}
-
+--- Toggle an app by name:
+---  • If the app is frontmost -> hide it
+---  • If not running -> launch/focus it
+---  • Otherwise -> activate, unhide, and focus its main window
+--- @param app string  # application display name (e.g. 'WezTerm', 'Safari')
 local toggle = function(app)
   local appObj = hs.application.get(app)
+
   if appObj and appObj:isFrontmost() then
     appObj:hide()
   else
@@ -84,6 +59,7 @@ local toggle = function(app)
     else
       appObj:activate()
       appObj:unhide()
+
       local win = appObj:mainWindow()
       if win then
         win:raise()
@@ -93,12 +69,14 @@ local toggle = function(app)
   end
 end
 
-for key, app in pairs(app_hotkeys) do
-  hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, function() toggle(app) end)
-end
-
------------------------------------- Window Manager hotkeys ------------------------------------
-
+--- Move the currently focused window.
+--- String modes:
+---  • 'next'     -> move to next screen
+---  • 'previous' -> move to previous screen
+---  • 'maximize' -> maximize window on current screen
+--- Rect mode:
+---  • Provide a unit-rect table to place the window via hs.geometry.rect
+--- @param app_pos '"next"'|'"previous"'|'"maximize"'|{ x:number, y:number, w:number, h:number }
 local moveApp = function(app_pos)
   local win = hs.window.focusedWindow()
 
@@ -113,10 +91,13 @@ local moveApp = function(app_pos)
       win:maximize()
     end
   else
+    -- Treat as a unit-rect (fractions of screen); accepts numbers in [0,1]
     win:moveToUnit(hs.geometry.rect(app_pos.x, app_pos.y, app_pos.w, app_pos.h))
   end
 end
 
+--- Almost maximize the focused window with a uniform margin around the edges.
+--- Uses a fixed pixel margin on the current screen.
 local almost_maximize = function()
   local win = hs.window.focusedWindow()
   if win then
@@ -134,28 +115,10 @@ local almost_maximize = function()
   end
 end
 
-local window_hotkeys = {
-  { mods = ctrl_alt_cmd, key = 'Left', desc = 'Left Display', cmd = function() moveApp 'next' end },
-  { mods = ctrl_alt_cmd, key = 'Right', desc = 'Right Display', cmd = function() moveApp 'previous' end },
-  { mods = ctrl_alt, key = 'Left', desc = 'Left Half', cmd = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, key = 'Right', desc = 'Right Half', cmd = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, key = 'C', desc = 'Center Half', cmd = function() moveApp { x = 0.25, y = 0.25, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'Up', desc = 'Top Half', cmd = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'Down', desc = 'Bottom Half', cmd = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'U', desc = 'Top Left', cmd = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'I', desc = 'Top Right', cmd = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'J', desc = 'Bottom Left', cmd = function() moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'K', desc = 'Bottom Right', cmd = function() moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, key = 'F', desc = 'Maximize', cmd = function() moveApp 'maximize' end },
-  { mods = ctrl_alt, key = 'A', desc = 'Almost Maximize', cmd = almost_maximize },
-}
-
-for _, m in ipairs(window_hotkeys) do
-  hs.hotkey.bind(m.mods, m.key, m.desc, m.cmd)
-end
-
------------------------------------- Workspace Manager hotkeys ------------------------------------
-
+--- Activate an app, move its main window to a given screen, focus it,
+--- and set it to an "almost maximized" frame with a margin.
+--- @param appName string     # application display name
+--- @param screen any         # target screen (e.g., hs.screen.mainScreen())
 local positionApp = function(appName, screen)
   local app = hs.application.get(appName)
   if app then
@@ -180,47 +143,78 @@ local positionApp = function(appName, screen)
   end
 end
 
-local workspaces = {
-  {
-    mods = ctrl_alt_cmd,
-    key = '1',
-    desc = 'Set Single Monitor Workspace',
-    cmd = function()
-      local screens = hs.screen.allScreens()
-
-      -- Arc @ top right
-      positionApp('Arc', screens[1])
-      moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 }
-
-      -- ChatGPT @ bottom right
-      positionApp('ChatGPT', screens[1])
-      moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 }
-
-      -- WezTerm @ left half
-      positionApp('WezTerm', screens[1])
-      moveApp { x = 0, y = 0, w = 0.5, h = 1 }
-    end,
-  },
-
-  {
-    mods = ctrl_alt_cmd,
-    key = '2',
-    desc = 'Set 2 External Monitor Workspace',
-    cmd = function()
-      local screens = hs.screen.allScreens()
-      if #screens < 3 then
-        hs.alert.show 'Requires 3 displays!'
-        return
-      end
-
-      positionApp('Arc', screens[3])
-      positionApp('ChatGPT', screens[2])
-      moveApp 'maximize'
-      positionApp('WezTerm', screens[1])
-    end,
-  },
-}
-
-for _, m in ipairs(workspaces) do
-  hs.hotkey.bind(m.mods, m.key, m.desc, m.cmd)
+--- Arrange Arc, ChatGPT, and WezTerm on a single monitor.
+--- Arc: top right, ChatGPT: bottom right, WezTerm: left half.
+--- @return nil
+local arrange_monitor = function()
+  local screens = hs.screen.allScreens()
+  if #screens < 1 then return hs.alert.show 'No displays detected!' end
+  positionApp('Arc', screens[1])
+  moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 }
+  positionApp('ChatGPT', screens[1])
+  moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 }
+  positionApp('WezTerm', screens[1])
+  moveApp { x = 0, y = 0, w = 0.5, h = 1 }
 end
+
+--- Arrange Arc, ChatGPT, and WezTerm across three monitors.
+--- Arc: right monitor, ChatGPT: middle monitor (maximized), WezTerm: left monitor.
+--- @return nil
+local arrange_3_monitors = function()
+  local screens = hs.screen.allScreens()
+  if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
+  positionApp('Arc', screens[3])
+  positionApp('ChatGPT', screens[2])
+  moveApp 'maximize'
+  positionApp('WezTerm', screens[1])
+end
+
+-- Mods
+local ctrl_alt = { 'ctrl', 'alt' }
+local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
+
+-- Reload
+hs.hotkey.bind(ctrl_alt_cmd, 'h', 'Reload Hammerspoon Config', hs_reload)
+
+-- Workspaces
+hs.hotkey.bind(ctrl_alt_cmd, '1', 'Set Single Monitor Workspace', arrange_monitor)
+hs.hotkey.bind(ctrl_alt_cmd, '2', 'Set 2 External Monitor Workspace', arrange_3_monitors)
+
+-- Monitor placement
+hs.hotkey.bind(ctrl_alt_cmd, 'Left', 'Left Display', function() moveApp 'next' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'Right', 'Right Display', function() moveApp 'previous' end)
+
+-- Application hotkeys
+hs.hotkey.bind(ctrl_alt_cmd, 'a', 'Toggle Anki', function() toggle 'Anki' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'b', 'Toggle Arc', function() toggle 'Arc' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'c', 'Toggle ChatGPT', function() toggle 'ChatGPT' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'd', 'Toggle Discord', function() toggle 'Discord' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'e', 'Toggle Notion Calendar', function() toggle 'Notion Calendar' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'f', 'Toggle Messenger', function() toggle 'Messenger' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'g', 'Toggle Google Chrome', function() toggle 'Google Chrome' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'i', 'Toggle Image2Icon', function() toggle 'Image2Icon' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'j', 'Toggle Hammerspoon', function() toggle 'Hammerspoon' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'k', 'Toggle Karabiner-Elements', function() toggle 'Karabiner-Elements' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'l', 'Toggle Slack', function() toggle 'Slack' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'm', 'Toggle Messages', function() toggle 'Messages' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'n', 'Toggle Notes', function() toggle 'Notes' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'p', 'Toggle Photos', function() toggle 'Photos' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'r', 'Toggle Reminders', function() toggle 'Reminders' end)
+hs.hotkey.bind(ctrl_alt_cmd, 's', 'Toggle Spotify', function() toggle 'Spotify' end)
+hs.hotkey.bind(ctrl_alt_cmd, 't', 'Toggle WhatsApp', function() toggle 'WhatsApp' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'v', 'Toggle VLC', function() toggle 'VLC' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'w', 'Toggle WezTerm', function() toggle 'WezTerm' end)
+hs.hotkey.bind(ctrl_alt_cmd, 'x', 'Toggle System Settings', function() toggle 'System Settings' end)
+
+-- Window sizing and placement
+hs.hotkey.bind(ctrl_alt, 'Left', 'Left Half', function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end)
+hs.hotkey.bind(ctrl_alt, 'Right', 'Right Half', function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end)
+hs.hotkey.bind(ctrl_alt, 'C', 'Center Half', function() moveApp { x = 0.25, y = 0.25, w = 0.5, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'Up', 'Top Half', function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'Down', 'Bottom Half', function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'U', 'Top Left', function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'I', 'Top Right', function() moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'J', 'Bottom Left', function() moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'K', 'Bottom Right', function() moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 } end)
+hs.hotkey.bind(ctrl_alt, 'F', 'Maximize', function() moveApp 'maximize' end)
+hs.hotkey.bind(ctrl_alt, 'A', 'Almost Maximize', almost_maximize)
