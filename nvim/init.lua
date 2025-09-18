@@ -93,10 +93,19 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
--- Load plugins
+-- Lazy load local plugins
+vim.cmd.packadd 'dashboard'
+vim.cmd.packadd 'terminal'
+
+local dashboard = require 'dashboard'
+local statusline = require 'statusline'
+local term = require 'terminal'
+
+-- Load lua modules
 local icn = require 'icons'
 local masonames = require 'masonames'
 
+-- Load vendor plugins
 local autopairs = require 'nvim-autopairs'
 local blink = require 'blink.cmp'
 local conform = require 'conform'
@@ -497,13 +506,6 @@ vim.keymap.set('n', '<leader>e', function()
   vim.cmd 'wincmd ='
 end, { desc = 'Focus file [e]xplorer' })
 
--- Lazy load local plugins
-vim.cmd.packadd 'dashboard'
-vim.cmd.packadd 'terminal'
-
-local dashboard = require 'dashboard'
-local term = require 'terminal'
-
 ------------------------------------ [4/6] LSP ------------------------------------
 
 local tools = {}
@@ -740,8 +742,6 @@ vim.api.nvim_create_autocmd('LspProgress', {
     local data = args.data.params.value
     local progress = ''
 
-    local stl = require 'statusline'
-
     if data.percentage then
       local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
       local idx = math.max(1, math.floor(data.percentage / 10))
@@ -749,12 +749,13 @@ vim.api.nvim_create_autocmd('LspProgress', {
       progress = table.concat { icon, ' ', data.percentage, '%% ' }
     end
 
-    stl.state.lsp_msg = data.kind == 'end' and '' or table.concat {
-      progress,
-      data.message or '',
-      ' ',
-      data.title or '',
-    }
+    statusline.state.lsp_msg = data.kind == 'end' and ''
+      or table.concat {
+        progress,
+        data.message or '',
+        ' ',
+        data.title or '',
+      }
 
     vim.cmd.redrawstatus()
   end,
