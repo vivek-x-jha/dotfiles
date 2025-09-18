@@ -96,6 +96,7 @@ vim.pack.add {
 -- Configure plugins
 local blink = require 'blink.cmp'
 local conform = require 'conform'
+local fzf = require 'fzf-lua'
 local gs = require 'gitsigns'
 local icn = require 'icons'
 local mason = require 'mason'
@@ -107,14 +108,14 @@ local spectre = require 'spectre'
 require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
 
 -- LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
-for _, style in ipairs { 'vscode', 'snipmate', 'lua' } do
-  require('luasnip.loaders.from_' .. style).lazy_load()
-end
+require('luasnip.loaders.from_vscode').lazy_load()
+require('luasnip.loaders.from_snipmate').lazy_load()
+require('luasnip.loaders.from_lua').lazy_load()
 
 require('luasnip').setup { history = true, updateevents = 'TextChanged,TextChangedI' }
 
 -- Autocompletion: https://cmp.saghen.dev/installation
-require('blink.cmp').setup {
+blink.setup {
   keymap = { preset = 'default' },
   appearance = { nerd_font_variant = 'mono' },
 
@@ -187,7 +188,7 @@ vim.api.nvim_create_autocmd('BufWritePre', { callback = function(args) conform.f
 vim.keymap.set('n', '<leader>fm', function() conform.format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })
 
 -- Multi Modal Picker
-require('fzf-lua').setup {
+fzf.setup {
   winopts = {
     preview = {
       winopts = {
@@ -286,17 +287,17 @@ require('fzf-lua').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>ff', '<cmd>FzfLua files<CR>', { desc = '[F]ind [F]iles' })
-vim.keymap.set('n', '<leader>fo', '<cmd>FzfLua oldfiles<CR>', { desc = '[R]ecent [B]uffers' })
-vim.keymap.set('n', '<leader>fa', '<cmd>FzfLua autocmds<CR>', { desc = '[F]ind Neovim [A]uto-commands' })
-vim.keymap.set('n', '<leader>fw', '<cmd>FzfLua live_grep<CR>', { desc = '[F]ind [W]ord' })
-vim.keymap.set('n', '<leader>fc', '<cmd>FzfLua command_history<CR>', { desc = '[F]ind [C]ommands' })
-vim.keymap.set('n', '<leader>fb', '<cmd>FzfLua buffers<CR>', { desc = '[F]ind [B]uffers' })
-vim.keymap.set('n', '<leader>fn', '<cmd>FzfLua commands<CR>', { desc = '[F]ind Neovim [C]ommands' })
-vim.keymap.set('n', '<leader>fg', '<cmd>FzfLua git_files<CR>', { desc = '[F]ind [G]it Files' })
-vim.keymap.set('n', '<leader>glg', '<cmd>FzfLua git_commits<CR>', { desc = '[G]it [L]og Graph' })
-vim.keymap.set('n', '<leader>gst', '<cmd>FzfLua git_status<CR>', { desc = '[G]it [St]atus' })
-vim.keymap.set('n', '<leader>gsw', '<cmd>FzfLua git_branches<CR>', { desc = '[G]it [S]witch' })
+vim.keymap.set('n', '<leader>ff', function() fzf.files() end, { desc = '[F]ind [F]iles' })
+vim.keymap.set('n', '<leader>fo', function() fzf.oldfiles() end, { desc = '[R]ecent [B]uffers' })
+vim.keymap.set('n', '<leader>fa', function() fzf.autocmds() end, { desc = '[F]ind Neovim [A]uto-commands' })
+vim.keymap.set('n', '<leader>fw', function() fzf.live_grep() end, { desc = '[F]ind [W]ord' })
+vim.keymap.set('n', '<leader>fc', function() fzf.command_history() end, { desc = '[F]ind [C]ommands' })
+vim.keymap.set('n', '<leader>fb', function() fzf.buffers() end, { desc = '[F]ind [B]uffers' })
+vim.keymap.set('n', '<leader>fn', function() fzf.commands() end, { desc = '[F]ind Neovim [C]ommands' })
+vim.keymap.set('n', '<leader>fg', function() fzf.git_files() end, { desc = '[F]ind [G]it Files' })
+vim.keymap.set('n', '<leader>glg', function() fzf.git_commits() end, { desc = '[G]it [L]og Graph' })
+vim.keymap.set('n', '<leader>gst', function() fzf.git_status() end, { desc = '[G]it [St]atus' })
+vim.keymap.set('n', '<leader>gsw', function() fzf.git_branches() end, { desc = '[G]it [S]witch' })
 
 -- Git buffer icons
 local signs = {
