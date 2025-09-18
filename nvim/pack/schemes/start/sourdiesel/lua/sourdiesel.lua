@@ -1,14 +1,21 @@
 local M = {}
 
--- Load colors from $HOME/.zshenv
-local hex_from_zsh = function()
+--- Read hex color env vars from ~/.zshenv and build a palette table.
+--- Expected lines look like: `export RED_HEX='#ff0000'`
+--- Suffix `_HEX` is stripped and keys are lowercased (e.g., "RED_HEX" -> "red").
+--- @return table<string, string> palette  # map of color name -> '#rrggbb'
+local hexify = function(env_path)
+  env_path = env_path or os.getenv 'HOME' .. '/.zshenv'
+
+  ---@type table<string, string>
   local palette = {}
-  local env_path = os.getenv 'HOME' .. '/.zshenv'
-  local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
+
+  local f = assert(io.open(env_path, 'r'), 'Failed to open ' .. env_path)
 
   for line in f:lines() do
-    -- Only match exports ending in _HEX
+    -- Only match exports ending in _HEX, capturing NAME_HEX and the hex value
     local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+
     if color and hex then
       -- Drop the _HEX suffix and lowercase it
       color = color:match('^(.-)_HEX$'):lower()
@@ -17,11 +24,10 @@ local hex_from_zsh = function()
   end
 
   f:close()
-
   return palette
 end
 
-local thm = hex_from_zsh()
+local thm = hexify()
 
 local highlights = {
   ---------------------------- Defaults ----------------------------------
