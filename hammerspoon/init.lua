@@ -4,14 +4,18 @@
 --- Expected lines look like: `export RED_HEX='#ff0000'`
 --- Suffix `_HEX` is stripped and keys are lowercased (e.g., "RED_HEX" -> "red").
 --- @return table<string, string> palette  # map of color name -> '#rrggbb'
-local hex_from_zsh = function()
-  local palette = {} ---@type table<string, string>
-  local env_path = os.getenv 'HOME' .. '/.zshenv'
-  local f = assert(io.open(env_path, 'r'), 'Failed to open $HOME/.zshenv')
+local hexify = function(env_path)
+  env_path = env_path or os.getenv 'HOME' .. '/.zshenv'
+
+  ---@type table<string, string>
+  local palette = {}
+
+  local f = assert(io.open(env_path, 'r'), 'Failed to open ' .. env_path)
 
   for line in f:lines() do
     -- Only match exports ending in _HEX, capturing NAME_HEX and the hex value
     local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+
     if color and hex then
       -- Drop the _HEX suffix and lowercase it
       color = color:match('^(.-)_HEX$'):lower()
@@ -23,18 +27,20 @@ local hex_from_zsh = function()
   return palette
 end
 
+local thm = hexify()
+
 -- Set console theme
 hs.console.alpha(0.98)
-hs.console.consoleCommandColor { hex = hex_from_zsh().green }
+hs.console.consoleCommandColor { hex = thm.green }
 hs.console.consoleFont { name = 'JetBrainsMono Nerd Font', size = 15 }
-hs.console.consolePrintColor { hex = hex_from_zsh().brightmagenta }
-hs.console.consoleResultColor { hex = hex_from_zsh().red }
+hs.console.consolePrintColor { hex = thm.brightmagenta }
+hs.console.consoleResultColor { hex = thm.red }
 hs.console.darkMode(true)
-hs.console.inputBackgroundColor { hex = hex_from_zsh().dark }
-hs.console.outputBackgroundColor { hex = hex_from_zsh().dark }
+hs.console.inputBackgroundColor { hex = thm.dark }
+hs.console.outputBackgroundColor { hex = thm.dark }
 hs.console.titleVisibility 'hidden'
 hs.console.toolbar(nil)
-hs.console.windowBackgroundColor { hex = hex_from_zsh().dark }
+hs.console.windowBackgroundColor { hex = thm.dark }
 
 --- Reload Hammerspoon and clear the console for a clean slate.
 --- Side effects: reloads config, clears console output.
