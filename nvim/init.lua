@@ -208,7 +208,12 @@ conform.setup {
   },
 }
 
-vim.api.nvim_create_autocmd('BufWritePre', { callback = function(args) conform.format { bufnr = args.buf } end })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('FormatOnSave', { clear = true }),
+  desc = 'Format buffer before saving using conform',
+  callback = function(args) conform.format { bufnr = args.buf } end,
+})
+
 vim.keymap.set('n', '<leader>fm', function() conform.format { lsp_fallback = true } end, { desc = '[f]or[m]at file with linter' })
 
 -- Multi Modal Picker
