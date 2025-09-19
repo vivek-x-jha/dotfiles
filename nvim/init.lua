@@ -130,29 +130,16 @@ blink.setup {
         components = {
           kind_icon = {
             text = function(ctx)
-              -- default kind icon
-              local icon = ctx.kind_icon
-              -- colorized kind for LSP items via nvim-highlight-colors (if present)
-              if ctx.item.source_name == 'LSP' then
-                local ok, nhc = pcall(require, 'nvim-highlight-colors')
-                if ok then
-                  local color_item = nhc.format(ctx.item.documentation, { kind = ctx.kind })
-                  if color_item and color_item.abbr ~= '' then icon = color_item.abbr end
-                end
-              end
+              local color_item = ctx.item.source_name == 'LSP' and highlight_colors.format(ctx.item.documentation, { kind = ctx.kind })
+              local icon = color_item and color_item.abbr ~= '' and color_item.abbr or ctx.kind_icon
+
               return icon .. ctx.icon_gap
             end,
+
             highlight = function(ctx)
-              -- default highlight group
-              local hl = 'BlinkCmpKind' .. ctx.kind
-              -- colorized highlight (if available)
-              if ctx.item.source_name == 'LSP' then
-                local ok, nhc = pcall(require, 'nvim-highlight-colors')
-                if ok then
-                  local color_item = nhc.format(ctx.item.documentation, { kind = ctx.kind })
-                  if color_item and color_item.abbr_hl_group then hl = color_item.abbr_hl_group end
-                end
-              end
+              local color_item = ctx.item.source_name == 'LSP' and highlight_colors.format(ctx.item.documentation, { kind = ctx.kind })
+              local hl = color_item and color_item.abbr_hl_group or 'BlinkCmpKind' .. ctx.kind
+
               return hl
             end,
           },
