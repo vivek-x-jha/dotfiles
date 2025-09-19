@@ -1,9 +1,14 @@
 -- https://www.hammerspoon.org/docs/
 
---- Read hex color env vars from ~/.zshenv and build a palette table.
+--- Read hex color env vars from ~/.zshenv (or a custom file) and build a palette table.
+---
 --- Expected lines look like: `export RED_HEX='#ff0000'`
---- Suffix `_HEX` is stripped and keys are lowercased (e.g., "RED_HEX" -> "red").
---- @return table<string, string> palette  # map of color name -> '#rrggbb'
+--- * The `_HEX` suffix is stripped.
+--- * Keys are lowercased (e.g., "RED_HEX" -> "red").
+--- * Values are normalized to lowercase `#rrggbb`.
+---
+--- @param env_path? string  Optional path to an env file; falls back to $HOME/.zshenv
+--- @return table<string, string> palette  Map of color name -> '#rrggbb'
 local hexify = function(env_path)
   env_path = env_path or os.getenv 'HOME' .. '/.zshenv'
 
@@ -13,13 +18,13 @@ local hexify = function(env_path)
   local f = assert(io.open(env_path, 'r'), 'Failed to open ' .. env_path)
 
   for line in f:lines() do
-    -- Only match exports ending in _HEX, capturing NAME_HEX and the hex value
-    local color, hex = line:match "^export%s+([A-Z_]+_HEX)%s*=%s*'?(#%x%x%x%x%x%x)'?"
+    -- match exports ending in _HEX, capturing VAR_HEX and the hex value
+    local color, hex = line:match '^%s*export%s+([A-Z_]+_HEX)%s*=%s*[\'"]?(#%x%x%x%x%x%x)[\'"]?'
 
     if color and hex then
-      -- Drop the _HEX suffix and lowercase it
+      -- strip the _HEX suffix and lowercase the key
       color = color:match('^(.-)_HEX$'):lower()
-      palette[color] = hex
+      palette[color] = hex:lower()
     end
   end
 
