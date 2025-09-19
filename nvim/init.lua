@@ -46,66 +46,46 @@ vim.o.undofile = true -- persistent undo
 vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
 
------------------------------------- [2/6] Highlights ------------------------------------
+------------------------------------ [2/6] Load Plugins ------------------------------------
 
--- Set colorscheme
+-- Load local plugins
 vim.cmd.colorscheme 'sourdiesel'
 
------------------------------------- [3/6] Plugins ------------------------------------
+vim.cmd.packadd 'dashboard'
+vim.cmd.packadd 'terminal'
 
--- Install plugins
+-- Load vendor plugins
 vim.pack.add {
-  -- 🔧 Editing
   { src = 'https://github.com/windwp/nvim-autopairs' },
   { src = 'https://github.com/saghen/blink.cmp' },
-  { src = 'https://github.com/L3MON4D3/LuaSnip' }, -- used by blink for lua snippets
+  { src = 'https://github.com/L3MON4D3/LuaSnip' }, -- blink snippets
   { src = 'https://github.com/kylechui/nvim-surround' },
-
-  -- 📝 Formatting / Linting
   { src = 'https://github.com/stevearc/conform.nvim' },
   { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
-
-  -- 🔍 Search / Replace
   { src = 'https://github.com/nvim-pack/nvim-spectre' },
-  { src = 'https://github.com/nvim-lua/plenary.nvim' }, -- dependency of spectre
-
-  -- 🪄 UI Enhancements
+  { src = 'https://github.com/nvim-lua/plenary.nvim' }, -- spectre dependency
   { src = 'https://github.com/folke/noice.nvim' },
-  { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- dependency of noice
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' }, -- used by noice for syntax parsing
+  { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- noice dependency
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' }, -- noice syntax parsing
   { src = 'https://github.com/rcarriga/nvim-notify' },
   { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
-
-  -- 🌲 File Explorer
   { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
-  { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- used by tree and statusline
-
-  -- 🌀 Git
+  { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- nvim-tree + statusline icons
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
-
-  -- 🔎 Fuzzy Finder
   { src = 'https://github.com/ibhagwan/fzf-lua' },
-
-  -- 🧰 LSP / Tools
   { src = 'https://github.com/williamboman/mason.nvim' },
-
-  -- 🪟 Navigation
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
--- Load local plugins
-vim.cmd.packadd 'dashboard'
-vim.cmd.packadd 'terminal'
+------------------------------------ [3/6] Configure Plugins ------------------------------------
+
+local icons = require 'icons'
+local masonames = require 'masonames'
 
 local dashboard = require 'dashboard'
 local statusline = require 'statusline'
 local terminal = require 'terminal'
 
--- Load lua modules
-local icons = require 'icons'
-local masonames = require 'masonames'
-
--- Load vendor plugins
 local autopairs = require 'nvim-autopairs'
 local blink = require 'blink.cmp'
 local conform = require 'conform'
