@@ -669,22 +669,29 @@ vim.api.nvim_create_autocmd({ 'BufAdd', 'BufEnter' }, {
 })
 
 -- Clean up buffer list on deletion
-vim.api.nvim_create_autocmd('BufDelete', {
+vim.api.nvim_create_autocmd({ 'BufDelete', 'BufWipeout' }, {
   desc = 'Remove deleted buffer from buffer list',
-  group = vim.api.nvim_create_augroup('BufferAU', {}),
+  group = vim.api.nvim_create_augroup('BufferAU', { clear = true }),
   callback = function(args)
-    for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-      local bufs = vim.t[tab].bufs
-      if bufs then
-        for i, bufnr in ipairs(bufs) do
-          if bufnr == args.buf then
-            table.remove(bufs, i)
-            vim.t[tab].bufs = bufs
-            break
+    -- Run after Neovim finishes closing windows/tabs for this deletion.
+    vim.schedule(function()
+      for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+        if vim.api.nvim_tabpage_is_valid(tab) then
+          local vars = vim.t[tab]
+          local bufs = vars and vars.bufs
+
+          if type(bufs) == 'table' then
+            -- remove in reverse to be extra safe
+            for i = #bufs, 1, -1 do
+              if bufs[i] == args.buf then
+                table.remove(bufs, i)
+                break
+              end
+            end
           end
         end
       end
-    end
+    end)
   end,
 })
 
