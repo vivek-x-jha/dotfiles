@@ -1,4 +1,4 @@
-local icn = require 'icons'
+local icons = require 'icons'
 local M = {}
 local utl = {}
 
@@ -24,18 +24,18 @@ local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   -- { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
-  { txt = icn.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = fzf 'files' },
-  { txt = icn.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = fzf 'oldfiles' },
-  { txt = icn.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fa', cmd = fzf 'autocmds' },
-  { txt = icn.gear .. '  Settings', hl = 'DashSettings', keys = 's', cmd = table.concat { 'edit ', vim.fn.stdpath 'config', '/init.lua' } },
-  { txt = icn.fuzzy .. '  Search Word', hl = 'DashWord', keys = 'fw', cmd = fzf 'live_grep' },
-  { txt = icn.cmd_hist .. '  Command History', hl = 'DashCmdHist', keys = 'fc', cmd = fzf 'command_history' },
-  { txt = icn.file .. '  Buffers', hl = 'DashBuffers', keys = 'fb', cmd = fzf 'buffers' },
-  { txt = icn.vim .. '  Neovim Commands', hl = 'DashNvimCmds', keys = 'fn', cmd = fzf 'commands' },
-  { txt = icn.git .. '  Git Files', hl = 'DashGitFiles', keys = 'fg', cmd = fzf 'git_files' },
-  { txt = icn.log .. '  Git Log', hl = 'DashGitLog', keys = 'glg', cmd = fzf 'git_commits' },
-  { txt = icn.status .. '  Git Status', hl = 'DashGitStatus', keys = 'gst', cmd = fzf 'git_status' },
-  { txt = icn.branch .. '  Git Switch', hl = 'DashGitSwitch', keys = 'gsw', cmd = fzf 'git_branches' },
+  { txt = icons.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = fzf 'files' },
+  { txt = icons.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = fzf 'oldfiles' },
+  { txt = icons.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fa', cmd = fzf 'autocmds' },
+  { txt = icons.gear .. '  Settings', hl = 'DashSettings', keys = 's', cmd = table.concat { 'edit ', vim.fn.stdpath 'config', '/init.lua' } },
+  { txt = icons.fuzzy .. '  Search Word', hl = 'DashWord', keys = 'fw', cmd = fzf 'live_grep' },
+  { txt = icons.cmd_hist .. '  Command History', hl = 'DashCmdHist', keys = 'fc', cmd = fzf 'command_history' },
+  { txt = icons.file .. '  Buffers', hl = 'DashBuffers', keys = 'fb', cmd = fzf 'buffers' },
+  { txt = icons.vim .. '  Neovim Commands', hl = 'DashNvimCmds', keys = 'fn', cmd = fzf 'commands' },
+  { txt = icons.git .. '  Git Files', hl = 'DashGitFiles', keys = 'fg', cmd = fzf 'git_files' },
+  { txt = icons.log .. '  Git Log', hl = 'DashGitLog', keys = 'glg', cmd = fzf 'git_commits' },
+  { txt = icons.status .. '  Git Status', hl = 'DashGitStatus', keys = 'gst', cmd = fzf 'git_status' },
+  { txt = icons.branch .. '  Git Switch', hl = 'DashGitSwitch', keys = 'gsw', cmd = fzf 'git_branches' },
 }
 
 utl.remap = function(keys, action, buf)
