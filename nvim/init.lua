@@ -84,8 +84,8 @@ vim.pack.add {
 
 local icons = require 'icons'
 
--- Autopair quotes, paranthesis, brackets, braces
-require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
+-- Color Previews
+require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icons.virtual_block }
 
 -- LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
 require('luasnip.loaders.from_vscode').lazy_load()
@@ -93,9 +93,6 @@ require('luasnip.loaders.from_snipmate').lazy_load()
 require('luasnip.loaders.from_lua').lazy_load()
 
 require('luasnip').setup { history = true, updateevents = 'TextChanged,TextChangedI' }
-
--- Color Previews
-require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icons.virtual_block }
 
 -- Autocompletion: https://cmp.saghen.dev/installation
 require('blink.cmp').setup {
@@ -142,6 +139,9 @@ require('blink.cmp').setup {
     },
   },
 }
+
+-- Autopair quotes, paranthesis, brackets, braces
+require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
 
 -- Formatters
 require('conform').setup {
