@@ -465,22 +465,20 @@ end, { desc = 'Focus file [e]xplorer' })
 
 ------------------------------------ [4/6] LSP ------------------------------------
 
-local tools = {}
-local linters = { 'shellcheck' }
-local formatters = require('conform').list_all_formatters()
-local servers = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
+-- Ensure all linters (and any other language tools) installed
+local tools = { 'shellcheck' }
 
--- Ensure linters + formatters + servers installed
-vim.list_extend(tools, linters)
-
-for _, v in ipairs(formatters) do
+-- Ensure all formatters installed: conform "formatters_by_ft"
+for _, v in ipairs(require('conform').list_all_formatters()) do
   vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
 end
 
-for name, kind in vim.fs.dir(servers) do
+-- Ensure all servers installed: "$XDG_CONFIG_HOME/nvim/lsp/"
+for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
   if kind == 'file' and name:sub(-4) == '.lua' then table.insert(tools, name:sub(1, -5)) end
 end
 
+-- Install all tools after mapping with Mason
 require('mason-registry').refresh(function()
   for _, tool in ipairs(tools) do
     local tool_kebab = assert(require('masonames')[tool])
