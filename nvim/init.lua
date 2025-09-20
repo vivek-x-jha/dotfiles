@@ -48,9 +48,10 @@ vim.o.winborder = 'single'
 
 ------------------------------------ [2/6] Load Plugins ------------------------------------
 
--- Load local plugins
+-- Set highlights
 vim.cmd.colorscheme 'sourdiesel'
 
+-- Initialize local plugins
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'icons'
 vim.cmd.packadd 'masonames'
