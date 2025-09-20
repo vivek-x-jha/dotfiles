@@ -74,6 +74,40 @@ local toggle = function(app)
   end
 end
 
+-- Mods
+local ctrl_alt = { 'ctrl', 'alt' }
+local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
+
+-- Application hotkeys
+local applications = {
+  a = 'Anki',
+  b = 'Arc',
+  c = 'ChatGPT',
+  d = 'Discord',
+  e = 'Notion Calendar',
+  f = 'Messenger',
+  g = 'Google Chrome',
+  h = 'Reload Hammerspoon',
+  i = 'Image2Icon',
+  j = 'Hammerspoon',
+  k = 'Karabiner-Elements',
+  l = 'Slack',
+  m = 'Messages',
+  n = 'Notes',
+  p = 'Photos',
+  r = 'Reminders',
+  s = 'Spotify',
+  t = 'WhatsApp',
+  v = 'VLC',
+  w = 'WezTerm',
+  x = 'System Settings',
+}
+
+for key, app in pairs(applications) do
+  local cmd = key == 'h' and hs.reload or function() toggle(app) end
+  hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, cmd)
+end
+
 --- Move the currently focused window - accepts following arguments:
 ---  * 'next'     -> move to next screen
 ---  * 'previous' -> move to previous screen
@@ -178,35 +212,6 @@ local arrange_3_monitors = function()
   positionApp('WezTerm', screens[1])
 end
 
--- Mods
-local ctrl_alt = { 'ctrl', 'alt' }
-local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
-
--- Application hotkeys
-local applications = {
-  a = 'Anki',
-  b = 'Arc',
-  c = 'ChatGPT',
-  d = 'Discord',
-  e = 'Notion Calendar',
-  f = 'Messenger',
-  g = 'Google Chrome',
-  h = 'Reload Hammerspoon',
-  i = 'Image2Icon',
-  j = 'Hammerspoon',
-  k = 'Karabiner-Elements',
-  l = 'Slack',
-  m = 'Messages',
-  n = 'Notes',
-  p = 'Photos',
-  r = 'Reminders',
-  s = 'Spotify',
-  t = 'WhatsApp',
-  v = 'VLC',
-  w = 'WezTerm',
-  x = 'System Settings',
-}
-
 -- All other hotkeys
 local remaps = {
   -- Workspaces
@@ -230,11 +235,6 @@ local remaps = {
   { mods = ctrl_alt, keys = 'F', desc = 'Maximize', cmd = function() moveApp 'maximize' end },
   { mods = ctrl_alt, keys = 'A', desc = 'Almost Maximize', cmd = almost_maximize },
 }
-
-for key, app in pairs(applications) do
-  local cmd = key == 'h' and hs.reload or function() toggle(app) end
-  hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, cmd)
-end
 
 for _, m in ipairs(remaps) do
   hs.hotkey.bind(m.mods, m.keys, m.desc, m.cmd)
