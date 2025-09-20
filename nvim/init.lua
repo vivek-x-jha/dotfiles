@@ -333,23 +333,22 @@ require('nvim-treesitter.configs').setup {
     'vimdoc',
     'yaml',
   },
+
   highlight = {
     enable = true,
     use_languagetree = true,
   },
+
   indent = { enable = true },
 }
 
 -- UI for pop-ups
-local notify = require 'notify' ---@type any  -- quiets “undefined field setup”
+---@class Notify
+---@field setup fun(opts: {background_colour?: string, fps?: integer, stages?: string})
 
-notify.setup {
-  background_colour = '#000000',
-  fps = 60,
-  stages = 'fade',
-}
-
-vim.notify = notify
+---@type Notify
+vim.notify = require 'notify'
+vim.notify.setup { background_colour = '#000000', fps = 60, stages = 'fade' }
 
 -- Notification + Cmd Line UI Manager
 require('noice').setup {
