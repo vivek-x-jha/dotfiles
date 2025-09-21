@@ -435,15 +435,8 @@ require('nvim-tree').setup {
   help = { sort_by = 'desc' },
 }
 
-vim.keymap.set('n', '<C-n>', function()
-  require('nvim-tree.api').tree.toggle { focus = false }
-  vim.cmd 'wincmd ='
-end, { desc = 'Toggle file explorer' })
-
-vim.keymap.set('n', '<leader>e', function()
-  require('nvim-tree.api').tree.open()
-  vim.cmd 'wincmd ='
-end, { desc = 'Focus file [e]xplorer' })
+vim.keymap.set('n', '<C-n>', function() require('nvim-tree.api').tree.toggle { focus = false } end, { desc = 'Toggle file explorer' })
+vim.keymap.set('n', '<leader>e', function() require('nvim-tree.api').tree.open() end, { desc = 'Focus file [e]xplorer' })
 
 ------------------------------------ [4/6] LSP ------------------------------------
 
