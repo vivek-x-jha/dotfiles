@@ -492,13 +492,17 @@ vim.diagnostic.config {
 }
 
 -- Enable language servers
-local servers = {}
+local lsp_servers = {}
+local lsp_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
 
-for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
-  if kind == 'file' and name:sub(-4) == '.lua' then table.insert(servers, name:sub(1, -5)) end
+for name, kind in vim.fs.dir(lsp_path) do
+  local is_lua_file = kind == 'file' and name:sub(-4) == '.lua'
+  local server = name:sub(1, -5)
+
+  if is_lua_file then table.insert(lsp_servers, server) end
 end
 
-vim.lsp.enable(servers)
+vim.lsp.enable(lsp_servers)
 
 ------------------------------------ [5/6] Auto-Commands (Event Triggers) ------------------------------------
 
