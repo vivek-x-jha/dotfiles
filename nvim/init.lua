@@ -54,7 +54,6 @@ vim.cmd.colorscheme 'sourdiesel'
 -- Initialize local plugins
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'icons'
-vim.cmd.packadd 'masonames'
 vim.cmd.packadd 'terminal'
 
 -- Load vendor plugins
@@ -77,6 +76,7 @@ vim.pack.add {
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
   { src = 'https://github.com/ibhagwan/fzf-lua' },
   { src = 'https://github.com/williamboman/mason.nvim' },
+  { src = 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim' },
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
@@ -300,19 +300,6 @@ vim.keymap.set('n', '<leader>gb', function() require('gitsigns').toggle_current_
 -- Markers for indentation
 require('ibl').setup { indent = { char = '┊' } }
 
--- LSP tool manager
-require('mason').setup {
-  ui = {
-    icons = {
-      package_pending = icons.download,
-      package_installed = icons.checkmark,
-      package_uninstalled = icons.dotted_circle,
-    },
-  },
-
-  max_concurrent_installers = 10,
-}
-
 -- Syntax Highlighting
 require('nvim-treesitter.configs').setup {
   -- LuaLS type (TSConfig) expects these keys; set them explicitly:
@@ -320,6 +307,8 @@ require('nvim-treesitter.configs').setup {
   sync_install = false,
   ignore_install = {},
   auto_install = false,
+  highlight = { enable = true, use_languagetree = true },
+  indent = { enable = true },
 
   ensure_installed = {
     'bash',
@@ -333,13 +322,6 @@ require('nvim-treesitter.configs').setup {
     'vimdoc',
     'yaml',
   },
-
-  highlight = {
-    enable = true,
-    use_languagetree = true,
-  },
-
-  indent = { enable = true },
 }
 
 -- UI for pop-ups
@@ -465,36 +447,46 @@ end, { desc = 'Focus file [e]xplorer' })
 
 ------------------------------------ [4/6] LSP ------------------------------------
 
--- Ensure all linters (and any other language tools) installed
-local tools = { 'shellcheck' }
+-- LSP tool manager
+require('mason').setup {
+  max_concurrent_installers = 10,
+  ui = {
+    icons = {
+      package_pending = icons.download,
+      package_installed = icons.checkmark,
+      package_uninstalled = icons.dotted_circle,
+    },
+  },
+}
 
--- Ensure all formatters installed: conform "formatters_by_ft"
-for _, v in ipairs(require('conform').list_all_formatters()) do
-  vim.list_extend(tools, vim.split(v.name:gsub(',', ''), '%s+'))
-end
+-- LSP tool installer
+require('mason-tool-installer').setup {
+  run_on_start = true,
+  auto_update = true,
 
--- Ensure all servers installed: "$XDG_CONFIG_HOME/nvim/lsp/"
-for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
-  if kind == 'file' and name:sub(-4) == '.lua' then table.insert(tools, name:sub(1, -5)) end
-end
+  ensure_installed = {
+    -- Servers
+    'basedpyright',
+    'bash-language-server',
+    'harper-ls',
+    'lua-language-server',
 
--- Install all tools after mapping with Mason
-require('mason-registry').refresh(function()
-  for _, tool in ipairs(tools) do
-    local tool_kebab = assert(require('masonames')[tool])
-    local pkg = require('mason-registry').get_package(tool_kebab)
+    -- Formatters
+    'stylua',
+    'ruff',
+    'shfmt',
 
-    if not pkg:is_installed() then pkg:install() end
-  end
-end)
-
--- Configure autocompletions
-vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities() })
+    -- Linters
+    'shellcheck',
+  },
+}
 
 -- Configure diagnostics
 vim.diagnostic.config {
-  float = { border = 'single' },
   severity_sort = true,
+  float = { border = 'single' },
+  virtual_lines = { current_line = true },
+  virtual_text = { current_line = true, prefix = icons.virtualcircle },
 
   signs = {
     text = {
@@ -504,19 +496,16 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.INFO] = icons.info,
     },
   },
-
-  virtual_lines = {
-    current_line = true,
-  },
-
-  virtual_text = {
-    current_line = true,
-    prefix = icons.virtualcircle,
-  },
 }
 
--- Enable LSP
-vim.lsp.enable(tools)
+-- Enable language servers
+local servers = {}
+
+for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
+  if kind == 'file' and name:sub(-4) == '.lua' then table.insert(servers, name:sub(1, -5)) end
+end
+
+vim.lsp.enable(servers)
 
 ------------------------------------ [5/6] Auto-Commands (Event Triggers) ------------------------------------
 
