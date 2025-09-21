@@ -8,7 +8,7 @@ local M = {}
 --- * Values are normalized to lowercase `#rrggbb`.
 ---
 --- @param env_path? string  Optional path to an env file; falls back to $HOME/.zshenv
---- @return table<string, string> palette  Map of color name -> '#rrggbb'
+--- @return table<string, string>
 local hexify = function(env_path)
   env_path = env_path or os.getenv 'HOME' .. '/.zshenv'
 
