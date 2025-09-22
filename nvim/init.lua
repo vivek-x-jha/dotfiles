@@ -256,26 +256,8 @@ require('fzf-lua').setup {
   },
 }
 
-local fzf_mappings = {
-  { key = 'ff', cmd = 'files', desc = '[F]ind [F]iles' },
-  { key = 'fo', cmd = 'oldfiles', desc = '[R]ecent [B]uffers' },
-  { key = 'fa', cmd = 'autocmds', desc = '[F]ind Neovim [A]uto-commands' },
-  { key = 'fw', cmd = 'live_grep', desc = '[F]ind [W]ord' },
-  { key = 'fc', cmd = 'command_history', desc = '[F]ind [C]ommands' },
-  { key = 'fb', cmd = 'buffers', desc = '[F]ind [B]uffers' },
-  { key = 'fn', cmd = 'commands', desc = '[F]ind Neovim [C]ommands' },
-  { key = 'fg', cmd = 'git_files', desc = '[F]ind [G]it Files' },
-  { key = 'glg', cmd = 'git_commits', desc = '[G]it [L]og Graph' },
-  { key = 'gst', cmd = 'git_status', desc = '[G]it [St]atus' },
-  { key = 'gsw', cmd = 'git_branches', desc = '[G]it [S]witch' },
-}
-
-for _, m in ipairs(fzf_mappings) do
-  vim.keymap.set('n', '<leader>' .. m.key, function() require('fzf-lua')[m.cmd]() end, { desc = m.desc })
-end
-
--- Git buffer icons
-local signs = {
+-- Git sign column icons
+local gs_icons = {
   add = { text = '+' },
   change = { text = '~' },
   delete = { text = 'x' },
@@ -284,10 +266,7 @@ local signs = {
   untracked = { text = '?' },
 }
 
-require('gitsigns').setup { signs = signs, signs_staged = signs }
-
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = function(args) require('gitsigns').attach(args.buf) end })
-vim.keymap.set('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = 'Toggle [g]itsigns current line [b]lame' })
+require('gitsigns').setup { signs = gs_icons, signs_staged = gs_icons }
 
 -- Markers for indentation
 require('ibl').setup { indent = { char = '┊' } }
@@ -342,10 +321,6 @@ require('noice').setup {
 
 -- Search & Replace
 require('spectre').setup { result_padding = '', default = { replace = { cmd = 'sed' } } }
-
-vim.keymap.set('n', '<leader>S', function() require('spectre').toggle() end, { desc = 'Toggle [S]pectre' })
-vim.keymap.set('n', '<leader>sw', function() require('spectre').open_visual { select_word = true } end, { desc = '[S]earch current [w]ord' })
-vim.keymap.set('v', '<leader>sw', function() require('spectre').open_visual() end, { desc = '[S]earch current [w]ord' })
 
 -- Auto bracket/paranthesis/quote wrapping
 require('nvim-surround').setup()
@@ -427,9 +402,6 @@ require('nvim-tree').setup {
   help = { sort_by = 'desc' },
 }
 
-vim.keymap.set('n', '<C-n>', function() require('nvim-tree.api').tree.toggle { focus = false } end, { desc = 'Toggle file explorer' })
-vim.keymap.set('n', '<leader>e', function() require('nvim-tree.api').tree.open() end, { desc = 'Focus file [e]xplorer' })
-
 ------------------------------------ [4/6] LSP ------------------------------------
 
 -- LSP tool manager
@@ -498,6 +470,54 @@ vim.lsp.enable(lsp_servers)
 
 ------------------------------------ [5/6] Auto-Commands (Event Triggers) ------------------------------------
 
+------------------------------------ Vendor Auto-commands ------------------------------------
+
+-- Enable git icons in editor gutter
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = function(args) require('gitsigns').attach(args.buf) end })
+
+-- Hide line numbers in Spectre
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Hide line numbers for Spectre',
+  group = vim.api.nvim_create_augroup('SpectreAU', {}),
+  pattern = 'spectre_panel',
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
+})
+
+-- Always refresh snippet list with respect to buffer
+vim.api.nvim_create_autocmd('InsertLeave', {
+  desc = 'Reset Snippet',
+  group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
+  callback = function()
+    local ls = require 'luasnip'
+
+    if ls.session.current_nodes[vim.api.nvim_get_current_buf()] and not ls.session.jump_active then ls.unlink_current() end
+  end,
+})
+
+-- Auto-refresh NvimTree on relevant events
+vim.api.nvim_create_autocmd({
+  'BufWritePost',
+  'BufDelete',
+  'BufReadPost',
+  'VimResized',
+  'FocusGained',
+  'ShellCmdPost',
+  'FileChangedShellPost',
+}, {
+  desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
+  group = vim.api.nvim_create_augroup('TreeAU', {}),
+  pattern = '*',
+  callback = function()
+    local nvt = require('nvim-tree.api').tree
+    if nvt.is_visible() then nvt.reload() end
+  end,
+})
+
+------------------------------------ Local Auto-commands ------------------------------------
+
 -- Display Dashboard on blank startup
 vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'Display Dashboard on blank startup',
@@ -508,17 +528,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
     if emptylines and emptyrows and untitled then require('dashboard').setup() end
-  end,
-})
-
--- Hide line numbers in Spectre
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Hide line numbers for Spectre',
-  group = vim.api.nvim_create_augroup('SpectreAU', {}),
-  pattern = 'spectre_panel',
-  callback = function()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
   end,
 })
 
@@ -551,25 +560,6 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
   group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
   command = 'mkview',
-})
-
--- Auto-refresh NvimTree on relevant events
-vim.api.nvim_create_autocmd({
-  'BufWritePost',
-  'BufDelete',
-  'BufReadPost',
-  'VimResized',
-  'FocusGained',
-  'ShellCmdPost',
-  'FileChangedShellPost',
-}, {
-  desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
-  group = vim.api.nvim_create_augroup('TreeAU', {}),
-  pattern = '*',
-  callback = function()
-    local nvt = require('nvim-tree.api').tree
-    if nvt.is_visible() then nvt.reload() end
-  end,
 })
 
 -- Trigger user FilePost event
@@ -656,17 +646,6 @@ vim.api.nvim_create_autocmd({ 'BufDelete', 'BufWipeout' }, {
   end,
 })
 
--- Always refresh snippet list with respect to buffer
-vim.api.nvim_create_autocmd('InsertLeave', {
-  desc = 'Reset Snippet',
-  group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
-  callback = function()
-    local ls = require 'luasnip'
-
-    if ls.session.current_nodes[vim.api.nvim_get_current_buf()] and not ls.session.jump_active then ls.unlink_current() end
-  end,
-})
-
 -- LSP progress indicator
 vim.api.nvim_create_autocmd('LspProgress', {
   desc = 'Show LSP Progress bar',
@@ -741,6 +720,42 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ------------------------------------ [6/6] Key Mappings (Deferred) ------------------------------------
 
 vim.schedule(function()
+  ------------------------------------ Vendor Hotkeys ------------------------------------
+
+  -- Open picker
+  local fzf_mappings = {
+    { key = 'ff', cmd = 'files', desc = '[F]ind [F]iles' },
+    { key = 'fo', cmd = 'oldfiles', desc = '[R]ecent [B]uffers' },
+    { key = 'fa', cmd = 'autocmds', desc = '[F]ind Neovim [A]uto-commands' },
+    { key = 'fw', cmd = 'live_grep', desc = '[F]ind [W]ord' },
+    { key = 'fc', cmd = 'command_history', desc = '[F]ind [C]ommands' },
+    { key = 'fb', cmd = 'buffers', desc = '[F]ind [B]uffers' },
+    { key = 'fn', cmd = 'commands', desc = '[F]ind Neovim [C]ommands' },
+    { key = 'fg', cmd = 'git_files', desc = '[F]ind [G]it Files' },
+    { key = 'glg', cmd = 'git_commits', desc = '[G]it [L]og Graph' },
+    { key = 'gst', cmd = 'git_status', desc = '[G]it [St]atus' },
+    { key = 'gsw', cmd = 'git_branches', desc = '[G]it [S]witch' },
+  }
+
+  for _, m in ipairs(fzf_mappings) do
+    vim.keymap.set('n', '<leader>' .. m.key, function() require('fzf-lua')[m.cmd]() end, { desc = m.desc })
+  end
+
+  -- Toggle git blame
+  vim.keymap.set('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
+
+  -- Toggle search and replace
+  vim.keymap.set('n', '<leader>S', function() require('spectre').toggle() end, { desc = 'Toggle [S]pectre' })
+  vim.keymap.set('n', '<leader>sw', function() require('spectre').open_visual { select_word = true } end, { desc = '[S]earch current [w]ord' })
+  vim.keymap.set('v', '<leader>sw', function() require('spectre').open_visual() end, { desc = '[S]earch current [w]ord' })
+
+  -- Toggle File Explorer
+
+  vim.keymap.set('n', '<C-n>', function() require('nvim-tree.api').tree.toggle { focus = false } end, { desc = 'Toggle file explorer' })
+  vim.keymap.set('n', '<leader>e', function() require('nvim-tree.api').tree.open() end, { desc = 'Focus file [e]xplorer' })
+
+  ------------------------------------ Local Hotkeys ------------------------------------
+
   vim.keymap.set('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
 
   -- Toggle line numbers
