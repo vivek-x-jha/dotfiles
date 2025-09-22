@@ -717,23 +717,17 @@ vim.schedule(function()
   ------------------------------------ Vendor Hotkeys ------------------------------------
 
   -- Open picker
-  local fzf_mappings = {
-    { key = 'ff', cmd = 'files', desc = '[F]ind [F]iles' },
-    { key = 'fo', cmd = 'oldfiles', desc = '[R]ecent [B]uffers' },
-    { key = 'fa', cmd = 'autocmds', desc = '[F]ind Neovim [A]uto-commands' },
-    { key = 'fw', cmd = 'live_grep', desc = '[F]ind [W]ord' },
-    { key = 'fc', cmd = 'command_history', desc = '[F]ind [C]ommands' },
-    { key = 'fb', cmd = 'buffers', desc = '[F]ind [B]uffers' },
-    { key = 'fn', cmd = 'commands', desc = '[F]ind Neovim [C]ommands' },
-    { key = 'fg', cmd = 'git_files', desc = '[F]ind [G]it Files' },
-    { key = 'glg', cmd = 'git_commits', desc = '[G]it [L]og Graph' },
-    { key = 'gst', cmd = 'git_status', desc = '[G]it [St]atus' },
-    { key = 'gsw', cmd = 'git_branches', desc = '[G]it [S]witch' },
-  }
-
-  for _, m in ipairs(fzf_mappings) do
-    vim.keymap.set('n', '<leader>' .. m.key, function() require('fzf-lua')[m.cmd]() end, { desc = m.desc })
-  end
+  vim.keymap.set('n', '<leader>ff', function() require('fzf-lua').files() end, { desc = '[F]ind [F]iles' })
+  vim.keymap.set('n', '<leader>fo', function() require('fzf-lua').oldfiles() end, { desc = '[R]ecent [B]uffers' })
+  vim.keymap.set('n', '<leader>fa', function() require('fzf-lua').autocmds() end, { desc = '[F]ind Neovim [A]uto-commands' })
+  vim.keymap.set('n', '<leader>fw', function() require('fzf-lua').live_grep() end, { desc = '[F]ind [W]ord' })
+  vim.keymap.set('n', '<leader>fc', function() require('fzf-lua').command_history() end, { desc = '[F]ind [C]ommands' })
+  vim.keymap.set('n', '<leader>fb', function() require('fzf-lua').buffers() end, { desc = '[F]ind [B]uffers' })
+  vim.keymap.set('n', '<leader>fn', function() require('fzf-lua').commands() end, { desc = '[F]ind Neovim [C]ommands' })
+  vim.keymap.set('n', '<leader>fg', function() require('fzf-lua').git_files() end, { desc = '[F]ind [G]it Files' })
+  vim.keymap.set('n', '<leader>glg', function() require('fzf-lua').git_commits() end, { desc = '[G]it [L]og Graph' })
+  vim.keymap.set('n', '<leader>gst', function() require('fzf-lua').git_status() end, { desc = '[G]it [St]atus' })
+  vim.keymap.set('n', '<leader>gsw', function() require('fzf-lua').git_branches() end, { desc = '[G]it [S]witch' })
 
   -- Toggle git blame
   vim.keymap.set('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
