@@ -29,6 +29,7 @@ dir_icons=(
   "/Applications/Spotify.app" "$HOME/Pictures/icons/spotify.png"
   "/Applications/Visual Studio Code.app" "$HOME/Pictures/icons/vscode.png"
   "/Applications/WezTerm.app" "$HOME/Pictures/icons/wezterm.png"
+  "/Applications/WeChat.app" "$HOME/Pictures/icons/wechat.png"
   "/Applications/WhatsApp.app" "$HOME/Pictures/icons/whatsapp.png"
   "$HOME/Developer" "$HOME/Pictures/icons/developer.png"
   "$HOME/Downloads" "$HOME/Pictures/icons/download.png"

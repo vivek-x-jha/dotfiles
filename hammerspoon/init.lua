@@ -101,6 +101,7 @@ local applications = {
   v = 'VLC',
   w = 'WezTerm',
   x = 'System Settings',
+  z = 'WeChat',
 }
 
 for key, app in pairs(applications) do
