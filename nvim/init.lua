@@ -156,12 +156,6 @@ require('conform').setup {
   },
 }
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('FormatOnSave', { clear = true }),
-  desc = 'Format buffer before saving using conform',
-  callback = function(args) require('conform').format { bufnr = args.buf } end,
-})
-
 -- Multi Modal Picker
 require('fzf-lua').setup {
   winopts = {
