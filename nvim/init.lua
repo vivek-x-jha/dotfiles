@@ -366,7 +366,7 @@ require('nvim-tree').setup {
       glyphs = {
         modified = icons.modified,
         folder = {
-          default = '󰉖',
+          default = icons.folder,
           empty = '󱧹',
           empty_open = '󰷏',
           open = '󰷏',
@@ -400,7 +400,7 @@ require('nvim-tree').setup {
 
   modified = { enable = true },
   filters = { git_ignored = false },
-  live_filter = { prefix = ' ' },
+  live_filter = { prefix = icons.search .. ' ' },
   help = { sort_by = 'desc' },
 }
 
