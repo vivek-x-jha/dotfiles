@@ -1,4 +1,4 @@
------------------------------------- [1/6] Options ------------------------------------
+------------------------------------ [1/5] Options ------------------------------------
 
 -- Set leader key(s)
 vim.g.mapleader = ' '
@@ -46,16 +46,7 @@ vim.o.undofile = true -- persistent undo
 vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
 
------------------------------------- [2/6] Load Plugins ------------------------------------
-
--- Set highlights
-vim.cmd.colorscheme 'sourdiesel'
-
--- Initialize local plugins
-vim.cmd.packadd 'dashboard'
-vim.cmd.packadd 'icons'
-vim.cmd.packadd 'masonames'
-vim.cmd.packadd 'terminal'
+------------------------------------ [2/5] Plugins ------------------------------------
 
 -- Load vendor plugins
 vim.pack.add {
@@ -81,11 +72,18 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
------------------------------------- [3/6] Configure Plugins ------------------------------------
+-- Load local plugins
+vim.cmd.colorscheme 'sourdiesel'
+
+vim.cmd.packadd 'dashboard'
+vim.cmd.packadd 'icons'
+vim.cmd.packadd 'masonames'
+vim.cmd.packadd 'terminal'
 
 local dashboard = require 'dashboard'
 local icons = require 'icons'
 local masonames = require 'masonames'
+local statusline = require 'statusline'
 local terminal = require 'terminal'
 
 -- Color Previews
@@ -419,7 +417,7 @@ require('mason').setup {
   },
 }
 
------------------------------------- [4/6] LSP ------------------------------------
+------------------------------------ [3/5] LSP ------------------------------------
 
 local servers, tools = {}, {}
 
@@ -464,7 +462,7 @@ vim.diagnostic.config {
 -- Initialize servers
 vim.lsp.enable(servers)
 
------------------------------------- [5/6] Auto-Commands (Event Triggers) ------------------------------------
+------------------------------------ [4/5] Auto-Commands (Event Triggers) ------------------------------------
 
 ------------------------------------ Vendor Auto-commands ------------------------------------
 
@@ -658,7 +656,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
       progress = table.concat { icon, ' ', data.percentage, '%% ' }
     end
 
-    require('statusline').state.lsp_msg = data.kind == 'end' and ''
+    statusline.state.lsp_msg = data.kind == 'end' and ''
       or table.concat {
         progress,
         data.message or '',
@@ -713,7 +711,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
------------------------------------- [6/6] Key Mappings (Deferred) ------------------------------------
+------------------------------------ [5/5] Keymaps ------------------------------------
 
 vim.schedule(function()
   ------------------------------------ Vendor Hotkeys ------------------------------------
