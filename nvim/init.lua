@@ -83,7 +83,10 @@ vim.pack.add {
 
 ------------------------------------ [3/6] Configure Plugins ------------------------------------
 
+local dashboard = require 'dashboard'
 local icons = require 'icons'
+local masonames = require 'masonames'
+local terminal = require 'terminal'
 
 -- Color Previews
 require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icons.virtual_block }
@@ -423,7 +426,7 @@ local servers, tools = {}, {}
 for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
   if kind == 'file' and name:sub(-4) == '.lua' then
     local server = name:sub(1, -5)
-    local mason_server = assert(require('masonames')[server], 'masonames missing mapping for ' .. server)
+    local mason_server = assert(masonames[server], 'masonames missing mapping for ' .. server)
 
     table.insert(servers, server)
     table.insert(tools, mason_server)
@@ -520,7 +523,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-    if emptylines and emptyrows and untitled then require('dashboard').setup() end
+    if emptylines and emptyrows and untitled then dashboard.setup() end
   end,
 })
 
@@ -743,12 +746,15 @@ vim.schedule(function()
   vim.keymap.set('v', '<leader>sw', function() require('spectre').open_visual() end, { desc = '[S]earch current [w]ord' })
 
   -- Toggle File Explorer
-
   vim.keymap.set('n', '<C-n>', function() require('nvim-tree.api').tree.toggle { focus = false } end, { desc = 'Toggle file explorer' })
   vim.keymap.set('n', '<leader>e', function() require('nvim-tree.api').tree.open() end, { desc = 'Focus file [e]xplorer' })
 
+  -- Dismiss notifications
+  vim.keymap.set('n', '<leader>nd', function() require('noice').cmd 'dismiss' end, { desc = 'Clear notifications' })
+
   ------------------------------------ Local Hotkeys ------------------------------------
 
+  -- Open command line
   vim.keymap.set('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
 
   -- Toggle line numbers
@@ -782,7 +788,7 @@ vim.schedule(function()
   vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
   -- Sessions
-  vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<CR>', { desc = '[S]ave file' })
+  vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>write<CR>', { desc = '[S]ave file' })
   vim.keymap.set('n', '<leader>rr', '<cmd>restart<CR>', { desc = 'Reinitialize Neovim' })
   vim.keymap.set('n', '<leader>oo', function()
     vim.cmd 'silent! mksession! Session.vim'
@@ -793,35 +799,19 @@ vim.schedule(function()
   vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
   vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close buffer' })
   vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
-  vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Clear notifications' })
   vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
   -- Terminal
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
-  vim.keymap.set('n', '<leader>h', function() require('terminal').open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
-  vim.keymap.set('n', '<leader>v', function() require('terminal').open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
-  vim.keymap.set(
-    { 'n', 't' },
-    '<A-v>',
-    function() require('terminal').toggle { pos = 'vsp', id = 'vtoggleTerm' } end,
-    { desc = 'Toggle [v]ertical terminal' }
-  )
-  vim.keymap.set(
-    { 'n', 't' },
-    '<A-h>',
-    function() require('terminal').toggle { pos = 'sp', id = 'htoggleTerm' } end,
-    { desc = 'Toggle [h]orizontal terminal' }
-  )
-  vim.keymap.set(
-    { 'n', 't' },
-    '<A-i>',
-    function() require('terminal').toggle { pos = 'float', id = 'floatTerm' } end,
-    { desc = 'Toggle [f]loating terminal' }
-  )
+  vim.keymap.set('n', '<leader>h', function() terminal.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
+  vim.keymap.set('n', '<leader>v', function() terminal.open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
+  vim.keymap.set({ 'n', 't' }, '<A-v>', function() terminal.toggle { pos = 'vsp', id = 'vtoggleTerm' } end, { desc = 'Toggle [v]ertical terminal' })
+  vim.keymap.set({ 'n', 't' }, '<A-h>', function() terminal.toggle { pos = 'sp', id = 'htoggleTerm' } end, { desc = 'Toggle [h]orizontal terminal' })
+  vim.keymap.set({ 'n', 't' }, '<A-i>', function() terminal.toggle { pos = 'float', id = 'floatTerm' } end, { desc = 'Toggle [f]loating terminal' })
 
   -- LSP
   vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })
 
   -- Dashboard
-  vim.keymap.set('n', '<leader>da', function() require('dashboard').setup() end, { desc = 'Toggle Dashboard' })
+  vim.keymap.set('n', '<leader>da', function() dashboard.setup() end, { desc = 'Toggle Dashboard' })
 end)
