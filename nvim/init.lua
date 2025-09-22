@@ -519,22 +519,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
--- Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('YankAU', {}),
-  callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
-})
-
--- Highlight color strings with virtual text
-vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Highlight color strings with virtual text',
-  group = vim.api.nvim_create_augroup('ColorifyAU', {}),
-  callback = function()
-    vim.schedule(function() require('nvim-highlight-colors').turnOn() end)
-  end,
-})
-
 -- Hide line numbers in Spectre
 vim.api.nvim_create_autocmd('FileType', {
   desc = 'Hide line numbers for Spectre',
@@ -544,6 +528,21 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
   end,
+})
+
+-- Exclude quickfix buffers from buffer list
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Prevents quickfix buffers from appearing in buffer lists',
+  group = vim.api.nvim_create_augroup('BufferAU', {}),
+  pattern = 'qf',
+  callback = function() vim.opt_local.buflisted = false end,
+})
+
+-- Highlight on yank
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('YankAU', {}),
+  callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 })
 
 -- Load folds
@@ -663,14 +662,6 @@ vim.api.nvim_create_autocmd({ 'BufDelete', 'BufWipeout' }, {
       end
     end)
   end,
-})
-
--- Exclude quickfix buffers from buffer list
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Prevents quickfix buffers from appearing in buffer lists',
-  group = vim.api.nvim_create_augroup('BufferAU', {}),
-  pattern = 'qf',
-  callback = function() vim.opt_local.buflisted = false end,
 })
 
 -- Always refresh snippet list with respect to buffer
