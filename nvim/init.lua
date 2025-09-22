@@ -54,6 +54,7 @@ vim.cmd.colorscheme 'sourdiesel'
 -- Initialize local plugins
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'icons'
+vim.cmd.packadd 'masonames'
 vim.cmd.packadd 'terminal'
 
 -- Load vendor plugins
@@ -402,11 +403,10 @@ require('nvim-tree').setup {
   help = { sort_by = 'desc' },
 }
 
------------------------------------- [4/6] LSP ------------------------------------
-
 -- LSP tool manager
 require('mason').setup {
   max_concurrent_installers = 10,
+
   ui = {
     icons = {
       package_pending = icons.download,
@@ -416,27 +416,30 @@ require('mason').setup {
   },
 }
 
--- LSP tool installer
-require('mason-tool-installer').setup {
-  run_on_start = true,
-  auto_update = true,
+------------------------------------ [4/6] LSP ------------------------------------
 
-  ensure_installed = {
-    -- Servers
-    'basedpyright',
-    'bash-language-server',
-    'harper-ls',
-    'lua-language-server',
+local servers, tools = {}, {}
 
-    -- Formatters
-    'stylua',
-    'ruff',
-    'shfmt',
+for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
+  if kind == 'file' and name:sub(-4) == '.lua' then
+    local server = name:sub(1, -5)
+    local mason_server = assert(require('masonames')[server], 'masonames missing mapping for ' .. server)
 
-    -- Linters
-    'shellcheck',
-  },
-}
+    table.insert(servers, server)
+    table.insert(tools, mason_server)
+  end
+end
+
+-- Linters
+vim.list_extend(tools, { 'shellcheck' })
+
+-- Formatters (all known to conform)
+for _, v in ipairs(require('conform').list_all_formatters()) do
+  vim.list_extend(tools, vim.split((v.name or ''):gsub(',', ''), '%s+'))
+end
+
+-- Install tools
+require('mason-tool-installer').setup { ensure_installed = tools, auto_update = true, run_on_start = true }
 
 -- Configure diagnostics
 vim.diagnostic.config {
@@ -455,18 +458,8 @@ vim.diagnostic.config {
   },
 }
 
--- Enable language servers
-local lsp_servers = {}
-local lsp_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
-
-for name, kind in vim.fs.dir(lsp_path) do
-  local is_lua_file = kind == 'file' and name:sub(-4) == '.lua'
-  local server = name:sub(1, -5)
-
-  if is_lua_file then table.insert(lsp_servers, server) end
-end
-
-vim.lsp.enable(lsp_servers)
+-- Initialize servers
+vim.lsp.enable(servers)
 
 ------------------------------------ [5/6] Auto-Commands (Event Triggers) ------------------------------------
 
