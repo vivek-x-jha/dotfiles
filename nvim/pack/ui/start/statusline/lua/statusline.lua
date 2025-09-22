@@ -85,18 +85,14 @@ local modules = {
   end,
 
   lsp = function()
-    if rawget(vim, 'lsp') then
-      for _, client in ipairs(vim.lsp.get_clients()) do
-        if client.attached_buffers[stbufnr()] then return table.concat { '%#St_lsp#', icons.gear, ' ', client.name, ' ', '%#Normal#%*' } end
-      end
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      if client.attached_buffers[stbufnr()] then return table.concat { '%#St_lsp#', icons.gear, ' ', client.name, ' ', '%#Normal#%*' } end
     end
 
     return ''
   end,
 
   diagnostics = function()
-    if not rawget(vim, 'lsp') then return '' end
-
     --- @type string[] Formatted statusline elements for each diagnostic
     local lsp_diagnostics = {}
 
