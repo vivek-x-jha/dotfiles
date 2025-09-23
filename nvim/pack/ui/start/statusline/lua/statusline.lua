@@ -100,12 +100,7 @@ local modules = {
     --- @type string[] -- Formatted statusline elements for each diagnostic
     local lsp_diagnostics = {}
 
-    --- @class LspDiagnostic
-    --- @field level '"ERROR"'|'"WARN"'|'"HINT"'|'"INFO"'  -- LSP diagnostic level
-    --- @field hl string                                   -- Highlight group
-    --- @field icon string                                 -- Icon for the diagnostic
-
-    --- @type LspDiagnostic[]
+    --- @type { level: '"ERROR"'|'"WARN"'|'"HINT"'|'"INFO"', hl: string, icon: string }[]
     local lsp_info = {
       { level = 'ERROR', hl = '%#St_lspError#', icon = icons.error },
       { level = 'WARN', hl = '%#St_lspWarning#', icon = icons.warn },
@@ -247,12 +242,7 @@ local modules = {
       end
     end
 
-    --- @class Status
-    --- @field cnt integer -- Count of items in this status
-    --- @field hl string   -- Highlight group string (e.g. "%#St_GitAhead#")
-    --- @field icon string -- Icon shown in the statusline
-
-    --- @type Status[] All Git statuses counts, highlights, and icons
+    --- @type { cnt: integer, hl: string, icon: string }[] -- All Git statuses counts, highlights, and icons
     local statuses = {
       { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up .. ' ' },
       { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down .. ' ' },

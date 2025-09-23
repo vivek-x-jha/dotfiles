@@ -1,5 +1,5 @@
 ---@class Dashboard
----@field setup fun() -- Displays header + buttons
+---@field setup fun(buf?: integer, win?: integer, action?: string) -- Displays header + buttons
 local M = {}
 
 --- @type { remap: function, txt_pad: function, btn_gap: function } -- Helper functions
@@ -27,15 +27,7 @@ local header = {
   '                                                       ',
 }
 
---- @class Button
---- @field txt string                -- Display text
---- @field hl string                 -- Highlight group
---- @field no_gap? boolean           -- Optional: whether to remove gap
---- @field rep? boolean              -- Optional: whether this line repeats
---- @field keys? string              -- Optional: keybinding hint
---- @field cmd? string|function      -- Optional: command string or Lua function
-
---- @type Button[]  -- Body of dashboard
+--- @type { txt: string, hl: string, no_gap?: boolean, rep?: boolean, keys?: string, cmd?: string|fun():any }[]
 local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   -- { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
