@@ -307,17 +307,15 @@ vim.notify.setup { background_colour = '#000000', fps = 60, stages = 'fade' }
 
 -- Notification + Cmd Line UI Manager
 require('noice').setup {
+  presets = { command_palette = true, long_message_to_split = true },
+
   lsp = {
+    signature = { enabled = false },
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
       ['vim.lsp.util.stylize_markdown'] = true,
       ['cmp.entry.get_documentation'] = true,
     },
-    signature = { enabled = false },
-  },
-  presets = {
-    command_palette = true,
-    long_message_to_split = true,
   },
 }
 
