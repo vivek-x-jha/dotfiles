@@ -67,8 +67,6 @@ vim.pack.add {
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- nvim-tree + statusline icons
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
   { src = 'https://github.com/ibhagwan/fzf-lua' },
-  { src = 'https://github.com/williamboman/mason.nvim' },
-  { src = 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim' },
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
@@ -77,12 +75,10 @@ vim.cmd.colorscheme 'sourdiesel'
 
 vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'icons'
-vim.cmd.packadd 'masonames'
 vim.cmd.packadd 'terminal'
 
 local dashboard = require 'dashboard'
 local icons = require 'icons'
-local masonames = require 'masonames'
 local statusline = require 'statusline'
 local terminal = require 'terminal'
 
@@ -402,45 +398,8 @@ require('nvim-tree').setup {
   help = { sort_by = 'desc' },
 }
 
--- LSP tool manager
-require('mason').setup {
-  max_concurrent_installers = 10,
-
-  ui = {
-    icons = {
-      package_pending = icons.download,
-      package_installed = icons.checkmark,
-      package_uninstalled = icons.dotted_circle,
-    },
-  },
-}
-
 ------------------------------------ [3/5] LSP ------------------------------------
 
-local servers, tools = {}, {}
-
-for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
-  if kind == 'file' and name:sub(-4) == '.lua' then
-    local server = name:sub(1, -5)
-    local mason_server = assert(masonames[server], 'masonames missing mapping for ' .. server)
-
-    table.insert(servers, server)
-    table.insert(tools, mason_server)
-  end
-end
-
--- Linters
-vim.list_extend(tools, { 'shellcheck' })
-
--- Formatters (all known to conform)
-for _, v in ipairs(require('conform').list_all_formatters()) do
-  vim.list_extend(tools, vim.split((v.name or ''):gsub(',', ''), '%s+'))
-end
-
--- Install tools
-require('mason-tool-installer').setup { ensure_installed = tools, auto_update = true, run_on_start = true }
-
--- Configure diagnostics
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'single' },
@@ -457,7 +416,21 @@ vim.diagnostic.config {
   },
 }
 
--- Initialize servers
+---@type string[] language server configs
+local servers = {}
+
+---@type string language server configs path
+local lspconfigs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
+
+-- Add all lua files in ~/.config/nvim/lsp/ to servers
+for name, kind in vim.fs.dir(lspconfigs) do
+  local is_lua_file = name:sub(-4) == '.lua' and kind == 'file'
+  local server = name:sub(1, -5)
+
+  if is_lua_file then table.insert(servers, server) end
+end
+
+-- Initialize language servers
 vim.lsp.enable(servers)
 
 ------------------------------------ [4/5] Auto-Commands (Event Triggers) ------------------------------------
@@ -490,15 +463,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 })
 
 -- Auto-refresh NvimTree on relevant events
-vim.api.nvim_create_autocmd({
-  'BufWritePost',
-  'BufDelete',
-  'BufReadPost',
-  'VimResized',
-  'FocusGained',
-  'ShellCmdPost',
-  'FileChangedShellPost',
-}, {
+vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   group = vim.api.nvim_create_augroup('TreeAU', {}),
   pattern = '*',
