@@ -77,10 +77,8 @@ vim.cmd.packadd 'dashboard'
 vim.cmd.packadd 'icons'
 vim.cmd.packadd 'terminal'
 
-local dashboard = require 'dashboard'
+--- @type table<string, string> Custom icons
 local icons = require 'icons'
-local statusline = require 'statusline'
-local terminal = require 'terminal'
 
 -- Color Previews
 require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icons.virtual_block }
@@ -254,7 +252,7 @@ require('fzf-lua').setup {
   },
 }
 
--- Git sign column icons
+---@type table<string, { text: string }> Git sign column icons
 local gs_icons = {
   add = { text = '+' },
   change = { text = '~' },
@@ -294,10 +292,6 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- UI for pop-ups
----@class Notify
----@field setup fun(opts: {background_colour?: string, fps?: integer, stages?: string})
-
----@type Notify
 vim.notify = require 'notify'
 vim.notify.setup { background_colour = '#000000', fps = 60, stages = 'fade' }
 
@@ -324,7 +318,7 @@ require('nvim-surround').setup()
 -- Additional Icon set
 require('nvim-web-devicons').setup {
   override = {
-    default_icon = { icon = icons.completions.File, name = 'Default' },
+    default_icon = { icon = icons.file, name = 'Default' },
     js = { icon = icons.javascript, name = 'js' },
     ts = { icon = icons.typescript, name = 'ts' },
     lock = { icon = icons.lock, name = 'lock' },
@@ -422,12 +416,11 @@ local servers = {}
 ---@type string language server configs path
 local lspconfigs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
 
--- Add all lua files in ~/.config/nvim/lsp/ to servers
 for name, kind in vim.fs.dir(lspconfigs) do
+  ---@type boolean flag for lua file
   local is_lua_file = name:sub(-4) == '.lua' and kind == 'file'
-  local server = name:sub(1, -5)
 
-  if is_lua_file then table.insert(servers, server) end
+  if is_lua_file then table.insert(servers, name:sub(1, -5)) end
 end
 
 -- Initialize language servers
@@ -484,7 +477,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-    if emptylines and emptyrows and untitled then dashboard.setup() end
+    if emptylines and emptyrows and untitled then require('dashboard').setup() end
   end,
 })
 
@@ -609,24 +602,27 @@ vim.api.nvim_create_autocmd('LspProgress', {
   group = vim.api.nvim_create_augroup('LspProgressAU', {}),
   pattern = { 'begin', 'end' },
   callback = function(args)
+    ---@type { kind: 'begin'|'report'|'end', title?: string, message?: string, percentage?: number }
     local data = args.data.params.value
+
+    ---@type string progress spinner + percent + trailing space (or empty)
     local progress = ''
 
     if data.percentage then
+      ---@type string[] all spinner shapes
       local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
+
+      ---@type integer index into spinners (1..#spinners), map 0..100 -> 1..10
       local idx = math.max(1, math.floor(data.percentage / 10))
-      local icon = spinners[idx]
-      progress = table.concat { icon, ' ', data.percentage, '%% ' }
+
+      progress = table.concat { spinners[idx], ' ', data.percentage, '%% ' }
     end
 
-    statusline.state.lsp_msg = data.kind == 'end' and ''
-      or table.concat {
-        progress,
-        data.message or '',
-        ' ',
-        data.title or '',
-      }
+    ---@type string LSP progress message
+    local msg = table.concat { progress, data.message or '', ' ', data.title or '' }
 
+    -- update LSP message in statusline
+    require('statusline').state.lsp_msg = data.kind ~= 'end' and msg or ''
     vim.cmd.redrawstatus()
   end,
 })
@@ -637,9 +633,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('LspAttachAU', {}),
   callback = function(args)
     vim.schedule(function()
-      local lsp = vim.lsp
       --- @type vim.lsp.Client|nil LSP client object
-      local client = lsp.get_client_by_id(args.data.client_id)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
 
       if client then
         --- @type table|nil Signature provider details
@@ -664,7 +659,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
               local triggers = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
 
               for _, char in ipairs(triggers) do
-                if cur_char == char or prev_char == char then lsp.buf.signature_help() end
+                if cur_char == char or prev_char == char then vim.lsp.buf.signature_help() end
               end
             end,
           })
@@ -757,6 +752,8 @@ vim.schedule(function()
   vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
   -- Terminal
+  local terminal = require 'terminal'
+
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
   vim.keymap.set('n', '<leader>h', function() terminal.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
   vim.keymap.set('n', '<leader>v', function() terminal.open { pos = 'vsp' } end, { desc = 'Open [v]ertical terminal' })
@@ -768,5 +765,5 @@ vim.schedule(function()
   vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })
 
   -- Dashboard
-  vim.keymap.set('n', '<leader>da', function() dashboard.setup() end, { desc = 'Toggle Dashboard' })
+  vim.keymap.set('n', '<leader>da', function() require('dashboard').setup() end, { desc = 'Toggle Dashboard' })
 end)

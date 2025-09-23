@@ -1,12 +1,19 @@
-local icons = require 'icons'
+---@class Dashboard
+---@field setup fun() -- Displays header + buttons
 local M = {}
+
+--- @type { remap: function, txt_pad: function, btn_gap: function } -- Helper functions
 local utl = {}
 
+--- @type table<string, string> -- Custom icons
+local icons = require 'icons'
+
 ---Create an fzf-lua command string
----@param cmd string  -- the fzf-lua method name (e.g., "files", "buffers")
----@return string -- a Lua command string to run
+---@param cmd string -- fzf-lua method name (e.g., "files", "buffers")
+---@return string -- Lua command string to run
 local fzf = function(cmd) return table.concat { 'lua require("fzf-lua").', cmd, '()' } end
 
+---@type string[] -- top most element
 local header = {
   '                                                       ',
   ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
@@ -20,6 +27,15 @@ local header = {
   '                                                       ',
 }
 
+--- @class Button
+--- @field txt string                -- Display text
+--- @field hl string                 -- Highlight group
+--- @field no_gap? boolean           -- Optional: whether to remove gap
+--- @field rep? boolean              -- Optional: whether this line repeats
+--- @field keys? string              -- Optional: keybinding hint
+--- @field cmd? string|function      -- Optional: command string or Lua function
+
+--- @type Button[]  -- Body of dashboard
 local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   -- { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
@@ -38,12 +54,20 @@ local buttons = {
   { txt = icons.branch .. '  Git Switch', hl = 'DashGitSwitch', keys = 'gsw', cmd = fzf 'git_branches' },
 }
 
+--- Remap a list of keys to an action in normal mode
+--- @param keys string[]           -- List of key sequences
+--- @param action string|function  -- Command string or Lua function to execute
+--- @param buf? integer            -- Optional buffer number
 utl.remap = function(keys, action, buf)
   for _, val in ipairs(keys) do
     vim.keymap.set('n', val, action, { buffer = buf })
   end
 end
 
+--- Pad a string so it is centered within a given width
+--- @param str string         -- String to pad
+--- @param max_str_w integer  -- Maximum display width
+--- @return string            -- Padded string
 utl.txt_pad = function(str, max_str_w)
   local av = math.floor((max_str_w - vim.api.nvim_strwidth(str)) / 2)
   local spacing = string.rep(' ', av)
@@ -51,6 +75,11 @@ utl.txt_pad = function(str, max_str_w)
   return spacing .. str .. spacing
 end
 
+--- Insert spacing between two strings so they fit a given width
+--- @param txt1 string        -- Left string
+--- @param txt2 string        -- Right string
+--- @param max_str_w integer  -- Maximum display width
+--- @return string            -- Combined string with spacing
 utl.btn_gap = function(txt1, txt2, max_str_w)
   local nonbuttonlength = max_str_w - vim.api.nvim_strwidth(txt1) - #txt2
   local spacing = string.rep(' ', nonbuttonlength)
@@ -58,6 +87,10 @@ utl.btn_gap = function(txt1, txt2, max_str_w)
   return txt1 .. spacing .. txt2
 end
 
+--- Setup handler
+--- @param buf? integer  -- Buffer handle, defaults to a new scratch buffer
+--- @param win? integer  -- Window handle, defaults to current window
+--- @param action? string  -- Action to perform, defaults to "open"
 M.setup = function(buf, win, action)
   buf = buf or vim.api.nvim_create_buf(false, true)
   win = win or vim.api.nvim_get_current_win()
@@ -70,6 +103,7 @@ M.setup = function(buf, win, action)
   vim.g.dashboard_buf = buf
   vim.g.dashboard_win = win
 
+  ---@type integer dashboard width
   local dashboard_w = 0
 
   if action == 'open' then vim.api.nvim_win_set_buf(0, buf) end
