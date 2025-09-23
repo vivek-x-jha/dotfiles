@@ -1,4 +1,8 @@
---- @type table Custom icons
+--- @class StatusLine
+--- @field setup fun(): string Aggregates all statusline modules
+local M = {}
+
+--- @type table<string, string> Custom icons
 local icons = require 'icons'
 
 --- @type table Store state of any LSP messages
@@ -8,16 +12,16 @@ local lspmsg = { lsp_msg = '' }
 local stbufnr = function() return vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0 end
 
 --- @class StatusLineModules
---- @field mode fun(): string Creates statusline module: mode indicator
---- @field git_branch fun(): string Creates statusline module: git branch
---- @field lsp fun(): string Creates statusline module: language server name
---- @field diagnostics fun(): string Creates statusline module: LSP diagnostics
---- @field file fun(): string Creates statusline module: current file
---- @field git_diff fun(): string Creates statusline module: git diff
---- @field lsp_msg fun(): string Creates statusline module: LSP message
---- @field cwd fun(): string Creates statusline module: current working directory
---- @field git_status fun(): string Creates statusline module: project git status
---- @field cursor fun(): string Creates statusline module: row and column counter
+--- @field mode fun(): string        -- Creates statusline module: mode indicator
+--- @field git_branch fun(): string  -- Creates statusline module: git branch
+--- @field lsp fun(): string         -- Creates statusline module: language server name
+--- @field diagnostics fun(): string -- Creates statusline module: LSP diagnostics
+--- @field file fun(): string        -- Creates statusline module: current file
+--- @field git_diff fun(): string    -- Creates statusline module: git diff
+--- @field lsp_msg fun(): string     -- Creates statusline module: LSP message
+--- @field cwd fun(): string         -- Creates statusline module: current working directory
+--- @field git_status fun(): string  -- Creates statusline module: project git status
+--- @field cursor fun(): string      -- Creates statusline module: row and column counter
 local modules = {
   mode = function()
     if not vim.api.nvim_get_current_win() == vim.g.statusline_winid then return '' end
@@ -68,14 +72,14 @@ local modules = {
       ['!'] = { 'SHELL', 'Terminal' },
     }
 
-    --- @type { [1]: string, [2]: string } Vim mode, highlight group
+    --- @type { [1]: string, [2]: string } -- Vim mode, highlight group
     local vmode = modes[vim.api.nvim_get_mode().mode]
 
     return table.concat { '%#St_', vmode[2], 'mode#', icons.vim, ' ', vmode[1], ' ', '%#Normal#%*' }
   end,
 
   git_branch = function()
-    --- @type table Current buffer options
+    --- @type table -- Current buffer options
     local buf = vim.b[stbufnr()]
 
     -- Check if it's not a Git repository
@@ -93,10 +97,15 @@ local modules = {
   end,
 
   diagnostics = function()
-    --- @type string[] Formatted statusline elements for each diagnostic
+    --- @type string[] -- Formatted statusline elements for each diagnostic
     local lsp_diagnostics = {}
 
-    --- @type { [1]: table, [2]: table, [3]: table, [4]: table  } LSP diagnostics
+    --- @class LspDiagnostic
+    --- @field level '"ERROR"'|'"WARN"'|'"HINT"'|'"INFO"'  -- LSP diagnostic level
+    --- @field hl string                                   -- Highlight group
+    --- @field icon string                                 -- Icon for the diagnostic
+
+    --- @type LspDiagnostic[]
     local lsp_info = {
       { level = 'ERROR', hl = '%#St_lspError#', icon = icons.error },
       { level = 'WARN', hl = '%#St_lspWarning#', icon = icons.warn },
@@ -105,13 +114,13 @@ local modules = {
     }
 
     for _, opts in ipairs(lsp_info) do
-      --- @type integer Current buffer id
+      --- @type integer -- Current buffer id
       local bufid = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
 
-      --- @type integer Number of LSP diagnostics for given `level`
+      --- @type integer -- Number of LSP diagnostics for given `level`
       local count = #vim.diagnostic.get(bufid, { severity = vim.diagnostic.severity[opts.level] })
 
-      --- @type string Formatted diagnostic entry
+      --- @type string -- Formatted diagnostic entry
       local diagnostic = table.concat { opts.hl, opts.icon, ' ', count, ' ', '%#Normal#%*' }
 
       if count > 0 then table.insert(lsp_diagnostics, diagnostic) end
@@ -121,10 +130,10 @@ local modules = {
   end,
 
   file = function()
-    --- @type string Absolute path of current buffer
+    --- @type string -- Absolute path of current buffer
     local path = vim.api.nvim_buf_get_name(stbufnr())
 
-    --- @type boolean[] Conditions to suppress file info
+    --- @type boolean[] -- Conditions to suppress file info
     local suppress = {
       path == '', -- empty buffer
       vim.bo.buftype == 'terminal', -- terminal
@@ -134,16 +143,16 @@ local modules = {
     -- Hide if buffer matches supress condition
     if vim.tbl_contains(suppress, true) then return '' end
 
-    --- @type string Filename
+    --- @type string -- Filename
     local name = path:match '([^/\\]+)[/\\]*$'
 
-    --- @type boolean, table
+    --- @type boolean, table -- Safe load nvim-web-devicons
     local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
 
-    --- @type string Replace with devicon
+    --- @type string -- Replace with devicon
     local icon = devicons_present and devicons.get_icon(name) or icons.file
 
-    --- @type string Highlight and icon conditional on modified buffer
+    --- @type string -- Highlight and icon conditional on modified buffer
     local hl_icon = vim.bo.modified and '%#St_filemod#' .. icons.modified or '%#St_file#' .. icon
 
     return table.concat { hl_icon, ' ', name, '%#Normal#%*', ' ' }
@@ -238,7 +247,12 @@ local modules = {
       end
     end
 
-    --- @type { [1]: table, [2]: table, [3]: table, [4]: table, [5]: table, [6]: table } All Git statuses counts, highlights, and icons
+    --- @class Status
+    --- @field cnt integer -- Count of items in this status
+    --- @field hl string   -- Highlight group string (e.g. "%#St_GitAhead#")
+    --- @field icon string -- Icon shown in the statusline
+
+    --- @type Status[] All Git statuses counts, highlights, and icons
     local statuses = {
       { cnt = ahead, hl = '%#St_GitAhead#', icon = icons.up .. ' ' },
       { cnt = behind, hl = '%#St_GitBehind#', icon = icons.down .. ' ' },
@@ -268,10 +282,6 @@ local modules = {
 
   cursor = function() return table.concat { '%#St_cursor#', icons.cursor, ' ', '%l:%c', '%#Normal#%*' } end,
 }
-
---- @class StatusLine
---- @field setup fun(): string Aggregates all statusline modules
-local M = {}
 
 M.state = lspmsg
 
