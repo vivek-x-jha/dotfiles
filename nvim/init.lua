@@ -46,9 +46,50 @@ vim.o.undofile = true -- persistent undo
 vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
 
------------------------------------- [2/5] Plugins ------------------------------------
+-- Set highlights
+vim.cmd.colorscheme 'sourdiesel'
 
--- Load vendor plugins
+------------------------------------ [2/5] LSP ------------------------------------
+
+vim.cmd.packadd 'icons'
+
+--- @type table<string, string> Custom icons
+local icons = require 'icons'
+
+vim.diagnostic.config {
+  severity_sort = true,
+  float = { border = 'single' },
+  virtual_lines = { current_line = true },
+  virtual_text = { current_line = true, prefix = icons.virtualcircle },
+
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = icons.error,
+      [vim.diagnostic.severity.WARN] = icons.warn,
+      [vim.diagnostic.severity.HINT] = icons.hint,
+      [vim.diagnostic.severity.INFO] = icons.info,
+    },
+  },
+}
+
+---@type string[] language server configs
+local servers = {}
+
+---@type string language server configs path
+local lspconfigs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
+
+for name, kind in vim.fs.dir(lspconfigs) do
+  ---@type boolean flag for lua file
+  local is_lua_file = name:sub(-4) == '.lua' and kind == 'file'
+
+  if is_lua_file then table.insert(servers, name:sub(1, -5)) end
+end
+
+-- Initialize language servers
+vim.lsp.enable(servers)
+
+------------------------------------ [3/5] Plugins ------------------------------------
+
 vim.pack.add {
   { src = 'https://github.com/windwp/nvim-autopairs' },
   { src = 'https://github.com/saghen/blink.cmp' },
@@ -69,16 +110,6 @@ vim.pack.add {
   { src = 'https://github.com/ibhagwan/fzf-lua' },
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
-
--- Load local plugins
-vim.cmd.colorscheme 'sourdiesel'
-
-vim.cmd.packadd 'dashboard'
-vim.cmd.packadd 'icons'
-vim.cmd.packadd 'terminal'
-
---- @type table<string, string> Custom icons
-local icons = require 'icons'
 
 -- Color Previews
 require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icons.virtual_block }
@@ -293,7 +324,7 @@ require('nvim-treesitter.configs').setup {
 
 -- UI for pop-ups
 vim.notify = require 'notify'
-vim.notify.setup { background_colour = '#000000', fps = 60, stages = 'fade' }
+vim.notify.setup { background_colour = os.getenv 'WEZTERM_BG_HEX', fps = 60, stages = 'fade' }
 
 -- Notification + Cmd Line UI Manager
 require('noice').setup {
@@ -392,40 +423,6 @@ require('nvim-tree').setup {
   help = { sort_by = 'desc' },
 }
 
------------------------------------- [3/5] LSP ------------------------------------
-
-vim.diagnostic.config {
-  severity_sort = true,
-  float = { border = 'single' },
-  virtual_lines = { current_line = true },
-  virtual_text = { current_line = true, prefix = icons.virtualcircle },
-
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = icons.error,
-      [vim.diagnostic.severity.WARN] = icons.warn,
-      [vim.diagnostic.severity.HINT] = icons.hint,
-      [vim.diagnostic.severity.INFO] = icons.info,
-    },
-  },
-}
-
----@type string[] language server configs
-local servers = {}
-
----@type string language server configs path
-local lspconfigs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
-
-for name, kind in vim.fs.dir(lspconfigs) do
-  ---@type boolean flag for lua file
-  local is_lua_file = name:sub(-4) == '.lua' and kind == 'file'
-
-  if is_lua_file then table.insert(servers, name:sub(1, -5)) end
-end
-
--- Initialize language servers
-vim.lsp.enable(servers)
-
 ------------------------------------ [4/5] Auto-Commands (Event Triggers) ------------------------------------
 
 ------------------------------------ Vendor Auto-commands ------------------------------------
@@ -477,6 +474,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
+    vim.cmd.packadd 'dashboard'
     if emptylines and emptyrows and untitled then require('dashboard').setup() end
   end,
 })
@@ -752,6 +750,7 @@ vim.schedule(function()
   vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
   -- Terminal
+  vim.cmd.packadd 'terminal'
   local terminal = require 'terminal'
 
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
