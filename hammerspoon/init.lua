@@ -7,18 +7,19 @@
 --- * Keys are lowercased (e.g., "RED_HEX" -> "red").
 --- * Values are normalized to lowercase `#rrggbb`.
 ---
---- @param env_path? string  Optional path to an env file; falls back to $HOME/.zshenv
+--- @param env_path? string -- Optional path to an env file; falls back to $HOME/.zshenv
 --- @return table<string, string>
 local hexify = function(env_path)
   env_path = env_path or os.getenv 'HOME' .. '/.zshenv'
 
-  ---@type table<string, string>
+  --- @type table<string, string>
   local palette = {}
 
+  --- @type file* -- Opened file handle
   local f = assert(io.open(env_path, 'r'), 'Failed to open ' .. env_path)
 
   for line in f:lines() do
-    -- match exports ending in _HEX, capturing VAR_HEX and the hex value
+    --- @type string?, string? -- Extracted color name and hex code from line
     local color, hex = line:match '^%s*export%s+([A-Z_]+_HEX)%s*=%s*[\'"]?(#%x%x%x%x%x%x)[\'"]?'
 
     if color and hex then
@@ -32,6 +33,7 @@ local hexify = function(env_path)
   return palette
 end
 
+--- @type table<string, string> -- Palette of colors
 local thm = hexify()
 
 -- Set console theme
