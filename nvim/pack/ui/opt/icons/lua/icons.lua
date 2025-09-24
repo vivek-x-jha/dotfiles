@@ -1,3 +1,4 @@
+--- @type table<string, string> -- commonly used icons
 return {
   modified = '󰷬',
 
