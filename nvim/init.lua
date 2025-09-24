@@ -1,3 +1,6 @@
+-- Set highlights
+vim.cmd.colorscheme 'sourdiesel'
+
 ------------------------------------ [1/5] Options ------------------------------------
 
 -- Set leader key(s)
@@ -46,9 +49,6 @@ vim.o.undofile = true -- persistent undo
 vim.o.updatetime = 250 -- swap write & CursorHold delay
 vim.o.winborder = 'single'
 
--- Set highlights
-vim.cmd.colorscheme 'sourdiesel'
-
 ------------------------------------ [2/5] LSP ------------------------------------
 
 vim.cmd.packadd 'icons'
@@ -75,14 +75,9 @@ vim.diagnostic.config {
 ---@type string[] language server configs
 local servers = {}
 
----@type string language server configs path
-local lspconfigs = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
-
-for name, kind in vim.fs.dir(lspconfigs) do
-  ---@type boolean flag for lua file
-  local is_lua_file = name:sub(-4) == '.lua' and kind == 'file'
-
-  if is_lua_file then table.insert(servers, name:sub(1, -5)) end
+-- Create table of language servers in "$XDG_CONFIG_HOME/nvim/lsp/"
+for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
+  if name:sub(-4) == '.lua' and kind == 'file' then table.insert(servers, name:sub(1, -5)) end
 end
 
 -- Initialize language servers
@@ -125,6 +120,9 @@ require('luasnip').setup { history = true, updateevents = 'TextChanged,TextChang
 require('blink.cmp').setup {
   keymap = { preset = 'default' },
   appearance = { nerd_font_variant = 'mono' },
+  snippets = { preset = 'luasnip' },
+  sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
+  fuzzy = { implementation = 'prefer_rust_with_warning', prebuilt_binaries = { force_version = 'v1.6.0' } },
 
   completion = {
     documentation = { auto_show = false },
@@ -135,6 +133,7 @@ require('blink.cmp').setup {
             text = function(ctx)
               local color_item = ctx.item.source_name == 'LSP'
                 and require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
+
               local icon = color_item and color_item.abbr ~= '' and color_item.abbr or ctx.kind_icon
 
               return icon .. ctx.icon_gap
@@ -143,6 +142,7 @@ require('blink.cmp').setup {
             highlight = function(ctx)
               local color_item = ctx.item.source_name == 'LSP'
                 and require('nvim-highlight-colors').format(ctx.item.documentation, { kind = ctx.kind })
+
               local hl = color_item and color_item.abbr_hl_group or 'BlinkCmpKind' .. ctx.kind
 
               return hl
@@ -150,19 +150,6 @@ require('blink.cmp').setup {
           },
         },
       },
-    },
-  },
-
-  snippets = { preset = 'luasnip' },
-
-  sources = {
-    default = { 'lsp', 'path', 'snippets', 'buffer' },
-  },
-
-  fuzzy = {
-    implementation = 'prefer_rust_with_warning',
-    prebuilt_binaries = {
-      force_version = 'v1.6.0', -- TODO find way to make this dynamic
     },
   },
 }
@@ -654,7 +641,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
               local cur_char = cur_line:sub(pos, pos)
 
               --- @type string[] Trigger characters
-              local triggers = client.server_capabilities.signatureHelpProvider.triggerCharacters or {}
+              local triggers = signatureProvider.triggerCharacters or {}
 
               for _, char in ipairs(triggers) do
                 if cur_char == char or prev_char == char then vim.lsp.buf.signature_help() end
