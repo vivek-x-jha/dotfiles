@@ -100,25 +100,27 @@ local modules = {
     --- @type string[] -- Formatted statusline elements for each diagnostic
     local lsp_diagnostics = {}
 
-    --- @type { level: '"ERROR"'|'"WARN"'|'"HINT"'|'"INFO"', hl: string, icon: string }[]
+    --- @type { level: '"ERROR"'|'"WARN"'|'"HINT"'|'"INFO"', text: string }[]
     local lsp_info = {
-      { level = 'ERROR', hl = '%#St_lspError#', icon = icons.error },
-      { level = 'WARN', hl = '%#St_lspWarning#', icon = icons.warn },
-      { level = 'HINT', hl = '%#St_lspHints#', icon = icons.hint },
-      { level = 'INFO', hl = '%#St_lspInfo#', icon = icons.info },
+      { level = 'ERROR', text = '%#St_lspError#E ' },
+      { level = 'WARN', text = '%#St_lspWarning#W ' },
+      { level = 'HINT', text = '%#St_lspHints#H ' },
+      { level = 'INFO', text = '%#St_lspInfo#I ' },
     }
 
-    for _, opts in ipairs(lsp_info) do
-      --- @type integer -- Current buffer id
-      local bufid = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
+    --- @type integer -- Current buffer id
+    local bufid = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0) or 0
 
+    for _, opts in ipairs(lsp_info) do
       --- @type integer -- Number of LSP diagnostics for given `level`
       local count = #vim.diagnostic.get(bufid, { severity = vim.diagnostic.severity[opts.level] })
 
-      --- @type string -- Formatted diagnostic entry
-      local diagnostic = table.concat { opts.hl, opts.icon, ' ', count, ' ', '%#Normal#%*' }
+      if count > 0 then
+        --- @type string -- Formatted diagnostic entry
+        local diagnostic = table.concat { opts.text, count, '%#Normal#%* ' }
 
-      if count > 0 then table.insert(lsp_diagnostics, diagnostic) end
+        table.insert(lsp_diagnostics, diagnostic)
+      end
     end
 
     return table.concat(lsp_diagnostics)

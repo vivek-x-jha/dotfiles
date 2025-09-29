@@ -27,12 +27,6 @@ return {
   log = '',
   status = '󰦒',
 
-  -- lsp diagnostics
-  error = '󰯈',
-  warn = '',
-  hint = '',
-  info = '',
-
   -- devicons
   javascript = '󰌞',
   typescript = '󰛦',
