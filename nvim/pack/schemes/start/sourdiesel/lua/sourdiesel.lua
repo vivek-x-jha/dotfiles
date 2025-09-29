@@ -266,7 +266,7 @@ local highlights = {
 
   BlinkCmpSource = { fg = thm.cyan },
   BlinkCmpGhostText = { fg = thm.brightblack },
-  BlinkCmpDoc = { fg = thm.white, bg = thm.dark },
+  BlinkCmpDoc = { fg = thm.white },
   BlinkCmpDocBorder = { fg = thm.brightblack },
   BlinkCmpDocSeparator = { fg = thm.brightblack },
   BlinkCmpDocCursorLine = { bg = thm.brightblack },

@@ -107,7 +107,7 @@ vim.pack.add {
 }
 
 -- Color Previews
-require('nvim-highlight-colors').setup { render = 'virtual', virtual_symbol = icons.virtual_block }
+require('nvim-highlight-colors').setup { render = 'foreground' }
 
 -- LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
 require('luasnip.loaders.from_vscode').lazy_load()
