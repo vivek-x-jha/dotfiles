@@ -2,12 +2,9 @@
 --- @field setup fun(): nil -- Applies all highlight groups
 local M = {}
 
---- Read hex color env vars from ~/.zshenv (or a custom file) and build a palette table.
----
---- Expected lines look like: `export RED_HEX='#ff0000'`
---- * The `_HEX` suffix is stripped.
---- * Keys are lowercased (e.g., "RED_HEX" -> "red").
---- * Values are normalized to lowercase `#rrggbb`.
+--- Generate pallete table of hex values by parsing env color file
+--- * File must contain lines in this format: `export *_HEX="#rrggbb"`
+--- * key, value pairs look like: "cyan" = "#8ae7c5"
 ---
 --- @param env_path? string -- Optional path to an env file; falls back to $HOME/.zshenv
 --- @return table<string, string>
