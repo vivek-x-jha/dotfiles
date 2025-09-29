@@ -91,8 +91,9 @@ alias gsw='git branch --format="%(refname:short)" | fzf --header "git switch" --
 
 # -------------------------------- CLI tools ---------------------------------------
 
-# 1Password CLI authenticator
+# https://developer.1password.com/docs/cli/shell-plugins
 alias gh="op plugin run -- gh"
+# alias mysql="op plugin run -- mysql"
 
 # MySQL launcher
 alias mycli-dev='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u mubuntu -p"$(op item get '\''MySQL User: mubuntu'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'

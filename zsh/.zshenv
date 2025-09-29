@@ -25,6 +25,9 @@ export VISUAL="$EDITOR"
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 export TMUX_FZF_LAUNCH_KEY='f'
 
+# 1P shell-plugins
+export OP_PLUGIN_ALIASES_SOURCED=1
+
 # Zoxide
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
