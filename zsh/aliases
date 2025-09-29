@@ -104,9 +104,6 @@ alias mysql-root='mysql -u root -p"$(op item get '\''MySQL Root'\'' --vault '\''
 # Print weather data
 alias weather='curl wttr.in'
 
-# AI launcher
-alias chatgpt='python ~/Developer/chatgpt-cli/chatgpt.py --key=$(python ~/Developer/chatgpt-cli/auth-chatgpt-cli.py)'
-
 # Sound toggler
 alias sas-airpods='SwitchAudioSource -s "band4band"'
 alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
