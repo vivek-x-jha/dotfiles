@@ -123,10 +123,12 @@ require('blink.cmp').setup {
   snippets = { preset = 'luasnip' },
   sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
   fuzzy = { implementation = 'prefer_rust_with_warning', prebuilt_binaries = { force_version = 'v1.6.0' } },
+  signature = { enabled = true },
 
   completion = {
-    documentation = { auto_show = false },
+    documentation = { auto_show = true },
     menu = {
+      auto_show = true,
       draw = {
         components = {
           kind_icon = {
@@ -170,102 +172,30 @@ require('conform').setup {
   },
 }
 
--- Multi Modal Picker
+-- Fuzzy finder / picker
 require('fzf-lua').setup {
-  winopts = {
-    preview = {
-      winopts = {
-        number = false,
-        signcolumn = 'yes',
-      },
-    },
-  },
-
-  files = {
-    header = 'fd --type f',
-    winopts = {
-      title = table.concat { ' ', icons.search, ' files ' },
-      title_flags = false,
-    },
-  },
+  winopts = { preview = { winopts = { number = false, signcolumn = 'yes' } } },
+  files = { header = 'fd --type f', winopts = { title = table.concat { ' ', icons.search, ' files ' }, title_flags = false } },
+  autocmds = { header = ':autocmd', winopts = { title = table.concat { ' ', icons.warn, ' event triggers ' }, title_flags = false } },
+  buffers = { header = ':ls', winopts = { title = table.concat { ' ', icons.file, ' buffers ' }, title_flags = false } },
+  commands = { header = ':command', winopts = { title = table.concat { ' ', icons.vim, ' commands ' }, title_flags = false } },
+  command_history = { header = ':history', winopts = { title = table.concat { ' ', icons.cmd_hist, ' command history ' }, title_flags = false } },
+  grep = { header = ':!rg --vimgrep', winopts = { title = table.concat { ' ', icons.fuzzy, ' fuzzy search' }, title_flags = false } },
 
   oldfiles = {
     header = ':FzfLua oldfiles',
     include_current_session = true,
     cwd_only = true,
-    winopts = {
-      title = table.concat { ' ', icons.recent, ' recent files ' },
-      title_flags = false,
-    },
-  },
-
-  autocmds = {
-    header = ':autocmd',
-    winopts = {
-      title = table.concat { ' ', icons.warn, ' event triggers ' },
-      title_flags = false,
-    },
-  },
-
-  buffers = {
-    header = ':ls',
-    winopts = {
-      title = table.concat { ' ', icons.file, ' buffers ' },
-      title_flags = false,
-    },
-  },
-
-  commands = {
-    header = ':command',
-    winopts = {
-      title = table.concat { ' ', icons.vim, ' commands ' },
-      title_flags = false,
-    },
-  },
-
-  command_history = {
-    header = ':history',
-    winopts = {
-      title = table.concat { ' ', icons.cmd_hist, ' command history ' },
-      title_flags = false,
-    },
+    winopts = { title = table.concat { ' ', icons.recent, ' recent files ' }, title_flags = false },
   },
 
   git = {
-    files = {
-      header = ':!git ls-files --exclude-standard',
-      winopts = {
-        title = table.concat { ' ', icons.git, ' ', icons.file, ' files (git) ' },
-      },
-    },
-
-    branches = {
-      header = ':!git branch --all --color && git switch',
-      winopts = {
-        title = table.concat { ' ', icons.branch, ' branches ' },
-      },
-    },
-
+    files = { header = ':!git ls-files --exclude-standard', winopts = { title = table.concat { ' ', icons.git, ' ', icons.file, ' files (git) ' } } },
+    branches = { header = ':!git branch --all --color && git switch', winopts = { title = table.concat { ' ', icons.branch, ' branches ' } } },
+    commits = { header = ':!git log --color --pretty=format:"..."', winopts = { title = table.concat { ' ', icons.log, '  git commits ' } } },
     status = {
       header = ':!git -c color.status=false --no-optional-locks status --porcelain=v1 -u',
-      winopts = {
-        title = table.concat { ' ', icons.status, ' git status ' },
-      },
-    },
-
-    commits = {
-      header = ':!git log --color --pretty=format:"..."',
-      winopts = {
-        title = table.concat { ' ', icons.log, '  git commits ' },
-      },
-    },
-  },
-
-  grep = {
-    header = ':!rg --vimgrep',
-    winopts = {
-      title = table.concat { ' ', icons.fuzzy, ' fuzzy search' },
-      title_flags = false,
+      winopts = { title = table.concat { ' ', icons.status, ' git status ' } },
     },
   },
 }
@@ -358,17 +288,12 @@ require('nvim-tree').setup {
     highlight_diagnostics = true,
     highlight_modified = 'icon',
 
-    indent_markers = {
-      enable = true,
-      icons = {
-        edge = '┊',
-        item = '┊',
-      },
-    },
+    indent_markers = { enable = true, icons = { edge = '┊', item = '┊' } },
 
     icons = {
       modified_placement = 'signcolumn',
       diagnostics_placement = 'before',
+
       glyphs = {
         modified = icons.modified,
         folder = {
@@ -378,6 +303,7 @@ require('nvim-tree').setup {
           open = '󰷏',
           symlink = '󱉆',
         },
+
         git = {
           renamed = '𝙍',
           staged = '+',
@@ -411,8 +337,6 @@ require('nvim-tree').setup {
 }
 
 ------------------------------------ [4/5] Auto-Commands (Event Triggers) ------------------------------------
-
------------------------------------- Vendor Auto-commands ------------------------------------
 
 -- Enable git icons in editor gutter
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, { callback = function(args) require('gitsigns').attach(args.buf) end })
@@ -519,146 +443,9 @@ vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   end,
 })
 
--- Manage buffer list
-vim.api.nvim_create_autocmd({ 'BufAdd', 'BufEnter' }, {
-  desc = 'Manages tab-local buffer lists and tracks buffer history for dynamic navigation and cleanup',
-  group = vim.api.nvim_create_augroup('BufferAU', {}),
-  callback = function(args)
-    local bufs = vim.t.bufs
-    local is_curbuf = vim.api.nvim_get_current_buf() == args.buf
-
-    local get_opt = function(opt, buf) return vim.api.nvim_get_option_value(opt, { buf = buf }) end
-
-    if bufs == nil then
-      bufs = is_curbuf and {} or { args.buf }
-    elseif
-      not vim.tbl_contains(bufs, args.buf)
-      and (args.event == 'BufEnter' or not is_curbuf or get_opt('buflisted', args.buf))
-      and vim.api.nvim_buf_is_valid(args.buf)
-      and get_opt('buflisted', args.buf)
-    then
-      table.insert(bufs, args.buf)
-    end
-
-    if args.event == 'BufAdd' then
-      if #vim.api.nvim_buf_get_name(bufs[1]) == 0 and not get_opt('modified', bufs[1]) then table.remove(bufs, 1) end
-    end
-
-    vim.t.bufs = bufs
-
-    if args.event == 'BufEnter' then
-      local buf_history = vim.g.buf_history or {}
-      table.insert(buf_history, args.buf)
-      vim.g.buf_history = buf_history
-    end
-  end,
-})
-
--- Clean up buffer list on deletion
-vim.api.nvim_create_autocmd({ 'BufDelete', 'BufWipeout' }, {
-  desc = 'Remove deleted buffer from buffer list',
-  group = vim.api.nvim_create_augroup('BufferAU', { clear = true }),
-  callback = function(args)
-    -- Run after Neovim finishes closing windows/tabs for this deletion.
-    vim.schedule(function()
-      for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-        if vim.api.nvim_tabpage_is_valid(tab) then
-          local vars = vim.t[tab]
-          local bufs = vars and vars.bufs
-
-          if type(bufs) == 'table' then
-            -- remove in reverse to be extra safe
-            for i = #bufs, 1, -1 do
-              if bufs[i] == args.buf then
-                table.remove(bufs, i)
-                break
-              end
-            end
-          end
-        end
-      end
-    end)
-  end,
-})
-
--- LSP progress indicator
-vim.api.nvim_create_autocmd('LspProgress', {
-  desc = 'Show LSP Progress bar',
-  group = vim.api.nvim_create_augroup('LspProgressAU', {}),
-  pattern = { 'begin', 'end' },
-  callback = function(args)
-    ---@type { kind: 'begin'|'report'|'end', title?: string, message?: string, percentage?: number }
-    local data = args.data.params.value
-
-    ---@type string progress spinner + percent + trailing space (or empty)
-    local progress = ''
-
-    if data.percentage then
-      ---@type string[] all spinner shapes
-      local spinners = { '', '', '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
-
-      ---@type integer index into spinners (1..#spinners), map 0..100 -> 1..10
-      local idx = math.max(1, math.floor(data.percentage / 10))
-
-      progress = table.concat { spinners[idx], ' ', data.percentage, '%% ' }
-    end
-
-    ---@type string LSP progress message
-    local msg = table.concat { progress, data.message or '', ' ', data.title or '' }
-
-    -- update LSP message in statusline
-    require('statusline').state.lsp_msg = data.kind ~= 'end' and msg or ''
-    vim.cmd.redrawstatus()
-  end,
-})
-
--- Initialize LSP on insert mode
-vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'Initialize LSP config',
-  group = vim.api.nvim_create_augroup('LspAttachAU', {}),
-  callback = function(args)
-    vim.schedule(function()
-      --- @type vim.lsp.Client|nil LSP client object
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-      if client then
-        --- @type table|nil Signature provider details
-        local signatureProvider = client.server_capabilities.signatureHelpProvider
-
-        if signatureProvider and signatureProvider.triggerCharacters then
-          local lsp_sig_au = vim.api.nvim_create_augroup('LspSignatureAU', { clear = false })
-
-          vim.api.nvim_clear_autocmds { group = lsp_sig_au, buffer = args.buf }
-
-          vim.api.nvim_create_autocmd('TextChangedI', {
-            desc = 'Detects Trigger Characters on Insert',
-            group = lsp_sig_au,
-            buffer = args.buf,
-            callback = function()
-              local cur_line = vim.api.nvim_get_current_line()
-              local pos = vim.api.nvim_win_get_cursor(0)[2]
-              local prev_char = cur_line:sub(pos - 1, pos - 1)
-              local cur_char = cur_line:sub(pos, pos)
-
-              --- @type string[] Trigger characters
-              local triggers = signatureProvider.triggerCharacters or {}
-
-              for _, char in ipairs(triggers) do
-                if cur_char == char or prev_char == char then vim.lsp.buf.signature_help() end
-              end
-            end,
-          })
-        end
-      end
-    end)
-  end,
-})
-
 ------------------------------------ [5/5] Keymaps ------------------------------------
 
 vim.schedule(function()
-  ------------------------------------ Vendor Hotkeys ------------------------------------
-
   -- Open picker
   vim.keymap.set('n', '<leader>ff', function() require('fzf-lua').files() end, { desc = '[F]ind [F]iles' })
   vim.keymap.set('n', '<leader>fo', function() require('fzf-lua').oldfiles() end, { desc = '[R]ecent [B]uffers' })
