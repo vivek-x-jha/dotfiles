@@ -64,10 +64,10 @@ vim.diagnostic.config {
 
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = icons.error,
-      [vim.diagnostic.severity.WARN] = icons.warn,
-      [vim.diagnostic.severity.HINT] = icons.hint,
-      [vim.diagnostic.severity.INFO] = icons.info,
+      [vim.diagnostic.severity.ERROR] = 'E',
+      [vim.diagnostic.severity.WARN] = 'W',
+      [vim.diagnostic.severity.HINT] = 'H',
+      [vim.diagnostic.severity.INFO] = 'I',
     },
   },
 }
@@ -280,6 +280,12 @@ require('nvim-tree').setup {
   disable_netrw = true,
   sync_root_with_cwd = true,
   view = { preserve_window_proportions = true },
+  update_focused_file = { enable = true },
+  diagnostics = { enable = true, show_on_dirs = true, icons = { hint = 'H', info = 'I', warning = 'W', error = 'E' } },
+  modified = { enable = true },
+  filters = { git_ignored = false },
+  live_filter = { prefix = icons.search .. ' ' },
+  help = { sort_by = 'desc' },
 
   renderer = {
     root_folder_label = false,
@@ -296,44 +302,11 @@ require('nvim-tree').setup {
 
       glyphs = {
         modified = icons.modified,
-        folder = {
-          default = icons.folder,
-          empty = '󱧹',
-          empty_open = '󰷏',
-          open = '󰷏',
-          symlink = '󱉆',
-        },
-
-        git = {
-          renamed = '𝙍',
-          staged = '+',
-          unmerged = '!',
-          unstaged = '~',
-          untracked = '?',
-          ignored = '',
-          deleted = '✘',
-        },
+        folder = { default = icons.folder, empty = '󱧹', empty_open = '󰷏', open = '󰷏', symlink = '󱉆' },
+        git = { renamed = '𝙍', staged = '+', unmerged = '!', unstaged = '~', untracked = '?', ignored = '', deleted = '✘' },
       },
     },
   },
-
-  update_focused_file = { enable = true },
-
-  diagnostics = {
-    enable = true,
-    show_on_dirs = true,
-    icons = {
-      hint = icons.hint,
-      info = icons.info,
-      warning = icons.warn,
-      error = icons.error,
-    },
-  },
-
-  modified = { enable = true },
-  filters = { git_ignored = false },
-  live_filter = { prefix = icons.search .. ' ' },
-  help = { sort_by = 'desc' },
 }
 
 ------------------------------------ [4/5] Auto-Commands (Event Triggers) ------------------------------------
