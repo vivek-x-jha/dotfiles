@@ -51,8 +51,6 @@ vim.o.winborder = 'single'
 
 ------------------------------------ [2/5] LSP ------------------------------------
 
-vim.cmd.packadd 'icons'
-
 --- @type table<string, string> Custom icons
 local icons = require 'icons'
 
