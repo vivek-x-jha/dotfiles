@@ -55,7 +55,7 @@ return {
   enumMember = '',
   constant = '󰏿',
   struct = '󰙅',
-  event = '',
+  event = '',
   operator = '󰆕',
   typeparameter = '󰊄',
   table = '',

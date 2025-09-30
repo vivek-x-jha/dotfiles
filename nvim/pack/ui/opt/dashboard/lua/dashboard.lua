@@ -34,7 +34,7 @@ local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   { txt = icons.search .. '  Files', hl = 'DashFiles', keys = 'ff', cmd = fzf 'files' },
   { txt = icons.recent .. '  Recent Files', hl = 'DashRecent', keys = 'fo', cmd = fzf 'oldfiles' },
-  { txt = icons.warn .. '  Event Triggers', hl = 'DashTrigger', keys = 'fa', cmd = fzf 'autocmds' },
+  { txt = icons.event .. '  Event Triggers', hl = 'DashTrigger', keys = 'fa', cmd = fzf 'autocmds' },
   { txt = icons.gear .. '  Settings', hl = 'DashSettings', keys = 's', cmd = table.concat { 'edit ', vim.fn.stdpath 'config', '/init.lua' } },
   { txt = icons.fuzzy .. '  Search Word', hl = 'DashWord', keys = 'fw', cmd = fzf 'live_grep' },
   { txt = icons.cmd_hist .. '  Command History', hl = 'DashCmdHist', keys = 'fc', cmd = fzf 'command_history' },
