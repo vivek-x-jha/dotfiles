@@ -35,7 +35,7 @@ end
 --- @type table<string, string> -- Palette of colors
 local thm = hexify()
 
---- @type table<string, { fg?: string, bg?: string, sp?: string, link?: string, bold?: boolean, italic?: boolean, underline?: boolean }> -- Local and vendor highlight groups with options
+--- @type table<string, vim.api.keyset.highlight> -- Highlight groups
 local highlights = {
   ---------------------------- Defaults ----------------------------------
 
