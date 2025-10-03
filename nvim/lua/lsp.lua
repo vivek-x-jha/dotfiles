@@ -21,7 +21,7 @@ vim.diagnostic.config {
 local server_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
 
 -- Ensure the directory exists
-assert(vim.fn.isdirectory(server_path) == 1, 'Failed to open: ' .. server_path)
+assert(vim.fn.isdirectory(server_path) == 1, '[LSP ERROR] Failed to open: "' .. server_path .. '"')
 
 ---@type string[] -- language server configs
 local servers = {}
