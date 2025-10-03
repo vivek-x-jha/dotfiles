@@ -205,7 +205,7 @@ require('fzf-lua').setup {
   },
 }
 
----@type table<string, { text: string }> Git sign column icons
+---@type table<string, { text: string, show_count?: boolean }> Git sign column icons
 local gs_icons = {
   add = { text = '+' },
   change = { text = '~' },
