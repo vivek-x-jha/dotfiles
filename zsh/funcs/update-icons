@@ -17,6 +17,7 @@ dir_icons=(
   "/Applications/Figma.app" "$HOME/Pictures/icons/figma.png"
   "/Applications/Firefox.app" "$HOME/Pictures/icons/firefox.png"
   "/Applications/Google Chrome.app" "$HOME/Pictures/icons/google-chrome.png"
+  "/Applications/Hammerspoon.app" "$HOME/Pictures/icons/hammerspoon.png"
   "/Applications/iTerm.app" "$HOME/Pictures/icons/iterm2.png"
   "/Applications/iTermAI.app" "$HOME/Pictures/icons/ai-brain.png"
   "/Applications/KeyCastr.app" "$HOME/Pictures/icons/keycastr.png"
