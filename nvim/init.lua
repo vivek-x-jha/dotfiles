@@ -1,6 +1,3 @@
--- Set highlights
-vim.cmd.colorscheme 'sourdiesel'
-
 ------------------------------------ [1/5] Options ------------------------------------
 
 -- Set leader key(s)
@@ -93,16 +90,26 @@ vim.pack.add {
   { src = 'https://github.com/folke/noice.nvim' },
   { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- noice dependency
   { src = 'https://github.com/windwp/nvim-autopairs' },
+  { src = 'https://github.com/vivek-x-jha/nvim-dashboard' },
   { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
   { src = 'https://github.com/rcarriga/nvim-notify' },
+  { src = 'https://github.com/vivek-x-jha/nvim-sourdiesel' },
   { src = 'https://github.com/nvim-pack/nvim-spectre' },
+  { src = 'https://github.com/vivek-x-jha/nvim-statusline' },
   { src = 'https://github.com/kylechui/nvim-surround' },
+  { src = 'https://github.com/vivek-x-jha/nvim-terminal' },
   { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
   { src = 'https://github.com/nvim-treesitter/nvim-treesitter' }, -- noice syntax parsing
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- nvim-tree + statusline icons
   { src = 'https://github.com/nvim-lua/plenary.nvim' }, -- spectre dependency
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
+
+-- Set highlights
+vim.cmd.colorscheme 'sourdiesel'
+
+-- Set statusline
+vim.o.statusline = "%!v:lua.require('nvim-statusline').setup()"
 
 -- Color Previews
 require('nvim-highlight-colors').setup { render = 'foreground' }
@@ -356,8 +363,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-    vim.cmd.packadd 'dashboard'
-    if emptylines and emptyrows and untitled then require('dashboard').setup() end
+    if emptylines and emptyrows and untitled then require('nvim-dashboard').setup() end
   end,
 })
 
@@ -495,8 +501,7 @@ vim.schedule(function()
   vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
   -- Terminal
-  vim.cmd.packadd 'terminal'
-  local terminal = require 'terminal'
+  local terminal = require 'nvim-terminal'
 
   vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
   vim.keymap.set('n', '<leader>h', function() terminal.open { pos = 'sp' } end, { desc = 'Open [h]orizontal terminal' })
@@ -509,5 +514,5 @@ vim.schedule(function()
   vim.keymap.set('n', '<leader>ds', vim.diagnostic.setloclist, { desc = 'LSP diagnostic loclist' })
 
   -- Dashboard
-  vim.keymap.set('n', '<leader>da', function() require('dashboard').setup() end, { desc = 'Toggle Dashboard' })
+  vim.keymap.set('n', '<leader>da', function() require('nvim-dashboard').setup() end, { desc = 'Toggle Dashboard' })
 end)
