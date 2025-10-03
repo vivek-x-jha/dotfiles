@@ -17,12 +17,21 @@ vim.diagnostic.config {
   },
 }
 
----@type string[] language server configs
+--- @type string -- Collect all LSP servers from "$XDG_CONFIG_HOME/nvim/lsp/"
+local server_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
+
+-- Ensure the directory exists
+assert(vim.fn.isdirectory(server_path) == 1, 'Failed to open: ' .. server_path)
+
+---@type string[] -- language server configs
 local servers = {}
 
--- Create table of language servers in "$XDG_CONFIG_HOME/nvim/lsp/"
-for name, kind in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')) do
-  if name:sub(-4) == '.lua' and kind == 'file' then table.insert(servers, name:sub(1, -5)) end
+-- Create table of language server names
+for name, kind in vim.fs.dir(server_path) do
+  --- @type boolean -- flag for valid lua file
+  local is_lua_file = (kind == 'file' and name:sub(-4) == '.lua')
+
+  if is_lua_file then table.insert(servers, name:sub(1, -5)) end
 end
 
 -- Initialize language servers
