@@ -1,9 +1,3 @@
--- Set local and global opts
-require 'options'
-
--- Initialize language servers
-require 'lsp'
-
 -- Load plugins
 vim.pack.add {
   { src = 'https://github.com/saghen/blink.cmp' },
@@ -33,8 +27,11 @@ vim.pack.add {
 -- Set highlights
 vim.cmd.colorscheme 'sourdiesel'
 
--- Set statusline
-vim.o.statusline = "%!v:lua.require('nvim-statusline').setup()"
+-- Set local and global opts
+require 'options'
+
+-- Initialize language servers
+require 'lsp'
 
 -- Configure plugins
 require 'plugins'

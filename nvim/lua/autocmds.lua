@@ -41,8 +41,13 @@ vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'Display Dashboard on blank startup',
   group = vim.api.nvim_create_augroup('DashAU', {}),
   callback = function()
+    --- @type boolean  -- true if the first (and only) line is empty
     local emptylines = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] == ''
+
+    --- @type boolean  -- true if the buffer has exactly one line
     local emptyrows = vim.api.nvim_buf_line_count(0) == 1
+
+    --- @type boolean  -- true if buffer has no name (unsaved/unnamed)
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
     if emptylines and emptyrows and untitled then require('nvim-dashboard').setup() end
