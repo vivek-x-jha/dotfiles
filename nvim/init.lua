@@ -27,10 +27,10 @@ vim.pack.add {
 -- Set highlights
 vim.cmd.colorscheme 'sourdiesel'
 
--- Set local and global opts
+-- Set editor settings + statusline
 require 'options'
 
--- Initialize language servers
+-- Initialize & configure language servers
 require 'lsp'
 
 -- Configure plugins
@@ -39,5 +39,5 @@ require 'plugins'
 -- Set event triggers
 require 'autocmds'
 
--- Set key remappings
+-- Set key mappings
 vim.schedule(function() require 'keymaps' end)
