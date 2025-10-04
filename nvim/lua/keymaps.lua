@@ -76,6 +76,7 @@ vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
 vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
 -- Terminal
+---@type NvTerminal -- terminal buffer
 local terminal = require 'nvim-terminal'
 
 vim.keymap.set('t', '<C-x>', '<C-\\><C-N>', { desc = 'Escape terminal mode' })
