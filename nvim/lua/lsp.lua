@@ -1,11 +1,8 @@
---- @type table<string, string> -- Custom icons
-local icons = require 'icons'
-
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'single' },
   virtual_lines = { current_line = true },
-  virtual_text = { current_line = true, prefix = icons.virtualcircle },
+  virtual_text = { current_line = true, prefix = '#' },
 
   signs = {
     text = {
