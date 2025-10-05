@@ -1,31 +1,26 @@
 --- @type table<string, string> -- commonly used icons
 return {
-  modified = '󰷬',
-
-  -- virtual text
-  virtualblock = '󱓻',
-  virtualcircle = '',
-
   -- general
   bell = ' ',
+  branch = '',
   checkmark = '✔',
+  cmd_hist = '',
+  cursor = '󰆾',
   dotted_circle = '󱥸 ',
+  down = '',
   download = ' ',
   file = '',
   folder = '',
-  gear = '',
-  branch = '',
-  cursor = '󰆾',
-  vim = '',
-  up = '',
-  down = '',
-  recent = '',
-  search = '',
   fuzzy = '',
-  cmd_hist = '',
+  gear = '',
   git = '',
   log = '',
+  modified = '●',
+  recent = '',
+  search = '',
   status = '󰦒',
+  up = '',
+  vim = '',
 
   -- devicons
   javascript = '󰌞',

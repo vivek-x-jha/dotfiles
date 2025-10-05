@@ -17,6 +17,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   desc = 'Reset Snippet',
   group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
   callback = function()
+    ---@type { session: { current_nodes: table, jump_active: boolean }, unlink_current: fun(): nil }
     local ls = require 'luasnip'
 
     if ls.session.current_nodes[vim.api.nvim_get_current_buf()] and not ls.session.jump_active then ls.unlink_current() end
@@ -28,10 +29,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimRe
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   group = vim.api.nvim_create_augroup('TreeAU', {}),
   pattern = '*',
-  callback = function()
-    local nvt = require('nvim-tree.api').tree
-    if nvt.is_visible() then nvt.reload() end
-  end,
+  callback = function() require('nvim-tree.api').tree.reload() end,
 })
 
 ------------------------------------ Local Auto-commands ------------------------------------
@@ -85,24 +83,31 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
   command = 'mkview',
 })
 
--- Trigger user FilePost event
+-- Fire a custom "User FilePost" once we have a real file buffer and the UI is ready.
+-- Also (deferred) retrigger FileType so filetype-dependent plugins/hooks can initialize cleanly.
 vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
-  group = vim.api.nvim_create_augroup('FilePostAU', {}),
+  group = vim.api.nvim_create_augroup('FilePostAU', { clear = true }),
+
+  ---@param args { buf: integer, event: string }
   callback = function(args)
+    ---@type string  -- Full buffer path ('' if none)
     local file = vim.api.nvim_buf_get_name(args.buf)
+
+    ---@type string  -- Buffer type: '', 'nofile', 'acwrite', etc.
     local buftype = vim.api.nvim_get_option_value('buftype', { buf = args.buf })
 
+    -- Mark that the UI has fully entered (only on first UIEnter)
     if not vim.g.ui_entered and args.event == 'UIEnter' then vim.g.ui_entered = true end
 
+    -- Only proceed for a real file buffer after UI is ready
     if file ~= '' and buftype ~= 'nofile' and vim.g.ui_entered then
+      -- Fire a one-time user event for downstream listeners
       vim.api.nvim_exec_autocmds('User', { pattern = 'FilePost', modeline = false })
       vim.api.nvim_del_augroup_by_name 'FilePostAU'
 
-      vim.schedule(function()
-        vim.api.nvim_exec_autocmds('FileType', {})
-        if vim.g.editorconfig then require('editorconfig').config(args.buf) end
-      end)
+      -- Re-run FileType autocommands - defer followups to avoid race/order issues
+      vim.schedule(function() vim.api.nvim_exec_autocmds('FileType', {}) end)
     end
   end,
 })
