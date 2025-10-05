@@ -1,4 +1,3 @@
--- Load plugins
 vim.pack.add {
   { src = 'https://github.com/saghen/blink.cmp' },
   { src = 'https://github.com/stevearc/conform.nvim' },
@@ -24,20 +23,11 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
--- Set highlights
-vim.cmd.colorscheme 'sourdiesel'
+vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors
 
--- Set editor settings + statusline
-require 'options'
+require 'options' -- set global/buffer opts + initialize statusline
+require 'lsp' -- initialize language servers
+require 'plugins' -- configure plugins
+require 'autocmds' -- event triggers
 
--- Initialize & configure language servers
-require 'lsp'
-
--- Configure plugins
-require 'plugins'
-
--- Set event triggers
-require 'autocmds'
-
--- Set key mappings
-vim.schedule(function() require 'keymaps' end)
+vim.schedule(function() require 'keymaps' end) -- defer keymaps to next loop to prevent overwriting keys
