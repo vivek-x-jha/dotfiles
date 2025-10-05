@@ -28,6 +28,6 @@ vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors
 require 'options' -- set global/buffer opts + initialize statusline
 require 'lsp' -- initialize language servers
 require 'plugins' -- configure plugins
-require 'autocmds' -- event triggers
+require 'autocmds' -- set event triggers
 
-vim.schedule(function() require 'keymaps' end) -- defer keymaps to next loop to prevent overwriting keys
+vim.schedule(function() require 'keymaps' end) -- defer settings key maps to next event loop to prevent unwanted remappings
