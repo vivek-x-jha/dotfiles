@@ -1,0 +1,8 @@
+--- Arguments passed to `callback` functions in `nvim_create_autocmd`
+---@class AutocmdCallbackArgs
+---@field id integer     -- Autocmd ID (unique for this definition)
+---@field event string   -- Name of the triggering event (e.g. "BufReadPost")
+---@field group? integer -- Augroup ID if the autocmd belongs to one
+---@field match string   -- Matched pattern or filename
+---@field buf integer    -- Buffer number associated with the event
+---@field file string    -- Filename associated with the event
