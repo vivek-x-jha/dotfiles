@@ -1,9 +1,10 @@
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 -- [1/9] Hide line numbers in Spectre
 autocmd('FileType', {
   desc = 'Hide line numbers for Spectre',
-  group = vim.api.nvim_create_augroup('SpectreAU', {}),
+  group = augroup('SpectreAU', {}),
   pattern = 'spectre_panel',
   callback = function()
     vim.opt_local.number = false
@@ -14,7 +15,7 @@ autocmd('FileType', {
 -- [2/9] Always refresh snippet list with respect to buffer
 autocmd('InsertLeave', {
   desc = 'Reset Snippet',
-  group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
+  group = augroup('LuaSnipAU', {}),
   callback = function()
     ---@type { session: { current_nodes: table<integer, any>, jump_active: boolean }, unlink_current: fun(): nil }
     local ls = require 'luasnip'
@@ -26,7 +27,7 @@ autocmd('InsertLeave', {
 -- [3/9] Auto-refresh NvimTree on relevant events
 autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
-  group = vim.api.nvim_create_augroup('TreeAU', {}),
+  group = augroup('TreeAU', {}),
   pattern = '*',
   callback = function() require('nvim-tree.api').tree.reload() end,
 })
@@ -34,7 +35,7 @@ autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained
 -- [4/9] Display Dashboard on blank startup
 autocmd('VimEnter', {
   desc = 'Display Dashboard on blank startup',
-  group = vim.api.nvim_create_augroup('DashAU', {}),
+  group = augroup('DashAU', {}),
   callback = function()
     --- @type boolean  -- true if the first (and only) line is empty
     local emptylines = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] == ''
@@ -52,7 +53,7 @@ autocmd('VimEnter', {
 -- [5/9] Exclude quickfix buffers from buffer list
 autocmd('FileType', {
   desc = 'Prevents quickfix buffers from appearing in buffer lists',
-  group = vim.api.nvim_create_augroup('BufferAU', {}),
+  group = augroup('BufferAU', {}),
   pattern = 'qf',
   callback = function() vim.opt_local.buflisted = false end,
 })
@@ -60,14 +61,14 @@ autocmd('FileType', {
 -- [6/9] Highlight on yank
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('YankAU', {}),
+  group = augroup('YankAU', {}),
   callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 })
 
 -- [7/9] Load folds
 autocmd('BufWinEnter', {
   desc = 'Load folds when opening file',
-  group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
+  group = augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
   command = 'silent! loadview',
 })
@@ -75,7 +76,7 @@ autocmd('BufWinEnter', {
 -- [8/9] Save folds
 autocmd('BufWinLeave', {
   desc = 'Save folds when closing file',
-  group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
+  group = augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
   command = 'mkview',
 })
@@ -83,7 +84,7 @@ autocmd('BufWinLeave', {
 -- [9/9] Fire a custom "User FilePost" once we have a real file buffer and the UI is ready
 autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
-  group = vim.api.nvim_create_augroup('FilePostAU', { clear = true }),
+  group = augroup('FilePostAU', { clear = true }),
 
   ---@param args AutocmdCallbackArgs
   callback = function(args)
