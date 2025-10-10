@@ -207,9 +207,11 @@ local arrange_3_monitors = function()
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
   positionApp('Arc', screens[3])
+  moveApp 'maximize'
   positionApp('ChatGPT', screens[2])
   moveApp 'maximize'
   positionApp('WezTerm', screens[1])
+  moveApp 'maximize'
 end
 
 -- All other hotkeys
