@@ -1,5 +1,7 @@
+local autocmd = vim.api.nvim_create_autocmd
+
 -- [1/9] Hide line numbers in Spectre
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', {
   desc = 'Hide line numbers for Spectre',
   group = vim.api.nvim_create_augroup('SpectreAU', {}),
   pattern = 'spectre_panel',
@@ -10,7 +12,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- [2/9] Always refresh snippet list with respect to buffer
-vim.api.nvim_create_autocmd('InsertLeave', {
+autocmd('InsertLeave', {
   desc = 'Reset Snippet',
   group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
   callback = function()
@@ -22,7 +24,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 })
 
 -- [3/9] Auto-refresh NvimTree on relevant events
-vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
+autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   group = vim.api.nvim_create_augroup('TreeAU', {}),
   pattern = '*',
@@ -30,7 +32,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimRe
 })
 
 -- [4/9] Display Dashboard on blank startup
-vim.api.nvim_create_autocmd('VimEnter', {
+autocmd('VimEnter', {
   desc = 'Display Dashboard on blank startup',
   group = vim.api.nvim_create_augroup('DashAU', {}),
   callback = function()
@@ -48,7 +50,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 -- [5/9] Exclude quickfix buffers from buffer list
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', {
   desc = 'Prevents quickfix buffers from appearing in buffer lists',
   group = vim.api.nvim_create_augroup('BufferAU', {}),
   pattern = 'qf',
@@ -56,14 +58,14 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- [6/9] Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
+autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('YankAU', {}),
   callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 })
 
 -- [7/9] Load folds
-vim.api.nvim_create_autocmd('BufWinEnter', {
+autocmd('BufWinEnter', {
   desc = 'Load folds when opening file',
   group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
@@ -71,7 +73,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 })
 
 -- [8/9] Save folds
-vim.api.nvim_create_autocmd('BufWinLeave', {
+autocmd('BufWinLeave', {
   desc = 'Save folds when closing file',
   group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
@@ -79,7 +81,7 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
 })
 
 -- [9/9] Fire a custom "User FilePost" once we have a real file buffer and the UI is ready
-vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
+autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
   group = vim.api.nvim_create_augroup('FilePostAU', { clear = true }),
 
