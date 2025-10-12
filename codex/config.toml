@@ -1,3 +1,6 @@
 model = "gpt-5-codex"
 [projects."/Users/mubuntu/.dotfiles"]
 trust_level = "trusted"
+
+[projects."/Users/mubuntu/Library/CloudStorage/Dropbox/developer/weather-tool"]
+trust_level = "trusted"
