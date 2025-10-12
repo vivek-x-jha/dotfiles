@@ -131,9 +131,9 @@ autocmd('FileType', {
     local highlights = {
       DiagnosticHint = 'St_GitBranch',
       DiagnosticInfo = 'St_cwd',
-      DiagnosticWarn = 'St_GitUntracked',
+      DiagnosticWarn = 'St_GitChanged',
       DiagnosticError = 'St_GitConflicted',
-      DiffAdd = 'St_GitChanged',
+      Added = 'St_GitUntracked',
     }
 
     ---@type string[] -- Build winhl string: "Old:New,Old:New,..."
