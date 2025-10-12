@@ -2,10 +2,22 @@
 return {
   cmd = { 'basedpyright-langserver', '--stdio' },
   filetypes = { 'python' },
+
+  root_markers = {
+    'pyproject.toml',
+    'uv.lock',
+    'requirements.txt',
+    'setup.cfg',
+    'setup.py',
+    '.git',
+  },
+
   settings = {
-    python = {
+    basedpyright = {
+      typeCheckingMode = 'strict',
+      venvPath = '.',
+      venv = '.venv',
       analysis = {
-        typeCheckingMode = 'strict',
         autoSearchPaths = true,
         diagnosticMode = 'workspace',
         useLibraryCodeForTypes = true,
