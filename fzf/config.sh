@@ -52,10 +52,10 @@ export FZF_DEFAULT_OPTS="
   --color fg:$BRIGHTBLACK_HEX
   --color fg+:$WHITE_HEX
   --color bg+:-1
-  --color gutter:-1
   --color hl:$BLACK_HEX
   --color hl+:$GREEN_HEX
-  --marker ' '
+  --gutter ' '
+  --marker '* '
   --pointer '󰓒'
 "
 
