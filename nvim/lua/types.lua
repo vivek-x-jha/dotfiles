@@ -6,3 +6,10 @@
 ---@field match string   -- Matched pattern or filename
 ---@field buf integer    -- Buffer number associated with the event
 ---@field file string    -- Filename associated with the event
+
+---@class NotifyEntry
+---@field message string|string[]
+---@field level integer|string|nil
+---@field title string[]|string|nil
+---@field icon string|nil
+---@field time number|nil

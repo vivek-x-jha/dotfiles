@@ -12,7 +12,7 @@ keymap('n', '<leader>fg', function() require('fzf-lua').git_files() end, { desc 
 keymap('n', '<leader>glg', function() require('fzf-lua').git_commits() end, { desc = '[G]it [L]og Graph' })
 keymap('n', '<leader>gst', function() require('fzf-lua').git_status() end, { desc = '[G]it [St]atus' })
 keymap('n', '<leader>gsw', function() require('fzf-lua').git_branches() end, { desc = '[G]it [S]witch' })
-keymap('n', '<leader>un', function() require('pickers.notify').notify_history_picker() end, { desc = 'Notifications: history (fzf-lua)' })
+keymap('n', '<leader>un', function() require('pickers.notify').history() end, { desc = 'Notifications: history (fzf-lua)' })
 
 -- Toggle git blame
 keymap('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
