@@ -29,7 +29,19 @@ autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   group = augroup('TreeAU', {}),
   pattern = '*',
-  callback = function() require('nvim-tree.api').tree.reload() end,
+  callback = function(args)
+    local ok, api = pcall(require, 'nvim-tree.api')
+    if not ok then return end
+
+    -- Skip special buffers that are being deleted (e.g. nvim-pack://*) to avoid E937
+    local buftype = vim.api.nvim_get_option_value('buftype', { buf = args.buf })
+    if buftype ~= '' then return end
+
+    local name = vim.api.nvim_buf_get_name(args.buf)
+    if name == '' or name:match '^nvim%-pack://' then return end
+
+    vim.schedule(function() api.tree.reload() end)
+  end,
 })
 
 -- [4/9] Display Dashboard on blank startup
@@ -84,7 +96,7 @@ autocmd('BufWinLeave', {
 -- [9/9] Fire a custom "User FilePost" once we have a real file buffer and the UI is ready
 autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
-  group = augroup('FilePostAU', { clear = true }),
+  group = augroup('FilePostAU', {}),
 
   ---@param args AutocmdCallbackArgs
   callback = function(args)
@@ -106,5 +118,32 @@ autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
       -- Re-run FileType autocommands - defer followups to avoid race/order issues
       vim.schedule(function() vim.api.nvim_exec_autocmds('FileType', {}) end)
     end
+  end,
+})
+
+-- [10/10] Window-local highlight remaps for vim.pack update/confirm buffer
+autocmd('FileType', {
+  desc = 'Scope Diagnostic/Diff highlight links to only the nvim-pack window',
+  group = augroup('NvimPackHighlights', {}),
+  pattern = 'nvim-pack',
+  callback = function()
+    ---@type table<string, string>
+    local highlights = {
+      DiagnosticHint = 'St_GitBranch',
+      DiagnosticInfo = 'St_cwd',
+      DiagnosticWarn = 'St_GitUntracked',
+      DiagnosticError = 'St_GitConflicted',
+      DiffAdd = 'St_GitChanged',
+    }
+
+    ---@type string[] -- Build winhl string: "Old:New,Old:New,..."
+    local parts = {}
+
+    for old_hl, new_hl in pairs(highlights) do
+      parts[#parts + 1] = old_hl .. ':' .. new_hl
+    end
+
+    -- Apply only to this window
+    vim.api.nvim_set_option_value('winhl', table.concat(parts, ','), { scope = 'local', win = 0 })
   end,
 })

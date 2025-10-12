@@ -78,6 +78,10 @@ keymap('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close buffer' })
 keymap('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
 keymap('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
+-- Tabs
+keymap('n', '<Tab>', '<cmd>tabnext<CR>', { desc = 'Open next tab' })
+keymap('n', '<S-Tab>', '<cmd>tabprevious<CR>', { desc = 'Open previous tab' })
+
 -- Terminal
 ---@type NvTerminal -- terminal buffer
 local terminal = require 'nvim-terminal'
