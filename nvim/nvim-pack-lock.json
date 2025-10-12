@@ -20,9 +20,13 @@
     "nvim-dashboard": [],
     "nvim-highlight-colors": [],
     "nvim-notify": [],
-    "nvim-sourdiesel": [],
+    "nvim-sourdiesel": {
+      "rev": "d44e371"
+    },
     "nvim-spectre": [],
-    "nvim-statusline": [],
+    "nvim-statusline": {
+      "rev": "8102d84"
+    },
     "nvim-surround": [],
     "nvim-terminal": [],
     "nvim-tree.lua": {
