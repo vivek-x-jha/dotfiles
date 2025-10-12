@@ -16,7 +16,9 @@
       "rev": "38c702b"
     },
     "nui.nvim": [],
-    "nvim-autopairs": [],
+    "nvim-autopairs": {
+      "rev": "7a2c97c"
+    },
     "nvim-dashboard": [],
     "nvim-highlight-colors": [],
     "nvim-notify": [],
