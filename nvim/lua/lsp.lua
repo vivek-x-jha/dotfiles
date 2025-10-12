@@ -23,9 +23,9 @@ assert(vim.fn.isdirectory(server_path) == 1, '[LSP ERROR] Failed to open: "' .. 
 ---@type string[] -- language server names
 local servers = {}
 
-for name, kind in vim.fs.dir(server_path) do
+for name, type in vim.fs.dir(server_path) do
   --- @type boolean -- flag for valid lua file
-  local is_lua_file = kind == 'file' and name:sub(-4) == '.lua'
+  local is_lua_file = type == 'file' and name:sub(-4) == '.lua'
 
   if is_lua_file then table.insert(servers, name:sub(1, -5)) end
 end
