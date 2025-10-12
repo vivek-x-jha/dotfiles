@@ -3,7 +3,7 @@
 # -------------------------------- File Editing ---------------------------------------
 
 # Open all files in current directory excluding...
-alias va='$EDITOR $(fd -HItf --exclude .git --exclude .github --exclude Session.vim --exclude "Icon?")'
+alias va='$EDITOR $(fd -HItf --exclude .git --exclude .github --exclude Session.vim --exclude .venv --exclude "Icon?")'
 
 # Fuzzy Search all files in current directory, then open
 alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
