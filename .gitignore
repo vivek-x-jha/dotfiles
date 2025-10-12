@@ -7,9 +7,15 @@ codex/*
 karabiner/assets
 karabiner/automatic_backups
 
-# Python Projects
-.python-version
-*__pycache__
+# Python-generated files
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
 
 # Databases
 *.sqlite3
