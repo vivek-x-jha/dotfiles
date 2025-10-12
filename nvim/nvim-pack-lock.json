@@ -2,7 +2,7 @@
   "plugins": {
     "LuaSnip": [],
     "blink.cmp": {
-      "rev": "cc8c9b7"
+      "rev": "ddeab4c"
     },
     "conform.nvim": {
       "rev": "fbcb4fa"
