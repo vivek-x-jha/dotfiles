@@ -2,7 +2,7 @@
 local icons = require 'icons'
 
 -- [1/15] Color Previews
-require('nvim-highlight-colors').setup { render = 'foreground' }
+require('nvim-highlight-colors').setup { render = 'virtual' }
 
 -- [2/15] LuaSnip: loaders + basic setup (mirrors the Lazy `dependencies.opts`)
 require('luasnip.loaders.from_vscode').lazy_load()
