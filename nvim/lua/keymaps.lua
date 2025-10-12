@@ -1,33 +1,46 @@
 local keymap = vim.keymap.set
 
--- Open picker
-keymap('n', '<leader>ff', function() require('fzf-lua').files() end, { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fo', function() require('fzf-lua').oldfiles() end, { desc = '[R]ecent [B]uffers' })
-keymap('n', '<leader>fa', function() require('fzf-lua').autocmds() end, { desc = '[F]ind Neovim [A]uto-commands' })
-keymap('n', '<leader>fw', function() require('fzf-lua').live_grep() end, { desc = '[F]ind [W]ord' })
-keymap('n', '<leader>fc', function() require('fzf-lua').command_history() end, { desc = '[F]ind [C]ommands' })
-keymap('n', '<leader>fb', function() require('fzf-lua').buffers() end, { desc = '[F]ind [B]uffers' })
-keymap('n', '<leader>fn', function() require('fzf-lua').commands() end, { desc = '[F]ind Neovim [C]ommands' })
-keymap('n', '<leader>fg', function() require('fzf-lua').git_files() end, { desc = '[F]ind [G]it Files' })
-keymap('n', '<leader>glg', function() require('fzf-lua').git_commits() end, { desc = '[G]it [L]og Graph' })
-keymap('n', '<leader>gst', function() require('fzf-lua').git_status() end, { desc = '[G]it [St]atus' })
-keymap('n', '<leader>gsw', function() require('fzf-lua').git_branches() end, { desc = '[G]it [S]witch' })
-keymap('n', '<leader>un', function() require('pickers.notify').history() end, { desc = 'Notifications: history (fzf-lua)' })
+local fzf = require 'fzf-lua'
+local fzf_notify = require 'pickers.notify'
+local gitsigns = require 'gitsigns'
+local noice = require 'noice'
+local tree = require('nvim-tree.api').tree
+local spectre = require 'spectre'
+
+keymap('n', '<leader>ff', function() fzf.files() end, { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fo', function() fzf.oldfiles() end, { desc = '[R]ecent [B]uffers' })
+keymap('n', '<leader>fa', function() fzf.autocmds() end, { desc = '[F]ind Neovim [A]uto-commands' })
+keymap('n', '<leader>fw', function() fzf.live_grep() end, { desc = '[F]ind [W]ord' })
+keymap('n', '<leader>fc', function() fzf.command_history() end, { desc = '[F]ind [C]ommands' })
+keymap('n', '<leader>fb', function() fzf.buffers() end, { desc = '[F]ind [B]uffers' })
+keymap('n', '<leader>fn', function() fzf.commands() end, { desc = '[F]ind Neovim [C]ommands' })
+keymap('n', '<leader>fg', function() fzf.git_files() end, { desc = '[F]ind [G]it Files' })
+keymap('n', '<leader>glg', function() fzf.git_commits() end, { desc = '[G]it [L]og Graph' })
+keymap('n', '<leader>gst', function() fzf.git_status() end, { desc = '[G]it [St]atus' })
+keymap('n', '<leader>gsw', function() fzf.git_branches() end, { desc = '[G]it [S]witch' })
+keymap('n', '<leader>un', function() fzf_notify.history() end, { desc = 'Notifications: history (fzf-lua)' })
 
 -- Toggle git blame
-keymap('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
+keymap('n', '<leader>gb', function() gitsigns.toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
 
 -- Toggle search and replace
-keymap('n', '<leader>S', function() require('spectre').toggle() end, { desc = 'Toggle [S]pectre' })
-keymap('n', '<leader>sw', function() require('spectre').open_visual { select_word = true } end, { desc = '[S]earch current [w]ord' })
-keymap('v', '<leader>sw', function() require('spectre').open_visual() end, { desc = '[S]earch current [w]ord' })
+keymap('n', '<leader>S', function() spectre.toggle() end, { desc = 'Toggle [S]pectre' })
+keymap('n', '<leader>sw', function() spectre.open_visual { select_word = true } end, { desc = '[S]earch current [w]ord' })
+keymap('v', '<leader>sw', function() spectre.open_visual() end, { desc = '[S]earch current [w]ord' })
 
 -- Toggle File Explorer
-keymap('n', '<C-n>', function() require('nvim-tree.api').tree.toggle { focus = false } end, { desc = 'Toggle file explorer' })
-keymap('n', '<leader>e', function() require('nvim-tree.api').tree.open() end, { desc = 'Focus file [e]xplorer' })
+keymap('n', '<C-n>', function()
+  tree.toggle { focus = false }
+  vim.cmd 'wincmd ='
+end, { desc = 'Toggle file explorer' })
+
+keymap('n', '<leader>e', function()
+  tree.open()
+  vim.cmd 'wincmd ='
+end, { desc = 'Focus file [e]xplorer' })
 
 -- Dismiss notifications
-keymap('n', '<leader>nd', function() require('noice').cmd 'dismiss' end, { desc = 'Clear notifications' })
+keymap('n', '<leader>nd', function() noice.cmd 'dismiss' end, { desc = 'Clear notifications' })
 
 ------------------------------------ Local Hotkeys ------------------------------------
 
