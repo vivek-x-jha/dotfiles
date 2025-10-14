@@ -44,6 +44,11 @@ vim.o.softtabstop = 2 -- editing width of a tab
 vim.o.ignorecase = true -- ignore case in search
 vim.o.smartcase = true -- override ignorecase if uppercase in search
 
+-- Configure statusline
+vim.o.laststatus = 3 -- global statusline
+vim.o.showmode = false -- don't show --INSERT--
+vim.o.statusline = "%!v:lua.require('nvim-statusline').setup()" -- initialize statusline
+
 -- Load plugins
 vim.pack.add {
   { src = 'https://github.com/saghen/blink.cmp' },
@@ -72,11 +77,6 @@ vim.pack.add {
 
 -- Set highlights
 vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors
-
--- Configure statusline
-vim.o.laststatus = 3 -- global statusline
-vim.o.showmode = false -- don't show --INSERT--
-vim.o.statusline = "%!v:lua.require('nvim-statusline').setup()" -- initialize statusline
 
 -- Initialize language servers
 require 'lsp'
