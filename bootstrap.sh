@@ -376,9 +376,14 @@ echo -e "${CYAN}󰓒 [$((++step))/13] HAMMERSPOON SETUP 󰓒${RESET}"
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
 echo 'GO TO System Settings > Privacy & Security > Accessibility: ENSURE HAMMERSPOON IS LISTED AND ENABLED'
 
-echo -e "${CYAN}󰓒 [$((++step))/13] NEOVIM VERSION MANAGER 󰓒${RESET}"
-bob install nightly
+echo -e "${CYAN}󰓒 [$((++step))/13] NEOVIM SETUP 󰓒${RESET}"
+# Version manager
 bob install stable
-bob use stable
+bob install nightly
+bob use nightly
+
+# Install LSP tools
+uv tool install basedpyright
+uv tool install ruff
 
 cd || exit
