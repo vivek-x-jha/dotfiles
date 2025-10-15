@@ -1,7 +1,7 @@
 local keymap = vim.keymap.set
 
 local fzf = require 'fzf-lua'
-local fzf_notify = require 'pickers.notify'
+local fzf_notify = require 'plugins.fzf.pickers.notify'
 local gitsigns = require 'gitsigns'
 local noice = require 'noice'
 local tree = require('nvim-tree.api').tree

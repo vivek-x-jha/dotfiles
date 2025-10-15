@@ -3,19 +3,16 @@ local icons = require 'icons'
 
 local M = {}
 
--- HH:MM:SS from seconds
 local function time_hms(sec)
   if type(sec) ~= 'number' then return '' end
   return os.date('%H:%M:%S', math.floor(sec))
 end
 
--- 1-line render for list rows
 local function oneline(v)
   if type(v) == 'table' then return table.concat(v, ' ') end
   return tostring(v or '')
 end
 
--- normalize to lines for preview/buffer
 local function to_lines(msg)
   if type(msg) == 'table' then
     local out = {}
@@ -27,7 +24,6 @@ local function to_lines(msg)
   return { tostring(msg or '') }
 end
 
--- Build reverse map for vim.log.levels once
 local function make_reverse_log_levels()
   local rev = {}
   for name, val in pairs(vim.log.levels or {}) do
@@ -38,29 +34,24 @@ end
 
 local REVERSE_LOG = make_reverse_log_levels()
 
--- Accepts number (vim.log.levels.*) or string ("hint", "INFO", etc.)
 local function level_name_any(lvl)
   if lvl == nil then return '' end
   local t = type(lvl)
   if t == 'number' then
-    return REVERSE_LOG[lvl] or tostring(lvl) -- fallback if unknown
+    return REVERSE_LOG[lvl] or tostring(lvl)
   elseif t == 'string' then
-    -- normalize common variants: "info", "Info" -> "INFO"
     return lvl:upper()
   else
     return tostring(lvl)
   end
 end
 
--- Fixed-width LEVEL column
 local function level_col(lvl)
   local s = level_name_any(lvl)
-  -- keep it neat; widen if you want
   if #s > 7 then s = s:sub(1, 7) end
   return string.format('%-7s', s)
 end
 
--- Write a scratch buffer
 local function write_scratch(bufnr, lines)
   vim.bo[bufnr].buftype = 'nofile'
   vim.bo[bufnr].bufhidden = 'wipe'
@@ -88,7 +79,6 @@ M.history = function()
     return
   end
 
-  -- Build rows: "[idx] HH:MM:SS  LEVEL   message…"
   local rows = {}
   for i, n in ipairs(history) do
     rows[#rows + 1] = string.format('[%d] %s  %s  %s', i, time_hms(n.time), level_col(n.level), oneline(n.message))
@@ -130,7 +120,7 @@ M.history = function()
         local idx = tonumber(s:match '^%[(%d+)%]') or 1
         local n = history[idx]
 
-        vim.cmd 'new' -- horizontal split (use vnew for vertical)
+        vim.cmd 'new'
         local buf = vim.api.nvim_get_current_buf()
         local header = {
           'Level : ' .. level_name_any(n.level),
