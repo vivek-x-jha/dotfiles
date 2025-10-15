@@ -95,6 +95,13 @@ keymap('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 keymap('n', '<Tab>', '<cmd>tabnext<CR>', { desc = 'Open next tab' })
 keymap('n', '<S-Tab>', '<cmd>tabprevious<CR>', { desc = 'Open previous tab' })
 
+-- Path
+keymap('n', '<leader>pp', function()
+  for _, path in ipairs(vim.opt.runtimepath:get()) do
+    print(path)
+  end
+end, { desc = 'List all packages in PATH' })
+
 -- Terminal
 ---@type NvTerminal -- terminal buffer
 local terminal = require 'nvim-terminal'
