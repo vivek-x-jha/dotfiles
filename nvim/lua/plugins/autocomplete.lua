@@ -1,4 +1,5 @@
 local colors = require 'nvim-highlight-colors'
+local ls = require 'luasnip' ---@type any
 
 require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
 require('nvim-surround').setup()
@@ -8,7 +9,7 @@ require('luasnip.loaders.from_vscode').lazy_load()
 require('luasnip.loaders.from_snipmate').lazy_load()
 require('luasnip.loaders.from_lua').lazy_load()
 
-require('luasnip').setup { history = true, updateevents = 'TextChanged,TextChangedI' }
+ls.setup { history = true, updateevents = 'TextChanged,TextChangedI' }
 
 require('blink.cmp').setup {
   keymap = { preset = 'default' },
