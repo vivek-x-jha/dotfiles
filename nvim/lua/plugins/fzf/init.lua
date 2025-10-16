@@ -1,3 +1,4 @@
+--- @type table<string, string> -- Custom icons
 local icons = require 'icons'
 
 require('fzf-lua').setup {
