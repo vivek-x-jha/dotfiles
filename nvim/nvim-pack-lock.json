@@ -1,16 +1,16 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "113f831"
+      "rev": "eec1a84"
     },
     "blink.cmp": {
-      "rev": "cb87357"
+      "rev": "ddeab4c"
     },
     "conform.nvim": {
       "rev": "fbcb4fa"
     },
     "fzf-lua": {
-      "rev": "db45bab"
+      "rev": "db3ccff"
     },
     "gitsigns.nvim": [],
     "indent-blankline.nvim": [],
@@ -25,7 +25,7 @@
     "nvim-highlight-colors": [],
     "nvim-notify": [],
     "nvim-sourdiesel": {
-      "rev": "ff851ad"
+      "rev": "5bd08ed"
     },
     "nvim-spectre": [],
     "nvim-statusline": {

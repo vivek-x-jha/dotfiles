@@ -3,16 +3,22 @@
 local default=main
 local branches=("$@")
 
-# Dynamically fetch feature branches if no arguments are provided
-[[ $# -eq 0 ]] && branches=("${(@f)$(git branch --format='%(refname:short)' | grep '^feature/')}")
+# Dynamically fetch feature branches if no arguments are passed
+if [[ $# -eq 0 ]]; then
+  branches=()
+  while IFS= read -r b; do
+    [[ -n $b ]] && branches+=("$b")
+  done < <(git branch --format='%(refname:short)' | grep '^feature/')
+fi
 
-if [[ ${#branches[@]} -eq 0 ]]; then
-  printf "${YELLOW}[WARN] no feature branches updated${RESET}\n"
+if [[ -z ${branches[1]} ]]; then
+  printf "${BRIGHTYELLOW}[WARN] no feature branches updated${RESET}\n"
+  printf "${BRIGHTBLUE}[INFO] run ${GREEN}\`git branch\`${BRIGHTBLUE} to show available branches\n"
 else
   for branch in "${branches[@]}"; do
     # Check if branch exists
     if ! git branch --format='%(refname:short)' | grep -Fxq "$branch"; then
-      printf "${RED}[ERROR] '%s' not found${RESET} - run ${GREEN}'git branch'${RESET} to show available branches\n" "$branch"
+      printf "${BRIGHTRED}[ERROR] '%s' not found${RESET}\n" "$branch"
       continue
     fi
 
