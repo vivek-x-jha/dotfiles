@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+
+# Ensure uv installed and in $PATH
+command -v uv &>/dev/null || {
+  print -u2 -- "[ERROR] ${GREEN}\`uv\`${RESET} not found in PATH"
+  return 127
+}
+
+tpl_dir="$XDG_DATA_HOME/templates/python"
+local flags=()
+local target_dir=""
+
+# Parse args: detect project dir + description flag
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -d | --desc)
+    shift
+    local desc="$1"
+    flags=(--description "$desc")
+    ;;
+  *)
+    [[ -z "$target_dir" ]] && target_dir="$1"
+    ;;
+  esac
+  shift
+done
+
+# Create python project
+[[ -n "$target_dir" ]] && uv init "$target_dir" "${flags[@]}" || uv init "${flags[@]}"
+
+# Overwrite templates
+local dest_dir="."
+[[ -n "$target_dir" ]] && dest_dir="$target_dir"
+
+[[ -d "$tpl_dir" ]] && {
+  [[ -f "$tpl_dir/.gitignore" ]] && cp -f "$tpl_dir/.gitignore" "$dest_dir"
+  [[ -f "$tpl_dir/.ruff.toml" ]] && cp -f "$tpl_dir/.ruff.toml" "$dest_dir"
+}
