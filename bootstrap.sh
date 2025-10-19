@@ -201,6 +201,7 @@ symlinks=(
   ../.dotfiles/bash "$XDG_CONFIG_HOME" bash
   ../.dotfiles/bat "$XDG_CONFIG_HOME" bat
   ../.dotfiles/blesh "$XDG_CONFIG_HOME" blesh
+  ../.dotfiles/browser "$XDG_CONFIG_HOME" browser
   ../.dotfiles/btop "$XDG_CONFIG_HOME" btop
   ../.dotfiles/codex "$XDG_CONFIG_HOME" codex
   ../.dotfiles/dust "$XDG_CONFIG_HOME" dust
@@ -217,7 +218,6 @@ symlinks=(
   ../.dotfiles/tmux "$XDG_CONFIG_HOME" tmux
   ../.dotfiles/wezterm "$XDG_CONFIG_HOME" wezterm
   ../.dotfiles/yazi "$XDG_CONFIG_HOME" yazi
-  ../.dotfiles/youtube "$XDG_CONFIG_HOME" youtube
   ../.dotfiles/zsh "$XDG_CONFIG_HOME" zsh
 
   ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME" starship.toml
