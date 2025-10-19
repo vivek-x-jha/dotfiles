@@ -38,7 +38,7 @@ export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"
 
 # AI
-export CODEX_HOME="$XDG_CONFIG_HOME/codex"
+export CODEX_HOME="$XDG_STATE_HOME/codex"
 
 # ANSI escape codes
 export BLACK='\e[0;30m'
