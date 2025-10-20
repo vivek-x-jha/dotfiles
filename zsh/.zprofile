@@ -10,12 +10,12 @@
   export HOMEBREW_INSTALL_BADGE="📦"
   eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 
-  # Prepend uv tools to PATH
-  export PATH="$HOME/.local/bin:$PATH"
-
   # Add iTerm uilities to PATH
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 }
+
+# Prepend uv tools to PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 # Add nvim-bin to PATH
 PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
