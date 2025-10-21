@@ -32,7 +32,7 @@ export OP_PLUGIN_ALIASES_SOURCED=1
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
 
 # History
-export LESSHISTFILE="$XDG_STATE_HOME/less/.less_history"
+export LESSHISTFILE="$XDG_STATE_HOME/less/.lesshst"
 export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"
 export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"
