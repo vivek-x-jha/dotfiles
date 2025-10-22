@@ -9,6 +9,8 @@
     "editor.fontFamily": "JetBrainsMonoNerdFont-ExtraLight",
     "editor.fontLigatures": true,
     "editor.fontSize": 15,
+    "editor.fontWeight": "200",
+    "editor.fontWeightBold": "500",
     "editor.guides.bracketPairs": true,
     "editor.language.brackets": [],
     "editor.minimap.enabled": false,
@@ -556,10 +558,9 @@
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.cursorStyle": "underline",
     "terminal.integrated.enablePersistentSessions": false,
-    "terminal.integrated.fontFamily": "LigaSFMonoNerdFont-Light",
     "terminal.integrated.fontSize": 16,
-    "terminal.integrated.fontWeight": "normal",
-    "terminal.integrated.fontWeightBold": "600",
+    "terminal.integrated.fontWeight": "200",
+    "terminal.integrated.fontWeightBold": "500",
     "terminal.integrated.inheritEnv": false,
     "window.confirmSaveUntitledWorkspace": false,
     "window.customTitleBarVisibility": "windowed",
@@ -567,7 +568,7 @@
     "window.restoreFullscreen": true,
     "window.titleBarStyle": "custom",
     "workbench.colorCustomizations": {
-        "[Eva Dark]": {
+        "[Catppuccin Macchiato]": {
             // "actionBar.toggledBackground": "#ff0000",
             "activityBar.activeBackground": "#212030",
             "activityBar.activeBorder": "#212030",
@@ -686,9 +687,14 @@
             "dropdown.foreground": "#9da5b3",
             "dropdown.listBackground": "#342834",
             "editor.background": "#212030",
+            "editor.foreground": "#f4f3f2",
             "editor.findMatchBackground": "#84d2e7",
             "editor.findMatchHighlightBackground": "#80d6fe21",
-            "editorCursor.foreground": "#F4F3F2",
+            "editor.selectionBackground": "#5c617d",
+            "editor.selectionForeground": "#ffffff",
+            "editor.selectionHighlightBackground": "#5c617d55",
+            "editorCursor.background": "#313244",
+            "editorCursor.foreground": "#c9ccfb",
             "editorError.foreground": "#ffc7c7",
             "editorGroup.border": "#212030",
             "editorGroupHeader.noTabsBackground": "#212030",
@@ -705,7 +711,7 @@
             "editorOverviewRuler.modifiedForeground": "#eccef0",
             "editorOverviewRuler.warningForeground": "#fff6c7",
             "editorWarning.foreground": "#fff6c7",
-            // "foreground": "#ff0000",
+            "foreground": "#f4f3f2",
             "gitDecoration.addedResourceForeground": "#ceffc9",
             "gitDecoration.conflictingResourceForeground": "#ffc7c7",
             "gitDecoration.deletedResourceForeground": "#ffc7c7",
@@ -883,13 +889,13 @@
             "terminal.background": "#212030",
             "terminal.border": "#212030",
             "terminal.foreground": "#F4F3F2",
-            "terminal.selectionBackground": "#7d969c71",
+            "terminal.selectionBackground": "#5c617d",
             "terminal.tab.activeBorder": "#d7dae0",
             // "terminalCommandDecoration.defaultBackground": "#b0b7c300",
             // "terminalCommandDecoration.errorBackground": "#e51400",
             // "terminalCommandDecoration.successBackground": "#3ec141",
-            "terminalCursor.background": "#F4F3F2",
-            "terminalCursor.foreground": "#F4F3F2",
+            "terminalCursor.background": "#c9ccfb",
+            "terminalCursor.foreground": "#313244",
             "textBlockQuote.background": "#21252B",
             "textBlockQuote.border": "#fff6c7",
             "textCodeBlock.background": "#21252B",
@@ -918,7 +924,7 @@
             "widget.shadow": "#000000"
         }
     },
-    "workbench.colorTheme": "Eva Dark",
+    "workbench.colorTheme": "Catppuccin Macchiato",
     "workbench.editor.showTabs": "none",
     "workbench.editorAssociations": {
         "*.pdf": "latex-workshop-pdf-hook"
@@ -927,5 +933,6 @@
     "workbench.iconTheme": "material-icon-theme",
     "workbench.panel.defaultLocation": "right",
     "workbench.tree.enableStickyScroll": false,
-    "terminal.integrated.shellIntegration.suggestEnabled": true
+    "terminal.integrated.shellIntegration.suggestEnabled": true,
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font"
 }
