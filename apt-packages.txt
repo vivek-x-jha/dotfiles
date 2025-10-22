@@ -1,0 +1,22 @@
+# apt packages to install on Ubuntu/Debian systems
+build-essential
+curl
+git
+zsh
+tmux
+neovim
+ripgrep
+fd-find
+bat
+fzf
+python3
+python3-pip
+pkg-config
+libssl-dev
+libsqlite3-dev
+unzip
+nodejs
+npm
+github-cli
+
+# Add additional packages below as needed
