@@ -380,6 +380,7 @@ collect_environment() {
 
 ${BLUE}-------------- ENVIRONMENT ------------------${RESET}
 Platform: $DISTRO_NAME
+
 XDG_CONFIG_HOME=$(pretty_path "$XDG_CONFIG_HOME")
 XDG_CACHE_HOME=$(pretty_path "$XDG_CACHE_HOME")
 XDG_DATA_HOME=$(pretty_path "$XDG_DATA_HOME")
