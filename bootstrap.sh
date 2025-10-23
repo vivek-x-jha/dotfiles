@@ -444,10 +444,9 @@ symlink() {
   popd >/dev/null || return
 }
 
+# Link dotfiles into their XDG targets and optional media directory.
+# Usage: create_symlinks
 create_symlinks() {
-  local eza_data="$XDG_DATA_HOME"
-  local media_root="$HOME/${MEDIA:-}"
-
   local dirs=(
     "$XDG_CACHE_HOME"
     "$XDG_STATE_HOME/bash"
@@ -459,6 +458,9 @@ create_symlinks() {
     "$XDG_STATE_HOME/zsh"
     "$XDG_DATA_HOME/zsh"
   )
+
+  # Ensure application directories are created
+  for dir in "${dirs[@]}"; do run "mkdir -p \"$dir\""; done
 
   local symlinks=(
     .dotfiles/bash/.bash_profile "$HOME" .bash_profile
@@ -484,44 +486,42 @@ create_symlinks() {
     ../.dotfiles/yazi "$XDG_CONFIG_HOME" yazi
     ../.dotfiles/zsh "$XDG_CONFIG_HOME" zsh
     ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME" starship.toml
+    themes/sourdiesel.yml "$XDG_CONFIG_HOME/eza" theme.yml
   )
 
-  # Ensure application directories are created
-  for dir in "${dirs[@]}"; do run "mkdir -p \"$dir\""; done
+  local vscode_src="../../../.dotfiles/vscode/settings.json"
+
+  [[ $OS_TYPE == macos ]] && {
+    local app_support="$HOME/Library/Application Support"
+
+    symlinks+=(
+      ../.dotfiles/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
+      ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
+      ../../.dotfiles/eza "$app_support" eza
+    )
+
+    vscode_src="../$vscode_src"
+  }
+
+  # Link Visual Studio Code settings
+  local vscode_target="${app_support:-$XDG_CONFIG_HOME}/Code/User"
+  symlinks+=("$vscode_src" "$vscode_target" settings.json)
 
   # Link 1Password ssh config
   ((USE_1PASSWORD)) && symlinks+=(../.dotfiles/1Password "$XDG_CONFIG_HOME" 1Password)
 
-  # Handle macOS specific applications that need to be linked
-  [[ $OS_TYPE == macos ]] && {
-    symlinks+=(
-      ../.dotfiles/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
-      ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
-    )
+  # Link MEDIA directory (i.e. Dropbox/)
+  [[ -z $MEDIA ]] && logg -w 'Media path not set. Skipping media symlinks...'
 
-    # Eza requires different data folder on macOS
-    eza_data="$HOME/Library/Application Support"
-  }
-
-  # Link eza
-  symlinks+=(../../.dotfiles/eza "$eza_data" eza)
-
-  # Link MEDIA directory
-  if [[ -z $MEDIA ]]; then
-    logg -w 'Media path not set. Skipping media symlinks...'
-  elif [[ ! -d $media_root ]]; then
-    logg -w "Media directory '$media_root' not found. Skipping media symlinks..."
-  else
-    symlinks+=(
-      "$MEDIA/developer" "$HOME" Developer
-      "../$MEDIA/content" "$HOME/Movies" content
-      "../$MEDIA/icons" "$HOME/Pictures" icons
-      "../$MEDIA/screenshots" "$HOME/Pictures" screenshots
-      "../$MEDIA/wallpapers" "$HOME/Pictures" wallpapers
-      "../$MEDIA/education" "$HOME/Documents" education
-      "../$MEDIA/finances" "$HOME/Documents" finances
-    )
-  fi
+  [[ -n $MEDIA && -d "$HOME/$MEDIA" ]] && symlinks+=(
+    "$MEDIA/developer" "$HOME" Developer
+    "../$MEDIA/content" "$HOME/Movies" content
+    "../$MEDIA/icons" "$HOME/Pictures" icons
+    "../$MEDIA/screenshots" "$HOME/Pictures" screenshots
+    "../$MEDIA/wallpapers" "$HOME/Pictures" wallpapers
+    "../$MEDIA/education" "$HOME/Documents" education
+    "../$MEDIA/finances" "$HOME/Documents" finances
+  )
 
   # Ensure all links are created
   for ((i = 0; i < ${#symlinks[@]}; i += 3)); do
