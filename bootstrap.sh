@@ -114,7 +114,7 @@ safe_op_call() {
   ((USE_1PASSWORD)) || return 1
 
   command -v op &>/dev/null || {
-    logg -w "1Password CLI not installed. Skipping related action."
+    logg -w '1Password CLI not installed. Skipping related action.'
     return 1
   }
 
@@ -149,9 +149,9 @@ append_if_missing() {
 detect_platform() {
   case "$(uname -s)" in
   Darwin)
-    OS_TYPE="macos"
-    PACKAGE_MANAGER="brew"
-    DISTRO_NAME="macOS"
+    OS_TYPE=macos
+    PACKAGE_MANAGER=brew
+    DISTRO_NAME=macOS
     ;;
   Linux)
     if [[ -r /etc/os-release ]]; then
@@ -160,8 +160,8 @@ detect_platform() {
       DISTRO_NAME="${PRETTY_NAME:-${NAME:-Linux}}"
       case "${ID_LIKE:-}$ID" in
       *debian* | *ubuntu*)
-        OS_TYPE="linux"
-        PACKAGE_MANAGER="apt"
+        OS_TYPE=linux
+        PACKAGE_MANAGER=apt
         ;;
       *)
         logg -e "Linux distribution '$DISTRO_NAME' is not yet supported."
@@ -169,7 +169,7 @@ detect_platform() {
         ;;
       esac
     else
-      logg -e "Unable to detect Linux distribution (missing /etc/os-release)."
+      logg -e 'Unable to detect Linux distribution (missing /etc/os-release).'
       exit 1
     fi
     ;;
@@ -184,19 +184,19 @@ detect_platform() {
 
 setup_package_manager() {
   if [[ $PACKAGE_MANAGER == brew ]]; then
-    notify -s "Ensuring Homebrew is installed"
+    notify -s 'Ensuring Homebrew is installed'
     if [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]]; then
       eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
     else
       if ((DRY_RUN)); then
-        logg -i "[dry-run] Install Homebrew"
+        logg -i '[dry-run] Install Homebrew'
       else
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
       fi
     fi
   elif [[ $PACKAGE_MANAGER == apt ]]; then
-    notify -s "Ensuring apt is available"
+    notify -s 'Ensuring apt is available'
     command -v apt-get &>/dev/null || {
       logg -e "Missing command 'apt-get'. Install via: sudo apt install apt"
       exit 1
@@ -206,10 +206,10 @@ setup_package_manager() {
 
 install_package_sets() {
   if [[ $PACKAGE_MANAGER == brew ]]; then
-    if confirm "Install packages & apps from Brewfile" "Y"; then
-      notify -s "Select Brewfile"
+    if confirm 'Install packages & apps from Brewfile' 'Y'; then
+      notify -s 'Select Brewfile'
       local brewfile
-      read -rp "Enter Brewfile path or URL (<Enter> to use default): " brewfile
+      read -rp 'Enter Brewfile path or URL (<Enter> to use default): ' brewfile
       [[ -z $brewfile ]] && brewfile="$BREWFILE_DEFAULT"
       logg -i "Using Brewfile: $brewfile"
 
@@ -234,48 +234,48 @@ install_package_sets() {
       fi
     fi
 
-    notify -s "Refresh Brewfile snapshot"
+    notify -s 'Refresh Brewfile snapshot'
     if ((DRY_RUN)); then
       logg -i "[dry-run] brew bundle dump --force --file=$HOME/.dotfiles/Brewfile"
     else
       brew bundle dump --force --file="$HOME/.dotfiles/Brewfile"
     fi
 
-    if confirm "Run brew cleanup & doctor" "N"; then
-      notify -s "Running brew maintenance"
+    if confirm "Run brew cleanup & doctor" 'N'; then
+      notify -s 'Running brew maintenance'
       ((DRY_RUN)) || brew cleanup
       ((DRY_RUN)) || brew doctor
     fi
 
-    if confirm "Update brew formulae & casks" "N"; then
-      notify -s "Updating Homebrew packages"
+    if confirm "Update brew formulae & casks" 'N'; then
+      notify -s 'Updating Homebrew packages'
       ((DRY_RUN)) || brew upgrade
       if command -v brew &>/dev/null && brew tap | grep -q '^buo/cask-upgrade$'; then
         ((DRY_RUN)) || brew cu -af
       fi
     fi
-  elif [[ $PACKAGE_MANAGER == "apt" ]]; then
-    if confirm "Update apt package lists" "Y"; then
-      notify -s "Updating apt cache"
+  elif [[ $PACKAGE_MANAGER == apt ]]; then
+    if confirm "Update apt package lists" 'Y'; then
+      notify -s 'Updating apt cache'
       if ((DRY_RUN)); then
-        logg -i "[dry-run] sudo apt update"
+        logg -i '[dry-run] sudo apt update'
       else
         sudo apt update
       fi
     fi
 
-    if confirm "Upgrade installed apt packages" "N"; then
-      notify -s "Upgrading apt packages"
+    if confirm "Upgrade installed apt packages" 'N'; then
+      notify -s 'Upgrading apt packages'
       if ((DRY_RUN)); then
-        logg -i "[dry-run] sudo apt upgrade -y"
+        logg -i '[dry-run] sudo apt upgrade -y'
       else
         sudo apt upgrade -y
       fi
     fi
 
     if [[ -f $APT_MANIFEST_DEFAULT ]]; then
-      if confirm "Install apt packages from $(basename "$APT_MANIFEST_DEFAULT")" "Y"; then
-        notify -s "Installing apt packages"
+      if confirm "Install apt packages from $(basename "$APT_MANIFEST_DEFAULT")" 'Y'; then
+        notify -s 'Installing apt packages'
         mapfile -t apt_packages < <(grep -vE '^(#|\s*$)' "$APT_MANIFEST_DEFAULT")
         if [[ ${#apt_packages[@]} -gt 0 ]]; then
           if ((DRY_RUN)); then
@@ -298,9 +298,9 @@ install_package_sets() {
 signin_1password() {
   ((USE_1PASSWORD)) || return
 
-  notify -s "Signing into 1Password CLI"
+  notify -s 'Signing into 1Password CLI'
   safe_op_call signin || {
-    logg -w "Skipping 1Password features (signin failed)."
+    logg -w 'Skipping 1Password features (signin failed).'
     USE_1PASSWORD=0
   }
 }
@@ -330,18 +330,18 @@ collect_environment() {
       read -rp "${WHITE}Git Username${RESET} (${existing_git_name:-required}): " GIT_NAME
       [[ -z $GIT_NAME && -n $existing_git_name ]] && GIT_NAME="$existing_git_name"
       [[ -n $GIT_NAME ]] && break
-      logg -w "Git username required."
+      logg -w 'Git username required.'
     done
 
     while true; do
       read -rp "${WHITE}Git Email${RESET} (${existing_git_email:-required}): " GIT_EMAIL
       [[ -z $GIT_EMAIL && -n $existing_git_email ]] && GIT_EMAIL="$existing_git_email"
       [[ -n $GIT_EMAIL ]] && break
-      logg -w "Git email required."
+      logg -w 'Git email required.'
     done
 
     if ((USE_1PASSWORD)); then
-      local default_vault="Private"
+      local default_vault=Private
       read -rp "${WHITE}1Password Vault name${RESET} (<Enter> for '$default_vault'): " OP_VAULT
       OP_VAULT="${OP_VAULT:-$default_vault}"
 
@@ -541,15 +541,15 @@ configure_macos_defaults() {
   run "defaults write com.apple.screencapture location -string $HOME/Pictures/screenshots"
 
   local defaults_settings=(
-    "com.apple.dock autohide-delay -float 0.1"
-    "com.apple.dock autohide -bool true"
-    "com.apple.dock autohide-time-modifier -int 0"
-    "com.apple.dock appswitcher-all-displays -bool true"
-    "com.apple.dock expose-animation-duration -float 0.1"
-    "com.apple.finder FXPreferredViewStyle -string Nlsv"
-    "com.apple.finder QuitMenuItem -bool true"
-    "com.apple.finder AppleShowAllFiles -bool true"
-    "com.apple.finder FXEnableExtensionChangeWarning -bool false"
+    'com.apple.dock autohide-delay -float 0.1'
+    'com.apple.dock autohide -bool true'
+    'com.apple.dock autohide-time-modifier -int 0'
+    'com.apple.dock appswitcher-all-displays -bool true'
+    'com.apple.dock expose-animation-duration -float 0.1'
+    'com.apple.finder FXPreferredViewStyle -string Nlsv'
+    'com.apple.finder QuitMenuItem -bool true'
+    'com.apple.finder AppleShowAllFiles -bool true'
+    'com.apple.finder FXEnableExtensionChangeWarning -bool false'
   )
 
   local domain key option value
@@ -558,7 +558,7 @@ configure_macos_defaults() {
     run "defaults write $domain $key $option $value"
   done
 
-  run "killall Dock"
+  run 'killall Dock'
 }
 
 configure_git_and_github() {
@@ -573,10 +573,11 @@ configure_git_and_github() {
   fi
 
   local github="git@github.com:$GITHUB_NAME/dotfiles.git"
+
   if ((DRY_RUN)); then
     logg -i "[dry-run] git -C $HOME/.dotfiles remote set-url origin $github"
   else
-    git -C "$HOME/.dotfiles" remote set-url origin "$github" 2>/dev/null || logg -w "Failed to update origin remote."
+    git -C "$HOME/.dotfiles" remote set-url origin "$github" 2>/dev/null || logg -w 'Failed to update origin remote.'
     if [[ $GITHUB_NAME != "vivek-x-jha" ]]; then
       git -C "$HOME/.dotfiles" remote add upstream "$github" 2>/dev/null || true
     fi
@@ -600,19 +601,19 @@ configure_git_and_github() {
 
   if command -v gh &>/dev/null; then
     if ((DRY_RUN)); then
-      logg -i "[dry-run] gh auth login"
+      logg -i '[dry-run] gh auth login'
       logg -i "[dry-run] gh repo set-default $GITHUB_NAME/dotfiles"
     else
       (cd "$HOME/.dotfiles" && gh auth login)
       (cd "$HOME/.dotfiles" && gh repo set-default "$GITHUB_NAME/dotfiles")
     fi
   else
-    logg -w "GitHub CLI not installed. Skipping gh auth."
+    logg -w 'GitHub CLI not installed. Skipping gh auth.'
   fi
 
   if ((DRY_RUN)); then
     logg -i "[dry-run] rm -f $HOME/.dotfiles/gh/hosts.yml"
-    logg -i "[dry-run] git add --all"
+    logg -i '[dry-run] git add --all'
   else
     rm -f "$HOME/.dotfiles/gh/hosts.yml"
     git -C "$HOME/.dotfiles" add --all || true
@@ -624,50 +625,50 @@ install_templates() {
     if ((DRY_RUN)); then
       logg -i "[dry-run] gh repo clone vivek-x-jha/templates $XDG_DATA_HOME/templates"
     else
-      gh repo clone vivek-x-jha/templates "$XDG_DATA_HOME/templates" 2>/dev/null || logg -w "gh repo clone failed (already exists?)."
+      gh repo clone vivek-x-jha/templates "$XDG_DATA_HOME/templates" 2>/dev/null || logg -w 'gh repo clone failed (already exists?).'
     fi
   else
-    logg -w "GitHub CLI not available. Skipping template clone."
+    logg -w 'GitHub CLI not available. Skipping template clone.'
   fi
 }
 
 install_shell_plugins() {
   if [[ ! -f $XDG_DATA_HOME/zap/zap.zsh ]]; then
     if ((DRY_RUN)); then
-      logg -i "[dry-run] zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k"
+      logg -i '[dry-run] zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k'
     else
       zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
     fi
   fi
 
   if ((DRY_RUN)); then
-    logg -i "[dry-run] git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git"
+    logg -i '[dry-run] git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git'
     logg -i "[dry-run] make -C ble.sh install PREFIX=$HOME/.local"
-    logg -i "[dry-run] rm -rf ble.sh"
+    logg -i '[dry-run] rm -rf ble.sh'
   else
     if git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git; then
       make -C ble.sh install PREFIX="$HOME/.local"
       rm -rf ble.sh
     else
-      logg -w "Unable to clone ble.sh"
+      logg -w 'Unable to clone ble.sh'
     fi
   fi
 }
 
 setup_atuin_sync() {
   if ! command -v atuin &>/dev/null; then
-    logg -w "Atuin not installed. Skipping sync setup."
+    logg -w 'Atuin not installed. Skipping sync setup.'
     return
   fi
 
   if ! ((USE_1PASSWORD)); then
-    logg -w "1Password disabled. Skipping Atuin vault automation."
+    logg -w '1Password disabled. Skipping Atuin vault automation.'
     return
   fi
 
   if ((DRY_RUN)); then
     logg -i "[dry-run] op item get $ATUIN_OP_TITLE --vault $OP_VAULT"
-    logg -i "[dry-run] atuin register/login"
+    logg -i '[dry-run] atuin register/login'
     return
   fi
 
@@ -685,7 +686,7 @@ setup_atuin_sync() {
   local atuin_password
   atuin_password="$(get_op_field "$ATUIN_OP_TITLE" password)"
   if [[ -z $atuin_password ]]; then
-    logg -w "Failed to fetch Atuin password from 1Password. Skipping sync."
+    logg -w 'Failed to fetch Atuin password from 1Password. Skipping sync.'
     return
   fi
 
@@ -703,11 +704,11 @@ setup_atuin_sync() {
 
 rebuild_bat_cache() {
   if ! command -v bat &>/dev/null; then
-    logg -w "bat not installed. Skipping cache rebuild."
+    logg -w 'bat not installed. Skipping cache rebuild.'
     return
   fi
   if ((DRY_RUN)); then
-    logg -i "[dry-run] bat cache --build"
+    logg -i '[dry-run] bat cache --build'
   else
     bat cache --build
   fi
@@ -718,7 +719,7 @@ configure_sudo_auth() {
     local brew_prefix
     brew_prefix=$(brew --prefix 2>/dev/null)
     if [[ -z $brew_prefix ]]; then
-      logg -w "Unable to determine Homebrew prefix for Touch ID setup."
+      logg -w 'Unable to determine Homebrew prefix for Touch ID setup.'
       return
     fi
     local pam_content="# Authenticate with Touch ID - even in tmux\nauth  optional    ${brew_prefix}/lib/pam/pam_reattach.so ignore_ssh\nauth  sufficient  pam_tid.so"
@@ -726,7 +727,7 @@ configure_sudo_auth() {
       logg -i "[dry-run] sudo tee /etc/pam.d/sudo_local <<<'$pam_content'"
     else
       printf '%s\n' "$pam_content" | sudo tee /etc/pam.d/sudo_local >/dev/null
-      logg -i "UPDATED /etc/pam.d/sudo_local"
+      logg -i 'UPDATED /etc/pam.d/sudo_local'
     fi
   else
     logg -w "Touch ID sudo configuration not applicable on $DISTRO_NAME."
@@ -739,7 +740,7 @@ suppress_login_banner() {
   else
     touch "$HOME/.hushlogin"
   fi
-  logg -i "Ensured ~/.hushlogin exists"
+  logg -i 'Ensured ~/.hushlogin exists'
 }
 
 change_shell_default() {
@@ -750,7 +751,7 @@ change_shell_default() {
     if [[ -n $brew_prefix ]]; then
       shell_paths=("$brew_prefix/bin/bash" "$brew_prefix/bin/zsh")
     else
-      logg -w "Homebrew prefix unavailable; skipping shell change."
+      logg -w 'Homebrew prefix unavailable; skipping shell change.'
       return
     fi
   else
@@ -782,7 +783,7 @@ change_shell_default() {
     fi
     logg -i "SHELL=$new_shell"
   else
-    logg -w "No shell candidates found to set as default."
+    logg -w 'No shell candidates found to set as default.'
   fi
 }
 
@@ -792,7 +793,7 @@ configure_desktop_integration() {
       logg -i "[dry-run] defaults write org.hammerspoon.Hammerspoon MJConfigFile $XDG_CONFIG_HOME/hammerspoon/init.lua"
     else
       defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
-      logg -i "Configure System Settings > Privacy & Security > Accessibility for Hammerspoon."
+      logg -i 'Configure System Settings > Privacy & Security > Accessibility for Hammerspoon.'
     fi
   else
     logg -w "Hammerspoon configuration skipped on $DISTRO_NAME. Configure your window manager manually."
@@ -802,10 +803,10 @@ configure_desktop_integration() {
 install_linux_optional_tools() {
   [[ $OS_TYPE == linux ]] || return
 
-  notify -s "Install optional CLI tooling"
+  notify -s 'Install optional CLI tooling'
 
   if command -v atuin &>/dev/null; then
-    logg -i "Atuin already installed."
+    logg -i 'Atuin already installed.'
   else
     local atuin_cmd="curl --proto '=https' --tlsv1.2 -sSf https://repo.atuin.sh/install.sh | bash"
     if ((DRY_RUN)); then
@@ -816,41 +817,41 @@ install_linux_optional_tools() {
   fi
 
   if command -v op &>/dev/null; then
-    logg -i "1Password CLI already installed."
+    logg -i '1Password CLI already installed.'
   else
-    local key_cmd="curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg"
+    local key_cmd='curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg'
     local repo_cmd="printf '%s\n' 'deb [signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list >/dev/null"
     if ((DRY_RUN)); then
       logg -i "[dry-run] $key_cmd"
       logg -i "[dry-run] $repo_cmd"
-      logg -i "[dry-run] sudo apt update"
-      logg -i "[dry-run] sudo apt install -y 1password-cli"
+      logg -i '[dry-run] sudo apt update'
+      logg -i '[dry-run] sudo apt install -y 1password-cli'
     else
       run "$key_cmd"
       run "$repo_cmd"
-      run "sudo apt update"
-      run "sudo apt install -y 1password-cli"
+      run 'sudo apt update'
+      run 'sudo apt install -y 1password-cli'
     fi
   fi
 
   if command -v bob &>/dev/null; then
-    logg -i "bob already installed."
+    logg -i 'bob already installed.'
   else
     if command -v cargo &>/dev/null; then
       if ((DRY_RUN)); then
-        logg -i "[dry-run] cargo install bob-nvim"
+        logg -i '[dry-run] cargo install bob-nvim'
       else
-        run "cargo install bob-nvim"
+        run 'cargo install bob-nvim'
       fi
     else
-      logg -w "Rust toolchain (cargo) not found; skipping bob installation."
+      logg -w 'Rust toolchain (cargo) not found; skipping bob installation.'
     fi
   fi
 
   if command -v uv &>/dev/null; then
-    logg -i "uv already installed."
+    logg -i 'uv already installed.'
   else
-    local uv_cmd="curl -Ls https://astral.sh/uv/install.sh | sh"
+    local uv_cmd='curl -Ls https://astral.sh/uv/install.sh | sh'
     if ((DRY_RUN)); then
       logg -i "[dry-run] $uv_cmd"
     else
@@ -862,26 +863,26 @@ install_linux_optional_tools() {
 setup_neovim() {
   if command -v bob &>/dev/null; then
     if ((DRY_RUN)); then
-      logg -i "[dry-run] bob install stable && bob install nightly && bob use nightly"
+      logg -i '[dry-run] bob install stable && bob install nightly && bob use nightly'
     else
       bob install stable
       bob install nightly
       bob use nightly
     fi
   else
-    logg -w "bob not installed; skipping Neovim version management."
+    logg -w 'bob not installed; skipping Neovim version management.'
   fi
 
   if command -v uv &>/dev/null; then
     if ((DRY_RUN)); then
-      logg -i "[dry-run] uv tool install basedpyright"
-      logg -i "[dry-run] uv tool install ruff"
+      logg -i '[dry-run] uv tool install basedpyright'
+      logg -i '[dry-run] uv tool install ruff'
     else
       uv tool install basedpyright
       uv tool install ruff
     fi
   else
-    logg -w "uv not installed; skipping LSP tool installs."
+    logg -w 'uv not installed; skipping LSP tool installs.'
   fi
 }
 
@@ -892,7 +893,7 @@ authorize() {
   command -v sudo &>/dev/null || return
 
   if ! sudo -v; then
-    logg -w "Unable to refresh sudo credentials; privileged steps may prompt for password."
+    logg -w 'Unable to refresh sudo credentials; privileged steps may prompt for password.'
     return
   fi
 
@@ -936,7 +937,7 @@ HELP
   # Ensure xcode-select installed on macOS
   [[ $OS_TYPE == macos ]] &&
     ! command -v xcode-select &>/dev/null &&
-    logg -e "Please install Xcode Command Line Tools: xcode-select --install" &&
+    logg -e 'Please install Xcode Command Line Tools: xcode-select --install' &&
     exit 1
 
   # https://specifications.freedesktop.org/basedir-spec/latest/#introduction
@@ -957,47 +958,47 @@ HELP
   ((USE_1PASSWORD && !op_available)) && logg -w '1Password CLI not detected. Skipping related steps.' && USE_1PASSWORD=0
 
   # Begin core install and configuration of applications and CLI tools
-  notify "INSTALLING COMMANDS & APPS"
+  notify 'INSTALLING COMMANDS & APPS'
   setup_package_manager
   install_package_sets
 
-  notify "SET ENVIRONMENT"
+  notify 'SET ENVIRONMENT'
   collect_environment
 
-  notify "CREATE SYMLINKS & DIRECTORIES"
+  notify 'CREATE SYMLINKS & DIRECTORIES'
   create_symlinks
 
-  notify "CONFIGURE OS OPTIONS"
+  notify 'CONFIGURE OS OPTIONS'
   configure_macos_defaults
 
-  notify "CONFIGURE GIT AND GITHUB CLI"
+  notify 'CONFIGURE GIT AND GITHUB CLI'
   configure_git_and_github
 
-  notify "INSTALL TEMPLATES"
+  notify 'INSTALL TEMPLATES'
   install_templates
 
-  notify "INSTALL SHELL PLUGINS"
+  notify 'INSTALL SHELL PLUGINS'
   install_shell_plugins
 
-  notify "SETUP ATUIN SYNC"
+  notify 'SETUP ATUIN SYNC'
   setup_atuin_sync
 
-  notify "LOAD BAT THEMES"
+  notify 'LOAD BAT THEMES'
   rebuild_bat_cache
 
-  notify "SETUP SUDO AUTH"
+  notify 'SETUP SUDO AUTH'
   configure_sudo_auth
 
-  notify "SUPPRESS LOGIN BANNER"
+  notify 'SUPPRESS LOGIN BANNER'
   suppress_login_banner
 
-  notify "CHANGE SHELL"
+  notify 'CHANGE SHELL'
   change_shell_default
 
-  notify "DESKTOP INTEGRATION"
+  notify 'DESKTOP INTEGRATION'
   configure_desktop_integration
 
-  notify "NEOVIM SETUP"
+  notify 'NEOVIM SETUP'
   setup_neovim
 
   # Exit confirmation messages
