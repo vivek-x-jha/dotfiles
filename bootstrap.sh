@@ -286,16 +286,6 @@ install_package_sets() {
   fi
 }
 
-signin_1password() {
-  ((USE_1PASSWORD)) || return
-
-  notify -s 'Signing into 1Password CLI'
-  safe_op_call signin || {
-    logg -w 'Skipping 1Password features (signin failed).'
-    USE_1PASSWORD=0
-  }
-}
-
 get_op_field() {
   local item="$1"
   local field="$2"
@@ -308,8 +298,16 @@ get_op_field() {
   printf '%s' "$value"
 }
 
+# Prepare installer output message after collecting environment variable user input
+# Usage collect_environment
 collect_environment() {
-  signin_1password
+  # Sign into 1Password CLI when integration is enabled
+  ((USE_1PASSWORD)) && {
+    notify -s 'Signing into 1Password CLI'
+    safe_op_call signin || { logg -w 'Skipping 1Password features (signin failed).' && USE_1PASSWORD=0; }
+  }
+
+  # Get any exiosting Git metadata
   local existing_git_name existing_git_email existing_signingkey
 
   existing_git_name=$(git config --global user.name 2>/dev/null || true)
