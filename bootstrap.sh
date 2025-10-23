@@ -448,6 +448,8 @@ symlink() {
 # Link dotfiles into their XDG targets and optional media directory.
 # Usage: create_symlinks
 create_symlinks() {
+  local vscode_src='../../../.dotfiles/vscode/settings.json'
+
   local dirs=(
     "$XDG_CACHE_HOME"
     "$XDG_STATE_HOME/bash"
@@ -459,9 +461,6 @@ create_symlinks() {
     "$XDG_STATE_HOME/zsh"
     "$XDG_DATA_HOME/zsh"
   )
-
-  # Ensure application directories are created
-  for dir in "${dirs[@]}"; do run "mkdir -p \"$dir\""; done
 
   local symlinks=(
     .dotfiles/bash/.bash_profile "$HOME" .bash_profile
@@ -490,22 +489,24 @@ create_symlinks() {
     themes/sourdiesel.yml "$XDG_CONFIG_HOME/eza" theme.yml
   )
 
-  local vscode_src="../../../.dotfiles/vscode/settings.json"
+  # Ensure application directories are created
+  for dir in "${dirs[@]}"; do run "mkdir -p \"$dir\""; done
 
+  # Add macOS specific tools
   [[ $OS_TYPE == macos ]] && {
-    local app_support="$HOME/Library/Application Support"
+    local app_data="$HOME/Library/Application Support"
 
     symlinks+=(
       ../.dotfiles/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
       ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
-      ../../.dotfiles/eza "$app_support" eza
+      ../../.dotfiles/eza "$app_data" eza
     )
 
     vscode_src="../$vscode_src"
   }
 
   # Link Visual Studio Code settings
-  local vscode_target="${app_support:-$XDG_CONFIG_HOME}/Code/User"
+  local vscode_target="${app_data:-$XDG_CONFIG_HOME}/Code/User"
   symlinks+=("$vscode_src" "$vscode_target" settings.json)
 
   # Link 1Password ssh config
