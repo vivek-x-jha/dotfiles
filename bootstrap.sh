@@ -36,7 +36,7 @@ APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
 
 # -------------------------------------- HELPER FUNCTIONS -------------------------------------
 
-# print standardized and colorized log messages
+# [HF1] print standardized and colorized log messages
 # Usage: logg -i | -w | -e "message"
 logg() {
   local opt="$1"
@@ -53,7 +53,7 @@ logg() {
   printf '%b[%s] %s%b\n' "$color" "$level" "$*" "$RESET"
 }
 
-# print step progress message (supports main and substeps)
+# [HF2] print step progress message (supports main and substeps)
 # Usage: notify [-s] "message"
 notify() {
   local minor=''
@@ -66,7 +66,7 @@ notify() {
   printf '\n%s\n' "${CYAN}${ICON} [${STEP}${minor}/${TOTAL_STEPS}] $* ${ICON}${RESET}"
 }
 
-# execute a command, honoring dry-run mode
+# [HF3] execute a command, honoring dry-run mode
 # Usage: run "command"
 run() {
   local cmd="$1"
@@ -75,7 +75,7 @@ run() {
   eval "$cmd"
 }
 
-# Convert paths under $HOME into a tilde-prefixed display string
+# [HF4] Convert paths under $HOME into a tilde-prefixed display string
 # Usage: pretty_path "/Users/me/.config"
 pretty_path() {
   local path="$1"
@@ -84,10 +84,11 @@ pretty_path() {
   printf '%s' "$path"
 }
 
-# ask a yes/no question with optional default
+# [HF5] ask a yes/no question with optional default
 # Usage: confirm "prompt" [default]
 confirm() {
-  local prompt="$1" default="${2:-}"
+  local prompt="$1"
+  local default="${2:-}"
   local suffix answer
 
   case "$default" in
@@ -110,6 +111,8 @@ confirm() {
   done
 }
 
+# [HF6] run 1Password CLI commands when integration is enabled
+# Usage: safe_op_call <subcommand> [args...]
 safe_op_call() {
   ((USE_1PASSWORD)) || return 1
 
@@ -129,18 +132,6 @@ safe_op_call() {
   [[ ${#quoted_args[@]} -gt 0 ]] && cmd+=" ${quoted_args[*]}"
 
   run "$cmd"
-}
-
-append_if_missing() {
-  local file="$1"
-  local line="$2"
-
-  if ((DRY_RUN)); then
-    logg -i "[dry-run] ensure '$line' present in $file"
-    return 0
-  fi
-
-  grep -qxF "$line" "$file" 2>/dev/null || echo "$line" | sudo tee -a "$file" >/dev/null
 }
 
 # --------------------------------------
