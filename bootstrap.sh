@@ -134,45 +134,34 @@ safe_op_call() {
   run "$cmd"
 }
 
-# --------------------------------------
-# Platform detection
-# --------------------------------------
+# Determine OS and package-manager defaults
+# Usage: detect_platform
 detect_platform() {
   case "$(uname -s)" in
-  Darwin)
-    OS_TYPE=macos
-    PACKAGE_MANAGER=brew
-    DISTRO_NAME=macOS
-    ;;
+  Darwin) OS_TYPE=macos && PACKAGE_MANAGER=brew && DISTRO_NAME=macOS ;;
   Linux)
-    if [[ -r /etc/os-release ]]; then
-      # shellcheck disable=SC1091
-      source /etc/os-release
-      DISTRO_NAME="${PRETTY_NAME:-${NAME:-Linux}}"
-      case "${ID_LIKE:-}$ID" in
-      *debian* | *ubuntu*)
-        OS_TYPE=linux
-        PACKAGE_MANAGER=apt
-        ;;
-      *)
-        logg -e "Linux distribution '$DISTRO_NAME' is not yet supported."
-        exit 1
-        ;;
-      esac
-    else
+    [[ -r /etc/os-release ]] || {
       logg -e 'Unable to detect Linux distribution (missing /etc/os-release).'
       exit 1
-    fi
+    }
+
+    # shellcheck disable=SC1091
+    source /etc/os-release
+    DISTRO_NAME="${PRETTY_NAME:-${NAME:-Linux}}"
+
+    case "${ID_LIKE:-}$ID" in
+    *debian* | *ubuntu*) OS_TYPE=linux && PACKAGE_MANAGER=apt ;;
+    *) logg -e "Linux distribution '$DISTRO_NAME' is not yet supported." && exit 1 ;;
+    esac
     ;;
-  *)
-    logg -e "Unsupported operating system: $(uname -s)"
-    exit 1
-    ;;
+  *) logg -e "Unsupported operating system: $(uname -s)" && exit 1 ;;
   esac
 
   logg -i "${CYAN}${ICON} TARGET PLATFORM: $DISTRO_NAME (${PACKAGE_MANAGER}) ${ICON}${RESET}"
 }
 
+# Ensure required package manager tooling is present
+# Usage: setup_package_manager
 setup_package_manager() {
   if [[ $PACKAGE_MANAGER == brew ]]; then
     notify -s 'Ensuring Homebrew is installed'
@@ -195,6 +184,8 @@ setup_package_manager() {
   fi
 }
 
+# Install brew/apt package manifests and optional updates
+# Usage: install_package_sets
 install_package_sets() {
   if [[ $PACKAGE_MANAGER == brew ]]; then
     if confirm 'Install packages & apps from Brewfile' 'Y'; then
@@ -286,6 +277,8 @@ install_package_sets() {
   fi
 }
 
+# Fetch a secret field from 1Password if enabled
+# Usage: get_op_field <item> <field>
 get_op_field() {
   local item="$1"
   local field="$2"
@@ -298,8 +291,8 @@ get_op_field() {
   printf '%s' "$value"
 }
 
-# Prepare installer output message after collecting environment variable user input
-# Usage collect_environment
+# Collect environment preferences and prompt for 1Password data
+# Usage: collect_environment
 collect_environment() {
   # Sign into 1Password CLI when integration is enabled
   ((USE_1PASSWORD)) && {
@@ -307,7 +300,7 @@ collect_environment() {
     safe_op_call signin || { logg -w 'Skipping 1Password features (signin failed).' && USE_1PASSWORD=0; }
   }
 
-  # Get any exiosting Git metadata
+  # Load any existing Git metadata as defaults
   local existing_git_name existing_git_email existing_signingkey
 
   existing_git_name=$(git config --global user.name 2>/dev/null || true)
@@ -394,6 +387,8 @@ EOF
   done
 }
 
+# Create or refresh a symlink under the given base directory
+# Usage: symlink <source> <base_dir> <link_name>
 symlink() {
   local src="$1"
   local base="$2"
@@ -520,6 +515,8 @@ create_symlinks() {
   done
 }
 
+# Apply preferred macOS UI defaults
+# Usage: configure_macos_defaults
 configure_macos_defaults() {
   if [[ $OS_TYPE != macos ]]; then
     logg -w "Skipping macOS UI tweaks on $DISTRO_NAME."
@@ -550,6 +547,8 @@ configure_macos_defaults() {
   run 'killall Dock'
 }
 
+# Configure git/user settings and GitHub CLI defaults
+# Usage: configure_git_and_github
 configure_git_and_github() {
   if ((DRY_RUN)); then
     logg -i "[dry-run] git config --global user.name $GIT_NAME"
@@ -609,6 +608,8 @@ configure_git_and_github() {
   fi
 }
 
+# Clone or update project template repository
+# Usage: install_templates
 install_templates() {
   if command -v gh &>/dev/null; then
     if ((DRY_RUN)); then
@@ -621,6 +622,8 @@ install_templates() {
   fi
 }
 
+# Install zap and ble.sh shell plugins
+# Usage: install_shell_plugins
 install_shell_plugins() {
   if [[ ! -f $XDG_DATA_HOME/zap/zap.zsh ]]; then
     if ((DRY_RUN)); then
@@ -644,6 +647,8 @@ install_shell_plugins() {
   fi
 }
 
+# Provision Atuin sync credentials via 1Password
+# Usage: setup_atuin_sync
 setup_atuin_sync() {
   if ! command -v atuin &>/dev/null; then
     logg -w 'Atuin not installed. Skipping sync setup.'
@@ -691,6 +696,8 @@ setup_atuin_sync() {
   atuin sync
 }
 
+# Rebuild bat's theme cache when available
+# Usage: rebuild_bat_cache
 rebuild_bat_cache() {
   if ! command -v bat &>/dev/null; then
     logg -w 'bat not installed. Skipping cache rebuild.'
@@ -703,6 +710,8 @@ rebuild_bat_cache() {
   fi
 }
 
+# Configure Touch ID-backed sudo when supported
+# Usage: configure_sudo_auth
 configure_sudo_auth() {
   if [[ $OS_TYPE == macos ]]; then
     local brew_prefix
@@ -723,6 +732,8 @@ configure_sudo_auth() {
   fi
 }
 
+# Suppress login banner by ensuring ~/.hushlogin exists
+# Usage: suppress_login_banner
 suppress_login_banner() {
   if ((DRY_RUN)); then
     logg -i "[dry-run] touch $HOME/.hushlogin"
@@ -732,6 +743,8 @@ suppress_login_banner() {
   logg -i 'Ensured ~/.hushlogin exists'
 }
 
+# Ensure preferred shell binaries are registered and set as default
+# Usage: change_shell_default
 change_shell_default() {
   local shell_paths=()
   if [[ $OS_TYPE == macos ]]; then
@@ -776,6 +789,8 @@ change_shell_default() {
   fi
 }
 
+# Configure desktop integrations like Hammerspoon
+# Usage: configure_desktop_integration
 configure_desktop_integration() {
   if [[ $OS_TYPE == macos ]]; then
     if ((DRY_RUN)); then
@@ -789,6 +804,8 @@ configure_desktop_integration() {
   fi
 }
 
+# Install optional Linux-only CLI dependencies
+# Usage: install_linux_optional_tools
 install_linux_optional_tools() {
   [[ $OS_TYPE == linux ]] || return
 
@@ -849,6 +866,8 @@ install_linux_optional_tools() {
   fi
 }
 
+# Install and configure Neovim tooling via bob and uv
+# Usage: setup_neovim
 setup_neovim() {
   if command -v bob &>/dev/null; then
     if ((DRY_RUN)); then
@@ -897,9 +916,34 @@ authorize() {
   trap '[[ -n ${KEEP_SUDO_PID:-} ]] && kill "$KEEP_SUDO_PID" 2>/dev/null' EXIT
 }
 
-main() {
-  printf '%s\n\n' "${BLUE}*** BOOTSTRAP DEVELOPMENT SCRIPT ***${RESET}"
+# Ensure macOS CLT installed and export XDG directories
+# Usage: export-xdg
+export-xdg() {
+  [[ $OS_TYPE == macos ]] &&
+    ! command -v xcode-select &>/dev/null &&
+    logg -e 'Please install Xcode Command Line Tools: xcode-select --install' &&
+    exit 1
 
+  export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+  export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+  export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+  export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+}
+
+# Enable 1Password integrations when the CLI is available
+# Usage: use_op
+use_op() {
+  local op_available=0
+  command -v op &>/dev/null && op_available=1
+
+  USE_1PASSWORD=$FORCE_1PASSWORD
+  ((!USE_1PASSWORD && op_available)) && confirm 'Enable 1Password CLI integrations' 'Y' && USE_1PASSWORD=1
+  ((USE_1PASSWORD && !op_available)) && logg -w '1Password CLI not detected. Skipping related steps.' && USE_1PASSWORD=0
+}
+
+# Orchestrate bootstrap workflow and CLI options
+# Usage: main "$@"
+main() {
   # Parse CLI flags for dry-run, optional 1Password integration, and help output
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -920,33 +964,16 @@ HELP
     shift
   done
 
-  # Detects which platform/operating system is being used
+  # Determine OS and create XDG env vars
+  export-xdg
   detect_platform
 
-  # Ensure xcode-select installed on macOS
-  [[ $OS_TYPE == macos ]] &&
-    ! command -v xcode-select &>/dev/null &&
-    logg -e 'Please install Xcode Command Line Tools: xcode-select --install' &&
-    exit 1
-
-  # https://specifications.freedesktop.org/basedir-spec/latest/#introduction
-  export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-  export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-  export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-  export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
-
-  # Maintain elevated privileged access
+  # Pre-install steps
+  printf '%s\n\n' "${BLUE}*** BOOTSTRAP DEVELOPMENT SCRIPT ***${RESET}"
   authorize
+  use_op
 
-  # Configure optional 1Password integration (default off unless -p flag or prompt accepts)
-  local op_available=0
-  command -v op &>/dev/null && op_available=1
-
-  USE_1PASSWORD=$FORCE_1PASSWORD
-  ((!USE_1PASSWORD && op_available)) && confirm 'Enable 1Password CLI integrations' 'Y' && USE_1PASSWORD=1
-  ((USE_1PASSWORD && !op_available)) && logg -w '1Password CLI not detected. Skipping related steps.' && USE_1PASSWORD=0
-
-  # Begin core install and configuration of applications and CLI tools
+  # Begin core install flow by installing tooling and preparing environment
   notify 'INSTALLING COMMANDS & APPS'
   setup_package_manager
   install_package_sets
