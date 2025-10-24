@@ -20,7 +20,7 @@ ICON='󰓒'
 
 STEP=0
 SUBSTEP=0
-TOTAL_STEPS=14
+TOTAL_STEPS=17
 
 DRY_RUN=0
 
@@ -29,8 +29,8 @@ FORCE_1PASSWORD=0
 KEEP_SUDO_PID=''
 
 OS_TYPE=''
-DISTRO_NAME=''
-PACKAGE_MANAGER=''
+DISTRO=''
+PKG_MGR=''
 BREWFILE_DEFAULT='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
 APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
 
@@ -40,12 +40,13 @@ APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
 # Usage: logg -i | -w | -e "message"
 logg() {
   local opt="$1"
-  local level color
+  local level=''
+  local color=''
 
   case "$opt" in
-  -i) level=INFO && color="$MAGENTA" ;;
+  -i) level=INFO ;;
   -w) level=WARN && color="$YELLOW" ;;
-  -e) level=ERROR && color="$RED" ;;
+  -e) level=ERROR && color="$MAGENTA" ;;
   *) printf 'log: missing or invalid level flag\n' >&2 && return 1 ;;
   esac
 
@@ -63,7 +64,7 @@ notify() {
   *) STEP=$((STEP + 1)) && SUBSTEP=0 ;;
   esac
 
-  printf '\n%s\n' "${CYAN}${ICON} [${STEP}${minor}/${TOTAL_STEPS}] $* ${ICON}${RESET}"
+  printf '\n%s\n' "${GREEN}${ICON} [${STEP}${minor}/${TOTAL_STEPS}] $* ${ICON}${RESET}"
 }
 
 # [HF3] execute a command, honoring dry-run mode
@@ -92,13 +93,13 @@ confirm() {
   local suffix answer
 
   case "$default" in
-  y | Y) suffix=" [${GREEN}Y${RESET}/n]" ;;
-  n | N) suffix=" [y/${GREEN}N${RESET}]" ;;
+  y | Y) suffix=" [${CYAN}Y${RESET}/n]" ;;
+  n | N) suffix=" [y/${CYAN}N${RESET}]" ;;
   *) suffix=' [y/n]' ;;
   esac
 
   while true; do
-    read -rp "$prompt$suffix: "
+    read -rp ">>> $prompt$suffix: "
 
     answer=${REPLY:-$default}
 
@@ -138,7 +139,11 @@ safe_op_call() {
 # Usage: detect_platform
 detect_platform() {
   case "$(uname -s)" in
-  Darwin) OS_TYPE=macos && PACKAGE_MANAGER=brew && DISTRO_NAME=macOS ;;
+  Darwin)
+    OS_TYPE=macos
+    PKG_MGR=brew
+    DISTRO=macOS
+    ;;
   Linux)
     [[ -r /etc/os-release ]] || {
       logg -e 'Unable to detect Linux distribution (missing /etc/os-release).'
@@ -147,23 +152,27 @@ detect_platform() {
 
     # shellcheck disable=SC1091
     source /etc/os-release
-    DISTRO_NAME="${PRETTY_NAME:-${NAME:-Linux}}"
+    DISTRO="${PRETTY_NAME:-${NAME:-Linux}}"
 
     case "${ID_LIKE:-}$ID" in
-    *debian* | *ubuntu*) OS_TYPE=linux && PACKAGE_MANAGER=apt ;;
-    *) logg -e "Linux distribution '$DISTRO_NAME' is not yet supported." && exit 1 ;;
+    *debian* | *ubuntu*)
+      OS_TYPE=linux
+      PKG_MGR=apt
+      ;;
+    *) logg -e "Linux distribution '$DISTRO' is not yet supported." && exit 1 ;;
     esac
     ;;
   *) logg -e "Unsupported operating system: $(uname -s)" && exit 1 ;;
   esac
 
-  logg -i "${CYAN}${ICON} TARGET PLATFORM: $DISTRO_NAME (${PACKAGE_MANAGER}) ${ICON}${RESET}"
+  logg -i "TARGET PLATFORM: DISTRO=$DISTRO"
+  logg -i "PACKAGE MANAGER: PKG_MGR=${PKG_MGR}${RESET}"
 }
 
 # Ensure required package manager tooling is present
 # Usage: setup_package_manager
 setup_package_manager() {
-  if [[ $PACKAGE_MANAGER == brew ]]; then
+  if [[ $PKG_MGR == brew ]]; then
     notify -s 'Ensuring Homebrew is installed'
     if [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]]; then
       eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
@@ -175,7 +184,7 @@ setup_package_manager() {
         eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
       fi
     fi
-  elif [[ $PACKAGE_MANAGER == apt ]]; then
+  elif [[ $PKG_MGR == apt ]]; then
     notify -s 'Ensuring apt is available'
     command -v apt-get &>/dev/null || {
       logg -e "Missing command 'apt-get'. Install via: sudo apt install apt"
@@ -187,11 +196,11 @@ setup_package_manager() {
 # Install brew/apt package manifests and optional updates
 # Usage: install_package_sets
 install_package_sets() {
-  if [[ $PACKAGE_MANAGER == brew ]]; then
+  if [[ $PKG_MGR == brew ]]; then
     if confirm 'Install packages & apps from Brewfile' 'Y'; then
       notify -s 'Select Brewfile'
       local brewfile
-      read -rp 'Enter Brewfile path or URL (<Enter> to use default): ' brewfile
+      read -rp '>>> Enter Brewfile path or URL (<Enter> to use default): ' brewfile
       [[ -z $brewfile ]] && brewfile="$BREWFILE_DEFAULT"
       logg -i "Using Brewfile: $brewfile"
 
@@ -236,7 +245,7 @@ install_package_sets() {
         ((DRY_RUN)) || brew cu -af
       fi
     fi
-  elif [[ $PACKAGE_MANAGER == apt ]]; then
+  elif [[ $PKG_MGR == apt ]]; then
     if confirm "Update apt package lists" 'Y'; then
       notify -s 'Updating apt cache'
       if ((DRY_RUN)); then
@@ -309,14 +318,14 @@ collect_environment() {
 
   while true; do
     while true; do
-      read -rp "${WHITE}Git Username${RESET} (${existing_git_name:-required}): " GIT_NAME
+      read -rp "${WHITE}>>> Git Username${RESET} (${existing_git_name:-required}): " GIT_NAME
       [[ -z $GIT_NAME && -n $existing_git_name ]] && GIT_NAME="$existing_git_name"
       [[ -n $GIT_NAME ]] && break
       logg -w 'Git username required.'
     done
 
     while true; do
-      read -rp "${WHITE}Git Email${RESET} (${existing_git_email:-required}): " GIT_EMAIL
+      read -rp "${WHITE}>>> Git Email${RESET} (${existing_git_email:-required}): " GIT_EMAIL
       [[ -z $GIT_EMAIL && -n $existing_git_email ]] && GIT_EMAIL="$existing_git_email"
       [[ -n $GIT_EMAIL ]] && break
       logg -w 'Git email required.'
@@ -324,63 +333,63 @@ collect_environment() {
 
     if ((USE_1PASSWORD)); then
       local default_vault=Private
-      read -rp "${WHITE}1Password Vault name${RESET} (<Enter> for '$default_vault'): " OP_VAULT
+      read -rp "${WHITE}>>> 1Password Vault name${RESET} (<Enter> for '$default_vault'): " OP_VAULT
       OP_VAULT="${OP_VAULT:-$default_vault}"
 
       OP_GIT_SIGNKEY="$(get_op_field 'GitHub Signing Key' 'public key' || true)"
       local obfuscated_key="${OP_GIT_SIGNKEY:0:18} ... ${OP_GIT_SIGNKEY: -10}"
       [[ -z $OP_GIT_SIGNKEY ]] && obfuscated_key=""
 
-      read -rp "${WHITE}Git Signing Key${RESET} (<Enter> to use '${obfuscated_key}'): " GIT_SIGNINGKEY
+      read -rp "${WHITE}>>> Git Signing Key${RESET} (<Enter> to use '${obfuscated_key}'): " GIT_SIGNINGKEY
       GIT_SIGNINGKEY="${GIT_SIGNINGKEY:-${OP_GIT_SIGNKEY:-$existing_signingkey}}"
 
-      read -rp "${WHITE}GitHub User${RESET} (<Enter> to use '${GIT_EMAIL%@*}'): " GITHUB_NAME
+      read -rp "${WHITE}>>> GitHub User${RESET} (<Enter> to use '${GIT_EMAIL%@*}'): " GITHUB_NAME
       GITHUB_NAME="${GITHUB_NAME:-${GIT_EMAIL%@*}}"
 
-      read -rp "${WHITE}1Password Atuin Sync Title${RESET} (<Enter> for 'Atuin Sync'): " ATUIN_OP_TITLE
+      read -rp "${WHITE}>>> 1Password Atuin Sync Title${RESET} (<Enter> for 'Atuin Sync'): " ATUIN_OP_TITLE
       ATUIN_OP_TITLE="${ATUIN_OP_TITLE:-Atuin Sync}"
 
-      read -rp "${WHITE}Atuin Username${RESET} (<Enter> for '${GIT_EMAIL%@*}'): " ATUIN_USERNAME
+      read -rp "${WHITE}>>> Atuin Username${RESET} (<Enter> for '${GIT_EMAIL%@*}'): " ATUIN_USERNAME
       ATUIN_USERNAME="${ATUIN_USERNAME:-${GIT_EMAIL%@*}}"
 
-      read -rp "${WHITE}Atuin Email${RESET} (<Enter> for '$GIT_EMAIL'): " ATUIN_EMAIL
+      read -rp "${WHITE}>>> Atuin Email${RESET} (<Enter> for '$GIT_EMAIL'): " ATUIN_EMAIL
       ATUIN_EMAIL="${ATUIN_EMAIL:-$GIT_EMAIL}"
     else
       OP_VAULT=""
       GIT_SIGNINGKEY="${existing_signingkey:-}"
-      read -rp "${WHITE}GitHub User${RESET} (<Enter> to use '${GIT_EMAIL%@*}'): " GITHUB_NAME
+      read -rp "${WHITE}>>> GitHub User${RESET} (<Enter> to use '${GIT_EMAIL%@*}'): " GITHUB_NAME
       GITHUB_NAME="${GITHUB_NAME:-${GIT_EMAIL%@*}}"
-      ATUIN_OP_TITLE=""
-      ATUIN_USERNAME=""
-      ATUIN_EMAIL=""
+      ATUIN_OP_TITLE=''
+      ATUIN_USERNAME=''
+      ATUIN_EMAIL=''
     fi
 
-    read -rp "${WHITE}Media directory ~/$MEDIA${RESET} (<Enter> to skip): " MEDIA
+    read -rp "${WHITE}>>> Media directory ~/$MEDIA${RESET} (<Enter> to skip): " MEDIA
     MEDIA="${MEDIA:-}"
 
     cat <<EOF
 
-${BLUE}-------------- ENVIRONMENT ------------------${RESET}
-Platform: $DISTRO_NAME
+${CYAN}-------------- ENVIRONMENT ------------------${RESET}
+${MAGENTA}OS TYPE${RESET}: $DISTRO
 
-XDG_CONFIG_HOME=$(pretty_path "$XDG_CONFIG_HOME")
-XDG_CACHE_HOME=$(pretty_path "$XDG_CACHE_HOME")
-XDG_DATA_HOME=$(pretty_path "$XDG_DATA_HOME")
-XDG_STATE_HOME=$(pretty_path "$XDG_STATE_HOME")
+${MAGENTA}XDG_CONFIG_HOME${RESET}=$(pretty_path "$XDG_CONFIG_HOME")
+${MAGENTA}XDG_CACHE_HOME${RESET}=$(pretty_path "$XDG_CACHE_HOME")
+${MAGENTA}XDG_DATA_HOME${RESET}=$(pretty_path "$XDG_DATA_HOME")
+${MAGENTA}XDG_STATE_HOME${RESET}=$(pretty_path "$XDG_STATE_HOME")
 
-GIT_NAME=$GIT_NAME
-GIT_EMAIL=$GIT_EMAIL
-GIT_SIGNINGKEY=${GIT_SIGNINGKEY:-<unset>}
+${MAGENTA}GIT_NAME${RESET}=$GIT_NAME
+${MAGENTA}GIT_EMAIL${RESET}=$GIT_EMAIL
+${MAGENTA}GIT_SIGNINGKEY${RESET}=${GIT_SIGNINGKEY:-<unset>}
 
-GITHUB_NAME=$GITHUB_NAME
-OP_VAULT=${OP_VAULT:-<unused>}
+${MAGENTA}GITHUB_NAME${RESET}=$GITHUB_NAME
+${MAGENTA}OP_VAULT${RESET}=${OP_VAULT:-<unused>}
 
-ATUIN_USERNAME=${ATUIN_USERNAME:-<skipped>}
-ATUIN_EMAIL=${ATUIN_EMAIL:-<skipped>}
-ATUIN_OP_TITLE=${ATUIN_OP_TITLE:-<skipped>}
+${MAGENTA}ATUIN_USERNAME${RESET}=${ATUIN_USERNAME:-<skipped>}
+${MAGENTA}ATUIN_EMAIL${RESET}=${ATUIN_EMAIL:-<skipped>}
+${MAGENTA}ATUIN_OP_TITLE${RESET}=${ATUIN_OP_TITLE:-<skipped>}
 
-MEDIA=~/${MEDIA:-<not set>}
-${BLUE}---------------------------------------------${RESET}
+${MAGENTA}MEDIA${RESET}=~/${MEDIA:-<not set>}
+${CYAN}---------------------------------------------${RESET}
 EOF
 
     confirm "${YELLOW}Re-enter any variables?${RESET}" "N" || break
@@ -519,7 +528,7 @@ create_symlinks() {
 # Usage: configure_macos_defaults
 configure_macos_defaults() {
   if [[ $OS_TYPE != macos ]]; then
-    logg -w "Skipping macOS UI tweaks on $DISTRO_NAME."
+    logg -w "Skipping macOS UI tweaks on $DISTRO."
     return
   fi
 
@@ -728,7 +737,7 @@ configure_sudo_auth() {
       logg -i 'UPDATED /etc/pam.d/sudo_local'
     fi
   else
-    logg -w "Touch ID sudo configuration not applicable on $DISTRO_NAME."
+    logg -w "Touch ID sudo configuration not applicable on $DISTRO."
   fi
 }
 
@@ -800,7 +809,7 @@ configure_desktop_integration() {
       logg -i 'Configure System Settings > Privacy & Security > Accessibility for Hammerspoon.'
     fi
   else
-    logg -w "Hammerspoon configuration skipped on $DISTRO_NAME. Configure your window manager manually."
+    logg -w "Hammerspoon configuration skipped on $DISTRO. Configure your window manager manually."
   fi
 }
 
@@ -964,17 +973,17 @@ HELP
     shift
   done
 
-  # Determine OS and create XDG env vars
+  notify 'BEGIN BOOTSTRAP DEVELOPMENT SCRIPT'
+
+  notify 'CREATE XDG ENV VARS & DETECT OS'
   export-xdg
   detect_platform
 
-  # Pre-install steps
-  printf '%s\n\n' "${BLUE}*** BOOTSTRAP DEVELOPMENT SCRIPT ***${RESET}"
+  notify 'AUTHORIZE & DETECT 1PASSWORD'
   authorize
   use_op
 
-  # Begin core install flow by installing tooling and preparing environment
-  notify 'INSTALLING COMMANDS & APPS'
+  notify 'INSTALL COMMANDS & APPS'
   setup_package_manager
   install_package_sets
 
@@ -1014,7 +1023,7 @@ HELP
   notify 'DESKTOP INTEGRATION'
   configure_desktop_integration
 
-  notify 'NEOVIM SETUP'
+  notify 'SETUP NEOVIM'
   setup_neovim
 
   # Exit confirmation messages
