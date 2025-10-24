@@ -22,6 +22,9 @@ PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
 
 export PATH
 
-# Load secrets
+# Load secrets only once per top-level login shell
 # shellcheck disable=SC1091
-[[ -f $HOME/.dotfiles/.env ]] && source "$HOME/.dotfiles/.env"
+[[ -z ${DOTFILES_SECRETS_INIT:-} ]] &&
+  export DOTFILES_SECRETS_INIT=1 &&
+  [[ -f $HOME/.dotfiles/.env ]] &&
+  source "$HOME/.dotfiles/.env"
