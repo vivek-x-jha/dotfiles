@@ -3,7 +3,7 @@
 # -------------------------------- File Editing ---------------------------------------
 
 # Open all files in current directory excluding...
-alias va='$EDITOR $(fd -HItf \
+command -v fd &>/dev/null && alias va='$EDITOR $(fd -HItf \
   --exclude .git \
   --exclude .github \
   --exclude __pycache__ \
@@ -11,14 +11,11 @@ alias va='$EDITOR $(fd -HItf \
   --exclude .venv \
   --exclude "Icon?")'
 
-# Fuzzy Search all files in current directory, then open
-alias vf='fzf --preview "bat -n --color=always {}" | xargs -r "$EDITOR"'
-
 # Open vim using viminfo state file
 alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 
 # Deletes temp file - NOTE this fixes neovim shada error, but unsure why this works...
-alias reload-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
+command -v nvim &>/dev/null && alias reload-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
 # -------------------------------- File Management & Previewing ---------------------------------------
 
@@ -29,13 +26,13 @@ alias ...="cd ../.."
 alias grep='grep --color=auto'
 
 # List all directory items in long format with git info
-alias l='eza --all --long --git --icons=always --group-directories-first'
+command -v eza &>/dev/null && alias l='eza --all --long --git --icons=always --group-directories-first'
 
 # Print all directory items in colored tree format excluding git info
-alias tree='tree -aCI ".git|.github"'
+command -v tree &>/dev/null && alias tree='tree -aCI ".git|.github"'
 
 # Fuzzy search man pages
-alias docs='compgen -c | fzf | xargs man'
+command -v fzf &>/dev/null && alias docs='compgen -c | fzf | xargs man'
 
 # -------------------------------- List Long Functions ---------------------------------------
 
@@ -47,9 +44,11 @@ alias list-users='dscl . list /Users | grep -v "^_"'
 alias list-real-users='dscl . list /Users UniqueID | awk '\''$2 >= 501 { print $1 }'\'''
 
 # Outputs Homebrew package info
-alias list-apps='brew list --cask | xargs -n1'
-alias list-cmds='brew list --formula | xargs -n1'
-alias list-deps='brew deps --tree --installed'
+command -v brew &>/dev/null && {
+  alias list-apps='brew list --cask | xargs -n1'
+  alias list-cmds='brew list --formula | xargs -n1'
+  alias list-deps='brew deps --tree --installed'
+}
 
 # Outputs Aliases & Environment Variables
 alias list-alias='alias | sort'
@@ -71,53 +70,83 @@ alias list-vars='env | sort'
 
 # -------------------------------- Workspace Management ---------------------------------------
 
-# Attach to last tmux session, if none then create new one
-alias t='tmux attach || tmux new-session'
+command -v tmux &>/dev/null && {
+  # Attach to last tmux session, if none then create new one
+  alias t='tmux attach || tmux new-session'
 
-# Kill and restart all sessions
-alias reload-tmux='tmux kill-server &>/dev/null; tmux attach &>/dev/null || tmux new-session &>/dev/null'
+  # Kill and restart all sessions
+  alias reload-tmux='tmux kill-server &>/dev/null; tmux attach &>/dev/null || tmux new-session &>/dev/null'
+}
 
 # -------------------------------- Version Control ---------------------------------------
 
 # Commitizen
-alias czc='cz commit'
+command -v cz &>/dev/null && alias czc='cz commit'
 
 # Git
-alias gaa='git add --all'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias glg='git log --graph --date=format:"%b-%d-%Y" --pretty="$GIT_PRETTY"'
-alias gp='git push'
-alias grs='git restore'
-alias grst='git restore --staged'
-alias grv='git remote --verbose'
-alias gst='git status'
+command -v git &>/dev/null && {
+  alias gaa='git add --all'
+  alias gd='git diff'
+  alias gds='git diff --staged'
+  alias gp='git push'
+  alias grs='git restore'
+  alias grst='git restore --staged'
+  alias grv='git remote --verbose'
+  alias gst='git status'
 
-alias gsw='git branch --format="%(refname:short)" | fzf --header "git switch" --border-label "  branches " --preview "git show --color=always {1}" | xargs -r git switch'
+  alias glg='git log \
+    --graph \
+    --date=format:"%b-%d-%Y" \
+    --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"'
+
+  command -v fzf &>/dev/null && {
+    alias gsw='git branch --format="%(refname:short)" \
+      | fzf \
+        --header "git switch" \
+        --border-label "  branches " \
+        --preview "git show --color=always {1}" \
+      | xargs -r git switch'
+  }
+}
 
 # -------------------------------- CLI tools ---------------------------------------
 
 # https://developer.1password.com/docs/cli/shell-plugins
-alias gh="op plugin run -- gh"
-# alias mysql="op plugin run -- mysql"
+command -v op &>/dev/null && {
+  command -v gh &>/dev/null && alias gh="op plugin run -- gh"
+  # command -v mysql &>/dev/null && alias mysql="op plugin run -- mysql"
 
-# MySQL launcher
-alias mycli-dev='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u mubuntu -p"$(op item get '\''MySQL User: mubuntu'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
-alias mysql-dev='mysql -u mubuntu -p"$(op item get '\''MySQL User: mubuntu'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
+  op_mysql_pwd() {
+    local user="$1"
+    local vault="${2:-Private}"
 
-alias mycli-root='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u root -p"$(op item get '\''MySQL Root'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
-alias mysql-root='mysql -u root -p"$(op item get '\''MySQL Root'\'' --vault '\''Private'\'' --field '\''password'\'' --reveal)"'
+    op item get "MySQL User: $user" --vault "$vault" --field 'password' --reveal
+  }
+
+  # MySQL launcher
+  command -v mycli &>/dev/null && {
+    alias mycli-dev='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u mubuntu -p"$(op_mysql_pwd mubuntu)"'
+    alias mycli-root='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u root -p"$(op_mysql_pwd root)"'
+  }
+
+  command -v mysql &>/dev/null && {
+    alias mysql-dev='mysql -u mubuntu -p"$(get_mysql_pwd mubuntu)"'
+    alias mysql-root='mysql -u root -p"$(get_mysql_pwd root)"'
+  }
+}
 
 # Print weather data
 alias weather='curl wttr.in'
 
 # Sound toggler
-alias sas-airpods='SwitchAudioSource -s "band4band"'
-alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
-alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
+command -v SwitchAudioSource &>/dev/null && {
+  alias sas-airpods='SwitchAudioSource -s "band4band"'
+  alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
+  alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
+}
 
 # Remove macOS quarantine flag(s)
-alias fix-spotify='sudo xattr -rd com.apple.quarantine /Applications/Spotify.app'
+[[ -d /Applications/Spotify.app ]] && alias fix-spotify='sudo xattr -rd com.apple.quarantine /Applications/Spotify.app'
 
 # -------------------------------- Suffix Aliases ---------------------------------------
 
