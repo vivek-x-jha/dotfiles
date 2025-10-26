@@ -480,6 +480,7 @@ create_symlinks() {
     ../.dotfiles/zsh "$XDG_CONFIG_HOME" zsh
     ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME" starship.toml
     themes/sourdiesel.yml "$XDG_CONFIG_HOME/eza" theme.yml
+    ../../../.dotfiles/btop/btop.log "$XDG_STATE_HOME/btop" btop.log
   )
 
   # Ensure application directories are created
