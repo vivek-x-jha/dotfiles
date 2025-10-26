@@ -1,0 +1,16 @@
+# Search hidden files and directories by default; still respects .ignore rules.
+--hidden
+
+# Follow symlinks so linked worktrees are included.
+--follow
+
+# Skip bulky or generated directories that rarely need searching.
+--glob=!.git
+--glob=!node_modules
+--glob=!vendor
+--glob=!.cache
+--glob=!tmp
+
+# Allow long lines but show a preview when they would be truncated.
+--max-columns=160
+--max-columns-preview
