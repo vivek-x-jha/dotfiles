@@ -1,21 +1,17 @@
--- https://wezterm.org/config/files.html?h=config
-local wezterm = require 'wezterm'
-local config = wezterm.config_builder() or {}
-
 --- Generate pallete table of hex values by parsing env color file
 --- * File must contain lines in this format: `export *_HEX="#rrggbb"`
 --- * key, value pairs look like: "cyan" = "#8ae7c5"
 ---
---- @param env_path? string -- Optional path to an env file; falls back to $HOME/.zshenv
+--- @param theme string -- Theme identifier (e.g. 'sourdiesel')
 --- @return table<string, string>
-local hexify = function(env_path)
-  env_path = env_path or os.getenv 'HOME' .. '/.zshenv'
+local hexify = function(theme)
+  local thm_path = os.getenv 'HOME' .. '/.config/zsh/themes/' .. theme .. '.sh'
 
   --- @type table<string, string>
   local palette = {}
 
   --- @type file* -- Opened file handle
-  local f = assert(io.open(env_path, 'r'), 'Failed to open ' .. env_path)
+  local f = assert(io.open(thm_path, 'r'), 'Failed to open ' .. thm_path)
 
   for line in f:lines() do
     --- @type string?, string? -- Extracted color name and hex code from line
@@ -33,7 +29,11 @@ local hexify = function(env_path)
 end
 
 --- @type table<string, string> -- Palette of colors
-local thm = hexify()
+local thm = hexify 'sourdiesel'
+
+-- https://wezterm.org/config/files.html?h=config
+local wezterm = require 'wezterm'
+local config = wezterm.config_builder() or {}
 
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
 config.bold_brightens_ansi_colors = false

@@ -1,21 +1,23 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "eec1a84"
+      "rev": "ccf25a5"
     },
     "blink.cmp": {
-      "rev": "ddeab4c"
+      "rev": "8743384"
     },
     "conform.nvim": {
-      "rev": "fbcb4fa"
+      "rev": "9fd3d5e"
     },
     "fzf-lua": {
-      "rev": "db3ccff"
+      "rev": "6bb2a26"
     },
-    "gitsigns.nvim": [],
+    "gitsigns.nvim": {
+      "rev": "20ad441"
+    },
     "indent-blankline.nvim": [],
     "noice.nvim": {
-      "rev": "38c702b"
+      "rev": "d14d02c"
     },
     "nui.nvim": [],
     "nvim-autopairs": {
@@ -25,19 +27,23 @@
     "nvim-highlight-colors": [],
     "nvim-notify": [],
     "nvim-sourdiesel": {
-      "rev": "5bd08ed"
+      "rev": "d38a5a5"
     },
     "nvim-spectre": [],
     "nvim-statusline": {
       "rev": "8102d84"
     },
-    "nvim-surround": [],
+    "nvim-surround": {
+      "rev": "fcfa7e0"
+    },
     "nvim-terminal": [],
     "nvim-tree.lua": {
-      "rev": "e397756"
+      "rev": "64e2192"
     },
     "nvim-treesitter": [],
-    "nvim-web-devicons": [],
+    "nvim-web-devicons": {
+      "rev": "8dcb311"
+    },
     "plenary.nvim": [],
     "vim-tmux-navigator": []
   }
