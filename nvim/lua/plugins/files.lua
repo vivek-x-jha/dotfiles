@@ -14,6 +14,7 @@ require('nvim-tree').setup {
   hijack_cursor = true,
   disable_netrw = true,
   sync_root_with_cwd = true,
+  filesystem_watchers = { enable = false },
   view = { preserve_window_proportions = true },
   update_focused_file = { enable = true },
   modified = { enable = true },
