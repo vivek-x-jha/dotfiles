@@ -4,7 +4,7 @@
       "rev": "ccf25a5"
     },
     "blink.cmp": {
-      "rev": "8743384"
+      "rev": "312097b"
     },
     "conform.nvim": {
       "rev": "9fd3d5e"
@@ -17,7 +17,7 @@
     },
     "indent-blankline.nvim": [],
     "noice.nvim": {
-      "rev": "d14d02c"
+      "rev": "5099348"
     },
     "nui.nvim": [],
     "nvim-autopairs": {
