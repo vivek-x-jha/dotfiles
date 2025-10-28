@@ -70,13 +70,8 @@ alias list-vars='env | sort'
 
 # -------------------------------- Workspace Management ---------------------------------------
 
-command -v tmux &>/dev/null && {
-  # Attach to existing tmux session or create templated session
-  alias work='create_project'
-
-  # Kill and restart all sessions
-  alias reload-tmux='tmux kill-server &>/dev/null; create_project'
-}
+# Tmux
+command -v tmux &>/dev/null && alias reload-tmux='tmux kill-server &>/dev/null; work'
 
 # -------------------------------- Version Control ---------------------------------------
 
