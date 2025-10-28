@@ -1,0 +1,67 @@
+#!/usr/bin/env zsh
+
+local window='main'
+local left='edit'
+local top_right='ai'
+local bottom_right='test'
+
+local left_cmd='nvim'
+local top_right_cmd='codex'
+local bottom_right_cmd='clear;'
+
+# Handle opts for different project setups
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -p | --python) bottom_right_cmd+='uvi' && shift ;;
+  --) shift && break ;;
+  *) break ;;
+  esac
+done
+
+local session="$1"
+local root="$HOME/developer/$session"
+local left_id="$session:$window.1"
+local top_right_id="$session:$window.2"
+local bottom_right_id="$session:$window.3"
+
+# No session name provided → attach or start bare session
+[[ -n $session ]] || {
+  tmux list-sessions &>/dev/null && {
+    [[ -n $TMUX ]] && tmux switch-client -l || tmux attach-session
+    return $?
+  }
+
+  tmux new-session
+  return $?
+}
+
+tmux_template() {
+  # Ensure project root exists
+  mkdir -p "$root"
+
+  # Initialize new session & rename window
+  tmux new-session -d -s "$session" -c "$root" -n "$window"
+
+  # Create window layout
+  tmux split-window -h -t "$left_id" -c "$root"
+  tmux split-window -v -t "$top_right_id" -c "$root"
+
+  # Rename panes
+  tmux select-pane -t "$left_id" -T "$left"
+  tmux select-pane -t "$top_right_id" -T "$top_right"
+  tmux select-pane -t "$bottom_right_id" -T "$bottom_right"
+
+  # Send <cmd> to panes
+  tmux send-keys -t "$left_id" "$left_cmd" C-m
+  tmux send-keys -t "$top_right_id" "$top_right_cmd" C-m
+  tmux send-keys -t "$bottom_right_id" "$bottom_right_cmd" C-m
+
+  # Start session in shell
+  tmux select-pane -t "$bottom_right_id"
+}
+
+# Missing named session → scaffold via template
+tmux has-session -t "$session" &>/dev/null || tmux_template || return $?
+
+# Switch or attach depending on current tmux context
+[[ -n $TMUX ]] && tmux switch-client -t "$session" || tmux attach-session -t "$session"
