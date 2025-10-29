@@ -20,7 +20,7 @@ ICON='󰓒'
 
 STEP=0
 SUBSTEP=0
-TOTAL_STEPS=17
+TOTAL_STEPS=18
 
 DRY_RUN=0
 
@@ -33,6 +33,22 @@ DISTRO=''
 PKG_MGR=''
 BREWFILE_DEFAULT='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
 APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
+DEVELOPER_CLONE_ROOT="${DEVELOPER_CLONE_ROOT:-$HOME/Developer}"
+DEVELOPER_REPOS=(
+  "PolynomialTool|git@github.com:vivek-x-jha/PolynomialTool.git"
+  "dcp|git@github.com:vivek-x-jha/dcp.git"
+  "notes|git@github.com:vivek-x-jha/notes.git"
+  "nvim-dashboard|git@github.com:vivek-x-jha/nvim-dashboard.git"
+  "nvim-launcher|git@github.com:vivek-x-jha/neovim-macos-launcher.git"
+  "nvim-sourdiesel|git@github.com:vivek-x-jha/nvim-sourdiesel.git"
+  "nvim-statusline|git@github.com:vivek-x-jha/nvim-statusline.git"
+  "nvim-terminal|git@github.com:vivek-x-jha/nvim-terminal.git"
+  "pokemon|git@github.com:vivek-x-jha/pokemon.git"
+  "real-analysis|git@github.com:vivek-x-jha/RealAnalysis.git"
+  "system-design-primer|git@github.com:donnemartin/system-design-primer.git"
+  "todo|git@github.com:AEMahi/To-Do.git"
+  "weather-tool|git@github.com:vivek-x-jha/weather-tool.git"
+)
 
 # -------------------------------------- HELPER FUNCTIONS -------------------------------------
 
@@ -510,7 +526,6 @@ create_symlinks() {
   [[ -z $MEDIA ]] && logg -w 'Media path not set. Skipping media symlinks...'
 
   [[ -n $MEDIA && -d "$HOME/$MEDIA" ]] && symlinks+=(
-    "$MEDIA/developer" "$HOME" Developer
     "../$MEDIA/content" "$HOME/Movies" content
     "../$MEDIA/icons" "$HOME/Pictures" icons
     "../$MEDIA/screenshots" "$HOME/Pictures" screenshots
@@ -616,6 +631,59 @@ configure_git_and_github() {
     rm -f "$HOME/.dotfiles/gh/hosts.yml"
     git -C "$HOME/.dotfiles" add --all || true
   fi
+}
+
+# Clone curated developer repositories under the user's workspace
+# Usage: clone_developer_repos
+clone_developer_repos() {
+  local base="$DEVELOPER_CLONE_ROOT"
+
+  if ! command -v git &>/dev/null; then
+    logg -w 'git not available. Skipping developer repository cloning.'
+    return
+  fi
+
+  if ((DRY_RUN)); then
+    logg -i "[dry-run] mkdir -p $base"
+  else
+    mkdir -p "$base"
+  fi
+
+  local entry name url dest
+  for entry in "${DEVELOPER_REPOS[@]}"; do
+    IFS='|' read -r name url <<<"$entry"
+    dest="$base/$name"
+
+    if [[ -z $url ]]; then
+      logg -w "Skipping $name - missing repository URL."
+      continue
+    fi
+
+    if [[ -d $dest/.git ]]; then
+      logg -i "$name already present; ensuring SSH remote."
+      if ((DRY_RUN)); then
+        logg -i "[dry-run] git -C $dest remote set-url origin $url"
+      else
+        if ! git -C "$dest" remote set-url origin "$url" 2>/dev/null; then
+          git -C "$dest" remote add origin "$url" 2>/dev/null || logg -w "Failed to configure origin for $name."
+        fi
+      fi
+      continue
+    fi
+
+    if [[ -e $dest ]]; then
+      local pretty_dest
+      pretty_dest="$(pretty_path "$dest")"
+      logg -w "Skipping $name - $pretty_dest exists but is not a git repository."
+      continue
+    fi
+
+    if ((DRY_RUN)); then
+      logg -i "[dry-run] git clone $url $dest"
+    else
+      git clone "$url" "$dest" || logg -w "Failed to clone $name from $url."
+    fi
+  done
 }
 
 # Clone or update project template repository
@@ -999,6 +1067,9 @@ HELP
 
   notify 'CONFIGURE GIT AND GITHUB CLI'
   configure_git_and_github
+
+  notify 'CLONE DEVELOPER REPOS'
+  clone_developer_repos
 
   notify 'INSTALL TEMPLATES'
   install_templates
