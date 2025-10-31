@@ -33,21 +33,18 @@ DISTRO=''
 PKG_MGR=''
 BREWFILE_DEFAULT='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
 APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
+DNF_MANIFEST_DEFAULT="$HOME/.dotfiles/dnf-packages.txt"
+DNF_CMD=''
+
 DEVELOPER_CLONE_ROOT="${DEVELOPER_CLONE_ROOT:-$HOME/Developer}"
 DEVELOPER_REPOS=(
-  "PolynomialTool|git@github.com:vivek-x-jha/PolynomialTool.git"
-  "dcp|git@github.com:vivek-x-jha/dcp.git"
-  "notes|git@github.com:vivek-x-jha/notes.git"
-  "nvim-dashboard|git@github.com:vivek-x-jha/nvim-dashboard.git"
-  "nvim-launcher|git@github.com:vivek-x-jha/neovim-macos-launcher.git"
-  "nvim-sourdiesel|git@github.com:vivek-x-jha/nvim-sourdiesel.git"
-  "nvim-statusline|git@github.com:vivek-x-jha/nvim-statusline.git"
-  "nvim-terminal|git@github.com:vivek-x-jha/nvim-terminal.git"
-  "pokemon|git@github.com:vivek-x-jha/pokemon.git"
-  "real-analysis|git@github.com:vivek-x-jha/RealAnalysis.git"
-  "system-design-primer|git@github.com:donnemartin/system-design-primer.git"
-  "todo|git@github.com:AEMahi/To-Do.git"
-  "weather-tool|git@github.com:vivek-x-jha/weather-tool.git"
+  vivek-x-jha/dcp
+  vivek-x-jha/notes
+  vivek-x-jha/nvim-dashboard
+  vivek-x-jha/neovim-macos-launcher
+  vivek-x-jha/nvim-sourdiesel
+  vivek-x-jha/nvim-statusline
+  vivek-x-jha/nvim-terminal
 )
 
 # -------------------------------------- HELPER FUNCTIONS -------------------------------------
@@ -175,6 +172,10 @@ detect_platform() {
       OS_TYPE=linux
       PKG_MGR=apt
       ;;
+    *fedora* | *rhel* | *centos*)
+      OS_TYPE=linux
+      PKG_MGR=dnf
+      ;;
     *) logg -e "Linux distribution '$DISTRO' is not yet supported." && exit 1 ;;
     esac
     ;;
@@ -188,25 +189,54 @@ detect_platform() {
 # Ensure required package manager tooling is present
 # Usage: setup_package_manager
 setup_package_manager() {
-  if [[ $PKG_MGR == brew ]]; then
-    notify -s 'Ensuring Homebrew is installed'
-    if [[ -x /opt/homebrew/bin/brew || -x /usr/local/bin/brew ]]; then
-      eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
-    else
-      if ((DRY_RUN)); then
-        logg -i '[dry-run] Install Homebrew'
-      else
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
-      fi
-    fi
-  elif [[ $PKG_MGR == apt ]]; then
+  [[ $PKG_MGR == brew ]] && {
+    notify -s 'Ensuring Homebrew is available'
+
+    local brew_cmd=''
+    brew_cmd="$(command -v brew 2>/dev/null)"
+
+    # run installer if homebrew executable not in $PATH
+    [[ -z $brew_cmd ]] && {
+      notify -s 'Installing Homebrew'
+
+      local brew_installer="/bin/bash -c \"\\\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+      run "$brew_installer" 2>/dev/null
+
+      [[ $(uname -m) == arm64 ]] && brew_cmd=/opt/homebrew/bin/brew
+      [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
+
+      [[ -x $brew_cmd ]] || {
+        logg -e 'Homebrew failed to install - please check install instructions @ https://brew.sh/'
+        exit 1
+      }
+    }
+
+    # Ensure homebrew is in $PATH for current shell session
+    run "eval \"\$($brew_cmd shellenv 2>/dev/null)\""
+  }
+
+  [[ $PKG_MGR == dnf ]] && {
+    notify -s 'Ensuring dnf is available'
+
+    local dnf_cmd=''
+    dnf_cmd="$(command -v dnf 2>/dev/null)"
+    [[ -z $dnf_cmd ]] && dnf_cmd="$(command -v dnf5 2>/dev/null)"
+
+    [[ -n $dnf_cmd ]] || {
+      logg -e "Missing command 'dnf'. Install the Fedora package manager before continuing."
+      exit 1
+    }
+
+    DNF_CMD="$dnf_cmd"
+  }
+
+  [[ $PKG_MGR == apt ]] && {
     notify -s 'Ensuring apt is available'
     command -v apt-get &>/dev/null || {
       logg -e "Missing command 'apt-get'. Install via: sudo apt install apt"
       exit 1
     }
-  fi
+  }
 }
 
 # Install brew/apt package manifests and optional updates
@@ -261,6 +291,43 @@ install_package_sets() {
         ((DRY_RUN)) || brew cu -af
       fi
     fi
+  elif [[ $PKG_MGR == dnf ]]; then
+    local dnf_exec="${DNF_CMD:-$(command -v dnf 2>/dev/null || command -v dnf5 2>/dev/null)}"
+
+    if [[ -z $dnf_exec ]]; then
+      logg -e 'dnf command not found after initialization.'
+      exit 1
+    fi
+
+    if confirm 'Upgrade Fedora packages' 'Y'; then
+      notify -s 'Upgrading system packages'
+      if ((DRY_RUN)); then
+        logg -i "[dry-run] sudo $dnf_exec upgrade --refresh -y"
+      else
+        run "sudo $dnf_exec upgrade --refresh -y"
+      fi
+    fi
+
+    if [[ -f $DNF_MANIFEST_DEFAULT ]]; then
+      if confirm "Install dnf packages from $(basename "$DNF_MANIFEST_DEFAULT")" 'Y'; then
+        notify -s 'Installing dnf packages'
+        mapfile -t dnf_packages < <(grep -vE '^(#|\\s*$)' "$DNF_MANIFEST_DEFAULT")
+        if [[ ${#dnf_packages[@]} -gt 0 ]]; then
+          if ((DRY_RUN)); then
+            logg -i "[dry-run] sudo $dnf_exec install -y ${dnf_packages[*]}"
+          else
+            sudo "$dnf_exec" install -y "${dnf_packages[@]}"
+          fi
+        else
+          logg -w "No packages listed in $DNF_MANIFEST_DEFAULT"
+        fi
+      fi
+    else
+      logg -w "dnf manifest not found at $DNF_MANIFEST_DEFAULT. Create it to enable bulk installs."
+    fi
+
+    install_linux_optional_tools
+
   elif [[ $PKG_MGR == apt ]]; then
     if confirm "Update apt package lists" 'Y'; then
       notify -s 'Updating apt cache'
@@ -649,23 +716,24 @@ clone_developer_repos() {
     mkdir -p "$base"
   fi
 
-  local entry name url dest
-  for entry in "${DEVELOPER_REPOS[@]}"; do
-    IFS='|' read -r name url <<<"$entry"
-    dest="$base/$name"
+  local slug repo_name url dest
+  local sorted_slugs=()
+  while IFS= read -r slug; do
+    sorted_slugs+=("$slug")
+  done < <(printf '%s\n' "${DEVELOPER_REPOS[@]}" | sort)
 
-    if [[ -z $url ]]; then
-      logg -w "Skipping $name - missing repository URL."
-      continue
-    fi
+  for slug in "${sorted_slugs[@]}"; do
+    repo_name="${slug##*/}"
+    url="git@github.com:${slug}.git"
+    dest="$base/$repo_name"
 
     if [[ -d $dest/.git ]]; then
-      logg -i "$name already present; ensuring SSH remote."
+      logg -i "$repo_name already present; ensuring SSH remote."
       if ((DRY_RUN)); then
         logg -i "[dry-run] git -C $dest remote set-url origin $url"
       else
         if ! git -C "$dest" remote set-url origin "$url" 2>/dev/null; then
-          git -C "$dest" remote add origin "$url" 2>/dev/null || logg -w "Failed to configure origin for $name."
+          git -C "$dest" remote add origin "$url" 2>/dev/null || logg -w "Failed to configure origin for $repo_name."
         fi
       fi
       continue
@@ -674,14 +742,14 @@ clone_developer_repos() {
     if [[ -e $dest ]]; then
       local pretty_dest
       pretty_dest="$(pretty_path "$dest")"
-      logg -w "Skipping $name - $pretty_dest exists but is not a git repository."
+      logg -w "Skipping $repo_name - $pretty_dest exists but is not a git repository."
       continue
     fi
 
     if ((DRY_RUN)); then
       logg -i "[dry-run] git clone $url $dest"
     else
-      git clone "$url" "$dest" || logg -w "Failed to clone $name from $url."
+      git clone "$url" "$dest" || logg -w "Failed to clone $repo_name from $url."
     fi
   done
 }

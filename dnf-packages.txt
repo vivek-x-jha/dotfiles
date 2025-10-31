@@ -1,0 +1,22 @@
+# dnf packages to install on Fedora-based systems
+@development-tools
+curl
+git
+zsh
+tmux
+neovim
+ripgrep
+fd-find
+bat
+fzf
+python3
+python3-pip
+pkgconf-pkg-config
+openssl-devel
+sqlite-devel
+unzip
+nodejs
+npm
+gh
+
+# Add additional packages below as needed
