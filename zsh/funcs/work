@@ -19,7 +19,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 local session="$1"
+local dotfiles_root="${DOTFILES_ROOT:-$HOME/.dotfiles}"
 local root="$HOME/developer/$session"
+
+case "$session" in nvim | wezterm) root="$dotfiles_root" ;; esac
+
 local left_id="$session:$window.1"
 local top_right_id="$session:$window.2"
 local bottom_right_id="$session:$window.3"
