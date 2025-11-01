@@ -31,9 +31,12 @@ KEEP_SUDO_PID=''
 OS_TYPE=''
 DISTRO=''
 PKG_MGR=''
-BREWFILE_DEFAULT='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main/Brewfile'
+GITHUB_RAW_BASE='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main'
+BREWFILE_DEFAULT="$GITHUB_RAW_BASE/Brewfile"
 APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
 DNF_MANIFEST_DEFAULT="$HOME/.dotfiles/dnf-packages.txt"
+APT_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/apt-packages.txt"
+DNF_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/dnf-packages.txt"
 DNF_CMD=''
 
 DEVELOPER_CLONE_ROOT="${DEVELOPER_CLONE_ROOT:-$HOME/Developer}"
@@ -308,10 +311,29 @@ install_package_sets() {
       fi
     fi
 
-    if [[ -f $DNF_MANIFEST_DEFAULT ]]; then
-      if confirm "Install dnf packages from $(basename "$DNF_MANIFEST_DEFAULT")" 'Y'; then
+    local dnf_manifest="$DNF_MANIFEST_DEFAULT"
+    local dnf_manifest_tmp=''
+
+    if [[ ! -f $dnf_manifest && -n $DNF_MANIFEST_URL_DEFAULT ]]; then
+      dnf_manifest_tmp="$(mktemp)"
+      if ((DRY_RUN)); then
+        logg -i "[dry-run] curl -fsL $DNF_MANIFEST_URL_DEFAULT -o $dnf_manifest_tmp"
+      fi
+
+      if curl -fsL "$DNF_MANIFEST_URL_DEFAULT" -o "$dnf_manifest_tmp" 2>/dev/null; then
+        logg -i "Using remote dnf manifest: $DNF_MANIFEST_URL_DEFAULT"
+        dnf_manifest="$dnf_manifest_tmp"
+      else
+        logg -w "Failed to fetch dnf manifest from $DNF_MANIFEST_URL_DEFAULT"
+        rm -f "$dnf_manifest_tmp"
+        dnf_manifest_tmp=''
+      fi
+    fi
+
+    if [[ -f $dnf_manifest ]]; then
+      if confirm "Install dnf packages from $(pretty_path "$dnf_manifest")" 'Y'; then
         notify -s 'Installing dnf packages'
-        mapfile -t dnf_packages < <(grep -vE '^(#|\\s*$)' "$DNF_MANIFEST_DEFAULT")
+        mapfile -t dnf_packages < <(grep -vE '^(#|\s*$)' "$dnf_manifest")
         if [[ ${#dnf_packages[@]} -gt 0 ]]; then
           if ((DRY_RUN)); then
             logg -i "[dry-run] sudo $dnf_exec install -y ${dnf_packages[*]}"
@@ -319,14 +341,19 @@ install_package_sets() {
             sudo "$dnf_exec" install -y "${dnf_packages[@]}"
           fi
         else
-          logg -w "No packages listed in $DNF_MANIFEST_DEFAULT"
+          logg -w "No packages listed in $(pretty_path "$dnf_manifest")"
         fi
       fi
     else
-      logg -w "dnf manifest not found at $DNF_MANIFEST_DEFAULT. Create it to enable bulk installs."
+      logg -w "dnf manifest not found locally and no remote fallback available."
+    fi
+
+    if [[ -n $dnf_manifest_tmp && -f $dnf_manifest_tmp ]]; then
+      rm -f "$dnf_manifest_tmp"
     fi
 
     install_linux_optional_tools
+    install_linux_gui_apps
 
   elif [[ $PKG_MGR == apt ]]; then
     if confirm "Update apt package lists" 'Y'; then
@@ -347,10 +374,29 @@ install_package_sets() {
       fi
     fi
 
-    if [[ -f $APT_MANIFEST_DEFAULT ]]; then
-      if confirm "Install apt packages from $(basename "$APT_MANIFEST_DEFAULT")" 'Y'; then
+    local apt_manifest="$APT_MANIFEST_DEFAULT"
+    local apt_manifest_tmp=''
+
+    if [[ ! -f $apt_manifest && -n $APT_MANIFEST_URL_DEFAULT ]]; then
+      apt_manifest_tmp="$(mktemp)"
+      if ((DRY_RUN)); then
+        logg -i "[dry-run] curl -fsL $APT_MANIFEST_URL_DEFAULT -o $apt_manifest_tmp"
+      fi
+
+      if curl -fsL "$APT_MANIFEST_URL_DEFAULT" -o "$apt_manifest_tmp" 2>/dev/null; then
+        logg -i "Using remote apt manifest: $APT_MANIFEST_URL_DEFAULT"
+        apt_manifest="$apt_manifest_tmp"
+      else
+        logg -w "Failed to fetch apt manifest from $APT_MANIFEST_URL_DEFAULT"
+        rm -f "$apt_manifest_tmp"
+        apt_manifest_tmp=''
+      fi
+    fi
+
+    if [[ -f $apt_manifest ]]; then
+      if confirm "Install apt packages from $(pretty_path "$apt_manifest")" 'Y'; then
         notify -s 'Installing apt packages'
-        mapfile -t apt_packages < <(grep -vE '^(#|\s*$)' "$APT_MANIFEST_DEFAULT")
+        mapfile -t apt_packages < <(grep -vE '^(#|\s*$)' "$apt_manifest")
         if [[ ${#apt_packages[@]} -gt 0 ]]; then
           if ((DRY_RUN)); then
             logg -i "[dry-run] sudo apt install -y ${apt_packages[*]}"
@@ -358,14 +404,19 @@ install_package_sets() {
             sudo apt install -y "${apt_packages[@]}"
           fi
         else
-          logg -w "No packages listed in $APT_MANIFEST_DEFAULT"
+          logg -w "No packages listed in $(pretty_path "$apt_manifest")"
         fi
       fi
     else
-      logg -w "apt manifest not found at $APT_MANIFEST_DEFAULT. Create it to enable bulk installs."
+      logg -w "apt manifest not found locally and no remote fallback available."
+    fi
+
+    if [[ -n $apt_manifest_tmp && -f $apt_manifest_tmp ]]; then
+      rm -f "$apt_manifest_tmp"
     fi
 
     install_linux_optional_tools
+    install_linux_gui_apps
   fi
 }
 
@@ -1009,6 +1060,250 @@ install_linux_optional_tools() {
     else
       run "$uv_cmd"
     fi
+  fi
+}
+
+# Install GUI applications recommended for Linux setups
+# Usage: install_linux_gui_apps
+install_linux_gui_apps() {
+  [[ $OS_TYPE == linux ]] || return
+
+  confirm 'Install recommended Linux GUI applications (Chrome, Slack, Spotify, etc.)' 'N' || {
+    logg -w 'Skipping Linux GUI application installs.'
+    return
+  }
+
+  notify -s 'Installing Linux GUI applications'
+
+  [[ $PKG_MGR == apt ]] && install_linux_gui_apps_apt && return
+  [[ $PKG_MGR == dnf ]] && install_linux_gui_apps_dnf && return
+
+  logg -w "No GUI installer defined for package manager: $PKG_MGR"
+}
+
+# Install GUI tooling on Debian/Ubuntu systems
+# Usage: install_linux_gui_apps_apt
+install_linux_gui_apps_apt() {
+  local download_dir="$HOME/Downloads/linux-gui"
+  local apt_update_needed=0
+
+  run "mkdir -p \"$download_dir\""
+
+  local onepassword_key='/usr/share/keyrings/1password-archive-keyring.gpg'
+  local onepassword_list='/etc/apt/sources.list.d/1password.list'
+
+  if [[ ! -f $onepassword_key ]]; then
+    run "curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o \"$onepassword_key\""
+    apt_update_needed=1
+  fi
+
+  if [[ ! -f $onepassword_list ]]; then
+    run "sudo tee \"$onepassword_list\" >/dev/null <<EOF
+deb [signed-by=$onepassword_key] https://downloads.1password.com/linux/debian/amd64 stable main
+EOF"
+    apt_update_needed=1
+  fi
+
+  local spotify_key='/usr/share/keyrings/spotify.gpg'
+  local spotify_list='/etc/apt/sources.list.d/spotify.list'
+
+  if [[ ! -f $spotify_key ]]; then
+    run "curl -fsSL https://download.spotify.com/debian/pubkey.gpg | sudo gpg --dearmor -o \"$spotify_key\""
+    apt_update_needed=1
+  fi
+
+  if [[ ! -f $spotify_list ]]; then
+    run "sudo tee \"$spotify_list\" >/dev/null <<EOF
+deb [signed-by=$spotify_key] http://repository.spotify.com stable non-free
+EOF"
+    apt_update_needed=1
+  fi
+
+  local ms_key='/usr/share/keyrings/ms.gpg'
+  local ms_list='/etc/apt/sources.list.d/vscode.list'
+
+  if [[ ! -f $ms_key ]]; then
+    run "curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee \"$ms_key\" >/dev/null"
+    apt_update_needed=1
+  fi
+
+  if [[ ! -f $ms_list ]]; then
+    run "sudo tee \"$ms_list\" >/dev/null <<EOF
+deb [arch=amd64 signed-by=$ms_key] https://packages.microsoft.com/repos/code stable main
+EOF"
+    apt_update_needed=1
+  fi
+
+  if ((apt_update_needed)); then run 'sudo apt update'; fi
+
+  local -a apt_packages=()
+
+  if ! dpkg -s 1password &>/dev/null; then apt_packages+=(1password); fi
+  if ! dpkg -s anki &>/dev/null && ! command -v anki &>/dev/null; then apt_packages+=(anki); fi
+  if ! dpkg -s nautilus-dropbox &>/dev/null; then apt_packages+=(nautilus-dropbox); fi
+  if ! dpkg -s spotify-client &>/dev/null && ! command -v spotify &>/dev/null; then apt_packages+=(spotify-client); fi
+  if ! dpkg -s code &>/dev/null && ! command -v code &>/dev/null; then apt_packages+=(code); fi
+  if ! dpkg -s vlc &>/dev/null && ! command -v vlc &>/dev/null; then apt_packages+=(vlc); fi
+
+  if [[ ${#apt_packages[@]} -gt 0 ]]; then
+    run "sudo apt install -y ${apt_packages[*]}"
+  else
+    logg -i 'Apt-based GUI packages already present.'
+  fi
+
+  install_deb_package() {
+    local pkg="$1"
+    local url="$2"
+    local label="$3"
+    local filename="$4"
+    local dest="$download_dir/${filename:-$pkg}.deb"
+
+    if dpkg -s "$pkg" &>/dev/null; then
+      logg -i "$label already installed."
+      return
+    fi
+
+    logg -i "Downloading $label installer."
+    run "curl -L \"$url\" -o \"$dest\""
+    run "sudo apt install -y \"$dest\""
+  }
+
+  install_deb_package google-chrome-stable 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb' 'Google Chrome'
+  install_deb_package slack-desktop 'https://downloads.slack-edge.com/desktop-releases/linux/x64/latest/slack-desktop-latest-amd64.deb' 'Slack'
+  install_deb_package discord 'https://discord.com/api/download?platform=linux&format=deb' 'Discord'
+
+  if ! command -v postman &>/dev/null; then
+    if command -v flatpak &>/dev/null; then
+      run 'flatpak install -y flathub com.getpostman.Postman'
+    else
+      logg -w 'Flatpak not available; skipping Postman installation. See gui-apps-linux.md for manual steps.'
+    fi
+  fi
+
+  if ! command -v wezterm &>/dev/null; then
+    if command -v flatpak &>/dev/null; then
+      run 'flatpak install -y flathub org.wezfurlong.wezterm'
+    else
+      logg -w 'WezTerm missing and Flatpak unavailable. Download from https://github.com/wez/wezterm/releases.'
+    fi
+  fi
+
+  if ! command -v thinkorswim &>/dev/null; then
+    logg -w 'Thinkorswim requires the vendor installer (see gui-apps-linux.md). Skipping automated install.'
+  fi
+}
+
+# Install GUI tooling on Fedora/RHEL systems
+# Usage: install_linux_gui_apps_dnf
+install_linux_gui_apps_dnf() {
+  local download_dir="$HOME/Downloads/linux-gui"
+  local dnf_refresh_needed=0
+
+  run "mkdir -p \"$download_dir\""
+
+  local rpmfusion_free='/etc/yum.repos.d/rpmfusion-free.repo'
+  local rpmfusion_nonfree='/etc/yum.repos.d/rpmfusion-nonfree.repo'
+
+  if [[ ! -f $rpmfusion_free ]]; then
+    run "sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    dnf_refresh_needed=1
+  fi
+
+  if [[ ! -f $rpmfusion_nonfree ]]; then
+    run "sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+    dnf_refresh_needed=1
+  fi
+
+  local onepassword_repo='/etc/yum.repos.d/1password.repo'
+  if [[ ! -f $onepassword_repo ]]; then
+    run 'sudo rpm --import https://downloads.1password.com/linux/keys/1password.asc'
+    run "sudo tee \"$onepassword_repo\" >/dev/null <<'EOF'
+[1password]
+name=1Password
+baseurl=https://downloads.1password.com/linux/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://downloads.1password.com/linux/keys/1password.asc
+EOF"
+    dnf_refresh_needed=1
+  fi
+
+  local vscode_repo='/etc/yum.repos.d/vscode.repo'
+  if [[ ! -f $vscode_repo ]]; then
+    run 'sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc'
+    run "sudo tee \"$vscode_repo\" >/dev/null <<'EOF'
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF"
+    dnf_refresh_needed=1
+  fi
+
+  local copr_repo='/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:wez:wezterm.repo'
+  if [[ ! -f $copr_repo ]]; then
+    run 'sudo dnf -y copr enable wez/wezterm'
+    dnf_refresh_needed=1
+  fi
+
+  ((dnf_refresh_needed)) && run 'sudo dnf makecache'
+
+  local -a dnf_packages=()
+
+  if ! rpm -q 1password &>/dev/null; then dnf_packages+=(1password); fi
+  if ! rpm -q anki &>/dev/null && ! command -v anki &>/dev/null; then dnf_packages+=(anki); fi
+  if ! rpm -q nautilus-dropbox &>/dev/null; then dnf_packages+=(nautilus-dropbox); fi
+  if ! rpm -q code &>/dev/null && ! command -v code &>/dev/null; then dnf_packages+=(code); fi
+  if ! rpm -q vlc &>/dev/null && ! command -v vlc &>/dev/null; then dnf_packages+=(vlc); fi
+  if ! rpm -q wezterm &>/dev/null && ! command -v wezterm &>/dev/null; then dnf_packages+=(wezterm); fi
+
+  if [[ ${#dnf_packages[@]} -gt 0 ]]; then
+    run "sudo dnf install -y ${dnf_packages[*]}"
+  else
+    logg -i 'DNF-based GUI packages already present.'
+  fi
+
+  install_rpm_package() {
+    local pkg="$1"
+    local url="$2"
+    local label="$3"
+    local filename="$4"
+    local dest="$download_dir/${filename:-$pkg}.rpm"
+
+    if rpm -q "$pkg" &>/dev/null; then
+      logg -i "$label already installed."
+      return
+    fi
+
+    logg -i "Downloading $label installer."
+    run "curl -L \"$url\" -o \"$dest\""
+    run "sudo dnf install -y \"$dest\""
+  }
+
+  install_rpm_package google-chrome-stable 'https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm' 'Google Chrome'
+  install_rpm_package slack 'https://downloads.slack-edge.com/desktop-releases/linux/x64/latest/slack-desktop-latest-x86_64.rpm' 'Slack' 'slack-desktop'
+  install_rpm_package discord 'https://discord.com/api/download?platform=linux&format=rpm' 'Discord'
+
+  if ! command -v spotify &>/dev/null; then
+    if command -v flatpak &>/dev/null; then
+      run 'flatpak install -y flathub com.spotify.Client'
+    else
+      logg -w 'Flatpak not available; skipping Spotify installation. See gui-apps-linux.md for manual steps.'
+    fi
+  fi
+
+  if ! command -v postman &>/dev/null; then
+    if command -v flatpak &>/dev/null; then
+      run 'flatpak install -y flathub com.getpostman.Postman'
+    else
+      logg -w 'Flatpak not available; skipping Postman installation. See gui-apps-linux.md for manual steps.'
+    fi
+  fi
+
+  if ! command -v thinkorswim &>/dev/null; then
+    logg -w 'Thinkorswim requires the vendor shell installer. Download from TD Ameritrade manually.'
   fi
 }
 
