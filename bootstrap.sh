@@ -31,6 +31,7 @@ KEEP_SUDO_PID=''
 OS_TYPE=''
 DISTRO=''
 PKG_MGR=''
+
 GITHUB_RAW_BASE='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main'
 BREWFILE_DEFAULT="$GITHUB_RAW_BASE/Brewfile"
 APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
