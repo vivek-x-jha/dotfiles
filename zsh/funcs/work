@@ -56,9 +56,12 @@ tmux_template() {
   tmux select-pane -t "$bottom_right_id" -T "$bottom_right"
 
   # Send <cmd> to panes
-  tmux send-keys -t "$left_id" "$left_cmd" C-m
-  tmux send-keys -t "$top_right_id" "$top_right_cmd" C-m
-  tmux send-keys -t "$bottom_right_id" "$bottom_right_cmd" C-m
+  tmux send-keys -t "$left_id" "$left_cmd"
+  tmux send-keys -t "$left_id" Enter
+  tmux send-keys -t "$top_right_id" "$top_right_cmd"
+  tmux send-keys -t "$top_right_id" Enter
+  tmux send-keys -t "$bottom_right_id" "$bottom_right_cmd"
+  tmux send-keys -t "$bottom_right_id" Enter
 
   # Start session in shell
   tmux select-pane -t "$bottom_right_id"
