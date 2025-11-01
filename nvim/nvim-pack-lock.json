@@ -4,13 +4,13 @@
       "rev": "ccf25a5"
     },
     "blink.cmp": {
-      "rev": "312097b"
+      "rev": "2408f14"
     },
     "conform.nvim": {
       "rev": "9fd3d5e"
     },
     "fzf-lua": {
-      "rev": "6bb2a26"
+      "rev": "a8458b7"
     },
     "gitsigns.nvim": {
       "rev": "20ad441"
