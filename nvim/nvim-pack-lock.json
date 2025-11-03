@@ -1,13 +1,13 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "ccf25a5"
+      "rev": "5a1e392"
     },
     "blink.cmp": {
       "rev": "2408f14"
     },
     "conform.nvim": {
-      "rev": "9fd3d5e"
+      "rev": "26c02e1"
     },
     "fzf-lua": {
       "rev": "a8458b7"
@@ -17,7 +17,7 @@
     },
     "indent-blankline.nvim": [],
     "noice.nvim": {
-      "rev": "5099348"
+      "rev": "7bfd942"
     },
     "nui.nvim": [],
     "nvim-autopairs": {
