@@ -129,27 +129,22 @@ confirm() {
   done
 }
 
-# [HF6] run 1Password CLI commands when integration is enabled
-# Usage: safe_op_call <subcommand> [args...]
-safe_op_call() {
+# [HF6] fetch secret field from 1Password when available
+# Usage: get_op_field <item> <field>
+get_op_field() {
+  local item="$1"
+  local field="$2"
+  local value=''
+
   ((USE_1PASSWORD)) || return 1
+  ((DRY_RUN)) && printf '<dry-run:%s>\n' "$field" && return
 
-  command -v op &>/dev/null || {
-    logg -w '1Password CLI not installed. Skipping related action.'
-    return 1
-  }
+  value=$(op item get "$item" \
+    --vault "$OP_VAULT" \
+    --field "$field" \
+    --reveal 2>/dev/null) || return 1
 
-  local quoted_args=()
-  local cmd=op
-
-  for arg in "$@"; do
-    printf -v quoted_arg '%q' "$arg"
-    quoted_args+=("$quoted_arg")
-  done
-
-  [[ ${#quoted_args[@]} -gt 0 ]] && cmd+=" ${quoted_args[*]}"
-
-  run "$cmd"
+  printf '%s' "$value"
 }
 
 # Determine OS and package-manager defaults
@@ -422,26 +417,17 @@ install_package_sets() {
 }
 
 # Fetch a secret field from 1Password if enabled
-# Usage: get_op_field <item> <field>
-get_op_field() {
-  local item="$1"
-  local field="$2"
-  local value
-
-  ((USE_1PASSWORD)) || return 1
-  ((DRY_RUN)) && printf '\n' && return 0
-
-  value=$(op item get "$item" --vault "$OP_VAULT" --field "$field" --reveal 2>/dev/null) || return 1
-  printf '%s' "$value"
-}
 
 # Collect environment preferences and prompt for 1Password data
 collect_environment() {
   # Sign into 1Password CLI when integration is enabled
-  ((USE_1PASSWORD)) && {
+  if ((USE_1PASSWORD)); then
     notify -s 'Signing into 1Password CLI'
-    safe_op_call signin || { logg -w 'Skipping 1Password features (signin failed).' && USE_1PASSWORD=0; }
-  }
+    run 'op signin' || {
+      logg -w 'Skipping 1Password features (signin failed).'
+      USE_1PASSWORD=0
+    }
+  fi
 
   # Load any existing Git metadata as defaults
   local existing_git_name existing_git_email existing_signingkey
@@ -822,50 +808,51 @@ install_templates() {
 
 # Provision Atuin sync credentials via 1Password
 setup_atuin_sync() {
-  if ! command -v atuin &>/dev/null; then
-    logg -w 'Atuin not installed. Skipping sync setup.'
-    return
-  fi
+  # Skip Atuin 1Password setup when either command unavailable
+  ! command -v atuin &>/dev/null && logg -w 'Atuin not installed. Skipping sync setup.' && return
+  ! ((USE_1PASSWORD)) && logg -w '1Password disabled. Skipping Atuin vault automation.' && return
+  ! command -v op &>/dev/null && logg -w '1Password CLI not installed. Skipping Atuin vault automation.' && return
 
-  if ! ((USE_1PASSWORD)); then
-    logg -w '1Password disabled. Skipping Atuin vault automation.'
-    return
-  fi
+  local atuin_op="${ATUIN_OP_TITLE} --vault ${OP_VAULT}"
 
-  if ((DRY_RUN)); then
-    logg -i "[dry-run] op item get $ATUIN_OP_TITLE --vault $OP_VAULT"
-    logg -i '[dry-run] atuin register/login'
-    return
-  fi
+  # Ensure Atuin Sync 1Password login exists with password generated
+  run "op item get \"$atuin_op\" >/dev/null || op item create \
+    --title \"$atuin_op\" \
+    --category login \
+    --generate-password='letters,digits,symbols,32' \
+    username=\"$ATUIN_USERNAME\" \
+    email[text]=\"$ATUIN_EMAIL\" \
+    key[password]='<Update with \$(atuin key)>' >/dev/null"
 
-  if ! safe_op_call item get "$ATUIN_OP_TITLE" --vault "$OP_VAULT" &>/dev/null; then
-    safe_op_call item create \
-      --vault "$OP_VAULT" \
-      --category login \
-      --title "$ATUIN_OP_TITLE" \
-      --generate-password='letters,digits,symbols,32' \
-      "username=$ATUIN_USERNAME" \
-      "email[text]=$ATUIN_EMAIL" \
-      "key[password]=<Update with \$(atuin key)>" >/dev/null
-  fi
-
-  local atuin_password
+  # Retreive Atuin Sync password
+  local atuin_password=''
   atuin_password="$(get_op_field "$ATUIN_OP_TITLE" password)"
-  if [[ -z $atuin_password ]]; then
-    logg -w 'Failed to fetch Atuin password from 1Password. Skipping sync.'
-    return
-  fi
+  [[ -z $atuin_password ]] && logg -w 'Failed to fetch Atuin password from 1Password. Skipping sync.' && return
 
-  atuin register -u "$ATUIN_USERNAME" -e "$ATUIN_EMAIL" -p "$atuin_password" || true
-  safe_op_call item edit "$ATUIN_OP_TITLE" --vault "$OP_VAULT" key="$(atuin key)" >/dev/null
+  # Register Atuin credentials obtained from 1Password - if already exists is idempotent
+  run "atuin register \
+    -u \"$ATUIN_USERNAME\" \
+    -e \"$ATUIN_EMAIL\" \
+    -p \"$atuin_password\" || true"
 
-  atuin status | grep -q "$ATUIN_USERNAME" || (
-    atuin logout
-    atuin login -u "$ATUIN_USERNAME" -p "$atuin_password" -k "$(get_op_field "$ATUIN_OP_TITLE" key)"
-  ) >/dev/null 2>&1
+  # Update Atuin Sync 1Password with generated key
+  run "op item edit \"$atuin_op\" key=\"$(atuin key)\" >/dev/null"
 
-  atuin import auto
-  atuin sync
+  # Retrieve freshly updated Atuin sync key
+  local atuin_key=''
+  atuin_key="$(get_op_field "$ATUIN_OP_TITLE" key)"
+  [[ -z $atuin_key ]] && logg -w 'Failed to retrieve Atuin sync key from 1Password. Skipping login refresh.' && return
+
+  # Ensure Atuin session logged in using 1Password-managed credentials
+  run "atuin status | grep -q \"$ATUIN_USERNAME\" || ( \
+    atuin logout && atuin login \
+    -u \"$ATUIN_USERNAME\" \
+    -p \"$atuin_password\" \
+    -k \"$atuin_key\" ) &>/dev/null"
+
+  # Sync Atuin history with existing commands in server
+  run 'atuin import auto'
+  run 'atuin sync'
 }
 
 # Configure Touch ID-backed sudo when supported
