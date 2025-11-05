@@ -877,7 +877,6 @@ configure_sudo_auth() {
 }
 
 # Ensure preferred shell binaries are registered and set as default
-# Usage: change_shell_default
 change_shell_default() {
   local shell_paths=()
   if [[ $OS_TYPE == macos ]]; then
