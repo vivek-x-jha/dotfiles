@@ -1,13 +1,13 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "5a1e392"
+      "rev": "3732756"
     },
     "blink.cmp": {
-      "rev": "2408f14"
+      "rev": "40380e7"
     },
     "conform.nvim": {
-      "rev": "26c02e1"
+      "rev": "cde4da5"
     },
     "fzf-lua": {
       "rev": "a8458b7"
