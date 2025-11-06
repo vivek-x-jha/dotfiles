@@ -535,7 +535,7 @@ symlink() {
     fi
   fi
 
-  if ! pushd "$base" >/dev/null 2>&1; then
+if ! pushd "$base" &>/dev/null; then
     logg -w "Skipping link (unable to enter $base)"
     return
   fi
