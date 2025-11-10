@@ -55,7 +55,7 @@ alias list-alias='alias | sort'
 alias list-vars='env | sort'
 
 # Outputs Zsh options + functions + FPATH + syntax-highlighting
-[[ -n $ZSH_VERSION ]] && {
+[ -n "${ZSH_VERSION:-}" ] && {
   alias list-opts='setopt'
   alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
   alias list-fpath='print -l ${fpath[@]}'
@@ -63,7 +63,7 @@ alias list-vars='env | sort'
 }
 
 # Outputs Bash options + functions
-[[ -n $BASH_VERSION ]] && {
+[ -n "${BASH_VERSION:-}" ] && {
   alias list-opts='shopt -p'
   alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
 }
@@ -145,7 +145,7 @@ command -v SwitchAudioSource &>/dev/null && {
 
 # -------------------------------- Suffix Aliases ---------------------------------------
 
-command -v autoload &>/dev/null && autoload -Uz is-at-least && is-at-least 4.2.0 && {
+[ -n "${ZSH_VERSION:-}" ] && {
   # Images
   _image_fts=(jpg jpeg png gif mng tiff tif xpm)
   for ft in $_image_fts; do alias -s $ft='open -a Preview'; done
