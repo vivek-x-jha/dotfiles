@@ -32,6 +32,24 @@ require('fzf-lua').setup {
   },
 
   grep = {
+    rg_opts = table.concat({
+      '--hidden',
+      '--follow',
+      '--glob=!.git',
+      '--glob=!node_modules',
+      '--glob=!vendor',
+      '--glob=!.cache',
+      '--glob=!tmp',
+      '--max-columns=160',
+      '--max-columns-preview',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+    }, ' '),
+
     header = ':!rg --vimgrep',
     winopts = { title = ' ' .. icons.fuzzy .. ' fuzzy search', title_flags = false },
   },
