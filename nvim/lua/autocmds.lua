@@ -147,3 +147,11 @@ autocmd('FileType', {
     vim.api.nvim_set_option_value('winhl', table.concat(parts, ','), { scope = 'local', win = 0 })
   end,
 })
+
+-- [11/11] Git config niceties
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  desc = 'Treat dotfiles git config paths as gitconfig filetype',
+  group = augroup('GitConfigFt', {}),
+  pattern = '*/git/config',
+  callback = function() vim.bo.filetype = 'gitconfig' end,
+})
