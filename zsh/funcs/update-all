@@ -1,29 +1,75 @@
 #!/usr/bin/env zsh
 
-# Asynchronously delete all .DS_Store files system-wide (non-blocking)
-fd -HI .DS_Store / -x rm -f {} &>/dev/null &
-
-# Zsh plugin manager: update zap & plugins
-zap update all
-
-# Update tmux plugins
-$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all
-
-# Set Brewfile path or fallback to default
+# Usage: update-all [Brewfile]
+#   Brewfile (optional): custom brew bundle output path; defaults to ~/.dotfiles/Brewfile
 local brewfile="${1:-$HOME/.dotfiles/Brewfile}"
 
-# Homebrew: upgrade formulae and casks
-brew upgrade
-brew cu -af
+local ICON='󰓒'
+local STEP=0
+local SUBSTEP=0
+local TOTAL_STEPS=5
 
-# Homebrew: clean up and verify
-brew cleanup
-brew doctor
+logg() {
+  local opt="$1" level color
+  case "$opt" in
+  -i) level=INFO && color="$BLACK" ;;
+  -w) level=WARN && color="$YELLOW" ;;
+  -e) level=ERROR && color="$MAGENTA" ;;
+  *) printf 'logg: invalid level\n' >&2 && return 1 ;;
+  esac
+  shift
+  printf '%b[%s] %s%b\n' "$color" "$level" "$*" "$RESET"
+}
 
-# Re-dump current brew bundle (force overwrite)
-brew bundle dump --force --file="$brewfile"
+notify() {
+  local minor=''
+  case "$1" in
+  -s) SUBSTEP=$((SUBSTEP + 1)) && minor=".$SUBSTEP" && shift ;;
+  *) STEP=$((STEP + 1)) && SUBSTEP=0 ;;
+  esac
+  printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
+}
 
-# Post-brew: update icons for any newly installed or updated apps
+notify 'PRUNE .DS_STORE ARTIFACTS'
+logg -i 'Deleting .DS_Store files from disk (async)'
+if command -v fd &>/dev/null; then
+  fd -HI .DS_Store / -x rm -f {} &>/dev/null &
+else
+  find / -name '.DS_Store' -print -delete &>/dev/null &
+fi
+
+notify 'UPDATE ZSH PLUGINS'
+if command -v zap &>/dev/null; then
+  zap update all
+else
+  logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
+fi
+
+notify 'UPDATE TMUX PLUGINS'
+if [[ -n $TMUX_PLUGIN_MANAGER_PATH ]] && [[ -x $TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins ]]; then
+  "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins" all
+else
+  logg -w 'TMUX PLUGIN MANAGER NOT DETECTED; SKIPPING TPM UPDATE'
+fi
+
+notify 'RUN HOMEBREW MAINTENANCE'
+if command -v brew &>/dev/null; then
+  notify -s 'UPGRADE FORMULAE AND CASKS'
+  brew upgrade
+  brew cu -af
+
+  notify -s 'CLEANUP AND HEALTH CHECKS'
+  brew cleanup && logg -i 'RUNNING BREW CLEANUP'
+  brew doctor && logg -i 'RUNNING BREW DOCTOR'
+
+  notify -s 'EXPORT BREWFILE'
+  brew bundle dump --force --file="$brewfile" && logg -i "UPDATING BREWFILE: $brewfile"
+
+else
+  logg -w 'HOMEBREW NOT FOUND; SKIPPING BREW MAINTENANCE'
+fi
+
+notify 'REFRESH MACOS ICONS'
 update-icons
 
 # Optional: Update TeX Live Utility (uncomment if used)
