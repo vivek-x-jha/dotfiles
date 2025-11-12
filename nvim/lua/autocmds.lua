@@ -1,7 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
--- [1/10] Hide line numbers in Spectre
+-- [1/12] Hide line numbers in Spectre
 autocmd('FileType', {
   desc = 'Hide line numbers for Spectre',
   group = augroup('SpectreAU', {}),
@@ -12,7 +12,7 @@ autocmd('FileType', {
   end,
 })
 
--- [2/10] Always refresh snippet list with respect to buffer
+-- [2/12] Always refresh snippet list with respect to buffer
 autocmd('InsertLeave', {
   desc = 'Reset Snippet',
   group = augroup('LuaSnipAU', {}),
@@ -24,7 +24,7 @@ autocmd('InsertLeave', {
   end,
 })
 
--- [3/10] Auto-refresh NvimTree on relevant events
+-- [3/12] Auto-refresh NvimTree on relevant events
 autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   group = augroup('TreeAU', {}),
@@ -44,7 +44,7 @@ autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained
   end,
 })
 
--- [4/10] Display Dashboard on blank startup
+-- [4/12] Display Dashboard on blank startup
 autocmd('VimEnter', {
   desc = 'Display Dashboard on blank startup',
   group = augroup('DashAU', {}),
@@ -62,7 +62,7 @@ autocmd('VimEnter', {
   end,
 })
 
--- [5/10] Exclude quickfix buffers from buffer list
+-- [5/12] Exclude quickfix buffers from buffer list
 autocmd('FileType', {
   desc = 'Prevents quickfix buffers from appearing in buffer lists',
   group = augroup('BufferAU', {}),
@@ -70,14 +70,14 @@ autocmd('FileType', {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
--- [6/10] Highlight on yank
+-- [6/12] Highlight on yank
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('YankAU', {}),
   callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 })
 
--- [7/10] Load folds
+-- [7/12] Load folds
 autocmd('BufWinEnter', {
   desc = 'Load folds when opening file',
   group = augroup('FoldsAU', { clear = false }),
@@ -85,7 +85,7 @@ autocmd('BufWinEnter', {
   command = 'silent! loadview',
 })
 
--- [8/10] Save folds
+-- [8/12] Save folds
 autocmd('BufWinLeave', {
   desc = 'Save folds when closing file',
   group = augroup('FoldsAU', { clear = false }),
@@ -93,7 +93,7 @@ autocmd('BufWinLeave', {
   command = 'mkview',
 })
 
--- [9/10] Fire a custom "User FilePost" once we have a real file buffer and the UI is ready
+-- [9/12] Fire a custom "User FilePost" once we have a real file buffer and the UI is ready
 autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
   group = augroup('FilePostAU', {}),
@@ -121,7 +121,7 @@ autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   end,
 })
 
--- [10/10] Window-local highlight remaps for vim.pack update/confirm buffer
+-- [10/12] Window-local highlight remaps for vim.pack update/confirm buffer
 autocmd('FileType', {
   desc = 'Scope Diagnostic/Diff highlight links to only the nvim-pack window',
   group = augroup('NvimPackHighlights', {}),
