@@ -7,6 +7,7 @@ require('nvim-web-devicons').setup {
     ts = { icon = icons.typescript, name = 'ts' },
     lock = { icon = icons.lock, name = 'lock' },
     ['robots.txt'] = { icon = icons.robot, name = 'robots' },
+    ['.gitignore'] = { icon = icons.branch .. ' ', name = 'git' },
   },
 }
 
