@@ -148,10 +148,27 @@ autocmd('FileType', {
   end,
 })
 
--- [11/11] Git config niceties
+-- [11/12] Git config niceties
 autocmd({ 'BufRead', 'BufNewFile' }, {
-  desc = 'Treat dotfiles git config paths as gitconfig filetype',
+  desc = 'Treat git/config as gitconfig filetype',
   group = augroup('GitConfigFt', {}),
   pattern = '*/git/config',
   callback = function() vim.bo.filetype = 'gitconfig' end,
+})
+
+-- [12/12] Auto-open nvim-tree on startup
+autocmd('VimEnter', {
+  desc = 'Open nvim-tree when Neovim starts',
+  group = augroup('TreeAutoOpen', {}),
+  callback = function()
+    local ok_api, api = pcall(require, 'nvim-tree.api')
+    local ok_view, view = pcall(require, 'nvim-tree.view')
+    if not ok_api or not ok_view then return end
+
+    vim.schedule(function()
+      api.tree.open()
+      api.tree.reload()
+      if view.get_winnr() ~= nil then vim.cmd 'wincmd p' end
+    end)
+  end,
 })
