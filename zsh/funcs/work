@@ -1,74 +1,190 @@
 #!/usr/bin/env zsh
 
-local window='main'
-local left='edit'
-local top_right='ai'
-local bottom_right='test'
+local window_label='main'
+local left_label='edit'
+local top_right_label='ai'
+local bottom_right_label='test'
 
 local left_cmd='nvim'
 local top_right_cmd='codex'
 local bottom_right_cmd='clear;'
 
-# Handle opts for different project setups
+local root=''
+
+# Ensure tmux available
+command -v tmux &>/dev/null || {
+  printf 'tmux not available\n' >&2
+  return 1
+}
+
+# Doc helper
+usage() {
+  cat <<'EOF'
+Usage: work [options] [session]
+
+Options:
+  -h, --help                     Show this help message and exit
+  -r, --reload                   Kill current tmux server and start a fresh session
+  -p, --python                   Append 'uvi' command in bottom pane
+
+Layout customization:
+  --window-label NAME            Set the tmux window name (default: main)
+  --left-label NAME              Pane 1 (left) label (default: edit)
+  --top-right-label NAME         Pane 2 (top-right) label (default: ai)
+  --bottom-right-label NAME      Pane 3 (bottom-right) label (default: test)
+
+Command customization:
+  --left-cmd CMD                 Command for left pane (default: nvim)
+  --top-right-cmd CMD            Command for top-right pane (default: codex)
+  --bottom-right-cmd CMD         Command for bottom-right pane (default: 'clear;')
+
+Examples:
+  work                           Attach or create default session
+  work myapp                     Open session in ~/developer/myapp
+  work --window-label dev myapp  Custom window name
+  work -r                        Reset tmux server (tmux kill-server && tmux new-session)
+EOF
+}
+
+# Handle [options] for different project setups
 while [[ $# -gt 0 ]]; do
   case "$1" in
-  -p | --python) bottom_right_cmd+='uvi' && shift ;;
+  -h | --help)
+    usage
+    return
+    ;;
+
+  -r | --reload)
+    [[ -n $TMUX ]] && {
+      printf 'Stopping tmux server... rerun `work -r` once tmux exits to start fresh.\n'
+      tmux kill-server &>/dev/null
+      return
+    }
+
+    tmux list-sessions &>/dev/null && tmux kill-server &>/dev/null
+
+    # Wait up to 1-2 seconds after tmux klls server to create/resurrect
+    local attempt=0
+    while ((attempt < 3)); do
+      TMUX='' tmux new-session && return
+      sleep 0.5
+      attempt=$((attempt + 1))
+    done
+
+    printf 'work: failed to start new tmux session after reload.\n' >&2
+    return 1
+    ;;
+
+  -p | --python)
+    bottom_right_cmd+='uvi'
+    shift
+    ;;
+
+  --window-label)
+    window_label="$2"
+    shift 2
+    ;;
+
+  --left-label)
+    left_label="$2"
+    shift 2
+    ;;
+
+  --top-right-label)
+    top_right_label="$2"
+    shift 2
+    ;;
+
+  --bottom-right-label)
+    bottom_right_label="$2"
+    shift 2
+    ;;
+
+  --left-cmd)
+    left_cmd="$2"
+    shift 2
+    ;;
+
+  --top-right-cmd)
+    top_right_cmd="$2"
+    shift 2
+    ;;
+
+  --bottom-right-cmd)
+    bottom_right_cmd="$2"
+    shift 2
+    ;;
+
   --) shift && break ;;
   *) break ;;
   esac
 done
 
+# Handle [sessions] for different project setups
 local session="$1"
-local dotfiles_root="${DOTFILES_ROOT:-$HOME/.dotfiles}"
-local root="$HOME/developer/$session"
 
-case "$session" in nvim | wezterm) root="$dotfiles_root" ;; esac
-
-local left_id="$session:$window.1"
-local top_right_id="$session:$window.2"
-local bottom_right_id="$session:$window.3"
-
-# No session name provided → attach or start bare session
-[[ -n $session ]] || {
+case "$session" in
+# Default no arg behavior
+'')
+  # If tmux server running attach to last session
   tmux list-sessions &>/dev/null && {
-    [[ -n $TMUX ]] && tmux switch-client -l || tmux attach-session
+    tmux attach-session
     return $?
   }
 
+  # If no tmux server create new session - probably will invoke resurrect
   tmux new-session
   return $?
-}
+  ;;
 
+# Weird cases
+nvim | wezterm) root="$HOME/.dotfiles" ;;
+
+# Default arg behavior
+*) root="$HOME/developer/$session" ;;
+esac
+
+# General template creator
+# TODO expand for different templates
 tmux_template() {
-  # Ensure project root exists
-  mkdir -p "$root"
+  local left_id="$session:$window_label.1"
+  local top_right_id="$session:$window_label.2"
+  local bottom_right_id="$session:$window_label.3"
 
-  # Initialize new session & rename window
-  tmux new-session -d -s "$session" -c "$root" -n "$window"
+  # Setup project structure
+  mkdir -p "$root/prompts"
 
-  # Create window layout
+  # Initialize session with given configuration
+  tmux new-session -d -s "$session" -c "$root" -n "$window_label"
+
+  # Configure window layout
   tmux split-window -h -t "$left_id" -c "$root"
   tmux split-window -v -t "$top_right_id" -c "$root"
 
-  # Rename panes
-  tmux select-pane -t "$left_id" -T "$left"
-  tmux select-pane -t "$top_right_id" -T "$top_right"
-  tmux select-pane -t "$bottom_right_id" -T "$bottom_right"
+  # Label panes
+  tmux select-pane -t "$left_id" -T "$left_label"
+  tmux select-pane -t "$top_right_id" -T "$top_right_label"
+  tmux select-pane -t "$bottom_right_id" -T "$bottom_right_label"
 
-  # Send <cmd> to panes
-  tmux send-keys -t "$left_id" "$left_cmd"
-  tmux send-keys -t "$left_id" Enter
-  tmux send-keys -t "$top_right_id" "$top_right_cmd"
-  tmux send-keys -t "$top_right_id" Enter
-  tmux send-keys -t "$bottom_right_id" "$bottom_right_cmd"
-  tmux send-keys -t "$bottom_right_id" Enter
+  # Execute startup commands
+  tmux send-keys -t "$left_id" "$left_cmd" Enter
+  tmux send-keys -t "$top_right_id" "$top_right_cmd" Enter
+  tmux send-keys -t "$bottom_right_id" "$bottom_right_cmd" Enter
 
-  # Start session in shell
   tmux select-pane -t "$bottom_right_id"
 }
 
 # Missing named session → scaffold via template
-tmux has-session -t "$session" &>/dev/null || tmux_template || return $?
+tmux has-session -t "$session" &>/dev/null || {
+  tmux_template || {
+    printf 'work: failed to scaffold session %s\n' "$session" >&2
+    usage && return 1
+  }
+}
 
 # Switch or attach depending on current tmux context
-[[ -n $TMUX ]] && tmux switch-client -t "$session" || tmux attach-session -t "$session"
+if [[ -n $TMUX ]]; then
+  tmux switch-client -t "$session" 2>/dev/null || tmux switch-client -l
+else
+  tmux attach-session -t "$session" 2>/dev/null || tmux attach-session
+fi

@@ -68,11 +68,6 @@ alias list-vars='env | sort'
   alias list-funcs='declare -F | cut -d " " -f3 | grep -v "/"'
 }
 
-# -------------------------------- Workspace Management ---------------------------------------
-
-# Tmux
-command -v tmux &>/dev/null && alias reload-tmux='tmux kill-server &>/dev/null; work'
-
 # -------------------------------- Version Control ---------------------------------------
 
 # Commitizen
