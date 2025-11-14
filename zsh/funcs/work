@@ -122,6 +122,7 @@ done
 
 # Handle <sessions> for different project setups
 local session="$1"
+local should_prompt_description=0
 
 case "$session" in
 '')
@@ -138,7 +139,7 @@ case "$session" in
 
 # Default arg behavior & specific cases
 nvim | wezterm) root="$HOME/.dotfiles" ;;
-*) root="$HOME/developer/$session" ;;
+*) root="$HOME/developer/$session" && should_prompt_description=1 ;;
 esac
 
 # Helper func: respects whether current shell is already inside tmux
@@ -157,17 +158,23 @@ tmux has-session -t "$session" &>/dev/null && {
   return $?
 }
 
+local description=''
+
+# Update agent initial cmd with description for easy conversation history filtering
+((should_prompt_description)) && {
+  local prompt
+  printf -v prompt '%bEnter description? %b' "$BRIGHTYELLOW" "$RESET"
+  [[ -t 0 ]] && read -r "?$prompt"
+  description="${REPLY:+: $REPLY}"
+  top_right_cmd+=" '$session$description'"
+}
+
 # General template creator
 # TODO expand for different templates
 tmux_template() {
   local left_id="$session:$window_label.1"
   local top_right_id="$session:$window_label.2"
   local bottom_right_id="$session:$window_label.3"
-
-  [[ -t 0 ]] && {
-    read -r "?Enter description? "
-    top_right_cmd="codex '$session${REPLY:+: $REPLY}'"
-  }
 
   # Setup project structure
   mkdir -p "$root/prompts"
@@ -185,9 +192,12 @@ tmux_template() {
   tmux select-pane -t "$bottom_right_id" -T "$bottom_right_label"
 
   # Execute startup commands
-  tmux send-keys -t "$left_id" "$left_cmd" Enter
-  tmux send-keys -t "$top_right_id" "$top_right_cmd" Enter
-  tmux send-keys -t "$bottom_right_id" "$bottom_right_cmd" Enter
+  tmux send-keys -t "$left_id" -l -- "$left_cmd"
+  tmux send-keys -t "$left_id" C-m
+  tmux send-keys -t "$top_right_id" -l -- "$top_right_cmd"
+  tmux send-keys -t "$top_right_id" C-m
+  tmux send-keys -t "$bottom_right_id" -l -- "$bottom_right_cmd"
+  tmux send-keys -t "$bottom_right_id" C-m
 
   tmux select-pane -t "$bottom_right_id"
 }
