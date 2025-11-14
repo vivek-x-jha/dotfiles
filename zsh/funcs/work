@@ -1,5 +1,11 @@
 #!/usr/bin/env zsh
 
+# Ensure tmux available
+command -v tmux &>/dev/null || {
+  printf 'tmux not available\n' >&2
+  return 1
+}
+
 local window_label='main'
 local left_label='edit'
 local top_right_label='ai'
@@ -11,21 +17,15 @@ local bottom_right_cmd='clear;'
 
 local root=''
 
-# Ensure tmux available
-command -v tmux &>/dev/null || {
-  printf 'tmux not available\n' >&2
-  return 1
-}
-
 # Doc helper
 usage() {
   cat <<'EOF'
-Usage: work [options] [session]
+Usage: work <options> <session>
 
 Options:
   -h, --help                     Show this help message and exit
   -r, --reload                   Kill current tmux server and start a fresh session
-  -p, --python                   Append 'uvi' command in bottom pane
+  -p, --python                   Initialize Python project (runs 'uvi' if no pyproject.toml)
 
 Layout customization:
   --window-label NAME            Set the tmux window name (default: main)
@@ -46,7 +46,7 @@ Examples:
 EOF
 }
 
-# Handle [options] for different project setups
+# Handle <options> for different project setups
 while [[ $# -gt 0 ]]; do
   case "$1" in
   -h | --help)
@@ -76,7 +76,7 @@ while [[ $# -gt 0 ]]; do
     ;;
 
   -p | --python)
-    bottom_right_cmd+='uvi'
+    bottom_right_cmd+=' if test ! -f pyproject.toml; then uvi; fi'
     shift
     ;;
 
@@ -120,29 +120,42 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Handle [sessions] for different project setups
+# Handle <sessions> for different project setups
 local session="$1"
 
 case "$session" in
-# Default no arg behavior
 '')
-  # If tmux server running attach to last session
-  tmux list-sessions &>/dev/null && {
-    tmux attach-session
+  # If run without args inside TMUX session -> mutate to `tmux list-sessions`
+  if [[ -n $TMUX ]]; then
+    tmux list-sessions
     return $?
-  }
+  fi
 
-  # If no tmux server create new session - probably will invoke resurrect
-  tmux new-session
+  # If run without args outside TMUX session -> mutate to `tmux attach-session or new-session`
+  tmux attach-session || tmux new-session
   return $?
   ;;
 
-# Weird cases
+# Default arg behavior & specific cases
 nvim | wezterm) root="$HOME/.dotfiles" ;;
-
-# Default arg behavior
 *) root="$HOME/developer/$session" ;;
 esac
+
+# Helper func: respects whether current shell is already inside tmux
+swatt() {
+  local target="$1"
+  if [[ -n $TMUX ]]; then
+    tmux switch-client -t "$target" 2>/dev/null || tmux switch-client -l
+  else
+    tmux attach-session -t "$target" 2>/dev/null || tmux attach-session
+  fi
+}
+
+# Short circuit if session already exists
+tmux has-session -t "$session" &>/dev/null && {
+  swatt "$session"
+  return $?
+}
 
 # General template creator
 # TODO expand for different templates
@@ -150,6 +163,11 @@ tmux_template() {
   local left_id="$session:$window_label.1"
   local top_right_id="$session:$window_label.2"
   local bottom_right_id="$session:$window_label.3"
+
+  [[ -t 0 ]] && {
+    read -r "?Enter description? "
+    top_right_cmd="codex '$session${REPLY:+: $REPLY}'"
+  }
 
   # Setup project structure
   mkdir -p "$root/prompts"
@@ -174,17 +192,11 @@ tmux_template() {
   tmux select-pane -t "$bottom_right_id"
 }
 
-# Missing named session → scaffold via template
-tmux has-session -t "$session" &>/dev/null || {
-  tmux_template || {
-    printf 'work: failed to scaffold session %s\n' "$session" >&2
-    usage && return 1
-  }
+tmux_template || {
+  printf 'work: failed to scaffold session %s\n' "$session" >&2
+  usage
+  return 1
 }
 
-# Switch or attach depending on current tmux context
-if [[ -n $TMUX ]]; then
-  tmux switch-client -t "$session" 2>/dev/null || tmux switch-client -l
-else
-  tmux attach-session -t "$session" 2>/dev/null || tmux attach-session
-fi
+swatt "$session"
+return $?
