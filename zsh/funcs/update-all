@@ -10,15 +10,24 @@ local SUBSTEP=0
 local TOTAL_STEPS=5
 
 logg() {
-  local opt="$1" level color
-  case "$opt" in
-  -i) level=INFO && color="$BLACK" ;;
-  -w) level=WARN && color="$YELLOW" ;;
-  -e) level=ERROR && color="$MAGENTA" ;;
-  *) printf 'logg: invalid level\n' >&2 && return 1 ;;
+  local level=INFO color="$BLACK" cmd=''
+
+  case "${1-}" in
+  -w) level=WARN && color="$YELLOW" && shift ;;
+  -e) level=ERROR && color="$MAGENTA" && shift ;;
+  -c) cmd="$2" && shift 2 ;;
   esac
-  shift
-  printf '%b[%s] %s%b\n' "$color" "$level" "$*" "$RESET"
+
+  local message="$*"
+  if [[ -n $cmd ]]; then
+    message="Running ${GREEN}${cmd}${RESET}"
+  fi
+
+  printf '%b[%s] %b%b\n' "$color" "$level" "$message" "$RESET"
+  if [[ -n $cmd ]]; then
+    eval "$cmd"
+    return $?
+  fi
 }
 
 notify() {
@@ -31,44 +40,28 @@ notify() {
 }
 
 notify 'PRUNE .DS_STORE ARTIFACTS'
-logg -i 'Deleting .DS_Store files from disk (async)'
-if command -v fd &>/dev/null; then
-  fd -HI .DS_Store / -x rm -f {} &>/dev/null &
-else
-  find / -name '.DS_Store' -print -delete &>/dev/null &
-fi
+logg -c "fd -HI .DS_Store / -x rm -f {} &>/dev/null &" 2>/dev/null ||
+  logg -c "find / -name '.DS_Store' -print -delete &>/dev/null &"
 
 notify 'UPDATE ZSH PLUGINS'
-if command -v zap &>/dev/null; then
-  zap update all
-else
+logg -c 'zap update all' 2>/dev/null ||
   logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
-fi
 
 notify 'UPDATE TMUX PLUGINS'
-if [[ -n $TMUX_PLUGIN_MANAGER_PATH ]] && [[ -x $TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins ]]; then
-  "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins" all
-else
-  logg -w 'TMUX PLUGIN MANAGER NOT DETECTED; SKIPPING TPM UPDATE'
-fi
+logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
+  logg -w 'UPDATE TMUX PLUGINS FAILED'
 
 notify 'RUN HOMEBREW MAINTENANCE'
-if command -v brew &>/dev/null; then
-  notify -s 'UPGRADE FORMULAE AND CASKS'
-  logg -i "Running ${GREEN}brew upgrade${RESET}" && brew upgrade
-  logg -i "Running ${GREEN}brew cu -af${RESET}" && brew cu -af
+notify -s 'UPGRADE FORMULAE AND CASKS'
+logg -c 'brew upgrade' || logg -w 'UPDATE HOMEBREW FORMULAE FAILED'
+logg -c 'brew cu -af' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
-  notify -s 'CLEANUP AND HEALTH CHECKS'
-  logg -i "Running ${GREEN}brew cleanup${RESET}" && brew cleanup
-  logg -i "Running ${GREEN}brew doctor${RESET}" && brew doctor
+notify -s 'CLEANUP AND HEALTH CHECKS'
+logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
+logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
 
-  notify -s 'EXPORT BREWFILE'
-  logg -i "Running ${GREEN}brew bundle dump --force --file=\"$brewfile\"" &&
-    brew bundle dump --force --file="$brewfile"
-
-else
-  logg -w 'HOMEBREW NOT FOUND; SKIPPING BREW MAINTENANCE'
-fi
+notify -s 'EXPORT BREWFILE'
+logg -c "brew bundle dump --force --file=\"${brewfile/#$HOME/~}\"" || logg -w 'UPDATE BREWFILE FAILED'
 
 notify 'REFRESH MACOS ICONS'
 update-icons
