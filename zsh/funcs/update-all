@@ -55,15 +55,16 @@ fi
 notify 'RUN HOMEBREW MAINTENANCE'
 if command -v brew &>/dev/null; then
   notify -s 'UPGRADE FORMULAE AND CASKS'
-  logg -i 'RUNNING BREW UPGRADE' && brew upgrade
-  logg -i 'RUNNING BREW CASK UPGRADE' && brew cu -af
+  logg -i "Running ${GREEN}brew upgrade${RESET}" && brew upgrade
+  logg -i "Running ${GREEN}brew cu -af${RESET}" && brew cu -af
 
   notify -s 'CLEANUP AND HEALTH CHECKS'
-  logg -i 'RUNNING BREW CLEANUP' && brew cleanup
-  logg -i 'RUNNING BREW DOCTOR' && brew doctor
+  logg -i "Running ${GREEN}brew cleanup${RESET}" && brew cleanup
+  logg -i "Running ${GREEN}brew doctor${RESET}" && brew doctor
 
   notify -s 'EXPORT BREWFILE'
-  brew bundle dump --force --file="$brewfile" && logg -i "UPDATING BREWFILE: $brewfile"
+  logg -i "Running ${GREEN}brew bundle dump --force --file=\"$brewfile\"" &&
+    brew bundle dump --force --file="$brewfile"
 
 else
   logg -w 'HOMEBREW NOT FOUND; SKIPPING BREW MAINTENANCE'
