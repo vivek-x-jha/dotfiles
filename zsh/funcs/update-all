@@ -55,12 +55,12 @@ fi
 notify 'RUN HOMEBREW MAINTENANCE'
 if command -v brew &>/dev/null; then
   notify -s 'UPGRADE FORMULAE AND CASKS'
-  brew upgrade
-  brew cu -af
+  logg -i 'RUNNING BREW UPGRADE' && brew upgrade
+  logg -i 'RUNNING BREW CASK UPGRADE' && brew cu -af
 
   notify -s 'CLEANUP AND HEALTH CHECKS'
-  brew cleanup && logg -i 'RUNNING BREW CLEANUP'
-  brew doctor && logg -i 'RUNNING BREW DOCTOR'
+  logg -i 'RUNNING BREW CLEANUP' && brew cleanup
+  logg -i 'RUNNING BREW DOCTOR' && brew doctor
 
   notify -s 'EXPORT BREWFILE'
   brew bundle dump --force --file="$brewfile" && logg -i "UPDATING BREWFILE: $brewfile"
