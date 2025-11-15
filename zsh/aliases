@@ -135,9 +135,6 @@ command -v SwitchAudioSource &>/dev/null && {
   alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
 }
 
-# Remove macOS quarantine flag(s)
-[[ -d /Applications/Spotify.app ]] && alias fix-spotify='sudo xattr -rd com.apple.quarantine /Applications/Spotify.app'
-
 # -------------------------------- Suffix Aliases ---------------------------------------
 
 [ -n "${ZSH_VERSION:-}" ] && {
