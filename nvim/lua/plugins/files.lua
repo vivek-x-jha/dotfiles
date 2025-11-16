@@ -96,7 +96,7 @@ require('nvim-web-devicons').setup {
     ['Package.resolved'] = { icon = icons.package, name = 'Package.resolved' },
     ['packages.config'] = { icon = icons.package, name = 'packages.config' },
     ['project.assets.json'] = { icon = icons.package, name = 'project.assets' },
-    ['nvim-pack-lock.json'] = { icon = icons.package, name = 'nvim-pack-lock', color = '#00c4d8' },
+    ['nvim-pack-lock.json'] = { icon = icons.package, name = 'nvim-pack-lock' },
   },
 }
 
