@@ -97,8 +97,12 @@ filenames:
       glyph: ""
 
   .python-version:
+    filename:
+      foreground: Black
     icon:
       glyph: ""
+      style:
+        foreground: Black
 
   .env:
     icon:
@@ -141,8 +145,12 @@ filenames:
       glyph: ""
 
   LICENSE:
+    filename:
+      foreground: Black
     icon:
       glyph: ""
+      style:
+        foreground: Black
 
   CONTRIBUTING.md:
     icon:
@@ -155,6 +163,14 @@ filenames:
   Brewfile.lock.json:
     icon:
       glyph: ""
+
+  .luarc.json:
+    filename:
+      foreground: Black
+    icon:
+      glyph: ""
+      style:
+        foreground: Black
 
   Brewfile:
     filename:
@@ -419,8 +435,12 @@ extensions:
     icon:
       glyph: ""
   toml:
+    filename:
+      foreground: Black
     icon:
       glyph: ""
+      style:
+        foreground: Black
   yaml:
     icon:
       glyph: ""
