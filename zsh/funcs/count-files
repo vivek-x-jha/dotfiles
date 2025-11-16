@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-# Should emulate behavior of: ls -A "$1" | wc -l
-local dir="${1:-$PWD}"
-local files=("$dir"/*(N) "$dir"/.*(N))
-
-echo $#files

@@ -4,13 +4,13 @@ for plugin in "$TMUX_PLUGIN_MANAGER_PATH"/*; do
   [[ -d "$plugin/.git" ]] || continue
 
   local name="${plugin:t}"
+  local repo=tmux-plugins
 
   case $name in
-  tmux-fzf) local repo=sainnhe ;;
-  tmux-fzf-url) local repo=junegunn ;;
-  tmux-mode-indicator) local repo=MunifTanjim ;;
-  vim-tmux-navigator) local repo=christoomey ;;
-  *) local repo=tmux-plugins ;;
+  tmux-fzf) repo=sainnhe ;;
+  tmux-fzf-url) repo=junegunn ;;
+  tmux-mode-indicator) repo=MunifTanjim ;;
+  vim-tmux-navigator) repo=christoomey ;;
   esac
 
   git -C "$plugin" remote set-url origin "git@github.com:$repo/$name.git"
