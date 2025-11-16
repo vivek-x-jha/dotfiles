@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-
-local target=$1
-local sources=("${@:2}")
-
-# Backup target pdf if exists
-[[ -f $target ]] && mv -f -- "$target" "${target%.pdf}.bak.pdf"
-
-gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$target" "${sources[@]}"
