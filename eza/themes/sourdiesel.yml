@@ -7,6 +7,7 @@ filekinds:
     foreground: Blue
   executable:
     foreground: Green
+
 perms:
   user_read:
     foreground: Yellow
@@ -32,17 +33,19 @@ perms:
     foreground: Red
   other_execute:
     foreground: Green
+
 size:
   number_byte:
     foreground: Black
   number_kilo:
-    foreground: Cyan
+    foreground: cyan
   number_mega:
     foreground: Yellow
   number_giga:
     foreground: Red
   number_huge:
     foreground: Blue
+
 users:
   user_you:
     foreground: 08
@@ -62,29 +65,380 @@ users:
   group_root:
     foreground: 09
     is_italic: true
+
 links:
   normal:
     foreground: Yellow
+
 date:
   foreground: 13
+
 broken_symlink:
   foreground: Red
+
 broken_path_overlay:
   foreground: Red
+
 filenames:
-  # Just change the icon glyph
-  Cargo.toml: {icon: {glyph: 🦀}}
-  Cargo.lock: {icon: {glyph: 🦀}}
-  .env: {icon: {glyph: }}
-  .gitignore: {icon: {glyph: }}
+  .bash_profile:
+    icon:
+      glyph: ""
+
+  .bashrc:
+    icon:
+      glyph: ""
+
+  .dircolors:
+    icon:
+      glyph: ""
+
+  .hushlogin:
+    icon:
+      glyph: ""
+
+  .python-version:
+    icon:
+      glyph: ""
+
+  .env:
+    icon:
+      glyph: ""
+
+  .gitignore:
+    icon:
+      glyph: ""
+
+  .state.itermexport:
+    icon:
+      glyph: ""
+
+  .zprofile:
+    icon:
+      glyph: ""
+
+  .zshenv:
+    icon:
+      glyph: ""
+
+  .zshrc:
+    icon:
+      glyph: ""
+
+  "Icon\r":
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  aliases:
+    icon:
+      glyph: ""
+
+  README.md:
+    icon:
+      glyph: ""
+
+  LICENSE:
+    icon:
+      glyph: ""
+
+  CONTRIBUTING.md:
+    icon:
+      glyph: ""
+
+  SECURITY.md:
+    icon:
+      glyph: ""
+
+  Brewfile.lock.json:
+    icon:
+      glyph: ""
+
+  Brewfile:
+    filename:
+      foreground: cyan
+      is_underlined: false
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  Gemfile.lock:
+    icon:
+      glyph: ""
+
+  Gemfile:
+    icon:
+      glyph: ""
+
+  Package.resolved:
+    icon:
+      glyph: ""
+
+  Package.swift:
+    icon:
+      glyph: ""
+
+  Pipfile.lock:
+    icon:
+      glyph: ""
+
+  Pipfile:
+    icon:
+      glyph: ""
+
+  build.gradle.kts:
+    icon:
+      glyph: ""
+
+  build.gradle:
+    icon:
+      glyph: ""
+
+  bun.lockb:
+    icon:
+      glyph: ""
+
+  cabal.project.freeze:
+    icon:
+      glyph: ""
+
+  cabal.project:
+    icon:
+      glyph: ""
+
+  composer.json:
+    icon:
+      glyph: ""
+
+  composer.lock:
+    icon:
+      glyph: ""
+
+  config.sh:
+    icon:
+      glyph: ""
+
+  config:
+    icon:
+      glyph: ""
+
+  go.mod:
+    icon:
+      glyph: ""
+
+  go.sum:
+    icon:
+      glyph: ""
+
+  gradle.lockfile:
+    icon:
+      glyph: ""
+
+  mix.exs:
+    icon:
+      glyph: ""
+
+  mix.lock:
+    icon:
+      glyph: ""
+
+  nvim-pack-lock.json:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  package-lock.json:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  package.json:
+    icon:
+      glyph: ""
+
+  package.lock:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  packages.config:
+    icon:
+      glyph: ""
+
+  uv.lock:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  pnpm-lock.yaml:
+    icon:
+      glyph: ""
+
+  poetry.lock:
+    icon:
+      glyph: ""
+
+  pom.xml:
+    icon:
+      glyph: ""
+
+  project.assets.json:
+    icon:
+      glyph: ""
+
+  pubspec.lock:
+    icon:
+      glyph: ""
+
+  pubspec.yaml:
+    icon:
+      glyph: ""
+
+  pyproject.toml:
+    filename:
+      foreground: cyan
+      is_underlined: false
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  requirements.txt:
+    icon:
+      glyph: ""
+
+  stack.yaml:
+    icon:
+      glyph: ""
+
+  cheatsheet:
+    icon:
+      glyph: ""
+
+  commit-and-sync:
+    icon:
+      glyph: ""
+
+  fix-tmux-remotes:
+    icon:
+      glyph: ""
+
+  list-256:
+    icon:
+      glyph: ""
+
+  list-colors:
+    icon:
+      glyph: ""
+
+  take:
+    icon:
+      glyph: ""
+
+  update-all:
+    icon:
+      glyph: ""
+
+  update-feature-branches:
+    icon:
+      glyph: ""
+
+  update-icons:
+    icon:
+      glyph: ""
+
+  uvi:
+    icon:
+      glyph: ""
+
+  work:
+    icon:
+      glyph: ""
+
+  yarn.lock:
+    icon:
+      glyph: ""
+
+  funcs:
+    icon:
+      glyph: ""
+
+  Cargo.toml:
+    icon:
+      glyph: ""
+
+  Cargo.lock:
+    icon:
+      glyph: ""
+
+  bootstrap.sh:
+    icon:
+      glyph: ""
+
+  .localized:
+    filename:
+      foreground: 08
+    icon:
+      glyph: "󰲄"
+      style:
+        foreground: 08
+
+  .dbxignore:
+    icon:
+      glyph: ""
 extensions:
-  # Change the filename color and icon
-  # NOTE: not all unicode glyphs support color changes
-  rs: {filename: {foreground: Red}, icon: {glyph: 🦀}}
-  # Change the icon glyph and color
-  nix: {icon: {glyph: ❄, style: {foreground: White}}}
-  txt: {icon: {glyph: }}
-  sh: {icon: {glyph: }}
-  bash: {icon: {glyph: }}
-  zsh: {icon: {glyph: }}
-  vim: {icon: {glyph: }}
+  rs:
+    filename:
+      foreground: Red
+    icon:
+      glyph: "🦀"
+  nix:
+    icon:
+      glyph: "❄"
+      style:
+        foreground: White
+  txt:
+    icon:
+      glyph: ""
+  md:
+    icon:
+      glyph: ""
+  toml:
+    icon:
+      glyph: ""
+  yaml:
+    icon:
+      glyph: ""
+  yml:
+    icon:
+      glyph: ""
+  xml:
+    icon:
+      glyph: ""
+  sh:
+    icon:
+      glyph: ""
+  bash:
+    icon:
+      glyph: ""
+  zsh:
+    icon:
+      glyph: ""
+  vim:
+    icon:
+      glyph: ""
