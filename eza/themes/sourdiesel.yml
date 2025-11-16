@@ -84,3 +84,7 @@ extensions:
   # Change the icon glyph and color
   nix: {icon: {glyph: ❄, style: {foreground: White}}}
   txt: {icon: {glyph: }}
+  sh: {icon: {glyph: }}
+  bash: {icon: {glyph: }}
+  zsh: {icon: {glyph: }}
+  vim: {icon: {glyph: }}

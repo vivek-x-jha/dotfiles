@@ -8,6 +8,10 @@ require('nvim-web-devicons').setup {
     lock = { icon = icons.lock, name = 'lock' },
     ['robots.txt'] = { icon = icons.robot, name = 'robots' },
     ['.gitignore'] = { icon = icons.branch .. ' ', name = 'git' },
+    Makefile = { icon = icons.makefile, name = 'Makefile' },
+    sh = { icon = icons.shell, name = 'sh' },
+    bash = { icon = icons.shell, name = 'bash' },
+    zsh = { icon = icons.shell, name = 'zsh' },
   },
 }
 

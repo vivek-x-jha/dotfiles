@@ -69,4 +69,6 @@ return {
   codeium = '',
   tabnine = '',
   bladenav = '',
+  makefile = '',
+  shell = '',
 }
