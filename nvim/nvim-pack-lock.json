@@ -13,7 +13,7 @@
       "rev": "8337813"
     },
     "gitsigns.nvim": {
-      "rev": "20ad441"
+      "rev": "cdafc32"
     },
     "indent-blankline.nvim": [],
     "noice.nvim": {
@@ -31,7 +31,7 @@
     },
     "nvim-spectre": [],
     "nvim-statusline": {
-      "rev": "8102d84"
+      "rev": "0b9f965"
     },
     "nvim-surround": {
       "rev": "fcfa7e0"
