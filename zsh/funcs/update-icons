@@ -6,39 +6,45 @@ command -v fileicon &>/dev/null || {
   return 1
 }
 
+local icon_dir="${1:-$HOME/Pictures/icons}"
+[[ -d $icon_dir ]] || {
+  printf "${BRIGHTRED}%s %s${BRIGHTYELLOW}%s${RESET}\n" "✘" "Icon directory not found" " - ${icon_dir/#$HOME/~}"
+  return 1
+}
+
 table_width=60
 
 # Directory - Icons
 dir_icons=(
-  "/Applications/1Password.app" "$HOME/Pictures/icons/1password.png"
-  "/Applications/Anki.app" "$HOME/Pictures/icons/anki.png"
-  "/Applications/ChatGPT.app" "$HOME/Pictures/icons/chatgpt.png"
-  "/Applications/Discord.app" "$HOME/Pictures/icons/discord.png"
-  "/Applications/Figma.app" "$HOME/Pictures/icons/figma.png"
-  "/Applications/Firefox.app" "$HOME/Pictures/icons/firefox.png"
-  "/Applications/Hammerspoon.app" "$HOME/Pictures/icons/hammerspoon.png"
-  "/Applications/iTerm.app" "$HOME/Pictures/icons/iterm2.png"
-  "/Applications/iTermAI.app" "$HOME/Pictures/icons/ai-brain.png"
-  "/Applications/KeyCastr.app" "$HOME/Pictures/icons/keycastr.png"
-  "/Applications/Messenger.app" "$HOME/Pictures/icons/messenger.png"
-  "/Applications/Neovim-iTerm.app" "$HOME/Pictures/icons/neovim-iterm.png"
-  "/Applications/Neovim-Wezterm.app" "$HOME/Pictures/icons/neovim-wezterm.png"
-  "/Applications/Notion Calendar.app" "$HOME/Pictures/icons/notion-calendar.png"
-  "/Applications/Postman.app" "$HOME/Pictures/icons/postman.png"
-  "/Applications/Skim.app" "$HOME/Pictures/icons/skim.png"
-  "/Applications/Slack.app" "$HOME/Pictures/icons/slack.png"
-  "/Applications/Spotify.app" "$HOME/Pictures/icons/spotify.png"
-  "/Applications/Visual Studio Code.app" "$HOME/Pictures/icons/vscode.png"
-  "/Applications/WeChat.app" "$HOME/Pictures/icons/wechat.png"
-  "/Applications/WezTerm.app" "$HOME/Pictures/icons/wezterm.png"
-  "/Applications/WhatsApp.app" "$HOME/Pictures/icons/whatsapp.png"
-  "$HOME/Developer" "$HOME/Pictures/icons/developer.png"
-  "$HOME/Downloads" "$HOME/Pictures/icons/download.png"
-  "$HOME/Dropbox/content" "$HOME/Pictures/icons/content.png"
-  "$HOME/Pictures/icons" "$HOME/Pictures/icons/png.png"
-  "$HOME/Pictures/screenshots" "$HOME/Pictures/icons/screenshot.png"
-  "$HOME/Pictures/wallpapers" "$HOME/Pictures/icons/wallpaper.png"
-  "$HOME/.dotfiles" "$HOME/Pictures/icons/gear.png"
+  "/Applications/1Password.app" "$icon_dir/1password.png"
+  "/Applications/Anki.app" "$icon_dir/anki.png"
+  "/Applications/ChatGPT.app" "$icon_dir/chatgpt.png"
+  "/Applications/Discord.app" "$icon_dir/discord.png"
+  "/Applications/Figma.app" "$icon_dir/figma.png"
+  "/Applications/Firefox.app" "$icon_dir/firefox.png"
+  "/Applications/Hammerspoon.app" "$icon_dir/hammerspoon.png"
+  "/Applications/iTerm.app" "$icon_dir/iterm2.png"
+  "/Applications/iTermAI.app" "$icon_dir/ai-brain.png"
+  "/Applications/KeyCastr.app" "$icon_dir/keycastr.png"
+  "/Applications/Messenger.app" "$icon_dir/messenger.png"
+  "/Applications/Neovim-iTerm.app" "$icon_dir/neovim-iterm.png"
+  "/Applications/Neovim-Wezterm.app" "$icon_dir/neovim-wezterm.png"
+  "/Applications/Notion Calendar.app" "$icon_dir/notion-calendar.png"
+  "/Applications/Postman.app" "$icon_dir/postman.png"
+  "/Applications/Skim.app" "$icon_dir/skim.png"
+  "/Applications/Slack.app" "$icon_dir/slack.png"
+  "/Applications/Spotify.app" "$icon_dir/spotify.png"
+  "/Applications/Visual Studio Code.app" "$icon_dir/vscode.png"
+  "/Applications/WeChat.app" "$icon_dir/wechat.png"
+  "/Applications/WezTerm.app" "$icon_dir/wezterm.png"
+  "/Applications/WhatsApp.app" "$icon_dir/whatsapp.png"
+  "$HOME/Developer" "$icon_dir/developer.png"
+  "$HOME/Downloads" "$icon_dir/download.png"
+  "$HOME/Dropbox/content" "$icon_dir/content.png"
+  "$icon_dir" "$icon_dir/png.png"
+  "$HOME/Pictures/screenshots" "$icon_dir/screenshot.png"
+  "$HOME/Pictures/wallpapers" "$icon_dir/wallpaper.png"
+  "$HOME/.dotfiles" "$icon_dir/gear.png"
 )
 
 print_separator() {
@@ -47,7 +53,7 @@ print_separator() {
 
 # Create header
 print_separator
-printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${RESET}\n" '' 'App / Directory' \~/Pictures/icons/
+printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${RESET}\n" '' 'App / Directory' "${icon_dir/#$HOME/~}"
 print_separator
 
 # Create rows
@@ -77,4 +83,4 @@ done
 # Create Footer
 print_separator
 printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$success" 'Folder icon(s) updated successfully'
-(($fail == 0)) || printf "${RED}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$fail" 'Folder icon(s) failed to update'
+((fail)) && printf "${RED}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$fail" 'Folder icon(s) failed to update'

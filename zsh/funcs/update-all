@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 
-# Usage: update-all [Brewfile]
-#   Brewfile (optional): custom brew bundle output path; defaults to ~/.dotfiles/Brewfile
+# Usage: update-all [Brewfile] [IconsDir]
+#   Brewfile  (optional): custom brew bundle output path; defaults to ~/.dotfiles/Brewfile
+#   IconsDir  (optional): directory containing custom macOS icons (default: ~/Pictures/icons)
 local brewfile="${1:-$HOME/.dotfiles/Brewfile}"
+local icons_dir="${2:-$HOME/Pictures/icons}"
 
 local ICON='󰓒'
 local STEP=0
@@ -65,7 +67,7 @@ notify -s 'EXPORT BREWFILE'
 logg -c "brew bundle dump --force --file=\"${brewfile/#$HOME/~}\"" || logg -w 'UPDATE BREWFILE FAILED'
 
 notify 'REFRESH MACOS ICONS'
-update-icons
+update-icons "$icons_dir" || logg -w 'FAILED TO UPDATE MACOS ICONS'
 
 # Optional: Update TeX Live Utility (uncomment if used)
 # sudo tlmgr update --self --all
