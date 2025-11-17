@@ -1,5 +1,23 @@
 local icons = require 'icons'
 
+local palette = {
+  black = vim.env.BLACK_HEX or '#cccccc',
+  red = vim.env.RED_HEX or '#ffc7c7',
+  green = vim.env.GREEN_HEX or '#ceffc9',
+  yellow = vim.env.YELLOW_HEX or '#fdf7cd',
+  blue = vim.env.BLUE_HEX or '#c4effa',
+  magenta = vim.env.MAGENTA_HEX or '#eccef0',
+  cyan = vim.env.CYAN_HEX or '#8ae7c5',
+  brightblack = vim.env.BRIGHTBLACK_HEX or '#5c617d',
+  brightred = vim.env.BRIGHTRED_HEX or '#f096b7',
+  brightgreen = vim.env.BRIGHTGREEN_HEX or '#d2fd9d',
+  brightyellow = vim.env.BRIGHTYELLOW_HEX or '#f3b175',
+  brightblue = vim.env.BRIGHTBLUE_HEX or '#80d7fe',
+  brightmagenta = vim.env.BRIGHTMAGENTA_HEX or '#c9ccfb',
+  brightcyan = vim.env.BRIGHTCYAN_HEX or '#47e7b1',
+  brightwhite = vim.env.BRIGHTWHITE_HEX or '#ffffff',
+}
+
 require('nvim-web-devicons').setup {
   override = {
     -- Defaults we lean on
@@ -10,12 +28,11 @@ require('nvim-web-devicons').setup {
     js = { icon = icons.javascript, name = 'js' },
     ts = { icon = icons.typescript, name = 'ts' },
     lock = { icon = icons.lock, name = 'lock' },
-    ['robots.txt'] = { icon = icons.robot, name = 'robots' },
-    ['.gitignore'] = { icon = icons.branch, name = 'git' },
+    ['.gitignore'] = { icon = icons.branch, name = 'git', color = palette.black },
     Makefile = { icon = icons.makefile, name = 'Makefile' },
     txt = { icon = icons.file, name = 'txt' },
-    config = { icon = icons.gear, name = 'config' },
-    md = { icon = icons.markdown, name = 'md' },
+    config = { icon = icons.gear, name = 'config', color = palette.brightblack },
+    md = { icon = icons.markdown, name = 'md', color = palette.brightyellow },
 
     -- Zsh helpers (autoload + wrappers)
     aliases = { icon = icons.shell, name = 'aliases' },
@@ -35,7 +52,7 @@ require('nvim-web-devicons').setup {
     -- Dotfiles + environment helpers
     ['.dircolors'] = { icon = icons.gear, name = '.dircolors' },
     ['.hushlogin'] = { icon = icons.file, name = '.hushlogin' },
-    ['.python-version'] = { icon = icons.gear, name = '.python-version' },
+    ['.python-version'] = { icon = icons.gear, name = '.python-version', color = palette.black },
     ['.ruff.toml'] = { icon = icons.gear, name = '.ruff.toml' },
     ['config.sh'] = { icon = icons.gear, name = 'config.sh' },
     ['.bashrc'] = { icon = icons.gear, name = '.bashrc' },
@@ -44,37 +61,37 @@ require('nvim-web-devicons').setup {
     ['.zshrc'] = { icon = icons.gear, name = '.zshrc' },
     ['.zprofile'] = { icon = icons.gear, name = '.zprofile' },
     ['.env'] = { icon = icons.key, name = '.env' },
-    ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap.sh' },
+    ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap.sh', color = palette.brightgreen },
     ['.state.itermexport'] = { icon = icons.gear, name = '.state.itermexport' },
-    ['.localized'] = { icon = icons.localized, name = '.localized' },
+    ['.localized'] = { icon = icons.localized, name = '.localized', color = palette.brightblack },
     ['.dbxignore'] = { icon = icons.file, name = '.dbxignore' },
-    ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json' },
+    ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json', color = palette.black },
     ['README.md'] = { icon = icons.markdown, name = 'README' },
-    ['LICENSE'] = { icon = icons.markdown, name = 'LICENSE' },
+    ['LICENSE'] = { icon = icons.markdown, name = 'LICENSE', color = palette.black },
     ['CONTRIBUTING.md'] = { icon = icons.markdown, name = 'CONTRIBUTING' },
     ['SECURITY.md'] = { icon = icons.markdown, name = 'SECURITY' },
 
     -- Generic config formats
-    toml = { icon = icons.gear, name = 'toml' },
-    yaml = { icon = icons.gear, name = 'yaml' },
-    yml = { icon = icons.gear, name = 'yml' },
-    xml = { icon = icons.gear, name = 'xml' },
+    toml = { icon = icons.gear, name = 'toml', color = palette.black },
+    yaml = { icon = icons.gear, name = 'yaml', color = palette.black },
+    yml = { icon = icons.gear, name = 'yml', color = palette.black },
+    xml = { icon = icons.gear, name = 'xml', color = palette.black },
 
     -- Package / lock manifests
-    Brewfile = { icon = icons.package, name = 'Brewfile' },
+    Brewfile = { icon = icons.package, name = 'Brewfile', color = palette.cyan },
     ['Brewfile.lock.json'] = { icon = icons.package, name = 'Brewfile.lock' },
-    ['package.lock'] = { icon = icons.package, name = 'package.lock' },
-    ['package-lock.json'] = { icon = icons.package, name = 'package-lock' },
+    ['package.lock'] = { icon = icons.package, name = 'package.lock', color = palette.cyan },
+    ['package-lock.json'] = { icon = icons.package, name = 'package-lock', color = palette.cyan },
     ['pnpm-lock.yaml'] = { icon = icons.package, name = 'pnpm-lock' },
     ['yarn.lock'] = { icon = icons.package, name = 'yarn.lock' },
     ['package.json'] = { icon = icons.package, name = 'package.json' },
     ['bun.lockb'] = { icon = icons.package, name = 'bun.lockb' },
-    ['uv.lock'] = { icon = icons.lock, name = 'uv.lock' },
+    ['uv.lock'] = { icon = icons.lock, name = 'uv.lock', color = palette.cyan },
     ['requirements.txt'] = { icon = icons.package, name = 'requirements' },
     ['poetry.lock'] = { icon = icons.package, name = 'poetry.lock' },
     Pipfile = { icon = icons.package, name = 'Pipfile' },
     ['Pipfile.lock'] = { icon = icons.package, name = 'Pipfile.lock' },
-    ['pyproject.toml'] = { icon = icons.package, name = 'pyproject' },
+    ['pyproject.toml'] = { icon = icons.package, name = 'pyproject', color = palette.cyan },
     ['Cargo.toml'] = { icon = icons.package, name = 'Cargo.toml' },
     ['Cargo.lock'] = { icon = icons.package, name = 'Cargo.lock' },
     ['go.mod'] = { icon = icons.package, name = 'go.mod' },
@@ -98,7 +115,7 @@ require('nvim-web-devicons').setup {
     ['Package.resolved'] = { icon = icons.package, name = 'Package.resolved' },
     ['packages.config'] = { icon = icons.package, name = 'packages.config' },
     ['project.assets.json'] = { icon = icons.package, name = 'project.assets' },
-    ['nvim-pack-lock.json'] = { icon = icons.package, name = 'nvim-pack-lock' },
+    ['nvim-pack-lock.json'] = { icon = icons.package, name = 'nvim-pack-lock', color = palette.cyan },
   },
 }
 
