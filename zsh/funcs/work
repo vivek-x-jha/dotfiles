@@ -63,10 +63,48 @@ while [[ $# -gt 0 ]]; do
 
     tmux list-sessions &>/dev/null && tmux kill-server &>/dev/null
 
-    # Wait up to 1-2 seconds after tmux klls server to create/resurrect
+    local reload_session='__work_reload__'
+    local restore_script="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins}/tmux-resurrect/scripts/restore.sh"
+    local preferred_session=''
+
     local attempt=0
     while ((attempt < 3)); do
-      TMUX='' tmux new-session && return
+      preferred_session=''
+      if TMUX='' tmux new-session -ds "$reload_session" -c "$HOME"; then
+        if [[ -x "$restore_script" ]]; then
+          tmux run-shell "$restore_script"
+
+          local resurrect_dir
+          resurrect_dir="$(tmux show-option -gqv '@resurrect-dir')"
+          if [[ -z "$resurrect_dir" ]]; then
+            if [[ -d "$HOME/.tmux/resurrect" ]]; then
+              resurrect_dir="$HOME/.tmux/resurrect"
+            else
+              resurrect_dir="${XDG_DATA_HOME:-$HOME/.local/share}/tmux/resurrect"
+            fi
+          fi
+
+          local last_file="$resurrect_dir/last"
+          if [[ -f "$last_file" ]]; then
+            preferred_session="$(awk -F'\t' '$1=="state"{current=$2} END{print current}' "$last_file")"
+            [[ -z "$preferred_session" ]] &&
+              preferred_session="$(awk -F'\t' '$1=="state"{previous=$3} END{print previous}' "$last_file")"
+          fi
+
+          [[ -n "$preferred_session" && "$preferred_session" != "$reload_session" ]] ||
+            preferred_session=''
+
+          tmux list-sessions -F '#S' | grep -qv "^${reload_session}$" &&
+            tmux kill-session -t "$reload_session" &>/dev/null
+        fi
+
+        if [[ -n "$preferred_session" ]]; then
+          tmux attach-session -t "$preferred_session" && return $?
+        fi
+
+        tmux attach-session || tmux new-session
+        return $?
+      fi
       sleep 0.5
       attempt=$((attempt + 1))
     done
