@@ -7,10 +7,10 @@
       "rev": "b19413d"
     },
     "conform.nvim": {
-      "rev": "cde4da5"
+      "rev": "178b8f0"
     },
     "fzf-lua": {
-      "rev": "abad16f"
+      "rev": "24d77b0"
     },
     "gitsigns.nvim": {
       "rev": "cdafc32"
