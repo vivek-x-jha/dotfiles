@@ -37,4 +37,9 @@ local dest_dir="."
 [[ -d "$tpl_dir" ]] && {
   [[ -f "$tpl_dir/.gitignore" ]] && cp -f "$tpl_dir/.gitignore" "$dest_dir"
   [[ -f "$tpl_dir/.ruff.toml" ]] && cp -f "$tpl_dir/.ruff.toml" "$dest_dir"
+
+  [[ -f "$tpl_dir/pyproject.toml" && -f "$dest_dir/pyproject.toml" ]] && {
+    grep -q '^\[tool\.commitizen\]' "$dest_dir/pyproject.toml" ||
+      cat "$tpl_dir/pyproject.toml" >>"$dest_dir/pyproject.toml"
+  }
 }
