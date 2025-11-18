@@ -66,10 +66,10 @@ require('nvim-web-devicons').setup {
     ['.localized'] = { icon = icons.localized, name = '.localized', color = palette.brightblack },
     ['.dbxignore'] = { icon = icons.file, name = '.dbxignore' },
     ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json', color = palette.black },
-    ['README.md'] = { icon = icons.markdown, name = 'README' },
-    ['LICENSE'] = { icon = icons.markdown, name = 'LICENSE', color = palette.black },
-    ['CONTRIBUTING.md'] = { icon = icons.markdown, name = 'CONTRIBUTING' },
-    ['SECURITY.md'] = { icon = icons.markdown, name = 'SECURITY' },
+    ['README.md'] = { icon = icons.markdown, name = 'README', color = palette.brightyellow },
+    ['LICENSE'] = { icon = icons.markdown, name = 'LICENSE', color = palette.brightyellow },
+    ['CONTRIBUTING.md'] = { icon = icons.markdown, name = 'CONTRIBUTING', color = palette.brightyellow },
+    ['SECURITY.md'] = { icon = icons.markdown, name = 'SECURITY', color = palette.brightyellow },
 
     -- Generic config formats
     toml = { icon = icons.gear, name = 'toml', color = palette.black },
@@ -143,8 +143,14 @@ require('nvim-tree').setup {
   },
 
   renderer = {
+    special_files = {
+      'README.md',
+      'LICENSE',
+      'CONTRIBUTING.md',
+      'SECURITY.md',
+    },
+
     root_folder_label = false,
-    special_files = { 'README.md' },
     highlight_git = true,
     highlight_diagnostics = true,
     highlight_modified = 'icon',
