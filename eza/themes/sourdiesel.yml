@@ -146,11 +146,11 @@ filenames:
 
   LICENSE:
     filename:
-      foreground: Black
+      foreground: 11
     icon:
       glyph: ""
       style:
-        foreground: Black
+        foreground: 11
 
   CONTRIBUTING.md:
     icon:
@@ -432,8 +432,12 @@ extensions:
     icon:
       glyph: ""
   md:
+    filename:
+      foreground: 11
     icon:
       glyph: ""
+      style:
+        foreground: 11
   toml:
     filename:
       foreground: Black
