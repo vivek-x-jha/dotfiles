@@ -1,50 +1,50 @@
 filekinds:
   normal:
-    foreground: Blue
+    foreground: blue
   directory:
-    foreground: Blue
+    foreground: blue
   symlink:
-    foreground: Blue
+    foreground: blue
   executable:
-    foreground: Green
+    foreground: green
 
 perms:
   user_read:
-    foreground: Yellow
+    foreground: yellow
     is_bold: true
   user_write:
-    foreground: Red
+    foreground: red
     is_bold: true
   user_execute_file:
-    foreground: Green
+    foreground: green
     is_bold: true
   user_execute_other:
-    foreground: Green
+    foreground: green
     is_bold: true
   group_read:
-    foreground: Yellow
+    foreground: yellow
   group_write:
-    foreground: Red
+    foreground: red
   group_execute:
-    foreground: Green
+    foreground: green
   other_read:
-    foreground: Yellow
+    foreground: yellow
   other_write:
-    foreground: Red
+    foreground: red
   other_execute:
-    foreground: Green
+    foreground: green
 
 size:
   number_byte:
-    foreground: Black
+    foreground: black
   number_kilo:
     foreground: cyan
   number_mega:
-    foreground: Yellow
+    foreground: yellow
   number_giga:
-    foreground: Red
+    foreground: red
   number_huge:
-    foreground: Blue
+    foreground: blue
 
 users:
   user_you:
@@ -54,13 +54,13 @@ users:
     foreground: 09
     is_italic: true
   user_other:
-    foreground: Yellow
+    foreground: yellow
     is_italic: true
   group_yours:
     foreground: 08
     is_italic: true
   group_other:
-    foreground: Yellow
+    foreground: yellow
     is_italic: true
   group_root:
     foreground: 09
@@ -68,16 +68,16 @@ users:
 
 links:
   normal:
-    foreground: Yellow
+    foreground: yellow
 
 date:
   foreground: 13
 
 broken_symlink:
-  foreground: Red
+  foreground: red
 
 broken_path_overlay:
-  foreground: Red
+  foreground: red
 
 filenames:
   .bash_profile:
@@ -98,11 +98,11 @@ filenames:
 
   .python-version:
     filename:
-      foreground: Black
+      foreground: black
     icon:
       glyph: ""
       style:
-        foreground: Black
+        foreground: black
 
   .env:
     icon:
@@ -128,7 +128,7 @@ filenames:
     icon:
       glyph: ""
 
-  "Icon\r":
+  "icon\r":
     filename:
       foreground: 08
     icon:
@@ -140,11 +140,11 @@ filenames:
     icon:
       glyph: ""
 
-  README.md:
+  readme.md:
     icon:
       glyph: ""
 
-  LICENSE:
+  license:
     filename:
       foreground: 11
     icon:
@@ -152,27 +152,27 @@ filenames:
       style:
         foreground: 11
 
-  CONTRIBUTING.md:
+  contributing.md:
     icon:
       glyph: ""
 
-  SECURITY.md:
+  security.md:
     icon:
       glyph: ""
 
-  Brewfile.lock.json:
+  brewfile.lock.json:
     icon:
       glyph: ""
 
   .luarc.json:
     filename:
-      foreground: Black
+      foreground: black
     icon:
       glyph: ""
       style:
-        foreground: Black
+        foreground: black
 
-  Brewfile:
+  brewfile:
     filename:
       foreground: cyan
       is_underlined: false
@@ -181,27 +181,27 @@ filenames:
       style:
         foreground: cyan
 
-  Gemfile.lock:
+  gemfile.lock:
     icon:
       glyph: ""
 
-  Gemfile:
+  gemfile:
     icon:
       glyph: ""
 
-  Package.resolved:
+  package.resolved:
     icon:
       glyph: ""
 
-  Package.swift:
+  package.swift:
     icon:
       glyph: ""
 
-  Pipfile.lock:
+  pipfile.lock:
     icon:
       glyph: ""
 
-  Pipfile:
+  pipfile:
     icon:
       glyph: ""
 
@@ -394,11 +394,11 @@ filenames:
     icon:
       glyph: ""
 
-  Cargo.toml:
+  cargo.toml:
     icon:
       glyph: ""
 
-  Cargo.lock:
+  cargo.lock:
     icon:
       glyph: ""
 
@@ -420,14 +420,14 @@ filenames:
 extensions:
   rs:
     filename:
-      foreground: Red
+      foreground: red
     icon:
       glyph: "🦀"
   nix:
     icon:
       glyph: "❄"
       style:
-        foreground: White
+        foreground: white
   txt:
     icon:
       glyph: ""
@@ -440,11 +440,11 @@ extensions:
         foreground: 11
   toml:
     filename:
-      foreground: Black
+      foreground: black
     icon:
       glyph: ""
       style:
-        foreground: Black
+        foreground: black
   yaml:
     icon:
       glyph: ""
