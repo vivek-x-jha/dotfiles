@@ -1,4 +1,4 @@
-# WSL Git + SSH Setup for Andrew Labno
+# WSL Setup
 
 ## 1. Create a GitHub Account
 1. Browse to [https://github.com/signup](https://github.com/signup).
@@ -12,49 +12,104 @@
    wsl
    ```
    This launches the Ubuntu shell.
-2. Inside Ubuntu, update packages and install prerequisites:
+2. Inside Ubuntu, update packages and install prerequisites (including the CLI tools referenced in your zsh config):
    ```bash
    sudo apt update && sudo apt upgrade -y
-   sudo apt install -y git curl unzip build-essential
+   sudo apt install -y \
+     git curl unzip build-essential \
+     atuin bat btop dust eza fzf gh glow mycli ripgrep tmux yazi zsh zoxide
    ```
 
-## 3. Clone Vivek’s Dotfiles (HTTPS for now)
+## 3. Install bob (Neovim version manager)
+1. Install Rust (provides `cargo` which bob uses):
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+   source ~/.cargo/env
+   ```
+2. Install bob via cargo:
+   ```bash
+   cargo install bob-nvim
+   ```
+3. Install and select the Neovim nightly build (matches this dotfiles setup):
 ```bash
+~/.local/share/bob/bin/bob install nightly
+~/.local/share/bob/bin/bob use nightly
+```
+This sets up bob under `~/.local/share/bob` and installs the nightly Neovim build matching your dotfiles.
+
+## 4. Clone Vivek’s Dotfiles (HTTPS for now)
+```bash
+rm -rf ~/.dotfiles
 git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
 ```
 
-## 4. Mirror Dotfiles into `~/.config`
-Instead of linking individual files into `$HOME`, mirror the directories under `~/.config` (add or remove entries based on what you use):
+## 5. Create Required Directories
+Make sure the XDG cache/state/data paths exist before linking anything:
 ```bash
+mkdir -p ~/.cache
 mkdir -p ~/.config
-cd ~/.config
-ln -snf ~/.dotfiles/git git
-ln -snf ~/.dotfiles/ssh ssh
-ln -snf ~/.dotfiles/zsh zsh
-ln -snf ~/.dotfiles/nvim nvim
-ln -snf ~/.dotfiles/wezterm wezterm
+mkdir -p ~/.local/state/{bash,less,mycli,mysql,python,zsh}
+mkdir -p ~/.local/share/zsh
 ```
 
-## 5. Generate SSH Keys (stored inside dotfiles)
+## 6. Mirror Dotfiles into `~/.config`
+Instead of linking individual files into `$HOME`, mirror everything under `~/.config` so future updates stay in sync:
+```bash
+cd ~/.config
+ln -sf ~/.dotfiles/atuin atuin
+ln -sf ~/.dotfiles/bash bash
+ln -sf ~/.dotfiles/bat bat
+ln -sf ~/.dotfiles/blesh blesh
+ln -sf ~/.dotfiles/btop btop
+ln -sf ~/.dotfiles/dust dust
+ln -sf ~/.dotfiles/eza eza
+ln -sf ~/.dotfiles/fzf fzf
+ln -sf ~/.dotfiles/gh gh
+ln -sf ~/.dotfiles/git git
+ln -sf ~/.dotfiles/glow glow
+ln -sf ~/.dotfiles/mycli mycli
+ln -sf ~/.dotfiles/nvim nvim
+ln -sf ~/.dotfiles/ripgrep ripgrep
+ln -sf ~/.dotfiles/ssh ssh
+ln -sf ~/.dotfiles/tmux tmux
+ln -sf ~/.dotfiles/wezterm wezterm
+ln -sf ~/.dotfiles/yazi yazi
+ln -sf ~/.dotfiles/zsh zsh
+ln -sf ~/.dotfiles/starship/config.toml starship.toml
+```
+
+## 7. Install Zap (Zsh plugin manager)
+1. Make sure zsh is installed (`sudo apt install zsh`).
+2. Run the Zap installer:
+   ```bash
+   zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
+   ```
+   This installs Zap into `~/.local/share/zap`.
+3. To update Zap/plugins later:
+   ```bash
+   zap update all
+   ```
+
+## 8. Generate SSH Keys (stored inside dotfiles)
 ```bash
 ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.dotfiles/ssh/id_ed25519
 eval "$(ssh-agent -s)"
 ssh-add ~/.dotfiles/ssh/id_ed25519
 ```
 
-## 6. Add the Public Key to GitHub
+## 9. Add the Public Key to GitHub
 ```bash
 cat ~/.dotfiles/ssh/id_ed25519.pub
 ```
 Copy the entire output → GitHub → **Settings** → **SSH and GPG keys** → **New SSH key** → paste, name it “WSL Ubuntu,” and save.
 
-## 7. (Optional) Prime `known_hosts`
+## 10. (Optional) Prime `known_hosts`
 ```bash
 ssh-keyscan github.com >> ~/.dotfiles/ssh/known_hosts
 ```
 This avoids the first-time authenticity prompt.
 
-## 8. Set Git Identity
+## 11. Set Git Identity
 ```bash
 git config --global user.name  "Andrew Labno"
 git config --global user.email "andrew.labno@gmail.com"
@@ -64,14 +119,27 @@ git config --global --list
 ```
 (These settings live in `~/.config/git/config` because the entire directory is symlinked.)
 
-## 9. Switch the Dotfiles Remote to SSH
+## 12. Switch the Dotfiles Remote to SSH
 ```bash
 cd ~/.dotfiles
 git remote set-url origin git@github.com:vivek-x-jha/dotfiles.git
 ```
 
-## 10. Test GitHub SSH Access
+## 13. Test GitHub SSH Access
 ```bash
 ssh -T git@github.com
 ```
 Type “yes” if asked to trust the host. You should see “Hi andrewlabno!” confirming that SSH auth works.
+
+## 14. Restart Zsh to Load Zap Plugins
+After SSH and Zap are configured, start a fresh zsh shell so Zap can pull the plugins defined in `~/.config/zsh/.zshrc`:
+```bash
+exec zsh -l
+```
+You should see the expected prompt (powerlevel10k, autocomplete, autosuggestions, etc.) once Zap finishes cloning.
+
+## 15. Build bat Theme Cache
+If you want bat’s syntax theme caching to match this dotfiles setup:
+```bash
+bat cache --build
+```
