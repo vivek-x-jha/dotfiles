@@ -35,6 +35,14 @@ local thm = hexify 'sourdiesel'
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder() or {}
 
+config.default_prog = wezterm.target_triple:match 'windows' and {
+  'wsl',
+  '--distribution',
+  'Ubuntu',
+  '--cd',
+  '/home/aflex',
+}
+
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
 config.bold_brightens_ansi_colors = false
 config.colors = {
