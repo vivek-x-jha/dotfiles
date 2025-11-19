@@ -3,6 +3,11 @@
 # =========================
 .env*
 
+ssh/*
+!ssh/allowed_signers
+!ssh/config
+!ssh/known_hosts
+
 karabiner/assets
 karabiner/automatic_backups
 
