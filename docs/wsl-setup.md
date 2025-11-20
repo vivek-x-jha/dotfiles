@@ -86,7 +86,19 @@ On WSL, remove the mac-only agent lines from `~/.config/ssh/config`:
 sed -i '/UseKeychain/d;/IdentityAgent/d' ~/.config/ssh/config
 ```
 
-## 7. Install Zap (Zsh plugin manager)
+## 7. Install WezTerm (Better Terminal)
+1. Download the installer: https://wezfurlong.org/wezterm/install/windows.html
+2. Run with defaults; it creates `C:\Users\<WindowsUser>\.config\wezterm\wezterm.lua`.
+3. Point it at your dotfiles config so it starts in WSL at `/home/aflex`:
+   ```bash
+   win_usr=$(cmd.exe /c "echo %USERNAME%" | tr -d '\r')
+   wezterm_path="/mnt/c/Users/$win_usr/.config/wezterm"
+   mkdir -p "$wezterm_path" && cd "$wezterm_path/wezterm.lua"
+   ln -sf ~/.dotfiles/wezterm/wezterm.lua
+   ```
+   (Or create the same symlink from PowerShell using a Developer Mode symlink to `\\wsl$\\Ubuntu\\home\\aflex\\.dotfiles\\wezterm\\wezterm.lua`.)
+
+## 8. Install Zap (Zsh plugin manager)
 1. Run the Zap installer:
    ```bash
    zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
@@ -97,26 +109,26 @@ sed -i '/UseKeychain/d;/IdentityAgent/d' ~/.config/ssh/config
    zap update all
    ```
 
-## 8. Generate SSH Keys (these are like secret keys that are more secure than simple passwords - check out the video I posted in Slack in #resources)
+## 9. Generate SSH Keys (these are like secret keys that are more secure than simple passwords - check out the video I posted in Slack in #resources)
 ```bash
 ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.config/ssh/id_ed25519
 eval "$(ssh-agent -s)"
 ssh-add ~/.config/ssh/id_ed25519
 ```
 
-## 9. Add the Public Key to GitHub
+## 10. Add the Public Key to GitHub
 ```bash
 cat ~/.config/ssh/id_ed25519.pub
 ```
 Copy the entire output → GitHub → **Settings** → **SSH and GPG keys** → **New SSH key** → paste, name it “WSL Ubuntu,” and save.
 
-## 10. Add github `known_hosts`
+## 11. Add github `known_hosts`
 ```bash
 ssh-keyscan github.com > ~/.config/ssh/known_hosts
 ```
 This avoids the first-time authenticity prompt.
 
-## 11. Set Git Identity
+## 12. Set Git Identity
 ```bash
 git config --global user.name  "Andrew Labno"
 git config --global user.email "andrew.labno@gmail.com"
@@ -130,26 +142,26 @@ git config --global --list
 ```
 last command shows all your git settings
 
-## 12. Switch the Dotfiles Remote to SSH
+## 13. Switch the Dotfiles Remote to SSH
 ```bash
 cd ~/.dotfiles
 git remote set-url origin git@github.com:vivek-x-jha/dotfiles.git
 ```
 
-## 13. Test GitHub SSH Access
+## 14. Test GitHub SSH Access
 ```bash
 ssh -T git@github.com
 ```
 Type “yes” if asked to trust the host. You should see “Hi andrewlabno!” confirming that SSH auth works.
 
-## 14. Restart Zsh to Load Zap Plugins
+## 15. Restart Zsh to Load Zap Plugins
 After SSH and Zap are configured, start a fresh zsh shell so Zap can pull the plugins defined in `~/.config/zsh/.zshrc`:
 ```bash
 exec zsh -l
 ```
 You should see the expected prompt (powerlevel10k, autocomplete, autosuggestions, etc.) once Zap finishes cloning.
 
-## 15. Build bat (better version of cat) Theme Cache
+## 16. Build bat (better version of cat) Theme Cache
 If you want bat’s syntax theme caching to match this dotfiles setup:
 ```bash
 bat cache --build
