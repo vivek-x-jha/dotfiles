@@ -15,9 +15,7 @@
 2. Inside Ubuntu, update packages and install prerequisites (including the CLI tools referenced in your zsh config):
    ```bash
    sudo apt update && sudo apt upgrade -y
-   sudo apt install -y \
-     git curl unzip build-essential \
-     atuin bat btop dust eza fzf gh glow mycli ripgrep tmux yazi zsh zoxide
+   sudo apt install -y git curl unzip build-essential atuin bat btop dust eza fzf gh glow mycli ripgrep tmux yazi zsh zoxide
    ```
 
 ## 3. Install Neovim (better version of vim editor)
