@@ -57,7 +57,8 @@ mkdir -p ~/.local/share/zsh
 ```
 
 ## 6. Mirror Dotfiles into `~/.config`
-Instead of linking individual files into `$HOME`, mirror everything under `~/.config` so future updates stay in sync:
+- Instead of linking individual files into `$HOME`, mirror everything under `~/.config` so future updates stay in sync
+- Remember a symlink is like a pointer where ghe first argument is source file/folder and secon argument is the target name. most of these programs automatically look for their configuration in ~/.config so this is a way to "pretend" its there while managing it in our custom central location ~/.dotfiles
 ```bash
 cd ~/.config
 ln -sf ~/.dotfiles/atuin atuin
