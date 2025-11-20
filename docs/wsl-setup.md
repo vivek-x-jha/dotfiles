@@ -20,18 +20,22 @@
      atuin bat btop dust eza fzf gh glow mycli ripgrep tmux yazi zsh zoxide
    ```
 
-## 3. Install bob (Neovim version manager)
-1. Install Rust (provides `cargo` which bob uses):
+## 3. Install Neovim (better version of vim editor)
+1. Install Rust (programming language like Python)
+- provides `cargo` package manager for rust tools (like sudo apt ... for Linux):
    ```bash
    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
    source ~/.cargo/env
    ```
-2. Install bob via cargo:
+2. Install bob (Neovim version manager) via cargo:
    ```bash
    cargo install bob-nvim
    ```
-3. Install and select the Neovim nightly build (matches this dotfiles setup):
+3. Install Neovim
+- stable is what you would typically download as a .zip or .exe from the website
+- nightly is usually the latest but could have some bugs):
 ```bash
+~/.local/share/bob/bin/bob install stable
 ~/.local/share/bob/bin/bob install nightly
 ~/.local/share/bob/bin/bob use nightly
 ```
