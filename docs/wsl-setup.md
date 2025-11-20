@@ -83,6 +83,11 @@ ln -sf ~/.dotfiles/zsh zsh
 ln -sf ~/.dotfiles/starship/config.toml starship.toml
 ```
 
+On WSL, remove the mac-only agent lines from `~/.config/ssh/config`:
+```bash
+sed -i '/UseKeychain/d;/IdentityAgent/d' ~/.config/ssh/config
+```
+
 ## 7. Install Zap (Zsh plugin manager)
 1. Run the Zap installer:
    ```bash
@@ -96,20 +101,20 @@ ln -sf ~/.dotfiles/starship/config.toml starship.toml
 
 ## 8. Generate SSH Keys (these are like secret keys that are more secure than simple passwords - check out the video I posted in Slack in #resources)
 ```bash
-ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.dotfiles/ssh/id_ed25519
+ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.config/ssh/id_ed25519
 eval "$(ssh-agent -s)"
-ssh-add ~/.dotfiles/ssh/id_ed25519
+ssh-add ~/.config/ssh/id_ed25519
 ```
 
 ## 9. Add the Public Key to GitHub
 ```bash
-cat ~/.dotfiles/ssh/id_ed25519.pub
+cat ~/.config/ssh/id_ed25519.pub
 ```
 Copy the entire output → GitHub → **Settings** → **SSH and GPG keys** → **New SSH key** → paste, name it “WSL Ubuntu,” and save.
 
 ## 10. Add github `known_hosts`
 ```bash
-ssh-keyscan github.com > ~/.dotfiles/ssh/known_hosts
+ssh-keyscan github.com > ~/.config/ssh/known_hosts
 ```
 This avoids the first-time authenticity prompt.
 
@@ -119,9 +124,13 @@ git config --global user.name  "Andrew Labno"
 git config --global user.email "andrew.labno@gmail.com"
 git config --global core.autocrlf input
 git config --global core.fileMode false
+git config --global --unset user.signingkey || true
+git config --global --unset gpg.format  || true
+git config --global --unset gpg.ssh.program || true
+git config --global --unset gpg.ssh.allowedSignersFile || true
 git config --global --list
 ```
-last command shows all your git settings 
+last command shows all your git settings
 
 ## 12. Switch the Dotfiles Remote to SSH
 ```bash
