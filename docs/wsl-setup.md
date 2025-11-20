@@ -58,7 +58,7 @@ mkdir -p ~/.local/share/zsh
 
 ## 6. Mirror Dotfiles into `~/.config`
 - Instead of linking individual files into `$HOME`, mirror everything under `~/.config` so future updates stay in sync
-- Remember a symlink is like a pointer where ghe first argument is source file/folder and secon argument is the target name. most of these programs automatically look for their configuration in ~/.config so this is a way to "pretend" its there while managing it in our custom central location ~/.dotfiles
+- Remember a symlink is like a pointer where the first argument is "source" file/folder and second argument is the "target" name. most of these programs automatically look for their configuration in ~/.config so this is a way to "pretend" its there while managing it in our custom central location ~/.dotfiles
 ```bash
 cd ~/.config
 ln -sf ~/.dotfiles/atuin atuin
@@ -84,18 +84,17 @@ ln -sf ~/.dotfiles/starship/config.toml starship.toml
 ```
 
 ## 7. Install Zap (Zsh plugin manager)
-1. Make sure zsh is installed (`sudo apt install zsh`).
-2. Run the Zap installer:
+1. Run the Zap installer:
    ```bash
    zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
    ```
    This installs Zap into `~/.local/share/zap`.
-3. To update Zap/plugins later:
+2. To update Zap/plugins later (no need to run this now but keep in mind for later):
    ```bash
    zap update all
    ```
 
-## 8. Generate SSH Keys (stored inside dotfiles)
+## 8. Generate SSH Keys (these are like secret keys that are more secure than simple passwords - check out the video I posted in Slack in #resources)
 ```bash
 ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.dotfiles/ssh/id_ed25519
 eval "$(ssh-agent -s)"
@@ -108,9 +107,9 @@ cat ~/.dotfiles/ssh/id_ed25519.pub
 ```
 Copy the entire output → GitHub → **Settings** → **SSH and GPG keys** → **New SSH key** → paste, name it “WSL Ubuntu,” and save.
 
-## 10. (Optional) Prime `known_hosts`
+## 10. Add github `known_hosts`
 ```bash
-ssh-keyscan github.com >> ~/.dotfiles/ssh/known_hosts
+ssh-keyscan github.com > ~/.dotfiles/ssh/known_hosts
 ```
 This avoids the first-time authenticity prompt.
 
@@ -122,7 +121,7 @@ git config --global core.autocrlf input
 git config --global core.fileMode false
 git config --global --list
 ```
-(These settings live in `~/.config/git/config` because the entire directory is symlinked.)
+last command shows all your git settings 
 
 ## 12. Switch the Dotfiles Remote to SSH
 ```bash
@@ -143,7 +142,7 @@ exec zsh -l
 ```
 You should see the expected prompt (powerlevel10k, autocomplete, autosuggestions, etc.) once Zap finishes cloning.
 
-## 15. Build bat Theme Cache
+## 15. Build bat (better version of cat) Theme Cache
 If you want bat’s syntax theme caching to match this dotfiles setup:
 ```bash
 bat cache --build
