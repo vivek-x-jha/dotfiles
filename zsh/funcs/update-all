@@ -57,9 +57,12 @@ notify 'RUN HOMEBREW MAINTENANCE'
 notify -s 'UPGRADE FORMULAE AND CASKS'
 logg -c 'brew upgrade' || logg -w 'UPDATE HOMEBREW FORMULAE FAILED'
 logg -c 'brew cu -af' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
-logg -c 'sudo xattr -rd com.apple.quarantine /Applications/Spotify.app' || logg -w 'FAILED TO CLEAR SPOTIFY QUARANTINE'
 
-notify -s 'CLEANUP AND HEALTH CHECKS'
+notify -s 'RUN QUARANTINE CHECKS'
+logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/Arc.app"' || logg -w 'FAILED TO CLEAR ARC QUARANTINE'
+logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/Spotify.app"' || logg -w 'FAILED TO CLEAR SPOTIFY QUARANTINE'
+logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/WhatsApp.app"' || logg -w 'FAILED TO CLEAR WHATSAPP QUARANTINE'
+
 logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
 logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
 
