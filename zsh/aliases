@@ -70,9 +70,6 @@ alias list-vars='env | sort'
 
 # -------------------------------- Version Control ---------------------------------------
 
-# Commitizen
-command -v cz &>/dev/null && alias czc='cz commit'
-
 # Git
 command -v git &>/dev/null && {
   alias gaa='git add --all'
