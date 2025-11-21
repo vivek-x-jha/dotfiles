@@ -10,7 +10,7 @@
       "rev": "1bf8b5b"
     },
     "fzf-lua": {
-      "rev": "123cc54"
+      "rev": "3b4a5d1"
     },
     "gitsigns.nvim": {
       "rev": "cdafc32"
@@ -38,7 +38,7 @@
     },
     "nvim-terminal": [],
     "nvim-tree.lua": {
-      "rev": "1eda256"
+      "rev": "3fb91e1"
     },
     "nvim-treesitter": [],
     "nvim-web-devicons": {
