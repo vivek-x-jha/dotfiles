@@ -84,3 +84,5 @@ done
 print_separator
 printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$success" 'Folder icon(s) updated successfully'
 ((fail)) && printf "${RED}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$fail" 'Folder icon(s) failed to update'
+
+return 0
