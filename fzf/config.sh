@@ -48,15 +48,15 @@ export FZF_DEFAULT_OPTS="
   --color list-border:$BRIGHTBLACK_HEX
   --color list-label:$YELLOW_HEX
   --color marker:$CYAN_HEX
-  --color pointer:$GREEN_HEX
+  --color pointer:$MAGENTA_HEX
   --color fg:$BRIGHTBLACK_HEX
   --color fg+:$WHITE_HEX
   --color bg+:-1
   --color hl:$BLACK_HEX
-  --color hl+:$GREEN_HEX
+  --color hl+:$RED_HEX
   --gutter ' '
   --marker '* '
-  --pointer '󰓒'
+  --pointer '󰶻'
 "
 
 # https://junegunn.github.io/fzf/shell-integration/#alt-c
