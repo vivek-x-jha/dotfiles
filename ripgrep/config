@@ -14,3 +14,8 @@
 # Allow long lines but show a preview when they would be truncated.
 --max-columns=160
 --max-columns-preview
+
+# Colorscheme
+--colors=path:fg:blue
+--colors=line:fg:13
+--colors=column:fg:magenta
