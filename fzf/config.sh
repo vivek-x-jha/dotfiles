@@ -53,7 +53,7 @@ export FZF_DEFAULT_OPTS="
   --color fg+:$WHITE_HEX
   --color bg+:-1
   --color hl:$BLACK_HEX
-  --color hl+:$RED_HEX
+  --color hl+:$RED_HEX:bold
   --gutter ' '
   --marker '* '
   --pointer '󰶻'
