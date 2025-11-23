@@ -60,6 +60,7 @@ logg -c 'brew cu -af' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
 notify -s 'RUN QUARANTINE CHECKS'
 logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/Arc.app"' || logg -w 'FAILED TO CLEAR ARC QUARANTINE'
+logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/Slack.app"' || logg -w 'FAILED TO CLEAR SLACK QUARANTINE'
 logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/Spotify.app"' || logg -w 'FAILED TO CLEAR SPOTIFY QUARANTINE'
 logg -c 'sudo xattr -rd com.apple.quarantine "/Applications/WhatsApp.app"' || logg -w 'FAILED TO CLEAR WHATSAPP QUARANTINE'
 
