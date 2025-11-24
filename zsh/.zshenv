@@ -35,6 +35,10 @@ export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"
 # Python: https://docs.python.org/3/using/cmdline.html#envvar-PYTHON_HISTORY
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"
 
+# Rust toolchain
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
 # TPM: https://github.com/tmux-plugins/tpm/blob/master/docs/changing_plugins_install_dir.md#changing-plugins-install-dir
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 
@@ -58,3 +62,9 @@ export CODEX_HOME="$XDG_STATE_HOME/codex"
 
 # Shell color palette
 source "$ZDOTDIR/themes/sourdiesel.sh"
+
+# Homebrew (MacOS only)
+[[ $(uname) == Darwin ]] && {
+  export HOMEBREW_NO_ENV_HINTS=1
+  export HOMEBREW_INSTALL_BADGE='📦'
+}
