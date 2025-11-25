@@ -1,10 +1,8 @@
 #!/usr/bin/env zsh
 
-# Usage: update-all [Brewfile] [IconsDir]
-#   Brewfile  (optional): custom brew bundle output path; defaults to ~/.dotfiles/Brewfile
+# Usage: update-all [IconsDir]
 #   IconsDir  (optional): directory containing custom macOS icons (default: ~/Pictures/icons)
-local brewfile="${1:-$HOME/.dotfiles/Brewfile}"
-local icons_dir="${2:-$HOME/Pictures/icons}"
+local icons_dir="${1:-$HOME/Pictures/icons}"
 
 local ICON='󰓒'
 local STEP=0
@@ -75,7 +73,7 @@ logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
 logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
 
 notify -s 'EXPORT BREWFILE'
-logg -c "brew bundle dump --force --file=\"${brewfile/#$HOME/~}\"" || logg -w 'UPDATE BREWFILE FAILED'
+logg -c "brew bundle dump --force" || logg -w 'UPDATE BREWFILE FAILED'
 
 notify 'REFRESH MACOS ICONS'
 update-icons "$icons_dir" || logg -w 'FAILED TO UPDATE MACOS ICONS'

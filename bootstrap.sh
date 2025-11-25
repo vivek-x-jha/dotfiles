@@ -33,11 +33,11 @@ DISTRO=''
 PKG_MGR=''
 
 GITHUB_RAW_BASE='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main'
-BREWFILE_DEFAULT="$GITHUB_RAW_BASE/Brewfile"
-APT_MANIFEST_DEFAULT="$HOME/.dotfiles/apt-packages.txt"
-DNF_MANIFEST_DEFAULT="$HOME/.dotfiles/dnf-packages.txt"
-APT_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/apt-packages.txt"
-DNF_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/dnf-packages.txt"
+BREWFILE_DEFAULT="$GITHUB_RAW_BASE/manifests/Brewfile"
+APT_MANIFEST_DEFAULT="$HOME/.dotfiles/manifests/apt-packages.txt"
+DNF_MANIFEST_DEFAULT="$HOME/.dotfiles/manifests/dnf-packages.txt"
+APT_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/apt-packages.txt"
+DNF_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/dnf-packages.txt"
 DNF_CMD=''
 
 DEVELOPER_CLONE_ROOT="${DEVELOPER_CLONE_ROOT:-$HOME/Developer}"

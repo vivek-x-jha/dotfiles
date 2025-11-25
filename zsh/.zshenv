@@ -67,4 +67,5 @@ source "$ZDOTDIR/themes/sourdiesel.sh"
 [[ $(uname) == Darwin ]] && {
   export HOMEBREW_NO_ENV_HINTS=1
   export HOMEBREW_INSTALL_BADGE='📦'
+  export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/manifests/Brewfile"
 }
