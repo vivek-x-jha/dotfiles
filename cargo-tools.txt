@@ -1,0 +1,15 @@
+atuin
+bat
+bob-nvim
+du-dust
+eza
+fd-find
+rainfrog
+ripgrep
+starship
+stylua
+tealdeer
+tokei
+uv
+yazi-fm
+zoxide
