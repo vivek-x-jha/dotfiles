@@ -62,9 +62,18 @@ logg() {
 
   case "$opt" in
   -i) level=INFO ;;
-  -w) level=WARN && color="$YELLOW" ;;
-  -e) level=ERROR && color="$MAGENTA" ;;
-  *) printf 'log: missing or invalid level flag\n' >&2 && return 1 ;;
+  -w)
+    level=WARN
+    color="$YELLOW"
+    ;;
+  -e)
+    level=ERROR
+    color="$MAGENTA"
+    ;;
+  *)
+    printf 'log: missing or invalid level flag\n' >&2
+    return 1
+    ;;
   esac
 
   shift
@@ -517,44 +526,38 @@ EOF
 }
 
 # Create or refresh a symlink under the given base directory
-# Usage: symlink <source> <base_dir> <link_name>
 symlink() {
   local src="$1"
   local base="$2"
   local target="$3"
 
-  if [[ -z $src || -z $base || -z $target ]]; then
-    return
-  fi
+  # Ensure required args are passed
+  [[ -z $src || -z $base || -z $target ]] && {
+    logg -e 'Missing required arg(s): Usage: symlink <source> <base_dir> <link_name>'
+    return 1
+  }
 
-  if [[ ! -d $base ]]; then
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] mkdir -p $base"
-    else
-      mkdir -p "$base"
-    fi
-  fi
+  # Ensure base directory of target link exists
+  [[ -d $base ]] || run "mkdir -p \"$base\""
 
-if ! pushd "$base" &>/dev/null; then
+  # Bail early if we can't enter the base directory (e.g., permissions)
+  pushd "$base" &>/dev/null || {
     logg -w "Skipping link (unable to enter $base)"
-    return
-  fi
+    return 1
+  }
 
-  if [[ ! -e $src && ! -L $src ]]; then
+  # Skip if the source path is missing
+  [[ -e $src || -L $src ]] || {
     logg -w "Skipping link (missing source: $base/$src)"
-    popd >/dev/null || return
-    return
-  fi
+    popd >/dev/null || return 1
+    return 1
+  }
 
-  if ((DRY_RUN)); then
-    logg -i "[dry-run] ln -sf $src -> $base/$target"
-    popd >/dev/null || return
-    return
-  fi
-
+  # Backup target directory
   [[ -d $target && ! -L $target ]] && mv -f "$target" "${target}.bak"
-  ln -sf "$src" "$target"
-  logg -i "[+ Link: $src -> $base/$target]"
+
+  # Create symlinks
+  run "ln -sf \"$src\" \"$target\"" && logg -i "[+ Link: $src -> $base/$target]"
   popd >/dev/null || return
 }
 
