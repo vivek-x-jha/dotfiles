@@ -17,7 +17,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "cdafc320f03f2572c40ab93a4eecb733d4016d07",
+      "rev": "684270f22364bd248fcedd51598b6433266fdc47",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "indent-blankline.nvim": {
