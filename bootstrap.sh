@@ -525,42 +525,6 @@ EOF
   done
 }
 
-# Create or refresh a symlink under the given base directory
-symlink() {
-  local src="$1"
-  local base="$2"
-  local target="$3"
-
-  # Ensure required args are passed
-  [[ -z $src || -z $base || -z $target ]] && {
-    logg -e 'Missing required arg(s): Usage: symlink <source> <base_dir> <link_name>'
-    return 1
-  }
-
-  # Ensure base directory of target link exists
-  [[ -d $base ]] || run "mkdir -p \"$base\""
-
-  # Bail early if we can't enter the base directory (e.g., permissions)
-  pushd "$base" &>/dev/null || {
-    logg -w "Skipping link (unable to enter $base)"
-    return 1
-  }
-
-  # Skip if the source path is missing
-  [[ -e $src || -L $src ]] || {
-    logg -w "Skipping link (missing source: $base/$src)"
-    popd >/dev/null || return 1
-    return 1
-  }
-
-  # Backup target directory
-  [[ -d $target && ! -L $target ]] && mv -f "$target" "${target}.bak"
-
-  # Create symlinks
-  run "ln -sf \"$src\" \"$target\"" && logg -i "[+ Link: $src -> $base/$target]"
-  popd >/dev/null || return
-}
-
 # Link dotfiles into their XDG targets and optional media directory.
 create_symlinks() {
   local vscode_src='../../../.dotfiles/vscode/settings.json'
@@ -642,7 +606,38 @@ create_symlinks() {
 
   # Ensure all links are created
   for ((i = 0; i < ${#symlinks[@]}; i += 3)); do
-    symlink "${symlinks[i]}" "${symlinks[i + 1]}" "${symlinks[i + 2]}"
+    local src="${symlinks[i]}"
+    local base="${symlinks[i + 1]}"
+    local target="${symlinks[i + 2]}"
+
+    # Ensure required args are present
+    [[ -n $src && -n $base && -n $target ]] || {
+      logg -e 'Missing required arg(s): Usage: symlink <source> <base_dir> <link_name>'
+      continue
+    }
+
+    # Ensure base directory of target link exists
+    [[ -d $base ]] || run "mkdir -p \"$base\""
+
+    # Bail early if we can't enter the base directory (e.g., permissions)
+    pushd "$base" &>/dev/null || {
+      logg -w "Skipping link (unable to enter $base)"
+      continue
+    }
+
+    # Skip if the source path is missing
+    [[ -e $src || -L $src ]] || {
+      logg -w "Skipping link (missing source: $base/$src)"
+      popd >/dev/null || true
+      continue
+    }
+
+    # Backup target directory
+    [[ -d $target && ! -L $target ]] && mv -f "$target" "${target}.bak"
+
+    # Create symlink (respects DRY_RUN via run)
+    run "ln -sf \"$src\" \"$target\"" && logg -i "[+ Link: $src -> $base/$target]"
+    popd >/dev/null || true
   done
 }
 
