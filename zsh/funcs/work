@@ -166,11 +166,13 @@ case "$session" in
 '')
   # If run without args inside TMUX session -> mutate to `tmux list-sessions`
   if [[ -n $TMUX ]]; then
+    [[ -t 0 ]] || return 0
     tmux list-sessions
     return $?
   fi
 
   # If run without args outside TMUX session -> mutate to `tmux attach-session or new-session`
+  [[ -t 0 ]] || return 0
   tmux attach-session || tmux new-session
   return $?
   ;;
