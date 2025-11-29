@@ -5,9 +5,7 @@ command -v fd &>/dev/null || return
 
 local -a files=()
 while IFS= read -r -d '' f; do
-  if file -bi "$f" | grep -vq binary; then
-    files+=("$f")
-  fi
+  file -bi "$f" | grep -vq binary && files+=("$f")
 done < <(fd -HItf \
   --exclude .git \
   --exclude .github \
@@ -18,4 +16,4 @@ done < <(fd -HItf \
   --exclude "*.pdf" \
   -0)
 
-(( ${#files[@]} )) && "$EDITOR" "${files[@]}"
+((${#files[@]})) && "$EDITOR" "${files[@]}"
