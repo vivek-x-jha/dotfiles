@@ -2,15 +2,8 @@
 
 # -------------------------------- File Editing ---------------------------------------
 
-# Open all files in current directory excluding...
-command -v fd &>/dev/null && alias va='$EDITOR $(fd -HItf \
-  --exclude .git \
-  --exclude .github \
-  --exclude __pycache__ \
-  --exclude Session.vim \
-  --exclude .venv \
-  --exclude "Icon?" \
-  --exclude "*.pdf")'
+# Open all non-binary files in current directory (skip common junk)
+command -v fd &>/dev/null && alias va='nvim-open-all'
 
 # Open vim using viminfo state file
 alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
