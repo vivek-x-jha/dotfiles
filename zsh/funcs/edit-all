@@ -1,0 +1,48 @@
+#!/usr/bin/env zsh
+
+# Open all non-binary files in current directory (skip common junk)
+local files=()
+local excludes=(
+  '.cache'
+  '.direnv'
+  '.git'
+  '.github'
+  '.idea'
+  '.terraform'
+  '.venv'
+  'Icon?'
+  'Session.vim'
+  '__pycache__'
+  'dist'
+  'node_modules'
+  'target'
+  'vendor'
+)
+
+if command -v fd &>/dev/null; then
+  # Prefer fd for speed
+  local fd_args=(fd -HItf -0)
+  local pat
+  for pat in "${excludes[@]}"; do fd_args+=(--exclude "$pat"); done
+
+  while IFS= read -r -d '' f; do
+    file -bi "$f" | grep -vq binary && files+=("$f")
+  done < <("${fd_args[@]}")
+else
+  # Fallback to find with equivalent pruning
+  local find_prune=()
+  local pat
+  for pat in "${excludes[@]}"; do find_prune+=(-name "$pat" -o); done
+  find_prune=("${find_prune[@]:0:${#find_prune[@]}-1}")
+
+  while IFS= read -r f; do
+    file -bi "$f" | grep -vq binary && files+=("$f")
+  done < <(find . \( "${find_prune[@]}" \) -prune -o -type f -print)
+fi
+
+# Launch editor with collected files (if any)
+if (( ${#files[@]} )); then
+  "$EDITOR" "${files[@]}"
+else
+  printf "No non-binary files to edit in %s\n" "$PWD"
+fi

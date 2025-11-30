@@ -43,7 +43,7 @@ require('nvim-web-devicons').setup {
     ['list-256'] = { icon = icons.shell, name = 'list-256' },
     ['list-colors'] = { icon = icons.shell, name = 'list-colors' },
     ['take'] = { icon = icons.shell, name = 'take' },
-    ['nvim-open-all'] = { icon = icons.shell, name = 'nvim-open-all' },
+    ['edit-all'] = { icon = icons.shell, name = 'edit-all' },
     ['update-all'] = { icon = icons.shell, name = 'update-all' },
     ['update-feature-branches'] = { icon = icons.shell, name = 'update-feature-branches' },
     ['update-icons'] = { icon = icons.shell, name = 'update-icons' },

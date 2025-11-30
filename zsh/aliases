@@ -2,9 +2,6 @@
 
 # -------------------------------- File Editing ---------------------------------------
 
-# Open all non-binary files in current directory (skip common junk)
-command -v fd &>/dev/null && alias va='nvim-open-all'
-
 # Open vim using viminfo state file
 alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 
