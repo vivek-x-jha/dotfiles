@@ -1,35 +1,39 @@
 #!/usr/bin/env zsh
 
-local default=main
 local branches=("$@")
 
-# Dynamically fetch feature branches if no arguments are passed
-if [[ $# -eq 0 ]]; then
-  branches=()
-  while IFS= read -r b; do
-    [[ -n $b ]] && branches+=("$b")
-  done < <(git branch --format='%(refname:short)' | grep '^feature/')
-fi
+# Ensure git is available
+command -v git &>/dev/null || {
+  printf "${RED}[ERROR] git not found on PATH${RESET}\n" >&2
+  return 1
+}
 
-if [[ -z ${branches[1]} ]]; then
-  printf "${BRIGHTYELLOW}[WARN] no feature branches updated${RESET}\n"
-  printf "${BRIGHTBLUE}[INFO] run ${GREEN}\`git branch\`${BRIGHTBLUE} to show available branches\n"
-else
-  for branch in "${branches[@]}"; do
-    # Check if branch exists
-    if ! git branch --format='%(refname:short)' | grep -Fxq "$branch"; then
-      printf "${BRIGHTRED}[ERROR] '%s' not found${RESET}\n" "$branch"
-      continue
-    fi
+local default=$(git config --get init.defaultBranch 2>/dev/null)
+default=${default:-main}
 
-    # Perform merge
-    git switch "$branch" &>/dev/null
-    git merge "$default" &>/dev/null
+# Collect branches: passed args + any feature/* branches present
+local feature_branches="$(git for-each-ref --format='%(refname:short)' refs/heads/feature)"
+branches+=("${(f)feature_branches}")
 
-    # Print success message
-    printf "${GREEN}✔ ${RESET}${CYAN}%s${RESET} -> ${MAGENTA}${default}${RESET}\n" "$branch"
-  done
-fi
+# Exit early if no branches collected
+(( ${#branches[@]} )) || {
+  printf "${YELLOW}[WARN] no feature branches updated${RESET}\n"
+  printf "${BLACK}[INFO] run ${GREEN}\`git branch\`${BLACK} to show available branches\n"
+  return
+}
 
-# Always return to main branch (once)
+for branch in "${branches[@]}"; do
+  # Skip branch if not in refs list
+  git show-ref --verify --quiet "refs/heads/$branch" || {
+    printf "${RED}[ERROR] '%s' not found${RESET}\n" "$branch"
+    continue
+  }
+
+  # Merge branch into default branch
+  git switch "$branch" &>/dev/null
+  git merge "$default" &>/dev/null
+  printf "${GREEN}✔ ${RESET}${CYAN}%s${RESET} -> ${MAGENTA}${default}${RESET}\n" "$branch"
+done
+
+# Always return to default branch
 git switch "$default" &>/dev/null
