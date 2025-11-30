@@ -1,5 +1,17 @@
 #!/usr/bin/env zsh
 
+# Ensure git is available
+command -v git &>/dev/null || {
+  printf "${RED}[ERROR] git not found on PATH${RESET}\n" >&2
+  return 1
+}
+
+# Ensure commitizen is available
+command -v cz &>/dev/null || {
+  printf "${RED}[ERROR] commitizen (cz) not found on PATH${RESET}\n" >&2
+  return 1
+}
+
 git add --all &&
   cz commit &&
   git push &&
