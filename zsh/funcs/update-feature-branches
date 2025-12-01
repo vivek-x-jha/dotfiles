@@ -13,7 +13,17 @@ default=${default:-main}
 
 # Collect branches: passed args + any feature/* branches present
 local feature_branches="$(git for-each-ref --format='%(refname:short)' refs/heads/feature)"
-branches+=("${(f)feature_branches}")
+[[ -n $feature_branches ]] && branches+=("${(f)feature_branches}")
+
+# Drop any empty entries (e.g., when nothing matched)
+{
+  local filtered=()
+  local b
+  for b in "${branches[@]}"; do
+    [[ -n $b ]] && filtered+=("$b")
+  done
+  branches=("${filtered[@]}")
+}
 
 # Exit early if no branches collected
 (( ${#branches[@]} )) || {
