@@ -92,8 +92,25 @@ M.history = function()
       ['--tiebreak'] = 'index',
       ['--with-nth'] = '1..',
     },
+
     winopts = {
-      preview = { layout = 'vertical', horizontal = 'right:60%' },
+      preview = {
+        layout = 'vertical',
+        horizontal = 'right:60%',
+        winopts = {
+          number = false,
+          relativenumber = false,
+          cursorline = false,
+          cursorlineopt = 'both',
+          cursorcolumn = false,
+          signcolumn = 'yes',
+          list = false,
+          foldenable = false,
+          foldmethod = 'manual',
+          scrolloff = 0,
+          winblend = 0,
+        },
+      },
     },
 
     fn_preview = function(item)

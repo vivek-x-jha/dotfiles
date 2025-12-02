@@ -1,9 +1,23 @@
---- @type table<string, string> -- Custom icons
+-- @type table<string, string> -- Custom icons
 local icons = require 'icons'
 
 require('fzf-lua').setup {
   winopts = {
-    preview = { winopts = { number = false, signcolumn = 'yes' } },
+    preview = {
+      winopts = {
+        number = false,
+        relativenumber = false,
+        cursorline = false,
+        cursorlineopt = 'both',
+        cursorcolumn = false,
+        signcolumn = 'yes',
+        list = false,
+        foldenable = false,
+        foldmethod = 'manual',
+        scrolloff = 0,
+        winblend = 0,
+      },
+    },
   },
 
   files = {
