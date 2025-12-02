@@ -51,10 +51,6 @@ keymap('n', ';', ':', { desc = 'Enter CMD mode w/o <Shift>' })
 keymap('n', '<leader>n', '<cmd>set nu!<CR>', { desc = 'Toggle line number' })
 keymap('n', '<leader>rn', '<cmd>set rnu!<CR>', { desc = 'Toggle relative number' })
 
--- Comments
-keymap('n', '<leader>/', 'gcc', { desc = 'Toggle comment', remap = true })
-keymap('v', '<leader>/', 'gc', { desc = 'Toggle comment', remap = true })
-
 -- Indentation
 keymap('v', '<Tab>', '>gv', { desc = 'Indent selection' })
 keymap('v', '<S-Tab>', '<gv', { desc = 'Outdent selection' })
