@@ -44,6 +44,7 @@ export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 
 # Tmux fzf: https://github.com/sainnhe/tmux-fzf?tab=readme-ov-file#key-binding
 export TMUX_FZF_LAUNCH_KEY='f'
+export TMUX_FZF_OPTIONS="-p -w 75% -h 50% -m"
 
 # 1password: https://developer.1password.com/docs/cli/shell-plugins
 export OP_PLUGIN_ALIASES_SOURCED=1
