@@ -39,7 +39,7 @@ export FZF_DEFAULT_OPTS="
   --color query:$WHITE_HEX
   --color input-border:$BRIGHTBLACK_HEX
   --color input-label:$BLUE_HEX
-  --color prompt:$BLUE_HEX
+  --color prompt:$BRIGHTYELLOW_HEX
   --color spinner:$CYAN_HEX
   --color info:$BRIGHTMAGENTA_HEX
   --prompt '  '
