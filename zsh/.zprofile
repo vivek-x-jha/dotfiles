@@ -7,10 +7,10 @@
 }
 
 # Prepend uv tools to PATH
-export PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 
 # Add cargo bin to PATH (respects XDG CARGO_HOME override)
-export PATH="$CARGO_HOME/bin:$PATH"
+PATH="$CARGO_HOME/bin:$PATH"
 
 # Add nvim-bin to PATH
 PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
