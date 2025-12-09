@@ -59,6 +59,7 @@ logg -c 'brew cu -af' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 notify -s 'RUN QUARANTINE CHECKS'
 local apps=(
   Arc
+  ChatGPT
   Slack
   Spotify
   WhatsApp
