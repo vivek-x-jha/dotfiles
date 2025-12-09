@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "ff0c88a046392a593042c7badc0e33aee43d5c7c",
+      "rev": "de0fd4a21ee29cf6532d0c3bcae08a0b25d99b6a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -33,7 +33,7 @@
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-autopairs": {
-      "rev": "7a2c97cccd60abc559344042fefb1d5a85b3e33b",
+      "rev": "d9e44e54384e5b0f3536339c65484f2e41b528e3",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-dashboard": {
@@ -61,7 +61,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-statusline"
     },
     "nvim-surround": {
-      "rev": "fcfa7e02323d57bfacc3a141f8a74498e1522064",
+      "rev": "a0f5ab44268d22c8b0b19cb89fd9cabbd21e361c",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-terminal": {
@@ -69,7 +69,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-terminal"
     },
     "nvim-tree.lua": {
-      "rev": "59088b96a32ea47caf4976e164dbd88b86447fb7",
+      "rev": "eb33612bff2fb31f54946fb5dcadc89e905e81ec",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
