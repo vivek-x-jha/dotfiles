@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "1d103911c268bea2c6bbe0933a9c67a4bfb46e76",
+      "rev": "e9c8828f216e419d3b7fa1292d18378b14368492",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
