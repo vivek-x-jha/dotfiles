@@ -20,7 +20,7 @@ ICON='󰓒'
 
 STEP=0
 SUBSTEP=0
-TOTAL_STEPS=18
+TOTAL_STEPS=19
 
 DRY_RUN=0
 
@@ -40,7 +40,6 @@ APT_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/apt-packages.txt"
 DNF_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/dnf-packages.txt"
 DNF_CMD=''
 
-DEVELOPER_CLONE_ROOT="${DEVELOPER_CLONE_ROOT:-$HOME/Developer}"
 DEVELOPER_REPOS=(
   vivek-x-jha/dcp
   vivek-x-jha/notes
@@ -71,7 +70,7 @@ logg() {
     color="$MAGENTA"
     ;;
   *)
-    printf 'log: missing or invalid level flag\n' >&2
+    printf 'logg: missing or invalid level flag\n' >&2
     return 1
     ;;
   esac
@@ -102,7 +101,18 @@ run() {
   eval "$cmd"
 }
 
-# [HF4] Convert paths under $HOME into a tilde-prefixed display string
+# [HF4] Ensure a command exists, warn generically, and return non-zero otherwise
+# Usage: require git
+require() {
+  local bin="$1"
+
+  command -v "$bin" &>/dev/null || {
+    logg -w "$bin unavailable or not in PATH. Skipping..."
+    return 1
+  }
+}
+
+# [HF5] Convert paths under $HOME into a tilde-prefixed display string
 # Usage: pretty_path "/Users/me/.config"
 pretty_path() {
   local path="$1"
@@ -111,7 +121,7 @@ pretty_path() {
   printf '%s' "$path"
 }
 
-# [HF5] ask a yes/no question with optional default
+# [HF6] ask a yes/no question with optional default
 # Usage: confirm "prompt" [default]
 confirm() {
   local prompt="$1"
@@ -161,10 +171,7 @@ detect_platform() {
   case "$(uname -s)" in
   Darwin)
     # Ensure xcode installed for macOS
-    command -v xcode-select &>/dev/null || {
-      logg -e 'Please install Xcode Command Line Tools: xcode-select --install'
-      exit 1
-    }
+    require xcode-select || exit 1
 
     DISTRO=macOS
     OS_TYPE=macos
@@ -201,18 +208,13 @@ setup_package_manager() {
   [[ $PKG_MGR == brew ]] && {
     notify -s 'Ensuring Homebrew is available'
 
-    local brew_cmd=''
-    brew_cmd="$(command -v brew 2>/dev/null)"
+    local brew_cmd='/opt/homebrew/bin/brew'
+    [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
 
     # run installer if homebrew executable not in $PATH
-    [[ -z $brew_cmd ]] && {
+    require brew && {
       notify -s 'Installing Homebrew'
-
-      local brew_installer="/bin/bash -c \"\\\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
-      run "$brew_installer" 2>/dev/null
-
-      [[ $(uname -m) == arm64 ]] && brew_cmd=/opt/homebrew/bin/brew
-      [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
+      run 'curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | /bin/bash' 2>/dev/null
 
       [[ -x $brew_cmd ]] || {
         logg -e 'Homebrew failed to install - please check install instructions @ https://brew.sh/'
@@ -221,7 +223,7 @@ setup_package_manager() {
     }
 
     # Ensure homebrew is in $PATH for current shell session
-    run "eval \"\$($brew_cmd shellenv 2>/dev/null)\""
+    run "eval \"\$($brew_cmd shellenv)\""
   }
 
   [[ $PKG_MGR == dnf ]] && {
@@ -231,20 +233,13 @@ setup_package_manager() {
     dnf_cmd="$(command -v dnf 2>/dev/null)"
     [[ -z $dnf_cmd ]] && dnf_cmd="$(command -v dnf5 2>/dev/null)"
 
-    [[ -n $dnf_cmd ]] || {
-      logg -e "Missing command 'dnf'. Install the Fedora package manager before continuing."
-      exit 1
-    }
-
+    require "$dnf_cmd" || exit 1
     DNF_CMD="$dnf_cmd"
   }
 
   [[ $PKG_MGR == apt ]] && {
     notify -s 'Ensuring apt is available'
-    command -v apt-get &>/dev/null || {
-      logg -e "Missing command 'apt-get'. Install via: sudo apt install apt"
-      exit 1
-    }
+    require apt-get || exit 1
   }
 }
 
@@ -357,7 +352,6 @@ install_package_sets() {
       rm -f "$dnf_manifest_tmp"
     fi
 
-    install_linux_optional_tools
     install_linux_gui_apps
 
   elif [[ $PKG_MGR == apt ]]; then
@@ -420,7 +414,18 @@ install_package_sets() {
       rm -f "$apt_manifest_tmp"
     fi
 
-    install_linux_optional_tools
+    # Install 1Password CLI on Linux (apt-based)
+    notify -s 'Install 1Password CLI'
+    require op || {
+      # Import signing key, add repo, then install
+      run "curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg"
+
+      run "printf '%s\n' 'deb [signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list >/dev/null"
+
+      run 'sudo apt update'
+      run 'sudo apt install -y 1password-cli'
+    }
+
     install_linux_gui_apps
   fi
 }
@@ -643,15 +648,14 @@ create_symlinks() {
 
 # Apply preferred macOS UI defaults
 configure_macos_defaults() {
-  if [[ $OS_TYPE != macos ]]; then
-    logg -w "Skipping macOS UI tweaks on $DISTRO."
-    return
-  fi
+  [[ $OS_TYPE != macos ]] && logg -w "Skipping macOS UI tweaks on $DISTRO" && return
 
-  run "mkdir -p $HOME/Pictures/screenshots"
-  run "defaults write com.apple.screencapture location -string $HOME/Pictures/screenshots"
+  # Ensure screenshots folder exists
+  local screenshots="$HOME/Pictures/screenshots"
+  run "mkdir -p \"$screenshots\""
 
-  local defaults_settings=(
+  # domain | key | option | value
+  local settings=(
     'com.apple.dock autohide-delay -float 0.1'
     'com.apple.dock autohide -bool true'
     'com.apple.dock autohide-time-modifier -int 0'
@@ -661,14 +665,20 @@ configure_macos_defaults() {
     'com.apple.finder QuitMenuItem -bool true'
     'com.apple.finder AppleShowAllFiles -bool true'
     'com.apple.finder FXEnableExtensionChangeWarning -bool false'
+    "com.apple.screencapture location -string $screenshots"
   )
 
-  local domain key option value
-  for entry in "${defaults_settings[@]}"; do
-    read -r domain key option value <<<"$entry"
-    run "defaults write $domain $key $option $value"
+  local entry dom key opt val
+
+  # Update defaults settings
+  for entry in "${settings[@]}"; do
+    read -r dom key opt val <<<"$entry"
+    local setting="$dom $key $opt $val"
+
+    run "defaults write \"$setting\""
   done
 
+  # Reset dock for settings to take effect
   run 'killall Dock'
 }
 
@@ -728,18 +738,10 @@ configure_git_and_github() {
 
 # Clone curated developer repositories under the user's workspace
 clone_developer_repos() {
-  local base="$DEVELOPER_CLONE_ROOT"
+  require git || return
 
-  if ! command -v git &>/dev/null; then
-    logg -w 'git not available. Skipping developer repository cloning.'
-    return
-  fi
-
-  if ((DRY_RUN)); then
-    logg -i "[dry-run] mkdir -p $base"
-  else
-    mkdir -p "$base"
-  fi
+  local base="$HOME/Developer"
+  mkdir -p "$base"
 
   local slug repo_name url dest
   local sorted_slugs=()
@@ -781,12 +783,11 @@ clone_developer_repos() {
 
 # Clone or update project template repository
 install_templates() {
+  require git || return
+
   local templates_remote='git@github.com:vivek-x-jha/templates.git'
   local templates_dir="$XDG_DATA_HOME/templates"
   local templates_backup="${templates_dir}.bak"
-
-  # Ensure git available
-  ! command -v git &>/dev/null && logg -w 'git not available or not in PATH. Skipping template clone.' && return
 
   # Backup existing templates directory
   [[ -d $templates_dir ]] && {
@@ -807,9 +808,9 @@ install_templates() {
 # Provision Atuin sync credentials via 1Password
 setup_atuin_sync() {
   # Skip Atuin 1Password setup when either command unavailable
-  ! command -v atuin &>/dev/null && logg -w 'Atuin not installed. Skipping sync setup.' && return
+  require atuin || return
   ! ((USE_1PASSWORD)) && logg -w '1Password disabled. Skipping Atuin vault automation.' && return
-  ! command -v op &>/dev/null && logg -w '1Password CLI not installed. Skipping Atuin vault automation.' && return
+  require op || return
 
   local atuin_op="${ATUIN_OP_TITLE} --vault ${OP_VAULT}"
 
@@ -855,23 +856,21 @@ setup_atuin_sync() {
 
 # Configure Touch ID-backed sudo when supported
 configure_sudo_auth() {
-  if [[ $OS_TYPE == macos ]]; then
-    local brew_prefix
-    brew_prefix=$(brew --prefix 2>/dev/null)
-    if [[ -z $brew_prefix ]]; then
-      logg -w 'Unable to determine Homebrew prefix for Touch ID setup.'
-      return
-    fi
-    local pam_content="# Authenticate with Touch ID - even in tmux\nauth  optional    ${brew_prefix}/lib/pam/pam_reattach.so ignore_ssh\nauth  sufficient  pam_tid.so"
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] sudo tee /etc/pam.d/sudo_local <<<'$pam_content'"
-    else
-      printf '%s\n' "$pam_content" | sudo tee /etc/pam.d/sudo_local >/dev/null
-      logg -i 'UPDATED /etc/pam.d/sudo_local'
-    fi
-  else
-    logg -w "Touch ID sudo configuration not applicable on $DISTRO."
-  fi
+  require brew || return
+
+  local brew_prefix='' pam_content=''
+  brew_prefix=$(brew --prefix)
+
+  pam_content=$(
+    cat <<EOF
+# Authenticate with Touch ID - even in tmux
+auth  optional    $brew_prefix/lib/pam/pam_reattach.so ignore_ssh
+auth  sufficient  pam_tid.so
+EOF
+  )
+
+  run "printf '%s\n' \"$pam_content\" | sudo tee /etc/pam.d/sudo_local >/dev/null" &&
+    logg -i 'UPDATED /etc/pam.d/sudo_local'
 }
 
 # Ensure preferred shell binaries are registered and set as default
@@ -927,67 +926,6 @@ configure_hammerspoon() {
   }
 
   logg -i 'Configure System Settings > Privacy & Security > Accessibility for Hammerspoon.'
-}
-
-# Install optional Linux-only CLI dependencies
-install_linux_optional_tools() {
-  [[ $OS_TYPE == linux ]] || return
-
-  notify -s 'Install optional CLI tooling'
-
-  if command -v atuin &>/dev/null; then
-    logg -i 'Atuin already installed.'
-  else
-    local atuin_cmd="curl --proto '=https' --tlsv1.2 -sSf https://repo.atuin.sh/install.sh | bash"
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] $atuin_cmd"
-    else
-      run "$atuin_cmd"
-    fi
-  fi
-
-  if command -v op &>/dev/null; then
-    logg -i '1Password CLI already installed.'
-  else
-    local key_cmd='curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg'
-    local repo_cmd="printf '%s\n' 'deb [signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list >/dev/null"
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] $key_cmd"
-      logg -i "[dry-run] $repo_cmd"
-      logg -i '[dry-run] sudo apt update'
-      logg -i '[dry-run] sudo apt install -y 1password-cli'
-    else
-      run "$key_cmd"
-      run "$repo_cmd"
-      run 'sudo apt update'
-      run 'sudo apt install -y 1password-cli'
-    fi
-  fi
-
-  if command -v bob &>/dev/null; then
-    logg -i 'bob already installed.'
-  else
-    if command -v cargo &>/dev/null; then
-      if ((DRY_RUN)); then
-        logg -i '[dry-run] cargo install bob-nvim'
-      else
-        run 'cargo install bob-nvim'
-      fi
-    else
-      logg -w 'Rust toolchain (cargo) not found; skipping bob installation.'
-    fi
-  fi
-
-  if command -v uv &>/dev/null; then
-    logg -i 'uv already installed.'
-  else
-    local uv_cmd='curl -Ls https://astral.sh/uv/install.sh | sh'
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] $uv_cmd"
-    else
-      run "$uv_cmd"
-    fi
-  fi
 }
 
 # Install GUI applications recommended for Linux setups
@@ -1231,42 +1169,77 @@ EOF"
   fi
 }
 
-# Install and configure Neovim tooling via bob and uv
-setup_neovim() {
-  if command -v bob &>/dev/null; then
-    if ((DRY_RUN)); then
-      logg -i '[dry-run] bob install stable && bob install nightly && bob use nightly'
-    else
-      bob install stable
-      bob install nightly
-      bob use nightly
-    fi
-  else
-    logg -w 'bob not installed; skipping Neovim version management.'
-  fi
+# Install Rust toolchain manager, LSP, and cargo managed CLI utilities
+install_rust_tooling() {
+  export CARGO_HOME="${CARGO_HOME:-$XDG_DATA_HOME/cargo}"
+  export RUSTUP_HOME="${RUSTUP_HOME:-$XDG_DATA_HOME/rustup}"
+  export PATH="$CARGO_HOME/bin:$PATH"
 
-  if command -v uv &>/dev/null; then
-    if ((DRY_RUN)); then
-      logg -i '[dry-run] uv tool install basedpyright'
-      logg -i '[dry-run] uv tool install ruff'
-    else
-      uv tool install basedpyright
-      uv tool install ruff
-    fi
-  else
-    logg -w 'uv not installed; skipping LSP tool installs.'
-  fi
+  # Install toolchain manager + pkg manager
+  require rustup || run "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path"
+
+  # Ensure toolchain manager + pkg manager installed properly
+  require rustup || return
+  require cargo || return
+
+  # Install language server
+  run 'rustup component add rust-analyzer' || logg -w 'rust-analyzer component not installed'
+
+  # Cargo managed packages
+  local crates=(
+    atuin
+    bat
+    bob-nvim
+    dust
+    eza
+    fd-find
+    rainfrog
+    ripgrep
+    starship
+    stylua
+    tealdeer
+    tokei
+    uv
+    yazi-fm
+    zoxide
+  )
+
+  # Install all packages
+  for crate in "${crates[@]}"; do
+    run "cargo install --locked $crate" || logg -w "cargo install failed for $crate"
+  done
+}
+
+# Install and configure ide tools
+setup_ide() {
+  # Install and configure Neovim version manager
+  require bob || return
+
+  # Install current stable + nightly Neovim builds
+  run 'bob install stable'
+  run 'bob install nightly'
+  run 'bob use nightly'
+
+  require nvim || return
+
+  # Install Python tools
+  require uv && {
+    run 'uv tool install basedpyright'
+    require basedpyright
+
+    run 'uv tool install ruff'
+    require ruff
+  }
 }
 
 # Keep sudo credentials fresh for long-running operations.
 authorize() {
-  ((DRY_RUN)) && return
-  command -v sudo &>/dev/null || return
+  require sudo || return
 
-  if ! sudo -v; then
+  run 'sudo -v' || {
     logg -w 'Unable to refresh sudo credentials; privileged steps may prompt for password.'
     return
-  fi
+  }
 
   {
     while true; do
@@ -1282,7 +1255,7 @@ authorize() {
 # Enable 1Password integrations when the CLI is available
 use_op() {
   local op_available=0
-  command -v op &>/dev/null && op_available=1
+  require op && op_available=1
 
   USE_1PASSWORD=$FORCE_1PASSWORD
   ((!USE_1PASSWORD && op_available)) && confirm 'Enable 1Password CLI integrations' 'Y' && USE_1PASSWORD=1
@@ -1374,8 +1347,11 @@ HELP
   notify 'DESKTOP INTEGRATION'
   configure_hammerspoon
 
-  notify 'SETUP NEOVIM'
-  setup_neovim
+  notify 'INSTALL RUST TOOLING'
+  install_rust_tooling
+
+  notify 'SETUP IDE TOOLS'
+  setup_ide
 
   # Exit confirmation messages
   printf '\n%s\n' "${CYAN}BOOTSTRAP COMPLETE - HAPPY DEVELOPING!...${RESET}"
