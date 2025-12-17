@@ -203,6 +203,37 @@ detect_platform() {
   logg -i "PACKAGE MANAGER: PKG_MGR=$PKG_MGR"
 }
 
+# Keep sudo credentials fresh for long-running operations.
+authorize() {
+  ((DRY_RUN)) && return
+  require sudo || return
+
+  run 'sudo -v' || {
+    logg -w 'Unable to refresh sudo credentials; privileged steps may prompt for password.'
+    return
+  }
+
+  {
+    while true; do
+      sleep 60
+      sudo -n true || break
+    done
+  } &
+
+  KEEP_SUDO_PID=$!
+  trap '[[ -n ${KEEP_SUDO_PID:-} ]] && kill "$KEEP_SUDO_PID" 2>/dev/null' EXIT
+}
+
+# Enable 1Password integrations when the CLI is available
+use_op() {
+  local op_available=0
+  require op && op_available=1
+
+  USE_1PASSWORD=$FORCE_1PASSWORD
+  ((!USE_1PASSWORD && op_available)) && confirm 'Enable 1Password CLI integrations' 'Y' && USE_1PASSWORD=1
+  ((USE_1PASSWORD && !op_available)) && logg -w '1Password CLI not detected. Skipping related steps.' && USE_1PASSWORD=0
+}
+
 # Ensure required package manager tooling is present
 setup_package_manager() {
   [[ $PKG_MGR == brew ]] && {
@@ -212,7 +243,7 @@ setup_package_manager() {
     [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
 
     # run installer if homebrew executable not in $PATH
-    require brew && {
+    require brew || {
       notify -s 'Installing Homebrew'
       run 'curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | /bin/bash' 2>/dev/null
 
@@ -809,8 +840,8 @@ install_templates() {
 setup_atuin_sync() {
   # Skip Atuin 1Password setup when either command unavailable
   require atuin || return
-  ! ((USE_1PASSWORD)) && logg -w '1Password disabled. Skipping Atuin vault automation.' && return
   require op || return
+  ! ((USE_1PASSWORD)) && logg -w '1Password disabled. Skipping Atuin vault automation.' && return
 
   local atuin_op="${ATUIN_OP_TITLE} --vault ${OP_VAULT}"
 
@@ -876,15 +907,9 @@ EOF
 # Ensure preferred shell binaries are registered and set as default
 change_shell_default() {
   local shell_paths=()
-  if [[ $OS_TYPE == macos ]]; then
-    local brew_prefix
-    brew_prefix=$(brew --prefix 2>/dev/null)
-    if [[ -n $brew_prefix ]]; then
-      shell_paths=("$brew_prefix/bin/bash" "$brew_prefix/bin/zsh")
-    else
-      logg -w 'Homebrew prefix unavailable; skipping shell change.'
-      return
-    fi
+
+  if [[ $OS_TYPE == macos ]] && require brew; then
+    shell_paths=("$(brew --prefix)/bin/bash" "$(brew --prefix)/bin/zsh")
   else
 
     while IFS= read -r shell_candidate; do
@@ -895,7 +920,7 @@ change_shell_default() {
     done < <(command -v zsh 2>/dev/null)
   fi
 
-  local new_shell=""
+  local new_shell=''
   for shell_path in "${shell_paths[@]}"; do
     [[ -x $shell_path ]] || continue
     new_shell="$shell_path"
@@ -907,11 +932,7 @@ change_shell_default() {
   done
 
   if [[ -n $new_shell ]]; then
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] chsh -s $new_shell"
-    else
-      chsh -s "$new_shell" || logg -w "Failed to change default shell."
-    fi
+    run "chsh -s \"$new_shell\"" || logg -w "Failed to change default shell."
     logg -i "SHELL=$new_shell"
   else
     logg -w 'No shell candidates found to set as default.'
@@ -1230,36 +1251,6 @@ setup_ide() {
     run 'uv tool install ruff'
     require ruff
   }
-}
-
-# Keep sudo credentials fresh for long-running operations.
-authorize() {
-  require sudo || return
-
-  run 'sudo -v' || {
-    logg -w 'Unable to refresh sudo credentials; privileged steps may prompt for password.'
-    return
-  }
-
-  {
-    while true; do
-      sleep 60
-      sudo -n true || break
-    done
-  } &
-
-  KEEP_SUDO_PID=$!
-  trap '[[ -n ${KEEP_SUDO_PID:-} ]] && kill "$KEEP_SUDO_PID" 2>/dev/null' EXIT
-}
-
-# Enable 1Password integrations when the CLI is available
-use_op() {
-  local op_available=0
-  require op && op_available=1
-
-  USE_1PASSWORD=$FORCE_1PASSWORD
-  ((!USE_1PASSWORD && op_available)) && confirm 'Enable 1Password CLI integrations' 'Y' && USE_1PASSWORD=1
-  ((USE_1PASSWORD && !op_available)) && logg -w '1Password CLI not detected. Skipping related steps.' && USE_1PASSWORD=0
 }
 
 # Orchestrate bootstrap workflow and CLI options
