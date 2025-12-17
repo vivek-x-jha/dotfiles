@@ -92,6 +92,7 @@ local applications = {
   l = 'Slack',
   m = 'Messages',
   n = 'Notes',
+  o = 'Skim',
   p = 'Photos',
   r = 'Reminders',
   s = 'Spotify',
