@@ -205,7 +205,6 @@ detect_platform() {
 
 # Keep sudo credentials fresh for long-running operations.
 authorize() {
-  ((DRY_RUN)) && return
   require sudo || return
 
   run 'sudo -v' || {
@@ -243,18 +242,16 @@ setup_package_manager() {
     [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
 
     # run installer if homebrew executable not in $PATH
-    require brew || {
+    [[ -x $brew_cmd ]] || {
       notify -s 'Installing Homebrew'
       run 'curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | /bin/bash' 2>/dev/null
-
-      [[ -x $brew_cmd ]] || {
-        logg -e 'Homebrew failed to install - please check install instructions @ https://brew.sh/'
-        exit 1
-      }
     }
 
     # Ensure homebrew is in $PATH for current shell session
-    run "eval \"\$($brew_cmd shellenv)\""
+    run "eval \"\$($brew_cmd shellenv)\"" || {
+      logg -e 'Homebrew failed to install - please check install instructions @ https://brew.sh/'
+      exit 1
+    }
   }
 
   [[ $PKG_MGR == dnf ]] && {
