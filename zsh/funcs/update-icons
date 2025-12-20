@@ -19,6 +19,7 @@ dir_icons=(
   "/Applications/1Password.app" "$icon_dir/1password.png"
   "/Applications/Anki.app" "$icon_dir/anki.png"
   "/Applications/ChatGPT.app" "$icon_dir/chatgpt.png"
+  "/Applications/Dia.app" "$icon_dir/dia.png"
   "/Applications/Discord.app" "$icon_dir/discord.png"
   "/Applications/Figma.app" "$icon_dir/figma.png"
   "/Applications/Firefox.app" "$icon_dir/firefox.png"
