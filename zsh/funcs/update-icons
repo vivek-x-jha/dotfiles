@@ -27,7 +27,6 @@ dir_icons=(
   "/Applications/iTerm.app" "$icon_dir/iterm2.png"
   "/Applications/iTermAI.app" "$icon_dir/ai-brain.png"
   "/Applications/KeyCastr.app" "$icon_dir/keycastr.png"
-  "/Applications/Messenger.app" "$icon_dir/messenger.png"
   "/Applications/Neovim-iTerm.app" "$icon_dir/neovim-iterm.png"
   "/Applications/Neovim-Wezterm.app" "$icon_dir/neovim-wezterm.png"
   "/Applications/Notion Calendar.app" "$icon_dir/notion-calendar.png"
