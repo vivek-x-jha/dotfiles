@@ -19,7 +19,6 @@ dir_icons=(
   "/Applications/1Password.app" "$icon_dir/1password.png"
   "/Applications/Anki.app" "$icon_dir/anki.png"
   "/Applications/ChatGPT.app" "$icon_dir/chatgpt.png"
-  "/Applications/Dia.app" "$icon_dir/dia.png"
   "/Applications/Discord.app" "$icon_dir/discord.png"
   "/Applications/Figma.app" "$icon_dir/figma.png"
   "/Applications/Firefox.app" "$icon_dir/firefox.png"
@@ -38,6 +37,7 @@ dir_icons=(
   "/Applications/WeChat.app" "$icon_dir/wechat.png"
   "/Applications/WezTerm.app" "$icon_dir/wezterm.png"
   "/Applications/WhatsApp.app" "$icon_dir/whatsapp.png"
+
   "$HOME/Developer" "$icon_dir/developer.png"
   "$HOME/Downloads" "$icon_dir/download.png"
   "$HOME/Dropbox/content" "$icon_dir/content.png"
