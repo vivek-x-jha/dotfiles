@@ -57,7 +57,7 @@ printf "%-2s ${BLUE}%-37s ${MAGENTA}%-5s${RESET}\n" '' 'App / Directory' "${icon
 print_separator
 
 # Create rows
-local success=0 fail=0
+local i=0 success=0 fail=0
 
 for ((i = 1; i < ${#dir_icons[@]}; i += 2)); do
   local dir="$dir_icons[i]"
@@ -85,4 +85,4 @@ print_separator
 printf "${GREEN}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$success" 'Folder icon(s) updated successfully'
 ((fail)) && printf "${RED}%-2s ${BRIGHTBLACK}%-37s${RESET}\n" "$fail" 'Folder icon(s) failed to update'
 
-return 0
+return
