@@ -41,7 +41,8 @@ local -a colornames=(
   BRIGHTBLACK BRIGHTRED BRIGHTGREEN BRIGHTYELLOW BRIGHTBLUE BRIGHTMAGENTA BRIGHTCYAN BRIGHTWHITE
 )
 
-local i=1
+local binding i=1
+
 for binding in "${bindings[@]}"; do
   local colorname="${colornames[$((i % 17))]}"
   local color="${(P)colorname}"

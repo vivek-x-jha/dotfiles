@@ -1,5 +1,12 @@
 #!/usr/bin/env zsh
 
+command -v git &>/dev/null || {
+  printf "${BRIGHTRED}%s %s${RESET}\n" "✘" "git unavailable or not in PATH"
+  return 1
+}
+
+local plugin=''
+
 for plugin in "$TMUX_PLUGIN_MANAGER_PATH"/*; do
   [[ -d "$plugin/.git" ]] || continue
 
@@ -14,5 +21,5 @@ for plugin in "$TMUX_PLUGIN_MANAGER_PATH"/*; do
   esac
 
   git -C "$plugin" remote set-url origin "git@github.com:$repo/$name.git"
-  echo "${GREEN}  ${BLACK}Set remote for ${MAGENTA}$name ${WHITE}→ ${BLUE}$repo/$name${RESET}"
+  printf "${GREEN}%s  ${BLACK}Set remote for ${MAGENTA}%s ${WHITE}→ ${BLUE}%s${RESET}\n" "" "$name" "$repo/$name"
 done

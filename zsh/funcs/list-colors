@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+local hex
+
 local colors=(
   "$BLACK_HEX"
   "$RED_HEX"
