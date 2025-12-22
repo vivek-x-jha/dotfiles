@@ -57,17 +57,12 @@ logg -c 'brew upgrade' || logg -w 'UPDATE HOMEBREW FORMULAE FAILED'
 logg -c 'brew cu -af' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
 notify -s 'RUN QUARANTINE CHECKS'
-local apps=(
-  Arc
-  ChatGPT
-  Slack
-  Spotify
-  WhatsApp
-)
+local apps=(Arc ChatGPT Slack Spotify WhatsApp)
+local app='' quarantine_cmd=''
 
 for app in "${apps[@]}"; do
-  logg -c "sudo xattr -rd com.apple.quarantine \"/Applications/${app}.app\"" ||
-    logg -w "FAILED TO CLEAR ${app^^} QUARANTINE"
+  quarantine_cmd="sudo xattr -rd com.apple.quarantine '/Applications/${app}.app'"
+  logg -c "$quarantine_cmd" || logg -w "FAILED TO CLEAR ${app^^} QUARANTINE"
 done
 
 logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
