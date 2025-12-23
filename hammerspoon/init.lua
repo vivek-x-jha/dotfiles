@@ -83,6 +83,7 @@ local applications = {
   c = 'ChatGPT',
   d = 'Discord',
   e = 'Notion Calendar',
+  f = 'iPhone Mirroring',
   g = 'Google Chrome',
   h = 'Reload Hammerspoon',
   i = 'Image2Icon',
