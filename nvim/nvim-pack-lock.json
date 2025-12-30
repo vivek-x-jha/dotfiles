@@ -9,7 +9,7 @@
       "src": "https://github.com/saghen/blink.cmp"
     },
     "conform.nvim": {
-      "rev": "5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25",
+      "rev": "df83eeaab265dacd2eef139a78e502a3f8926618",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
