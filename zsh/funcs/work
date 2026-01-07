@@ -16,6 +16,7 @@ local top_right_cmd='codex'
 local bottom_right_cmd='clear;'
 
 local root=''
+local python_init=0
 
 # Doc helper
 usage() {
@@ -114,7 +115,7 @@ while [[ $# -gt 0 ]]; do
     ;;
 
   -p | --python)
-    bottom_right_cmd+=' if test ! -f pyproject.toml; then uvi; fi'
+    python_init=1
     shift
     ;;
 
@@ -207,6 +208,12 @@ local description=''
   [[ -t 0 ]] && read -r "?$prompt"
   description="${REPLY:+: $REPLY}"
   top_right_cmd+=" '$session$description'"
+}
+
+((python_init)) && {
+  local uvi_desc=''
+  printf -v uvi_desc '%q' "$REPLY"
+  bottom_right_cmd+=" if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
 }
 
 # General template creator
