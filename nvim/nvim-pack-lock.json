@@ -69,7 +69,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-terminal"
     },
     "nvim-tree.lua": {
-      "rev": "a0db8bf7d6488b1dcd9cb5b0dfd6684a1e14f769",
+      "rev": "ca8d82fff26cb12ced239713e3222f4a9dcd0da0",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
