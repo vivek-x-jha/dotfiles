@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "6b5bb1c8d86845c4b21e2146cc11e934a7f831cb",
+      "rev": "5cc68a2a20d4d1b1260f2c452becf557f9dcd479",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -69,7 +69,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-terminal"
     },
     "nvim-tree.lua": {
-      "rev": "5757bcf0447d22d8f78826bc5c59b28da2824c3b",
+      "rev": "b93dbb9b58a882116b381dcc6ae33acafadfb8ee",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
