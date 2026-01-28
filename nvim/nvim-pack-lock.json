@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "d59f857c76eb474ec00debcf043f14fd001805cc",
+      "rev": "83fa6ff3ff05f02a3fc3f93707b1aa7004831645",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -33,7 +33,7 @@
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-autopairs": {
-      "rev": "c2a0dd0d931d0fb07665e1fedb1ea688da3b80b4",
+      "rev": "007047febaa3681a8d2f3dd5126fdb9c6e81f393",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-dashboard": {
