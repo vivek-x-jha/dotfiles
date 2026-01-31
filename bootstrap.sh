@@ -159,7 +159,7 @@ get_op_field() {
   ((DRY_RUN)) && printf '<dry-run:%s>\n' "$field" && return
 
   value=$(op item get "$item" \
-    --vault "$OP_VAULT" \
+    --vault "${OP_VAULT:-}" \
     --field "$field" \
     --reveal 2>/dev/null) || return 1
 
@@ -189,7 +189,7 @@ detect_platform() {
     DISTRO="${PRETTY_NAME:-${NAME:-Linux}}"
     OS_TYPE=linux
 
-    case "${ID_LIKE:-}$ID" in
+    case "${ID_LIKE:-}${ID:-}" in
     *debian* | *ubuntu*) PKG_MGR=apt ;;
     *fedora* | *rhel* | *centos*) PKG_MGR=dnf ;;
     *) logg -e "Linux distribution '$DISTRO' is not yet supported." && exit 1 ;;
