@@ -121,6 +121,7 @@ alias weather='curl wttr.in'
 
 # Sound toggler
 command -v SwitchAudioSource &>/dev/null && {
+  alias sas-airpods='SwitchAudioSource -s "band4band"'
   alias sas-bose='SwitchAudioSource -s $'\''Se\xC3\xB1or Silencer'\'''
   alias sas-speaker='SwitchAudioSource -s "CalDigit TS4 Audio - Rear"'
   alias sas-macbook='SwitchAudioSource -s "MacBook Pro Speakers"'
