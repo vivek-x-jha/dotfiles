@@ -37,7 +37,9 @@
   local brightwhite='15'
 
   # Prompt segments
+  declare -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=
   declare -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    # =========================[ Line #1 ]=========================
     context                # user@host
     virtualenv             # python virtual environment
     pyenv                  # python virtual environment
@@ -45,10 +47,10 @@
     vcs                    # git status
     command_execution_time # previous command duration
     status                 # previous command exit code
+    # =========================[ Line #2 ]=========================
     newline                # \n
     prompt_char            # prompt symbol
   )
-  declare -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=
 
   # Prompt options
   declare -g POWERLEVEL9K_BACKGROUND=                            # transparent background
@@ -204,7 +206,7 @@
   declare -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
   
   # Configure virtualenv
-  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND="$yellow"
+  declare -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$yellow
   declare -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false      # hide version number
   declare -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER=''
   declare -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER=''
