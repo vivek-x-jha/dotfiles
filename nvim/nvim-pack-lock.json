@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "f85eb6252f4c0212be15c6c4213e9af587574cbe",
+      "rev": "694b768d8531bee24a0a364ece300967e7e2cf9d",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "conform.nvim": {
@@ -17,7 +17,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "f7cc6850517b8db59a41314b83bb7994eae33cdd",
+      "rev": "31217271a7314c343606acb4072a94a039a19fb5",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "indent-blankline.nvim": {
