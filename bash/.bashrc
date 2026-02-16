@@ -42,7 +42,7 @@ source "$ZDOTDIR/aliases"
 eval "$($(command -v dircolors || command -v gdircolors) "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
-eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/config.sh"
+eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 
 # Command history
 eval "$(atuin init bash)" && {

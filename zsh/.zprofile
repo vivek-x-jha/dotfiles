@@ -15,8 +15,8 @@ PATH="$CARGO_HOME/bin:$PATH"
 # Add nvim-bin to PATH
 PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
 
-# Dedupe PATH (keep first occurrence)
-typeset -U PATH
+# Dedupe PATH (keep first occurrence) in zsh only
+[[ -n ${ZSH_VERSION-} ]] && typeset -U PATH
 
 export PATH
 
