@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 local repo="${1:-.}"
+local exit_status=0
 
 # Ensure git is available
 command -v git &>/dev/null || {
@@ -14,6 +15,7 @@ command -v cz &>/dev/null || {
   return 1
 }
 
+# Ensure repo path exists
 [[ -d $repo ]] || {
   printf "${RED}[ERROR] repo path not found: %s${RESET}\n" "$repo" >&2
   return 1
@@ -21,11 +23,12 @@ command -v cz &>/dev/null || {
 
 pushd "$repo" >/dev/null || return 1
 
-git add --all &&
-  cz commit &&
-  git push &&
-  update-feature-branches
+{
+  git add --all &&
+    cz commit &&
+    git push &&
+    update-feature-branches
+} || exit_status=$?
 
-local exit_status=$?
 popd >/dev/null || return 1
 return $exit_status
