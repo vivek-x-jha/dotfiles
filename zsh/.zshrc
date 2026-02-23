@@ -29,7 +29,10 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
 }
 
 # Auto-complete
-plug marlonrichert/zsh-autocomplete
+plug marlonrichert/zsh-autocomplete || {
+  autoload -Uz compinit
+  compinit
+}
 
 # Auto-pairs
 plug hlissner/zsh-autopair
