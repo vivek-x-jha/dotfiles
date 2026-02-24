@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "76ddd6b56875bf4f6fd13848728207e738bb75a3",
+      "rev": "72ec224172eea757eab6b349775ad5bada7521d7",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -61,7 +61,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-statusline"
     },
     "nvim-surround": {
-      "rev": "b2f5ff27e603e0a756bd1926c476d2f219e6d42a",
+      "rev": "7fa0b922bbe6b0d7f33f2d7fd5e5f44119360231",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-terminal": {
@@ -69,7 +69,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-terminal"
     },
     "nvim-tree.lua": {
-      "rev": "5499299746b95c49ef4fc89b30c29a79b577881f",
+      "rev": "87594aa7c8808701b418b285e9adf690acead201",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
