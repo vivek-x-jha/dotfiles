@@ -103,10 +103,38 @@ local applications = {
   z = 'WeChat',
 }
 
+--- Show app hotkey reference from the applications table
+--- @return nil
+local show_app_hotkeys = function()
+  local rows = {}
+
+  for key, app in pairs(applications) do
+    rows[#rows + 1] = { key = key, app = app }
+  end
+
+  table.sort(rows, function(a, b) return a.key < b.key end)
+
+  local lines = { 'Apps (ctrl+alt+cmd)' }
+  for _, row in ipairs(rows) do
+    lines[#lines + 1] = string.format('%s  %s', row.key:upper(), row.app)
+  end
+
+  hs.alert.show(table.concat(lines, '\n'), {
+    textSize = 18,
+    radius = 12,
+    atScreenEdge = 2,
+    fillColor = { hex = thm.dark, alpha = 0.96 },
+    strokeColor = { hex = thm.brightmagenta, alpha = 0.9 },
+    textColor = { hex = thm.green, alpha = 1 },
+  }, hs.screen.mainScreen(), 5)
+end
+
 for key, app in pairs(applications) do
   local cmd = key == 'h' and hs.reload or function() toggle(app) end
   hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, cmd)
 end
+
+hs.hotkey.bind(ctrl_alt_cmd, '/', 'Show app hotkeys', show_app_hotkeys)
 
 --- Move the currently focused window - accepts following arguments:
 ---  * 'next'     -> move to next screen
