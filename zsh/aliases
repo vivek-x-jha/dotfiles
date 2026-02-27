@@ -73,7 +73,7 @@ command -v git &>/dev/null && {
   alias grs='git restore'
   alias grst='git restore --staged'
   alias grv='git remote --verbose'
-  alias gst='git status'
+  alias gst='git status -s'
 
   alias glg='git log \
     --graph \
