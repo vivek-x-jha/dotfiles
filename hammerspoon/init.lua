@@ -101,7 +101,7 @@ local applications = {
   w = 'WezTerm',
   x = 'System Settings',
   z = 'WeChat',
-  ['/'] = 'Show App Hotkeys',
+  ['/'] = 'Hotkeys',
 }
 
 --- Show app hotkey reference from the applications table
@@ -130,19 +130,16 @@ local show_app_hotkeys = function()
   }, hs.screen.mainScreen(), 5)
 end
 
+-- Bind application hotkeys defined in the applications table
 for key, app in pairs(applications) do
-  local message
-  local pressedfn
+  local message = 'Toggle ' .. app
+  local pressedfn = function() toggle(app) end
 
   if key == 'h' then
-    message = 'Reload Hammerspoon'
+    message = app
     pressedfn = hs.reload
   elseif key == '/' then
-    message = app
     pressedfn = show_app_hotkeys
-  else
-    message = 'Toggle ' .. app
-    pressedfn = function() toggle(app) end
   end
 
   hs.hotkey.bind(ctrl_alt_cmd, key, message, pressedfn)
