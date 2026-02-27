@@ -101,6 +101,7 @@ local applications = {
   w = 'WezTerm',
   x = 'System Settings',
   z = 'WeChat',
+  ['/'] = 'Show App Hotkeys',
 }
 
 --- Show app hotkey reference from the applications table
@@ -130,11 +131,22 @@ local show_app_hotkeys = function()
 end
 
 for key, app in pairs(applications) do
-  local cmd = key == 'h' and hs.reload or function() toggle(app) end
-  hs.hotkey.bind(ctrl_alt_cmd, key, 'Toggle ' .. app, cmd)
-end
+  local message
+  local pressedfn
 
-hs.hotkey.bind(ctrl_alt_cmd, '/', 'Show app hotkeys', show_app_hotkeys)
+  if key == 'h' then
+    message = 'Reload Hammerspoon'
+    pressedfn = hs.reload
+  elseif key == '/' then
+    message = app
+    pressedfn = show_app_hotkeys
+  else
+    message = 'Toggle ' .. app
+    pressedfn = function() toggle(app) end
+  end
+
+  hs.hotkey.bind(ctrl_alt_cmd, key, message, pressedfn)
+end
 
 --- Move the currently focused window - accepts following arguments:
 ---  * 'next'     -> move to next screen
@@ -245,27 +257,27 @@ end
 -- All other hotkeys
 local remaps = {
   -- Workspaces
-  { mods = ctrl_alt_cmd, keys = '1', desc = 'Set Single Monitor Workspace', cmd = arrange_monitor },
-  { mods = ctrl_alt_cmd, keys = '2', desc = 'Set 2 External Monitor Workspace', cmd = arrange_3_monitors },
+  { mods = ctrl_alt_cmd, key = '1', message = 'Set Single Monitor Workspace', pressedfn = arrange_monitor },
+  { mods = ctrl_alt_cmd, key = '2', message = 'Set 2 External Monitor Workspace', pressedfn = arrange_3_monitors },
 
   -- Monitor placement
-  { mods = ctrl_alt_cmd, keys = 'Left', desc = 'Left Display', cmd = function() moveApp 'next' end },
-  { mods = ctrl_alt_cmd, keys = 'Right', desc = 'Right Display', cmd = function() moveApp 'previous' end },
+  { mods = ctrl_alt_cmd, key = 'Left', message = 'Left Display', pressedfn = function() moveApp 'next' end },
+  { mods = ctrl_alt_cmd, key = 'Right', message = 'Right Display', pressedfn = function() moveApp 'previous' end },
 
   -- Window sizing and placement
-  { mods = ctrl_alt, keys = 'Left', desc = 'Left Half', cmd = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, keys = 'Right', desc = 'Right Half', cmd = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, keys = 'C', desc = 'Center Half', cmd = function() moveApp { x = 0.25, y = 0.25, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'Up', desc = 'Top Half', cmd = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'Down', desc = 'Bottom Half', cmd = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'U', desc = 'Top Left', cmd = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'I', desc = 'Top Right', cmd = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'J', desc = 'Bottom Left', cmd = function() moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'K', desc = 'Bottom Right', cmd = function() moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 } end },
-  { mods = ctrl_alt, keys = 'F', desc = 'Maximize', cmd = function() moveApp 'maximize' end },
-  { mods = ctrl_alt, keys = 'A', desc = 'Almost Maximize', cmd = almost_maximize },
+  { mods = ctrl_alt, key = 'Left', message = 'Left Half', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
+  { mods = ctrl_alt, key = 'Right', message = 'Right Half', pressedfn = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
+  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveApp { x = 0.25, y = 0.25, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'Up', message = 'Top Half', pressedfn = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'Down', message = 'Bottom Half', pressedfn = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'U', message = 'Top Left', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'I', message = 'Top Right', pressedfn = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'J', message = 'Bottom Left', pressedfn = function() moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'K', message = 'Bottom Right', pressedfn = function() moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'F', message = 'Maximize', pressedfn = function() moveApp 'maximize' end },
+  { mods = ctrl_alt, key = 'A', message = 'Almost Maximize', pressedfn = almost_maximize },
 }
 
 for _, m in ipairs(remaps) do
-  hs.hotkey.bind(m.mods, m.keys, m.desc, m.cmd)
+  hs.hotkey.bind(m.mods, m.key, m.message, m.pressedfn)
 end
