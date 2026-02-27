@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "55f1136b125f513c667d417ec51d1cb961221914",
+      "rev": "d637241b34f2cb012309baebb2e35e440a946d8b",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -61,7 +61,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-statusline"
     },
     "nvim-surround": {
-      "rev": "5553dd1fbb3559abb176a8227a12e8f1cab07e93",
+      "rev": "ce4ad4a8909d7f4537803c8f09b79e78c49a6cc4",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-terminal": {
@@ -69,7 +69,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-terminal"
     },
     "nvim-tree.lua": {
-      "rev": "ae16aab5fd1792b97758622b9fb53408ec804fd8",
+      "rev": "018a078c1e149bcd0c4e65c92aabb8e12501d769",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
@@ -77,7 +77,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-web-devicons": {
-      "rev": "16d919d768b5bc2921bd7d5a4ee76f158f7ea1c0",
+      "rev": "737cf6c657898d0c697311d79d361288a1343d50",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
