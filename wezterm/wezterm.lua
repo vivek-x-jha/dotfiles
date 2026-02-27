@@ -1,35 +1,31 @@
---- Generate pallete table of hex values by parsing env color file
---- * File must contain lines in this format: `export *_HEX="#rrggbb"`
---- * key, value pairs look like: "cyan" = "#8ae7c5"
----
---- @param theme string -- Theme identifier (e.g. 'sourdiesel')
---- @return table<string, string>
-local hexify = function(theme)
-  local thm_path = os.getenv 'HOME' .. '/.config/zsh/themes/' .. theme .. '.sh'
+-- Main palette
+local thm = {
+  -- Base16
+  black = '#cccccc',
+  red = '#ffc7c7',
+  green = '#ceffc9',
+  yellow = '#fdf7cd',
+  blue = '#c4effa',
+  magenta = '#eccef0',
+  cyan = '#8ae7c5',
+  white = '#f4f3f2',
+  brightblack = '#5c617d',
+  brightred = '#f096b7',
+  brightgreen = '#d2fd9d',
+  brightyellow = '#f3b175',
+  brightblue = '#80d7fe',
+  brightmagenta = '#c9ccfb',
+  brightcyan = '#47e7b1',
+  brightwhite = '#ffffff',
 
-  --- @type table<string, string>
-  local palette = {}
+  -- Other
+  dark = '#1b1c28',
+  grey = '#313244',
 
-  --- @type file* -- Opened file handle
-  local f = assert(io.open(thm_path, 'r'), 'Failed to open ' .. thm_path)
-
-  for line in f:lines() do
-    --- @type string?, string? -- Extracted color name and hex code from line
-    local color, hex = line:match '^%s*export%s+([A-Z_]+_HEX)%s*=%s*[\'"]?(#%x%x%x%x%x%x)[\'"]?'
-
-    if color and hex then
-      -- strip the _HEX suffix and lowercase the key
-      color = color:match('^(.-)_HEX$'):lower()
-      palette[color] = hex:lower()
-    end
-  end
-
-  f:close()
-  return palette
-end
-
---- @type table<string, string> -- Palette of colors
-local thm = hexify 'sourdiesel'
+  -- App specific
+  nvim_bg = 'NONE',
+  wezterm_bg = '#212030',
+}
 
 -- https://wezterm.org/config/files.html?h=config
 local wezterm = require 'wezterm'
