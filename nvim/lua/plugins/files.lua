@@ -63,7 +63,7 @@ require('nvim-web-devicons').setup {
     ['.env'] = { icon = icons.key, name = '.env' },
     ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap.sh', color = palette.brightgreen },
     ['.state.itermexport'] = { icon = icons.gear, name = '.state.itermexport' },
-    ['.localized'] = { icon = icons.localized, name = '.localized', color = palette.brightblack },
+    ['.localized'] = { icon = icons.file, name = '.localized', color = palette.brightblack },
     ['.dbxignore'] = { icon = icons.file, name = '.dbxignore' },
     ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json', color = palette.black },
     ['README.md'] = { icon = icons.markdown, name = 'README', color = palette.brightyellow },
@@ -151,8 +151,8 @@ require('nvim-tree').setup {
     },
 
     root_folder_label = false,
-    highlight_git = true,
-    highlight_diagnostics = true,
+    highlight_git = 'all',
+    highlight_diagnostics = 'all',
     highlight_modified = 'icon',
 
     indent_markers = {
