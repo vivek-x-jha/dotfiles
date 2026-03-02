@@ -1,0 +1,2 @@
+WRN 2026-03-02T11:40:00.998 ?.80305    server_start:197: Failed to start server: operation not permitted: /var/folders/q7/11_b_s116wv7xv_953j0r4jh0000gn/T/nvim.mubuntu/FXARK0/nvim.80305.0
+WRN 2026-03-02T11:40:01.078 ?.80305    server_start:197: Failed to start server: operation not permitted: /var/folders/q7/11_b_s116wv7xv_953j0r4jh0000gn/T/nvim.mubuntu/FXARK0/fzf-lua.1772480401.80305.1
