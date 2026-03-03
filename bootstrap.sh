@@ -886,14 +886,15 @@ setup_atuin_sync() {
 configure_sudo_auth() {
   require brew || return
 
-  local brew_prefix='' pam_content=''
+  local brew_prefix='' pam_content='' pam_tid_module='pam_tid.so'
   brew_prefix=$(brew --prefix)
+  [[ -r /usr/lib/pam/pam_tid.so.2 ]] && pam_tid_module='pam_tid.so.2'
 
   pam_content=$(
     cat <<EOF
 # Authenticate with Touch ID - even in tmux
 auth  optional    $brew_prefix/lib/pam/pam_reattach.so ignore_ssh
-auth  sufficient  pam_tid.so
+auth  sufficient  $pam_tid_module
 EOF
   )
 
