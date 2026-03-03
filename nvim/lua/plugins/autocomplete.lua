@@ -16,7 +16,7 @@ require('blink.cmp').setup {
   appearance = { nerd_font_variant = 'mono' },
   snippets = { preset = 'luasnip' },
   sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
-  fuzzy = { implementation = 'prefer_rust_with_warning', prebuilt_binaries = { force_version = 'v1.6.0' } },
+  fuzzy = { implementation = 'prefer_rust_with_warning' },
   signature = { enabled = true },
 
   completion = {
