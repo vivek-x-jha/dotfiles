@@ -16,6 +16,7 @@ export ZAP_GIT_PREFIX='git@github.com:'
 # Editor: https://wiki.archlinux.org/title/Environment_variables#Default_programs
 export EDITOR=nvim
 export VISUAL="$EDITOR"
+export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/.nvimlog"
 
 # Pager: https://github.com/sharkdp/bat?tab=readme-ov-file#man
 [[ -f $XDG_CONFIG_HOME/bat/config ]] && {
