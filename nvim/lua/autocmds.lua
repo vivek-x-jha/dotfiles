@@ -193,16 +193,16 @@ autocmd('PackChanged', {
     vim.notify('Building blink.cmp (cargo build --release)...', vim.log.levels.INFO)
     vim.system({ 'cargo', 'build', '--release' }, { cwd = ev.data.path, text = true }, function(out)
       if out.code == 0 then
-        vim.schedule(function()
-          vim.notify('blink.cmp build complete', vim.log.levels.INFO)
-        end)
+        vim.schedule(function() vim.notify('blink.cmp build complete', vim.log.levels.INFO) end)
       else
-        vim.schedule(function()
-          vim.notify(
-            'blink.cmp build failed: ' .. ((out.stderr and out.stderr ~= '') and out.stderr or ('exit code ' .. out.code)),
-            vim.log.levels.ERROR
-          )
-        end)
+        vim.schedule(
+          function()
+            vim.notify(
+              'blink.cmp build failed: ' .. ((out.stderr and out.stderr ~= '') and out.stderr or ('exit code ' .. out.code)),
+              vim.log.levels.ERROR
+            )
+          end
+        )
       end
     end)
   end,
