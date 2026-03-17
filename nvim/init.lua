@@ -4,11 +4,11 @@ require 'opts'
 -- Configure diagnostics and LSP servers
 require 'lsp'
 
--- Configure plugins
-require 'plugins'
-
 -- Set event triggers
 require 'autocmds'
+
+-- Configure plugins
+require 'plugins'
 
 -- Set highlights
 vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors

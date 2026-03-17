@@ -17,8 +17,9 @@ autocmd('InsertLeave', {
   desc = 'Reset Snippet',
   group = augroup('LuaSnipAU', {}),
   callback = function()
-    ---@type { session: { current_nodes: table<integer, any>, jump_active: boolean }, unlink_current: fun(): nil }
-    local ls = require 'luasnip'
+    --- @type boolean, { session: { current_nodes: table<integer, any>, jump_active: boolean }, unlink_current: fun(): nil }
+    local ok, ls = pcall(require, 'luasnip')
+    if not ok then return end
 
     if ls.session.current_nodes[vim.api.nvim_get_current_buf()] and not ls.session.jump_active then ls.unlink_current() end
   end,
@@ -58,7 +59,11 @@ autocmd('VimEnter', {
     --- @type boolean  -- true if buffer has no name (unsaved/unnamed)
     local untitled = vim.api.nvim_buf_get_name(0) == ''
 
-    if emptylines and emptyrows and untitled then require('nvim-dashboard').setup() end
+    if emptylines and emptyrows and untitled then
+      --- @type boolean, { setup: fun(): nil }
+      local ok, dashboard = pcall(require, 'nvim-dashboard')
+      if ok then dashboard.setup() end
+    end
   end,
 })
 
