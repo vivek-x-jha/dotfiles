@@ -7,7 +7,7 @@ local icons_dir="${1:-$HOME/Pictures/icons}"
 local ICON='󰓒'
 local STEP=0
 local SUBSTEP=0
-local TOTAL_STEPS=5
+local TOTAL_STEPS=6
 
 logg() {
   local level=INFO color="$BLACK" cmd=''
@@ -50,6 +50,9 @@ logg -c 'zap update all' 2>/dev/null ||
 notify 'UPDATE TMUX PLUGINS'
 logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
   logg -w 'UPDATE TMUX PLUGINS FAILED'
+
+notify 'UPDATE RUST TOOLCHAIN'
+logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
 
 notify 'RUN HOMEBREW MAINTENANCE'
 notify -s 'UPGRADE FORMULAE AND CASKS'
