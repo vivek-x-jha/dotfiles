@@ -29,8 +29,10 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
 }
 
 # Auto-complete
-autoload -Uz compinit
-compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
+plug marlonrichert/zsh-autocomplete "24.09.04" || {
+  autoload -Uz compinit
+  compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
+}
 
 # Auto-pairs
 plug hlissner/zsh-autopair
@@ -61,7 +63,7 @@ source "$ZDOTDIR/aliases"
 eval "$($(command -v dircolors || command -v gdircolors) "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
-source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source <(fzf --zsh)
 
 # Command history
 eval "$(atuin init zsh)" && {

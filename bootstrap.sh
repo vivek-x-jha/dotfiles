@@ -586,7 +586,6 @@ create_symlinks() {
     ../.dotfiles/btop "$XDG_CONFIG_HOME" btop
     ../.dotfiles/dust "$XDG_CONFIG_HOME" dust
     ../.dotfiles/eza "$XDG_CONFIG_HOME" eza
-    ../.dotfiles/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/gh "$XDG_CONFIG_HOME" gh
     ../.dotfiles/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/glow "$XDG_CONFIG_HOME" glow
