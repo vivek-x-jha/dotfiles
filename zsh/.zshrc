@@ -29,10 +29,8 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
 }
 
 # Auto-complete
-plug marlonrichert/zsh-autocomplete || {
-  autoload -Uz compinit
-  compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
-}
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
 
 # Auto-pairs
 plug hlissner/zsh-autopair
