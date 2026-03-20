@@ -11,5 +11,4 @@ stylua
 tealdeer
 tokei
 uv
-yazi-fm
 zoxide
