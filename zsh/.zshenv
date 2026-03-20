@@ -31,6 +31,9 @@ export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/.nvimlog"
   export MANPAGER="sh -c 'col -bx | bat -pl man --paging=always --theme=sourdiesel'"
 }
 
+# Glow: https://github.com/charmbracelet/glow/discussions/799#discussioncomment-14866750
+export GLAMOUR_STYLE="$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
+
 # Less: # https://man7.org/linux/man-pages/man1/less.1.html
 export LESSHISTFILE="$XDG_STATE_HOME/less/.lesshst"
 
