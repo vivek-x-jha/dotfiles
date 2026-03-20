@@ -1,1 +1,468 @@
-themes/sourdiesel.yml
+filekinds:
+  normal:
+    foreground: blue
+  directory:
+    foreground: blue
+  symlink:
+    foreground: blue
+  executable:
+    foreground: green
+
+perms:
+  user_read:
+    foreground: yellow
+    is_bold: true
+  user_write:
+    foreground: red
+    is_bold: true
+  user_execute_file:
+    foreground: green
+    is_bold: true
+  user_execute_other:
+    foreground: green
+    is_bold: true
+  group_read:
+    foreground: yellow
+  group_write:
+    foreground: red
+  group_execute:
+    foreground: green
+  other_read:
+    foreground: yellow
+  other_write:
+    foreground: red
+  other_execute:
+    foreground: green
+
+size:
+  number_byte:
+    foreground: black
+  number_kilo:
+    foreground: cyan
+  number_mega:
+    foreground: yellow
+  number_giga:
+    foreground: red
+  number_huge:
+    foreground: blue
+
+users:
+  user_you:
+    foreground: 08
+    is_italic: true
+  user_root:
+    foreground: 09
+    is_italic: true
+  user_other:
+    foreground: yellow
+    is_italic: true
+  group_yours:
+    foreground: 08
+    is_italic: true
+  group_other:
+    foreground: yellow
+    is_italic: true
+  group_root:
+    foreground: 09
+    is_italic: true
+
+links:
+  normal:
+    foreground: yellow
+
+date:
+  foreground: 13
+
+broken_symlink:
+  foreground: red
+
+broken_path_overlay:
+  foreground: red
+
+filenames:
+  .bash_profile:
+    icon:
+      glyph: ""
+
+  .bashrc:
+    icon:
+      glyph: ""
+
+  .dircolors:
+    icon:
+      glyph: ""
+
+  .hushlogin:
+    icon:
+      glyph: ""
+
+  .python-version:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .env:
+    icon:
+      glyph: ""
+
+  .gitignore:
+    icon:
+      glyph: ""
+
+  .state.itermexport:
+    icon:
+      glyph: ""
+
+  .zprofile:
+    icon:
+      glyph: ""
+
+  .zshenv:
+    icon:
+      glyph: ""
+
+  .zshrc:
+    icon:
+      glyph: ""
+
+  "icon\r":
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  aliases:
+    icon:
+      glyph: ""
+
+  readme.md:
+    icon:
+      glyph: ""
+
+  license:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  contributing.md:
+    icon:
+      glyph: ""
+
+  security.md:
+    icon:
+      glyph: ""
+
+  brewfile.lock.json:
+    icon:
+      glyph: ""
+
+  .luarc.json:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  brewfile:
+    filename:
+      foreground: cyan
+      is_underlined: false
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  gemfile.lock:
+    icon:
+      glyph: ""
+
+  gemfile:
+    icon:
+      glyph: ""
+
+  package.resolved:
+    icon:
+      glyph: ""
+
+  package.swift:
+    icon:
+      glyph: ""
+
+  pipfile.lock:
+    icon:
+      glyph: ""
+
+  pipfile:
+    icon:
+      glyph: ""
+
+  build.gradle.kts:
+    icon:
+      glyph: ""
+
+  build.gradle:
+    icon:
+      glyph: ""
+
+  bun.lockb:
+    icon:
+      glyph: ""
+
+  cabal.project.freeze:
+    icon:
+      glyph: ""
+
+  cabal.project:
+    icon:
+      glyph: ""
+
+  composer.json:
+    icon:
+      glyph: ""
+
+  composer.lock:
+    icon:
+      glyph: ""
+
+  config.sh:
+    icon:
+      glyph: ""
+
+  config:
+    icon:
+      glyph: ""
+
+  go.mod:
+    icon:
+      glyph: ""
+
+  go.sum:
+    icon:
+      glyph: ""
+
+  gradle.lockfile:
+    icon:
+      glyph: ""
+
+  mix.exs:
+    icon:
+      glyph: ""
+
+  mix.lock:
+    icon:
+      glyph: ""
+
+  nvim-pack-lock.json:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  package-lock.json:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  package.json:
+    icon:
+      glyph: ""
+
+  package.lock:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  packages.config:
+    icon:
+      glyph: ""
+
+  uv.lock:
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+    filename:
+      foreground: cyan
+
+  pnpm-lock.yaml:
+    icon:
+      glyph: ""
+
+  poetry.lock:
+    icon:
+      glyph: ""
+
+  pom.xml:
+    icon:
+      glyph: ""
+
+  project.assets.json:
+    icon:
+      glyph: ""
+
+  pubspec.lock:
+    icon:
+      glyph: ""
+
+  pubspec.yaml:
+    icon:
+      glyph: ""
+
+  pyproject.toml:
+    filename:
+      foreground: cyan
+      is_underlined: false
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  requirements.txt:
+    icon:
+      glyph: ""
+
+  stack.yaml:
+    icon:
+      glyph: ""
+
+  cheatsheet:
+    icon:
+      glyph: ""
+
+  commit-and-sync:
+    icon:
+      glyph: ""
+
+  fix-tmux-remotes:
+    icon:
+      glyph: ""
+
+  list-256:
+    icon:
+      glyph: ""
+
+  list-colors:
+    icon:
+      glyph: ""
+
+  take:
+    icon:
+      glyph: ""
+
+  update-all:
+    icon:
+      glyph: ""
+
+  update-feature-branches:
+    icon:
+      glyph: ""
+
+  update-icons:
+    icon:
+      glyph: ""
+
+  uvi:
+    icon:
+      glyph: ""
+
+  work:
+    icon:
+      glyph: ""
+
+  yarn.lock:
+    icon:
+      glyph: ""
+
+  funcs:
+    icon:
+      glyph: ""
+
+  cargo.toml:
+    icon:
+      glyph: ""
+
+  cargo.lock:
+    icon:
+      glyph: ""
+
+  bootstrap.sh:
+    icon:
+      glyph: ""
+
+  .localized:
+    filename:
+      foreground: 08
+    icon:
+      glyph: "󰲄"
+      style:
+        foreground: 08
+
+  .dbxignore:
+    icon:
+      glyph: ""
+extensions:
+  rs:
+    filename:
+      foreground: red
+    icon:
+      glyph: "🦀"
+  nix:
+    icon:
+      glyph: "❄"
+      style:
+        foreground: white
+  txt:
+    icon:
+      glyph: ""
+  md:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+  toml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  yaml:
+    icon:
+      glyph: ""
+  yml:
+    icon:
+      glyph: ""
+  xml:
+    icon:
+      glyph: ""
+  sh:
+    icon:
+      glyph: ""
+  bash:
+    icon:
+      glyph: ""
+  zsh:
+    icon:
+      glyph: ""
+  vim:
+    icon:
+      glyph: ""

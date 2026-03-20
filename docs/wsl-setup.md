@@ -15,7 +15,7 @@
 2. Inside Ubuntu, update packages and install prerequisites (including the CLI tools referenced in your zsh config):
    ```bash
    sudo apt update && sudo apt upgrade -y
-   sudo apt install -y git curl unzip build-essential atuin bat btop dust eza fzf gh glow mycli ripgrep tmux yazi zsh zoxide
+   sudo apt install -y git curl unzip build-essential atuin bat btop dust eza fzf gh glow mycli ripgrep tmux zsh zoxide
    ```
 
 ## 3. Install Neovim (better version of vim editor)
@@ -66,7 +66,6 @@ ln -sf ~/.dotfiles/blesh blesh
 ln -sf ~/.dotfiles/btop btop
 ln -sf ~/.dotfiles/dust dust
 ln -sf ~/.dotfiles/eza eza
-ln -sf ~/.dotfiles/fzf fzf
 ln -sf ~/.dotfiles/gh gh
 ln -sf ~/.dotfiles/git git
 ln -sf ~/.dotfiles/glow glow
@@ -76,9 +75,8 @@ ln -sf ~/.dotfiles/ripgrep ripgrep
 ln -sf ~/.dotfiles/ssh ssh
 ln -sf ~/.dotfiles/tmux tmux
 ln -sf ~/.dotfiles/wezterm wezterm
-ln -sf ~/.dotfiles/yazi yazi
 ln -sf ~/.dotfiles/zsh zsh
-ln -sf ~/.dotfiles/starship/config.toml starship.toml
+ln -sf ~/.dotfiles/starship/starship.toml starship.toml
 ```
 
 On WSL, remove the mac-only agent lines from `~/.config/ssh/config`:

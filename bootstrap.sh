@@ -575,30 +575,28 @@ create_symlinks() {
   )
 
   local symlinks=(
-    .dotfiles/bash/.bash_profile "$HOME" .bash_profile
-    .dotfiles/bash/.bashrc "$HOME" .bashrc
-    .dotfiles/zsh/.zshenv "$HOME" .zshenv
-    ../.dotfiles/atuin "$XDG_CONFIG_HOME" atuin
-    ../.dotfiles/bash "$XDG_CONFIG_HOME" bash
-    ../.dotfiles/bat "$XDG_CONFIG_HOME" bat
-    ../.dotfiles/blesh "$XDG_CONFIG_HOME" blesh
-    ../.dotfiles/browser "$XDG_CONFIG_HOME" browser
-    ../.dotfiles/btop "$XDG_CONFIG_HOME" btop
-    ../.dotfiles/dust "$XDG_CONFIG_HOME" dust
-    ../.dotfiles/eza "$XDG_CONFIG_HOME" eza
-    ../.dotfiles/gh "$XDG_CONFIG_HOME" gh
-    ../.dotfiles/git "$XDG_CONFIG_HOME" git
-    ../.dotfiles/glow "$XDG_CONFIG_HOME" glow
-    ../.dotfiles/mycli "$XDG_CONFIG_HOME" mycli
-    ../.dotfiles/nvim "$XDG_CONFIG_HOME" nvim
-    ../.dotfiles/ssh "$XDG_CONFIG_HOME" ssh
-    ../.dotfiles/tmux "$XDG_CONFIG_HOME" tmux
-    ../.dotfiles/wezterm "$XDG_CONFIG_HOME" wezterm
-    ../.dotfiles/yazi "$XDG_CONFIG_HOME" yazi
-    ../.dotfiles/zsh "$XDG_CONFIG_HOME" zsh
-    ../.dotfiles/starship/config.toml "$XDG_CONFIG_HOME" starship.toml
-    themes/sourdiesel.yml "$XDG_CONFIG_HOME/eza" theme.yml
-    ../../../.dotfiles/btop/btop.log "$XDG_STATE_HOME/btop" btop.log
+    .dotfiles/bash/.bash_profile "$HOME"
+    .dotfiles/bash/.bashrc "$HOME"
+    .dotfiles/zsh/.zshenv "$HOME"
+    ../.dotfiles/atuin "$XDG_CONFIG_HOME"
+    ../.dotfiles/bash "$XDG_CONFIG_HOME"
+    ../.dotfiles/bat "$XDG_CONFIG_HOME"
+    ../.dotfiles/blesh "$XDG_CONFIG_HOME"
+    ../.dotfiles/browser "$XDG_CONFIG_HOME"
+    ../.dotfiles/btop "$XDG_CONFIG_HOME"
+    ../.dotfiles/dust "$XDG_CONFIG_HOME"
+    ../.dotfiles/eza "$XDG_CONFIG_HOME"
+    ../.dotfiles/gh "$XDG_CONFIG_HOME"
+    ../.dotfiles/git "$XDG_CONFIG_HOME"
+    ../.dotfiles/glow "$XDG_CONFIG_HOME"
+    ../.dotfiles/mycli "$XDG_CONFIG_HOME"
+    ../.dotfiles/nvim "$XDG_CONFIG_HOME"
+    ../.dotfiles/ssh "$XDG_CONFIG_HOME"
+    ../.dotfiles/tmux "$XDG_CONFIG_HOME"
+    ../.dotfiles/wezterm "$XDG_CONFIG_HOME"
+    ../.dotfiles/zsh "$XDG_CONFIG_HOME"
+    ../.dotfiles/starship/starship.toml "$XDG_CONFIG_HOME"
+    ../../../.dotfiles/btop/btop.log "$XDG_STATE_HOME/btop"
   )
 
   # Ensure application directories are created
@@ -609,9 +607,9 @@ create_symlinks() {
     local app_data="$HOME/Library/Application Support"
 
     symlinks+=(
-      ../.dotfiles/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
-      ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
-      ../../.dotfiles/eza "$app_data" eza
+      ../.dotfiles/hammerspoon "$XDG_CONFIG_HOME"
+      ../.dotfiles/karabiner "$XDG_CONFIG_HOME"
+      ../../.dotfiles/eza "$app_data"
     )
 
     vscode_src="../$vscode_src"
@@ -619,32 +617,32 @@ create_symlinks() {
 
   # Link Visual Studio Code settings
   local vscode_target="${app_data:-$XDG_CONFIG_HOME}/Code/User"
-  symlinks+=("$vscode_src" "$vscode_target" settings.json)
+  symlinks+=("$vscode_src" "$vscode_target")
 
   # Link 1Password ssh config
-  ((USE_1PASSWORD)) && symlinks+=(../.dotfiles/1Password "$XDG_CONFIG_HOME" 1Password)
+  ((USE_1PASSWORD)) && symlinks+=(../.dotfiles/1Password "$XDG_CONFIG_HOME")
 
   # Link MEDIA directory (i.e. Dropbox/)
   [[ -z $MEDIA ]] && logg -w 'Media path not set. Skipping media symlinks...'
 
   [[ -n $MEDIA && -d "$HOME/$MEDIA" ]] && symlinks+=(
-    "../$MEDIA/content" "$HOME/Movies" content
-    "../$MEDIA/icons" "$HOME/Pictures" icons
-    "../$MEDIA/screenshots" "$HOME/Pictures" screenshots
-    "../$MEDIA/wallpapers" "$HOME/Pictures" wallpapers
-    "../$MEDIA/education" "$HOME/Documents" education
-    "../$MEDIA/finances" "$HOME/Documents" finances
+    "../$MEDIA/content" "$HOME/Movies"
+    "../$MEDIA/icons" "$HOME/Pictures"
+    "../$MEDIA/screenshots" "$HOME/Pictures"
+    "../$MEDIA/wallpapers" "$HOME/Pictures"
+    "../$MEDIA/education" "$HOME/Documents"
+    "../$MEDIA/finances" "$HOME/Documents"
   )
 
   # Ensure all links are created
-  for ((i = 0; i < ${#symlinks[@]}; i += 3)); do
+  for ((i = 0; i < ${#symlinks[@]}; i += 2)); do
     local src="${symlinks[i]}"
     local base="${symlinks[i + 1]}"
-    local target="${symlinks[i + 2]}"
+    local target="${src:t}"
 
     # Ensure required args are present
     [[ -n $src && -n $base && -n $target ]] || {
-      logg -e 'Missing required arg(s): Usage: symlink <source> <base_dir> <link_name>'
+      logg -e 'Missing required arg(s): Usage: symlink <source> <base_dir>'
       continue
     }
 
@@ -671,6 +669,7 @@ create_symlinks() {
     run "ln -sf \"$src\" \"$target\"" && logg -i "[+ Link: $src -> $base/$target]"
     popd >/dev/null || true
   done
+
 }
 
 # Apply preferred macOS UI defaults
@@ -1218,7 +1217,6 @@ install_rust_tooling() {
     tealdeer
     tokei
     uv
-    yazi-fm
     zoxide
   )
 
