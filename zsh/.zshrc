@@ -29,7 +29,7 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
 }
 
 # Auto-complete
-plug marlonrichert/zsh-autocomplete "24.09.04" || {
+plug marlonrichert/zsh-autocomplete || {
   autoload -Uz compinit
   compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
 }
