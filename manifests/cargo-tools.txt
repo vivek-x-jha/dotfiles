@@ -1,6 +1,7 @@
 atuin
 bat
 bob-nvim
+cargo-update
 du-dust
 eza
 fd-find
