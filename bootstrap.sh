@@ -1207,6 +1207,7 @@ install_rust_tooling() {
     atuin
     bat
     bob-nvim
+    cargo-update
     dust
     eza
     fd-find

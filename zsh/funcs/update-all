@@ -54,6 +54,14 @@ logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
 notify 'UPDATE RUST TOOLCHAIN'
 logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
 
+notify -s 'UPDATE RUST TOOLS'
+local reply=''
+[[ -t 0 ]] && read -r "Update cargo-installed Rust tools? [y/N] " reply
+case "${reply:l}" in
+  y|yes) logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED' ;;
+  *) logg -w 'SKIPPING RUST TOOLS UPDATE' ;;
+esac
+
 notify 'RUN HOMEBREW MAINTENANCE'
 notify -s 'UPGRADE FORMULAE AND CASKS'
 logg -c 'brew upgrade' || logg -w 'UPDATE HOMEBREW FORMULAE FAILED'
