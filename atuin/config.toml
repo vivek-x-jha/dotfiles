@@ -40,6 +40,9 @@ records = true
 
 [daemon]
 
+[logs]
+dir = "~/.local/state/atuin/logs"
+
 [theme]
 name = "sourdiesel"
 
