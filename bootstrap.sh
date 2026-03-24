@@ -572,9 +572,11 @@ create_symlinks() {
     "$XDG_STATE_HOME/python"
     "$XDG_STATE_HOME/zsh"
     "$XDG_DATA_HOME/zsh"
+    "$XDG_DATA_HOME/vscode"
   )
 
   local symlinks=(
+    .local/share/vscode "$HOME"
     .dotfiles/bash/.bash_profile "$HOME"
     .dotfiles/bash/.bashrc "$HOME"
     .dotfiles/zsh/.zshenv "$HOME"
@@ -637,7 +639,7 @@ create_symlinks() {
   # Ensure all links are created
   for ((i = 0; i < ${#symlinks[@]}; i += 2)); do
     local src="${symlinks[i]}"
-    local base="${symlinks[i + 1]}"
+    local base="${symlinks[i+1]}"
     local target="${src:t}"
 
     # Ensure required args are present
