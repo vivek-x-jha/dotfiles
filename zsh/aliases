@@ -111,8 +111,8 @@ command -v op &>/dev/null && {
   }
 
   command -v mysql &>/dev/null && {
-    alias mysql-dev='mysql -u mubuntu -p"$(get_mysql_pwd mubuntu)"'
-    alias mysql-root='mysql -u root -p"$(get_mysql_pwd root)"'
+    alias mysql-dev='mysql -u mubuntu -p"$(op_mysql_pwd mubuntu)"'
+    alias mysql-root='mysql -u root -p"$(op_mysql_pwd root)"'
   }
 }
 
