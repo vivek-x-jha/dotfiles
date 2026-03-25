@@ -119,7 +119,18 @@ export NVIM_BG_HEX='NONE'
 export WEZTERM_BG_HEX='#212030'
 
 # Fzf: https://junegunn.github.io/fzf/
-showdir="$(command -v tree &>/dev/null && echo 'tree -aCI \".git|.github\" {}' || echo 'ls -lAh {}')"
+showdir="$(
+  command -v eza &>/dev/null &&
+    echo 'eza \
+      --all \
+      --tree \
+      --level=3 \
+      --color=always \
+      --icons=always \
+      --group-directories-first \
+      --ignore-glob=".git|.github|.venv|__pycache__" {}' ||
+    echo 'ls -lAh {}'
+)"
 showfile="$(command -v bat &>/dev/null && echo 'bat --color=always --style=changes {}' || echo 'cat {}')"
 findfile="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
