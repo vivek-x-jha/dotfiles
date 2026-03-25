@@ -41,6 +41,7 @@ DNF_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/dnf-packages.txt"
 DNF_CMD=''
 
 DEVELOPER_REPOS=(
+  vivek-x-jha/agent-smith
   vivek-x-jha/dcp
   vivek-x-jha/notes
   vivek-x-jha/nvim-dashboard
@@ -48,6 +49,7 @@ DEVELOPER_REPOS=(
   vivek-x-jha/nvim-sourdiesel
   vivek-x-jha/nvim-statusline
   vivek-x-jha/nvim-terminal
+  vivek-x-jha/practice-sheets
 )
 
 # -------------------------------------- HELPER FUNCTIONS -------------------------------------
