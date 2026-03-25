@@ -17,12 +17,9 @@ alias ...="cd ../.."
 alias grep='grep --color=auto'
 
 # List or show as tree: all directory items in long format with git info
-tree_ignore_glob='.git|.github|.venv|__pycache__'
-command -v tree &>/dev/null && alias tree="tree -aCI \"$tree_ignore_glob\""
-
 command -v eza &>/dev/null && {
   alias l='eza --all --long --git --icons=always --group-directories-first'
-  alias t="l --tree --level=3 --ignore-glob=\"$tree_ignore_glob\""
+  alias t='l --tree --level=3 --ignore-glob=".git|.github|.venv|__pycache__"'
 }
 
 # Fuzzy search man pages
