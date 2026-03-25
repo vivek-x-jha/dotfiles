@@ -59,7 +59,9 @@ Symlinks are created from this repo into XDG paths, including:
 
 - `~/.config/{zsh,nvim,tmux,wezterm,git,ssh,...}`
 - `~/.local/state/{zsh,bash,codex,python,mysql,mycli,...}`
-- `~/.local/share/{zsh,...}`
+- `~/.local/share/{vscode,zsh,...}`
+
+Bootstrap also links `~/.vscode` back to `$XDG_DATA_HOME/vscode`.
 
 Implementation: `create_symlinks`.
 
@@ -114,10 +116,14 @@ This prevents manual rebuilds after `vim.pack.update()`.
 - Linux package manifests:
   - `manifests/apt-packages.txt`
   - `manifests/dnf-packages.txt`
+- Curated developer repos:
+  - cloned to `~/Developer` from `DEVELOPER_REPOS` in `bootstrap.sh`
 - Templates repo destination: `$XDG_DATA_HOME/templates`
 - VS Code settings symlink target:
   - macOS: `~/Library/Application Support/Code/User/settings.json`
   - Linux: `$XDG_CONFIG_HOME/Code/User/settings.json`
+- VS Code extension/CLI data directory:
+  - `~/.vscode -> $XDG_DATA_HOME/vscode`
 
 ## Maintenance Rules for Agents
 
