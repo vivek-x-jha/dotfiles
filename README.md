@@ -1,95 +1,122 @@
-# Personal Development Environment
+# Dotfiles
 
-A fast, functional, & fun command line based development experience!
+Personal development environment for macOS and Linux, centered on a fast terminal workflow with Zsh, Neovim, tmux, and XDG-first configuration.
 
-Features a modern terminal-first workflow across shell, editor, and tmux.
+## ✨ Overview
 
-## Documentation
+This repository manages:
 
-- **Agent + architecture guide**: [AGENTS.md](./AGENTS.md)
-- **Primary setup orchestrator**: [`bootstrap.sh`](./bootstrap.sh)
+- shell configuration for Zsh and Bash
+- terminal and multiplexer setup (`wezterm`, `tmux`)
+- editor configuration (`nvim`, VS Code settings)
+- Git, SSH, and CLI tooling
+- bootstrap automation for packages, symlinks, editor tooling, and OS defaults
 
-## Requirements
+The primary entry point is [`bootstrap.sh`](./bootstrap.sh).
 
-- [x] macOS (Intel or Apple Silicon)
-- [x] Linux (`apt` and `dnf` flows in `bootstrap.sh`)
+Additional implementation details live in [AGENTS.md](./AGENTS.md).
 
-## Installation
+## ⚡ Requirements
+
+- macOS
+- Linux
+  - Debian/Ubuntu via `apt`
+  - Fedora/RHEL via `dnf`
+
+## 🚀 Installation
+
+Clone the repository and run bootstrap:
 
 ```sh
-git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles" && "$HOME/.dotfiles/bootstrap.sh"
+git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
+"$HOME/.dotfiles/bootstrap.sh"
 ```
 
-Optional bootstrap flags:
+Bootstrap flags:
 
 ```sh
 ~/.dotfiles/bootstrap.sh --dry-run
 ~/.dotfiles/bootstrap.sh --with-1password
 ```
 
-Open a new terminal emulator window for changes to take effect!
+Open a new terminal window after setup completes.
 
-## 💡 TIP: Test GitHub Signing & Auth Key
+## 🛠️ What Bootstrap Configures
 
-To verify that your **GitHub Signing Key** and **GitHub Auth Key** are working correctly, run the following command:
+`bootstrap.sh` is the source of truth for workstation setup. It handles:
+
+- platform and package-manager detection
+- package installation
+- XDG symlink creation
+- curated repository clones under `~/Developer`
+- Git and GitHub CLI setup
+- shell plugin manager installation
+- Atuin provisioning
+- Touch ID `sudo` configuration on macOS
+- Neovim, Rust, and Python CLI tooling
+
+## 📁 Repository Layout
+
+- [`bash`](./bash): Bash configuration
+- [`zsh`](./zsh): Zsh configuration, aliases, functions, theme exports
+- [`nvim`](./nvim): Neovim configuration
+- [`tmux`](./tmux): tmux configuration
+- [`wezterm`](./wezterm): WezTerm configuration
+- [`git`](./git): Git configuration
+- [`ssh`](./ssh): SSH configuration
+- [`vscode`](./vscode): tracked VS Code settings and theme files
+- [`manifests`](./manifests): package manifests such as Brewfile and Linux package lists
+
+## 🔧 Tooling
+
+### Shell
+
+- Zsh with Zap, autosuggestions, syntax highlighting, autopairing, and autocomplete
+- Bash with `ble.sh`
+- Atuin history integration
+
+### Editor
+
+- Neovim using native `vim.pack`
+- `bob` for Neovim version management
+- `uv` for Python tooling (`basedpyright`, `ruff`)
+- cargo-managed Rust CLI tooling
+
+### Terminal Workflow
+
+- WezTerm
+- tmux with TPM, resurrect, continuum, yank, and fzf integrations
+
+## 🧩 VS Code
+
+This repository tracks VS Code settings in [`vscode/settings.json`](./vscode/settings.json).
+
+Bootstrap configures:
+
+- macOS settings symlink at `~/Library/Application Support/Code/User/settings.json`
+- Linux settings symlink at `$XDG_CONFIG_HOME/Code/User/settings.json`
+- extension and CLI data under `~/.vscode -> $XDG_DATA_HOME/vscode`
+
+## ✅ Validation
+
+After significant changes, a minimal validation pass is:
 
 ```sh
-cd "$HOME/.dotfiles" && git commit --allow-empty -m "$USER fork begins!" && git push && glg -5
+~/.dotfiles/bootstrap.sh --dry-run
 ```
 
-## Neovim Setup Notes
+Then verify:
 
-This config uses native `vim.pack` (not `lazy.nvim`/Mason) and installs core tools via bootstrap:
+- a new shell loads correctly
+- `work` and tmux startup behave as expected
+- Neovim passes `:checkhealth`
+- `vim.pack.update()` completes cleanly
 
-- `bob` for Neovim versions
-- `uv` for Python tools (`basedpyright`, `ruff`)
-- `cargo` toolchain for Rust-based CLI tools
+## 🔗 References
 
-## Features
-
-### Zsh
-
-1. [Auto-Complete](https://github.com/marlonrichert/zsh-autocomplete)
-1. [Auto-Pair](https://github.com/hlissner/zsh-autopair)
-1. [Auto-Suggestions](https://github.com/zsh-users/zsh-autosuggestions)
-1. [Syntax-Highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-1. [Plugin Manager: Zap](https://github.com/zap-zsh/zap)
-
-### Bash
-
-1. [Completion + Syntax-Highlighting](https://github.com/akinomyoga/ble.sh)
-
-### Neovim
-
-1. [Native vim.pack](https://neovim.io/doc/user/pack.html#vim.pack)
-1. [blink.cmp](https://github.com/Saghen/blink.cmp)
-1. [fzf-lua](https://github.com/ibhagwan/fzf-lua)
-1. [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua)
-1. [conform.nvim](https://github.com/stevearc/conform.nvim)
-
-### Tmux
-
-1. [TPM](https://github.com/tmux-plugins/tpm)
-1. [Vim Navigator](https://github.com/christoomey/vim-tmux-navigator)
-1. [tmux-fzf](https://github.com/sainnhe/tmux-fzf)
-1. [tmux-fzf-url](https://github.com/junegunn/tmux-fzf-url)
-1. [Yank](https://github.com/tmux-plugins/tmux-yank)
-1. [Sensible](https://github.com/tmux-plugins/tmux-sensible)
-1. [Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
-1. [Continuum](https://github.com/tmux-plugins/tmux-continuum)
-
-### Sudo
-
-Touch ID auth for `sudo` is configured by `bootstrap.sh` and supports tmux contexts via `pam_reattach`.
-
-### SSH
-
-Configure 1Password as SSH Manager
-
-1. [1Password for SSH & Git](https://developer.1password.com/docs/ssh/get-started)
-1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
-1. [Use 1Password to securely authenticate the GitHub CLI](https://developer.1password.com/docs/cli/shell-plugins/github/)
-
-## Fonts
-
-Using [Nerd Fonts](https://www.nerdfonts.com/)
+- [Homebrew](https://brew.sh/)
+- [Zap](https://github.com/zap-zsh/zap)
+- [ble.sh](https://github.com/akinomyoga/ble.sh)
+- [Atuin](https://atuin.sh/)
+- [WezTerm](https://wezterm.org/)
+- [1Password Shell Plugins](https://developer.1password.com/docs/cli/shell-plugins)
