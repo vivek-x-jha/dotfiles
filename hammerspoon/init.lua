@@ -71,6 +71,9 @@ end
 -- Mods
 local ctrl_alt = { 'ctrl', 'alt' }
 local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
+local wezterm_float_win_id = nil
+local last_cmd_tap = 0
+local cmd_tap_armed = false
 
 -- Application hotkeys
 local applications = {
@@ -246,6 +249,164 @@ local arrange_3_monitors = function()
   positionApp('WezTerm', screens[1])
   moveApp 'maximize'
 end
+
+--- Return a centered floating frame for a utility-style WezTerm window
+--- @param screen hs.screen
+--- @return table
+local wezterm_float_frame = function(screen)
+  local frame = screen:frame()
+  local width = math.floor(frame.w * 0.5)
+  local height = math.floor(frame.h * 0.5)
+
+  return {
+    x = frame.x + math.floor((frame.w - width) / 2),
+    y = frame.y + math.floor((frame.h - height) / 2),
+    w = width,
+    h = height,
+  }
+end
+
+--- Return the tracked dedicated WezTerm float window, if it still exists
+--- @return hs.window|nil
+local get_wezterm_float_window = function()
+  if wezterm_float_win_id then
+    local tracked = hs.window.get(wezterm_float_win_id)
+    if tracked then return tracked end
+  end
+
+  local app = hs.application.get 'WezTerm'
+  if not app then return nil end
+
+  for _, win in ipairs(app:allWindows()) do
+    if win:title():match 'float' then
+      wezterm_float_win_id = win:id()
+      return win
+    end
+  end
+
+  return nil
+end
+
+--- Move/focus a window as the dedicated WezTerm float on a target screen
+--- @param win hs.window
+--- @param screen hs.screen
+--- @return nil
+local focus_wezterm_float = function(win, screen)
+  if not win then return end
+
+  local app = win:application()
+  if app then
+    app:activate()
+    app:unhide()
+  end
+
+  win:moveToScreen(screen)
+  win:setFrame(wezterm_float_frame(screen))
+  win:raise()
+  win:focus()
+  wezterm_float_win_id = win:id()
+end
+
+--- Launch a new dedicated WezTerm float window and capture its window id
+--- @param screen hs.screen
+--- @return nil
+local spawn_wezterm_float = function(screen)
+  local app = hs.application.get 'WezTerm'
+  local existing = {}
+
+  if app then
+    for _, win in ipairs(app:allWindows()) do
+      existing[win:id()] = true
+    end
+  end
+
+  local initialize = function(win)
+    focus_wezterm_float(win, screen)
+    hs.timer.doAfter(0.2, function()
+      if win and win:id() == wezterm_float_win_id then
+        hs.eventtap.keyStrokes('work float\n')
+      end
+    end)
+  end
+
+  if app then
+    app:activate()
+    app:unhide()
+    hs.eventtap.keyStroke({ 'cmd' }, 'n', 0, app)
+  else
+    hs.application.launchOrFocus 'WezTerm'
+  end
+
+  local capture
+  capture = function()
+    local wezterm = hs.application.get 'WezTerm'
+    if not wezterm then return false end
+
+    for _, win in ipairs(wezterm:allWindows()) do
+      if not existing[win:id()] then
+        initialize(win)
+        return true
+      end
+    end
+
+    return false
+  end
+
+  hs.timer.doAfter(0.2, function()
+    if not capture() then
+      hs.timer.doAfter(0.6, function() capture() end)
+    end
+  end)
+end
+
+--- Toggle WezTerm as a floating utility window on the screen under the mouse
+--- @return nil
+local toggle_wezterm_float = function()
+  local screen = hs.mouse.getCurrentScreen() or hs.screen.mainScreen()
+  local win = get_wezterm_float_window()
+
+  if win and not win:isMinimized() then
+    win:minimize()
+    return
+  end
+
+  if win then
+    win:unminimize()
+    focus_wezterm_float(win, screen)
+    return
+  end
+
+  spawn_wezterm_float(screen)
+end
+
+-- Double-tap command to toggle the dedicated WezTerm float window
+hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(event)
+  local flags = event:getFlags()
+  local keycode = event:getKeyCode()
+
+  if keycode ~= 54 and keycode ~= 55 then return false end
+
+  local only_cmd = flags.cmd and not (flags.alt or flags.ctrl or flags.fn or flags.shift)
+
+  if only_cmd then
+    cmd_tap_armed = true
+  elseif flags.cmd then
+    cmd_tap_armed = false
+  elseif cmd_tap_armed then
+    local now = hs.timer.secondsSinceEpoch()
+    cmd_tap_armed = false
+
+    if now - last_cmd_tap <= 0.35 then
+      last_cmd_tap = 0
+      toggle_wezterm_float()
+      return false
+    end
+
+    last_cmd_tap = now
+  end
+
+  return false
+end):start()
 
 -- All other hotkeys
 local remaps = {
