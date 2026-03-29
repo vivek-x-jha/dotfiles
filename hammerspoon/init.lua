@@ -41,6 +41,26 @@ hs.console.titleVisibility 'hidden'
 hs.console.toolbar(nil)
 hs.console.windowBackgroundColor { hex = thm.dark }
 
+---@class WindowRect
+---@field x number
+---@field y number
+---@field w number
+---@field h number
+
+---@alias ScreenLike table
+---@alias WindowLike table
+---@alias AppPos '"next"'|'"previous"'|'"maximize"'|WindowRect
+
+---@class AppHotkeyRow
+---@field key string
+---@field app string
+
+---@class Remap
+---@field mods string[]
+---@field key string
+---@field message string
+---@field pressedfn fun()
+
 --- Toggle an app by name:
 ---  * If the app is frontmost -> hide it
 ---  * If not running -> launch/focus it
@@ -76,6 +96,7 @@ local last_cmd_tap = 0
 local cmd_tap_armed = false
 
 -- Application hotkeys
+---@type table<string, string>
 local applications = {
   a = 'Anki',
   b = 'Arc',
@@ -106,6 +127,7 @@ local applications = {
 --- Show app hotkey reference from the applications table
 --- @return nil
 local show_app_hotkeys = function()
+  ---@type AppHotkeyRow[]
   local rows = {}
 
   for key, app in pairs(applications) do
@@ -149,7 +171,7 @@ end
 ---  * 'previous' -> move to previous screen
 ---  * 'maximize' -> maximize window on current screen
 ---  * Provide a unit-rect table to place the window via hs.geometry.rect
---- @param app_pos '"next"'|'"previous"'|'"maximize"'|{ x:number, y:number, w:number, h:number }
+--- @param app_pos AppPos
 --- @return nil
 local moveApp = function(app_pos)
   local win = hs.window.focusedWindow()
@@ -192,7 +214,7 @@ end
 --- Activate an app, move its main window to a given screen, focus it,
 --- and set it to an "almost maximized" frame with a margin.
 --- @param appName string     # application display name
---- @param screen any         # target screen (e.g., hs.screen.mainScreen())
+--- @param screen ScreenLike  # target screen (e.g., hs.screen.mainScreen())
 --- @return nil
 local positionApp = function(appName, screen)
   local app = hs.application.get(appName)
@@ -251,7 +273,7 @@ local arrange_3_monitors = function()
 end
 
 --- Return a centered floating frame for a utility-style WezTerm window
---- @param screen hs.screen
+--- @param screen ScreenLike
 --- @return table
 local wezterm_float_frame = function(screen)
   local frame = screen:frame()
@@ -267,7 +289,7 @@ local wezterm_float_frame = function(screen)
 end
 
 --- Return the tracked dedicated WezTerm float window, if it still exists
---- @return hs.window|nil
+--- @return WindowLike|nil
 local get_wezterm_float_window = function()
   if wezterm_float_win_id then
     local tracked = hs.window.get(wezterm_float_win_id)
@@ -278,7 +300,8 @@ local get_wezterm_float_window = function()
   if not app then return nil end
 
   for _, win in ipairs(app:allWindows()) do
-    if win:title():match 'float' then
+    local title = win:title() or ''
+    if title:match 'float' then
       wezterm_float_win_id = win:id()
       return win
     end
@@ -288,8 +311,8 @@ local get_wezterm_float_window = function()
 end
 
 --- Move/focus a window as the dedicated WezTerm float on a target screen
---- @param win hs.window
---- @param screen hs.screen
+--- @param win WindowLike
+--- @param screen ScreenLike
 --- @return nil
 local focus_wezterm_float = function(win, screen)
   if not win then return end
@@ -308,10 +331,11 @@ local focus_wezterm_float = function(win, screen)
 end
 
 --- Launch a new dedicated WezTerm float window and capture its window id
---- @param screen hs.screen
+--- @param screen ScreenLike
 --- @return nil
 local spawn_wezterm_float = function(screen)
   local app = hs.application.get 'WezTerm'
+  ---@type table<number, boolean>
   local existing = {}
 
   if app then
@@ -337,6 +361,7 @@ local spawn_wezterm_float = function(screen)
     hs.application.launchOrFocus 'WezTerm'
   end
 
+  ---@type fun(): boolean
   local capture
   capture = function()
     local wezterm = hs.application.get 'WezTerm'
@@ -409,6 +434,7 @@ hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(event)
 end):start()
 
 -- All other hotkeys
+---@type Remap[]
 local remaps = {
   -- Workspaces
   { mods = ctrl_alt_cmd, key = '1', message = 'Set Single Monitor Workspace', pressedfn = arrange_monitor },
