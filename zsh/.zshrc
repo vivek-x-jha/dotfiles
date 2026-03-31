@@ -59,8 +59,9 @@ for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 # Aliases
 source "$ZDOTDIR/aliases"
 
-# Color ls, tree, eza
-eval "$($(command -v dircolors || command -v gdircolors) "$XDG_CONFIG_HOME/eza/.dircolors")"
+# Color ls + eza
+dircolors_bin="$(command -v dircolors || command -v gdircolors)"
+eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
 source <(fzf --zsh)
