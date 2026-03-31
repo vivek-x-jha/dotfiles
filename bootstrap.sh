@@ -45,7 +45,7 @@ DEVELOPER_REPOS=(
   vivek-x-jha/dcp
   vivek-x-jha/notes
   vivek-x-jha/nvim-dashboard
-  vivek-x-jha/neovim-macos-launcher
+  vivek-x-jha/nvim-launcher
   vivek-x-jha/nvim-sourdiesel
   vivek-x-jha/nvim-statusline
   vivek-x-jha/nvim-terminal
