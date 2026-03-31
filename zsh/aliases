@@ -92,7 +92,6 @@ command -v git &>/dev/null && {
 # https://developer.1password.com/docs/cli/shell-plugins
 command -v op &>/dev/null && {
   command -v gh &>/dev/null && alias gh="op plugin run -- gh"
-  # command -v mysql &>/dev/null && alias mysql="op plugin run -- mysql"
 
   op_mysql_pwd() {
     local user="$1"
@@ -103,12 +102,12 @@ command -v op &>/dev/null && {
 
   # MySQL launcher
   command -v mycli &>/dev/null && {
-    alias mycli-dev='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u mubuntu -p"$(op_mysql_pwd mubuntu)"'
+    alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u "$USER" -p"$(op_mysql_pwd "$USER")"'
     alias mycli-root='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u root -p"$(op_mysql_pwd root)"'
   }
 
   command -v mysql &>/dev/null && {
-    alias mysql-dev='mysql -u mubuntu -p"$(op_mysql_pwd mubuntu)"'
+    alias mysql='mysql -u "$USER" -p"$(op_mysql_pwd "$USER")"'
     alias mysql-root='mysql -u root -p"$(op_mysql_pwd root)"'
   }
 }
