@@ -562,7 +562,7 @@ EOF
 
 # Link dotfiles into their XDG targets and optional media directory.
 create_symlinks() {
-  local vscode_src='../../../.dotfiles/vscode/settings.json'
+  local vscode_src='../../../.dotfiles/editors/vscode/settings.json'
 
   local dirs=(
     "$XDG_CACHE_HOME"
@@ -589,7 +589,7 @@ create_symlinks() {
     ../.dotfiles/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/mycli "$XDG_CONFIG_HOME" mycli
-    ../.dotfiles/nvim "$XDG_CONFIG_HOME" nvim
+    ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
     ../.dotfiles/ssh "$XDG_CONFIG_HOME" ssh
     ../.dotfiles/tmux "$XDG_CONFIG_HOME" tmux
