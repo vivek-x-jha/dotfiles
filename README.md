@@ -59,12 +59,11 @@ Open a new terminal window after setup completes.
 
 - [`shells`](./shells): shell configuration for Bash, Zsh, ble.sh, and Starship
 - [`fzf`](./fzf): shared fzf and zoxide preview configuration
-- [`nvim`](./nvim): Neovim configuration
+- [`editors`](./editors): editor configuration for Neovim and VS Code
 - [`terminals`](./terminals): terminal emulator configuration, including WezTerm and Terminal profiles
 - [`tmux`](./tmux): tmux configuration
 - [`git`](./git): Git configuration
 - [`ssh`](./ssh): SSH configuration
-- [`vscode`](./vscode): tracked VS Code settings and theme files
 - [`manifests`](./manifests): package manifests such as Brewfile and Linux package lists
 
 ## 🔧 Tooling
@@ -89,7 +88,7 @@ Open a new terminal window after setup completes.
 
 ## 🧩 VS Code
 
-This repository tracks VS Code settings in [`vscode/settings.json`](./vscode/settings.json).
+This repository tracks VS Code settings in [`editors/vscode/settings.json`](./editors/vscode/settings.json).
 
 Bootstrap configures:
 

@@ -113,6 +113,9 @@ This prevents manual rebuilds after `vim.pack.update()`.
 
 ## Important Paths and Manifests
 
+- Editor config roots:
+  - `editors/nvim`
+  - `editors/vscode`
 - Homebrew bundle file: `manifests/Brewfile`
 - Shared shell entrypoint: `shells/env`
 - Shared fzf config: `fzf/fzf.sh`

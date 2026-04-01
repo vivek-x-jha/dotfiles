@@ -70,7 +70,7 @@ ln -sf ~/.dotfiles/gh gh
 ln -sf ~/.dotfiles/git git
 ln -sf ~/.dotfiles/glow glow
 ln -sf ~/.dotfiles/mycli mycli
-ln -sf ~/.dotfiles/nvim nvim
+ln -sf ~/.dotfiles/editors/nvim nvim
 ln -sf ~/.dotfiles/ripgrep ripgrep
 ln -sf ~/.dotfiles/ssh ssh
 ln -sf ~/.dotfiles/tmux tmux
