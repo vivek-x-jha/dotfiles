@@ -23,9 +23,6 @@ export ZAP_GIT_PREFIX='git@github.com:'
 # Zsh/Bash: https://superuser.com/q/1610587/930403
 export SHELL_SESSIONS_DISABLE=1
 
-# Starship: https://starship.rs/config/
-export STARSHIP_CONFIG="$SHELL_CONFIG/starship.toml"
-
 # Editor: https://wiki.archlinux.org/title/Environment_variables#Default_programs
 export EDITOR=nvim
 export VISUAL="$EDITOR"
