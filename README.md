@@ -57,11 +57,11 @@ Open a new terminal window after setup completes.
 
 ## 📁 Repository Layout
 
-- [`bash`](./bash): Bash configuration
-- [`zsh`](./zsh): Zsh configuration, aliases, functions, theme exports
+- [`shells`](./shells): shell configuration for Bash, Zsh, ble.sh, and Starship
+- [`fzf`](./fzf): shared fzf and zoxide preview configuration
 - [`nvim`](./nvim): Neovim configuration
+- [`terminals`](./terminals): terminal emulator configuration, including WezTerm and Terminal profiles
 - [`tmux`](./tmux): tmux configuration
-- [`wezterm`](./wezterm): WezTerm configuration
 - [`git`](./git): Git configuration
 - [`ssh`](./ssh): SSH configuration
 - [`vscode`](./vscode): tracked VS Code settings and theme files

@@ -2,10 +2,10 @@
 # shellcheck disable=SC1091
 
 # Environment
-source "$HOME/.zshenv"
+source "$HOME/.dotfiles/shells/env"
 
 # Plugin Manager
-[[ $- == *i* ]] && source "$XDG_DATA_HOME/blesh/ble.sh" --noattach
+[[ $- == *i* ]] && source "$XDG_DATA_HOME/blesh/ble.sh" --noattach --rcfile "$SHELL_CONFIG/bash/.blerc"
 
 # History
 export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"
@@ -36,14 +36,14 @@ while IFS= read -r -d '' path; do
 done < <(find "$ZDOTDIR/funcs" -type f -maxdepth 1 -print0)
 
 # Aliases
-source "$ZDOTDIR/aliases"
+source "$SHELL_CONFIG/aliases"
 
 # Color ls + eza
 dircolors_bin="$(command -v dircolors || command -v gdircolors)"
 eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
-eval "$(fzf --bash)"
+eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 
 # Command history
 eval "$(atuin init bash)" && {

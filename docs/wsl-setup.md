@@ -60,12 +60,12 @@ mkdir -p ~/.local/share/zsh
 ```bash
 cd ~/.config
 ln -sf ~/.dotfiles/atuin atuin
-ln -sf ~/.dotfiles/bash bash
+ln -sf ~/.dotfiles/shells shells
 ln -sf ~/.dotfiles/bat bat
-ln -sf ~/.dotfiles/blesh blesh
 ln -sf ~/.dotfiles/btop btop
 ln -sf ~/.dotfiles/dust dust
 ln -sf ~/.dotfiles/eza eza
+ln -sf ~/.dotfiles/fzf fzf
 ln -sf ~/.dotfiles/gh gh
 ln -sf ~/.dotfiles/git git
 ln -sf ~/.dotfiles/glow glow
@@ -74,9 +74,7 @@ ln -sf ~/.dotfiles/nvim nvim
 ln -sf ~/.dotfiles/ripgrep ripgrep
 ln -sf ~/.dotfiles/ssh ssh
 ln -sf ~/.dotfiles/tmux tmux
-ln -sf ~/.dotfiles/wezterm wezterm
-ln -sf ~/.dotfiles/zsh zsh
-ln -sf ~/.dotfiles/starship/starship.toml starship.toml
+ln -sf ~/.dotfiles/terminals/wezterm wezterm
 ```
 
 On WSL, remove the mac-only agent lines from `~/.config/ssh/config`:
@@ -91,10 +89,10 @@ sed -i '/UseKeychain/d;/IdentityAgent/d' ~/.config/ssh/config
    ```bash
    win_usr=$(cmd.exe /c "echo %USERNAME%" | tr -d '\r')
    wezterm_path="/mnt/c/Users/$win_usr/.config/wezterm"
-   mkdir -p "$wezterm_path" && cd "$wezterm_path/wezterm.lua"
-   ln -sf ~/.dotfiles/wezterm/wezterm.lua
+   mkdir -p "$wezterm_path" && cd "$wezterm_path"
+   ln -sf ~/.dotfiles/terminals/wezterm/wezterm.lua
    ```
-   (Or create the same symlink from PowerShell using a Developer Mode symlink to `\\wsl$\\Ubuntu\\home\\aflex\\.dotfiles\\wezterm\\wezterm.lua`.)
+   (Or create the same symlink from PowerShell using a Developer Mode symlink to `\\wsl$\\Ubuntu\\home\\aflex\\.dotfiles\\terminals\\wezterm\\wezterm.lua`.)
 
 ## 8. Install Zap (Zsh plugin manager)
 1. Run the Zap installer:
@@ -153,7 +151,7 @@ ssh -T git@github.com
 Type “yes” if asked to trust the host. You should see “Hi andrewlabno!” confirming that SSH auth works.
 
 ## 15. Restart Zsh to Load Zap Plugins
-After SSH and Zap are configured, start a fresh zsh shell so Zap can pull the plugins defined in `~/.config/zsh/.zshrc`:
+After SSH and Zap are configured, start a fresh zsh shell so Zap can pull the plugins defined in `~/.config/shells/zsh/.zshrc`:
 ```bash
 exec zsh -l
 ```
