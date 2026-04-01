@@ -57,7 +57,8 @@ Main flow in `bootstrap.sh`:
 
 Symlinks are created from this repo into XDG paths, including:
 
-- `~/.config/{zsh,nvim,tmux,wezterm,git,ssh,...}`
+- `~/.config/{shells,nvim,tmux,wezterm,git,ssh,...}`
+- `~/.config/fzf/fzf.sh`
 - `~/.local/state/{zsh,bash,codex,python,mysql,mycli,...}`
 - `~/.local/share/{vscode,zsh,...}`
 
@@ -113,6 +114,9 @@ This prevents manual rebuilds after `vim.pack.update()`.
 ## Important Paths and Manifests
 
 - Homebrew bundle file: `manifests/Brewfile`
+- Shared shell entrypoint: `shells/env`
+- Shared fzf config: `fzf/fzf.sh`
+- WezTerm config: `terminals/wezterm/wezterm.lua`
 - Linux package manifests:
   - `manifests/apt-packages.txt`
   - `manifests/dnf-packages.txt`
