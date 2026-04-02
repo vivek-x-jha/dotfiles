@@ -71,6 +71,7 @@ ln -sf ~/.dotfiles/auth/git git
 ln -sf ~/.dotfiles/cli/glow glow
 ln -sf ~/.dotfiles/cli/mycli mycli
 ln -sf ~/.dotfiles/editors/nvim nvim
+ln -sf ~/.dotfiles/editors/vscode vscode
 ln -sf ~/.dotfiles/cli/ripgrep ripgrep
 ln -sf ~/.dotfiles/auth/ssh ssh
 ln -sf ~/.dotfiles/terminals/tmux tmux

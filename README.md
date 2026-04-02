@@ -91,6 +91,7 @@ This repository tracks VS Code settings in [`editors/vscode/settings.json`](./ed
 
 Bootstrap configures:
 
+- `~/.config/vscode -> ~/.dotfiles/editors/vscode`
 - macOS settings symlink at `~/Library/Application Support/Code/User/settings.json`
 - Linux settings symlink at `$XDG_CONFIG_HOME/Code/User/settings.json`
 - extension and CLI data under `~/.vscode -> $XDG_DATA_HOME/vscode`
