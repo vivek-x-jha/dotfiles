@@ -590,6 +590,7 @@ create_symlinks() {
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
+    ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
     ../.dotfiles/auth/ssh "$XDG_CONFIG_HOME" ssh
     ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux

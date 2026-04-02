@@ -58,6 +58,7 @@ Main flow in `bootstrap.sh`:
 Symlinks are created from this repo into XDG paths, including:
 
 - `~/.config/{shells,nvim,tmux,wezterm,git,ssh,...}`
+- `~/.config/vscode`
 - `~/.config/fzf/fzf.sh`
 - `~/.config/webapps`
 - `~/.local/state/{zsh,bash,codex,python,mysql,mycli,...}`
@@ -149,6 +150,8 @@ This prevents manual rebuilds after `vim.pack.update()`.
 - VS Code settings symlink target:
   - macOS: `~/Library/Application Support/Code/User/settings.json`
   - Linux: `$XDG_CONFIG_HOME/Code/User/settings.json`
+- VS Code config root:
+  - `~/.config/vscode -> ~/.dotfiles/editors/vscode`
 - VS Code extension/CLI data directory:
   - `~/.vscode -> $XDG_DATA_HOME/vscode`
 
