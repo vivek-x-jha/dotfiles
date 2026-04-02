@@ -59,21 +59,21 @@ mkdir -p ~/.local/share/zsh
 - Remember a symlink is like a pointer where the first argument is "source" file/folder and second argument is the "target" name. most of these programs automatically look for their configuration in ~/.config so this is a way to "pretend" its there while managing it in our custom central location ~/.dotfiles
 ```bash
 cd ~/.config
-ln -sf ~/.dotfiles/atuin atuin
+ln -sf ~/.dotfiles/cli/atuin atuin
 ln -sf ~/.dotfiles/shells shells
-ln -sf ~/.dotfiles/bat bat
-ln -sf ~/.dotfiles/btop btop
-ln -sf ~/.dotfiles/dust dust
-ln -sf ~/.dotfiles/eza eza
-ln -sf ~/.dotfiles/fzf fzf
-ln -sf ~/.dotfiles/gh gh
-ln -sf ~/.dotfiles/git git
-ln -sf ~/.dotfiles/glow glow
-ln -sf ~/.dotfiles/mycli mycli
+ln -sf ~/.dotfiles/cli/bat bat
+ln -sf ~/.dotfiles/cli/btop btop
+ln -sf ~/.dotfiles/cli/dust dust
+ln -sf ~/.dotfiles/cli/eza eza
+ln -sf ~/.dotfiles/cli/fzf fzf
+ln -sf ~/.dotfiles/cli/gh gh
+ln -sf ~/.dotfiles/auth/git git
+ln -sf ~/.dotfiles/cli/glow glow
+ln -sf ~/.dotfiles/cli/mycli mycli
 ln -sf ~/.dotfiles/editors/nvim nvim
-ln -sf ~/.dotfiles/ripgrep ripgrep
-ln -sf ~/.dotfiles/ssh ssh
-ln -sf ~/.dotfiles/tmux tmux
+ln -sf ~/.dotfiles/cli/ripgrep ripgrep
+ln -sf ~/.dotfiles/auth/ssh ssh
+ln -sf ~/.dotfiles/terminals/tmux tmux
 ln -sf ~/.dotfiles/terminals/wezterm wezterm
 ```
 

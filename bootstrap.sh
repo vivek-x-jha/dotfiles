@@ -578,24 +578,24 @@ create_symlinks() {
   )
 
   local symlinks=(
-    ../.dotfiles/atuin "$XDG_CONFIG_HOME" atuin
-    ../.dotfiles/bat "$XDG_CONFIG_HOME" bat
-    ../.dotfiles/browser "$XDG_CONFIG_HOME" browser
-    ../.dotfiles/btop "$XDG_CONFIG_HOME" btop
-    ../.dotfiles/dust "$XDG_CONFIG_HOME" dust
-    ../.dotfiles/eza "$XDG_CONFIG_HOME" eza
-    ../.dotfiles/fzf "$XDG_CONFIG_HOME" fzf
-    ../.dotfiles/gh "$XDG_CONFIG_HOME" gh
-    ../.dotfiles/git "$XDG_CONFIG_HOME" git
-    ../.dotfiles/glow "$XDG_CONFIG_HOME" glow
-    ../.dotfiles/mycli "$XDG_CONFIG_HOME" mycli
+    ../.dotfiles/cli/atuin "$XDG_CONFIG_HOME" atuin
+    ../.dotfiles/cli/bat "$XDG_CONFIG_HOME" bat
+    ../.dotfiles/apps/webapps "$XDG_CONFIG_HOME" webapps
+    ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
+    ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
+    ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
+    ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
+    ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
+    ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
+    ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
+    ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
-    ../.dotfiles/ssh "$XDG_CONFIG_HOME" ssh
-    ../.dotfiles/tmux "$XDG_CONFIG_HOME" tmux
+    ../.dotfiles/auth/ssh "$XDG_CONFIG_HOME" ssh
+    ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux
     ../.dotfiles/terminals/wezterm "$XDG_CONFIG_HOME" wezterm
     shells/starship.toml "$XDG_CONFIG_HOME" starship.toml
-    ../../../.dotfiles/btop/btop.log "$XDG_STATE_HOME/btop" btop.log
+    ../../../.dotfiles/cli/btop/btop.log "$XDG_STATE_HOME/btop" btop.log
     .local/share/vscode "$HOME" .vscode
     .config/shells/bash/.bash_profile "$HOME" .bash_profile
     .config/shells/bash/.bashrc "$HOME" .bashrc
@@ -610,9 +610,9 @@ create_symlinks() {
     local app_data="$HOME/Library/Application Support"
 
     symlinks+=(
-      ../.dotfiles/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
-      ../.dotfiles/karabiner "$XDG_CONFIG_HOME" karabiner
-      ../../.dotfiles/eza "$app_data" eza
+      ../.dotfiles/apps/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
+      ../.dotfiles/apps/karabiner "$XDG_CONFIG_HOME" karabiner
+      ../../.dotfiles/cli/eza "$app_data" eza
     )
 
     vscode_src="../$vscode_src"
@@ -623,7 +623,7 @@ create_symlinks() {
   symlinks+=("$vscode_src" "$vscode_target" settings.json)
 
   # Link 1Password ssh config
-  ((USE_1PASSWORD)) && symlinks+=(../.dotfiles/1Password "$XDG_CONFIG_HOME" 1Password)
+  ((USE_1PASSWORD)) && symlinks+=(../.dotfiles/auth/1Password "$XDG_CONFIG_HOME" 1Password)
 
   # Link MEDIA directory (i.e. Dropbox/)
   [[ -z $MEDIA ]] && logg -w 'Media path not set. Skipping media symlinks...'
@@ -757,10 +757,10 @@ configure_git_and_github() {
   fi
 
   if ((DRY_RUN)); then
-    logg -i "[dry-run] rm -f $HOME/.dotfiles/gh/hosts.yml"
+    logg -i "[dry-run] rm -f $HOME/.dotfiles/cli/gh/hosts.yml"
     logg -i '[dry-run] git add --all'
   else
-    rm -f "$HOME/.dotfiles/gh/hosts.yml"
+    rm -f "$HOME/.dotfiles/cli/gh/hosts.yml"
     git -C "$HOME/.dotfiles" add --all || true
   fi
 }
