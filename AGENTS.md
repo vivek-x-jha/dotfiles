@@ -59,6 +59,7 @@ Symlinks are created from this repo into XDG paths, including:
 
 - `~/.config/{shells,nvim,tmux,wezterm,git,ssh,...}`
 - `~/.config/fzf/fzf.sh`
+- `~/.config/webapps`
 - `~/.local/state/{zsh,bash,codex,python,mysql,mycli,...}`
 - `~/.local/share/{vscode,zsh,...}`
 
@@ -104,7 +105,7 @@ Implementation: `install_rust_tooling`, `setup_ide`.
 
 Autocommands include a `PackChanged` hook that rebuilds `blink.cmp` rust fuzzy lib on install/update:
 
-- File: `nvim/lua/autocmds.lua`
+- File: `editors/nvim/lua/autocmds.lua`
 - Event: `PackChanged`
 - Trigger: plugin `blink.cmp`, kind `install` or `update`
 - Action: `cargo build --release` in plugin directory
@@ -118,7 +119,26 @@ This prevents manual rebuilds after `vim.pack.update()`.
   - `editors/vscode`
 - Homebrew bundle file: `manifests/Brewfile`
 - Shared shell entrypoint: `shells/env`
-- Shared fzf config: `fzf/fzf.sh`
+- Shared fzf config: `cli/fzf/fzf.sh`
+- Auth config roots:
+  - `auth/git`
+  - `auth/ssh`
+  - `auth/1Password`
+- CLI config roots:
+  - `cli/atuin`
+  - `cli/bat`
+  - `cli/btop`
+  - `cli/dust`
+  - `cli/eza`
+  - `cli/fzf`
+  - `cli/gh`
+  - `cli/glow`
+  - `cli/mycli`
+  - `cli/ripgrep`
+- App config roots:
+  - `apps/hammerspoon`
+  - `apps/karabiner`
+  - `apps/webapps`
 - WezTerm config: `terminals/wezterm/wezterm.lua`
 - Linux package manifests:
   - `manifests/apt-packages.txt`

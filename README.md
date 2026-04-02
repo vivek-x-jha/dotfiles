@@ -9,7 +9,7 @@ This repository manages:
 - shell configuration for Zsh and Bash
 - terminal and multiplexer setup (`wezterm`, `tmux`)
 - editor configuration (`nvim`, VS Code settings)
-- Git, SSH, and CLI tooling
+- authentication, app automation, and CLI tooling
 - bootstrap automation for packages, symlinks, editor tooling, and OS defaults
 
 The primary entry point is [`bootstrap.sh`](./bootstrap.sh).
@@ -58,12 +58,11 @@ Open a new terminal window after setup completes.
 ## 📁 Repository Layout
 
 - [`shells`](./shells): shell configuration for Bash, Zsh, ble.sh, and Starship
-- [`fzf`](./fzf): shared fzf and zoxide preview configuration
+- [`cli`](./cli): XDG CLI tool configuration such as Atuin, bat, btop, eza, fzf, gh, glow, mycli, and ripgrep
 - [`editors`](./editors): editor configuration for Neovim and VS Code
-- [`terminals`](./terminals): terminal emulator configuration, including WezTerm and Terminal profiles
-- [`tmux`](./tmux): tmux configuration
-- [`git`](./git): Git configuration
-- [`ssh`](./ssh): SSH configuration
+- [`terminals`](./terminals): terminal and multiplexer configuration, including WezTerm, Terminal profiles, and tmux
+- [`auth`](./auth): Git, SSH, and 1Password configuration
+- [`apps`](./apps): GUI automation and web app extension configuration
 - [`manifests`](./manifests): package manifests such as Brewfile and Linux package lists
 
 ## 🔧 Tooling
