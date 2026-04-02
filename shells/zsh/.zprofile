@@ -20,6 +20,8 @@ PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
 
 export PATH
 
-# Load secrets (ignore if missing)
-# shellcheck disable=SC1091
-source "$HOME/.dotfiles/.env" 2>/dev/null
+# Load secrets from a regular file only; special files such as FIFOs can block shell startup.
+if [[ -f "$HOME/.dotfiles/.env" ]]; then
+  # shellcheck disable=SC1091
+  source "$HOME/.dotfiles/.env" 2>/dev/null
+fi
