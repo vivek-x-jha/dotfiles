@@ -12,7 +12,7 @@ local top_right_label='ai'
 local bottom_right_label='test'
 
 local left_cmd='nvim'
-local top_right_cmd='codex'
+local top_right_cmd='codex resume --last'
 local bottom_right_cmd='clear;'
 
 local root=''
@@ -36,7 +36,7 @@ Layout customization:
 
 Command customization:
   --left-cmd CMD                 Command for left pane (default: nvim)
-  --top-right-cmd CMD            Command for top-right pane (default: codex)
+  --top-right-cmd CMD            Command for top-right pane (default: 'codex resume --last')
   --bottom-right-cmd CMD         Command for bottom-right pane (default: 'clear;')
 
 Examples:
@@ -74,6 +74,13 @@ while [[ $# -gt 0 ]]; do
       if TMUX='' tmux new-session -ds "$reload_session" -c "$HOME"; then
         if [[ -x "$restore_script" ]]; then
           tmux run-shell "$restore_script"
+
+          local test_pane
+          while IFS= read -r test_pane; do
+            [[ -n "$test_pane" ]] || continue
+            tmux send-keys -t "$test_pane" -l -- 'clear'
+            tmux send-keys -t "$test_pane" C-m
+          done < <(tmux list-panes -a -F '#{pane_id} #{pane_title}' | awk '$2=="test"{print $1}')
 
           local resurrect_dir
           resurrect_dir="$(tmux show-option -gqv '@resurrect-dir')"
