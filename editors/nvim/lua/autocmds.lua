@@ -153,7 +153,7 @@ autocmd('FileType', {
   end,
 })
 
--- [11/15] Git config niceties
+-- [11/16] Git config niceties
 autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat git/config as gitconfig filetype',
   group = augroup('GitConfigFt', {}),
@@ -161,7 +161,15 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function() vim.bo.filetype = 'gitconfig' end,
 })
 
--- [12/15] btop theme highlighting (treat as ini)
+-- [12/16] SSH config highlighting
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  desc = 'Treat ssh/config as sshconfig filetype',
+  group = augroup('SshConfigFt', {}),
+  pattern = '*/ssh/config',
+  callback = function() vim.bo.filetype = 'sshconfig' end,
+})
+
+-- [13/16] btop theme highlighting (treat as ini)
 autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat btop *.theme as dosini',
   group = augroup('BtopThemeFt', {}),
@@ -169,7 +177,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function() vim.bo.filetype = 'conf' end,
 })
 
--- [13/15] Shared shell env highlighting (treat as zsh)
+-- [14/16] Shared shell env highlighting (treat as zsh)
 autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat shells/env as zsh filetype',
   group = augroup('ShellEnvFt', {}),
@@ -177,7 +185,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function() vim.bo.filetype = 'zsh' end,
 })
 
--- [14/15] Auto-open nvim-tree on startup
+-- [15/16] Auto-open nvim-tree on startup
 autocmd('VimEnter', {
   desc = 'Open nvim-tree when Neovim starts',
   group = augroup('TreeAutoOpen', {}),
@@ -194,7 +202,7 @@ autocmd('VimEnter', {
   end,
 })
 
--- [15/15] Rebuild blink.cmp Rust fuzzy library after install/update
+-- [16/16] Rebuild blink.cmp Rust fuzzy library after install/update
 autocmd('PackChanged', {
   desc = 'Build blink.cmp fuzzy matcher with cargo after plugin updates',
   group = augroup('BlinkBuildAU', {}),
