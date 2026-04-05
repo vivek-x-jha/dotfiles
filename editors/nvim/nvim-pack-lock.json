@@ -13,11 +13,11 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "abacb0693d7a37de9e85e6fcb2d22d848cb75cef",
+      "rev": "9f0432fdd7825ab163520045831a40b6df82ea28",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "4ed47e8c4c66c921dc1d6643977e0526e1f44396",
+      "rev": "07ff073b84d3ef48f286529c36658a65d1a64707",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "indent-blankline.nvim": {
@@ -61,7 +61,7 @@
       "src": "https://github.com/vivek-x-jha/nvim-statusline"
     },
     "nvim-surround": {
-      "rev": "19e39478ccf5fa2eefdb3595af2f2927d0ff2416",
+      "rev": "9291040de8cd8a4439eb64c441e8d5d2bf884a5a",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-terminal": {
