@@ -56,7 +56,7 @@ logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
 
 notify -s 'UPDATE RUST TOOLS'
 local reply=''
-[[ -t 0 ]] && read -r "?Update cargo-installed Rust tools? [y/N] " reply
+[[ -t 0 ]] && read -r "?Update cargo-installed Rust tools [y/N]? " reply
 case "${reply:l}" in
   y|yes) logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED' ;;
   *) logg -w 'SKIPPING RUST TOOLS UPDATE' ;;
