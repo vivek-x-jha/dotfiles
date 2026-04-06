@@ -8,7 +8,7 @@ command -v tmux &>/dev/null || {
 
 local window_label='main'
 local left_label='edit'
-local top_right_label='ai'
+local top_right_label=''
 local bottom_right_label='test'
 
 local left_cmd='nvim'
@@ -189,6 +189,8 @@ case "$session" in
 nvim | wezterm) root="$HOME/.dotfiles" ;;
 *) root="$HOME/developer/$session" && should_prompt_description=1 ;;
 esac
+
+[[ -z "$top_right_label" ]] && top_right_label="${root:t}"
 
 # Helper func: respects whether current shell is already inside tmux
 swatt() {
