@@ -120,6 +120,7 @@ local applications = {
   v = 'VLC',
   w = 'WezTerm',
   x = 'System Settings',
+  y = 'iTerm2',
   z = 'WeChat',
   ['/'] = 'Hotkeys',
 }
