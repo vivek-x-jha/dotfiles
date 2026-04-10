@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+commit-and-sync() {
+  local repo="${1:-.}"
+
+  command -v git >/dev/null 2>&1 || {
+    printf "%b[ERROR] git not found on PATH%b\n" "$RED" "$RESET" >&2
+    return 1
+  }
+
+  command -v cz >/dev/null 2>&1 || {
+    printf "%b[ERROR] commitizen (cz) not found on PATH%b\n" "$RED" "$RESET" >&2
+    return 1
+  }
+
+  [[ -d $repo ]] || {
+    printf "%b[ERROR] repo path not found: %s%b\n" "$RED" "$repo" "$RESET" >&2
+    return 1
+  }
+
+  (
+    cd "$repo" || exit 1
+    git add --all &&
+      cz commit &&
+      git push &&
+      update-feature-branches
+  )
+}

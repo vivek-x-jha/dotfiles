@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+update-icons() {
+  command -v fileicon >/dev/null 2>&1 || {
+    printf "%b%s %s%b%s%b\n" "$BRIGHTRED" "✘" "'fileicon' dependency not found" "$BRIGHTYELLOW" " - please install or check in \$PATH." "$RESET"
+    return 1
+  }
+
+  local icon_dir="${1:-$HOME/Pictures/icons}"
+  [[ -d $icon_dir ]] || {
+    printf "%b%s %s%b%s%b\n" "$BRIGHTRED" "✘" "Icon directory not found" "$BRIGHTYELLOW" " - ${icon_dir/#$HOME/~}" "$RESET"
+    return 1
+  }
+
+  local table_width=60
+  local dir_icons=(
+    "/Applications/1Password.app" "$icon_dir/1password.png"
+    "/Applications/Anki.app" "$icon_dir/anki.png"
+    "/Applications/ChatGPT.app" "$icon_dir/chatgpt.png"
+    "/Applications/Discord.app" "$icon_dir/discord.png"
+    "/Applications/Figma.app" "$icon_dir/figma.png"
+    "/Applications/Firefox.app" "$icon_dir/firefox.png"
+    "/Applications/Hammerspoon.app" "$icon_dir/hammerspoon.png"
+    "/Applications/iTerm.app" "$icon_dir/iterm2.png"
+    "/Applications/iTermAI.app" "$icon_dir/ai-brain.png"
+    "/Applications/KeyCastr.app" "$icon_dir/keycastr.png"
+    "/Applications/Neovim-iTerm.app" "$icon_dir/neovim-iterm.png"
+    "/Applications/Neovim-Wezterm.app" "$icon_dir/neovim-wezterm.png"
+    "/Applications/Notion Calendar.app" "$icon_dir/notion-calendar.png"
+    "/Applications/Postman.app" "$icon_dir/postman.png"
+    "/Applications/Skim.app" "$icon_dir/skim.png"
+    "/Applications/Slack.app" "$icon_dir/slack.png"
+    "/Applications/Spotify.app" "$icon_dir/spotify.png"
+    "/Applications/Visual Studio Code.app" "$icon_dir/vscode.png"
+    "/Applications/WeChat.app" "$icon_dir/wechat.png"
+    "/Applications/WezTerm.app" "$icon_dir/wezterm.png"
+    "/Applications/WhatsApp.app" "$icon_dir/whatsapp.png"
+    "$HOME/Developer" "$icon_dir/developer.png"
+    "$HOME/Downloads" "$icon_dir/download.png"
+    "$HOME/Dropbox/content" "$icon_dir/content.png"
+    "$icon_dir" "$icon_dir/png.png"
+    "$HOME/Pictures/screenshots" "$icon_dir/screenshot.png"
+    "$HOME/Pictures/wallpapers" "$icon_dir/wallpaper.png"
+    "$HOME/.dotfiles" "$icon_dir/gear.png"
+  )
+
+  print_separator() {
+    printf "%b%-${table_width}s%b\n" "$BRIGHTBLACK" '' "$RESET" | tr ' ' '-'
+  }
+
+  print_status() {
+    local highlight="$1"
+    local status_icon="$2"
+    printf "${highlight}%-1s ${WHITE}%-37s ${BRIGHTMAGENTA}%-5s${RESET}\n" \
+      "$status_icon" "${dir/#$HOME/~}" "$(basename "$icon")"
+  }
+
+  print_separator
+  printf "%-2s %b%-37s %-5s%b\n" '' "$BLUE" 'App / Directory' "${icon_dir/#$HOME/~}" "$RESET"
+  print_separator
+
+  local i dir icon success=0 fail=0
+  for ((i = 0; i < ${#dir_icons[@]}; i += 2)); do
+    dir="${dir_icons[i]}"
+    icon="${dir_icons[i + 1]}"
+
+    fileicon set "$dir" "$icon" >/dev/null 2>&1 || {
+      print_status "$RED" "✘"
+      ((fail++))
+      continue
+    }
+
+    print_status "$GREEN" "✔"
+    ((success++))
+  done
+
+  print_separator
+  printf "%b%-2s %b%-37s%b\n" "$GREEN" "$success" "$BRIGHTBLACK" 'Folder icon(s) updated successfully' "$RESET"
+  ((fail)) && printf "%b%-2s %b%-37s%b\n" "$RED" "$fail" "$BRIGHTBLACK" 'Folder icon(s) failed to update' "$RESET"
+}

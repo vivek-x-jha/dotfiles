@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+uvi() {
+  command -v uv >/dev/null 2>&1 || {
+    printf "[ERROR] %b\`uv\`%b not found in PATH\n" "$GREEN" "$RESET" >&2
+    return 127
+  }
+
+  local tpl_dir="$XDG_DATA_HOME/templates/python"
+  local flags=()
+  local target_dir=""
+  local desc=""
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -d|--desc)
+      shift
+      desc="$1"
+      flags=(--description "$desc")
+      ;;
+    *)
+      [[ -z $target_dir ]] && target_dir="$1"
+      ;;
+    esac
+    shift
+  done
+
+  if [[ -n $target_dir ]]; then
+    uv init "$target_dir" "${flags[@]}"
+  else
+    uv init "${flags[@]}"
+  fi
+
+  local dest_dir='.'
+  [[ -n $target_dir ]] && dest_dir="$target_dir"
+
+  if [[ -d $tpl_dir ]]; then
+    [[ -f "$tpl_dir/.gitignore" ]] && cp -f "$tpl_dir/.gitignore" "$dest_dir"
+    [[ -f "$tpl_dir/.ruff.toml" ]] && cp -f "$tpl_dir/.ruff.toml" "$dest_dir"
+
+    if [[ -f "$tpl_dir/pyproject.toml" && -f "$dest_dir/pyproject.toml" ]]; then
+      grep -q '^\[tool\.commitizen\]' "$dest_dir/pyproject.toml" ||
+        cat "$tpl_dir/pyproject.toml" >>"$dest_dir/pyproject.toml"
+    fi
+  fi
+}

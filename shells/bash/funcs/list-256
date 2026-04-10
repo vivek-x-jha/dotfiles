@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+list-256() {
+  local i
+  for ((i = 0; i <= 255; i++)); do
+    printf '\e[48;5;%sm  \e[0m\e[38;5;%sm%03d\e[0m ' "$i" "$i" "$i"
+    ((i % 6 == 3)) && printf '\n'
+  done
+  printf '\n'
+}

@@ -22,18 +22,11 @@ source "$ZDOTDIR/.zprofile"
 eval "$(starship init bash)"
 
 # Functions
-while IFS= read -r -d '' path; do
-  fn="${path##*/}"
-
-  # skip hidden files
-  [[ $fn == .* ]] && continue
-
-  # handle any funcs that use cd
-  [[ $fn == take ]] && eval "$fn() { mkdir -p \"\$1\" && cd \"\$1\"; }" && continue
-
-  # load func as zsh interactive commands
-  eval "$fn() { zsh -ic '$fn \"\$@\"' $fn \"\$@\"; }"
-done < <(find "$ZDOTDIR/funcs" -type f -maxdepth 1 -print0)
+for fn in "$SHELL_CONFIG"/bash/funcs/*; do
+  [[ -f $fn ]] || continue
+  # shellcheck disable=SC1090
+  source "$fn"
+done
 
 # Aliases
 source "$SHELL_CONFIG/aliases"

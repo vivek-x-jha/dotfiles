@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+edit-all() {
+  local files=()
+  local excludes=(
+    '.cache'
+    '.direnv'
+    '.git'
+    '.github'
+    '.idea'
+    '.terraform'
+    '.venv'
+    'Icon?'
+    'Session.vim'
+    '__pycache__'
+    'dist'
+    'node_modules'
+    'target'
+    'vendor'
+  )
+  local pat f mime
+  local cmd=()
+
+  if command -v fd >/dev/null 2>&1; then
+    cmd=(fd -HItf -0)
+    for pat in "${excludes[@]}"; do cmd+=(--exclude "$pat"); done
+  else
+    cmd=(find . '(')
+    for pat in "${excludes[@]}"; do cmd+=(-name "$pat" -o); done
+    unset 'cmd[${#cmd[@]}-1]'
+    cmd+=(-prune -o -type f -print0 ')')
+  fi
+
+  while IFS= read -r -d '' f; do
+    mime=$(file -b --mime-type "$f")
+    case "$mime" in
+    text/*|application/json|application/xml|application/x-sh|application/javascript|application/x-yaml|application/yaml|application/toml)
+      files+=("$f")
+      ;;
+    esac
+  done < <("${cmd[@]}")
+
+  if ((${#files[@]})); then
+    "$EDITOR" "${files[@]}"
+  else
+    printf 'No non-binary files to edit in %s\n' "$PWD"
+  fi
+}

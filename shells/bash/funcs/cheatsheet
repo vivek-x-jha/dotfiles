@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+cheatsheet() {
+  local key_width=13
+  local desc_width=35
+  local cmd_width=20
+  local table_width=$((key_width + desc_width + cmd_width + 2))
+
+  print_separator() {
+    printf "%b%-${table_width}s%b\n" "$BRIGHTBLACK" '' "$RESET" | tr ' ' '-'
+  }
+
+  local bindings=(
+    '<A-L>:clear terminal screen:clear'
+    '<A-C>:jump to subdirectory:builtin cd --'
+    '<C-E>:select autosuggestion:autosuggest-accept'
+    '<C-R>:search shell command history:atuin-search'
+    '<C-T>:fuzzy search files/directories:fzf'
+    '<C-Y>:run autosuggestion:autosuggest-execute'
+    '<C-U>:delete chars left of cursor:unix-line-discard'
+    '<C-I>:accept autocomplete:fzf-completion'
+    '<C-O>:reload shell:exec bash'
+    '<C-P>:search frequent directories:zoxide query --interactive'
+    '<C-A>:invoke tmux hotkey:tmux prefix'
+    '<C-D>:end input:logout'
+    '<C-Z>:suspend process (restart with fg):kill -TSTP <pid>'
+    '<C-C>:interrupt process:kill -INT <pid>'
+    '<C-N>:open previous neovim session:nvim -S'
+    '<Up>:search shell last command history:atuin-up-search'
+  )
+
+  local colornames=(
+    BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE
+    BRIGHTBLACK BRIGHTRED BRIGHTGREEN BRIGHTYELLOW BRIGHTBLUE BRIGHTMAGENTA BRIGHTCYAN BRIGHTWHITE
+  )
+
+  local binding i colorname color
+
+  print_separator
+  printf "%b%-6s %-35s %-40s%b\n" "$YELLOW$BLUE$GREEN" 'Key' 'Desc' 'Cmd' "$RESET"
+  print_separator
+
+  for ((i = 0; i < ${#bindings[@]}; i++)); do
+    binding="${bindings[i]}"
+    colorname="${colornames[i % ${#colornames[@]}]}"
+    color="${!colorname}"
+    printf '%b%s%b\n' "$color" "$binding" "$RESET"
+  done | awk -F ':' -v k="$key_width" -v d="$desc_width" -v c="$cmd_width" '
+    {
+      printf "%-*s %-*s %-*s\n", k, $1, d, $2, c, ($3 ? $3 : "")
+    }'
+}
