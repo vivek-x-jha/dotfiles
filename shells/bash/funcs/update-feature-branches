@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+update-feature-branches() {
+  local branches=("$@")
+
+  command -v git >/dev/null 2>&1 || {
+    printf "%b[ERROR] git not found on PATH%b\n" "$RED" "$RESET" >&2
+    return 1
+  }
+
+  local default
+  default=$(git config --get init.defaultBranch 2>/dev/null)
+  default=${default:-main}
+  local original_branch
+  original_branch=$(git branch --show-current 2>/dev/null)
+
+  local feature_branches=()
+  mapfile -t feature_branches < <(git for-each-ref --format='%(refname:short)' refs/heads/feature)
+  branches+=("${feature_branches[@]}")
+
+  local filtered=()
+  local b
+  for b in "${branches[@]}"; do
+    [[ -n $b ]] && filtered+=("$b")
+  done
+  branches=("${filtered[@]}")
+
+  local deduped=()
+  declare -A seen=()
+  for b in "${branches[@]}"; do
+    [[ -n ${seen[$b]:-} ]] && continue
+    seen[$b]=1
+    deduped+=("$b")
+  done
+  branches=("${deduped[@]}")
+
+  ((${#branches[@]})) || {
+    printf "%b[WARN] no feature branches updated%b\n" "$YELLOW" "$RESET"
+    printf "%b[INFO] run %b\`git branch\`%b to show available branches\n" "$BLACK" "$GREEN" "$BLACK"
+    return 0
+  }
+
+  local branch rc=0
+  for branch in "${branches[@]}"; do
+    git show-ref --verify --quiet "refs/heads/$branch" || {
+      printf "%b[ERROR] '%s' not found%b\n" "$RED" "$branch" "$RESET"
+      rc=1
+      continue
+    }
+
+    git switch "$branch" >/dev/null 2>&1 || {
+      rc=1
+      continue
+    }
+
+    git merge "$default" >/dev/null 2>&1 || {
+      rc=1
+      continue
+    }
+
+    printf "%b✔ %b%b%s%b -> %b%s%b\n" "$GREEN" "$RESET" "$CYAN" "$branch" "$RESET" "$MAGENTA" "$default" "$RESET"
+  done
+
+  if [[ -n $original_branch ]]; then
+    git switch "$original_branch" >/dev/null 2>&1 || rc=1
+  else
+    git switch "$default" >/dev/null 2>&1 || rc=1
+  fi
+
+  return "$rc"
+}

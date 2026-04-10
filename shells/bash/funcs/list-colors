@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+list-colors() {
+  local hex r g b ansi
+  local colors=(
+    "$BLACK_HEX"
+    "$RED_HEX"
+    "$GREEN_HEX"
+    "$YELLOW_HEX"
+    "$BLUE_HEX"
+    "$MAGENTA_HEX"
+    "$CYAN_HEX"
+    "$WHITE_HEX"
+    "$BRIGHTBLACK_HEX"
+    "$BRIGHTRED_HEX"
+    "$BRIGHTGREEN_HEX"
+    "$BRIGHTYELLOW_HEX"
+    "$BRIGHTBLUE_HEX"
+    "$BRIGHTMAGENTA_HEX"
+    "$BRIGHTCYAN_HEX"
+    "$BRIGHTWHITE_HEX"
+  )
+
+  for hex in "${colors[@]}"; do
+    r=$((16#${hex:1:2}))
+    g=$((16#${hex:3:2}))
+    b=$((16#${hex:5:2}))
+    ansi="\e[38;2;${r};${g};${b}m"
+    printf "%b(%s) The quick brown fox jumps over the lazy dog%b\n" "$ansi" "$hex" "$RESET"
+  done
+}

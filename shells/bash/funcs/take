@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+take() {
+  local dir="$1"
+  mkdir -p -- "$dir" || return
+  cd -- "$dir" || return
+}

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+fix-tmux-remotes() {
+  command -v git >/dev/null 2>&1 || {
+    printf "%b%s %s%b\n" "$BRIGHTRED" "✘" "git unavailable or not in PATH" "$RESET"
+    return 1
+  }
+
+  [[ -n ${TMUX_PLUGIN_MANAGER_PATH:-} && -d ${TMUX_PLUGIN_MANAGER_PATH:-} ]] || {
+    printf "%b%s %s%b\n" "$BRIGHTRED" "✘" "TMUX_PLUGIN_MANAGER_PATH unavailable or not a directory" "$RESET"
+    return 1
+  }
+
+  local plugin name repo
+
+  for plugin in "$TMUX_PLUGIN_MANAGER_PATH"/*; do
+    [[ -d "$plugin/.git" ]] || continue
+
+    name="${plugin##*/}"
+    repo=tmux-plugins
+
+    case $name in
+    tmux-fzf) repo=sainnhe ;;
+    tmux-fzf-url) repo=junegunn ;;
+    tmux-mode-indicator) repo=MunifTanjim ;;
+    vim-tmux-navigator) repo=christoomey ;;
+    esac
+
+    git -C "$plugin" remote set-url origin "git@github.com:$repo/$name.git"
+    printf "%b%s  %bSet remote for %b%s %b→ %b%s%b\n" \
+      "$GREEN" "" "$BLACK" "$MAGENTA" "$name" "$WHITE" "$BLUE" "$repo/$name" "$RESET"
+  done
+}
