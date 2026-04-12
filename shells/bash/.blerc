@@ -3,7 +3,7 @@
 # https://github.com/akinomyoga/ble.sh?tab=readme-ov-file#2-basic-settings
 # https://github.com/akinomyoga/ble.sh/blob/master/blerc.template
 
-bleopt prompt_ps1_transient=always
+bleopt prompt_ps1_transient=
 
 ## "exec_elapsed_mark" specifies the format of the command execution time
 ## report.  It takes two arguments: the first is the string that explains the
