@@ -49,7 +49,7 @@
       "src": "https://github.com/rcarriga/nvim-notify"
     },
     "nvim-sourdiesel": {
-      "rev": "a955c883ff024514c154bf101237f4853e0d380d",
+      "rev": "d2a5efbd68a46b687a45d56ecd7e98ebeec7503a",
       "src": "https://github.com/vivek-x-jha/nvim-sourdiesel"
     },
     "nvim-spectre": {
