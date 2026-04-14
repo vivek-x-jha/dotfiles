@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+# Shared aliases for bash and zsh
 
 # -------------------------------- File Editing ---------------------------------------
 
@@ -32,7 +32,7 @@ alias list-path='tr ":" "\n" <<< "$PATH"'
 alias list-shells='tail -n +5 /etc/shells'
 alias list-sysinfo='system_profiler SPSoftwareDataType SPHardwareDataType'
 alias list-users='dscl . list /Users | grep -v "^_"'
-alias list-real-users='dscl . list /Users UniqueID | awk '\''$2 >= 501 { print $1 }'\'''
+list-real-users() { dscl . list /Users UniqueID | awk '$2 >= 501 { print $1 }'; }
 
 # Outputs Homebrew package info
 command -v brew &>/dev/null && {
@@ -46,6 +46,7 @@ alias list-alias='alias | sort'
 alias list-vars='env | sort'
 
 # Outputs Zsh options + functions + FPATH + syntax-highlighting
+# shellcheck disable=SC2154
 [ -n "${ZSH_VERSION:-}" ] && {
   alias list-opts='setopt'
   alias list-funcs='print -l ${(ok)functions[(I)[^_]*]} | sort'
@@ -125,6 +126,7 @@ command -v SwitchAudioSource &>/dev/null && {
 
 # -------------------------------- Suffix Aliases ---------------------------------------
 
+# shellcheck disable=SC2128,SC2139,SC2086
 [ -n "${ZSH_VERSION:-}" ] && {
   # Images
   _image_fts=(jpg jpeg png gif mng tiff tif xpm)
