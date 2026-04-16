@@ -57,7 +57,7 @@ Open a new terminal window after setup completes.
 
 ## 📁 Repository Layout
 
-- [`shells`](./shells): shell configuration for Bash, Zsh, ble.sh, and Starship
+- [`shells`](./shells): shell configuration for Bash, Zsh, ble.sh, Starship, and the shared `sourdiesel` palette
 - [`cli`](./cli): XDG CLI tool configuration such as Atuin, bat, btop, eza, fzf, gh, glow, mycli, and ripgrep
 - [`editors`](./editors): editor configuration for Neovim and VS Code
 - [`terminals`](./terminals): terminal and multiplexer configuration, including WezTerm, Terminal profiles, and tmux

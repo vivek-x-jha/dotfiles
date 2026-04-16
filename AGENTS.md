@@ -119,6 +119,7 @@ This prevents manual rebuilds after `vim.pack.update()`.
   - `editors/nvim`
   - `editors/vscode`
 - Homebrew bundle file: `manifests/Brewfile`
+- Shared theme palette: `shells/sourdiesel`
 - Shared shell entrypoint: `shells/env`
 - Shared fzf config: `cli/fzf/fzf.sh`
 - Auth config roots:
