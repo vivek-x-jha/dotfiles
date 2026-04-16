@@ -172,11 +172,15 @@ When the user asks to validate, stage, commit, merge to `main`, and push, prefer
 
 - `git add -A`
 - `git commit -m`
+- `git switch`
 - `git switch main`
 - `git merge --ff-only`
 - `git push`
+- `git branch --set-upstream-to`
 
 Still ask before destructive operations such as `git reset --hard`, branch deletion, or force-push unless the user explicitly requested that operation.
+
+Codex may still need an escalation prompt when the sandbox blocks writes to Git internals such as `.git/index.lock`, `.git/config`, or ref lock files. Treat those as filesystem permission prompts, and request the reusable prefix from the list above instead of changing the Git workflow.
 
 ## Common Failure Modes
 
