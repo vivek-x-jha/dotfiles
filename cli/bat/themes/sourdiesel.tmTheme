@@ -727,9 +727,22 @@
       </dict>
       <dict>
         <key>name</key>
-        <string>Bash built-in function</string>
+        <string>Shell statements</string>
         <key>scope</key>
-        <string>source.shell.bash meta.function.shell meta.compound.shell meta.function-call.identifier.shell</string>
+        <string>source.shell keyword, source.shell support.function.builtin, source.shell storage.modifier, source.shell storage.type</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#ECCEF0</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell repeats</string>
+        <key>scope</key>
+        <string>source.shell keyword.control.loop</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
@@ -740,13 +753,52 @@
       </dict>
       <dict>
         <key>name</key>
-        <string>Bash parameter</string>
+        <string>Shell operators</string>
         <key>scope</key>
-        <string>variable.language.shell</string>
+        <string>source.shell keyword.operator, source.shell punctuation.separator, source.shell punctuation.terminator</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#ECCEF0</string>
+          <string>#CCCCCC</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell aliases and commands</string>
+        <key>scope</key>
+        <string>source.shell meta.function-call.identifier.shell, source.shell meta.function.shell entity.name.function.shell</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#FFC7C7</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell functions</string>
+        <key>scope</key>
+        <string>source.shell entity.name.function, source.shell variable.function</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#C4EFFA</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell variables</string>
+        <key>scope</key>
+        <string>source.shell variable, source.shell variable.language, source.shell variable.other.assignment</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#CCCCCC</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
