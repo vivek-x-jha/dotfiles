@@ -181,7 +181,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat shared shell config files as zsh filetype',
   group = augroup('ShellConfigFt', {}),
-  pattern = { '*/shells/env', '*/shells/aliases' },
+  pattern = { '*/shells/env', '*/shells/aliases', '*/shells/colors/*' },
   callback = function() vim.bo.filetype = 'zsh' end,
 })
 
