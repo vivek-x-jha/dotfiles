@@ -166,6 +166,18 @@ This prevents manual rebuilds after `vim.pack.update()`.
 - Preserve dry-run compatibility by routing shell actions through `run` where practical.
 - Use `require <bin>` guard clauses for optional integrations.
 
+## Git Workflow Permissions
+
+When the user asks to validate, stage, commit, merge to `main`, and push, prefer requesting reusable approval prefixes instead of one-off command approvals:
+
+- `git add -A`
+- `git commit -m`
+- `git switch main`
+- `git merge --ff-only`
+- `git push`
+
+Still ask before destructive operations such as `git reset --hard`, branch deletion, or force-push unless the user explicitly requested that operation.
+
 ## Common Failure Modes
 
 - Touch ID sudo not prompting:
