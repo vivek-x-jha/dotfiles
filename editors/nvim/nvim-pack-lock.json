@@ -13,7 +13,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "69b0d5d045cc039e68ba4c82190ce471464226b6",
+      "rev": "83f7195972538beee3a40932b38ccd86c8cc0f06",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -49,7 +49,7 @@
       "src": "https://github.com/rcarriga/nvim-notify"
     },
     "nvim-sourdiesel": {
-      "rev": "d2a5efbd68a46b687a45d56ecd7e98ebeec7503a",
+      "rev": "ce9372683ee2dc6c3b348b7fc6d218ce1ffa8bd5",
       "src": "https://github.com/vivek-x-jha/nvim-sourdiesel"
     },
     "nvim-spectre": {
