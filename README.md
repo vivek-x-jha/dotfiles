@@ -15,6 +15,17 @@ Personal macOS and Linux workstation configuration centered on a fast terminal w
 - 🔐 Optional 1Password CLI, shell plugin, Git signing, SSH agent, and Atuin sync setup
 - 🧪 Dry-run support before setup changes touch the machine
 
+## 📚 Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Bootstrap Flow](#bootstrap-flow)
+- [Repository Layout](#repository-layout)
+- [XDG Config Model](#xdg-config-model)
+- [Tooling Stack](#tooling-stack)
+- [Validation](#validation)
+- [Troubleshooting](#troubleshooting)
+
 ## ⚠️ Read First
 
 This repository is personal infrastructure. It is written to be repeatable, but it still changes shell startup files, package sets, symlinks, OS defaults, Git configuration, and optional privileged macOS settings.
@@ -33,7 +44,7 @@ This repository is personal infrastructure. It is written to be repeatable, but 
 - [`git`](https://git-scm.com/docs)
 - `bash`
 - `zsh`
-- `curl`
+- `curl` for package installers, remote manifests, and vendor downloads
 - `sudo` for privileged setup steps
 - A [Nerd Font](https://www.nerdfonts.com/) if you want icons and glyphs to render correctly. Recommended: [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/JetBrainsMono), based on [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono).
 
@@ -42,11 +53,21 @@ This repository is personal infrastructure. It is written to be repeatable, but 
 - macOS is the primary platform.
 - [`xcode-select`](https://keith.github.io/xcode-man-pages/xcode-select.1.html) command line tools are required.
 - [`Homebrew`](https://brew.sh/) is installed or bootstrapped automatically.
-- Optional GUI integrations expect:
+- Bootstrap can install or configure:
   - [Hammerspoon](https://www.hammerspoon.org/go)
   - [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
   - [WezTerm](https://wezterm.org/)
   - [1Password](https://developer.1password.com/docs/cli/)
+
+Install Apple Command Line Tools from Terminal:
+
+```sh
+[[ $(uname) == Darwin ]] && xcode-select --install
+```
+
+Finish the Apple installer before cloning this repo. If `git` is still unavailable afterward, close and reopen Terminal.
+
+Optional: install [1Password for Mac](https://1password.com/downloads/mac/) from Safari before running bootstrap. Open it, sign in, unlock it, and leave it running if you want bootstrap to configure Git signing, SSH, Atuin sync, GitHub CLI wrapping, and secret-backed aliases.
 
 ### Linux
 
@@ -56,28 +77,34 @@ This repository is personal infrastructure. It is written to be repeatable, but 
 
 ## 🚀 Installation
 
+Use Safari for the optional 1Password install. Run the command blocks below in Terminal.
+
 Clone the repository:
 
 ```sh
-git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git "$HOME/.dotfiles"
+git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
 ```
+
+Use `git clone` rather than `curl | sh` because bootstrap symlinks files from the local `~/.dotfiles` checkout.
 
 Preview setup:
 
 ```sh
-"$HOME/.dotfiles/bootstrap.sh" --dry-run
+~/.dotfiles/bootstrap.sh --dry-run
 ```
 
-Run setup:
+Run one setup command.
+
+Without 1Password integration:
 
 ```sh
-"$HOME/.dotfiles/bootstrap.sh"
+~/.dotfiles/bootstrap.sh
 ```
 
-Force 1Password integration prompts:
+With 1Password integration prompts:
 
 ```sh
-"$HOME/.dotfiles/bootstrap.sh" --with-1password
+~/.dotfiles/bootstrap.sh --with-1password
 ```
 
 Open a new terminal window after setup completes so login and interactive shell startup are reloaded.
@@ -467,28 +494,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 ## 🔗 References
 
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/0.8/)
-- [Homebrew](https://brew.sh/)
 - [Homebrew Bundle and Brewfile](https://docs.brew.sh/Brew-Bundle-and-Brewfile)
-- [Git](https://git-scm.com/docs)
-- [GitHub CLI](https://cli.github.com/manual/)
-- [Zsh](https://zsh.sourceforge.io/)
-- [Zap](https://www.zapzsh.com/)
-- [ble.sh](https://github.com/akinomyoga/ble.sh)
-- [Starship](https://starship.rs/config/)
-- [Atuin](https://docs.atuin.sh/cli/)
-- [fzf](https://junegunn.github.io/fzf/)
-- [ripgrep](https://github.com/BurntSushi/ripgrep)
-- [bat](https://github.com/sharkdp/bat)
-- [eza](https://github.com/eza-community/eza)
-- [zoxide](https://github.com/ajeetdsouza/zoxide)
-- [Neovim](https://neovim.io/)
-- [bob](https://github.com/MordechaiHadad/bob)
-- [uv](https://docs.astral.sh/uv/)
-- [WezTerm](https://wezterm.org/)
-- [tmux](https://github.com/tmux/tmux/wiki)
-- [TPM](https://github.com/tmux-plugins/tpm)
-- [Hammerspoon](https://www.hammerspoon.org/)
-- [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
 - [1Password CLI](https://developer.1password.com/docs/cli/)
 - [1Password Shell Plugins](https://developer.1password.com/docs/cli/shell-plugins)
 - [1Password SSH Agent](https://developer.1password.com/docs/ssh/agent/)
