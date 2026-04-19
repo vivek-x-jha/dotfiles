@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+local branches=("$@")
+
+command -v git &>/dev/null || {
+  printf "${RED}[ERROR] git not found on PATH${RESET}\n" >&2
+  return 1
+}
+
+local default
+default=$(git config --get init.defaultBranch 2>/dev/null)
+default=${default:-main}
+
+local original_branch
+original_branch=$(git branch --show-current 2>/dev/null)
+
+if (( ! ${#branches[@]} )); then
+  local candidate
+  for candidate in dev develop; do
+    git show-ref --verify --quiet "refs/heads/$candidate" && branches+=("$candidate")
+  done
+fi
+
+local filtered=()
+local branch
+for branch in "${branches[@]}"; do
+  [[ -z $branch || $branch == "$default" ]] && continue
+  (( ${filtered[(Ie)$branch]} )) && continue
+  filtered+=("$branch")
+done
+branches=("${filtered[@]}")
+
+(( ${#branches[@]} )) || {
+  printf "${YELLOW}[WARN] no branches updated${RESET}\n"
+  printf "${BLACK}[INFO] pass branch names, e.g. ${GREEN}\`update-branches dev\`${BLACK}\n"
+  return 0
+}
+
+local rc=0
+for branch in "${branches[@]}"; do
+  git show-ref --verify --quiet "refs/heads/$branch" || {
+    printf "${RED}[ERROR] '%s' not found${RESET}\n" "$branch"
+    rc=1
+    continue
+  }
+
+  git switch "$branch" &>/dev/null || {
+    rc=1
+    continue
+  }
+
+  git merge "$default" &>/dev/null || {
+    rc=1
+    continue
+  }
+
+  printf "${GREEN}✔ ${RESET}${CYAN}%s${RESET} <- ${MAGENTA}%s${RESET}\n" "$branch" "$default"
+done
+
+if [[ -n $original_branch ]]; then
+  git switch "$original_branch" &>/dev/null || rc=1
+else
+  git switch "$default" &>/dev/null || rc=1
+fi
+
+return "$rc"
