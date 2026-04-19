@@ -23,6 +23,6 @@ commit-and-sync() {
     git add --all &&
       cz commit &&
       git push &&
-      update-feature-branches
+      update-branches
   )
 }

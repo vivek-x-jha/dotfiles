@@ -24,7 +24,7 @@ command -v cz &>/dev/null || {
   git add --all &&
     cz commit &&
     git push &&
-    update-feature-branches
+    update-branches
 )
 
 return $?

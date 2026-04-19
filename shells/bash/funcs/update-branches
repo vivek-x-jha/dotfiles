@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-update-feature-branches() {
+update-branches() {
   local branches=("$@")
 
   command -v git >/dev/null 2>&1 || {
@@ -11,36 +11,40 @@ update-feature-branches() {
   local default
   default=$(git config --get init.defaultBranch 2>/dev/null)
   default=${default:-main}
+
   local original_branch
   original_branch=$(git branch --show-current 2>/dev/null)
 
-  local feature_branches=()
-  mapfile -t feature_branches < <(git for-each-ref --format='%(refname:short)' refs/heads/feature)
-  branches+=("${feature_branches[@]}")
+  if ((${#branches[@]} == 0)); then
+    local candidate
+    for candidate in dev develop; do
+      git show-ref --verify --quiet "refs/heads/$candidate" && branches+=("$candidate")
+    done
+  fi
 
   local filtered=()
-  local b
-  for b in "${branches[@]}"; do
-    [[ -n $b ]] && filtered+=("$b")
+  local branch
+  for branch in "${branches[@]}"; do
+    [[ -z $branch || $branch == "$default" ]] && continue
+
+    local seen=0
+    local existing
+    for existing in "${filtered[@]}"; do
+      [[ $existing == "$branch" ]] && seen=1 && break
+    done
+    ((seen)) && continue
+
+    filtered+=("$branch")
   done
   branches=("${filtered[@]}")
 
-  local deduped=()
-  declare -A seen=()
-  for b in "${branches[@]}"; do
-    [[ -n ${seen[$b]:-} ]] && continue
-    seen[$b]=1
-    deduped+=("$b")
-  done
-  branches=("${deduped[@]}")
-
   ((${#branches[@]})) || {
-    printf "%b[WARN] no feature branches updated%b\n" "$YELLOW" "$RESET"
-    printf "%b[INFO] run %b\`git branch\`%b to show available branches\n" "$BLACK" "$GREEN" "$BLACK"
+    printf "%b[WARN] no branches updated%b\n" "$YELLOW" "$RESET"
+    printf "%b[INFO] pass branch names, e.g. %b\`update-branches dev\`%b\n" "$BLACK" "$GREEN" "$BLACK"
     return 0
   }
 
-  local branch rc=0
+  local rc=0
   for branch in "${branches[@]}"; do
     git show-ref --verify --quiet "refs/heads/$branch" || {
       printf "%b[ERROR] '%s' not found%b\n" "$RED" "$branch" "$RESET"
@@ -58,7 +62,7 @@ update-feature-branches() {
       continue
     }
 
-    printf "%b✔ %b%b%s%b -> %b%s%b\n" "$GREEN" "$RESET" "$CYAN" "$branch" "$RESET" "$MAGENTA" "$default" "$RESET"
+    printf "%b✔ %b%b%s%b <- %b%s%b\n" "$GREEN" "$RESET" "$CYAN" "$branch" "$RESET" "$MAGENTA" "$default" "$RESET"
   done
 
   if [[ -n $original_branch ]]; then
