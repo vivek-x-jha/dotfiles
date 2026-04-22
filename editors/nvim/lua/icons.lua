@@ -14,7 +14,8 @@ return {
   fuzzy = '',
   gear = '',
   git = '',
-  log = '',
+  host = '󰒋',
+  log = '',
   modified = '●',
   recent = '',
   search = '',
@@ -24,6 +25,8 @@ return {
 
   -- devicons
   javascript = '󰌞',
+  lua = '',
+  python = '',
   typescript = '󰛦',
   lock = '',
   robot = '󱙺',
@@ -73,6 +76,8 @@ return {
   bladenav = '',
   makefile = '',
   shell = '',
+  signature = '󰷊',
+  syntax = '',
   sync = '',
   star = '',
   lightbulb = '󰌶',
