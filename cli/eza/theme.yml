@@ -4,7 +4,7 @@ filekinds:
   directory:
     foreground: blue
   symlink:
-    foreground: blue
+    foreground: yellow
   executable:
     foreground: green
 
@@ -84,7 +84,7 @@ filenames:
     filename:
       foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: magenta
 
@@ -92,17 +92,25 @@ filenames:
     filename:
       foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: magenta
 
   .blerc:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
   .dircolors:
+    filename:
+      foreground: magenta
     icon:
       glyph: ""
+      style:
+        foreground: magenta
 
   .hushlogin:
     icon:
@@ -117,8 +125,12 @@ filenames:
         foreground: black
 
   .env:
+    filename:
+      foreground: 09
     icon:
       glyph: ""
+      style:
+        foreground: 09
 
   env:
     filename:
@@ -129,30 +141,70 @@ filenames:
         foreground: 09
 
   .gitignore:
+    filename:
+      foreground: black
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: black
 
-  .state.itermexport:
+  .git:
+    icon:
+      glyph: ""
+
+  .cz.toml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .ruff.toml:
+    filename:
+      foreground: black
     icon:
       glyph: ""
+      style:
+        foreground: black
+
+  .stylua.toml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .state.itermexport:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
 
   .zprofile:
     filename:
       foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: magenta
 
   .zshenv:
+    filename:
+      foreground: 09
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: 09
 
   .zshrc:
     filename:
       foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: magenta
 
@@ -164,77 +216,81 @@ filenames:
       style:
         foreground: 08
 
+  "Icon\r":
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
   aliases:
     icon:
       glyph: ""
 
-  apps:
+  allowed_signers:
     filename:
-      foreground: blue
+      foreground: 12
+    icon:
+      glyph: "󰷊"
+      style:
+        foreground: 12
+
+  known_hosts:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰒋"
+      style:
+        foreground: 12
+
+  .p10k.zsh:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  apps:
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   auth:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   cli:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   docs:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   editors:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   manifests:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   shells:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   terminals:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   readme.md:
+    filename:
+      foreground: 11
     icon:
       glyph: ""
+      style:
+        foreground: 11
 
   license:
     filename:
@@ -245,16 +301,388 @@ filenames:
         foreground: 11
 
   contributing.md:
+    filename:
+      foreground: 11
     icon:
       glyph: ""
+      style:
+        foreground: 11
 
   security.md:
+    filename:
+      foreground: 11
     icon:
       glyph: ""
+      style:
+        foreground: 11
+
+  Session.vim:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
 
   brewfile.lock.json:
+    filename:
+      foreground: 13
     icon:
       glyph: ""
+      style:
+        foreground: 13
+
+  brewfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Brewfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Brewfile.lock.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  apt-packages.txt:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  dnf-packages.txt:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  gemfile.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  gemfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Gemfile.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Gemfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  package.resolved:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  package.swift:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Package.resolved:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Package.swift:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pipfile.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pipfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Pipfile.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Pipfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  build.gradle.kts:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  build.gradle:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  bun.lockb:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cabal.project.freeze:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cabal.project:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  composer.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  composer.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  go.mod:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  go.sum:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  gradle.lockfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  mix.exs:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  mix.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  nvim-pack-lock.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  package-lock.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  package.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  package.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  packages.config:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  uv.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pnpm-lock.yaml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  poetry.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pom.xml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  project.assets.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pubspec.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pubspec.yaml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pyproject.toml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  requirements.txt:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  stack.yaml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
 
   .luarc.json:
     filename:
@@ -264,175 +692,113 @@ filenames:
       style:
         foreground: black
 
-  brewfile:
+  agent.toml:
     filename:
-      foreground: cyan
-      is_underlined: false
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: cyan
+        foreground: magenta
 
-  gemfile.lock:
+  btop.conf:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  gemfile:
+  config.yml:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  package.resolved:
+  config:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  package.swift:
+  config.toml:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  pipfile.lock:
+  extensions.json:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  pipfile:
+  glow.yml:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  build.gradle.kts:
+  init.lua:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  build.gradle:
+  karabiner.json:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  bun.lockb:
+  settings.json:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  cabal.project.freeze:
+  starship.toml:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  cabal.project:
+  tmux.conf:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
-  composer.json:
+  wezterm.lua:
+    filename:
+      foreground: magenta
     icon:
-      glyph: ""
-
-  composer.lock:
-    icon:
-      glyph: ""
+      glyph: ""
+      style:
+        foreground: magenta
 
   config.sh:
     icon:
-      glyph: ""
-
-  config:
-    icon:
-      glyph: ""
-
-  go.mod:
-    icon:
-      glyph: ""
-
-  go.sum:
-    icon:
-      glyph: ""
-
-  gradle.lockfile:
-    icon:
-      glyph: ""
-
-  mix.exs:
-    icon:
-      glyph: ""
-
-  mix.lock:
-    icon:
-      glyph: ""
-
-  nvim-pack-lock.json:
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-    filename:
-      foreground: cyan
-
-  package-lock.json:
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-    filename:
-      foreground: cyan
-
-  package.json:
-    icon:
-      glyph: ""
-
-  package.lock:
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-    filename:
-      foreground: cyan
-
-  packages.config:
-    icon:
-      glyph: ""
-
-  uv.lock:
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-    filename:
-      foreground: cyan
-
-  pnpm-lock.yaml:
-    icon:
-      glyph: ""
-
-  poetry.lock:
-    icon:
-      glyph: ""
-
-  pom.xml:
-    icon:
-      glyph: ""
-
-  project.assets.json:
-    icon:
-      glyph: ""
-
-  pubspec.lock:
-    icon:
-      glyph: ""
-
-  pubspec.yaml:
-    icon:
-      glyph: ""
-
-  pyproject.toml:
-    filename:
-      foreground: cyan
-      is_underlined: false
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  requirements.txt:
-    icon:
-      glyph: ""
-
-  stack.yaml:
-    icon:
-      glyph: ""
+      glyph: ""
 
   cheatsheet:
     icon:
@@ -482,99 +848,79 @@ filenames:
     icon:
       glyph: ""
 
+  fzf.sh:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   yarn.lock:
     icon:
       glyph: ""
 
   1Password:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   Spoons:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   assets:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   automatic_backups:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   atuin:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   bash:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   bat:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   btop:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   funcs:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   colors:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   complex_modifications:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   sourdiesel:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  sourdiesel.json:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  sourdiesel.toml:
     filename:
       foreground: cyan
     icon:
@@ -590,225 +936,157 @@ filenames:
       style:
         foreground: cyan
 
-  dust:
+  theme.yml:
     filename:
-      foreground: blue
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  dust:
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   eza:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   fzf:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   gh:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   git:
-    filename:
-      foreground: blue
     icon:
-      glyph: ""
-      style:
-        foreground: blue
+      glyph: ""
 
   glow:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   hammerspoon:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   iterm2:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   karabiner:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   mycli:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   nvim:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   lsp:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   lua:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   pickers:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   plugins:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   ripgrep:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   ssh:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   terminal:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   tmux:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   vscode:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   webapps:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   wezterm:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   zsh:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   styles:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   syntaxes:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   themes:
-    filename:
-      foreground: blue
     icon:
       glyph: ""
-      style:
-        foreground: blue
 
   cargo.toml:
+    filename:
+      foreground: 13
     icon:
       glyph: ""
+      style:
+        foreground: 13
 
   cargo.lock:
+    filename:
+      foreground: 13
     icon:
       glyph: ""
+      style:
+        foreground: 13
+
+  Cargo.toml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Cargo.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
 
   bootstrap.sh:
+    filename:
+      foreground: 10
     icon:
       glyph: ""
+      style:
+        foreground: 10
 
   .localized:
     filename:
@@ -821,6 +1099,62 @@ filenames:
   .dbxignore:
     icon:
       glyph: ""
+
+  .bash_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .histfile:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .zsh_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  hist:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  histfile:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
 extensions:
   rs:
     filename:
@@ -842,6 +1176,48 @@ extensions:
       glyph: ""
       style:
         foreground: 11
+  json:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  jsonc:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  lua:
+    filename:
+      foreground: 15
+    icon:
+      glyph: ""
+      style:
+        foreground: 15
+  py:
+    filename:
+      foreground: 15
+    icon:
+      glyph: ""
+      style:
+        foreground: 15
+  conf:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  log:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
   toml:
     filename:
       foreground: black
@@ -849,6 +1225,34 @@ extensions:
       glyph: ""
       style:
         foreground: black
+  tmTheme:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+  tmtheme:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+  theme:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+  sublime-syntax:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
   yaml:
     filename:
       foreground: black
