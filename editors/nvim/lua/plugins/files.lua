@@ -236,7 +236,10 @@ require('nvim-tree').setup {
   },
 }
 
-local function apply_nvim_tree_highlights() vim.api.nvim_set_hl(0, 'NvimTreeSpecialFile', { fg = palette.brightblack }) end
+local function apply_nvim_tree_highlights()
+  vim.api.nvim_set_hl(0, 'NvimTreeExecFile', { link = 'NvimTreeFileName' })
+  vim.api.nvim_set_hl(0, 'NvimTreeSpecialFile', { fg = palette.brightblack })
+end
 
 vim.api.nvim_create_autocmd('ColorScheme', {
   desc = 'Apply custom nvim-tree highlights',
