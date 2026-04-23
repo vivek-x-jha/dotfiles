@@ -103,6 +103,8 @@ local devicon_overrides = {
   ['settings.json'] = { icon = icons.gear, name = 'settings.json', color = palette.magenta },
   ['starship.toml'] = { icon = icons.gear, name = 'starship.toml', color = palette.magenta },
   ['wezterm.lua'] = { icon = icons.lua, name = 'wezterm.lua', color = palette.magenta },
+  ['AGENTS.md'] = { icon = icons.robot, name = 'AGENTS', color = palette.brightyellow },
+  ['CLAUDE.md'] = { icon = icons.robot, name = 'CLAUDE', color = palette.brightyellow },
   ['README.md'] = { icon = icons.markdown, name = 'README', color = palette.brightyellow },
   ['LICENSE'] = { icon = icons.markdown, name = 'LICENSE', color = palette.brightyellow },
   ['CONTRIBUTING.md'] = { icon = icons.markdown, name = 'CONTRIBUTING', color = palette.brightyellow },
