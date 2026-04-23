@@ -962,7 +962,7 @@ filenames:
 
   git:
     icon:
-      glyph: ""
+      glyph: ""
 
   glow:
     icon:
@@ -1149,6 +1149,14 @@ filenames:
         foreground: red
 
   history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  lesshst:
     filename:
       foreground: red
     icon:

@@ -42,8 +42,8 @@ export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/.nvimlog"
 # Glow: https://github.com/charmbracelet/glow/discussions/799#discussioncomment-14866750
 export GLAMOUR_STYLE="$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
 
-# Less: # https://man7.org/linux/man-pages/man1/less.1.html
-export LESSHISTFILE="$XDG_STATE_HOME/less/.lesshst"
+# Less: https://man7.org/linux/man-pages/man1/less.1.html
+export LESSHISTFILE="$XDG_STATE_HOME/lesshst"
 
 # MySQL: # https://dev.mysql.com/doc/refman/9.5/en/environment-variables.html
 export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"

@@ -596,7 +596,6 @@ create_symlinks() {
     ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux
     ../.dotfiles/terminals/wezterm "$XDG_CONFIG_HOME" wezterm
     shells/starship.toml "$XDG_CONFIG_HOME" starship.toml
-    ../../../.dotfiles/cli/btop/btop.log "$XDG_STATE_HOME/btop" btop.log
     .local/share/vscode "$HOME" .vscode
     .config/shells/bash/.bash_profile "$HOME" .bash_profile
     .config/shells/bash/.bashrc "$HOME" .bashrc
