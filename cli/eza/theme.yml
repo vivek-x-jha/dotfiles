@@ -316,6 +316,22 @@ filenames:
       style:
         foreground: 11
 
+  AGENTS.md:
+    filename:
+      foreground: 11
+    icon:
+      glyph: "󱙺"
+      style:
+        foreground: 11
+
+  CLAUDE.md:
+    filename:
+      foreground: 11
+    icon:
+      glyph: "󱙺"
+      style:
+        foreground: 11
+
   Session.vim:
     filename:
       foreground: 08
