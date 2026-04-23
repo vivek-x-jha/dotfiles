@@ -226,7 +226,7 @@ filenames:
 
   aliases:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   allowed_signers:
     filename:
@@ -802,51 +802,51 @@ filenames:
 
   cheatsheet:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   commit-and-sync:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   edit-all:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   fix-tmux-remotes:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   list-256:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   list-colors:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   take:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   update-all:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   update-branches:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   update-icons:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   uvi:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   work:
     icon:
-      glyph: ""
+      glyph: "󰊕"
 
   fzf.sh:
     filename:

@@ -82,5 +82,6 @@ return {
   star = '',
   lightbulb = '󰌶',
   cloud = '',
+  command = '󰊕',
   help = '󰋖',
 }
