@@ -54,7 +54,7 @@ local devicon_overrides = {
 
   -- Dotfiles + environment helpers
   ['.dircolors'] = { icon = icons.gear, name = '.dircolors', color = palette.magenta },
-  ['.hushlogin'] = { icon = icons.file, name = '.hushlogin' },
+  ['.hushlogin'] = { icon = icons.file, name = '.hushlogin', color = palette.brightblack },
   ['.python-version'] = { icon = icons.gear, name = '.python-version', color = palette.black },
   ['.ruff.toml'] = { icon = icons.gear, name = '.ruff.toml', color = palette.black },
   ['config.sh'] = { icon = icons.shell, name = 'config.sh' },
@@ -78,6 +78,7 @@ local devicon_overrides = {
   ['.state.itermexport'] = { icon = icons.gear, name = '.state.itermexport', color = palette.black },
   ['.localized'] = { icon = icons.file, name = '.localized', color = palette.brightblack },
   ['.dbxignore'] = { icon = icons.file, name = '.dbxignore' },
+  ['.DS_Store'] = { icon = icons.macos, name = '.DS_Store', color = palette.brightblack },
   ['icon\r'] = { icon = icons.file, name = 'Icon', color = palette.brightblack },
   ['.bash_history'] = { icon = icons.log, name = '.bash_history', color = palette.red },
   ['.histfile'] = { icon = icons.log, name = '.histfile', color = palette.red },
@@ -224,6 +225,7 @@ require('nvim-tree').setup {
           open = icons.folder,
           symlink = icons.folder,
         },
+        symlink = icons.link,
 
         git = {
           renamed = '𝙍',

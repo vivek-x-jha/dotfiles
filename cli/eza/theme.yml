@@ -1116,6 +1116,14 @@ filenames:
     icon:
       glyph: ""
 
+  .DS_Store:
+    filename:
+      foreground: 08
+    icon:
+      glyph: "󰘳"
+      style:
+        foreground: 08
+
   .bash_history:
     filename:
       foreground: red
