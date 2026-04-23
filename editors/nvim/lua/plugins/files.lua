@@ -97,6 +97,7 @@ local devicon_overrides = {
   ['hist'] = { icon = icons.log, name = 'hist', color = palette.red },
   ['histfile'] = { icon = icons.log, name = 'histfile', color = palette.red },
   ['history'] = { icon = icons.log, name = 'history', color = palette.red },
+  ['lesshst'] = { icon = icons.log, name = 'lesshst', color = palette.red },
   ['init.lua'] = { icon = icons.lua, name = 'init.lua', color = palette.magenta },
   ['karabiner.json'] = { icon = icons.gear, name = 'karabiner.json', color = palette.magenta },
   ['settings.json'] = { icon = icons.gear, name = 'settings.json', color = palette.magenta },
