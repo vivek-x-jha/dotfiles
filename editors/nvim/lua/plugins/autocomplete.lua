@@ -1,3 +1,4 @@
+local blink = require 'blink.cmp'
 local colors = require 'nvim-highlight-colors'
 local ls = require 'luasnip' ---@type any
 
@@ -11,7 +12,9 @@ require('luasnip.loaders.from_lua').lazy_load()
 
 ls.setup { history = true, updateevents = 'TextChanged,TextChangedI' }
 
-require('blink.cmp').setup {
+blink.build():wait(60000)
+
+blink.setup {
   keymap = { preset = 'default' },
   appearance = { nerd_font_variant = 'mono' },
   snippets = { preset = 'luasnip' },
