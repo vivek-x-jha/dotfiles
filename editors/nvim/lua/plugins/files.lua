@@ -116,6 +116,7 @@ local devicon_overrides = {
   ['json'] = { icon = icons.gear, name = 'json', color = palette.black },
   ['jsonc'] = { icon = icons.gear, name = 'jsonc', color = palette.black },
   ['log'] = { icon = icons.log, name = 'log', color = palette.red },
+  ['terminal'] = { icon = icons.color, name = 'terminal', color = palette.cyan },
   ['toml'] = { icon = icons.gear, name = 'toml', color = palette.black },
   ['tmtheme'] = { icon = icons.color, name = 'tmTheme', color = palette.cyan },
   ['tmux.conf'] = { icon = icons.gear, name = 'tmux.conf', color = palette.magenta },
