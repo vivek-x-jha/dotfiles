@@ -209,21 +209,21 @@ autocmd('PackChanged', {
   callback = function(ev)
     local name = ev.data.spec.name
     local kind = ev.data.kind
-    if name ~= 'blink.cmp' or (kind ~= 'install' and kind ~= 'update') then return end
+    if name ~= 'blink.cmp' and name ~= 'blink.lib' or (kind ~= 'install' and kind ~= 'update') then return end
 
-    vim.notify('Building blink.cmp (cargo build --release)...', vim.log.levels.INFO)
-    vim.system({ 'cargo', 'build', '--release' }, { cwd = ev.data.path, text = true }, function(out)
-      if out.code == 0 then
-        vim.schedule(function() vim.notify('blink.cmp build complete', vim.log.levels.INFO) end)
+    vim.schedule(function()
+      local ok, blink = pcall(require, 'blink.cmp')
+      if not ok then
+        vim.notify('blink.cmp not available yet; skipping native library rebuild', vim.log.levels.WARN)
+        return
+      end
+
+      vim.notify('Building blink fuzzy library...', vim.log.levels.INFO)
+      local build_ok, err = pcall(function() blink.build({ force = true }):wait(60000) end)
+      if build_ok then
+        vim.notify('blink fuzzy library build complete', vim.log.levels.INFO)
       else
-        vim.schedule(
-          function()
-            vim.notify(
-              'blink.cmp build failed: ' .. ((out.stderr and out.stderr ~= '') and out.stderr or ('exit code ' .. out.code)),
-              vim.log.levels.ERROR
-            )
-          end
-        )
+        vim.notify('blink fuzzy library build failed: ' .. tostring(err), vim.log.levels.ERROR)
       end
     end)
   end,
