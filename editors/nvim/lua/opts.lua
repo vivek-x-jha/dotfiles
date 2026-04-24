@@ -47,8 +47,3 @@ vim.o.smartcase = true -- override ignorecase if uppercase in search
 -- Configure statusline
 vim.o.laststatus = 3 -- global statusline
 vim.o.showmode = false -- don't show --INSERT--
-_G.sourdiesel_statusline = function()
-  local ok, statusline = pcall(require, 'nvim-statusline')
-  return ok and statusline.setup() or ''
-end
-vim.o.statusline = '%!v:lua.sourdiesel_statusline()' -- initialize statusline
