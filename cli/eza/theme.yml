@@ -1064,6 +1064,594 @@ filenames:
     icon:
       glyph: ""
 
+  .cache:
+    icon:
+      glyph: ""
+
+  .config:
+    icon:
+      glyph: ""
+
+  .copilot:
+    icon:
+      glyph: ""
+
+  .dotfiles:
+    icon:
+      glyph: ""
+
+  .dropbox:
+    icon:
+      glyph: ""
+
+  .github:
+    icon:
+      glyph: ""
+
+  .local:
+    icon:
+      glyph: ""
+
+  .sigstore:
+    icon:
+      glyph: ""
+
+  .venv:
+    icon:
+      glyph: ""
+
+  .zcompcache:
+    icon:
+      glyph: ""
+
+  0:
+    icon:
+      glyph: ""
+
+  0.4:
+    icon:
+      glyph: ""
+
+  1:
+    icon:
+      glyph: ""
+
+  2e:
+    icon:
+      glyph: ""
+
+  5.3:
+    icon:
+      glyph: ""
+
+  Crashpad:
+    icon:
+      glyph: ""
+
+  Developer:
+    icon:
+      glyph: ""
+
+  Media.localized:
+    icon:
+      glyph: ""
+
+  Movies:
+    icon:
+      glyph: ""
+
+  PolynomialTool:
+    icon:
+      glyph: ""
+
+  Previous Libraries.localized:
+    icon:
+      glyph: ""
+
+  QuitReports:
+    icon:
+      glyph: ""
+
+  StatisticalLearning:
+    icon:
+      glyph: ""
+
+  TV:
+    icon:
+      glyph: ""
+
+  TV Library.tvlibrary:
+    icon:
+      glyph: ""
+
+  __pycache__:
+    icon:
+      glyph: ""
+
+  agent-smith:
+    icon:
+      glyph: ""
+
+  agent_smith:
+    icon:
+      glyph: ""
+
+  agent_smith.egg-info:
+    icon:
+      glyph: ""
+
+  ai-mastery:
+    icon:
+      glyph: ""
+
+  algebra:
+    icon:
+      glyph: ""
+
+  algebra2:
+    icon:
+      glyph: ""
+
+  archive-v0:
+    icon:
+      glyph: ""
+
+  arithmetic:
+    icon:
+      glyph: ""
+
+  attachments:
+    icon:
+      glyph: ""
+
+  bin:
+    icon:
+      glyph: ""
+
+  blesh:
+    icon:
+      glyph: ""
+
+  bob:
+    icon:
+      glyph: ""
+
+  boston:
+    icon:
+      glyph: ""
+
+  builds-v0:
+    icon:
+      glyph: ""
+
+  calculus:
+    icon:
+      glyph: ""
+
+  cargo:
+    icon:
+      glyph: ""
+
+  chatgpt-cli:
+    icon:
+      glyph: ""
+
+  cheatsheets:
+    icon:
+      glyph: ""
+
+  codex:
+    icon:
+      glyph: ""
+
+  completed:
+    icon:
+      glyph: ""
+
+  database_creation:
+    icon:
+      glyph: ""
+
+  dcp:
+    icon:
+      glyph: ""
+
+  dcp1_data_structures:
+    icon:
+      glyph: ""
+
+  dcp2_algorithms:
+    icon:
+      glyph: ""
+
+  dcp3_applications:
+    icon:
+      glyph: ""
+
+  dcp4_design:
+    icon:
+      glyph: ""
+
+  doc:
+    icon:
+      glyph: ""
+
+  environments-v2:
+    icon:
+      glyph: ""
+
+  events:
+    icon:
+      glyph: ""
+
+  exceptions:
+    icon:
+      glyph: ""
+
+  float:
+    icon:
+      glyph: ""
+
+  gem:
+    icon:
+      glyph: ""
+
+  geometry:
+    icon:
+      glyph: ""
+
+  gitstatus:
+    icon:
+      glyph: ""
+
+  hooks:
+    icon:
+      glyph: ""
+
+  hub:
+    icon:
+      glyph: ""
+
+  huggingface:
+    icon:
+      glyph: ""
+
+  images:
+    icon:
+      glyph: ""
+
+  info:
+    icon:
+      glyph: ""
+
+  instance1:
+    icon:
+      glyph: ""
+
+  instance_db:
+    icon:
+      glyph: ""
+
+  intermediate-macroeconomics:
+    icon:
+      glyph: ""
+
+  interpreter-v4:
+    icon:
+      glyph: ""
+
+  legacy-latex:
+    icon:
+      glyph: ""
+
+  less:
+    icon:
+      glyph: ""
+
+  linear-algebra:
+    icon:
+      glyph: ""
+
+  lock:
+    icon:
+      glyph: ""
+
+  log:
+    icon:
+      glyph: ""
+
+  logs:
+    icon:
+      glyph: ""
+
+  lua-language-server:
+    icon:
+      glyph: ""
+
+  machine_storage:
+    icon:
+      glyph: ""
+
+  math-stats:
+    icon:
+      glyph: ""
+
+  meta:
+    icon:
+      glyph: ""
+
+  metrics:
+    icon:
+      glyph: ""
+
+  mubuntu:
+    icon:
+      glyph: ""
+
+  mysql:
+    icon:
+      glyph: ""
+
+  new:
+    icon:
+      glyph: ""
+
+  notes:
+    icon:
+      glyph: ""
+
+  nvim-dashboard:
+    icon:
+      glyph: ""
+
+  nvim-dev:
+    icon:
+      glyph: ""
+
+  nvim-launcher:
+    icon:
+      glyph: ""
+
+  nvim-sourdiesel:
+    icon:
+      glyph: ""
+
+  nvim-statusline:
+    icon:
+      glyph: ""
+
+  nvim-terminal:
+    icon:
+      glyph: ""
+
+  objects:
+    icon:
+      glyph: ""
+
+  op:
+    icon:
+      glyph: ""
+
+  p10k:
+    icon:
+      glyph: ""
+
+  p10k-mubuntu:
+    icon:
+      glyph: ""
+
+  pending:
+    icon:
+      glyph: ""
+
+  pokemon:
+    icon:
+      glyph: ""
+
+  practice-sheets:
+    icon:
+      glyph: ""
+
+  practiceML:
+    icon:
+      glyph: ""
+
+  prompts:
+    icon:
+      glyph: ""
+
+  python:
+    icon:
+      glyph: ""
+
+  real-analysis:
+    icon:
+      glyph: ""
+
+  real-estate:
+    icon:
+      glyph: ""
+
+  refs:
+    icon:
+      glyph: ""
+
+  resources:
+    icon:
+      glyph: ""
+
+  rustup:
+    icon:
+      glyph: ""
+
+  sdists-v6:
+    icon:
+      glyph: ""
+
+  sdists-v8:
+    icon:
+      glyph: ""
+
+  sdists-v9:
+    icon:
+      glyph: ""
+
+  session-history:
+    icon:
+      glyph: ""
+
+  share:
+    icon:
+      glyph: ""
+
+  simple-v14:
+    icon:
+      glyph: ""
+
+  simple-v15:
+    icon:
+      glyph: ""
+
+  simple-v16:
+    icon:
+      glyph: ""
+
+  simple-v18:
+    icon:
+      glyph: ""
+
+  sockets:
+    icon:
+      glyph: ""
+
+  solutions:
+    icon:
+      glyph: ""
+
+  source_data:
+    icon:
+      glyph: ""
+
+  specs:
+    icon:
+      glyph: ""
+
+  ssa_events:
+    icon:
+      glyph: ""
+
+  starship:
+    icon:
+      glyph: ""
+
+  state:
+    icon:
+      glyph: ""
+
+  sync:
+    icon:
+      glyph: ""
+
+  sync_fp:
+    icon:
+      glyph: ""
+
+  system-design-primer:
+    icon:
+      glyph: ""
+
+  teasers:
+    icon:
+      glyph: ""
+
+  templates:
+    icon:
+      glyph: ""
+
+  tests:
+    icon:
+      glyph: ""
+
+  thinkorswim:
+    icon:
+      glyph: ""
+
+  todo:
+    icon:
+      glyph: ""
+
+  travel-agent:
+    icon:
+      glyph: ""
+
+  tree-sitter:
+    icon:
+      glyph: ""
+
+  typescript:
+    icon:
+      glyph: ""
+
+  uv:
+    icon:
+      glyph: ""
+
+  v6:
+    icon:
+      glyph: ""
+
+  var:
+    icon:
+      glyph: ""
+
+  vim:
+    icon:
+      glyph: ""
+
+  virtualenvs:
+    icon:
+      glyph: ""
+
+  weather:
+    icon:
+      glyph: ""
+
+  weather-tool:
+    icon:
+      glyph: ""
+
+  wheels-v3:
+    icon:
+      glyph: ""
+
+  wheels-v4:
+    icon:
+      glyph: ""
+
+  wheels-v5:
+    icon:
+      glyph: ""
+
+  yarn:
+    icon:
+      glyph: ""
+
+  yazi:
+    icon:
+      glyph: ""
+
+  zap:
+    icon:
+      glyph: ""
+
+  zoxide:
+    icon:
+      glyph: ""
+
+  zsh-autocomplete:
+    icon:
+      glyph: ""
+
   cargo.toml:
     filename:
       foreground: 13
