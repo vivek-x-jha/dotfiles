@@ -66,7 +66,7 @@ update-all() {
   logg -c 'brew cu -af' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
   notify -s 'RUN QUARANTINE CHECKS'
-  local apps=(Arc ChatGPT Codex Slack Spotify WhatsApp)
+  local apps=('Arc' 'ChatGPT' 'Codex' 'Notion Calendar' 'Slack' 'Spotify' 'WhatsApp')
   local app quarantine_cmd
   for app in "${apps[@]}"; do
     quarantine_cmd="sudo xattr -rd com.apple.quarantine '/Applications/${app}.app'"
