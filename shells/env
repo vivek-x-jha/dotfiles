@@ -31,7 +31,7 @@ export SHELL_SESSIONS_DISABLE=1
 # Editor: https://wiki.archlinux.org/title/Environment_variables#Default_programs
 export EDITOR=nvim
 export VISUAL="$EDITOR"
-export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/.nvimlog"
+export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"
 
 # Pager: https://github.com/sharkdp/bat?tab=readme-ov-file#man
 [[ -f $XDG_CONFIG_HOME/bat/config ]] && {
