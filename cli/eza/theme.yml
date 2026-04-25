@@ -708,6 +708,14 @@ filenames:
       style:
         foreground: black
 
+  .netrwhist:
+    filename:
+      foreground: 08
+    icon:
+      glyph: "󰋚"
+      style:
+        foreground: 08
+
   agent.toml:
     filename:
       foreground: magenta
@@ -904,7 +912,15 @@ filenames:
     icon:
       glyph: ""
 
+  blink:
+    icon:
+      glyph: ""
+
   btop:
+    icon:
+      glyph: ""
+
+  cmp:
     icon:
       glyph: ""
 
@@ -1000,6 +1016,10 @@ filenames:
     icon:
       glyph: ""
 
+  netrw:
+    icon:
+      glyph: ""
+
   nvim:
     icon:
       glyph: ""
@@ -1060,7 +1080,19 @@ filenames:
     icon:
       glyph: ""
 
+  shada:
+    icon:
+      glyph: ""
+
   themes:
+    icon:
+      glyph: ""
+
+  undo:
+    icon:
+      glyph: ""
+
+  view:
     icon:
       glyph: ""
 

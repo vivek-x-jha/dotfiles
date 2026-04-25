@@ -19,6 +19,7 @@ return {
   log = '',
   macos = '󰘳',
   modified = '●',
+  netrwhist = '󰋚',
   recent = '',
   search = '',
   status = '󰦒',
