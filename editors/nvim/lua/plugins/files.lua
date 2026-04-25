@@ -114,6 +114,7 @@ local devicon_overrides = {
 
   -- Generic config formats
   ['conf'] = { icon = icons.gear, name = 'conf', color = palette.black },
+  ['dat'] = { icon = icons.file, name = 'dat', color = palette.brightblack },
   ['json'] = { icon = icons.gear, name = 'json', color = palette.black },
   ['jsonc'] = { icon = icons.gear, name = 'jsonc', color = palette.black },
   ['log'] = { icon = icons.log, name = 'log', color = palette.red },
