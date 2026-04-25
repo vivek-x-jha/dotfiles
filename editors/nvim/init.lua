@@ -1,3 +1,6 @@
+-- Keep headless/non-shell launches (for example Codex-run `nvim --headless`) on the XDG log path too.
+vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nvim.log')
+
 -- Configure options
 require 'opts'
 
