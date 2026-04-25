@@ -60,10 +60,6 @@
       "rev": "72f56f7585903cd7bf92c665351aa585e150af0f",
       "src": "https://github.com/nvim-pack/nvim-spectre"
     },
-    "nvim-statusline": {
-      "rev": "0b9f965c5a6bb8880f01e638d9ed53fa4df00cda",
-      "src": "https://github.com/vivek-x-jha/nvim-statusline"
-    },
     "nvim-surround": {
       "rev": "9291040de8cd8a4439eb64c441e8d5d2bf884a5a",
       "src": "https://github.com/kylechui/nvim-surround"

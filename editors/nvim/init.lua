@@ -14,11 +14,7 @@ require 'autocmds'
 require 'plugins'
 
 -- Initialize statusline
-_G.sourdiesel_statusline = function()
-  local ok, statusline = pcall(require, 'nvim-statusline')
-  return ok and statusline.setup() or ''
-end
-vim.o.statusline = '%!v:lua.sourdiesel_statusline()'
+vim.o.statusline = "%!v:lua.require('statusline').setup()"
 
 -- Set highlights
 vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors

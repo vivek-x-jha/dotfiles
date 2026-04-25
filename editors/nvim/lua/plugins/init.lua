@@ -15,7 +15,6 @@ vim.pack.add {
   { src = 'https://github.com/rcarriga/nvim-notify' },
   { src = 'https://github.com/vivek-x-jha/nvim-sourdiesel' },
   { src = 'https://github.com/nvim-pack/nvim-spectre' },
-  { src = 'https://github.com/vivek-x-jha/nvim-statusline' },
   { src = 'https://github.com/kylechui/nvim-surround' },
   { src = 'https://github.com/vivek-x-jha/nvim-terminal' },
   { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
