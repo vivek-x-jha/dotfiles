@@ -87,6 +87,7 @@ local devicon_overrides = {
   ['allowed_signers'] = { icon = icons.signature, name = 'allowed_signers', color = palette.brightblue },
   ['known_hosts'] = { icon = icons.host, name = 'known_hosts', color = palette.brightblue },
   ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json', color = palette.black },
+  ['.netrwhist'] = { icon = icons.netrwhist, name = '.netrwhist', color = palette.brightblack },
   ['.stylua.toml'] = { icon = icons.gear, name = '.stylua.toml', color = palette.black },
   ['agent.toml'] = { icon = icons.gear, name = 'agent.toml', color = palette.magenta },
   ['btop.conf'] = { icon = icons.gear, name = 'btop.conf', color = palette.magenta },
