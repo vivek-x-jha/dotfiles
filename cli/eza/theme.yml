@@ -1863,6 +1863,13 @@ extensions:
       glyph: ""
       style:
         foreground: black
+  dat:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
   log:
     filename:
       foreground: red
