@@ -14,12 +14,10 @@ vim.pack.add {
   { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
   { src = 'https://github.com/rcarriga/nvim-notify' },
   { src = 'https://github.com/vivek-x-jha/nvim-sourdiesel' },
-  { src = 'https://github.com/nvim-pack/nvim-spectre' },
   { src = 'https://github.com/kylechui/nvim-surround' },
   { src = 'https://github.com/vivek-x-jha/nvim-terminal' },
   { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' }, -- nvim-tree + statusline icons
-  { src = 'https://github.com/nvim-lua/plenary.nvim' }, -- spectre dependency
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
@@ -29,5 +27,4 @@ require 'plugins.files'
 require 'plugins.format'
 require 'plugins.ui'
 require 'plugins.git'
-require 'plugins.refactor'
 require 'plugins.fzf'

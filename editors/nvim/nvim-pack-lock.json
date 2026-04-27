@@ -56,10 +56,6 @@
       "rev": "c9bf3e46dfe3856cc25c54e3d4a503444f169d7f",
       "src": "https://github.com/vivek-x-jha/nvim-sourdiesel"
     },
-    "nvim-spectre": {
-      "rev": "72f56f7585903cd7bf92c665351aa585e150af0f",
-      "src": "https://github.com/nvim-pack/nvim-spectre"
-    },
     "nvim-surround": {
       "rev": "9291040de8cd8a4439eb64c441e8d5d2bf884a5a",
       "src": "https://github.com/kylechui/nvim-surround"
@@ -75,10 +71,6 @@
     "nvim-web-devicons": {
       "rev": "8069e89df2d7259704286a5906a11c5b27d5b440",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
-    },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "vim-tmux-navigator": {
       "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",

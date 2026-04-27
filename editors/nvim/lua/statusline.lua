@@ -211,11 +211,24 @@ M.state = lspmsg
 M.setup = function()
   local statusline = {}
   local is_term_buf = vim.tbl_contains({ 't', 'nt' }, vim.api.nvim_get_mode().mode)
-  local is_spectre_buf = vim.bo.filetype == 'spectre_panel'
-  local module_order = (is_term_buf or is_spectre_buf) and { 'mode', '%=', 'cwd', 'cursor' }
-    or { 'mode', 'git_branch', 'git_status', 'file', 'git_diff', '%=', 'lsp_msg', '%=', 'diagnostics', 'lsp', 'cwd', 'cursor' }
+  local term_buf_mods = { 'mode', '%=', 'cwd', 'cursor' }
 
-  for _, mod in ipairs(module_order) do
+  local default_mods = {
+    'mode',
+    'git_branch',
+    'git_status',
+    'file',
+    'git_diff',
+    '%=',
+    'lsp_msg',
+    '%=',
+    'diagnostics',
+    'lsp',
+    'cwd',
+    'cursor',
+  }
+
+  for _, mod in ipairs(is_term_buf and term_buf_mods or default_mods) do
     table.insert(statusline, mod == '%=' and mod or modules[mod]())
   end
 
