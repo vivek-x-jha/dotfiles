@@ -5,7 +5,6 @@ local fzf_notify = require 'plugins.fzf.pickers.notify'
 local gitsigns = require 'gitsigns'
 local noice = require 'noice'
 local tree = require('nvim-tree.api').tree
-local spectre = require 'spectre'
 
 keymap('n', '<leader>ff', function() fzf.files() end, { desc = '[F]ind [F]iles' })
 keymap('n', '<leader>fo', function() fzf.oldfiles() end, { desc = '[R]ecent [B]uffers' })
@@ -22,11 +21,6 @@ keymap('n', '<leader>un', function() fzf_notify.history() end, { desc = 'Notific
 
 -- Toggle git blame
 keymap('n', '<leader>gb', function() gitsigns.toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
-
--- Toggle search and replace
-keymap('n', '<leader>S', function() spectre.toggle() end, { desc = 'Toggle [S]pectre' })
-keymap('n', '<leader>sw', function() spectre.open_visual { select_word = true } end, { desc = '[S]earch current [w]ord' })
-keymap('v', '<leader>sw', function() spectre.open_visual() end, { desc = '[S]earch current [w]ord' })
 
 -- Toggle File Explorer
 keymap('n', '<C-n>', function()
