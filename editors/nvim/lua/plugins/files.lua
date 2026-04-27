@@ -89,6 +89,7 @@ local devicon_overrides = {
   ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json', color = palette.black },
   ['.netrwhist'] = { icon = icons.netrwhist, name = '.netrwhist', color = palette.brightblack },
   ['.stylua.toml'] = { icon = icons.gear, name = '.stylua.toml', color = palette.black },
+  ['main.shada'] = { icon = icons.vim, name = 'main.shada', color = palette.brightblack },
   ['agent.toml'] = { icon = icons.gear, name = 'agent.toml', color = palette.magenta },
   ['btop.conf'] = { icon = icons.gear, name = 'btop.conf', color = palette.magenta },
   ['btop.log'] = { icon = icons.log, name = 'btop.log', color = palette.red },
@@ -118,6 +119,7 @@ local devicon_overrides = {
   ['json'] = { icon = icons.gear, name = 'json', color = palette.black },
   ['jsonc'] = { icon = icons.gear, name = 'jsonc', color = palette.black },
   ['log'] = { icon = icons.log, name = 'log', color = palette.red },
+  ['shada'] = { icon = icons.vim, name = 'shada', color = palette.brightblack },
   ['terminal'] = { icon = icons.color, name = 'terminal', color = palette.cyan },
   ['toml'] = { icon = icons.gear, name = 'toml', color = palette.black },
   ['tmtheme'] = { icon = icons.color, name = 'tmTheme', color = palette.cyan },
@@ -170,6 +172,12 @@ local devicon_overrides = {
   ['project.assets.json'] = { icon = icons.package, name = 'project.assets', color = palette.brightmagenta },
   ['nvim-pack-lock.json'] = { icon = icons.package, name = 'nvim-pack-lock', color = palette.brightmagenta },
 }
+
+for byte = string.byte 'a', string.byte 'z' do
+  local suffix = string.char(byte)
+  local name = 'main.shada.tmp.' .. suffix
+  devicon_overrides[name] = { icon = icons.vim, name = name, color = palette.brightblack }
+end
 
 devicons.setup { override = devicon_overrides }
 -- setup() is ignored if devicons loaded earlier; set_icon() keeps overrides deterministic.
