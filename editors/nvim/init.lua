@@ -13,6 +13,9 @@ require 'autocmds'
 -- Configure plugins
 require 'plugins'
 
+-- Create user commands
+require 'usercmds'
+
 -- Initialize statusline
 vim.o.statusline = "%!v:lua.require('statusline').setup()"
 
