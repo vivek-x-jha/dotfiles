@@ -716,6 +716,222 @@ filenames:
       style:
         foreground: 08
 
+  main.shada:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.a:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.b:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.c:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.d:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.e:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.f:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.g:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.h:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.i:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.j:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.k:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.l:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.m:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.n:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.o:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.p:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.q:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.r:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.s:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.t:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.u:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.v:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.w:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.x:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.y:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  main.shada.tmp.z:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
   agent.toml:
     filename:
       foreground: magenta
@@ -1842,6 +2058,13 @@ extensions:
       glyph: ""
       style:
         foreground: black
+  shada:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
   lua:
     filename:
       foreground: 15
