@@ -2,8 +2,6 @@ local blink = require 'blink.cmp'
 local colors = require 'nvim-highlight-colors'
 local ls = require 'luasnip' ---@type any
 
-require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
-require('nvim-surround').setup()
 colors.setup { render = 'virtual' }
 
 require('luasnip.loaders.from_vscode').lazy_load()
