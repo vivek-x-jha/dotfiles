@@ -50,7 +50,7 @@ vim.pack.add {
 require 'plugins.autocomplete'
 require 'plugins.editing'
 require 'plugins.files'
-require 'plugins.format'
+require 'plugins.conform'
 require 'plugins.ui'
 require 'plugins.gitsigns'
 require 'plugins.fzf'
