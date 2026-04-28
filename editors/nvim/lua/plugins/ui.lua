@@ -6,6 +6,12 @@ vim.notify.setup {
   stages = 'fade',
 }
 
+require('ibl').setup {
+  indent = {
+    char = '┊',
+  },
+}
+
 require('noice').setup {
   presets = { command_palette = true, long_message_to_split = true },
 

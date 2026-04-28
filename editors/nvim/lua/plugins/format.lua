@@ -12,9 +12,3 @@ require('conform').setup {
     sh = { 'shfmt' },
   },
 }
-
-require('ibl').setup {
-  indent = {
-    char = '┊',
-  },
-}
