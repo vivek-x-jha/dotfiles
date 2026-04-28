@@ -1,16 +1,16 @@
--- Standardize non-interactive history
+-- Standardize Neovim logging for interactive and headless launches.
 vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nvim.log')
 
--- Configure options
+-- Configure core editor options.
 require 'opts'
 
--- Configure diagnostics and LSP servers
+-- Configure diagnostics and LSP servers.
 require 'lsp'
 
--- Set event triggers
+-- Register autocommands.
 require 'autocmds'
 
--- Configure plugins
+-- Register plugin sources.
 vim.pack.add {
   { src = 'https://github.com/saghen/blink.lib' },
   { src = 'https://github.com/saghen/blink.cmp' },
@@ -33,6 +33,7 @@ vim.pack.add {
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 }
 
+-- Configure plugin modules.
 require 'plugins.autocomplete'
 require 'plugins.files'
 require 'plugins.format'
@@ -40,14 +41,14 @@ require 'plugins.ui'
 require 'plugins.gitsigns'
 require 'plugins.fzf'
 
--- Create user commands
+-- Register user commands.
 require 'usercmds'
 
--- Initialize statusline
+-- Initialize the local statusline.
 vim.o.statusline = "%!v:lua.require('statusline').setup()"
 
--- Set highlights
+-- Apply the shell-aligned colorscheme.
 vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors
 
--- Set keymaps - defer to next event loop to prevent unwanted remappings
+-- Defer keymaps to the next event loop to avoid unwanted remappings.
 vim.schedule(function() require 'keymaps' end)
