@@ -114,6 +114,7 @@ local applications = {
   n = 'Notes',
   o = 'Skim',
   p = 'Photos',
+  q = 'thinkorswim',
   r = 'Reminders',
   s = 'Spotify',
   t = 'WhatsApp',
