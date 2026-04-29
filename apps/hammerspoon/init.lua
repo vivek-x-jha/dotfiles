@@ -90,6 +90,65 @@ local toggle = function(app)
   end
 end
 
+local thinkorswim_focus_token = 0
+
+--- Give thinkorswim's Java login window an initial click so keyboard focus starts.
+--- @param token number
+--- @return nil
+local focus_thinkorswim_login = function(token)
+  if token ~= thinkorswim_focus_token then return end
+
+  local app = hs.application.get 'java-arm' or hs.application.find 'java-arm' or hs.application.get 'thinkorswim'
+  if not app then return end
+  if app:isHidden() then return end
+
+  app:activate()
+  app:unhide()
+
+  local win = app:mainWindow()
+  if not win then return end
+
+  win:raise()
+  win:focus()
+
+  local frame = win:frame()
+  local point = {
+    x = frame.x + math.floor(frame.w * 0.5),
+    y = frame.y + math.floor(frame.h * 0.48),
+  }
+
+  hs.timer.doAfter(0.15, function()
+    hs.mouse.absolutePosition(point)
+    hs.eventtap.leftClick(point)
+  end)
+end
+
+--- Toggle thinkorswim and seed keyboard focus after launch/focus.
+--- @return nil
+local toggle_thinkorswim = function()
+  local app = hs.application.get 'java-arm' or hs.application.find 'java-arm' or hs.application.get 'thinkorswim'
+
+  if app and app:isFrontmost() then
+    thinkorswim_focus_token = thinkorswim_focus_token + 1
+    app:hide()
+    return
+  end
+
+  thinkorswim_focus_token = thinkorswim_focus_token + 1
+  local token = thinkorswim_focus_token
+
+  if not app then
+    hs.application.launchOrFocus 'thinkorswim'
+  else
+    app:activate()
+    app:unhide()
+  end
+
+  hs.timer.doAfter(2, function() focus_thinkorswim_login(token) end)
+  hs.timer.doAfter(5, function() focus_thinkorswim_login(token) end)
+  hs.timer.doAfter(10, function() focus_thinkorswim_login(token) end)
+end
+
 -- Mods
 local ctrl_alt = { 'ctrl', 'alt' }
 local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
@@ -165,6 +224,8 @@ for key, app in pairs(applications) do
     pressedfn = hs.reload
   elseif key == '/' then
     pressedfn = show_app_hotkeys
+  elseif app == 'thinkorswim' then
+    pressedfn = toggle_thinkorswim
   end
 
   hs.hotkey.bind(ctrl_alt_cmd, key, message, pressedfn)
