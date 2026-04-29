@@ -72,19 +72,21 @@ local toggle = function(app)
 
   if appObj and appObj:isFrontmost() then
     appObj:hide()
-  else
-    if not appObj then
-      hs.application.launchOrFocus(app)
-    else
-      appObj:activate()
-      appObj:unhide()
+    return
+  end
 
-      local win = appObj:mainWindow()
-      if win then
-        win:raise()
-        win:focus()
-      end
-    end
+  if not appObj then
+    hs.application.launchOrFocus(app)
+    return
+  end
+
+  appObj:activate()
+  appObj:unhide()
+
+  local win = appObj:mainWindow()
+  if win then
+    win:raise()
+    win:focus()
   end
 end
 
