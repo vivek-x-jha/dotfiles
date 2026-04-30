@@ -276,6 +276,18 @@ filenames:
     icon:
       glyph: ""
 
+  markdown:
+    icon:
+      glyph: ""
+
+  node:
+    icon:
+      glyph: ""
+
+  node_modules:
+    icon:
+      glyph: ""
+
   shells:
     icon:
       glyph: ""
