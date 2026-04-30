@@ -1,15 +1,15 @@
 # =========================
-# Project Environment Files
+# Project-Specific
 # =========================
 .env*
 
-ssh/*
-!ssh/allowed_signers
-!ssh/config
-!ssh/known_hosts
+auth/ssh/*
+!auth/ssh/allowed_signers
+!auth/ssh/config
+!auth/ssh/known_hosts
 
-karabiner/assets
-karabiner/automatic_backups
+apps/karabiner/*
+!apps/karabiner/karabiner.json
 
 # =========================
 # System Files
@@ -61,4 +61,4 @@ Sessionx.vim
 # Logs & Tags
 # =========================
 *.log
-tags._]*.un~
+tags
