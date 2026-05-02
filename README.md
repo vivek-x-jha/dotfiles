@@ -310,7 +310,7 @@ The Rust install flow:
 3. Installs `cargo-update`.
 4. Installs cargo-managed CLI tools from the Brewfile cargo section.
 
-`update-all` asks before running `cargo install-update -a --git`. The default answer is **No** when pressing Enter.
+`update-all -r` updates the stable Rust toolchain and cargo-installed tools. Without `-r`, Rust updates are skipped.
 
 ## 📦 Package Management
 
@@ -370,12 +370,19 @@ Interactive update helper:
 update-all
 ```
 
+Include Rust toolchain and cargo-installed tool updates:
+
+```sh
+update-all --rust
+```
+
 Typical manual update checks:
 
 ```sh
 brew update
 brew upgrade
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
+tldr --update
 rustup update stable
 cargo install-update -a --git
 uv tool upgrade --all
