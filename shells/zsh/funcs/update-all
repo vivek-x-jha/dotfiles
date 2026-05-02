@@ -1,14 +1,40 @@
 #!/usr/bin/env zsh
 
-# Usage: update-all [IconsDir]
-#   IconsDir  (optional): directory containing custom macOS icons (default: ~/Pictures/icons)
-local icons_dir="${1:-$HOME/Pictures/icons}"
+# Usage:
+#   update-all [-r|--rust] [IconsDir]
+#
+# Options:
+#   -r, --rust  update Rust toolchain and cargo-installed tools
+#   -h, --help  print usage
+#
+# Arguments:
+#   IconsDir    optional custom macOS icons directory (default: ~/Pictures/icons)
+local icons_dir="$HOME/Pictures/icons"
+local update_rust=0
+
+while (( $# )); do
+  case "$1" in
+  -r|--rust) update_rust=1 ;;
+  -h|--help)
+    printf 'Usage: update-all [-r|--rust] [IconsDir]\n'
+    return
+    ;;
+  *) icons_dir="$1" ;;
+  esac
+  shift
+done
 
 local ICON='󰓒'
 local STEP=0
 local SUBSTEP=0
 local TOTAL_STEPS=6
+((update_rust)) && TOTAL_STEPS=$((TOTAL_STEPS + 1))
 
+# Usage:
+#   logg "message"
+#   logg -w "warning"
+#   logg -e "error"
+#   logg -c "command"
 logg() {
   local level=INFO color="$BLACK" cmd=''
 
@@ -19,17 +45,17 @@ logg() {
   esac
 
   local message="$*"
-  if [[ -n $cmd ]]; then
-    message="Running ${GREEN}${cmd}${RESET}"
-  fi
+  [[ -n $cmd ]] && message="Running ${GREEN}${cmd}${RESET}"
 
   printf '%b[%s] %b%b\n' "$color" "$level" "$message" "$RESET"
-  if [[ -n $cmd ]]; then
-    eval "$cmd"
-    return $?
-  fi
+  [[ -z $cmd ]] && return
+
+  eval "$cmd"
 }
 
+# Usage:
+#   notify "major step"
+#   notify -s "minor step"
 notify() {
   local minor=''
   case "$1" in
@@ -51,16 +77,15 @@ notify 'UPDATE TMUX PLUGINS'
 logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
   logg -w 'UPDATE TMUX PLUGINS FAILED'
 
-notify 'UPDATE RUST TOOLCHAIN'
-logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
+notify 'UPDATE TLDR CACHE'
+logg -c 'tldr --update' || logg -w 'UPDATE TLDR CACHE FAILED'
 
-notify -s 'UPDATE RUST TOOLS'
-local reply=''
-[[ -t 0 ]] && read -r "?Update cargo-installed Rust tools [y/N]? " reply
-case "${reply:l}" in
-  y|yes) logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED' ;;
-  *) logg -w 'SKIPPING RUST TOOLS UPDATE' ;;
-esac
+((update_rust)) && {
+  notify 'UPDATE RUST TOOLCHAIN AND TOOLS'
+  logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
+  notify -s 'UPDATE RUST TOOLS'
+  logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED'
+}
 
 notify 'RUN HOMEBREW MAINTENANCE'
 notify -s 'UPGRADE FORMULAE AND CASKS'
