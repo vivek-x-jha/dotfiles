@@ -5,11 +5,11 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "4776d26ed08443c11b661cb6cf57c04ba6674bdf",
+      "rev": "80f5dd3f11049f1c3a87557718d4e55556a0e3f5",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
-      "rev": "878fbf9c4539aaca04b48039ffc897efb1ef4ae6",
+      "rev": "f29d8bac6549bc1e7d699c83f680823d7def98bd",
       "src": "https://github.com/saghen/blink.lib"
     },
     "conform.nvim": {
@@ -17,7 +17,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "5b36002c54d647307339714cec47e89c2c2c50c1",
+      "rev": "10c19a5f08bfeed34b930a1efddda3a9a983e6e2",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
