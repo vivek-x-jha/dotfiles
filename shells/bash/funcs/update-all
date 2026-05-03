@@ -86,8 +86,7 @@ update-all() {
   logg -c 'tldr --update' || logg -w 'UPDATE TLDR CACHE FAILED'
 
   notify 'UPDATE FZF'
-  local fzf_dir="$XDG_DATA_HOME/fzf"
-  logg -c "git -C \"$fzf_dir\" pull --ff-only" || logg -w 'UPDATE FZF CHECKOUT FAILED'
+  logg -c "git -C \"$XDG_DATA_HOME/fzf\" pull --ff-only" || logg -w 'UPDATE FZF CHECKOUT FAILED'
 
   ((update_nvim)) && {
     notify 'UPDATE NEOVIM PLUGINS'
