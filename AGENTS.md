@@ -34,7 +34,7 @@ Main flow in `bootstrap.sh`:
 
 1. Detect platform and package manager (`detect_platform`)
 2. Refresh sudo auth + detect 1Password (`authorize`, `use_op`)
-3. Install package sets (`setup_package_manager`, `install_package_sets`)
+3. Install package sets (`setup_package_manager`, `install_package_sets`) and fzf (`install_fzf`)
 4. Collect runtime/user environment (`collect_environment`)
 5. Create symlinks + state directories (`create_symlinks`)
 6. Apply OS defaults (`configure_macos_defaults`)
@@ -70,11 +70,11 @@ Implementation: `create_symlinks`.
 
 ### 2) Package Management by Platform
 
-- macOS: Homebrew + Brewfile flow
-- Debian/Ubuntu: apt manifests + optional GUI app installs
-- Fedora/RHEL: dnf manifests + optional GUI app installs
+- macOS: Homebrew + Brewfile flow + upstream fzf git install
+- Debian/Ubuntu: apt manifests + upstream fzf git install + optional GUI app installs
+- Fedora/RHEL: dnf manifests + upstream fzf git install + optional GUI app installs
 
-Implementation: `setup_package_manager`, `install_package_sets`, `install_linux_gui_apps_*`.
+Implementation: `setup_package_manager`, `install_package_sets`, `install_fzf`, `install_linux_gui_apps_*`.
 
 ### 3) 1Password-Aware Setup
 

@@ -9,6 +9,9 @@
 # Prepend uv tools to PATH
 PATH="$HOME/.local/bin:$PATH"
 
+# Prepend XDG-managed fzf to PATH when installed from upstream git
+[[ -d "$XDG_DATA_HOME/fzf/bin" ]] && PATH="$XDG_DATA_HOME/fzf/bin:$PATH"
+
 # Add cargo bin to PATH (respects XDG CARGO_HOME override)
 PATH="$CARGO_HOME/bin:$PATH"
 

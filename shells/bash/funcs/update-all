@@ -17,7 +17,7 @@ update-all() {
   local ICON='󰓒'
   local STEP=0
   local SUBSTEP=0
-  local TOTAL_STEPS=6
+  local TOTAL_STEPS=7
 
   while (($#)); do
     case "$1" in
@@ -84,6 +84,10 @@ update-all() {
 
   notify 'UPDATE TLDR CACHE'
   logg -c 'tldr --update' || logg -w 'UPDATE TLDR CACHE FAILED'
+
+  notify 'UPDATE FZF'
+  local fzf_dir="$XDG_DATA_HOME/fzf"
+  logg -c "git -C \"$fzf_dir\" pull --ff-only" || logg -w 'UPDATE FZF CHECKOUT FAILED'
 
   ((update_nvim)) && {
     notify 'UPDATE NEOVIM PLUGINS'
