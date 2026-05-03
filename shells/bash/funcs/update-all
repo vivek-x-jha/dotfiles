@@ -2,15 +2,17 @@
 
 update-all() {
   # Usage:
-  #   update-all [-r|--rust] [IconsDir]
+  #   update-all [-n|--nvim] [-r|--rust] [IconsDir]
   #
   # Options:
+  #   -n, --nvim  update Neovim plugins
   #   -r, --rust  update Rust toolchain and cargo-installed tools
   #   -h, --help  print usage
   #
   # Arguments:
   #   IconsDir    optional custom macOS icons directory (default: ~/Pictures/icons)
   local icons_dir="$HOME/Pictures/icons"
+  local update_nvim=0
   local update_rust=0
   local ICON='󰓒'
   local STEP=0
@@ -19,9 +21,10 @@ update-all() {
 
   while (($#)); do
     case "$1" in
+    -n|--nvim) update_nvim=1 ;;
     -r|--rust) update_rust=1 ;;
     -h|--help)
-      printf 'Usage: update-all [-r|--rust] [IconsDir]\n'
+      printf 'Usage: update-all [-n|--nvim] [-r|--rust] [IconsDir]\n'
       return
       ;;
     *) icons_dir="$1" ;;
@@ -29,6 +32,7 @@ update-all() {
     shift
   done
 
+  ((update_nvim)) && TOTAL_STEPS=$((TOTAL_STEPS + 1))
   ((update_rust)) && TOTAL_STEPS=$((TOTAL_STEPS + 1))
 
   # Usage:
@@ -80,6 +84,11 @@ update-all() {
 
   notify 'UPDATE TLDR CACHE'
   logg -c 'tldr --update' || logg -w 'UPDATE TLDR CACHE FAILED'
+
+  ((update_nvim)) && {
+    notify 'UPDATE NEOVIM PLUGINS'
+    logg -c "nvim --headless '+lua vim.pack.update()' '+qa'" || logg -w 'UPDATE NEOVIM PLUGINS FAILED'
+  }
 
   ((update_rust)) && {
     notify 'UPDATE RUST TOOLCHAIN AND TOOLS'
