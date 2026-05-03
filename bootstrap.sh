@@ -460,6 +460,33 @@ install_package_sets() {
   fi
 }
 
+# Install fzf from upstream git so the binary lives under XDG data.
+install_fzf() {
+  notify -s 'Installing fzf'
+
+  local fzf_dir="$XDG_DATA_HOME/fzf"
+  run "mkdir -p \"$XDG_DATA_HOME\""
+
+  if [[ -d $fzf_dir/.git ]]; then
+    run "git -C \"$fzf_dir\" pull --ff-only"
+  elif [[ -e $fzf_dir ]]; then
+    logg -w "fzf path already exists and is not a git checkout: $(pretty_path "$fzf_dir")"
+    logg -w 'Skipping fzf git install.'
+    return
+  else
+    run "git clone --depth 1 https://github.com/junegunn/fzf.git \"$fzf_dir\""
+  fi
+
+  [[ -L $fzf_dir/bin/fzf ]] && run "rm -f \"$fzf_dir/bin/fzf\""
+
+  [[ -x $fzf_dir/install ]] && {
+    run "PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\" \"$fzf_dir/install\" --bin --no-update-rc"
+    return
+  }
+
+  logg -w "fzf installer not found: $(pretty_path "$fzf_dir/install")"
+}
+
 # Fetch a secret field from 1Password if enabled
 
 # Collect environment preferences and prompt for 1Password data
@@ -1291,6 +1318,7 @@ HELP
   notify 'INSTALL COMMANDS & APPS'
   setup_package_manager
   install_package_sets
+  install_fzf
 
   notify 'SET ENVIRONMENT'
   collect_environment
