@@ -71,10 +71,10 @@ Implementation: `create_symlinks`.
 ### 2) Package Management by Platform
 
 - macOS: Homebrew + Brewfile flow + upstream fzf git install
-- Debian/Ubuntu: apt manifests + upstream fzf git install + Charm repo Glow install + optional GUI app installs
-- Fedora/RHEL: dnf manifests + upstream fzf git install + Charm repo Glow install + optional GUI app installs
+- Debian/Ubuntu: apt manifests + upstream fzf git install + GitHub CLI repo install + Charm repo Glow install + optional GUI app installs
+- Fedora/RHEL: dnf manifests + upstream fzf git install + GitHub CLI install + Charm repo Glow install + optional GUI app installs
 
-Implementation: `setup_package_manager`, `install_package_sets`, `install_fzf`, `install_glow`, `install_linux_gui_apps_*`.
+Implementation: `setup_package_manager`, `install_package_sets`, `install_fzf`, `install_gh`, `install_glow`, `install_linux_gui_apps_*`.
 
 ### 3) 1Password-Aware Setup
 
