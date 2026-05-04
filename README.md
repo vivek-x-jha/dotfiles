@@ -343,6 +343,8 @@ Linux packages are split by package manager:
 - [`manifests/apt-packages.txt`](./manifests/apt-packages.txt)
 - [`manifests/dnf-packages.txt`](./manifests/dnf-packages.txt)
 
+Glow is installed from Charm's official Linux repository because Debian/Ubuntu and Fedora need that vendor repo before `glow` can be installed reliably.
+
 GUI apps are installed through distro repos, vendor repos, direct packages, or Flatpak where available.
 
 ## 🧪 Validation

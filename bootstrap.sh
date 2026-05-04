@@ -487,6 +487,56 @@ install_fzf() {
   logg -w "fzf installer not found: $(pretty_path "$fzf_dir/install")"
 }
 
+# Install Glow from Charm's Linux package repositories.
+install_glow() {
+  [[ $OS_TYPE == linux ]] || return
+  command -v glow &>/dev/null && return
+
+  notify -s 'Installing Glow'
+
+  if [[ $PKG_MGR == apt ]]; then
+    local charm_key='/etc/apt/keyrings/charm.gpg'
+    local charm_list='/etc/apt/sources.list.d/charm.list'
+
+    run 'sudo mkdir -p /etc/apt/keyrings'
+
+    [[ -f $charm_key ]] || {
+      require gpg || return
+      run "curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o \"$charm_key\""
+    }
+
+    [[ -f $charm_list ]] || run "printf '%s\n' 'deb [signed-by=$charm_key] https://repo.charm.sh/apt/ * *' | sudo tee \"$charm_list\" >/dev/null"
+
+    run 'sudo apt update'
+    run 'sudo apt install -y glow'
+    return
+  fi
+
+  if [[ $PKG_MGR == dnf ]]; then
+    local charm_repo='/etc/yum.repos.d/charm.repo'
+    local dnf_exec="${DNF_CMD:-$(command -v dnf 2>/dev/null || command -v dnf5 2>/dev/null)}"
+
+    [[ -n $dnf_exec ]] || {
+      logg -w 'dnf command not found. Skipping Glow install.'
+      return
+    }
+
+    [[ -f $charm_repo ]] || run "sudo tee \"$charm_repo\" >/dev/null <<'EOF'
+[charm]
+name=Charm
+baseurl=https://repo.charm.sh/yum/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.charm.sh/yum/gpg.key
+EOF"
+
+    run "sudo $dnf_exec install -y glow"
+    return
+  fi
+
+  logg -w "No Glow installer defined for package manager: $PKG_MGR"
+}
+
 # Fetch a secret field from 1Password if enabled
 
 # Collect environment preferences and prompt for 1Password data
@@ -1319,6 +1369,7 @@ HELP
   setup_package_manager
   install_package_sets
   install_fzf
+  install_glow
 
   notify 'SET ENVIRONMENT'
   collect_environment

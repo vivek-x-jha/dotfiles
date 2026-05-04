@@ -10,6 +10,7 @@ fd-find
 bat
 python3
 python3-pip
+gnupg
 pkg-config
 libssl-dev
 libsqlite3-dev
