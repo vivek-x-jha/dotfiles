@@ -17,6 +17,5 @@ libsqlite3-dev
 unzip
 nodejs
 npm
-github-cli
 
 # Add additional packages below as needed

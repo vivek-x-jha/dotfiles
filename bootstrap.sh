@@ -487,6 +487,47 @@ install_fzf() {
   logg -w "fzf installer not found: $(pretty_path "$fzf_dir/install")"
 }
 
+# Install GitHub CLI from official Linux package repositories.
+install_gh() {
+  [[ $OS_TYPE == linux ]] || return
+  command -v gh &>/dev/null && return
+
+  notify -s 'Installing GitHub CLI'
+
+  if [[ $PKG_MGR == apt ]]; then
+    local github_key='/etc/apt/keyrings/githubcli-archive-keyring.gpg'
+    local github_list='/etc/apt/sources.list.d/github-cli.list'
+
+    run 'sudo mkdir -p /etc/apt/keyrings'
+
+    [[ -f $github_key ]] || {
+      require gpg || return
+      run "curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee \"$github_key\" >/dev/null"
+      run "sudo chmod go+r \"$github_key\""
+    }
+
+    [[ -f $github_list ]] || run "printf '%s\n' 'deb [arch=$(dpkg --print-architecture) signed-by=$github_key] https://cli.github.com/packages stable main' | sudo tee \"$github_list\" >/dev/null"
+
+    run 'sudo apt update'
+    run 'sudo apt install -y gh'
+    return
+  fi
+
+  if [[ $PKG_MGR == dnf ]]; then
+    local dnf_exec="${DNF_CMD:-$(command -v dnf 2>/dev/null || command -v dnf5 2>/dev/null)}"
+
+    [[ -n $dnf_exec ]] || {
+      logg -w 'dnf command not found. Skipping GitHub CLI install.'
+      return
+    }
+
+    run "sudo $dnf_exec install -y gh"
+    return
+  fi
+
+  logg -w "No GitHub CLI installer defined for package manager: $PKG_MGR"
+}
+
 # Install Glow from Charm's Linux package repositories.
 install_glow() {
   [[ $OS_TYPE == linux ]] || return
@@ -1369,6 +1410,7 @@ HELP
   setup_package_manager
   install_package_sets
   install_fzf
+  install_gh
   install_glow
 
   notify 'SET ENVIRONMENT'
