@@ -89,7 +89,7 @@ logg -c "git -C \"$XDG_DATA_HOME/fzf\" pull --ff-only" || logg -w 'UPDATE FZF CH
 
 ((update_nvim)) && {
   notify 'UPDATE NEOVIM PLUGINS'
-  logg -c "nvim --headless '+lua vim.pack.update()' '+qa'" || logg -w 'UPDATE NEOVIM PLUGINS FAILED'
+  logg -c "nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'" || logg -w 'UPDATE NEOVIM PLUGINS FAILED'
 }
 
 ((update_rust)) && {
