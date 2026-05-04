@@ -310,7 +310,7 @@ The Rust install flow:
 3. Installs `cargo-update`.
 4. Installs cargo-managed CLI tools from the Brewfile cargo section.
 
-`update-all -n` updates Neovim plugins through `vim.pack.update()`. `update-all -r` updates the stable Rust toolchain and cargo-installed tools. Without these flags, Neovim and Rust updates are skipped.
+`update-all -n` updates Neovim plugins through `vim.pack.update(nil, { force = true })`. `update-all -r` updates the stable Rust toolchain and cargo-installed tools. Without these flags, Neovim and Rust updates are skipped.
 
 ## 📦 Package Management
 
@@ -392,7 +392,7 @@ brew upgrade
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
 git -C "$XDG_DATA_HOME/fzf" pull --ff-only
-nvim --headless '+lua vim.pack.update()' '+qa'
+nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'
 rustup update stable
 cargo install-update -a --git
 uv tool upgrade --all
