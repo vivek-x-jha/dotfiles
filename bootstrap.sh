@@ -521,6 +521,38 @@ install_fzf() {
   logg -w "fzf installer not found: $(pretty_path "$fzf_dir/install")"
 }
 
+# Ensure an apt keyring and source list exist for a vendor package repository.
+ensure_apt_keyring_repo() {
+  local key_path="$1"
+  local key_command="$2"
+  local list_path="$3"
+  local list_line="$4"
+
+  run 'sudo mkdir -p /etc/apt/keyrings'
+
+  [[ -f $key_path ]] || {
+    require gpg || return
+    run "$key_command"
+  }
+
+  [[ -f $list_path ]] || run "printf '%s\n' '$list_line' | sudo tee \"$list_path\" >/dev/null"
+}
+
+# Ensure a dnf/yum repo file exists for a vendor package repository.
+ensure_dnf_repo_file() {
+  local repo_path="$1"
+  local repo_content="$2"
+
+  [[ -f $repo_path ]] && return
+
+  if ((DRY_RUN)); then
+    logg -i "[dry-run] write dnf repo file $repo_path"
+    return
+  fi
+
+  printf '%s\n' "$repo_content" | sudo tee "$repo_path" >/dev/null
+}
+
 # Install GitHub CLI from official Linux package repositories.
 install_gh() {
   [[ $OS_TYPE == linux ]] || return
@@ -531,16 +563,14 @@ install_gh() {
   if [[ $PKG_MGR == apt ]]; then
     local github_key='/etc/apt/keyrings/githubcli-archive-keyring.gpg'
     local github_list='/etc/apt/sources.list.d/github-cli.list'
+    local github_arch
+    github_arch="$(dpkg --print-architecture 2>/dev/null || printf amd64)"
 
-    run 'sudo mkdir -p /etc/apt/keyrings'
-
-    [[ -f $github_key ]] || {
-      require gpg || return
-      run "curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee \"$github_key\" >/dev/null"
-      run "sudo chmod go+r \"$github_key\""
-    }
-
-    [[ -f $github_list ]] || run "printf '%s\n' 'deb [arch=$(dpkg --print-architecture) signed-by=$github_key] https://cli.github.com/packages stable main' | sudo tee \"$github_list\" >/dev/null"
+    ensure_apt_keyring_repo \
+      "$github_key" \
+      "curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee \"$github_key\" >/dev/null && sudo chmod go+r \"$github_key\"" \
+      "$github_list" \
+      "deb [arch=$github_arch signed-by=$github_key] https://cli.github.com/packages stable main" || return
 
     run 'sudo apt update'
     run 'sudo apt install -y gh'
@@ -573,14 +603,11 @@ install_glow() {
     local charm_key='/etc/apt/keyrings/charm.gpg'
     local charm_list='/etc/apt/sources.list.d/charm.list'
 
-    run 'sudo mkdir -p /etc/apt/keyrings'
-
-    [[ -f $charm_key ]] || {
-      require gpg || return
-      run "curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o \"$charm_key\""
-    }
-
-    [[ -f $charm_list ]] || run "printf '%s\n' 'deb [signed-by=$charm_key] https://repo.charm.sh/apt/ * *' | sudo tee \"$charm_list\" >/dev/null"
+    ensure_apt_keyring_repo \
+      "$charm_key" \
+      "curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o \"$charm_key\"" \
+      "$charm_list" \
+      "deb [signed-by=$charm_key] https://repo.charm.sh/apt/ * *" || return
 
     run 'sudo apt update'
     run 'sudo apt install -y glow'
@@ -596,14 +623,13 @@ install_glow() {
       return
     }
 
-    [[ -f $charm_repo ]] || run "sudo tee \"$charm_repo\" >/dev/null <<'EOF'
-[charm]
+    ensure_dnf_repo_file "$charm_repo" \
+"[charm]
 name=Charm
 baseurl=https://repo.charm.sh/yum/
 enabled=1
 gpgcheck=1
-gpgkey=https://repo.charm.sh/yum/gpg.key
-EOF"
+gpgkey=https://repo.charm.sh/yum/gpg.key"
 
     run "sudo $dnf_exec install -y glow"
     return
