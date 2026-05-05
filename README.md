@@ -75,9 +75,27 @@ Optional: install [1Password for Mac](https://1password.com/downloads/mac/) from
 - Fedora/RHEL use `dnf` or `dnf5`.
 - Optional GUI app installation uses distro package repositories, vendor repositories, `.deb`/`.rpm` downloads, and Flatpak where available.
 
+For a fresh Ubuntu or WSL environment, install the minimum prerequisites first:
+
+```sh
+sudo apt update
+sudo apt install -y git curl sudo bash zsh
+```
+
+Then clone this repo and run bootstrap from the local checkout:
+
+```sh
+git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
+~/.dotfiles/bootstrap.sh --check
+~/.dotfiles/bootstrap.sh --dry-run
+~/.dotfiles/bootstrap.sh
+```
+
+On WSL, GUI application installs are best-effort and can be skipped. The shell, tmux, Neovim, CLI, Git, fzf, and XDG symlink setup are the useful paths there.
+
 ## 🚀 Installation
 
-Use Safari for the optional 1Password install. Run the command blocks below in Terminal.
+On macOS, use Safari for the optional 1Password install. Run the command blocks below in Terminal.
 
 Clone the repository:
 
