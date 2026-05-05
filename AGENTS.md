@@ -25,6 +25,7 @@ It follows `bootstrap.sh` as the source of truth for setup order and behavior.
   - `~/.dotfiles/bootstrap.sh`
 - Flags:
   - `-p`, `--with-1password`: force-enable 1Password integration
+  - `-c`, `--check`: validate repo files and shell syntax, then exit
   - `-n`, `--dry-run`: print actions without executing
   - `-h`, `--help`: usage output
 
@@ -205,8 +206,9 @@ Codex may still need an escalation prompt when the sandbox blocks writes to Git 
 
 After major changes:
 
-1. `bootstrap.sh -n` (dry-run sanity)
-2. Launch a new shell and verify XDG exports/symlinks
-3. Run `work`/tmux flow sanity
-4. Open Neovim and run `:checkhealth`
-5. Run `vim.pack.update()` and confirm blink rebuild hook behavior
+1. `bootstrap.sh --check` (repo and shell syntax sanity)
+2. `bootstrap.sh -n` (dry-run sanity)
+3. Launch a new shell and verify XDG exports/symlinks
+4. Run `work`/tmux flow sanity
+5. Open Neovim and run `:checkhealth`
+6. Run `vim.pack.update()` and confirm blink rebuild hook behavior
