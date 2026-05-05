@@ -350,20 +350,12 @@ install_package_sets() {
       logg -i "Using Brewfile: $brewfile"
 
       if [[ $brewfile =~ ^https?:// ]]; then
-        if ((DRY_RUN)); then
-          logg -i "[dry-run] curl -fsSL $brewfile | brew bundle --file=-"
-        else
-          curl -fsSL "$brewfile" | brew bundle --file=-
-        fi
+        run "curl -fsSL \"$brewfile\" | brew bundle --file=-"
       else
         [[ $brewfile =~ ^~ ]] && brewfile="${HOME}${brewfile:1}"
         brewfile="${brewfile/#\~/$HOME}"
         if [[ -f $brewfile ]]; then
-          if ((DRY_RUN)); then
-            logg -i "[dry-run] brew bundle --file=$brewfile"
-          else
-            brew bundle --file="$brewfile"
-          fi
+          run "brew bundle --file=\"$brewfile\""
         else
           logg -w "Invalid Brewfile path: $brewfile"
         fi
@@ -371,23 +363,19 @@ install_package_sets() {
     fi
 
     notify -s 'Refresh Brewfile snapshot'
-    if ((DRY_RUN)); then
-      logg -i "[dry-run] brew bundle dump --force --file=$HOME/.dotfiles/Brewfile"
-    else
-      brew bundle dump --force --file="$HOME/.dotfiles/Brewfile"
-    fi
+    run "brew bundle dump --force --file=\"$HOME/.dotfiles/Brewfile\""
 
     if confirm "Run brew cleanup & doctor" 'N'; then
       notify -s 'Running brew maintenance'
-      ((DRY_RUN)) || brew cleanup
-      ((DRY_RUN)) || brew doctor
+      run 'brew cleanup'
+      run 'brew doctor'
     fi
 
     if confirm "Update brew formulae & casks" 'N'; then
       notify -s 'Updating Homebrew packages'
-      ((DRY_RUN)) || brew upgrade
+      run 'brew upgrade'
       if command -v brew &>/dev/null && brew tap | grep -q '^buo/cask-upgrade$'; then
-        ((DRY_RUN)) || brew cu -af
+        run 'brew cu -af'
       fi
     fi
   elif [[ $PKG_MGR == dnf ]]; then
@@ -400,11 +388,7 @@ install_package_sets() {
 
     if confirm 'Upgrade Fedora packages' 'Y'; then
       notify -s 'Upgrading system packages'
-      if ((DRY_RUN)); then
-        logg -i "[dry-run] sudo $dnf_exec upgrade --refresh -y"
-      else
-        run "sudo $dnf_exec upgrade --refresh -y"
-      fi
+      run "sudo $dnf_exec upgrade --refresh -y"
     fi
 
     local dnf_manifest="$DNF_MANIFEST_DEFAULT"
@@ -431,11 +415,7 @@ install_package_sets() {
         notify -s 'Installing dnf packages'
         mapfile -t dnf_packages < <(grep -vE '^(#|\s*$)' "$dnf_manifest")
         if [[ ${#dnf_packages[@]} -gt 0 ]]; then
-          if ((DRY_RUN)); then
-            logg -i "[dry-run] sudo $dnf_exec install -y ${dnf_packages[*]}"
-          else
-            sudo "$dnf_exec" install -y "${dnf_packages[@]}"
-          fi
+          run "sudo $dnf_exec install -y ${dnf_packages[*]}"
         else
           logg -w "No packages listed in $(pretty_path "$dnf_manifest")"
         fi
@@ -453,20 +433,12 @@ install_package_sets() {
   elif [[ $PKG_MGR == apt ]]; then
     if confirm "Update apt package lists" 'Y'; then
       notify -s 'Updating apt cache'
-      if ((DRY_RUN)); then
-        logg -i '[dry-run] sudo apt update'
-      else
-        sudo apt update
-      fi
+      run 'sudo apt update'
     fi
 
     if confirm "Upgrade installed apt packages" 'N'; then
       notify -s 'Upgrading apt packages'
-      if ((DRY_RUN)); then
-        logg -i '[dry-run] sudo apt upgrade -y'
-      else
-        sudo apt upgrade -y
-      fi
+      run 'sudo apt upgrade -y'
     fi
 
     local apt_manifest="$APT_MANIFEST_DEFAULT"
@@ -493,11 +465,7 @@ install_package_sets() {
         notify -s 'Installing apt packages'
         mapfile -t apt_packages < <(grep -vE '^(#|\s*$)' "$apt_manifest")
         if [[ ${#apt_packages[@]} -gt 0 ]]; then
-          if ((DRY_RUN)); then
-            logg -i "[dry-run] sudo apt install -y ${apt_packages[*]}"
-          else
-            sudo apt install -y "${apt_packages[@]}"
-          fi
+          run "sudo apt install -y ${apt_packages[*]}"
         else
           logg -w "No packages listed in $(pretty_path "$apt_manifest")"
         fi
@@ -933,20 +901,15 @@ configure_git_and_github() {
       logg -i '[dry-run] gh auth login'
       logg -i "[dry-run] gh repo set-default $GITHUB_NAME/dotfiles"
     else
-      (cd "$HOME/.dotfiles" && gh auth login)
-      (cd "$HOME/.dotfiles" && gh repo set-default "$GITHUB_NAME/dotfiles")
+      run "cd \"$HOME/.dotfiles\" && gh auth login"
+      run "cd \"$HOME/.dotfiles\" && gh repo set-default \"$GITHUB_NAME/dotfiles\""
     fi
   else
     logg -w 'GitHub CLI not installed. Skipping gh auth.'
   fi
 
-  if ((DRY_RUN)); then
-    logg -i "[dry-run] rm -f $HOME/.dotfiles/cli/gh/hosts.yml"
-    logg -i '[dry-run] git add --all'
-  else
-    rm -f "$HOME/.dotfiles/cli/gh/hosts.yml"
-    git -C "$HOME/.dotfiles" add --all || true
-  fi
+  run "rm -f \"$HOME/.dotfiles/cli/gh/hosts.yml\""
+  run "git -C \"$HOME/.dotfiles\" add --all" || true
 }
 
 # Clone curated developer repositories under the user's workspace
@@ -954,7 +917,7 @@ clone_developer_repos() {
   require git || return
 
   local base="$HOME/Developer"
-  mkdir -p "$base"
+  run "mkdir -p \"$base\""
 
   local slug repo_name url dest
   local sorted_slugs=()
@@ -972,8 +935,8 @@ clone_developer_repos() {
       if ((DRY_RUN)); then
         logg -i "[dry-run] git -C $dest remote set-url origin $url"
       else
-        if ! git -C "$dest" remote set-url origin "$url" 2>/dev/null; then
-          git -C "$dest" remote add origin "$url" 2>/dev/null || logg -w "Failed to configure origin for $repo_name."
+        if ! run "git -C \"$dest\" remote set-url origin \"$url\"" 2>/dev/null; then
+          run "git -C \"$dest\" remote add origin \"$url\"" 2>/dev/null || logg -w "Failed to configure origin for $repo_name."
         fi
       fi
       continue
@@ -989,7 +952,7 @@ clone_developer_repos() {
     if ((DRY_RUN)); then
       logg -i "[dry-run] git clone $url $dest"
     else
-      git clone "$url" "$dest" || logg -w "Failed to clone $repo_name from $url."
+      run "git clone \"$url\" \"$dest\"" || logg -w "Failed to clone $repo_name from $url."
     fi
   done
 }
