@@ -44,13 +44,17 @@ DNF_CMD=''
 DEVELOPER_REPOS=(
   vivek-x-jha/agent-smith
   vivek-x-jha/dcp
+  vivek-x-jha/legacy-latex
   vivek-x-jha/notes
   vivek-x-jha/nvim-dashboard
   vivek-x-jha/nvim-launcher
   vivek-x-jha/nvim-sourdiesel
-  vivek-x-jha/nvim-statusline
   vivek-x-jha/nvim-terminal
   vivek-x-jha/practice-sheets
+  rasbt/LLMs-from-scratch
+  vivek-x-jha/todo
+  vivek-x-jha/travel-agent
+  vivek-x-jha/weather-tool
 )
 
 # -------------------------------------- HELPER FUNCTIONS -------------------------------------
