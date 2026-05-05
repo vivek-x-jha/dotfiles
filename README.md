@@ -23,6 +23,7 @@ Personal macOS and Linux workstation configuration centered on a fast terminal w
 - [Repository Layout](#repository-layout)
 - [XDG Config Model](#xdg-config-model)
 - [Tooling Stack](#tooling-stack)
+- [AI Workflows](#ai-workflows)
 - [Validation](#validation)
 - [Troubleshooting](#troubleshooting)
 
@@ -384,6 +385,24 @@ Then verify:
 - 📦 Run `vim.pack.update()` and confirm the `blink.cmp` Rust build hook runs when needed.
 - 🎨 Run `bat cache --build` after changing bat themes or syntaxes.
 - 🔐 Run `ssh -T git@github.com` and `git log --show-signature -1` when changing auth config.
+
+## 🤖 AI Workflows
+
+Reusable prompt workflows live in [`docs/ai-workflows.md`](./docs/ai-workflows.md).
+
+Use them as slash-command style prompts in Codex, Claude, or another coding agent:
+
+```text
+/sanity
+/review
+/git-flow
+/bootstrap-change
+/nvim-update
+/package-sync
+/xdg-audit
+```
+
+These labels are not shell commands by default. Paste the prompt text from the workflow doc into the AI client, or register them as custom slash commands if the client supports that.
 
 ## 🔄 Updates
 
