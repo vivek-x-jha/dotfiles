@@ -23,6 +23,7 @@ SUBSTEP=0
 TOTAL_STEPS=19
 
 DRY_RUN=0
+CHECK_MODE=0
 
 USE_1PASSWORD=0
 FORCE_1PASSWORD=0
@@ -166,6 +167,71 @@ get_op_field() {
     --reveal 2>/dev/null) || return 1
 
   printf '%s' "$value"
+}
+
+# Validate repository files and shell syntax without changing the system.
+check_bootstrap() {
+  local status=0
+  local bootstrap_path="${BASH_SOURCE[0]}"
+  local path=''
+
+  notify 'CHECK BOOTSTRAP'
+
+  check_path() {
+    local target="$1"
+    [[ -e $target ]] && {
+      logg -i "ok: $(pretty_path "$target")"
+      return
+    }
+
+    logg -e "missing: $(pretty_path "$target")"
+    status=1
+  }
+
+  check_cmd() {
+    local label="$1"
+    shift
+
+    if "$@"; then
+      logg -i "ok: $label"
+    else
+      logg -e "failed: $label"
+      status=1
+    fi
+  }
+
+  check_cmd 'bootstrap shell syntax' bash -n "$bootstrap_path"
+
+  while IFS= read -r path; do
+    check_cmd "bash syntax: $(pretty_path "$path")" bash -n "$path"
+  done < <(find "$HOME/.dotfiles/shells/bash/funcs" -maxdepth 1 -type f -print | sort)
+
+  while IFS= read -r path; do
+    check_cmd "zsh syntax: $(pretty_path "$path")" zsh -n "$path"
+  done < <(find "$HOME/.dotfiles/shells/zsh/funcs" -maxdepth 1 -type f -print | sort)
+
+  check_cmd 'zsh profile syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zprofile"
+  check_cmd 'zshrc syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zshrc"
+  check_cmd 'bash profile syntax' bash -n "$HOME/.dotfiles/shells/bash/.bash_profile"
+  check_cmd 'bashrc syntax' bash -n "$HOME/.dotfiles/shells/bash/.bashrc"
+
+  check_path "$HOME/.dotfiles/manifests/Brewfile"
+  check_path "$HOME/.dotfiles/manifests/apt-packages.txt"
+  check_path "$HOME/.dotfiles/manifests/dnf-packages.txt"
+  check_path "$HOME/.dotfiles/shells/env"
+  check_path "$HOME/.dotfiles/shells/starship.toml"
+  check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
+  check_path "$HOME/.dotfiles/editors/nvim/init.lua"
+  check_path "$HOME/.dotfiles/editors/vscode/settings.json"
+  check_path "$HOME/.dotfiles/terminals/tmux/tmux.conf"
+
+  if command -v shellcheck &>/dev/null; then
+    check_cmd 'shellcheck bootstrap' shellcheck "$bootstrap_path"
+  else
+    logg -w 'shellcheck unavailable; skipping shellcheck validation.'
+  fi
+
+  return "$status"
 }
 
 # Determine OS and package-manager defaults
@@ -1377,11 +1443,13 @@ main() {
   while [[ $# -gt 0 ]]; do
     case "$1" in
     -p | --with-1password) FORCE_1PASSWORD=1 ;;
+    -c | --check) CHECK_MODE=1 ;;
     -n | --dry-run) DRY_RUN=1 ;;
     -h | --help)
       cat <<'HELP'
-Usage: bootstrap.sh [-p] [-n] [-h]
+Usage: bootstrap.sh [-p] [-c] [-n] [-h]
   -p, --with-1password     Enable 1Password integration (requires op CLI)
+  -c, --check              Validate repo files and shell syntax, then exit
   -n, --dry-run            Print actions instead of executing them
   -h, --help               Show this message
 HELP
@@ -1398,6 +1466,11 @@ HELP
   export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
   export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
   export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+  if ((CHECK_MODE)); then
+    check_bootstrap
+    exit $?
+  fi
 
   notify 'SET UNIX DISTRO + PACKAGE MANAGER'
   detect_platform

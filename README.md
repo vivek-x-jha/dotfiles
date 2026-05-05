@@ -352,6 +352,7 @@ GUI apps are installed through distro repos, vendor repos, direct packages, or F
 After significant changes:
 
 ```sh
+~/.dotfiles/bootstrap.sh --check
 ~/.dotfiles/bootstrap.sh --dry-run
 bash -n ~/.dotfiles/bootstrap.sh
 ```
