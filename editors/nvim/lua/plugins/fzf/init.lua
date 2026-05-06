@@ -1,5 +1,5 @@
 -- @type table<string, string> -- Custom icons
-local icons = require 'icons'
+local icons = require 'ui.icons'
 
 require('fzf-lua').setup {
   winopts = {
