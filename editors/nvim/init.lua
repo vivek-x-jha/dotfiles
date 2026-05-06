@@ -7,9 +7,6 @@ require 'opts'
 -- Configure diagnostics and LSP servers.
 require 'lsp'
 
--- Register autocommands.
-require 'autocmds'
-
 -- Register plugin sources.
 vim.pack.add {
   -- autocomplete
@@ -33,10 +30,7 @@ vim.pack.add {
   { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
   { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- noice dependency
   { src = 'https://github.com/folke/noice.nvim' },
-  { src = 'https://github.com/vivek-x-jha/nvim-dashboard' },
   { src = 'https://github.com/rcarriga/nvim-notify' },
-  { src = 'https://github.com/vivek-x-jha/nvim-sourdiesel' },
-  { src = 'https://github.com/vivek-x-jha/nvim-terminal' },
   { src = 'https://github.com/christoomey/vim-tmux-navigator' },
 
   -- gitsigns
@@ -46,23 +40,108 @@ vim.pack.add {
   { src = 'https://github.com/ibhagwan/fzf-lua' },
 }
 
--- Configure plugin modules.
-require 'plugins.autocomplete'
-require 'plugins.editing'
-require 'plugins.files'
-require 'plugins.conform'
-require 'plugins.ui'
-require 'plugins.gitsigns'
+-- Configure Formatters
+require('conform').setup {
+  format_on_save = {
+    timeout_ms = 2000,
+    lsp_fallback = true,
+  },
+
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    python = { 'ruff_format', 'ruff_organize_imports' },
+    bash = { 'shfmt' },
+    zsh = { 'shfmt' },
+    sh = { 'shfmt' },
+  },
+}
+
+-- Configure Autopairing tokens
+require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
+
+-- Configure Auto-surround tokens
+require('nvim-surround').setup()
+
+--- Configure Identing Blanklines
+require('ibl').setup { indent = { char = '┊' } }
+
+-- Configure nvim-notify and install it as Neovim's notification backend.
+local notify = require 'notify'
+notify.setup { background_colour = os.getenv 'WEZTERM_BG_HEX', fps = 60, stages = 'fade' }
+vim.notify = notify
+
+-- Configure Noice command-line, message, and LSP UI behavior.
+require('noice').setup {
+  presets = { command_palette = true, long_message_to_split = true },
+
+  lsp = {
+    signature = { enabled = false },
+
+    override = {
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true,
+    },
+  },
+}
+
+-- Configure Git Info
+require('gitsigns').setup {
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = 'x' },
+    topdelete = { text = 'x' },
+    changedelete = { text = 'x' },
+    untracked = { text = '?' },
+  },
+
+  signs_staged = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = 'x' },
+    topdelete = { text = 'x' },
+    changedelete = { text = 'x' },
+    untracked = { text = '?' },
+  },
+
+  on_attach = function(bufnr)
+    local map = function(key, fn)
+      vim.keymap.set('n', key, function()
+        if vim.wo.diff then return key end
+        vim.schedule(package.loaded.gitsigns[fn])
+        return '<Ignore>'
+      end, { buffer = bufnr, expr = true, desc = 'Git: ' .. fn })
+    end
+
+    map(']c', 'next_hunk')
+    map('[c', 'prev_hunk')
+  end,
+}
+
+-- Configure Autocomplete
+require 'plugins.blink'
+
+-- Configure icons
+require 'plugins.webdevicons'
+
+-- Configure File Explorer
+require 'plugins.tree'
+
+-- Configure Pickers
 require 'plugins.fzf'
+
+-- Register autocommands.
+require 'autocmds'
 
 -- Register user commands.
 require 'usercmds'
 
 -- Initialize the local statusline.
-vim.o.statusline = "%!v:lua.require('statusline').setup()"
+vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
--- Apply the shell-aligned colorscheme.
-vim.cmd.colorscheme 'sourdiesel' -- use shell theme colors
+-- Apply the shell-aligned base16 colorscheme.
+vim.cmd.colorscheme 'sourdiesel'
 
 -- Defer keymaps to the next event loop to avoid unwanted remappings.
 vim.schedule(function() require 'keymaps' end)

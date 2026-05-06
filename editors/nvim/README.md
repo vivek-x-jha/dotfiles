@@ -32,8 +32,12 @@ integration, and XDG state paths.
 | `lua/autocmds.lua` | Autocommands |
 | `lua/usercmds.lua` | Custom user commands |
 | `lua/keymaps.lua` | Keymaps |
-| `lua/statusline.lua` | Local statusline implementation |
-| `lua/icons.lua` | Shared icon table |
+| `lua/ui/statusline.lua` | Local statusline implementation |
+| `lua/ui/icons.lua` | Shared icon table |
+| `lua/ui/colors/sourdiesel.lua` | SourDiesel palette and highlight setup |
+| `lua/ui/dashboard.lua` | Local dashboard implementation |
+| `lua/ui/terminal.lua` | Local terminal helper |
+| `colors/sourdiesel.lua` | Standard Neovim colorscheme entrypoint |
 | `lua/types.lua` | LuaLS-only type annotations |
 | `lua/plugins/*.lua` | Plugin-specific configuration |
 | `nvim-pack-lock.json` | Native `vim.pack` lockfile |
@@ -57,11 +61,11 @@ Rules:
 - Keep plugin configuration in `lua/plugins/<plugin>.lua` when the file configures
   one plugin, for example `plugins/gitsigns.lua`.
 - Use a broader module name only when it coordinates multiple plugins, for example
-  `plugins/ui.lua` or `plugins/files.lua`.
+  `plugins/noice.lua` or `plugins/tree.lua`.
 
 ## Completion
 
-Completion is handled by `blink.cmp` in `lua/plugins/autocomplete.lua`.
+Completion is handled by `blink.cmp` in `lua/plugins/blink.lua`.
 
 `blink.cmp` v2 requires both:
 
@@ -79,12 +83,12 @@ fuzzy matcher after `blink.cmp` or `blink.lib` installs/updates.
 
 ## Statusline
 
-The statusline is local to this repo in `lua/statusline.lua`.
+The statusline is local to this repo in `lua/ui/statusline.lua`.
 
 It is initialized from `init.lua` with:
 
 ```lua
-vim.o.statusline = "%!v:lua.require('statusline').setup()"
+vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 ```
 
 Do not add a separate statusline plugin unless there is a clear reason to make it
@@ -94,10 +98,11 @@ reusable outside this dotfiles repo.
 
 The visual system is split across:
 
-- `nvim-sourdiesel` for colorscheme highlights
-- `nvim-web-devicons` overrides in `lua/plugins/files.lua`
-- `nvim-tree` renderer settings in `lua/plugins/files.lua`
-- shared icon names in `lua/icons.lua`
+- `colors/sourdiesel.lua` as the standard Neovim colorscheme entrypoint
+- `lua/ui/colors/sourdiesel.lua` for local colorscheme highlights and palette exports
+- `nvim-web-devicons` overrides in `lua/plugins/webdevicons.lua`
+- `nvim-tree` renderer settings in `lua/plugins/tree.lua`
+- shared icon names in `lua/ui/icons.lua`
 
 For icon/color consistency, treat `nvim-tree` as the visual source of truth and
 make path-based pickers such as `fzf-lua` match that behavior where practical.
@@ -133,4 +138,3 @@ If a removed plugin still exists on disk:
 If headless Neovim checks fail in a sandbox with `serverstart()` or ShaDa write
 errors, verify the config with format/static checks first. Those errors usually
 come from runtime directory or state-path restrictions, not from Lua syntax.
-

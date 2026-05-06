@@ -50,7 +50,7 @@ autocmd('VimEnter', {
 
     if emptylines and emptyrows and untitled then
       --- @type boolean, { setup: fun(): nil }
-      local ok, dashboard = pcall(require, 'nvim-dashboard')
+      local ok, dashboard = pcall(require, 'ui.dashboard')
       if ok then dashboard.setup() end
     end
   end,
