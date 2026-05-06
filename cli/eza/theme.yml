@@ -1180,6 +1180,14 @@ filenames:
       style:
         foreground: cyan
 
+  sourdiesel.lua:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
   sourdiesel.toml:
     filename:
       foreground: cyan

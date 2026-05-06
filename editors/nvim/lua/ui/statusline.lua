@@ -3,7 +3,7 @@
 local M = {}
 
 --- @type table<string, string> Custom icons
-local icons = require 'icons'
+local icons = require 'ui.icons'
 
 --- @type table Store state of any LSP messages
 local lspmsg = { lsp_msg = '' }
