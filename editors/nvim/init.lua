@@ -1,13 +1,13 @@
--- Standardize Neovim logging for interactive and headless launches.
+-- Standardize Neovim logging for interactive and headless launches
 vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nvim.log')
 
--- Configure core editor options.
+-- Configure core editor options
 require 'opts'
 
--- Configure diagnostics and LSP servers.
+-- Configure diagnostics and LSP servers
 require 'lsp'
 
--- Register plugin sources.
+-- Register plugin sources
 vim.pack.add {
   -- autocomplete
   { src = 'https://github.com/saghen/blink.lib' },
@@ -65,12 +65,12 @@ require('nvim-surround').setup()
 --- Configure Identing Blanklines
 require('ibl').setup { indent = { char = '┊' } }
 
--- Configure nvim-notify and install it as Neovim's notification backend.
+-- Configure nvim-notify and install it as Neovim's notification backend
 local notify = require 'notify'
 notify.setup { background_colour = os.getenv 'WEZTERM_BG_HEX', fps = 60, stages = 'fade' }
 vim.notify = notify
 
--- Configure Noice command-line, message, and LSP UI behavior.
+-- Configure Noice command-line, message, and LSP UI behavior
 require('noice').setup {
   presets = { command_palette = true, long_message_to_split = true },
 
@@ -131,17 +131,17 @@ require 'plugins.tree'
 -- Configure Pickers
 require 'plugins.fzf'
 
--- Register autocommands.
+-- Register autocommands
 require 'autocmds'
 
--- Register user commands.
+-- Register user commands
 require 'usercmds'
 
--- Initialize the local statusline.
+-- Initialize the local statusline
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
--- Apply the shell-aligned base16 colorscheme.
+-- Apply the shell-aligned base16 colorscheme
 vim.cmd.colorscheme 'sourdiesel'
 
--- Defer keymaps to the next event loop to avoid unwanted remappings.
+-- Defer keymaps to the next event loop to avoid unwanted remappings
 vim.schedule(function() require 'keymaps' end)

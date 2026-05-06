@@ -87,7 +87,7 @@
     [[ -n $P9K_CONTENT ]] && declare -g my_git_format=$P9K_CONTENT && return
 
     if (( $1 )); then
-      # Styling for up-to-date Git status.
+      # Styling for up-to-date Git status
       local meta='%f'
       local clean='%5F'
       local diverged='%12F'
@@ -98,7 +98,7 @@
       local conflicted='%9F'
 
     else
-      # Styling for incomplete and stale Git status.
+      # Styling for incomplete and stale Git status
       local meta='%f'
       local clean='%f'
       local modified='%f'
@@ -133,14 +133,14 @@
     # Display "WIP" if the latest commit's summary contains "wip" or "WIP"
     [[ $VCS_STATUS_COMMIT_SUMMARY == (|*[^[:alnum:]])(wip|WIP)(|[^[:alnum:]]*) ]] && res+=" ${modified}WIP"
 
-    #  42 if behind the remote.
+    #  42 if behind the remote
     (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${diverged} ${VCS_STATUS_COMMITS_BEHIND}"
 
     #  42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42
     (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && res+=" "
     (( VCS_STATUS_COMMITS_AHEAD )) && res+="${diverged} ${VCS_STATUS_COMMITS_AHEAD}"
 
-    #  42 if behind the push remote.
+    #  42 if behind the push remote
     (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${diverged} ${VCS_STATUS_PUSH_COMMITS_BEHIND}"
     (( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" "
 
@@ -159,7 +159,7 @@
     # ~42 if have unstaged changes
     (( VCS_STATUS_NUM_UNSTAGED )) && res+=" ${modified}~${VCS_STATUS_NUM_UNSTAGED}"
 
-    # *42 if have stashes.
+    # *42 if have stashes
     (( VCS_STATUS_STASHES )) && res+=" ${stashed}*${VCS_STATUS_STASHES}"
 
     # ?42 if have untracked files
@@ -236,11 +236,11 @@
   declare -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='▶'                # Vim Overwrite Mode Symbol
   declare -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
 
-  # If p10k is already loaded, reload configuration.
+  # If p10k is already loaded, reload configuration
   (( ! $+functions[p10k] )) || p10k reload
 }
 
-# Tell `p10k configure` which file it should overwrite.
+# Tell `p10k configure` which file it should overwrite
 declare -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}

@@ -1,4 +1,4 @@
--- Configure blink.cmp completion, snippets, and inline color previews.
+-- Configure blink.cmp completion, snippets, and inline color previews
 local blink = require 'blink.cmp'
 local colors = require 'nvim-highlight-colors'
 local ls = require 'luasnip' ---@type any
