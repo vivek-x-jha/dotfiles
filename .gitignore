@@ -11,6 +11,8 @@ auth/ssh/*
 apps/karabiner/*
 !apps/karabiner/karabiner.json
 
+cli/gh/hosts.yml
+
 # =========================
 # System Files
 # =========================

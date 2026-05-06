@@ -3,6 +3,8 @@ filekinds:
     foreground: blue
   directory:
     foreground: blue
+    icon:
+      glyph: ""
   symlink:
     foreground: yellow
   executable:
@@ -1409,6 +1411,10 @@ filenames:
       glyph: ""
 
   Developer:
+    icon:
+      glyph: ""
+
+  llms-from-scratch:
     icon:
       glyph: ""
 
