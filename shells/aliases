@@ -5,7 +5,7 @@
 # Open vim using viminfo state file
 alias vi='vim -i "$XDG_STATE_HOME/vim/viminfo"'
 
-# Deletes temp file - NOTE this fixes neovim shada error, but unsure why this works...
+# Recover Neovim ShaDa state when temp file write slots are stuck
 command -v nvim &>/dev/null && alias reload-shada='mv -f "$XDG_STATE_HOME/nvim/shada/main.shada.tmp.x" "$XDG_STATE_HOME/nvim/shada/main.shada"'
 
 # -------------------------------- File Management & Previewing ---------------------------------------

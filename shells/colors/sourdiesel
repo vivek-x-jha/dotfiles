@@ -1,4 +1,4 @@
-# Shared sourdiesel theme values for bash and zsh.
+# Shared sourdiesel theme values for bash and zsh
 
 # ANSI colors
 export RESET='\e[0m'

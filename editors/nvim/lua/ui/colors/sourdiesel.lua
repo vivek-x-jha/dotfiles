@@ -1,6 +1,6 @@
 local M = {}
 
--- Define the SourDiesel thm.
+-- Define the SourDiesel palette
 M.palette = {
   -- Base16
   black = '#cccccc',
@@ -31,7 +31,7 @@ M.palette = {
 
 local thm = M.palette
 
--- Define highlight groups.
+-- Define highlight groups
 --- @type table<string, vim.api.keyset.highlight>
 local highlights = {
   ---------------------------- Defaults ----------------------------------

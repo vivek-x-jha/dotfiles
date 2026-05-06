@@ -23,6 +23,6 @@ PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
 
 export PATH
 
-# Load secrets from a regular file only; special files such as FIFOs can block shell startup.
+# Load secrets from a regular file only; special files such as FIFOs can block shell startup
 # shellcheck disable=SC1091
 [[ -f "$HOME/.dotfiles/.env" ]] && source "$HOME/.dotfiles/.env"

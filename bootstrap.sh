@@ -170,7 +170,7 @@ get_op_field() {
   printf '%s' "$value"
 }
 
-# Validate repository files and shell syntax without changing the system.
+# Validate repository files and shell syntax without changing the system
 check_bootstrap() {
   local status=0
   local bootstrap_path="${BASH_SOURCE[0]}"
@@ -272,7 +272,7 @@ detect_platform() {
   logg -i "PACKAGE MANAGER: PKG_MGR=$PKG_MGR"
 }
 
-# Keep sudo credentials fresh for long-running operations.
+# Keep sudo credentials fresh for long-running operations
 authorize() {
   require sudo || return
 
@@ -495,7 +495,7 @@ install_package_sets() {
   fi
 }
 
-# Install fzf from upstream git so the binary lives under XDG data.
+# Install fzf from upstream git so the binary lives under XDG data
 install_fzf() {
   notify -s 'Installing fzf'
 
@@ -522,7 +522,7 @@ install_fzf() {
   logg -w "fzf installer not found: $(pretty_path "$fzf_dir/install")"
 }
 
-# Ensure an apt keyring and source list exist for a vendor package repository.
+# Ensure an apt keyring and source list exist for a vendor package repository
 ensure_apt_keyring_repo() {
   local key_path="$1"
   local key_command="$2"
@@ -539,7 +539,7 @@ ensure_apt_keyring_repo() {
   [[ -f $list_path ]] || run "printf '%s\n' '$list_line' | sudo tee \"$list_path\" >/dev/null"
 }
 
-# Ensure a dnf/yum repo file exists for a vendor package repository.
+# Ensure a dnf/yum repo file exists for a vendor package repository
 ensure_dnf_repo_file() {
   local repo_path="$1"
   local repo_content="$2"
@@ -554,7 +554,7 @@ ensure_dnf_repo_file() {
   printf '%s\n' "$repo_content" | sudo tee "$repo_path" >/dev/null
 }
 
-# Install GitHub CLI from official Linux package repositories.
+# Install GitHub CLI from official Linux package repositories
 install_gh() {
   [[ $OS_TYPE == linux ]] || return
   command -v gh &>/dev/null && return
@@ -593,7 +593,7 @@ install_gh() {
   logg -w "No GitHub CLI installer defined for package manager: $PKG_MGR"
 }
 
-# Install Glow from Charm's Linux package repositories.
+# Install Glow from Charm's Linux package repositories
 install_glow() {
   [[ $OS_TYPE == linux ]] || return
   command -v glow &>/dev/null && return
@@ -739,7 +739,7 @@ EOF
   done
 }
 
-# Link dotfiles into their XDG targets and optional media directory.
+# Link dotfiles into their XDG targets and optional media directory
 create_symlinks() {
   local vscode_src='../../../.dotfiles/editors/vscode/settings.json'
 
