@@ -34,7 +34,8 @@ integration, and XDG state paths.
 | `lua/keymaps.lua` | Keymaps |
 | `lua/ui/statusline.lua` | Local statusline implementation |
 | `lua/ui/icons.lua` | Shared icon table |
-| `lua/ui/colors/sourdiesel.lua` | SourDiesel palette and highlight setup |
+| `lua/ui/colors/sourdiesel.lua` | SourDiesel palette |
+| `lua/ui/highlights.lua` | SourDiesel highlight groups |
 | `lua/ui/dashboard.lua` | Local dashboard implementation |
 | `lua/ui/terminal.lua` | Local terminal helper |
 | `colors/sourdiesel.lua` | Standard Neovim colorscheme entrypoint |
@@ -99,7 +100,8 @@ reusable outside this dotfiles repo.
 The visual system is split across:
 
 - `colors/sourdiesel.lua` as the standard Neovim colorscheme entrypoint
-- `lua/ui/colors/sourdiesel.lua` for local colorscheme highlights and palette exports
+- `lua/ui/colors/sourdiesel.lua` for the shared SourDiesel palette
+- `lua/ui/highlights.lua` for local colorscheme highlights
 - `nvim-web-devicons` overrides in `lua/plugins/webdevicons.lua`
 - `nvim-tree` renderer settings in `lua/plugins/tree.lua`
 - shared icon names in `lua/ui/icons.lua`
