@@ -412,9 +412,7 @@ local spawn_wezterm_float = function(screen)
   local initialize = function(win)
     focus_wezterm_float(win, screen)
     hs.timer.doAfter(0.2, function()
-      if win and win:id() == wezterm_float_win_id then
-        hs.eventtap.keyStrokes('work float\n')
-      end
+      if win and win:id() == wezterm_float_win_id then hs.eventtap.keyStrokes 'work float\n' end
     end)
   end
 
@@ -443,9 +441,7 @@ local spawn_wezterm_float = function(screen)
   end
 
   hs.timer.doAfter(0.2, function()
-    if not capture() then
-      hs.timer.doAfter(0.6, function() capture() end)
-    end
+    if not capture() then hs.timer.doAfter(0.6, function() capture() end) end
   end)
 end
 
@@ -470,33 +466,35 @@ local toggle_wezterm_float = function()
 end
 
 -- Double-tap command to toggle the dedicated WezTerm float window
-hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(event)
-  local flags = event:getFlags()
-  local keycode = event:getKeyCode()
+hs.eventtap
+  .new({ hs.eventtap.event.types.flagsChanged }, function(event)
+    local flags = event:getFlags()
+    local keycode = event:getKeyCode()
 
-  if keycode ~= 54 and keycode ~= 55 then return false end
+    if keycode ~= 54 and keycode ~= 55 then return false end
 
-  local only_cmd = flags.cmd and not (flags.alt or flags.ctrl or flags.fn or flags.shift)
+    local only_cmd = flags.cmd and not (flags.alt or flags.ctrl or flags.fn or flags.shift)
 
-  if only_cmd then
-    cmd_tap_armed = true
-  elseif flags.cmd then
-    cmd_tap_armed = false
-  elseif cmd_tap_armed then
-    local now = hs.timer.secondsSinceEpoch()
-    cmd_tap_armed = false
+    if only_cmd then
+      cmd_tap_armed = true
+    elseif flags.cmd then
+      cmd_tap_armed = false
+    elseif cmd_tap_armed then
+      local now = hs.timer.secondsSinceEpoch()
+      cmd_tap_armed = false
 
-    if now - last_cmd_tap <= 0.35 then
-      last_cmd_tap = 0
-      toggle_wezterm_float()
-      return false
+      if now - last_cmd_tap <= 0.35 then
+        last_cmd_tap = 0
+        toggle_wezterm_float()
+        return false
+      end
+
+      last_cmd_tap = now
     end
 
-    last_cmd_tap = now
-  end
-
-  return false
-end):start()
+    return false
+  end)
+  :start()
 
 -- All other hotkeys
 ---@type Remap[]
