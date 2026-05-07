@@ -62,8 +62,8 @@ Symlinks are created from this repo into XDG paths, including:
 - `~/.config/vscode`
 - `~/.config/fzf/fzf.sh`
 - `~/.config/webapps`
-- `~/.local/state/{zsh,bash,codex,python,mysql,mycli,...}`
-- `~/.local/share/{vscode,zsh,...}`
+- `~/.local/state/{zsh,bash,codex,jupyter,python,mysql,mycli,...}`
+- `~/.local/share/{jupyter,vscode,zsh,...}`
 
 Bootstrap also links `~/.vscode` back to `$XDG_DATA_HOME/vscode`.
 
