@@ -65,7 +65,7 @@ require('nvim-autopairs').setup { fast_wrap = {}, disable_filetype = { 'vim' } }
 -- Configure Auto-surround tokens
 require('nvim-surround').setup()
 
---- Configure Identing Blanklines
+-- Configure Indent Blankline guides
 require('ibl').setup { indent = { char = '┊' } }
 
 -- Configure nvim-notify and install it as Neovim's notification backend

@@ -1290,6 +1290,10 @@ filenames:
     icon:
       glyph: ""
 
+  ui:
+    icon:
+      glyph: ""
+
   tmux:
     icon:
       glyph: ""
@@ -1358,7 +1362,19 @@ filenames:
     icon:
       glyph: ""
 
+  .ipython:
+    icon:
+      glyph: ""
+
+  .jupyter:
+    icon:
+      glyph: ""
+
   .local:
+    icon:
+      glyph: ""
+
+  .npm:
     icon:
       glyph: ""
 
