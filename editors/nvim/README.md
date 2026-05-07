@@ -18,7 +18,7 @@ integration, and XDG state paths.
 6. Configure plugin modules under `lua/plugins/`.
 7. Register user commands from `lua/usercmds.lua`.
 8. Initialize the local statusline.
-9. Apply the `sourdiesel` colorscheme.
+9. Apply the selected UI colorscheme.
 10. Defer keymaps from `lua/keymaps.lua` to the next event loop.
 
 ## Layout
@@ -34,6 +34,7 @@ integration, and XDG state paths.
 | `lua/keymaps.lua` | Keymaps |
 | `lua/ui/statusline.lua` | Local statusline implementation |
 | `lua/ui/icons.lua` | Shared icon table |
+| `lua/ui/colors/init.lua` | Active UI palette selector |
 | `lua/ui/colors/sourdiesel.lua` | SourDiesel palette |
 | `lua/ui/highlights.lua` | SourDiesel highlight groups |
 | `lua/ui/dashboard.lua` | Local dashboard implementation |
@@ -100,7 +101,9 @@ reusable outside this dotfiles repo.
 The visual system is split across:
 
 - `colors/sourdiesel.lua` as the standard Neovim colorscheme entrypoint
-- `lua/ui/colors/sourdiesel.lua` for the shared SourDiesel palette
+- `vim.g.ui_colorscheme` as the selected palette and colorscheme name
+- `lua/ui/colors/init.lua` as the shared palette entrypoint
+- `lua/ui/colors/sourdiesel.lua` for the SourDiesel palette
 - `lua/ui/highlights.lua` for local colorscheme highlights
 - `nvim-web-devicons` overrides in `lua/plugins/webdevicons.lua`
 - `nvim-tree` renderer settings in `lua/plugins/tree.lua`

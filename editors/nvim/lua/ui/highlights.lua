@@ -1,4 +1,4 @@
-local thm = require 'ui.colors.sourdiesel'
+local thm = require 'ui.colors'
 
 -- Define highlight groups
 --- @type table<string, vim.api.keyset.highlight>
