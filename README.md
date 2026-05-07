@@ -221,8 +221,10 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
 | Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state |
-| Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/.nvimlog"` | Neovim log |
+| Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
+| [IPython](https://ipython.readthedocs.io/en/stable/config/intro.html#ipythondir) | `IPYTHONDIR="$XDG_CONFIG_HOME/ipython"` | IPython profile config |
+| [Jupyter](https://docs.jupyter.org/en/latest/use/jupyter-directories.html#environment-variables) | `JUPYTER_CONFIG_DIR`, `JUPYTER_DATA_DIR`, `JUPYTER_RUNTIME_DIR` | Jupyter config, kernels/data, and runtime files |
 | MySQL | `MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"` | MySQL history |
 | MyCLI | `MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"` | MyCLI history |
 
@@ -517,7 +519,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 - Run `:checkhealth`.
 - Run `vim.pack.update()`.
 - Clear stale parser/plugin state only after confirming the failing plugin path.
-- Confirm `NVIM_LOG_FILE` points at `$XDG_STATE_HOME/nvim/.nvimlog`.
+- Confirm `NVIM_LOG_FILE` points at `$XDG_STATE_HOME/nvim/nvim.log`.
 
 ### Atuin Migration Errors
 
