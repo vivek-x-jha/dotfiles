@@ -14,6 +14,7 @@ cheatsheet() {
     '<A-L>:clear terminal screen:clear'
     '<A-C>:jump to subdirectory:builtin cd --'
     '<C-E>:select autosuggestion:autosuggest-accept'
+    '<C-G>:show recent git log:glg -5'
     '<C-R>:search shell command history:atuin-search'
     '<C-T>:fuzzy search files/directories:fzf'
     '<C-Y>:run autosuggestion:autosuggest-execute'
