@@ -43,13 +43,27 @@ vim.pack.add {
   { src = 'https://github.com/ibhagwan/fzf-lua' },
 }
 
+-- Configure nvim-notify and install it as Neovim's notification backend
+local notify = require 'notify'
+notify.setup { background_colour = os.getenv 'WEZTERM_BG_HEX', fps = 60, stages = 'fade' }
+vim.notify = notify
+
+-- Configure Noice command-line, message, and LSP UI behavior
+require('noice').setup {
+  presets = { command_palette = true, long_message_to_split = true },
+  lsp = {
+    signature = { enabled = false },
+    override = {
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true,
+    },
+  },
+}
+
 -- Configure Formatters
 require('conform').setup {
-  format_on_save = {
-    timeout_ms = 2000,
-    lsp_fallback = true,
-  },
-
+  format_on_save = { timeout_ms = 2000, lsp_fallback = true },
   formatters_by_ft = {
     lua = { 'stylua' },
     python = { 'ruff_format', 'ruff_organize_imports' },
@@ -68,55 +82,8 @@ require('nvim-surround').setup()
 -- Configure Indent Blankline guides
 require('ibl').setup { indent = { char = '┊' } }
 
--- Configure nvim-notify and install it as Neovim's notification backend
-local notify = require 'notify'
-notify.setup { background_colour = os.getenv 'WEZTERM_BG_HEX', fps = 60, stages = 'fade' }
-vim.notify = notify
-
--- Configure Noice command-line, message, and LSP UI behavior
-require('noice').setup {
-  presets = { command_palette = true, long_message_to_split = true },
-
-  lsp = {
-    signature = { enabled = false },
-
-    override = {
-      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-      ['vim.lsp.util.stylize_markdown'] = true,
-      ['cmp.entry.get_documentation'] = true,
-    },
-  },
-}
-
 -- Configure Git Info
-local gitsigns_signs = {
-  add = { text = '+' },
-  change = { text = '~' },
-  delete = { text = 'x' },
-  topdelete = { text = 'x' },
-  changedelete = { text = 'x' },
-  untracked = { text = '?' },
-}
-
---- @param direction 'next'|'prev'
-local cycle_hunk = function(direction)
-  if vim.wo.diff then return direction == 'next' and ']c' or '[c' end
-  vim.schedule(package.loaded.gitsigns[direction .. '_hunk'])
-  return '<Ignore>'
-end
-
-local next_hunk = function() return cycle_hunk 'next' end
-local prev_hunk = function() return cycle_hunk 'prev' end
-
-require('gitsigns').setup {
-  signs = gitsigns_signs,
-  signs_staged = gitsigns_signs,
-
-  on_attach = function(bufnr)
-    vim.keymap.set('n', ']c', next_hunk, { buffer = bufnr, expr = true, desc = 'Git: next_hunk' })
-    vim.keymap.set('n', '[c', prev_hunk, { buffer = bufnr, expr = true, desc = 'Git: prev_hunk' })
-  end,
-}
+require 'plugins.gitsigns'
 
 -- Configure Autocomplete
 require 'plugins.blink'
