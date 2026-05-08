@@ -11,7 +11,7 @@ integration, and XDG state paths.
 `init.lua` is the startup orchestrator:
 
 1. Set `NVIM_LOG_FILE` for interactive and headless launches.
-2. Select `vim.g.ui_colorscheme`.
+2. Select `vim.g.ui_theme`.
 3. Load core options from `lua/opts.lua`.
 4. Configure diagnostics and language servers through `lua/lsp.lua`.
 5. Register plugin sources with `vim.pack.add`.
@@ -101,7 +101,7 @@ reusable outside this dotfiles repo.
 The visual system is split across:
 
 - `colors/sourdiesel.lua` as the standard Neovim colorscheme entrypoint
-- `vim.g.ui_colorscheme` as the selected palette and colorscheme name
+- `vim.g.ui_theme` as the selected palette and colorscheme name
 - `lua/ui/highlights/init.lua` as the active palette selector and local highlight applier
 - `lua/ui/highlights/sourdiesel.lua` for the SourDiesel palette
 - `nvim-web-devicons` overrides in `lua/plugins/webdevicons.lua`
