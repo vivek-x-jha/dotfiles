@@ -52,6 +52,7 @@ eval "$(zoxide init bash --cmd j)" && bind '"\C-p": "ji\n"'
 bind -x '"\C-o": printf \"\\ec\"; exec '"$(which bash)"
 bind -x '"\el": clear'
 bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
+bind '"\C-g": "glg -5\n"'
 
 # Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach

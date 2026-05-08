@@ -81,6 +81,7 @@ eval "$(zoxide init zsh --cmd j)" && bindkey -s '^p' 'ji\n'
 bindkey -s '^o' 'exec zsh\n'
 bindkey -s '^[l' 'clear\n'
 bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
+bindkey -s '^g' 'glg -5\n'
 
 # Syntax-highlighting
 plug zsh-users/zsh-syntax-highlighting && typeset -gA ZSH_HIGHLIGHT_STYLES=(
