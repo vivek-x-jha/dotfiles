@@ -49,8 +49,6 @@ DEVELOPER_REPOS=(
   vivek-x-jha/nvim-launcher
   vivek-x-jha/practice-sheets
   rasbt/LLMs-from-scratch
-  vivek-x-jha/todo
-  vivek-x-jha/travel-agent
   vivek-x-jha/weather-tool
 )
 
