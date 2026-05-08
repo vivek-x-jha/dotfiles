@@ -14,10 +14,10 @@ keymap('n', '<leader>gst', function() require('fzf-lua').git_status() end, { des
 keymap('n', '<leader>gsw', function() require('fzf-lua').git_branches() end, { desc = '[G]it [S]witch' })
 
 -- Toggle Fzf.lua custom pickers
-keymap('n', '<leader>un', function() require('plugins.fzf.pickers.notify').history() end, { desc = 'Notifications: history (fzf-lua)' })
+keymap('n', '<leader>un', function() require('plugins.fzf.pickers.notifications').history() end, { desc = 'Notifications: history (fzf-lua)' })
 
 -- Toggle git blame
-keymap('n', '<leader>gb', function() require('gitsigns').toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
+keymap('n', '<leader>gb', function() package.loaded.gitsigns.toggle_current_line_blame() end, { desc = 'Toggle [g]it [b]lame' })
 
 -- Toggle File Explorer
 keymap('n', '<C-n>', function()

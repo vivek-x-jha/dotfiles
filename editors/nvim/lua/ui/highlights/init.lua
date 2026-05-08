@@ -5,7 +5,7 @@ M.palette = require('ui.highlights.' .. vim.g.ui_theme)
 local thm = M.palette
 
 -- Define highlight groups
---- @type table<string, vim.api.keyset.highlight>
+--- @type table<string, table<string, any>>
 local highlights = {
   ---------------------------- Defaults ----------------------------------
 
