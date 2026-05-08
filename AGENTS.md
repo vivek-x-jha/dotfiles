@@ -114,6 +114,20 @@ Autocommands include a `PackChanged` hook that rebuilds `blink.cmp` rust fuzzy l
 
 This prevents manual rebuilds after `vim.pack.update()`.
 
+## Neovim Session Refresh
+
+When Neovim changes affect opened buffers, module paths, renamed files, or
+session restore behavior, run the Neovim validation first and then refresh the
+ignored root session file:
+
+```sh
+nvim --headless '+silent! mksession! Session.vim' '+qa'
+```
+
+`Session.vim` is intentionally ignored, but keeping it fresh lets `:restart`
+resume against current paths. A native Neovim hook may replace this later; for
+now this is an agent-layer maintenance step.
+
 ## Important Paths and Manifests
 
 - Editor config roots:

@@ -1,4 +1,8 @@
-local thm = require 'ui.colors'
+local M = {}
+
+M.palette = require('ui.highlights.' .. vim.g.ui_colorscheme)
+
+local thm = M.palette
 
 -- Define highlight groups
 --- @type table<string, vim.api.keyset.highlight>
@@ -480,8 +484,6 @@ local highlights = {
   DevIconDart = { fg = thm.cyan },
   DevIconSourdiesel = { fg = thm.cyan },
 }
-
-local M = {}
 
 M.apply = function(name)
   vim.g.colors_name = name
