@@ -2,7 +2,7 @@ local thm = require 'ui.colors'
 
 -- Define highlight groups
 --- @type table<string, vim.api.keyset.highlight>
-return {
+local highlights = {
   ---------------------------- Defaults ----------------------------------
 
   Added = { fg = thm.green },
@@ -480,3 +480,15 @@ return {
   DevIconDart = { fg = thm.cyan },
   DevIconSourdiesel = { fg = thm.cyan },
 }
+
+local M = {}
+
+M.apply = function(name)
+  vim.g.colors_name = name
+
+  for group, opts in pairs(highlights) do
+    vim.api.nvim_set_hl(0, group, opts)
+  end
+end
+
+return M
