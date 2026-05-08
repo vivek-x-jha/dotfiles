@@ -109,8 +109,8 @@ Autocommands include a `PackChanged` hook that rebuilds `blink.cmp` rust fuzzy l
 
 - File: `editors/nvim/lua/autocmds.lua`
 - Event: `PackChanged`
-- Trigger: plugin `blink.cmp`, kind `install` or `update`
-- Action: `cargo build --release` in plugin directory
+- Trigger: plugin `blink.cmp` or `blink.lib`, kind `install` or `update`
+- Action: `require('blink.cmp').build({ force = true }):wait(60000)`
 
 This prevents manual rebuilds after `vim.pack.update()`.
 
