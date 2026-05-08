@@ -1,6 +1,6 @@
 ---@class NvTerminal
 ---@field save fun(index: integer|string, val: TermRecord)
----@field setup fun(opts: TermRecord)
+---@field setup fun(opts: TermSetupOpts)
 ---@field open fun(opts: TermOpenOpts)
 ---@field toggle fun(opts: TermToggleOpts)
 ---@field runner fun(opts: TermRunnerOpts)
@@ -39,7 +39,7 @@ M.save = function(index, val)
 end
 
 --- Create window, set up options, resize as needed, and record the terminal
---- @param opts TermRecord
+--- @param opts TermSetupOpts
 M.setup = function(opts)
   -- Controls floating terminal opts
   if opts.pos == 'float' then
@@ -52,7 +52,7 @@ M.setup = function(opts)
       height = 0.4,
     }
 
-    ---@type FloatOpts
+    ---@type table<string, any>
     local newopts = vim.tbl_deep_extend('force', default_float_opts, opts.float_opts or {})
 
     newopts.width = math.ceil(newopts.width * vim.o.columns)
@@ -68,6 +68,7 @@ M.setup = function(opts)
   ---@type integer
   local win = vim.api.nvim_get_current_win()
   opts.win = win
+  ---@cast opts TermRecord
 
   vim.bo[opts.buf].buflisted = false
   vim.bo[opts.buf].ft = 'NvTerm_' .. opts.pos:gsub(' ', '')
@@ -118,15 +119,15 @@ M.open = function(opts)
   ---@type boolean
   local buf_exists = opts.buf ~= nil
   opts.buf = opts.buf or vim.api.nvim_create_buf(false, true)
+  ---@cast opts TermSetupOpts
 
   -- handle cmd opt
   ---@type string[]
   local cmd = { vim.o.shell }
   if opts.cmd and opts.buf then cmd = { vim.o.shell, '-c', utl.format_cmd(opts.cmd) .. '; ' .. vim.o.shell } end
 
-  ---@diagnostic disable-next-line: assign-type-mismatch
   M.setup(opts) -- opts is refined into a TermRecord during setup
-  ---@diagnostic disable-next-line: assign-type-mismatch
+  ---@cast opts TermRecord
   M.save(opts.buf, opts)
 
   if not buf_exists then vim.api.nvim_call_function('termopen', { cmd, opts.termopen_opts or { detach = false } }) end
@@ -163,7 +164,11 @@ M.runner = function(opts)
     M.open(opts)
   else
     -- window isnt visible
-    if vim.fn.bufwinid(x.buf) == -1 then M.setup(opts) end
+    if vim.fn.bufwinid(x.buf) == -1 then
+      ---@type TermSetupOpts
+      local setup_opts = vim.tbl_extend('force', opts, { buf = x.buf })
+      M.setup(setup_opts)
+    end
 
     ---@type string
     local cmd = utl.format_cmd(opts.cmd)
