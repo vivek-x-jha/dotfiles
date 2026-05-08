@@ -1,1 +1,1 @@
-require('ui.colorscheme').apply 'sourdiesel'
+require('ui.highlights').apply 'sourdiesel'

@@ -1,5 +1,5 @@
 local icons = require 'ui.icons'
-local thm = require 'ui.colors'
+local thm = require('ui.highlights').palette
 
 require('nvim-web-devicons').setup {
   override = {
