@@ -103,16 +103,17 @@ require('gitsigns').setup {
   signs_staged = gitsigns_signs,
 
   on_attach = function(bufnr)
-    local map = function(key, fn)
-      vim.keymap.set('n', key, function()
-        if vim.wo.diff then return key end
-        vim.schedule(package.loaded.gitsigns[fn])
-        return '<Ignore>'
-      end, { buffer = bufnr, expr = true, desc = 'Git: ' .. fn })
-    end
+    vim.keymap.set('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(package.loaded.gitsigns.next_hunk)
+      return '<Ignore>'
+    end, { buffer = bufnr, expr = true, desc = 'Git: next_hunk' })
 
-    map(']c', 'next_hunk')
-    map('[c', 'prev_hunk')
+    vim.keymap.set('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(package.loaded.gitsigns.prev_hunk)
+      return '<Ignore>'
+    end, { buffer = bufnr, expr = true, desc = 'Git: prev_hunk' })
   end,
 }
 
