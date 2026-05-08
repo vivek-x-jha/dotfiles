@@ -37,7 +37,7 @@ integration, and XDG state paths.
 | `lua/ui/icons.lua` | Shared icon table |
 | `lua/ui/colors/init.lua` | Active UI palette selector |
 | `lua/ui/colors/sourdiesel.lua` | SourDiesel palette |
-| `lua/ui/highlights.lua` | SourDiesel highlight groups |
+| `lua/ui/colorscheme.lua` | Shared colorscheme apply helper and highlight groups |
 | `lua/ui/dashboard.lua` | Local dashboard implementation |
 | `lua/ui/terminal.lua` | Local terminal helper |
 | `colors/sourdiesel.lua` | Standard Neovim colorscheme entrypoint |
@@ -105,7 +105,7 @@ The visual system is split across:
 - `vim.g.ui_colorscheme` as the selected palette and colorscheme name
 - `lua/ui/colors/init.lua` as the shared palette entrypoint
 - `lua/ui/colors/sourdiesel.lua` for the SourDiesel palette
-- `lua/ui/highlights.lua` for local colorscheme highlights
+- `lua/ui/colorscheme.lua` to set `vim.g.colors_name` and apply local highlights
 - `nvim-web-devicons` overrides in `lua/plugins/webdevicons.lua`
 - `nvim-tree` renderer settings in `lua/plugins/tree.lua`
 - shared icon names in `lua/ui/icons.lua`
