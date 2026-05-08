@@ -98,22 +98,23 @@ local gitsigns_signs = {
   untracked = { text = '?' },
 }
 
+--- @param direction 'next'|'prev'
+local cycle_hunk = function(direction)
+  if vim.wo.diff then return direction == 'next' and ']c' or '[c' end
+  vim.schedule(package.loaded.gitsigns[direction .. '_hunk'])
+  return '<Ignore>'
+end
+
+local next_hunk = function() return cycle_hunk 'next' end
+local prev_hunk = function() return cycle_hunk 'prev' end
+
 require('gitsigns').setup {
   signs = gitsigns_signs,
   signs_staged = gitsigns_signs,
 
   on_attach = function(bufnr)
-    vim.keymap.set('n', ']c', function()
-      if vim.wo.diff then return ']c' end
-      vim.schedule(package.loaded.gitsigns.next_hunk)
-      return '<Ignore>'
-    end, { buffer = bufnr, expr = true, desc = 'Git: next_hunk' })
-
-    vim.keymap.set('n', '[c', function()
-      if vim.wo.diff then return '[c' end
-      vim.schedule(package.loaded.gitsigns.prev_hunk)
-      return '<Ignore>'
-    end, { buffer = bufnr, expr = true, desc = 'Git: prev_hunk' })
+    vim.keymap.set('n', ']c', next_hunk, { buffer = bufnr, expr = true, desc = 'Git: next_hunk' })
+    vim.keymap.set('n', '[c', prev_hunk, { buffer = bufnr, expr = true, desc = 'Git: prev_hunk' })
   end,
 }
 
