@@ -1,6 +1,6 @@
 local M = {}
 
-M.palette = require('ui.highlights.' .. vim.g.ui_colorscheme)
+M.palette = require('ui.highlights.' .. vim.g.ui_theme)
 
 local thm = M.palette
 

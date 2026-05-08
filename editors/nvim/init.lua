@@ -1,8 +1,8 @@
 -- Standardize Neovim logging for interactive and headless launches
 vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nvim.log')
 
--- Select the UI colorscheme once for palette consumers and :colorscheme
-vim.g.ui_colorscheme = 'sourdiesel'
+-- Select the UI theme once for palette consumers and :colorscheme
+vim.g.ui_theme = 'sourdiesel'
 
 -- Configure core editor options
 require 'opts'
@@ -107,7 +107,7 @@ require 'usercmds'
 vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 
 -- Apply the shell-aligned base16 colorscheme
-vim.cmd.colorscheme(vim.g.ui_colorscheme)
+vim.cmd.colorscheme(vim.g.ui_theme)
 
 -- Defer keymaps to the next event loop to avoid unwanted remappings
 vim.schedule(function() require 'keymaps' end)
