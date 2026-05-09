@@ -1,5 +1,7 @@
+local aucmd = vim.api.nvim_create_autocmd
+
 -- [1/15] Always refresh snippet list with respect to buffer
-vim.api.nvim_create_autocmd('InsertLeave', {
+aucmd('InsertLeave', {
   desc = 'Reset Snippet',
   group = vim.api.nvim_create_augroup('LuaSnipAU', {}),
   callback = function()
@@ -12,7 +14,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 })
 
 -- [2/15] Auto-refresh NvimTree on relevant events
-vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
+aucmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimResized', 'FocusGained', 'ShellCmdPost', 'FileChangedShellPost' }, {
   desc = 'Auto-refresh Nvim-Tree on file, Git, and resize events',
   group = vim.api.nvim_create_augroup('TreeAU', {}),
   pattern = '*',
@@ -32,7 +34,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'BufReadPost', 'VimRe
 })
 
 -- [3/15] Display Dashboard on blank startup
-vim.api.nvim_create_autocmd('VimEnter', {
+aucmd('VimEnter', {
   desc = 'Display Dashboard on blank startup',
   group = vim.api.nvim_create_augroup('DashAU', {}),
   callback = function()
@@ -54,7 +56,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 -- [4/15] Exclude quickfix buffers from buffer list
-vim.api.nvim_create_autocmd('FileType', {
+aucmd('FileType', {
   desc = 'Prevents quickfix buffers from appearing in buffer lists',
   group = vim.api.nvim_create_augroup('BufferAU', {}),
   pattern = 'qf',
@@ -62,14 +64,14 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- [5/15] Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
+aucmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('YankAU', {}),
   callback = function() vim.highlight.on_yank { higroup = 'YankFlash', timeout = 200 } end,
 })
 
 -- [6/15] Load folds
-vim.api.nvim_create_autocmd('BufWinEnter', {
+aucmd('BufWinEnter', {
   desc = 'Load folds when opening file',
   group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
@@ -77,7 +79,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 })
 
 -- [7/15] Save folds
-vim.api.nvim_create_autocmd('BufWinLeave', {
+aucmd('BufWinLeave', {
   desc = 'Save folds when closing file',
   group = vim.api.nvim_create_augroup('FoldsAU', { clear = false }),
   pattern = { '*.*' },
@@ -85,7 +87,7 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
 })
 
 -- [8/15] Fire a custom "User FilePost" once we have a real file buffer and the UI is ready
-vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
+aucmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
   group = vim.api.nvim_create_augroup('FilePostAU', {}),
 
@@ -113,7 +115,7 @@ vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
 })
 
 -- [9/15] Window-local highlight remaps for vim.pack update/confirm buffer
-vim.api.nvim_create_autocmd('FileType', {
+aucmd('FileType', {
   desc = 'Scope Diagnostic/Diff highlight links to only the nvim-pack window',
   group = vim.api.nvim_create_augroup('NvimPackHighlights', {}),
   pattern = 'nvim-pack',
@@ -140,7 +142,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- [10/15] Git config niceties
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+aucmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat git/config as gitconfig filetype',
   group = vim.api.nvim_create_augroup('GitConfigFt', {}),
   pattern = '*/git/config',
@@ -148,7 +150,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- [11/15] SSH config highlighting
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+aucmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat ssh/config as sshconfig filetype',
   group = vim.api.nvim_create_augroup('SshConfigFt', {}),
   pattern = '*/ssh/config',
@@ -156,7 +158,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- [12/15] btop theme highlighting (treat as ini)
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+aucmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat btop *.theme as dosini',
   group = vim.api.nvim_create_augroup('BtopThemeFt', {}),
   pattern = '*/btop/themes/*.theme',
@@ -164,7 +166,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- [13/15] Shared shell config highlighting (treat as zsh)
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+aucmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat shared shell config files as zsh filetype',
   group = vim.api.nvim_create_augroup('ShellConfigFt', {}),
   pattern = { '*/shells/env', '*/shells/aliases', '*/shells/colors/*' },
@@ -172,7 +174,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- [14/15] Auto-open nvim-tree on startup
-vim.api.nvim_create_autocmd('VimEnter', {
+aucmd('VimEnter', {
   desc = 'Open nvim-tree when Neovim starts',
   group = vim.api.nvim_create_augroup('TreeAutoOpen', {}),
   callback = function()
@@ -189,7 +191,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 -- [15/15] Rebuild blink.cmp Rust fuzzy library after install/update
-vim.api.nvim_create_autocmd('PackChanged', {
+aucmd('PackChanged', {
   desc = 'Build blink.cmp fuzzy matcher with cargo after plugin updates',
   group = vim.api.nvim_create_augroup('BlinkBuildAU', {}),
   callback = function(ev)
