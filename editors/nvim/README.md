@@ -12,23 +12,20 @@ integration, and XDG state paths.
 
 1. Set `NVIM_LOG_FILE` for interactive and headless launches.
 2. Select `vim.g.ui_theme`.
-3. Load core options from `lua/opts.lua`.
-4. Configure diagnostics and language servers through `lua/lsp.lua`.
-5. Register plugin sources with `vim.pack.add`.
-6. Configure plugins inline and through `lua/plugins/`.
-7. Register autocommands from `lua/autocmds.lua`.
-8. Register user commands from `lua/usercmds.lua`.
-9. Initialize the local statusline.
-10. Apply the selected UI colorscheme and local highlights.
-11. Defer keymaps from `lua/keymaps.lua` to the next event loop.
+3. Configure core options, diagnostics, and language servers inline.
+4. Register plugin sources with `vim.pack.add`.
+5. Configure plugins inline and through `lua/plugins/`.
+6. Register autocommands from `lua/autocmds.lua`.
+7. Register user commands from `lua/usercmds.lua`.
+8. Initialize the local statusline.
+9. Apply the selected UI colorscheme and local highlights.
+10. Defer keymaps from `lua/keymaps.lua` to the next event loop.
 
 ## Layout
 
 | Path | Purpose |
 | --- | --- |
-| `init.lua` | Startup order and plugin source registration |
-| `lua/opts.lua` | Core editor options |
-| `lua/lsp.lua` | LSP server enablement and shared LSP behavior |
+| `init.lua` | Startup order, core options, LSP setup, and plugin source registration |
 | `lsp/*.lua` | Per-server LSP settings |
 | `lua/autocmds.lua` | Autocommands |
 | `lua/usercmds.lua` | Custom user commands |
