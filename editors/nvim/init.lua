@@ -5,7 +5,47 @@ vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nv
 vim.g.ui_theme = 'sourdiesel'
 
 -- Configure core editor options
-require 'opts'
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
+
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
+vim.opt.fillchars = { eob = ' ' }
+vim.opt.guicursor = 'n-v-c:block-blinkwait300-blinkon200-blinkoff150,i-ci:ver25-blinkwait300-blinkon200-blinkoff150'
+vim.opt.shortmess:append 'sI'
+vim.opt.swapfile = false
+vim.opt.termguicolors = true
+vim.opt.whichwrap:append '<>[]hl'
+
+vim.o.clipboard = 'unnamedplus'
+vim.o.cursorline = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.timeoutlen = 400
+vim.o.undofile = true
+vim.o.updatetime = 250
+vim.o.winborder = 'single'
+
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.numberwidth = 2
+vim.o.ruler = false
+vim.o.signcolumn = 'yes'
+
+vim.o.expandtab = true
+vim.o.shiftwidth = 2
+vim.o.smartindent = true
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
+
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+vim.o.laststatus = 3
+vim.o.showmode = false
 
 -- Configure diagnostics UI
 vim.diagnostic.config {
