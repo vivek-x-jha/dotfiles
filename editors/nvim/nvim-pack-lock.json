@@ -17,7 +17,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "33fe4b6f0c817c4d99a7baeea82c4d17e57efd64",
+      "rev": "375078d1fcb082b5593601bba424f5c4f4f00aaf",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -57,7 +57,7 @@
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-web-devicons": {
-      "rev": "4fc505ac7bd7692824a142e96e5f529c133862f8",
+      "rev": "2795c26c916bb3c57dde308b82be51971fa92747",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "vim-tmux-navigator": {
