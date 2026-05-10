@@ -66,13 +66,6 @@ local btn_gap = function(txt1, txt2, max_str_w)
   return txt1 .. spacing .. txt2
 end
 
--- Create a fresh augroup; nvim_create_augroup defaults to clear = true
---- @param name string
---- @return integer
-local augroup = function(name) return vim.api.nvim_create_augroup(name, {}) end
-local aucmd = vim.api.nvim_create_autocmd
-local remap = vim.keymap.set
-
 --- Setup handler
 --- @param buf? integer  -- Buffer handle, defaults to a new scratch buffer
 --- @param win? integer  -- Window handle, defaults to current window
@@ -112,7 +105,7 @@ M.setup = function(buf, win, action)
 
     if dashboard_w < w then dashboard_w = w end
 
-    if val.keys then remap('n', val.keys, '<cmd>' .. val.cmd .. '<cr>', { buffer = buf }) end
+    if val.keys then vim.keymap.set('n', val.keys, '<cmd>' .. val.cmd .. '<cr>', { buffer = buf }) end
   end
   ----------------------- save display txt -----------------------------------------
   local dashboard = {}
@@ -184,11 +177,11 @@ M.setup = function(buf, win, action)
     if key[1] and key[1].cmd then vim.cmd(key[1].cmd) end
   end
 
-  remap('n', 'k', navigate_up, { buffer = buf })
-  remap('n', '<up>', navigate_up, { buffer = buf })
-  remap('n', 'j', navigate_down, { buffer = buf })
-  remap('n', '<down>', navigate_down, { buffer = buf })
-  remap('n', '<cr>', run_selected, { buffer = buf })
+  vim.keymap.set('n', 'k', navigate_up, { buffer = buf })
+  vim.keymap.set('n', '<up>', navigate_up, { buffer = buf })
+  vim.keymap.set('n', 'j', navigate_down, { buffer = buf })
+  vim.keymap.set('n', '<down>', navigate_down, { buffer = buf })
+  vim.keymap.set('n', '<cr>', run_selected, { buffer = buf })
 
   ------------------------------ clean buffer options ------------------------------------
   local opt_local = {
@@ -213,21 +206,13 @@ M.setup = function(buf, win, action)
 
   if action == 'redraw' then return end
 
-  ----------------------- autocmds -----------------------------
-  aucmd('BufWinLeave', {
-    group = augroup 'DashboardAU',
+  ----------------------- autocmd -----------------------------
+  vim.api.nvim_create_autocmd('BufWinLeave', {
+    group = vim.api.nvim_create_augroup('DashboardAU', {}),
     buffer = buf,
     callback = function()
       vim.g.dashboard_displayed = false
       vim.api.nvim_del_augroup_by_name 'DashboardAU'
-    end,
-  })
-
-  aucmd({ 'WinResized', 'VimResized' }, {
-    group = augroup 'DashboardAU',
-    callback = function()
-      vim.bo[vim.g.dashboard_buf].ma = true
-      require('ui.dashboard').setup(vim.g.dashboard_buf, vim.g.dashboard_win, 'redraw')
     end,
   })
 end
