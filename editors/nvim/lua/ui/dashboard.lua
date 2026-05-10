@@ -2,9 +2,6 @@
 ---@field setup fun(buf?: integer, win?: integer, action?: string) -- Displays header + buttons
 local M = {}
 
---- @type { remap: function, txt_pad: function, btn_gap: function } -- Helper functions
-local utl = {}
-
 --- @type table<string, string> -- Custom icons
 local icons = require 'ui.icons'
 
@@ -46,21 +43,11 @@ local buttons = {
   { txt = icons.branch .. '  Git Switch', hl = 'DashGitSwitch', keys = 'gsw', cmd = fzf 'git_branches' },
 }
 
---- Remap a list of keys to an action in normal mode
---- @param keys string[]           -- List of key sequences
---- @param action string|function  -- Command string or Lua function to execute
---- @param buf? integer            -- Optional buffer number
-utl.remap = function(keys, action, buf)
-  for _, val in ipairs(keys) do
-    vim.keymap.set('n', val, action, { buffer = buf })
-  end
-end
-
 --- Pad a string so it is centered within a given width
 --- @param str string         -- String to pad
 --- @param max_str_w integer  -- Maximum display width
 --- @return string            -- Padded string
-utl.txt_pad = function(str, max_str_w)
+local txt_pad = function(str, max_str_w)
   local av = math.floor((max_str_w - vim.api.nvim_strwidth(str)) / 2)
   local spacing = string.rep(' ', av)
 
@@ -72,12 +59,19 @@ end
 --- @param txt2 string        -- Right string
 --- @param max_str_w integer  -- Maximum display width
 --- @return string            -- Combined string with spacing
-utl.btn_gap = function(txt1, txt2, max_str_w)
+local btn_gap = function(txt1, txt2, max_str_w)
   local nonbuttonlength = max_str_w - vim.api.nvim_strwidth(txt1) - #txt2
   local spacing = string.rep(' ', nonbuttonlength)
 
   return txt1 .. spacing .. txt2
 end
+
+-- Create a fresh augroup; nvim_create_augroup defaults to clear = true
+--- @param name string
+--- @return integer
+local augroup = function(name) return vim.api.nvim_create_augroup(name, {}) end
+local aucmd = vim.api.nvim_create_autocmd
+local remap = vim.keymap.set
 
 --- Setup handler
 --- @param buf? integer  -- Buffer handle, defaults to a new scratch buffer
@@ -118,13 +112,13 @@ M.setup = function(buf, win, action)
 
     if dashboard_w < w then dashboard_w = w end
 
-    if val.keys then utl.remap({ val.keys }, '<cmd>' .. val.cmd .. '<cr>', buf) end
+    if val.keys then remap('n', val.keys, '<cmd>' .. val.cmd .. '<cr>', { buffer = buf }) end
   end
   ----------------------- save display txt -----------------------------------------
   local dashboard = {}
 
   for _, line in ipairs(header) do
-    table.insert(dashboard, { txt = utl.txt_pad(line, dashboard_w), hl = 'DashAscii' })
+    table.insert(dashboard, { txt = txt_pad(line, dashboard_w), hl = 'DashAscii' })
   end
 
   for _, item in ipairs(buttons) do
@@ -132,9 +126,9 @@ M.setup = function(buf, win, action)
 
     if not item.keys then
       local str = type(item.txt) == 'string' and item.txt or item.txt()
-      txt = item.rep and string.rep(str, dashboard_w) or utl.txt_pad(str, dashboard_w)
+      txt = item.rep and string.rep(str, dashboard_w) or txt_pad(str, dashboard_w)
     else
-      txt = utl.btn_gap(item.txt, item.keys, dashboard_w)
+      txt = btn_gap(item.txt, item.keys, dashboard_w)
     end
 
     table.insert(dashboard, { txt = txt, hl = item.hl, cmd = item.cmd })
@@ -172,23 +166,29 @@ M.setup = function(buf, win, action)
   local btn_start_i = row_i + #header + 2
   vim.api.nvim_win_set_cursor(win, { btn_start_i, col_i + 5 })
 
-  utl.remap({ 'k', '<up>' }, function()
+  local navigate_up = function()
     local cur = vim.fn.line '.'
     local target_line = cur == key_lines[1].i and key_lines[#key_lines].i or cur - 2
     vim.api.nvim_win_set_cursor(win, { target_line, col_i + 5 })
-  end, buf)
+  end
 
-  utl.remap({ 'j', '<down>' }, function()
+  local navigate_down = function()
     local cur = vim.fn.line '.'
     local target_line = cur == key_lines[#key_lines].i and key_lines[1].i or cur + 2
     vim.api.nvim_win_set_cursor(win, { target_line, col_i + 5 })
-  end, buf)
+  end
 
-  utl.remap({ '<cr>' }, function()
+  local run_selected = function()
     local key = vim.tbl_filter(function(item) return item.i == vim.fn.line '.' end, key_lines)
 
     if key[1] and key[1].cmd then vim.cmd(key[1].cmd) end
-  end, buf)
+  end
+
+  remap('n', 'k', navigate_up, { buffer = buf })
+  remap('n', '<up>', navigate_up, { buffer = buf })
+  remap('n', 'j', navigate_down, { buffer = buf })
+  remap('n', '<down>', navigate_down, { buffer = buf })
+  remap('n', '<cr>', run_selected, { buffer = buf })
 
   ------------------------------ clean buffer options ------------------------------------
   local opt_local = {
@@ -214,19 +214,17 @@ M.setup = function(buf, win, action)
   if action == 'redraw' then return end
 
   ----------------------- autocmds -----------------------------
-  local group_id = vim.api.nvim_create_augroup('NvdashAu', { clear = true })
-
-  vim.api.nvim_create_autocmd('BufWinLeave', {
-    group = group_id,
+  aucmd('BufWinLeave', {
+    group = augroup 'DashboardAU',
     buffer = buf,
     callback = function()
       vim.g.dashboard_displayed = false
-      vim.api.nvim_del_augroup_by_name 'NvdashAu'
+      vim.api.nvim_del_augroup_by_name 'DashboardAU'
     end,
   })
 
-  vim.api.nvim_create_autocmd({ 'WinResized', 'VimResized' }, {
-    group = group_id,
+  aucmd({ 'WinResized', 'VimResized' }, {
+    group = augroup 'DashboardAU',
     callback = function()
       vim.bo[vim.g.dashboard_buf].ma = true
       require('ui.dashboard').setup(vim.g.dashboard_buf, vim.g.dashboard_win, 'redraw')
