@@ -1,12 +1,3 @@
--- Autocmd callback payloads
----@class AutocmdCallbackArgs
----@field id integer     -- Autocmd ID (unique for this definition)
----@field event string   -- Name of the triggering event (e.g. "BufReadPost")
----@field group? integer -- Augroup ID if the autocmd belongs to one
----@field match string   -- Matched pattern or filename
----@field buf integer    -- Buffer number associated with the event
----@field file string    -- Filename associated with the event
-
 -- Notification history items
 ---@class NotifyEntry
 ---@field message string|string[]
@@ -15,24 +6,18 @@
 ---@field icon string|nil
 ---@field time number|nil
 
--- Dashboard button text can be static or lazily generated
----@alias DashboardText string|fun():string
-
 -- Dashboard module metadata
 ---@class Dashboard
 ---@field setup fun(buf?: integer, win?: integer, action?: string) -- Displays header + buttons
 
 -- Dashboard button definition
 ---@class DashboardButton
----@field txt DashboardText
+---@field txt string|fun():string
 ---@field hl string
 ---@field no_gap? boolean
 ---@field rep? boolean
 ---@field keys? string
 ---@field cmd? string|fun():any
-
--- Dashboard button list
----@alias DashboardButtons DashboardButton[]
 
 -- Terminal positions accepted by the terminal UI
 ---@alias TermPos 'float'|'sp'|'vsp'|'bo sp'|'bo vsp'
@@ -74,7 +59,7 @@
 ---@field clear_cmd? string
 
 -- Public terminal module API
----@class NvTerminal
+---@class Terminal
 ---@field save fun(index: integer|string, val: TermRecord)
 ---@field setup fun(opts: TermSetupOpts)
 ---@field open fun(opts: TermOpenOpts)
@@ -82,6 +67,6 @@
 ---@field runner fun(opts: TermRunnerOpts)
 
 -- Internal helpers for the terminal module
----@class TerminalUtils
+---@class TermUtils
 ---@field opts_to_id fun(id: any): (TermRecord|nil)
 ---@field format_cmd fun(cmd: string|fun():string): string

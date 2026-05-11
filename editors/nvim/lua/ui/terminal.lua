@@ -9,7 +9,7 @@ vim.g.nvhterm = false
 ---@type boolean
 vim.g.nvvterm = false
 
----@type TerminalUtils
+---@type TermUtils
 local utl = {
   opts_to_id = function(id)
     for _, opts in pairs(vim.g.terminals) do
