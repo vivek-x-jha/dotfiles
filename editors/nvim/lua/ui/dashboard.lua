@@ -1,5 +1,3 @@
----@class Dashboard
----@field setup fun(buf?: integer, win?: integer, action?: string) -- Displays header + buttons
 local M = {}
 
 --- @type table<string, string> -- Custom icons
@@ -24,7 +22,7 @@ local header = {
   '                                                       ',
 }
 
---- @type { txt: string, hl: string, no_gap?: boolean, rep?: boolean, keys?: string, cmd?: string|fun():any }[]
+---@type DashboardButtons
 local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   -- { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
@@ -66,6 +64,14 @@ local btn_gap = function(txt1, txt2, max_str_w)
   return txt1 .. spacing .. txt2
 end
 
+--- Resolve dashboard button text to a string
+---@param txt DashboardText
+---@return string
+local button_text = function(txt)
+  if type(txt) == 'function' then return txt() end
+  return txt
+end
+
 --- Setup handler
 --- @param buf? integer  -- Buffer handle, defaults to a new scratch buffer
 --- @param win? integer  -- Window handle, defaults to current window
@@ -99,10 +105,10 @@ M.setup = function(buf, win, action)
   end
 
   for _, val in ipairs(buttons) do
-    local str = type(val.txt) == 'string' and val.txt or val.txt()
-    str = val.keys and str .. val.keys or str
-    local w = vim.api.nvim_strwidth(str)
+    local str = button_text(val.txt)
+    if val.keys then str = str .. val.keys end
 
+    local w = vim.api.nvim_strwidth(str)
     if dashboard_w < w then dashboard_w = w end
 
     if val.keys then vim.keymap.set('n', val.keys, '<cmd>' .. val.cmd .. '<cr>', { buffer = buf }) end
@@ -115,16 +121,17 @@ M.setup = function(buf, win, action)
   end
 
   for _, item in ipairs(buttons) do
-    local txt
+    local txt = item.txt
+    if type(txt) == 'function' then txt = txt() end
+    local txt_str = tostring(txt)
 
     if not item.keys then
-      local str = type(item.txt) == 'string' and item.txt or item.txt()
-      txt = item.rep and string.rep(str, dashboard_w) or txt_pad(str, dashboard_w)
+      txt_str = item.rep and string.rep(txt_str, dashboard_w) or txt_pad(txt_str, dashboard_w)
     else
-      txt = btn_gap(item.txt, item.keys, dashboard_w)
+      txt_str = btn_gap(txt_str, item.keys, dashboard_w)
     end
 
-    table.insert(dashboard, { txt = txt, hl = item.hl, cmd = item.cmd })
+    table.insert(dashboard, { txt = txt_str, hl = item.hl, cmd = item.cmd })
 
     if not item.no_gap then table.insert(dashboard, { txt = string.rep(' ', dashboard_w) }) end
   end
