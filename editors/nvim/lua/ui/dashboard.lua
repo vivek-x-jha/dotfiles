@@ -22,7 +22,7 @@ local header = {
   '                                                       ',
 }
 
----@type DashboardButtons
+---@type DashboardButton[]
 local buttons = {
   { txt = '─', hl = 'DashLine', no_gap = true, rep = true },
   -- { txt = plugin_stats(), hl = 'DashPlugins', no_gap = true },
@@ -65,7 +65,7 @@ local btn_gap = function(txt1, txt2, max_str_w)
 end
 
 --- Resolve dashboard button text to a string
----@param txt DashboardText
+---@param txt string|fun():string
 ---@return string
 local button_text = function(txt)
   if type(txt) == 'function' then return txt() end

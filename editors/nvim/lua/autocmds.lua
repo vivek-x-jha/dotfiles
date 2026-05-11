@@ -107,8 +107,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
   desc = 'Wait to load user events on non-empty buffers',
   group = vim.api.nvim_create_augroup('FilePostAU', {}),
-
-  ---@param args AutocmdCallbackArgs
   callback = function(args)
     ---@type string  -- Full buffer path ('' if none)
     local file = vim.api.nvim_buf_get_name(args.buf)
