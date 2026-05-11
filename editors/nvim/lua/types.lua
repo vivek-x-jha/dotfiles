@@ -1,4 +1,4 @@
---- Arguments passed to `callback` functions in `nvim_create_autocmd`
+-- Autocmd callback payloads
 ---@class AutocmdCallbackArgs
 ---@field id integer     -- Autocmd ID (unique for this definition)
 ---@field event string   -- Name of the triggering event (e.g. "BufReadPost")
@@ -7,6 +7,7 @@
 ---@field buf integer    -- Buffer number associated with the event
 ---@field file string    -- Filename associated with the event
 
+-- Notification history items
 ---@class NotifyEntry
 ---@field message string|string[]
 ---@field level integer|string|nil
@@ -14,8 +15,29 @@
 ---@field icon string|nil
 ---@field time number|nil
 
+-- Dashboard button text can be static or lazily generated
+---@alias DashboardText string|fun():string
+
+-- Dashboard module metadata
+---@class Dashboard
+---@field setup fun(buf?: integer, win?: integer, action?: string) -- Displays header + buttons
+
+-- Dashboard button definition
+---@class DashboardButton
+---@field txt DashboardText
+---@field hl string
+---@field no_gap? boolean
+---@field rep? boolean
+---@field keys? string
+---@field cmd? string|fun():any
+
+-- Dashboard button list
+---@alias DashboardButtons DashboardButton[]
+
+-- Terminal positions accepted by the terminal UI
 ---@alias TermPos 'float'|'sp'|'vsp'|'bo sp'|'bo vsp'
 
+-- Floating window sizing options
 ---@class FloatOpts
 ---@field relative? 'editor'|'win'|'cursor'
 ---@field row? number    -- fraction (0..1) before scaling
@@ -23,6 +45,7 @@
 ---@field width? number  -- fraction (0..1) before scaling
 ---@field height? number -- fraction (0..1) before scaling
 
+-- Base terminal open options
 ---@class TermOpenOpts
 ---@field id any
 ---@field pos TermPos
@@ -33,15 +56,32 @@
 ---@field cmd? string|fun():string
 ---@field termopen_opts? table
 
+-- Terminal setup options after buffer creation
 ---@class TermSetupOpts : TermOpenOpts
 ---@field buf integer
 ---@field win? integer
 
+-- Recorded terminal state
 ---@class TermRecord : TermSetupOpts
 ---@field win integer
 
+-- Terminal toggle options
 ---@class TermToggleOpts : TermOpenOpts
 
+-- Terminal runner options
 ---@class TermRunnerOpts : TermOpenOpts
 ---@field cmd string|fun():string
 ---@field clear_cmd? string
+
+-- Public terminal module API
+---@class NvTerminal
+---@field save fun(index: integer|string, val: TermRecord)
+---@field setup fun(opts: TermSetupOpts)
+---@field open fun(opts: TermOpenOpts)
+---@field toggle fun(opts: TermToggleOpts)
+---@field runner fun(opts: TermRunnerOpts)
+
+-- Internal helpers for the terminal module
+---@class TerminalUtils
+---@field opts_to_id fun(id: any): (TermRecord|nil)
+---@field format_cmd fun(cmd: string|fun():string): string

@@ -1,9 +1,3 @@
----@class NvTerminal
----@field save fun(index: integer|string, val: TermRecord)
----@field setup fun(opts: TermSetupOpts)
----@field open fun(opts: TermOpenOpts)
----@field toggle fun(opts: TermToggleOpts)
----@field runner fun(opts: TermRunnerOpts)
 local M = {}
 
 ---@type table<string, TermRecord>
@@ -15,9 +9,7 @@ vim.g.nvhterm = false
 ---@type boolean
 vim.g.nvvterm = false
 
----@class TerminalUtils
----@field opts_to_id fun(id: any): (TermRecord|nil)
----@field format_cmd fun(cmd: string|fun():string): string
+---@type TerminalUtils
 local utl = {
   opts_to_id = function(id)
     for _, opts in pairs(vim.g.terminals) do
