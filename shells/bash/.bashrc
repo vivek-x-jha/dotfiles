@@ -4,6 +4,10 @@
 # Environment
 source "$HOME/.dotfiles/shells/env"
 
+# Colorscheme
+# shellcheck disable=SC1090
+source "$SHELL_CONFIG/colors/$SHELL_THEME"
+
 # Plugin Manager
 [[ $- == *i* ]] && source "$XDG_DATA_HOME/blesh/ble.sh" --noattach --rcfile "$SHELL_CONFIG/bash/.blerc"
 

@@ -4,6 +4,9 @@
 # Instant Prompt
 source "$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh" 2>/dev/null
 
+# Colorscheme
+source "$SHELL_CONFIG/colors/$SHELL_THEME"
+
 # History
 HISTFILE="$XDG_STATE_HOME/zsh/.zsh_history"
 HISTSIZE=12000
