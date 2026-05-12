@@ -16,12 +16,6 @@ alias ...="cd ../.."
 # uses value of $GREP_COLOR
 alias grep='grep --color=auto'
 
-# List or show as tree: all directory items in long format with git info
-command -v eza &>/dev/null && {
-  alias l='eza --all --long --git --icons=always --group-directories-first'
-  alias t='l --tree --level=3 --ignore-glob=".git|.github|.venv|__pycache__"'
-}
-
 # Fuzzy search man pages
 command -v fzf &>/dev/null && alias docs='compgen -c | fzf | xargs man'
 

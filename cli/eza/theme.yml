@@ -1070,11 +1070,19 @@ filenames:
     icon:
       glyph: "󰊕"
 
+  l:
+    icon:
+      glyph: "󰊕"
+
   list-256:
     icon:
       glyph: "󰊕"
 
   list-colors:
+    icon:
+      glyph: "󰊕"
+
+  t:
     icon:
       glyph: "󰊕"
 
