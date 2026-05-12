@@ -1058,10 +1058,6 @@ filenames:
     icon:
       glyph: "󰊕"
 
-  commit-and-sync:
-    icon:
-      glyph: "󰊕"
-
   edit-all:
     icon:
       glyph: "󰊕"
@@ -1088,7 +1084,7 @@ filenames:
 
   update-branches:
     icon:
-      glyph: "󰊕"
+      glyph: ""
 
   update-icons:
     icon:
@@ -1214,6 +1210,30 @@ filenames:
       style:
         foreground: cyan
 
+  .sqlite:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  .sqlite-shm:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  .sqlite-wal:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
   dust:
     icon:
       glyph: ""
@@ -1234,7 +1254,19 @@ filenames:
     icon:
       glyph: ""
 
+  github:
+    icon:
+      glyph: ""
+
   glow:
+    icon:
+      glyph: ""
+
+  gmail:
+    icon:
+      glyph: ""
+
+  google-drive:
     icon:
       glyph: ""
 
@@ -1326,6 +1358,10 @@ filenames:
     icon:
       glyph: ""
 
+  sqlite:
+    icon:
+      glyph: ""
+
   themes:
     icon:
       glyph: ""
@@ -1339,6 +1375,10 @@ filenames:
       glyph: ""
 
   .cache:
+    icon:
+      glyph: ""
+
+  .agents:
     icon:
       glyph: ""
 
@@ -1382,6 +1422,10 @@ filenames:
     icon:
       glyph: ""
 
+  .tmp:
+    icon:
+      glyph: ""
+
   .Trash:
     icon:
       glyph: ""
@@ -1391,6 +1435,10 @@ filenames:
       glyph: ""
 
   .sigstore:
+    icon:
+      glyph: ""
+
+  .system:
     icon:
       glyph: ""
 
@@ -2986,6 +3034,10 @@ filenames:
     icon:
       glyph: ""
 
+  agents:
+    icon:
+      glyph: ""
+
   ai-mastery:
     icon:
       glyph: ""
@@ -3003,6 +3055,10 @@ filenames:
       glyph: ""
 
   arithmetic:
+    icon:
+      glyph: ""
+
+  arg0:
     icon:
       glyph: ""
 
@@ -3030,6 +3086,10 @@ filenames:
     icon:
       glyph: ""
 
+  cache:
+    icon:
+      glyph: ""
+
   calculus:
     icon:
       glyph: ""
@@ -3047,6 +3107,10 @@ filenames:
       glyph: ""
 
   codex:
+    icon:
+      glyph: ""
+
+  codex_apps_tools:
     icon:
       glyph: ""
 
@@ -3126,6 +3190,10 @@ filenames:
     icon:
       glyph: ""
 
+  imagegen:
+    icon:
+      glyph: ""
+
   info:
     icon:
       glyph: ""
@@ -3190,6 +3258,10 @@ filenames:
     icon:
       glyph: ""
 
+  memories:
+    icon:
+      glyph: ""
+
   mubuntu:
     icon:
       glyph: ""
@@ -3238,11 +3310,23 @@ filenames:
     icon:
       glyph: ""
 
+  openai-curated:
+    icon:
+      glyph: ""
+
+  openai-docs:
+    icon:
+      glyph: ""
+
   p10k:
     icon:
       glyph: ""
 
   p10k-mubuntu:
+    icon:
+      glyph: ""
+
+  path:
     icon:
       glyph: ""
 
@@ -3263,6 +3347,10 @@ filenames:
       glyph: ""
 
   prompts:
+    icon:
+      glyph: ""
+
+  plugin-creator:
     icon:
       glyph: ""
 
@@ -3290,6 +3378,10 @@ filenames:
     icon:
       glyph: ""
 
+  rules:
+    icon:
+      glyph: ""
+
   sdists-v6:
     icon:
       glyph: ""
@@ -3306,7 +3398,27 @@ filenames:
     icon:
       glyph: ""
 
+  sessions:
+    icon:
+      glyph: ""
+
   share:
+    icon:
+      glyph: ""
+
+  shell_snapshots:
+    icon:
+      glyph: ""
+
+  skill-creator:
+    icon:
+      glyph: ""
+
+  skill-installer:
+    icon:
+      glyph: ""
+
+  skills:
     icon:
       glyph: ""
 
@@ -3386,11 +3498,19 @@ filenames:
     icon:
       glyph: ""
 
+  tmp:
+    icon:
+      glyph: ""
+
   typescript:
     icon:
       glyph: ""
 
   uv:
+    icon:
+      glyph: ""
+
+  vendor_imports:
     icon:
       glyph: ""
 
@@ -3542,6 +3662,14 @@ filenames:
       style:
         foreground: red
 
+  history.jsonl:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
   hist:
     filename:
       foreground: red
@@ -3573,6 +3701,14 @@ filenames:
       glyph: ""
       style:
         foreground: red
+
+  session_index.jsonl:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
 extensions:
   rs:
     filename:
@@ -3608,6 +3744,13 @@ extensions:
       glyph: ""
       style:
         foreground: black
+  jsonl:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
   shada:
     filename:
       foreground: 08
@@ -3615,6 +3758,34 @@ extensions:
       glyph: ""
       style:
         foreground: 08
+  sqlite:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+  sqlite3:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+  sqlite-shm:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+  sqlite-wal:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
   lua:
     filename:
       foreground: 15

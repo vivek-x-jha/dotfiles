@@ -6,6 +6,7 @@ return {
   checkmark = '✔',
   cmd_hist = '',
   cursor = '󰆾',
+  database = '',
   dotted_circle = '󱥸 ',
   down = '',
   download = ' ',
