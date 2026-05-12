@@ -227,8 +227,12 @@ filenames:
         foreground: 08
 
   aliases:
+    filename:
+      foreground: white
     icon:
-      glyph: "󰊕"
+      glyph: ""
+      style:
+        foreground: white
 
   allowed_signers:
     filename:

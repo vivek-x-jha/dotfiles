@@ -21,7 +21,7 @@ require('nvim-web-devicons').setup {
     ['md'] = { icon = icons.markdown, name = 'md', color = thm.brightyellow },
 
     -- Zsh helpers (autoload + wrappers)
-    ['aliases'] = { icon = icons.command, name = 'aliases' },
+    ['aliases'] = { icon = icons.shell, name = 'aliases', color = thm.white },
     ['cheatsheet'] = { icon = icons.command, name = 'cheatsheet' },
     ['edit-all'] = { icon = icons.command, name = 'edit-all' },
     ['fix-tmux-remotes'] = { icon = icons.command, name = 'fix-tmux-remotes' },
