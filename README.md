@@ -397,7 +397,7 @@ Use them as slash-command style prompts in Codex, Claude, or another coding agen
 ```text
 /sanity
 /review
-/git-flow
+/update-branches
 /bootstrap-change
 /nvim-update
 /package-sync
