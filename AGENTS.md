@@ -180,13 +180,13 @@ now this is an agent-layer maintenance step.
 - Keep Linux and macOS branches explicit and guarded.
 - Preserve dry-run compatibility by routing shell actions through `run` where practical.
 - Use `require <bin>` guard clauses for optional integrations.
-- Use [`docs/ai-workflows.md`](./docs/ai-workflows.md) for repeatable slash-command style workflows such as `/sanity`, `/review`, `/git-flow`, `/bootstrap-change`, `/nvim-update`, `/package-sync`, and `/xdg-audit`.
+- Use [`docs/ai-workflows.md`](./docs/ai-workflows.md) for repeatable slash-command style workflows such as `/sanity`, `/review`, `/update-branches`, `/bootstrap-change`, `/nvim-update`, `/package-sync`, and `/xdg-audit`.
 
 ## AI Workflow Rules
 
 - Treat workflow names as prompt labels, not shell commands, unless the active client supports custom slash commands.
 - For `/sanity`, run `./bootstrap.sh --check`, `bash -n bootstrap.sh`, and `git diff --check`.
-- For `/git-flow`, inspect status and diff first, validate before committing, use commitizen-style messages, fast-forward `dev` from `main`, push `dev`, return to `main`, push `main`, and confirm refs match.
+- For `/update-branches`, inspect status and diff first, validate before committing, use commitizen-style messages, fast-forward `dev` from `main`, push `dev`, return to `main`, push `main`, and confirm refs match.
 - For bootstrap changes, preserve idempotence, dry-run behavior, XDG layout, and platform guards.
 - For package changes, update the relevant manifest and docs together.
 

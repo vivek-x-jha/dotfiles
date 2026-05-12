@@ -7,7 +7,7 @@ Use this file as a prompt playbook for Codex, Claude, or another coding agent wh
 1. Open an AI coding session in `~/.dotfiles`.
 2. Paste one workflow prompt from this file.
 3. Let the agent run the listed checks.
-4. For changes, require git flow before finishing.
+4. For changes, require `/update-branches` before finishing.
 
 Example:
 
@@ -25,7 +25,7 @@ Goal: prove the repo is healthy before or after a change.
 Prompt:
 
 ```text
-Run repo sanity checks. Use ./bootstrap.sh --check, bash -n bootstrap.sh, and git diff --check. If any check fails, inspect the failure, patch the smallest safe fix, rerun targeted checks, then rerun the full sanity set. Do not commit unless I explicitly ask for git flow.
+Run repo sanity checks. Use ./bootstrap.sh --check, bash -n bootstrap.sh, and git diff --check. If any check fails, inspect the failure, patch the smallest safe fix, rerun targeted checks, then rerun the full sanity set. Do not commit unless I explicitly ask for update branches.
 ```
 
 Expected checks:
@@ -46,14 +46,14 @@ Prompt:
 Review the current git diff as a PR. Lead with findings ordered by severity. Focus on bugs, regressions, stale docs, missing checks, XDG violations, dry-run violations, and bootstrap behavior changes. Include file and line references. If no issues are found, say that clearly and list residual risks.
 ```
 
-## /git-flow
+## /update-branches
 
 Goal: validate, commit, fast-forward `dev`, push both branches, and end on `main`.
 
 Prompt:
 
 ```text
-Run git flow. First inspect git status and current diff. Validate with ./bootstrap.sh --check and git diff --check plus any targeted checks relevant to the changed files. Stage logical parts, commit with commitizen-style messages, switch to dev, merge --ff-only main, push dev, switch back to main, push main, and confirm main/dev/origin refs match. Do not include manifests/Brewfile unless the package change is intentional.
+Run update branches. First inspect git status and current diff. Validate with ./bootstrap.sh --check and git diff --check plus any targeted checks relevant to the changed files. Stage logical parts, commit with commitizen-style messages, switch to dev, merge --ff-only main, push dev, switch back to main, push main, and confirm main/dev/origin refs match. Do not include manifests/Brewfile unless the package change is intentional.
 ```
 
 Expected final state:
@@ -70,7 +70,7 @@ Goal: change bootstrap behavior safely.
 Prompt:
 
 ```text
-Implement the requested bootstrap change. Keep operations idempotent, preserve --dry-run by routing mutating shell actions through run where practical, keep macOS/Linux branches guarded, and update README.md and AGENTS.md if user-facing behavior changes. Validate with ./bootstrap.sh --check, bash -n bootstrap.sh, and git diff --check. If checks pass, run git flow.
+Implement the requested bootstrap change. Keep operations idempotent, preserve --dry-run by routing mutating shell actions through run where practical, keep macOS/Linux branches guarded, and update README.md and AGENTS.md if user-facing behavior changes. Validate with ./bootstrap.sh --check, bash -n bootstrap.sh, and git diff --check. If checks pass, run update branches.
 ```
 
 Common checks:
@@ -88,7 +88,7 @@ Goal: update Neovim plugins and commit the lockfile.
 Prompt:
 
 ```text
-Update Neovim plugins using the repo's vim.pack flow. Run the headless forced update if needed, inspect editors/nvim/nvim-pack-lock.json, verify relevant installed plugin revisions, run ./bootstrap.sh --check and git diff --check, then commit only the lockfile unless config changes are required. Run git flow if checks pass.
+Update Neovim plugins using the repo's vim.pack flow. Run the headless forced update if needed, inspect editors/nvim/nvim-pack-lock.json, verify relevant installed plugin revisions, run ./bootstrap.sh --check and git diff --check, then commit only the lockfile unless config changes are required. Run update branches if checks pass.
 ```
 
 Useful command:
@@ -104,7 +104,7 @@ Goal: keep package manifests aligned with actual management source.
 Prompt:
 
 ```text
-Compare manifests/Brewfile, apt/dnf manifests, cargo-installed tools, uv tools, and actual command resolution. Identify tools managed by the wrong source, stale package entries, duplicate providers, and missing Linux install paths. Patch only clear fixes, update docs when behavior changes, validate, and run git flow.
+Compare manifests/Brewfile, apt/dnf manifests, cargo-installed tools, uv tools, and actual command resolution. Identify tools managed by the wrong source, stale package entries, duplicate providers, and missing Linux install paths. Patch only clear fixes, update docs when behavior changes, validate, and run update branches.
 ```
 
 Useful commands:
@@ -149,7 +149,7 @@ Use AI as a maintainer loop:
 ```text
 /sanity
 /review
-/git-flow
+/update-branches
 ```
 
 Use AI as a focused implementer:
