@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 update-icons() {
-  command -v fileicon >/dev/null 2>&1 || {
+  command -v fileicon &>/dev/null || {
     printf "%b%s %s%b%s%b\n" "$BRIGHTRED" "✘" "'fileicon' dependency not found" "$BRIGHTYELLOW" " - please install or check in \$PATH." "$RESET"
     return 1
   }
@@ -64,7 +64,7 @@ update-icons() {
     dir="${dir_icons[i]}"
     icon="${dir_icons[i + 1]}"
 
-    fileicon set "$dir" "$icon" >/dev/null 2>&1 || {
+    fileicon set "$dir" "$icon" &>/dev/null || {
       print_status "$RED" "✘"
       ((fail++))
       continue

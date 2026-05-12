@@ -71,8 +71,8 @@ update-all() {
   }
 
   notify 'PRUNE .DS_STORE ARTIFACTS'
-  logg -c "nohup fd -HI .DS_Store / -x rm -f {} >/dev/null 2>&1 & disown" 2>/dev/null ||
-    logg -c "nohup find / -name '.DS_Store' -print -delete >/dev/null 2>&1 & disown"
+  logg -c "nohup fd -HI .DS_Store / -x rm -f {} &>/dev/null & disown" 2>/dev/null ||
+    logg -c "nohup find / -name '.DS_Store' -print -delete &>/dev/null & disown"
 
   notify 'UPDATE ZSH PLUGINS'
   logg -c 'zap update all' 2>/dev/null ||

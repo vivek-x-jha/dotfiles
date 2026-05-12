@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 fix-tmux-remotes() {
-  command -v git >/dev/null 2>&1 || {
+  command -v git &>/dev/null || {
     printf "%b%s %s%b\n" "$BRIGHTRED" "✘" "git unavailable or not in PATH" "$RESET"
     return 1
   }

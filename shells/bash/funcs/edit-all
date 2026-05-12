@@ -21,7 +21,7 @@ edit-all() {
   local pat f mime
   local cmd=()
 
-  if command -v fd >/dev/null 2>&1; then
+  if command -v fd &>/dev/null; then
     cmd=(fd -HItf -0)
     for pat in "${excludes[@]}"; do cmd+=(--exclude "$pat"); done
   else

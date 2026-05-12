@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 uvi() {
-  command -v uv >/dev/null 2>&1 || {
+  command -v uv &>/dev/null || {
     printf "[ERROR] %b\`uv\`%b not found in PATH\n" "$GREEN" "$RESET" >&2
     return 127
   }

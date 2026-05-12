@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 work() {
-  command -v tmux >/dev/null 2>&1 || {
+  command -v tmux &>/dev/null || {
     printf 'tmux not available\n' >&2
     return 1
   }
@@ -53,11 +53,11 @@ EOF
     -r | --reload)
       if [[ -n $TMUX ]]; then
         printf "Stopping tmux server... rerun \`work -r\` once tmux exits to start fresh.\n"
-        tmux kill-server >/dev/null 2>&1
+        tmux kill-server &>/dev/null
         return 0
       fi
 
-      tmux list-sessions >/dev/null 2>&1 && tmux kill-server >/dev/null 2>&1
+      tmux list-sessions &>/dev/null && tmux kill-server &>/dev/null
 
       local reload_session='__work_reload__'
       local restore_script="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins}/tmux-resurrect/scripts/restore.sh"
@@ -97,7 +97,7 @@ EOF
             [[ -n $preferred_session && $preferred_session != "$reload_session" ]] || preferred_session=''
 
             tmux list-sessions -F '#S' | grep -qv "^${reload_session}$" &&
-              tmux kill-session -t "$reload_session" >/dev/null 2>&1
+              tmux kill-session -t "$reload_session" &>/dev/null
           fi
 
           if [[ -n $preferred_session ]]; then
@@ -188,7 +188,7 @@ EOF
     fi
   }
 
-  tmux has-session -t "$session" >/dev/null 2>&1 && {
+  tmux has-session -t "$session" &>/dev/null && {
     swatt "$session"
     return $?
   }
