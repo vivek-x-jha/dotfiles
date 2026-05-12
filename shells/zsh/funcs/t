@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+local dir='.'
+local level='3'
+local usage='usage: t [directory=.] [-level=3, range 1-99]'
+
+[[ ${1:-} == '-h' || ${1:-} == '--help' ]] && printf '%s\n' "$usage" && return
+(( $# > 2 )) && printf '%s\n' "$usage" >&2 && return 2
+
+[[ ${1:-} == -* ]] && level="${1#-}" || dir="${1:-.}"
+[[ ${2:-} == -* ]] && level="${2#-}"
+
+case "$level" in
+  [1-9] | [1-9][0-9]) ;;
+  *)
+    printf '%s\n' "$usage" >&2
+    return 2
+    ;;
+esac
+
+l --tree --level="$level" --ignore-glob=".git|.github|.venv|__pycache__" "$dir"

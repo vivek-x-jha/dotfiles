@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+l() {
+  local usage='usage: l [eza-options] [paths...]'
+
+  [[ ${1:-} == '-h' || ${1:-} == '--help' ]] && printf '%s\n' "$usage" && return
+
+  command -v eza >/dev/null 2>&1 || return 127
+  eza --all --long --git --icons=always --group-directories-first "$@"
+}
