@@ -31,11 +31,9 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"
 
-# Pager: https://github.com/sharkdp/bat?tab=readme-ov-file#man
-[[ -f $XDG_CONFIG_HOME/bat/config ]] && {
-  export PAGER='bat -p'
-  export MANPAGER="sh -c 'col -bx | bat -pl man --paging=always --theme=sourdiesel'"
-}
+# Pager: https://man7.org/linux/man-pages/man1/less.1.html
+export PAGER='less -R'
+export MANPAGER='less -R'
 
 # Glow: https://github.com/charmbracelet/glow/discussions/799#discussioncomment-14866750
 export GLAMOUR_STYLE="$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
