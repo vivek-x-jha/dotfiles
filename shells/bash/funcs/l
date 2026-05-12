@@ -5,6 +5,6 @@ l() {
 
   [[ ${1:-} == '-h' || ${1:-} == '--help' ]] && printf '%s\n' "$usage" && return
 
-  command -v eza >/dev/null 2>&1 || return 127
+  command -v eza &>/dev/null || return 127
   eza --all --long --git --icons=always --group-directories-first "$@"
 }
