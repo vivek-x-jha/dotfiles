@@ -1,19 +1,17 @@
-path_prepend() { [[ :$PATH: == *":$1:"* ]] || PATH="$1:$PATH"; }
+prepend() { [[ :$PATH: == *":$1:"* ]] || PATH="$1:$PATH"; }
 
 # Add MacOS tools - Homebrew + iTerm2 utilities
 [[ $(/usr/bin/uname) == Darwin ]] && {
-  path_prepend '/opt/homebrew/sbin'
-  path_prepend '/opt/homebrew/bin'
+  prepend '/opt/homebrew/sbin'
+  prepend '/opt/homebrew/bin'
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 }
 
 # Add user-managed tool directories
-path_prepend "$HOME/.local/bin"
-path_prepend "$XDG_DATA_HOME/fzf/bin"
-path_prepend "$CARGO_HOME/bin"
-path_prepend "$XDG_DATA_HOME/bob/nvim-bin"
-
-unset -f path_prepend
+prepend "$HOME/.local/bin"
+prepend "$XDG_DATA_HOME/fzf/bin"
+prepend "$CARGO_HOME/bin"
+prepend "$XDG_DATA_HOME/bob/nvim-bin"
 
 export PATH
 
