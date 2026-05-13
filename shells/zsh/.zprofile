@@ -1,17 +1,19 @@
+path_prepend() { [[ :$PATH: == *":$1:"* ]] || PATH="$1:$PATH"; }
+
 # Add MacOS tools - Homebrew + iTerm2 utilities
-[[ $(uname) == Darwin ]] && {
-  PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+[[ $(/usr/bin/uname) == Darwin ]] && {
+  path_prepend '/opt/homebrew/sbin'
+  path_prepend '/opt/homebrew/bin'
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 }
 
 # Add user-managed tool directories
-PATH="$HOME/.local/bin:$PATH"
-PATH="$XDG_DATA_HOME/fzf/bin:$PATH"
-PATH="$CARGO_HOME/bin:$PATH"
-PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
+path_prepend "$HOME/.local/bin"
+path_prepend "$XDG_DATA_HOME/fzf/bin"
+path_prepend "$CARGO_HOME/bin"
+path_prepend "$XDG_DATA_HOME/bob/nvim-bin"
 
-# Dedupe PATH (keep first occurrence) in zsh only
-[[ -n ${ZSH_VERSION-} ]] && typeset -U PATH
+unset -f path_prepend
 
 export PATH
 
