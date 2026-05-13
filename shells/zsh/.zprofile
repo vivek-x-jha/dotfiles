@@ -1,22 +1,28 @@
-[[ $(uname) == Darwin ]] && {
-  # Prepend homebrew to PATH
-  PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+# Add a directory to the front of PATH when it exists
+prepend_path() {
+  [[ ${1:-} == '-h' || ${1:-} == '--help' ]] && {
+    print 'usage: prepend_path <directory>'
+    return
+  }
 
-  # Add iTerm uilities to PATH
+  [[ -d "$1" ]] && PATH="$1:$PATH"
+}
+
+# Add MacOS tools - Homebrew + iTerm2 utilities
+[[ $(uname) == Darwin ]] && {
+  for dir in '/opt/homebrew/sbin' '/opt/homebrew/bin'; do prepend_path "$dir"; done
   PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
 }
 
-# Prepend uv tools to PATH
-PATH="$HOME/.local/bin:$PATH"
+# Add rest
+paths=(
+  "$HOME/.local/bin"
+  "$XDG_DATA_HOME/fzf/bin"
+  "$CARGO_HOME/bin"
+  "$XDG_DATA_HOME/bob/nvim-bin"
+)
 
-# Prepend XDG-managed fzf to PATH when installed from upstream git
-[[ -d "$XDG_DATA_HOME/fzf/bin" ]] && PATH="$XDG_DATA_HOME/fzf/bin:$PATH"
-
-# Add cargo bin to PATH (respects XDG CARGO_HOME override)
-PATH="$CARGO_HOME/bin:$PATH"
-
-# Add nvim-bin to PATH
-PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
+for dir in "${paths[@]}"; do prepend_path "$dir"; done
 
 # Dedupe PATH (keep first occurrence) in zsh only
 [[ -n ${ZSH_VERSION-} ]] && typeset -U PATH
