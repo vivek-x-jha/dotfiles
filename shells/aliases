@@ -75,22 +75,25 @@ command -v git &>/dev/null && {
 command -v op &>/dev/null && {
   command -v gh &>/dev/null && alias gh="op plugin run -- gh"
 
-  op_mysql_pwd() {
+  _op_mysql_pwd() {
     local user="$1"
     local vault="${2:-Private}"
+    local title="MySQL User: $user"
 
-    op item get "MySQL User: $user" --vault "$vault" --field 'password' --reveal
+    op item get "$title" --vault "$vault" --field 'password' --reveal
   }
 
   # MySQL launcher
   command -v mycli &>/dev/null && {
-    alias mycli='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u "$USER" -p"$(op_mysql_pwd "$USER")"'
-    alias mycli-root='mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u root -p"$(op_mysql_pwd root)"'
+    _mycli_usr_pwd() { command mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u "$1" -p"$(_op_mysql_pwd "$1")"; }
+    alias mycli='_mycli_usr_pwd "$USER"'
+    alias mycli-root='_mycli_usr_pwd root'
   }
 
   command -v mysql &>/dev/null && {
-    alias mysql='mysql -u "$USER" -p"$(op_mysql_pwd "$USER")"'
-    alias mysql-root='mysql -u root -p"$(op_mysql_pwd root)"'
+    _mysql_usr_pwd() { command mysql -u "$1" -p"$(_op_mysql_pwd "$1")"; }
+    alias mysql='_mysql_usr_pwd "$USER"'
+    alias mysql-root='_mysql_usr_pwd root'
   }
 }
 
