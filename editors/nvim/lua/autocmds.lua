@@ -184,7 +184,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat shared shell config files as zsh filetype',
   group = vim.api.nvim_create_augroup('ShellConfigFtAU', {}),
-  pattern = { '*/shells/env', '*/shells/aliases', '*/shells/colors/*' },
+  pattern = { '*/shells/env', '*/shells/profile', '*/shells/aliases', '*/shells/colors/*' },
   callback = function() vim.bo.filetype = 'zsh' end,
 })
 

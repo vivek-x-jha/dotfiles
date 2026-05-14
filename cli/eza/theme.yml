@@ -234,6 +234,14 @@ filenames:
       style:
         foreground: white
 
+  profile:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
   allowed_signers:
     filename:
       foreground: 12
