@@ -135,7 +135,8 @@ now this is an agent-layer maintenance step.
   - `editors/vscode`
 - Homebrew bundle file: `manifests/Brewfile`
 - Shared theme palette: `shells/sourdiesel`
-- Shared shell entrypoint: `shells/env`
+- Shared shell env: `shells/env`
+- Shared shell profile/PATH setup: `shells/profile`
 - Shared fzf config: `cli/fzf/fzf.sh`
 - Auth config roots:
   - `auth/git`

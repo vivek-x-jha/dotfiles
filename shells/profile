@@ -1,0 +1,30 @@
+# Shared login profile for bash and zsh
+
+prepend_path() {
+  PATH=":$PATH:"
+  PATH="${PATH//:$1:/:}"
+  PATH="${PATH#:}"
+  PATH="${PATH%:}"
+  PATH="$1:$PATH"
+}
+
+# Add MacOS tools - Homebrew + iTerm2 utilities
+[[ $(/usr/bin/uname) == Darwin ]] && {
+  prepend_path '/opt/homebrew/sbin'
+  prepend_path '/opt/homebrew/bin'
+  [[ :$PATH: == *":/Applications/iTerm.app/Contents/Resources/utilities:"* ]] ||
+    PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
+}
+
+# Add user-managed tool directories
+prepend_path "$HOME/.local/bin"
+prepend_path "$XDG_DATA_HOME/fzf/bin"
+prepend_path "$CARGO_HOME/bin"
+prepend_path "$XDG_DATA_HOME/bob/nvim-bin"
+
+export PATH
+
+# Load secrets after PATH setup so private overrides see the final baseline environment
+# Use a regular file only; special files such as FIFOs can block shell startup
+# shellcheck disable=SC1091
+[[ -f "$HOME/.dotfiles/.env" ]] && source "$HOME/.dotfiles/.env"
