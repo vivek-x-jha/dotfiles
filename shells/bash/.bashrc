@@ -47,7 +47,7 @@ eval "$(atuin init bash)" && {
 }
 
 # Directory jumper
-eval "$(zoxide init bash --cmd j)" && bind '"\C-p": "ji\n"'
+eval "$(zoxide init bash)" && bind '"\C-p": "zi\n"'
 
 # Keybindings
 bind -x '"\C-o": printf \"\\ec\"; exec '"$(which bash)"
