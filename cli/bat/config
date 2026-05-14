@@ -8,5 +8,6 @@
 
 # Syntaxes
 --map-syntax "config:SSH Config"
+--map-syntax "profile:Bourne Again Shell"
 --map-syntax "*.ino:C++"
 --map-syntax ".ignore:Git Ignore"
