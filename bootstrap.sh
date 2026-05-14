@@ -213,6 +213,7 @@ check_bootstrap() {
   check_cmd 'zshrc syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zshrc"
   check_cmd 'bash profile syntax' bash -n "$HOME/.dotfiles/shells/bash/.bash_profile"
   check_cmd 'bashrc syntax' bash -n "$HOME/.dotfiles/shells/bash/.bashrc"
+  check_cmd 'shared profile syntax' bash -n "$HOME/.dotfiles/shells/profile"
 
   check_path "$HOME/.dotfiles/manifests/Brewfile"
   check_path "$HOME/.dotfiles/manifests/apt-packages.txt"

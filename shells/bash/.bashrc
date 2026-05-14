@@ -1,7 +1,7 @@
 # https://www.gnu.org/software/bash/
-# shellcheck disable=SC1091
 
 # Environment
+# shellcheck disable=SC1091
 source "$HOME/.dotfiles/shells/env"
 
 # Colorscheme
@@ -20,17 +20,14 @@ shopt -s autocd
 set -o vi
 
 # PATH + Secrets
-source "$ZDOTDIR/.zprofile"
+source "$SHELL_CONFIG/profile"
 
 # Prompt
 eval "$(starship init bash)"
 
 # Functions
-for fn in "$SHELL_CONFIG"/bash/funcs/*; do
-  [[ -f $fn ]] || continue
-  # shellcheck disable=SC1090
-  source "$fn"
-done
+# shellcheck disable=SC1090
+for fn in "$SHELL_CONFIG"/bash/funcs/*; do [[ -f $fn ]] && source "$fn"; done
 
 # Aliases
 source "$SHELL_CONFIG/aliases"
