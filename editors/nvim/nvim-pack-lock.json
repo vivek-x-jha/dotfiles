@@ -13,11 +13,11 @@
       "src": "https://github.com/saghen/blink.lib"
     },
     "conform.nvim": {
-      "rev": "dca1a190aa85f9065979ef35802fb77131911106",
+      "rev": "18aeab3d63d350dcf44d64c462cc489a3412af40",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "97376e364f51f1b5ae3efaa3eb2e929430ca8419",
+      "rev": "311a630292310ea3bfe46dd616e17f283e975801",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
