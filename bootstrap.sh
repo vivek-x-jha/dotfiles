@@ -221,6 +221,7 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
+  check_path "$HOME/.dotfiles/cli/npm/npmrc"
   check_path "$HOME/.dotfiles/editors/nvim/init.lua"
   check_path "$HOME/.dotfiles/editors/vscode/settings.json"
   check_path "$HOME/.dotfiles/terminals/tmux/tmux.conf"
@@ -744,6 +745,7 @@ create_symlinks() {
 
   local dirs=(
     "$XDG_CACHE_HOME"
+    "$XDG_CACHE_HOME/npm"
     "$XDG_STATE_HOME/bash"
     "$XDG_STATE_HOME/codex"
     "$XDG_STATE_HOME/jupyter/runtime"
@@ -754,6 +756,8 @@ create_symlinks() {
     "$XDG_STATE_HOME/zsh"
     "$XDG_CONFIG_HOME/ipython"
     "$XDG_CONFIG_HOME/jupyter"
+    "$XDG_CONFIG_HOME/matplotlib"
+    "$XDG_CONFIG_HOME/npm"
     "$XDG_DATA_HOME/jupyter"
     "$XDG_DATA_HOME/zsh"
     "$XDG_DATA_HOME/vscode"
@@ -768,9 +772,11 @@ create_symlinks() {
     ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
+    ../.dotfiles/ai/claude "$XDG_CONFIG_HOME" claude
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
+    ../.dotfiles/cli/npm "$XDG_CONFIG_HOME" npm
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
     ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
@@ -778,6 +784,7 @@ create_symlinks() {
     ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux
     ../.dotfiles/terminals/wezterm "$XDG_CONFIG_HOME" wezterm
     shells/starship.toml "$XDG_CONFIG_HOME" starship.toml
+    .config/claude/.claude.json "$HOME" .claude.json
     .local/share/vscode "$HOME" .vscode
     .config/shells/bash/.bash_profile "$HOME" .bash_profile
     .config/shells/bash/.bashrc "$HOME" .bashrc
