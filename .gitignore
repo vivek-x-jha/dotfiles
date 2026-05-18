@@ -18,6 +18,10 @@ ai/claude/*
 !ai/claude/.claude.json
 !ai/claude/settings.json
 
+cli/matplotlib/*
+!cli/matplotlib/
+!cli/matplotlib/matplotlibrc
+
 # =========================
 # System Files
 # =========================
