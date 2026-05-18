@@ -38,6 +38,9 @@ export MANPAGER='less -R'
 # Glow: https://github.com/charmbracelet/glow/discussions/799#discussioncomment-14866750
 export GLAMOUR_STYLE="$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
 
+# Matplotlib: https://matplotlib.org/stable/install/environment_variables_faq.html
+export MPLCONFIGDIR="$XDG_CONFIG_HOME/matplotlib"
+
 # Less: https://man7.org/linux/man-pages/man1/less.1.html
 export LESSHISTFILE="$XDG_STATE_HOME/lesshst"
 
@@ -78,8 +81,14 @@ export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;
 # Ripgrep: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
+# npm: https://docs.npmjs.com/cli/v11/using-npm/config#environment-variables
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+
 # Zoxide: https://github.com/ajeetdsouza/zoxide#environment-variables
 export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"
+
+# Claude Code: https://code.claude.com/docs/en/env-vars
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 
 # Codex: https://github.com/openai/codex/pull/4414
 export CODEX_HOME="$XDG_STATE_HOME/codex"

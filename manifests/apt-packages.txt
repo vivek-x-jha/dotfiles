@@ -15,6 +15,7 @@ pkg-config
 libssl-dev
 libsqlite3-dev
 unzip
+rsync
 nodejs
 npm
 
