@@ -8,7 +8,8 @@ auth/ssh/*
 !auth/ssh/config
 !auth/ssh/known_hosts
 
-apps/karabiner/*
+apps/karabiner/**
+!apps/karabiner/
 !apps/karabiner/karabiner.json
 
 cli/gh/hosts.yml
