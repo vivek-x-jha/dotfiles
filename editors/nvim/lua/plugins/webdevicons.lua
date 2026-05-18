@@ -93,6 +93,7 @@ require('nvim-web-devicons').setup {
     ['session_index.jsonl'] = { icon = icons.gear, name = 'session_index.jsonl', color = thm.black },
     ['init.lua'] = { icon = icons.lua, name = 'init.lua', color = thm.magenta },
     ['karabiner.json'] = { icon = icons.gear, name = 'karabiner.json', color = thm.magenta },
+    ['npmrc'] = { icon = icons.gear, name = 'npmrc', color = thm.magenta },
     ['settings.json'] = { icon = icons.gear, name = 'settings.json', color = thm.magenta },
     ['starship.toml'] = { icon = icons.gear, name = 'starship.toml', color = thm.magenta },
     ['wezterm.lua'] = { icon = icons.lua, name = 'wezterm.lua', color = thm.magenta },
