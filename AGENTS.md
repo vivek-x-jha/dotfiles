@@ -157,6 +157,7 @@ now this is an agent-layer maintenance step.
   - `cli/fzf`
   - `cli/gh`
   - `cli/glow`
+  - `cli/matplotlib`
   - `cli/mycli`
   - `cli/npm`
   - `cli/ripgrep`

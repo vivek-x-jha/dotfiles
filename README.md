@@ -158,7 +158,7 @@ Open a new terminal window after setup completes so login and interactive shell 
 | [`bootstrap.sh`](./bootstrap.sh) | Setup orchestrator and source of truth |
 | [`ai`](./ai) | AI assistant configs such as Claude Code |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
-| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, mycli, and ripgrep |
+| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
 | [`terminals`](./terminals) | tmux, WezTerm, Terminal.app, and iTerm-related assets |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
@@ -225,8 +225,8 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Claude config is repo-managed from `ai/claude`; runtime files in that folder are ignored except `settings.json` and `.claude.json`. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
-| [IPython](https://ipython.readthedocs.io/en/stable/config/intro.html#ipythondir) | `IPYTHONDIR="$XDG_CONFIG_HOME/ipython"` | IPython profile config |
-| [Matplotlib](https://matplotlib.org/stable/install/environment_variables_faq.html) | `MPLCONFIGDIR="$XDG_CONFIG_HOME/matplotlib"` | Keeps Matplotlib config and generated metadata out of `~/.matplotlib`. |
+| [IPython](https://ipython.readthedocs.io/en/stable/development/config.html) | `IPYTHONDIR="$XDG_STATE_HOME/ipython"` | IPython profiles mix config with runtime DB/history files |
+| [Matplotlib](https://matplotlib.org/stable/install/environment_variables_faq.html) | `MPLCONFIGDIR="$XDG_CONFIG_HOME/matplotlib"` | `~/.config/matplotlib` links to `cli/matplotlib`; only `matplotlibrc` is tracked because Matplotlib also writes generated cache there. |
 | [Jupyter](https://docs.jupyter.org/en/latest/use/jupyter-directories.html#environment-variables) | `JUPYTER_CONFIG_DIR`, `JUPYTER_DATA_DIR`, `JUPYTER_RUNTIME_DIR` | Jupyter config, kernels/data, and runtime files |
 | MySQL | `MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"` | MySQL history |
 | MyCLI | `MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"` | MyCLI history |

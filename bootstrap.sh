@@ -221,6 +221,7 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
+  check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
   check_path "$HOME/.dotfiles/editors/nvim/init.lua"
   check_path "$HOME/.dotfiles/editors/vscode/settings.json"
@@ -753,10 +754,9 @@ create_symlinks() {
     "$XDG_STATE_HOME/mycli"
     "$XDG_STATE_HOME/mysql"
     "$XDG_STATE_HOME/python"
+    "$XDG_STATE_HOME/ipython"
     "$XDG_STATE_HOME/zsh"
-    "$XDG_CONFIG_HOME/ipython"
     "$XDG_CONFIG_HOME/jupyter"
-    "$XDG_CONFIG_HOME/matplotlib"
     "$XDG_CONFIG_HOME/npm"
     "$XDG_DATA_HOME/jupyter"
     "$XDG_DATA_HOME/zsh"
@@ -775,6 +775,7 @@ create_symlinks() {
     ../.dotfiles/ai/claude "$XDG_CONFIG_HOME" claude
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
+    ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
     ../.dotfiles/cli/npm "$XDG_CONFIG_HOME" npm
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim

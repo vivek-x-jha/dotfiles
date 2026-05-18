@@ -53,8 +53,8 @@ export MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"
 # Python: https://docs.python.org/3/using/cmdline.html#envvar-PYTHON_HISTORY
 export PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"
 
-# IPython: https://ipython.readthedocs.io/en/stable/config/intro.html#ipythondir
-export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+# IPython profiles mix config with runtime DB/history files.
+export IPYTHONDIR="$XDG_STATE_HOME/ipython"
 
 # Jupyter: https://docs.jupyter.org/en/latest/use/jupyter-directories.html#environment-variables
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
