@@ -3122,6 +3122,10 @@ filenames:
     icon:
       glyph: ""
 
+  claude:
+    icon:
+      glyph: ""
+
   cheatsheets:
     icon:
       glyph: ""
@@ -3234,6 +3238,14 @@ filenames:
     icon:
       glyph: ""
 
+  ipython:
+    icon:
+      glyph: ""
+
+  jupyter:
+    icon:
+      glyph: ""
+
   legacy-latex:
     icon:
       glyph: ""
@@ -3270,6 +3282,10 @@ filenames:
     icon:
       glyph: ""
 
+  matplotlib:
+    icon:
+      glyph: ""
+
   meta:
     icon:
       glyph: ""
@@ -3295,6 +3311,10 @@ filenames:
       glyph: ""
 
   notes:
+    icon:
+      glyph: ""
+
+  npm:
     icon:
       glyph: ""
 
