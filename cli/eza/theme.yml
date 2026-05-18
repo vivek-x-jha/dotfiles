@@ -638,6 +638,14 @@ filenames:
       style:
         foreground: 13
 
+  npmrc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   packages.config:
     filename:
       foreground: 13
@@ -1110,6 +1118,10 @@ filenames:
     icon:
       glyph: "󰊕"
 
+  user-settings:
+    icon:
+      glyph: ""
+
   uvi:
     icon:
       glyph: "󰊕"
@@ -1419,6 +1431,10 @@ filenames:
       glyph: ""
 
   .github:
+    icon:
+      glyph: ""
+
+  '@jupyterlab':
     icon:
       glyph: ""
 
@@ -3246,6 +3262,10 @@ filenames:
     icon:
       glyph: ""
 
+  lab:
+    icon:
+      glyph: ""
+
   legacy-latex:
     icon:
       glyph: ""
@@ -3494,6 +3514,10 @@ filenames:
     icon:
       glyph: ""
 
+  apputils-extension:
+    icon:
+      glyph: ""
+
   ssa_events:
     icon:
       glyph: ""
@@ -3587,6 +3611,10 @@ filenames:
       glyph: ""
 
   wheels-v5:
+    icon:
+      glyph: ""
+
+  workspaces:
     icon:
       glyph: ""
 
