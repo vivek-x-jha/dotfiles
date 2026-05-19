@@ -855,8 +855,12 @@ create_symlinks() {
       continue
     }
 
+    # Remove an existing symlink before relinking. `ln -sf` may follow a
+    # symlinked directory and create nested links inside the source tree.
+    [[ -L $target ]] && run "rm -f \"$target\""
+
     # Backup target directory
-    [[ -d $target && ! -L $target ]] && mv -f "$target" "${target}.bak"
+    [[ -d $target && ! -L $target ]] && run "mv -f \"$target\" \"${target}.bak\""
 
     # Create symlink (respects DRY_RUN via run)
     run "ln -sf \"$src\" \"$target\"" && logg -i "[+ Link: $src -> $base/$target]"
