@@ -25,13 +25,14 @@ Goal: prove the repo is healthy before or after a change.
 Prompt:
 
 ```text
-Run repo sanity checks. Use ./bootstrap.sh --check, bash -n bootstrap.sh, and git diff --check. If any check fails, inspect the failure, patch the smallest safe fix, rerun targeted checks, then rerun the full sanity set. Do not commit unless I explicitly ask for update branches.
+Run repo and installed-state sanity checks. Use ./bootstrap.sh --check, ./bootstrap.sh --doctor, bash -n bootstrap.sh, and git diff --check. If any check fails, inspect the failure, patch the smallest safe fix, rerun targeted checks, then rerun the full sanity set. Do not commit unless I explicitly ask for update branches.
 ```
 
 Expected checks:
 
 ```sh
 ./bootstrap.sh --check
+./bootstrap.sh --doctor
 bash -n bootstrap.sh
 git diff --check
 ```
