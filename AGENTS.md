@@ -61,15 +61,13 @@ Symlinks are created from this repo into XDG paths, including:
 - `~/.config/{shells,nvim,tmux,wezterm,git,ssh,...}`
 - `~/.config/vscode`
 - `~/.config/fzf/fzf.sh`
-- `~/.config/claude -> ~/.dotfiles/ai/claude`
+- `~/.config/claude/settings.json -> ~/.dotfiles/ai/claude/settings.json`
 - `~/.config/webapps`
 - `~/.local/state/{zsh,bash,codex,jupyter,python,mysql,mycli,...}`
 - `~/.local/share/{jupyter,vscode,zsh,...}`
 
 Bootstrap also links `~/.vscode` back to `$XDG_DATA_HOME/vscode`.
-For tools that still hardcode a home-root path, bootstrap creates compatibility links from the legacy path back to the managed XDG target:
-
-- `~/.claude.json -> ~/.config/claude/.claude.json`
+Claude runtime state such as `~/.claude.json` is left unmanaged; only `ai/claude/settings.json` is tracked and linked.
 
 Implementation: `create_symlinks`.
 
@@ -179,8 +177,8 @@ now this is an agent-layer maintenance step.
   - `~/.config/vscode -> ~/.dotfiles/editors/vscode`
 - VS Code extension/CLI data directory:
   - `~/.vscode -> $XDG_DATA_HOME/vscode`
-- Claude compatibility paths:
-  - `~/.claude.json -> ~/.config/claude/.claude.json`
+- Claude config:
+  - `~/.config/claude/settings.json -> ~/.dotfiles/ai/claude/settings.json`
 
 ## Maintenance Rules for Agents
 

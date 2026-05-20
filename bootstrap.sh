@@ -756,6 +756,7 @@ create_symlinks() {
     "$XDG_STATE_HOME/python"
     "$XDG_STATE_HOME/ipython"
     "$XDG_STATE_HOME/zsh"
+    "$XDG_CONFIG_HOME/claude"
     "$XDG_CONFIG_HOME/jupyter"
     "$XDG_CONFIG_HOME/npm"
     "$XDG_DATA_HOME/jupyter"
@@ -772,7 +773,7 @@ create_symlinks() {
     ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
-    ../.dotfiles/ai/claude "$XDG_CONFIG_HOME" claude
+    ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
@@ -785,7 +786,6 @@ create_symlinks() {
     ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux
     ../.dotfiles/terminals/wezterm "$XDG_CONFIG_HOME" wezterm
     shells/starship.toml "$XDG_CONFIG_HOME" starship.toml
-    .config/claude/.claude.json "$HOME" .claude.json
     .local/share/vscode "$HOME" .vscode
     .config/shells/bash/.bash_profile "$HOME" .bash_profile
     .config/shells/bash/.bashrc "$HOME" .bashrc

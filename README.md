@@ -222,7 +222,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
 | Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state |
-| [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Claude config is repo-managed from `ai/claude`; runtime files in that folder are ignored except `settings.json` and `.claude.json`. |
+| [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Only `settings.json` is repo-managed and linked into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
 | [IPython](https://ipython.readthedocs.io/en/stable/development/config.html) | `IPYTHONDIR="$XDG_STATE_HOME/ipython"` | IPython profiles mix config with runtime DB/history files |
@@ -231,14 +231,6 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | MySQL | `MYSQL_HISTFILE="$XDG_STATE_HOME/mysql/.mysql_history"` | MySQL history |
 | MyCLI | `MYCLI_HISTFILE="$XDG_STATE_HOME/mycli/.mycli_history"` | MyCLI history |
 | [npm](https://docs.npmjs.com/cli/v11/using-npm/config#environment-variables) | `NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"` | Repo-managed npm config points cache and logs at `$XDG_CACHE_HOME/npm`. |
-
-### 🔁 Home-Root Compatibility Links
-
-Some desktop tools still assume a home-root path or do not reliably inherit shell environment variables. Bootstrap creates compatibility links from those legacy home paths back to managed targets:
-
-| Tool | Home path | Managed target | Why |
-|---|---|---|---|
-| Claude Code | `~/.claude.json` | `~/.config/claude/.claude.json` | Separate top-level Claude file with no documented relocation flag. |
 
 ## 🧰 Tooling Stack
 
