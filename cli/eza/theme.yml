@@ -1266,6 +1266,10 @@ filenames:
       style:
         foreground: cyan
 
+  ai:
+    icon:
+      glyph: ""
+
   dust:
     icon:
       glyph: ""
