@@ -1,11 +1,11 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "8c091454d2e678d86f8517feb8e2a0b3ca6e1a42",
+      "rev": "0abc8f390b278c3b4aabc4c004ac8a088b65cf24",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "2ef3db111181c5eef22a462aa0122349a6027f28",
+      "rev": "35e3923a09ff3db150ceff80004befcbbfa071a0",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
