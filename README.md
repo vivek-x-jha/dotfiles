@@ -88,6 +88,7 @@ Then clone this repo and run bootstrap from the local checkout:
 ```sh
 git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
 ~/.dotfiles/bootstrap.sh --check
+~/.dotfiles/bootstrap.sh --doctor
 ~/.dotfiles/bootstrap.sh --dry-run
 ~/.dotfiles/bootstrap.sh
 ```
@@ -127,6 +128,14 @@ With 1Password integration prompts:
 ```
 
 Open a new terminal window after setup completes so login and interactive shell startup are reloaded.
+
+Validate the installed workstation state any time after setup:
+
+```sh
+~/.dotfiles/bootstrap.sh --doctor
+```
+
+`--doctor` is read-only and does not request elevated privileges.
 
 ## 🧭 Bootstrap Flow
 
@@ -378,6 +387,7 @@ After significant changes:
 
 ```sh
 ~/.dotfiles/bootstrap.sh --check
+~/.dotfiles/bootstrap.sh --doctor
 ~/.dotfiles/bootstrap.sh --dry-run
 bash -n ~/.dotfiles/bootstrap.sh
 ```
