@@ -15,7 +15,6 @@ apps/karabiner/**
 cli/gh/hosts.yml
 
 ai/claude/*
-!ai/claude/.claude.json
 !ai/claude/settings.json
 
 cli/matplotlib/*
