@@ -20,7 +20,7 @@ ICON='󰓒'
 
 STEP=0
 SUBSTEP=0
-TOTAL_STEPS=19
+TOTAL_STEPS=20
 
 DRY_RUN=0
 CHECK_MODE=0
@@ -224,6 +224,8 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
+  check_path "$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
+  check_path "$HOME/.dotfiles/ai/codex/themes/sourdiesel.toml"
   check_path "$HOME/.dotfiles/editors/nvim/init.lua"
   check_path "$HOME/.dotfiles/editors/vscode/settings.json"
   check_path "$HOME/.dotfiles/terminals/tmux/tmux.conf"
@@ -358,6 +360,7 @@ doctor_bootstrap() {
   doctor_dir "$XDG_DATA_HOME/jupyter"
   doctor_dir "$XDG_DATA_HOME/zsh"
   doctor_dir "$XDG_DATA_HOME/vscode"
+  doctor_file "$XDG_STATE_HOME/codex/config.toml"
 
   doctor_symlink "$XDG_CONFIG_HOME/atuin" ../.dotfiles/cli/atuin
   doctor_symlink "$XDG_CONFIG_HOME/bat" ../.dotfiles/cli/bat
@@ -1075,6 +1078,28 @@ create_symlinks() {
 
 }
 
+# Apply repo-managed Codex UI preferences without replacing runtime config
+configure_codex_ui() {
+  local codex_home="${CODEX_HOME:-$XDG_STATE_HOME/codex}"
+  local config_path="$codex_home/config.toml"
+  local script_path="$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
+  local preferences_path="$HOME/.dotfiles/ai/codex/themes/sourdiesel.toml"
+
+  require python3 || {
+    logg -w 'Python 3 unavailable. Skipping Codex UI preference configuration.'
+    return
+  }
+
+  [[ -f $script_path && -f $preferences_path ]] || {
+    logg -w 'Codex UI preference source files missing. Skipping Codex configuration.'
+    return
+  }
+
+  run "mkdir -p \"$codex_home\""
+  run "python3 \"$script_path\" \"$config_path\" \"$preferences_path\"" || logg -w 'Codex UI preference configuration failed.'
+  logg -i "Codex SourDiesel UI preferences: $(pretty_path "$preferences_path")"
+}
+
 # Apply preferred macOS UI defaults
 configure_macos_defaults() {
   [[ $OS_TYPE != macos ]] && logg -w "Skipping macOS UI tweaks on $DISTRO" && return
@@ -1709,6 +1734,9 @@ HELP
 
   notify 'CREATE SYMLINKS & DIRECTORIES'
   create_symlinks
+
+  notify 'CONFIGURE CODEX UI'
+  configure_codex_ui
 
   notify 'CONFIGURE OS OPTIONS'
   configure_macos_defaults

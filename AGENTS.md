@@ -39,19 +39,20 @@ Main flow in `bootstrap.sh`:
 3. Install package sets (`setup_package_manager`, `install_package_sets`) and fzf (`install_fzf`)
 4. Collect runtime/user environment (`collect_environment`)
 5. Create symlinks + state directories (`create_symlinks`)
-6. Apply OS defaults (`configure_macos_defaults`)
-7. Configure git + GitHub CLI (`configure_git_and_github`)
-8. Clone personal development repos (`clone_developer_repos`)
-9. Install project templates (`install_templates`)
-10. Install shell plugin managers (Zap, ble.sh)
-11. Provision Atuin sync (`setup_atuin_sync`)
-12. Build bat cache
-13. Configure sudo Touch ID (`configure_sudo_auth`)
-14. Create `~/.hushlogin`
-15. Set login shell (`change_shell_default`)
-16. Configure Hammerspoon path (`configure_hammerspoon`)
-17. Install Rust toolchain + cargo tools (`install_rust_tooling`)
-18. Setup editor tooling (`setup_ide`)
+6. Apply Codex SourDiesel UI preferences (`configure_codex_ui`)
+7. Apply OS defaults (`configure_macos_defaults`)
+8. Configure git + GitHub CLI (`configure_git_and_github`)
+9. Clone personal development repos (`clone_developer_repos`)
+10. Install project templates (`install_templates`)
+11. Install shell plugin managers (Zap, ble.sh)
+12. Provision Atuin sync (`setup_atuin_sync`)
+13. Build bat cache
+14. Configure sudo Touch ID (`configure_sudo_auth`)
+15. Create `~/.hushlogin`
+16. Set login shell (`change_shell_default`)
+17. Configure Hammerspoon path (`configure_hammerspoon`)
+18. Install Rust toolchain + cargo tools (`install_rust_tooling`)
+19. Setup editor tooling (`setup_ide`)
 
 ## High-Value Features
 
@@ -69,6 +70,7 @@ Symlinks are created from this repo into XDG paths, including:
 
 Bootstrap also links `~/.vscode` back to `$XDG_DATA_HOME/vscode`.
 Claude runtime state such as `~/.claude.json` is left unmanaged; only `ai/claude/settings.json` is tracked and linked.
+Codex runtime state and generated `config.toml` sections stay owned by Codex under `$CODEX_HOME`; bootstrap only merges known SourDiesel UI preference keys from `ai/codex/themes/sourdiesel.toml`.
 
 Implementation: `create_symlinks`.
 
@@ -105,6 +107,15 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 - Python CLI tools via `uv` (`basedpyright`, `ruff`)
 
 Implementation: `install_rust_tooling`, `setup_ide`.
+
+### 6) Codex SourDiesel UI Preferences
+
+- Source fragment: `ai/codex/themes/sourdiesel.toml`
+- Merge helper: `ai/codex/scripts/apply_preferences.py`
+- Runtime target: `$CODEX_HOME/config.toml`
+- Behavior: `configure_codex_ui` updates only managed UI preference keys and preserves Codex-owned sections such as `marketplaces`, `plugins`, `projects`, and `mcp_servers`.
+- Managed preferences include Desktop chrome theme keys plus TUI `status_line` order and `status_line_use_colors`.
+- TUI colors use Codex and the terminal ANSI palette with `status_line_use_colors = true`; do not add unsupported TUI color keys.
 
 ## Neovim Plugin Update Hooks
 
@@ -147,6 +158,7 @@ now this is an agent-layer maintenance step.
   - `auth/1Password`
 - AI config roots:
   - `ai/claude`
+  - `ai/codex`
 - CLI config roots:
   - `cli/atuin`
   - `cli/bat`
