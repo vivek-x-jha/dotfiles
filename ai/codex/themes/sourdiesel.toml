@@ -1,0 +1,32 @@
+[tui]
+session_picker_view = "comfortable"
+status_line = ["model-with-reasoning", "current-dir", "run-state", "context-remaining", "five-hour-limit", "weekly-limit", "codex-version", "thread-title"]
+status_line_use_colors = true
+
+[desktop]
+appearanceTheme = "dark"
+appearanceDarkCodeThemeId = "catppuccin"
+sansFontSize = 15
+codeFontSize = 15
+usePointerCursors = true
+mac-menu-bar-enabled = false
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+
+[desktop.appearanceDarkChromeTheme]
+surface = "#212030"
+ink = "#cccccc"
+accent = "#eccef0"
+contrast = 60
+opaqueWindows = false
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = "JetBrainsMono NF ExtraLight"
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#ceffc9"
+diffRemoved = "#ffc7c7"
+skill = "#c9ccfb"
+
+[desktop.open-in-target-preferences]
+global = "iterm2"

@@ -146,26 +146,27 @@ Validate the installed workstation state any time after setup:
 3. 📦 Install platform package sets
 4. 🧾 Collect user/runtime environment
 5. 🔗 Create symlinks and XDG state directories
-6. 🍎 Apply macOS defaults
-7. 🔐 Configure Git and GitHub CLI
-8. 🧑‍💻 Clone curated repos into `~/Developer`
-9. 🧱 Install templates
-10. 🐚 Install shell plugin managers
-11. 🕰️ Provision Atuin sync
-12. 🎨 Build the bat cache
-13. 👆 Configure Touch ID sudo on macOS
-14. 🤫 Create `~/.hushlogin`
-15. 🐚 Set login shell
-16. 🔨 Point Hammerspoon at XDG config
-17. 🦀 Install Rust toolchain and cargo tools
-18. 🧠 Install editor tooling
+6. 🎨 Apply Codex SourDiesel UI preferences
+7. 🍎 Apply macOS defaults
+8. 🔐 Configure Git and GitHub CLI
+9. 🧑‍💻 Clone curated repos into `~/Developer`
+10. 🧱 Install templates
+11. 🐚 Install shell plugin managers
+12. 🕰️ Provision Atuin sync
+13. 🎨 Build the bat cache
+14. 👆 Configure Touch ID sudo on macOS
+15. 🤫 Create `~/.hushlogin`
+16. 🐚 Set login shell
+17. 🔨 Point Hammerspoon at XDG config
+18. 🦀 Install Rust toolchain and cargo tools
+19. 🧠 Install editor tooling
 
 ## 📁 Repository Layout
 
 | Path | Purpose |
 |---|---|
 | [`bootstrap.sh`](./bootstrap.sh) | Setup orchestrator and source of truth |
-| [`ai`](./ai) | AI assistant configs such as Claude Code |
+| [`ai`](./ai) | AI assistant configs and managed theme fragments for Claude Code and Codex |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
 | [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
@@ -230,7 +231,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Cargo](https://doc.rust-lang.org/cargo/) | `CARGO_HOME="$XDG_DATA_HOME/cargo"` | Cargo bin, registry, and cache-like data |
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
-| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state |
+| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state and runtime-owned `config.toml`; bootstrap only merges known SourDiesel UI preference keys from `ai/codex`. |
 | [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Only `settings.json` is repo-managed and linked into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
@@ -419,6 +420,14 @@ Use them as slash-command style prompts in Codex, Claude, or another coding agen
 ```
 
 These labels are not shell commands by default. Paste the prompt text from the workflow doc into the AI client, or register them as custom slash commands if the client supports that.
+
+## 🤖 Codex UI Preferences
+
+Codex runtime configuration stays in `$CODEX_HOME/config.toml` because Codex writes local state there, including marketplaces, plugins, MCP servers, and project trust.
+
+Bootstrap applies tracked SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only those managed UI keys and preserves unrelated Codex-owned sections.
+
+The SourDiesel fragment manages Desktop chrome colors and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
 
 ## 🔄 Updates
 

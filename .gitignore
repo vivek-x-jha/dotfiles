@@ -63,6 +63,8 @@ Sessionx.vim
 # Temporary Files
 # =========================
 .netrwhist
+__pycache__/
+*.py[cod]
 *.bak
 *~
 [._]*.un~
