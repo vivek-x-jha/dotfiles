@@ -1418,6 +1418,10 @@ filenames:
     icon:
       glyph: ""
 
+  .codex:
+    icon:
+      glyph: ""
+
   .config:
     icon:
       glyph: ""
