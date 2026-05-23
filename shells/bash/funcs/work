@@ -11,7 +11,7 @@ work() {
   local top_right_label=''
   local bottom_right_label='test'
   local left_cmd='nvim'
-  local top_right_cmd='codex resume --last'
+  local top_right_cmd='codex resume'
   local bottom_right_cmd='clear;'
   local root=''
   local python_init=0
@@ -33,7 +33,7 @@ Layout customization:
 
 Command customization:
   --left-cmd CMD                 Command for left pane (default: nvim)
-  --top-right-cmd CMD            Command for top-right pane (default: 'codex resume --last')
+  --top-right-cmd CMD            Command for top-right pane (default: 'codex resume')
   --bottom-right-cmd CMD         Command for bottom-right pane (default: 'clear;')
 
 Examples:
