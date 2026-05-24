@@ -351,7 +351,7 @@ The Rust install flow:
 
 ### macOS
 
-Homebrew setup uses [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile) and [`manifests/Brewfile`](./manifests/Brewfile).
+Homebrew setup uses [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile) and [`manifests/Brewfile`](./manifests/Brewfile). During bootstrap, macOS installers can customize casks before install by entering cask names or list numbers to skip; formulae, VS Code extensions, cargo tools, and uv tools remain installed from the selected Brewfile.
 
 fzf is installed from upstream git into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc` instead of through Homebrew, apt, or dnf.
 
