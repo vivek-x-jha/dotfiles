@@ -35,7 +35,7 @@ DISTRO=''
 PKG_MGR=''
 
 GITHUB_RAW_BASE='https://raw.githubusercontent.com/vivek-x-jha/dotfiles/refs/heads/main'
-BREWFILE_DEFAULT="$GITHUB_RAW_BASE/manifests/Brewfile"
+BREWFILE_DEFAULT="$HOME/.dotfiles/manifests/Brewfile"
 APT_MANIFEST_DEFAULT="$HOME/.dotfiles/manifests/apt-packages.txt"
 DNF_MANIFEST_DEFAULT="$HOME/.dotfiles/manifests/dnf-packages.txt"
 APT_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/apt-packages.txt"
@@ -151,7 +151,101 @@ confirm() {
   done
 }
 
-# [HF6] fetch secret field from 1Password when available
+# [HF7] prepare a Brewfile for installation, optionally omitting selected casks
+# Usage: prepare_brewfile_install_file <path-or-url>
+prepare_brewfile_install_file() {
+  local brewfile="$1"
+  local casks=()
+  local cask=''
+  local token=''
+  local skip_tokens=''
+  local skip_name=''
+  local skip_names=''
+  local skipped=0
+  local idx=0
+
+  BREWFILE_INSTALL_PATH="$brewfile"
+  BREWFILE_SOURCE_TEMP=''
+  BREWFILE_SELECTED_TEMP=''
+
+  if [[ $brewfile =~ ^https?:// ]]; then
+    BREWFILE_SOURCE_TEMP="$(mktemp)"
+    if ((DRY_RUN)); then
+      logg -i "[dry-run] curl -fsSL \"$brewfile\" -o \"$BREWFILE_SOURCE_TEMP\""
+      BREWFILE_INSTALL_PATH="$brewfile"
+      BREWFILE_SOURCE_TEMP=''
+      logg -w 'Cask customization is skipped for remote Brewfiles during dry-run.'
+      return 0
+    fi
+
+    curl -fsSL "$brewfile" -o "$BREWFILE_SOURCE_TEMP" || {
+      logg -w "Unable to download Brewfile: $brewfile"
+      return 1
+    }
+    BREWFILE_INSTALL_PATH="$BREWFILE_SOURCE_TEMP"
+  fi
+
+  while IFS= read -r cask; do
+    casks+=("$cask")
+  done < <(sed -n 's/^[[:space:]]*cask[[:space:]]*"\([^"]*\)".*/\1/p' "$BREWFILE_INSTALL_PATH")
+
+  ((${#casks[@]})) || return 0
+
+  confirm 'Customize casks before install' 'N' || return 0
+
+  logg -i 'Available Brewfile casks:'
+  for idx in "${!casks[@]}"; do
+    printf '  %2d. %s\n' "$((idx + 1))" "${casks[$idx]}"
+  done
+
+  read -rp '>>> Enter casks to skip (names or numbers, comma/space separated; <Enter> for none): ' skip_tokens
+  [[ -z $skip_tokens ]] && return 0
+
+  for token in $(printf '%s' "$skip_tokens" | tr ',' ' '); do
+    skip_name=''
+    if [[ $token =~ ^[0-9]+$ ]]; then
+      idx=$((10#$token))
+      if ((idx >= 1 && idx <= ${#casks[@]})); then
+        skip_name="${casks[$((idx - 1))]}"
+      fi
+    else
+      for cask in "${casks[@]}"; do
+        [[ $token == "$cask" ]] && skip_name="$cask" && break
+      done
+    fi
+
+    if [[ -n $skip_name ]]; then
+      skip_names="${skip_names}${skip_names:+ }$skip_name"
+      skipped=$((skipped + 1))
+    else
+      logg -w "Ignoring unknown cask selection: $token"
+    fi
+  done
+
+  ((skipped)) || return 0
+
+  BREWFILE_SELECTED_TEMP="$(mktemp)"
+  awk -v skip="$skip_names" '
+    BEGIN {
+      n = split(skip, selected, " ")
+      for (i = 1; i <= n; i++) skipped[selected[i]] = 1
+    }
+    {
+      name = $0
+      if (name ~ /^[[:space:]]*cask[[:space:]]+"/) {
+        sub(/^[[:space:]]*cask[[:space:]]+"/, "", name)
+        sub(/".*/, "", name)
+        if (name in skipped) next
+      }
+      print
+    }
+  ' "$BREWFILE_INSTALL_PATH" >"$BREWFILE_SELECTED_TEMP"
+
+  BREWFILE_INSTALL_PATH="$BREWFILE_SELECTED_TEMP"
+  logg -i "Skipping $skipped cask(s): $skip_names"
+}
+
+# [HF8] fetch secret field from 1Password when available
 # Usage: get_op_field <item> <field>
 get_op_field() {
   local item="$1"
@@ -556,17 +650,31 @@ install_package_sets() {
     if confirm 'Install packages & apps from Brewfile' 'Y'; then
       notify -s 'Select Brewfile'
       local brewfile
+      local install_brewfile
       read -rp '>>> Enter Brewfile path or URL (<Enter> to use default): ' brewfile
       [[ -z $brewfile ]] && brewfile="$BREWFILE_DEFAULT"
       logg -i "Using Brewfile: $brewfile"
 
       if [[ $brewfile =~ ^https?:// ]]; then
-        run "curl -fsSL \"$brewfile\" | brew bundle --file=-"
+        if prepare_brewfile_install_file "$brewfile"; then
+          install_brewfile="$BREWFILE_INSTALL_PATH"
+          if [[ $install_brewfile == "$brewfile" ]]; then
+            run "curl -fsSL \"$brewfile\" | brew bundle --file=-"
+          else
+            run "brew bundle --file=\"$install_brewfile\""
+          fi
+          [[ -n $BREWFILE_SOURCE_TEMP ]] && rm -f "$BREWFILE_SOURCE_TEMP"
+          [[ -n $BREWFILE_SELECTED_TEMP ]] && rm -f "$BREWFILE_SELECTED_TEMP"
+        fi
       else
         [[ $brewfile =~ ^~ ]] && brewfile="${HOME}${brewfile:1}"
         brewfile="${brewfile/#\~/$HOME}"
         if [[ -f $brewfile ]]; then
-          run "brew bundle --file=\"$brewfile\""
+          if prepare_brewfile_install_file "$brewfile"; then
+            install_brewfile="$BREWFILE_INSTALL_PATH"
+            run "brew bundle --file=\"$install_brewfile\""
+            [[ -n $BREWFILE_SELECTED_TEMP ]] && rm -f "$BREWFILE_SELECTED_TEMP"
+          fi
         else
           logg -w "Invalid Brewfile path: $brewfile"
         fi

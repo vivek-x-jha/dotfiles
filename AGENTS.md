@@ -76,7 +76,7 @@ Implementation: `create_symlinks`.
 
 ### 2) Package Management by Platform
 
-- macOS: Homebrew + Brewfile flow + upstream fzf git install
+- macOS: Homebrew + Brewfile flow with optional cask filtering + upstream fzf git install
 - Debian/Ubuntu: apt manifests + upstream fzf git install + GitHub CLI repo install + Charm repo Glow install + optional GUI app installs
 - Fedora/RHEL: dnf manifests + upstream fzf git install + GitHub CLI install + Charm repo Glow install + optional GUI app installs
 
@@ -148,6 +148,7 @@ now this is an agent-layer maintenance step.
   - `editors/nvim`
   - `editors/vscode`
 - Homebrew bundle file: `manifests/Brewfile`
+  - Bootstrap defaults to this local Brewfile and can generate a temporary install Brewfile with selected `cask` entries omitted.
 - Shared theme palette: `shells/sourdiesel`
 - Shared shell env: `shells/env`
 - Shared shell profile/PATH setup: `shells/profile`
