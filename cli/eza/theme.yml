@@ -306,6 +306,10 @@ filenames:
     icon:
       glyph: ""
 
+  src:
+    icon:
+      glyph: ""
+
   terminals:
     icon:
       glyph: ""
@@ -3115,6 +3119,10 @@ filenames:
       glyph: ""
 
   blesh:
+    icon:
+      glyph: ""
+
+  build:
     icon:
       glyph: ""
 
