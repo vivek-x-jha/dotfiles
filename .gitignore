@@ -6,8 +6,8 @@
 auth/ssh/*
 !auth/ssh/allowed_signers
 !auth/ssh/config
-!auth/ssh/identity/
-!auth/ssh/identity/*
+!auth/ssh/identities/
+!auth/ssh/identities/*
 !auth/ssh/known_hosts
 
 apps/karabiner/**

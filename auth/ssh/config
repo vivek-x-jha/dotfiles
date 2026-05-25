@@ -1,4 +1,4 @@
-Include ~/.config/ssh/identity/1password
+Include ~/.config/ssh/identities/1password
 
 Host github.com
   HostName           github.com

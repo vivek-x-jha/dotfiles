@@ -168,7 +168,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat ssh/config as sshconfig filetype',
   group = vim.api.nvim_create_augroup('SshConfigFtAU', {}),
-  pattern = { '*/ssh/config', '*/ssh/config-*', '*/ssh/config.*', '*/ssh/identity/*' },
+  pattern = { '*/ssh/config', '*/ssh/config-*', '*/ssh/config.*', '*/ssh/identities/*' },
   callback = function() vim.bo.filetype = 'sshconfig' end,
 })
 
