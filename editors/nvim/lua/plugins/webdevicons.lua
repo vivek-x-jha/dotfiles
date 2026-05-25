@@ -4,7 +4,7 @@ local thm = require('ui.highlights').palette
 require('nvim-web-devicons').setup {
   override = {
     -- Defaults we lean on
-    ['sh'] = { icon = icons.shell, name = 'sh' },
+    ['sh'] = { icon = icons.shell, name = 'sh', color = thm.brightgreen },
     ['bash'] = { icon = icons.shell, name = 'bash' },
     ['zsh'] = { icon = icons.shell, name = 'zsh' },
     ['default_icon'] = { icon = icons.file, name = 'Default' },
@@ -41,7 +41,7 @@ require('nvim-web-devicons').setup {
     ['.hushlogin'] = { icon = icons.file, name = '.hushlogin', color = thm.brightblack },
     ['.python-version'] = { icon = icons.gear, name = '.python-version', color = thm.black },
     ['.ruff.toml'] = { icon = icons.gear, name = '.ruff.toml', color = thm.black },
-    ['config.sh'] = { icon = icons.shell, name = 'config.sh' },
+    ['config.sh'] = { icon = icons.shell, name = 'config.sh', color = thm.brightgreen },
     ['fzf.sh'] = { icon = icons.shell, name = 'fzf.sh', color = thm.magenta },
     ['.bashrc'] = { icon = icons.shell, name = '.bashrc', color = thm.magenta },
     ['.bash_profile'] = { icon = icons.shell, name = '.bash_profile', color = thm.magenta },
@@ -62,7 +62,6 @@ require('nvim-web-devicons').setup {
     ['.sqlite-shm'] = { icon = icons.database, name = '.sqlite-shm', color = thm.cyan },
     ['.sqlite-wal'] = { icon = icons.database, name = '.sqlite-wal', color = thm.cyan },
     ['session.vim'] = { icon = icons.vim, name = 'Session.vim', color = thm.brightblack },
-    ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap.sh', color = thm.brightgreen },
     ['.state.itermexport'] = { icon = icons.gear, name = '.state.itermexport', color = thm.black },
     ['.localized'] = { icon = icons.file, name = '.localized', color = thm.brightblack },
     ['.dbxignore'] = { icon = icons.file, name = '.dbxignore' },
