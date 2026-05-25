@@ -14,7 +14,7 @@ return {
   folder = '',
   fuzzy = '',
   gear = '',
-  git = '',
+  git = '',
   git_added = '+',
   git_changed = '~',
   git_deleted = 'x',

@@ -260,7 +260,7 @@ filenames:
 
   identity:
     icon:
-      glyph: ""
+      glyph: ""
 
   1password:
     icon:
@@ -287,6 +287,10 @@ filenames:
       glyph: ""
 
   auth:
+    icon:
+      glyph: ""
+
+  identities:
     icon:
       glyph: ""
 
@@ -1576,7 +1580,7 @@ filenames:
 
   "1password":
     icon:
-      glyph: ""
+      glyph: ""
 
   "2.AP Calculus BC Additional Resources-STUDENT USE":
     icon:
