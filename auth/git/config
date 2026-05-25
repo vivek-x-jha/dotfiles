@@ -1,48 +1,14 @@
 [init]
 	defaultBranch = main
-[user]
-	name = Vivek Jha
-	email = vivek.x.jha@gmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9fFcycueFLoRagrZwmLRmWiA3KDOjnsXlz6cHasozv
+[include]
+	path = ~/.config/git/identity
+[core]
+	sshCommand = ssh -F ~/.config/ssh/config
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 	allowedSignersFile = ~/.config/ssh/allowed_signers
 [commit]
 	gpgsign = true
-[core]
-	sshCommand = ssh -F ~/.config/ssh/config
-[color]
-	diff = auto
-	status = auto
-	branch = auto
-	interactive = auto
-	ui = true
-	pager = true
-[color "status"]
-	header = black
-	untracked = red
-	added = green
-	changed = yellow
-	branch = magenta
-	nobranch = red
-	remoteBranch = cyan
-	localBranch = magenta
-	unmerged = yellow
-[color "diff"]
-	old = red
-	meta = black
-	new = green
-	frag = yellow
-	context = brightblack
-[color "decorate"]
-	HEAD = brightgreen
-	branch = magenta
-	remoteBranch = cyan
-	tag = brightyellow
-	stash = cyan
-	grafted = red
-	hash = magenta
-[advice]
-	detachedHead = false
+[include]
+	path = ~/.config/git/themes/sourdiesel

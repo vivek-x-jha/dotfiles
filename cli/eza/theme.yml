@@ -258,6 +258,38 @@ filenames:
       style:
         foreground: 12
 
+  identity:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  1password:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  ssh-agent:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  ssh-agent-macos:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   .p10k.zsh:
     filename:
       foreground: magenta

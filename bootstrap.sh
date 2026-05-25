@@ -316,6 +316,10 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
+  check_path "$HOME/.dotfiles/auth/git/identity"
+  check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
+  check_path "$HOME/.dotfiles/auth/git/update-identity.sh"
+  check_cmd 'git identity updater syntax' bash -n "$HOME/.dotfiles/auth/git/update-identity.sh"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
   check_path "$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
@@ -510,6 +514,8 @@ doctor_bootstrap() {
   doctor_cmd cargo optional
 
   doctor_file "$XDG_CONFIG_HOME/atuin/config.toml"
+  doctor_file "$XDG_CONFIG_HOME/git/identity"
+  doctor_file "$XDG_CONFIG_HOME/git/themes/sourdiesel"
   command -v atuin &>/dev/null && {
     doctor_run 'atuin info' atuin info
     doctor_run 'atuin status' atuin status
@@ -1064,6 +1070,7 @@ create_symlinks() {
   local dirs=(
     "$XDG_CACHE_HOME"
     "$XDG_CACHE_HOME/npm"
+    "$HOME/.local/bin"
     "$XDG_STATE_HOME/bash"
     "$XDG_STATE_HOME/codex"
     "$XDG_STATE_HOME/jupyter/runtime"
@@ -1092,6 +1099,7 @@ create_symlinks() {
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
     ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
+    ../../.dotfiles/auth/git/update-identity.sh "$HOME/.local/bin" git-identity
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
@@ -1244,11 +1252,26 @@ configure_macos_defaults() {
   run 'killall Dock'
 }
 
-# Configure git/user settings and GitHub CLI defaults
+# Configure git identity settings and GitHub CLI defaults
 configure_git_and_github() {
-  run "git config --global user.name \"$GIT_NAME\""
-  run "git config --global user.email \"$GIT_EMAIL\""
-  [[ -n $GIT_SIGNINGKEY ]] && run "git config --global user.signingkey \"$GIT_SIGNINGKEY\""
+  local identity_script="$XDG_CONFIG_HOME/git/update-identity.sh"
+  [[ -x $identity_script ]] || identity_script="$HOME/.dotfiles/auth/git/update-identity.sh"
+
+  local identity_args=(
+    --name "$GIT_NAME"
+    --email "$GIT_EMAIL"
+  )
+
+  [[ -n $GIT_SIGNINGKEY ]] && identity_args+=(--signing-key "$GIT_SIGNINGKEY")
+  [[ -n $OP_VAULT ]] && identity_args+=(--op-vault "$OP_VAULT")
+  ((USE_1PASSWORD)) && identity_args+=(--use-1password) || identity_args+=(--no-1password)
+  ((DRY_RUN)) && identity_args+=(--dry-run)
+
+  if [[ -x $identity_script ]]; then
+    "$identity_script" "${identity_args[@]}"
+  else
+    logg -w "Git identity updater missing at $identity_script"
+  fi
 
   local github="git@github.com:$GITHUB_NAME/dotfiles.git"
 
@@ -1260,9 +1283,6 @@ configure_git_and_github() {
       git -C "$HOME/.dotfiles" remote add upstream "$github" 2>/dev/null || true
     fi
   fi
-
-  local allowed_signers="$XDG_CONFIG_HOME/ssh/allowed_signers"
-  [[ -n $GIT_SIGNINGKEY ]] && run "printf '%s\n' \"$GIT_EMAIL $GIT_SIGNINGKEY\" > \"$allowed_signers\""
 
   if ((USE_1PASSWORD)); then
     local agent_file="$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
