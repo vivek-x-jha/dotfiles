@@ -200,7 +200,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [dust](https://github.com/bootandy/dust) | `~/.config/dust/config.toml` | Repo-managed TOML config. |
 | [eza](https://man.archlinux.org/man/extra/eza/eza.1.en) | `~/.config/eza` | `EZA_CONFIG_DIR` defaults to `$XDG_CONFIG_HOME/eza` or `~/.config/eza`. |
 | [GitHub CLI](https://cli.github.com/manual/) | `~/.config/gh/config.yml` | gh stores CLI config under XDG config. |
-| [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Git supports an XDG global config path. |
+| [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Git supports an XDG global config path. Main Git settings live in `auth/git/config`; user identity and signer program are included from `auth/git/identity`; SourDiesel styling is included from `auth/git/themes/sourdiesel`. |
 | [Glow](https://github.com/charmbracelet/glow) | `~/.config/glow/glow.yml` | Used with `GLAMOUR_STYLE` for the SourDiesel style. |
 | [Karabiner-Elements](https://karabiner-elements.pqrs.org/docs/manual/) | `~/.config/karabiner/karabiner.json` | Native user config path. |
 | [Neovim](https://neovim.io/doc/user/starting/#standard-path) | `~/.config/nvim` | Neovim uses `stdpath()` and XDG base dirs. |
@@ -281,8 +281,8 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 ### 🔐 Auth and Secrets
 
-- Git config and signing live under [`auth/git`](./auth/git).
-- SSH client config, known hosts, and allowed signers live under [`auth/ssh`](./auth/ssh).
+- Git config and signing live in [`auth/git/config`](./auth/git/config), user identity and signer program live in [`auth/git/identity`](./auth/git/identity), and theme settings are included from [`auth/git/themes/sourdiesel`](./auth/git/themes/sourdiesel). Run `git-identity` to refresh identity/signing settings manually.
+- SSH client config, known hosts, and allowed signers live under [`auth/ssh`](./auth/ssh). The base SSH config includes the selected backend file directly from `~/.config/ssh/identity/`, such as `1password`, `ssh-agent`, or `ssh-agent-macos`.
 - [1Password CLI](https://developer.1password.com/docs/cli/) is optional but enables secret-backed aliases.
 - [1Password Shell Plugins](https://developer.1password.com/docs/cli/shell-plugins) wrap supported CLIs such as `gh`.
 - [1Password SSH Agent](https://developer.1password.com/docs/ssh/agent/) signs SSH requests without private keys leaving 1Password.
@@ -310,7 +310,7 @@ Notes:
 
 - sign in to `op`
 - fetch Git identity and signing material
-- configure Git signing through 1Password
+- configure Git signing through 1Password or OpenSSH
 - create or update Atuin sync credentials
 - link 1Password SSH agent configuration
 - wrap supported CLI aliases through `op plugin run`

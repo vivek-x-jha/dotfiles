@@ -158,9 +158,9 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- [10/14] Git config niceties
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  desc = 'Treat git/config as gitconfig filetype',
+  desc = 'Treat repo Git config fragments as gitconfig filetype',
   group = vim.api.nvim_create_augroup('GitConfigFtAU', {}),
-  pattern = '*/git/config',
+  pattern = { '*/git/config', '*/git/identity', '*/git/themes/*' },
   callback = function() vim.bo.filetype = 'gitconfig' end,
 })
 
@@ -168,7 +168,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat ssh/config as sshconfig filetype',
   group = vim.api.nvim_create_augroup('SshConfigFtAU', {}),
-  pattern = '*/ssh/config',
+  pattern = { '*/ssh/config', '*/ssh/config-*', '*/ssh/config.*', '*/ssh/identity/*' },
   callback = function() vim.bo.filetype = 'sshconfig' end,
 })
 

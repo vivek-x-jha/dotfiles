@@ -1,0 +1,3 @@
+Host github.com
+  IdentityFile       ~/.config/ssh/id_ed25519
+  IdentitiesOnly     yes
