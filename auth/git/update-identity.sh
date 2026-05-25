@@ -12,8 +12,8 @@ OP_VAULT=''
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 IDENTITY_FILE="$XDG_CONFIG_HOME/git/identity"
 SSH_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/config"
-SSH_BACKEND_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/identity/1password"
-SSH_AGENT_MACOS_BACKEND_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/identity/ssh-agent-macos"
+SSH_BACKEND_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/identities/1password"
+SSH_AGENT_MACOS_BACKEND_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/identities/ssh-agent-macos"
 ALLOWED_SIGNERS_FILE="$XDG_CONFIG_HOME/ssh/allowed_signers"
 OPENSSH_SIGNING_KEY="$XDG_CONFIG_HOME/ssh/id_ed25519_git_signing"
 
@@ -147,7 +147,7 @@ select_ssh_backend() {
   if [[ -f $SSH_CONFIG_FILE ]]; then
     awk -v include_path="$include_path" '
       BEGIN { done = 0 }
-      tolower($1) == "include" && $2 ~ /\/(config-(1password|ssh-agent|ssh-agent-macos)|identity\/(1password|ssh-agent|ssh-agent-macos))$/ && !done {
+      tolower($1) == "include" && $2 ~ /\/(config-(1password|ssh-agent|ssh-agent-macos)|identit(y|ies)\/(1password|ssh-agent|ssh-agent-macos))$/ && !done {
         print "Include " include_path
         done = 1
         next
@@ -314,11 +314,11 @@ if ! ((USE_1PASSWORD)); then
 fi
 
 if ((USE_1PASSWORD)); then
-  select_ssh_backend identity/1password
+  select_ssh_backend identities/1password
 elif [[ $(uname -s) == Darwin && -f $SSH_AGENT_MACOS_BACKEND_CONFIG_FILE ]]; then
-  select_ssh_backend identity/ssh-agent-macos
+  select_ssh_backend identities/ssh-agent-macos
 else
-  select_ssh_backend identity/ssh-agent
+  select_ssh_backend identities/ssh-agent
 fi
 
 run "mkdir -p \"$(dirname "$IDENTITY_FILE")\""
