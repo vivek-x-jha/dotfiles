@@ -442,7 +442,6 @@ doctor_bootstrap() {
   doctor_dir "$XDG_CACHE_HOME"
   doctor_dir "$XDG_DATA_HOME"
   doctor_dir "$XDG_STATE_HOME"
-  doctor_dir "$HOME/.ssh"
   doctor_dir "$XDG_CACHE_HOME/npm"
   doctor_dir "$XDG_STATE_HOME/bash"
   doctor_dir "$XDG_STATE_HOME/codex"
@@ -474,7 +473,6 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/nvim" ../.dotfiles/editors/nvim
   doctor_symlink "$XDG_CONFIG_HOME/shells" ../.dotfiles/shells
   doctor_symlink "$XDG_CONFIG_HOME/ssh" ../.dotfiles/auth/ssh
-  doctor_symlink "$HOME/.ssh/config" ../.config/ssh/config
   doctor_symlink "$XDG_CONFIG_HOME/tmux" ../.dotfiles/terminals/tmux
   doctor_symlink "$XDG_CONFIG_HOME/wezterm" ../.dotfiles/terminals/wezterm
   doctor_symlink "$XDG_CONFIG_HOME/claude/settings.json" ../../.dotfiles/ai/claude/settings.json
@@ -1072,7 +1070,6 @@ create_symlinks() {
   local dirs=(
     "$XDG_CACHE_HOME"
     "$XDG_CACHE_HOME/npm"
-    "$HOME/.ssh"
     "$HOME/.local/bin"
     "$XDG_STATE_HOME/bash"
     "$XDG_STATE_HOME/codex"
@@ -1111,7 +1108,6 @@ create_symlinks() {
     ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
     ../.dotfiles/auth/ssh "$XDG_CONFIG_HOME" ssh
-    ../.config/ssh/config "$HOME/.ssh" config
     ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux
     ../.dotfiles/terminals/wezterm "$XDG_CONFIG_HOME" wezterm
     shells/starship.toml "$XDG_CONFIG_HOME" starship.toml
