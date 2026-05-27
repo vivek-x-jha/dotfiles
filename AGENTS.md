@@ -157,6 +157,8 @@ now this is an agent-layer maintenance step.
   - `auth/git`
   - `auth/ssh`
   - `auth/1Password`
+- File-backed SSH private keys live under `~/.config/ssh/keys/`.
+- Bootstrap links `~/.ssh/config -> ~/.config/ssh/config` so plain `ssh` uses the repo-managed XDG SSH config.
 - AI config roots:
   - `ai/claude`
   - `ai/codex`

@@ -15,7 +15,7 @@ SSH_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/config"
 SSH_BACKEND_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/identities/1password"
 SSH_AGENT_MACOS_BACKEND_CONFIG_FILE="$XDG_CONFIG_HOME/ssh/identities/ssh-agent-macos"
 ALLOWED_SIGNERS_FILE="$XDG_CONFIG_HOME/ssh/allowed_signers"
-OPENSSH_SIGNING_KEY="$XDG_CONFIG_HOME/ssh/id_ed25519_git_signing"
+OPENSSH_SIGNING_KEY="$XDG_CONFIG_HOME/ssh/keys/id_ed25519_github_signing"
 
 log() {
   printf '[git-identity] %s\n' "$*" >&2

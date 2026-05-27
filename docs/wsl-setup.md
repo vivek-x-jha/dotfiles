@@ -108,14 +108,15 @@ sed -i '/UseKeychain/d;/IdentityAgent/d' ~/.config/ssh/config
 
 ## 9. Generate SSH Keys (these are like secret keys that are more secure than simple passwords - check out the video I posted in Slack in #resources)
 ```bash
-ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.config/ssh/id_ed25519
+mkdir -p ~/.config/ssh/keys
+ssh-keygen -t ed25519 -C "andrew.labno@gmail.com" -f ~/.config/ssh/keys/id_ed25519_github
 eval "$(ssh-agent -s)"
-ssh-add ~/.config/ssh/id_ed25519
+ssh-add ~/.config/ssh/keys/id_ed25519_github
 ```
 
 ## 10. Add the Public Key to GitHub
 ```bash
-cat ~/.config/ssh/id_ed25519.pub
+cat ~/.config/ssh/keys/id_ed25519_github.pub
 ```
 Copy the entire output → GitHub → **Settings** → **SSH and GPG keys** → **New SSH key** → paste, name it “WSL Ubuntu,” and save.
 

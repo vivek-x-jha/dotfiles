@@ -3,12 +3,7 @@
 # =========================
 .env*
 
-auth/ssh/*
-!auth/ssh/allowed_signers
-!auth/ssh/config
-!auth/ssh/identities/
-!auth/ssh/identities/*
-!auth/ssh/known_hosts
+auth/ssh/keys/
 
 apps/karabiner/**
 !apps/karabiner/
