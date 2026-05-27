@@ -282,7 +282,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 ### 🔐 Auth and Secrets
 
 - Git config and signing live in [`auth/git/config`](./auth/git/config), user identity and signer program live in [`auth/git/identity`](./auth/git/identity), and theme settings are included from [`auth/git/themes/sourdiesel`](./auth/git/themes/sourdiesel). Run `git-identity` to refresh identity/signing settings manually.
-- SSH client config, known hosts, and allowed signers live under [`auth/ssh`](./auth/ssh). The base SSH config includes the selected backend file directly from `~/.config/ssh/identities/`, such as `1password`, `ssh-agent`, or `ssh-agent-macos`.
+- SSH client config, known hosts, and allowed signers live under [`auth/ssh`](./auth/ssh). Bootstrap links `~/.ssh/config` to the XDG config so plain `ssh` and Git use the same settings. File-backed private keys live under `~/.config/ssh/keys/`, and the base SSH config includes the selected backend file directly from `~/.config/ssh/identities/`, such as `1password`, `ssh-agent`, or `ssh-agent-macos`.
 - [1Password CLI](https://developer.1password.com/docs/cli/) is optional but enables secret-backed aliases.
 - [1Password Shell Plugins](https://developer.1password.com/docs/cli/shell-plugins) wrap supported CLIs such as `gh`.
 - [1Password SSH Agent](https://developer.1password.com/docs/ssh/agent/) signs SSH requests without private keys leaving 1Password.
