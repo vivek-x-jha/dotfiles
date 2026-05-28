@@ -346,6 +346,7 @@ The Rust install flow:
 4. Installs cargo-managed CLI tools from the Brewfile cargo section.
 
 `update-all -n` updates Neovim plugins through `vim.pack.update(nil, { force = true })`. `update-all -r` updates the stable Rust toolchain and cargo-installed tools. Without these flags, Neovim and Rust updates are skipped.
+The macOS quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
 
 ## 📦 Package Management
 
