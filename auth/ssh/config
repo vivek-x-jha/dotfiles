@@ -7,4 +7,3 @@ Host github.com
 Host *
   UserKnownHostsFile ~/.config/ssh/known_hosts
   SendEnv            LANG LC_*
-  AddKeysToAgent     yes
