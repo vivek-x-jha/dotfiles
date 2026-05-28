@@ -1,13 +1,17 @@
 [init]
 	defaultBranch = main
-[include]
-	path = ~/.config/git/identity
+[user]
+	name = Vivek Jha
+	email = vivek.x.jha@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9fFcycueFLoRagrZwmLRmWiA3KDOjnsXlz6cHasozv
 [core]
 	sshCommand = ssh -F ~/.config/ssh/config
 [gpg]
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = ~/.config/ssh/allowed_signers
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	# program = ssh-keygen
 [commit]
 	gpgsign = true
 [include]

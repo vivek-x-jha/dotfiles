@@ -316,10 +316,7 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
-  check_path "$HOME/.dotfiles/auth/git/identity"
   check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
-  check_path "$HOME/.dotfiles/auth/git/update-identity.sh"
-  check_cmd 'git identity updater syntax' bash -n "$HOME/.dotfiles/auth/git/update-identity.sh"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
   check_path "$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
@@ -514,7 +511,6 @@ doctor_bootstrap() {
   doctor_cmd cargo optional
 
   doctor_file "$XDG_CONFIG_HOME/atuin/config.toml"
-  doctor_file "$XDG_CONFIG_HOME/git/identity"
   doctor_file "$XDG_CONFIG_HOME/git/themes/sourdiesel"
   command -v atuin &>/dev/null && {
     doctor_run 'atuin info' atuin info
@@ -977,11 +973,10 @@ collect_environment() {
   fi
 
   # Load any existing Git metadata as defaults
-  local existing_git_name existing_git_email existing_signingkey
+  local existing_git_name existing_git_email
 
   existing_git_name=$(git config --global user.name 2>/dev/null || true)
   existing_git_email=$(git config --global user.email 2>/dev/null || true)
-  existing_signingkey=$(git config --global user.signingkey 2>/dev/null || true)
 
   while true; do
     while true; do
@@ -1003,13 +998,6 @@ collect_environment() {
       read -rp "${WHITE}>>> 1Password Vault name${RESET} (<Enter> for '$default_vault'): " OP_VAULT
       OP_VAULT="${OP_VAULT:-$default_vault}"
 
-      OP_GIT_SIGNKEY="$(get_op_field 'GitHub Signing Key' 'public key' || true)"
-      local obfuscated_key="${OP_GIT_SIGNKEY:0:18} ... ${OP_GIT_SIGNKEY: -10}"
-      [[ -z $OP_GIT_SIGNKEY ]] && obfuscated_key=""
-
-      read -rp "${WHITE}>>> Git Signing Key${RESET} (<Enter> to use '${obfuscated_key}'): " GIT_SIGNINGKEY
-      GIT_SIGNINGKEY="${GIT_SIGNINGKEY:-${OP_GIT_SIGNKEY:-$existing_signingkey}}"
-
       read -rp "${WHITE}>>> GitHub User${RESET} (<Enter> to use '${GIT_EMAIL%@*}'): " GITHUB_NAME
       GITHUB_NAME="${GITHUB_NAME:-${GIT_EMAIL%@*}}"
 
@@ -1023,7 +1011,6 @@ collect_environment() {
       ATUIN_EMAIL="${ATUIN_EMAIL:-$GIT_EMAIL}"
     else
       OP_VAULT=""
-      GIT_SIGNINGKEY="${existing_signingkey:-}"
       read -rp "${WHITE}>>> GitHub User${RESET} (<Enter> to use '${GIT_EMAIL%@*}'): " GITHUB_NAME
       GITHUB_NAME="${GITHUB_NAME:-${GIT_EMAIL%@*}}"
       ATUIN_OP_TITLE=''
@@ -1046,7 +1033,6 @@ ${MAGENTA}XDG_STATE_HOME${RESET}=$(pretty_path "$XDG_STATE_HOME")
 
 ${MAGENTA}GIT_NAME${RESET}=$GIT_NAME
 ${MAGENTA}GIT_EMAIL${RESET}=$GIT_EMAIL
-${MAGENTA}GIT_SIGNINGKEY${RESET}=${GIT_SIGNINGKEY:-<unset>}
 
 ${MAGENTA}GITHUB_NAME${RESET}=$GITHUB_NAME
 ${MAGENTA}OP_VAULT${RESET}=${OP_VAULT:-<unused>}
@@ -1099,7 +1085,6 @@ create_symlinks() {
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
     ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
-    ../../.dotfiles/auth/git/update-identity.sh "$HOME/.local/bin" git-identity
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
@@ -1252,27 +1237,8 @@ configure_macos_defaults() {
   run 'killall Dock'
 }
 
-# Configure git identity settings and GitHub CLI defaults
+# Configure GitHub CLI defaults
 configure_git_and_github() {
-  local identity_script="$XDG_CONFIG_HOME/git/update-identity.sh"
-  [[ -x $identity_script ]] || identity_script="$HOME/.dotfiles/auth/git/update-identity.sh"
-
-  local identity_args=(
-    --name "$GIT_NAME"
-    --email "$GIT_EMAIL"
-  )
-
-  [[ -n $GIT_SIGNINGKEY ]] && identity_args+=(--signing-key "$GIT_SIGNINGKEY")
-  [[ -n $OP_VAULT ]] && identity_args+=(--op-vault "$OP_VAULT")
-  ((USE_1PASSWORD)) && identity_args+=(--use-1password) || identity_args+=(--no-1password)
-  ((DRY_RUN)) && identity_args+=(--dry-run)
-
-  if [[ -x $identity_script ]]; then
-    "$identity_script" "${identity_args[@]}"
-  else
-    logg -w "Git identity updater missing at $identity_script"
-  fi
-
   local github="git@github.com:$GITHUB_NAME/dotfiles.git"
 
   if ((DRY_RUN)); then

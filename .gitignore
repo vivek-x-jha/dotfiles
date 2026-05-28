@@ -3,7 +3,10 @@
 # =========================
 .env*
 
-auth/ssh/keys/
+auth/ssh/keys/**
+!auth/ssh/keys/**/
+!auth/ssh/keys/**/*.pub
+
 
 apps/karabiner/**
 !apps/karabiner/
