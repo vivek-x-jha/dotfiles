@@ -154,30 +154,6 @@ filenames:
     icon:
       glyph: ""
 
-  .cz.toml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  .ruff.toml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  .stylua.toml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
   .state.itermexport:
     filename:
       foreground: black
@@ -262,6 +238,38 @@ filenames:
     icon:
       glyph: ""
 
+  auth.key:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
+  auth.key.pub:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  signing.key:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
+  signing.key.pub:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
   1password:
     icon:
       glyph: ""
@@ -291,6 +299,10 @@ filenames:
       glyph: ""
 
   identities:
+    icon:
+      glyph: ""
+
+  keys:
     icon:
       glyph: ""
 
