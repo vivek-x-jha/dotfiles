@@ -44,7 +44,7 @@ require('nvim-web-devicons').setup {
     ['.bashrc'] = { icon = icons.shell, name = '.bashrc', color = thm.magenta },
     ['.bash_profile'] = { icon = icons.shell, name = '.bash_profile', color = thm.magenta },
     ['.blerc'] = { icon = icons.shell, name = 'Blerc', color = thm.magenta },
-    ['.zshenv'] = { icon = icons.key, name = '.zshenv', color = thm.brightred },
+    ['.zshenv'] = { icon = icons.shell, name = '.zshenv', color = thm.magenta },
     ['.zshrc'] = { icon = icons.shell, name = '.zshrc', color = thm.magenta },
     ['.zprofile'] = { icon = icons.shell, name = '.zprofile', color = thm.magenta },
     ['.p10k.zsh'] = { icon = icons.shell, name = '.p10k.zsh', color = thm.magenta },

@@ -172,11 +172,11 @@ filenames:
 
   .zshenv:
     filename:
-      foreground: 09
+      foreground: magenta
     icon:
       glyph: ""
       style:
-        foreground: 09
+        foreground: magenta
 
   .zshrc:
     filename:
