@@ -136,11 +136,11 @@ filenames:
 
   env:
     filename:
-      foreground: 09
+      foreground: magenta
     icon:
       glyph: ""
       style:
-        foreground: 09
+        foreground: magenta
 
   .gitignore:
     filename:
