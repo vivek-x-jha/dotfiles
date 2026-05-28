@@ -66,6 +66,7 @@ source "$SHELL_CONFIG/aliases"
 # Color ls + eza
 dircolors_bin="$(command -v dircolors || command -v gdircolors)"
 eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} 'ma=36;48;5;234'
 
 # Fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
