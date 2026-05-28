@@ -1,3 +1,4 @@
 Host github.com
   IdentityFile       ~/.config/ssh/keys/github/auth.key
+  AddKeysToAgent     yes
   IdentitiesOnly     yes
