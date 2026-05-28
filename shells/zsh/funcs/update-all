@@ -109,6 +109,10 @@ local apps=('Arc' 'ChatGPT' 'Claude' 'Codex' 'Notion Calendar' 'Slack' 'Spotify'
 local app='' quarantine_cmd=''
 
 for app in "${apps[@]}"; do
+  [[ -d "/Applications/${app}.app" ]] || {
+    logg -w "SKIPPING ${app^^} QUARANTINE CHECK; APP NOT FOUND"
+    continue
+  }
   quarantine_cmd="sudo xattr -rd com.apple.quarantine '/Applications/${app}.app'"
   logg -c "$quarantine_cmd" || logg -w "FAILED TO CLEAR ${app^^} QUARANTINE"
 done
