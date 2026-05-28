@@ -160,7 +160,7 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Treat repo Git config fragments as gitconfig filetype',
   group = vim.api.nvim_create_augroup('GitConfigFtAU', {}),
-  pattern = { '*/git/config', '*/git/identity', '*/git/themes/*' },
+  pattern = { '*/git/config', '*/git/themes/*' },
   callback = function() vim.bo.filetype = 'gitconfig' end,
 })
 
