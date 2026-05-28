@@ -248,11 +248,11 @@ filenames:
 
   auth.key.pub:
     filename:
-      foreground: 12
+      foreground: white
     icon:
       glyph: ""
       style:
-        foreground: 12
+        foreground: white
 
   signing.key:
     filename:
@@ -264,11 +264,11 @@ filenames:
 
   signing.key.pub:
     filename:
-      foreground: 12
+      foreground: white
     icon:
       glyph: ""
       style:
-        foreground: 12
+        foreground: white
 
   1password:
     icon:
