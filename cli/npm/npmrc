@@ -1,1 +1,3 @@
 cache=${XDG_CACHE_HOME}/npm
+logs-dir=${XDG_CACHE_HOME}/npm/_logs
+update-notifier=false
