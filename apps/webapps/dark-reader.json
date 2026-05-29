@@ -557,7 +557,12 @@
         "wiki.archlinux.org",
         "www.coursera.org",
         "www.hellointerview.com",
-        "chat.google.com"
+        "chat.google.com",
+        "www.mankier.com",
+        "claude.ai",
+        "chatgpt.com",
+        "www.1password.dev",
+        "platform.openai.com"
     ],
     "enableContextMenus": false,
     "enableForPDF": true,
@@ -576,7 +581,7 @@
     "previewNewDesign": false,
     "previewNewestDesign": false,
     "schemeVersion": 2,
-    "syncSettings": false,
+    "syncSettings": true,
     "syncSitesFixes": false,
     "theme": {
         "mode": 1,
