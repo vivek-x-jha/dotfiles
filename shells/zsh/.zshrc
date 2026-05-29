@@ -24,6 +24,10 @@ setopt autocd
 # Plugin Manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
+# Color ls + eza
+dircolors_bin="$(command -v dircolors || command -v gdircolors)"
+eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
+
 # Prompt
 {
   local XDG_CACHE_HOME="$XDG_CACHE_HOME/p10k"
@@ -37,6 +41,9 @@ plug marlonrichert/zsh-autocomplete || {
   compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
 }
 
+zstyle ':completion:*:unambiguous' format \
+  $'%{\e[0;2m%}%Bcommon substring:%b %{\e[0m%}%{\e[38;5;1m%}%d%{\e[0m%}'
+
 # Auto-pairs
 plug hlissner/zsh-autopair
 
@@ -49,6 +56,9 @@ plug zsh-users/zsh-autosuggestions && {
 
 # Completions
 plug zsh-users/zsh-completions && {
+  zsh_completion_colors=(${(s.:.)LS_COLORS} 'ma=00;38;5;14')
+
+  zstyle ':completion:*:default' list-colors "${zsh_completion_colors[@]}"
   zstyle ':completion:*' use-cache on
   zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
   zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts \
@@ -62,11 +72,6 @@ for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 
 # Aliases
 source "$SHELL_CONFIG/aliases"
-
-# Color ls + eza
-dircolors_bin="$(command -v dircolors || command -v gdircolors)"
-eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} 'ma=36;48;5;234'
 
 # Fuzzy finder
 source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
