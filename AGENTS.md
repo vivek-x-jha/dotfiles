@@ -89,6 +89,7 @@ When available/enabled:
 - Uses `op` for secret retrieval
 - Populates Git/Atuin-related credentials
 - Optionally links 1Password SSH config
+- Wraps `gh` through the 1Password shell plugin and provides direct `mysql`/`mycli` secret-backed aliases from `MySQL User: <user>` items
 
 Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sync`.
 

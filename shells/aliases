@@ -75,25 +75,48 @@ command -v git &>/dev/null && {
 command -v op &>/dev/null && {
   command -v gh &>/dev/null && alias gh="op plugin run -- gh"
 
-  _op_mysql_pwd() {
-    local user="$1"
-    local vault="${2:-Private}"
-    local title="MySQL User: $user"
+  _op_mysql_connect() {
+    local client="$1"
+    local user="$2"
+    local password
+    local secret_file
+    local exit_code
+    shift 2
 
-    op item get "$title" --vault "$vault" --field 'password' --reveal
-  }
+    password="$(op item get "MySQL User: $user" --vault Private --field 'password' --reveal)" || return
+    secret_file="$(mktemp "${TMPDIR:-/tmp}/${client}-op.XXXXXX")" || return
+    chmod 600 "$secret_file"
+    trap 'rm -f "$secret_file"' EXIT INT TERM
 
-  # MySQL launcher
-  command -v mycli &>/dev/null && {
-    _mycli_usr_pwd() { command mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u "$1" -p"$(_op_mysql_pwd "$1")"; }
-    alias mycli='_mycli_usr_pwd "$USER"'
-    alias mycli-root='_mycli_usr_pwd root'
+    case "$client" in
+    mysql)
+      {
+        printf '[client]\n'
+        printf 'user=%s\n' "$user"
+        printf 'password=%s\n' "$password"
+      } >"$secret_file"
+      command mysql --defaults-file="$secret_file" "$@"
+      ;;
+    mycli)
+      printf '%s\n' "$password" >"$secret_file"
+      command mycli --myclirc "$XDG_CONFIG_HOME/mycli/config" -u "$user" --password-file "$secret_file" "$@"
+      ;;
+    esac
+
+    exit_code=$?
+    rm -f "$secret_file"
+    trap - EXIT INT TERM
+    return "$exit_code"
   }
 
   command -v mysql &>/dev/null && {
-    _mysql_usr_pwd() { command mysql -u "$1" -p"$(_op_mysql_pwd "$1")"; }
-    alias mysql='_mysql_usr_pwd "$USER"'
-    alias mysql-root='_mysql_usr_pwd root'
+    alias mysql='_op_mysql_connect mysql "$USER"'
+    alias mysql-root='_op_mysql_connect mysql root'
+  }
+
+  command -v mycli &>/dev/null && {
+    alias mycli='_op_mysql_connect mycli "$USER"'
+    alias mycli-root='_op_mysql_connect mycli root'
   }
 }
 
