@@ -27,6 +27,7 @@ return {
   netrwhist = '󰋚',
   recent = '',
   search = '',
+  socket = '',
   status = '󰦒',
   up = '',
   vim = '',

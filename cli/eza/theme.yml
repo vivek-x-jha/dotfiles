@@ -9,6 +9,8 @@ filekinds:
     foreground: yellow
   executable:
     foreground: green
+  socket:
+    foreground: cyan
 
 perms:
   user_read:
@@ -1226,6 +1228,10 @@ filenames:
     icon:
       glyph: ""
 
+  highlights:
+    icon:
+      glyph: ""
+
   complex_modifications:
     icon:
       glyph: ""
@@ -1275,6 +1281,14 @@ filenames:
       foreground: cyan
     icon:
       glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  secrets:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
       style:
         foreground: cyan
 
@@ -1551,6 +1565,14 @@ filenames:
       glyph: ""
 
   Crashpad:
+    icon:
+      glyph: ""
+
+  AppSupport:
+    icon:
+      glyph: ""
+
+  Application Support:
     icon:
       glyph: ""
 
@@ -3867,6 +3889,20 @@ extensions:
       glyph: ""
       style:
         foreground: black
+  sock:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+  socket:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
   shada:
     filename:
       foreground: 08
