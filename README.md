@@ -217,7 +217,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | Bash | home startup symlinks | `~/.bashrc` and `~/.bash_profile` source `~/.config/shells/bash`; shared PATH setup comes from `~/.config/shells/profile` |
 | [ble.sh](https://github.com/akinomyoga/ble.sh) | `--rcfile` | `source "$XDG_DATA_HOME/blesh/ble.sh" --rcfile "$SHELL_CONFIG/bash/.blerc"` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file) | `RIPGREP_CONFIG_PATH` | `~/.config/ripgrep/config` |
-| [mycli](https://www.mycli.net/connect) | `--myclirc` | aliases pass `--myclirc "$XDG_CONFIG_HOME/mycli/config"` |
+| [mycli](https://www.mycli.net/connect) | `--myclirc` | 1Password-backed aliases pass `--myclirc "$XDG_CONFIG_HOME/mycli/config"` |
 | [Hammerspoon](https://www.hammerspoon.org/docs/hs.html#configdir) | macOS defaults override | `MJConfigFile="$XDG_CONFIG_HOME/hammerspoon/init.lua"` |
 | [OpenSSH](https://man.openbsd.org/ssh_config) | explicit config in Git | Git uses `ssh -F ~/.config/ssh/config` |
 | [fzf](https://junegunn.github.io/fzf/shell-integration/) | shell integration source | Bootstrap installs upstream fzf to `$XDG_DATA_HOME/fzf`; shell startup prepends `$XDG_DATA_HOME/fzf/bin` when present, then uses `fzf --zsh`/`fzf --bash` and `~/.config/fzf/fzf.sh` |
@@ -313,7 +313,8 @@ Notes:
 - configure Git signing through 1Password or OpenSSH
 - create or update Atuin sync credentials
 - link 1Password SSH agent configuration
-- wrap supported CLI aliases through `op plugin run`
+- wrap supported CLI aliases such as `gh` through `op plugin run`
+- provide 1Password-backed `mysql`, `mysql-root`, `mycli`, and `mycli-root` aliases
 
 Requirements:
 
@@ -326,7 +327,8 @@ Security notes:
 
 - The 1Password SSH agent config is not a secret, but it can reveal item/vault/account names.
 - Prefer item IDs in `agent.toml` if you do not want those names in plaintext.
-- `mycli` and `mysql` aliases fetch passwords dynamically from 1Password rather than writing them to disk.
+- `mysql` and `mycli` aliases expect 1Password items named `MySQL User: <user>` in the `Private` vault with a `password` field.
+- `mysql` and `mycli` aliases write credentials only to `chmod 600` temporary files for client startup, then remove them.
 
 ## 🦀 Rust and CLI Tools
 
