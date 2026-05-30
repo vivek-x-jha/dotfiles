@@ -1,3 +1,4 @@
+------------------------ Core -------------------------
 -- Standardize Neovim logging for interactive and headless launches
 vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nvim.log')
 
@@ -47,7 +48,7 @@ vim.o.smartcase = true
 vim.o.laststatus = 3
 vim.o.showmode = false
 
--- Configure diagnostics UI
+--------------------- Diagnostics ---------------------
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'single' },
@@ -64,6 +65,7 @@ vim.diagnostic.config {
   },
 }
 
+------------------------- LSP -------------------------
 --- @type string -- language server configs path: ~/.config/nvim/lsp/
 local server_path = vim.fs.joinpath(vim.fn.stdpath 'config', 'lsp')
 
@@ -83,6 +85,7 @@ end
 -- Initialize language servers
 vim.lsp.enable(servers)
 
+----------------------- Plugins -----------------------
 -- Register plugin sources
 vim.pack.add {
   -- autocomplete
@@ -170,6 +173,7 @@ require 'plugins.tree'
 -- Configure Pickers
 require 'plugins.fzf'
 
+------------------- Workspace hooks -------------------
 -- Register autocommands
 require 'autocmds'
 
@@ -182,5 +186,6 @@ vim.o.statusline = "%!v:lua.require('ui.statusline').setup()"
 -- Apply the shell-aligned base16 colorscheme
 vim.cmd.colorscheme(vim.g.ui_theme)
 
+----------------------- Keymaps -----------------------
 -- Defer keymaps to the next event loop to avoid unwanted remappings
 vim.schedule(function() require 'keymaps' end)
