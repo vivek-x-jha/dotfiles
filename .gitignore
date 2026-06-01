@@ -2,6 +2,7 @@
 # Project-Specific
 # =========================
 .env*
+bootstrap/config/local.env
 
 auth/ssh/keys/**
 !auth/ssh/keys/**/

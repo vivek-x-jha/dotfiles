@@ -121,10 +121,34 @@ Without 1Password integration:
 ~/.dotfiles/bootstrap.sh
 ```
 
-With 1Password integration prompts:
+By default, bootstrap uses the tracked defaults in [`bootstrap/config/defaults.env`](./bootstrap/config/defaults.env) and runs without setup questions. Local overrides can be placed in `bootstrap/config/local.env` or `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`.
+
+With explicit prompts:
+
+```sh
+~/.dotfiles/bootstrap.sh --interactive
+```
+
+With 1Password integration:
 
 ```sh
 ~/.dotfiles/bootstrap.sh --with-1password
+```
+
+Fresh and partial setup are both first-class:
+
+```sh
+~/.dotfiles/bootstrap.sh --fresh --dry-run
+~/.dotfiles/bootstrap.sh --partial --only codex,symlinks,ide --dry-run
+~/.dotfiles/bootstrap.sh --skip rust,ide
+~/.dotfiles/bootstrap.sh --list-targets
+```
+
+For Homebrew app selection, keep the Brewfile as the source of truth and choose casks by config:
+
+```sh
+BOOTSTRAP_BREW_CASK_MODE=only
+BOOTSTRAP_BREW_CASKS="1password 1password-cli wezterm visual-studio-code"
 ```
 
 Open a new terminal window after setup completes so login and interactive shell startup are reloaded.
@@ -139,7 +163,7 @@ Validate the installed workstation state any time after setup:
 
 ## 🧭 Bootstrap Flow
 
-`bootstrap.sh` executes in this order:
+`bootstrap.sh` is now a thin orchestrator. It loads defaults and local overrides, sources implementation modules from [`bootstrap/lib`](./bootstrap/lib), then executes a fixed phase list:
 
 1. 🧬 Detect platform and package manager
 2. 🔑 Refresh sudo credentials and detect 1Password
@@ -149,14 +173,14 @@ Validate the installed workstation state any time after setup:
 6. 🎨 Apply Codex SourDiesel UI preferences
 7. 🍎 Apply macOS defaults
 8. 🔐 Configure Git and GitHub CLI
-9. 🧑‍💻 Clone curated repos into `~/Developer`
-10. 🧱 Install templates
+9. 🧑‍💻 Optionally clone curated repos into `~/Developer`
+10. 🧱 Optionally install templates
 11. 🐚 Install shell plugin managers
-12. 🕰️ Provision Atuin sync
+12. 🕰️ Optionally provision Atuin sync
 13. 🎨 Build the bat cache
-14. 👆 Configure Touch ID sudo on macOS
+14. 👆 Optionally configure Touch ID sudo on macOS
 15. 🤫 Create `~/.hushlogin`
-16. 🐚 Set login shell
+16. 🐚 Optionally set login shell
 17. 🔨 Point Hammerspoon at XDG config
 18. 🦀 Install Rust toolchain and cargo tools
 19. 🧠 Install editor tooling
@@ -165,7 +189,8 @@ Validate the installed workstation state any time after setup:
 
 | Path | Purpose |
 |---|---|
-| [`bootstrap.sh`](./bootstrap.sh) | Setup orchestrator and source of truth |
+| [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
+| [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`ai`](./ai) | AI assistant configs and managed theme fragments for Claude Code and Codex |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
 | [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
@@ -231,7 +256,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Cargo](https://doc.rust-lang.org/cargo/) | `CARGO_HOME="$XDG_DATA_HOME/cargo"` | Cargo bin, registry, and cache-like data |
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
-| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state and runtime-owned `config.toml`; bootstrap only merges known SourDiesel UI preference keys from `ai/codex`. |
+| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state and runtime-owned `config.toml`; bootstrap exports this for shells and macOS GUI launches, then only merges known SourDiesel UI preference keys from `ai/codex`. |
 | [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Only `settings.json` is repo-managed and linked into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
@@ -354,7 +379,7 @@ The macOS quarantine pass only targets apps that are actually installed under `/
 
 ### macOS
 
-Homebrew setup uses [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile) and [`manifests/Brewfile`](./manifests/Brewfile). During bootstrap, macOS installers can customize casks before install by entering cask names or list numbers to skip; formulae, VS Code extensions, cargo tools, and uv tools remain installed from the selected Brewfile.
+Homebrew setup uses [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile) and [`manifests/Brewfile`](./manifests/Brewfile). Cask selection supports `BOOTSTRAP_BREW_CASK_MODE=all`, `skip`, or `only` with `BOOTSTRAP_BREW_CASKS`; formulae, VS Code extensions, cargo tools, and uv tools remain installed from the selected Brewfile.
 
 fzf is installed from upstream git into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc` instead of through Homebrew, apt, or dnf.
 
@@ -431,6 +456,18 @@ Codex runtime configuration stays in `$CODEX_HOME/config.toml` because Codex wri
 Bootstrap applies tracked SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only those managed UI keys and preserves unrelated Codex-owned sections.
 
 The SourDiesel fragment manages Desktop chrome colors and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
+
+Codex Desktop's integrated terminal is separate from the shell TUI. Its xterm.js palette is derived from the selected built-in code theme's VS Code terminal color variables, such as `terminal.ansiRed` and `terminal.ansiBrightBlue`. The repo pins `appearanceDarkCodeThemeId`, but does not add unsupported terminal ANSI keys to `config.toml`.
+
+On macOS, bootstrap also publishes `CODEX_HOME` and the XDG base directories through `launchctl setenv` so Codex Desktop launched from Finder, Spotlight, or Dock uses `$XDG_STATE_HOME/codex` instead of recreating `~/.codex`. Relaunch Codex Desktop after bootstrap for the launchd environment to take effect.
+
+Keep `ai/codex/` limited to repo-managed Codex inputs:
+
+- `themes/`: TOML fragments for managed UI preferences.
+- `scripts/`: idempotent helpers that merge or validate those fragments.
+- Optional docs or templates that are safe to share.
+
+Do not put Codex runtime state in `ai/codex/`: `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, and generated skill/plugin/runtime folders belong under `$CODEX_HOME`.
 
 ## 🔄 Updates
 
@@ -568,7 +605,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 
 ## 🧑‍💻 Maintainer Notes
 
-- Keep setup behavior in `bootstrap.sh`.
+- Keep orchestration in `bootstrap.sh`, defaults in `bootstrap/config/defaults.env`, and setup behavior in focused modules under `bootstrap/lib`.
 - Keep source files in this repo; avoid editing generated files directly.
 - Update `README.md` and `AGENTS.md` when user-facing setup behavior changes.
 - Keep macOS, apt, and dnf branches explicit.
