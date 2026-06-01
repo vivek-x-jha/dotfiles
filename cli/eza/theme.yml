@@ -1412,6 +1412,930 @@ filenames:
     icon:
       glyph: ""
 
+  lib:
+    icon:
+      glyph: ""
+
+  .devcontainer:
+    icon:
+      glyph: ""
+
+  .docker:
+    icon:
+      glyph: ""
+
+  _MASReceipt:
+    icon:
+      glyph: ""
+
+  app:
+    icon:
+      glyph: ""
+
+  Apps:
+    icon:
+      glyph: ""
+
+  ".Karabiner-VirtualHIDDevice-Manager.app":
+    icon:
+      glyph: ""
+
+  "1Password Browser Helper.app":
+    icon:
+      glyph: ""
+
+  "1Password for Safari.app":
+    icon:
+      glyph: ""
+
+  "1Password Launcher.app":
+    icon:
+      glyph: ""
+
+  "1Password.app":
+    icon:
+      glyph: ""
+
+  "Alfred 5.app":
+    icon:
+      glyph: ""
+
+  "Alfred Preferences.app":
+    icon:
+      glyph: ""
+
+  "AltTab.app":
+    icon:
+      glyph: ""
+
+  "Anki.app":
+    icon:
+      glyph: ""
+
+  "Arc.app":
+    icon:
+      glyph: ""
+
+  "ChatGPT.app":
+    icon:
+      glyph: ""
+
+  "ChromeNativeMessaging.app":
+    icon:
+      glyph: ""
+
+  "Chromium.app":
+    icon:
+      glyph: ""
+
+  "Claude.app":
+    icon:
+      glyph: ""
+
+  "CleanShot X.app":
+    icon:
+      glyph: ""
+
+  "Codex.app":
+    icon:
+      glyph: ""
+
+  "crashreporter.app":
+    icon:
+      glyph: ""
+
+  "Dark Reader for Safari.app":
+    icon:
+      glyph: ""
+
+  "Discord.app":
+    icon:
+      glyph: ""
+
+  "Dropbox.app":
+    icon:
+      glyph: ""
+
+  "DropboxMacUpdate.app":
+    icon:
+      glyph: ""
+
+  "DropboxUpdater.app":
+    icon:
+      glyph: ""
+
+  "Figma Desktop.app":
+    icon:
+      glyph: ""
+
+  "Figma.app":
+    icon:
+      glyph: ""
+
+  "FigmaAgent.app":
+    icon:
+      glyph: ""
+
+  "Firefox.app":
+    icon:
+      glyph: ""
+
+  "GarageBand.app":
+    icon:
+      glyph: ""
+
+  "Google Chrome.app":
+    icon:
+      glyph: ""
+
+  "gpu-helper.app":
+    icon:
+      glyph: ""
+
+  "Hammerspoon.app":
+    icon:
+      glyph: ""
+
+  "Image2Icon.app":
+    icon:
+      glyph: ""
+
+  "iMovie.app":
+    icon:
+      glyph: ""
+
+  "iStatistica Pro.app":
+    icon:
+      glyph: ""
+
+  "iStatisticaProHelper.app":
+    icon:
+      glyph: ""
+
+  "iStatisticaSensors.app":
+    icon:
+      glyph: ""
+
+  "iStatisticaSensorsHelper.app":
+    icon:
+      glyph: ""
+
+  "iTerm.app":
+    icon:
+      glyph: ""
+
+  "iTerm2ImportStatus.app":
+    icon:
+      glyph: ""
+
+  "iTermAI.app":
+    icon:
+      glyph: ""
+
+  "Karabiner-Elements.app":
+    icon:
+      glyph: ""
+
+  "Karabiner-EventViewer.app":
+    icon:
+      glyph: ""
+
+  "KeyCastr.app":
+    icon:
+      glyph: ""
+
+  "LaunchAtLoginHelper.app":
+    icon:
+      glyph: ""
+
+  "Logi Options+ Driver Installer.app":
+    icon:
+      glyph: ""
+
+  "logioptionsplus.app":
+    icon:
+      glyph: ""
+
+  "LogiPluginService.app":
+    icon:
+      glyph: ""
+
+  "LogiPluginServiceTool.app":
+    icon:
+      glyph: ""
+
+  "LoupeDiagMac.app":
+    icon:
+      glyph: ""
+
+  "media-plugin-helper.app":
+    icon:
+      glyph: ""
+
+  "Neovim-iTerm.app":
+    icon:
+      glyph: ""
+
+  "Neovim-Wezterm.app":
+    icon:
+      glyph: ""
+
+  "Notion Calendar.app":
+    icon:
+      glyph: ""
+
+  "plugin-container.app":
+    icon:
+      glyph: ""
+
+  "Postman.app":
+    icon:
+      glyph: ""
+
+  "Prime Video.app":
+    icon:
+      glyph: ""
+
+  "Skim.app":
+    icon:
+      glyph: ""
+
+  "Slack.app":
+    icon:
+      glyph: ""
+
+  "Spotify.app":
+    icon:
+      glyph: ""
+
+  "StartUpHelper.app":
+    icon:
+      glyph: ""
+
+  "thinkorswim Uninstaller.app":
+    icon:
+      glyph: ""
+
+  "thinkorswim.app":
+    icon:
+      glyph: ""
+
+  "updater.app":
+    icon:
+      glyph: ""
+
+  "uTorrent.app":
+    icon:
+      glyph: ""
+
+  "Visual Studio Code.app":
+    icon:
+      glyph: ""
+
+  "VLC.app":
+    icon:
+      glyph: ""
+
+  "WeChat.app":
+    icon:
+      glyph: ""
+
+  "WeChatAppEx.app":
+    icon:
+      glyph: ""
+
+  "WezTerm.app":
+    icon:
+      glyph: ""
+
+  "WhatsApp.app":
+    icon:
+      glyph: ""
+
+  audio:
+    icon:
+      glyph: ""
+
+  book_images:
+    icon:
+      glyph: ""
+
+  call_center:
+    icon:
+      glyph: ""
+
+  complex-analysis:
+    icon:
+      glyph: ""
+
+  datasets:
+    icon:
+      glyph: ""
+
+  DecisionTrees:
+    icon:
+      glyph: ""
+
+  deck_of_cards:
+    icon:
+      glyph: ""
+
+  default_app:
+    icon:
+      glyph: ""
+
+  dist:
+    icon:
+      glyph: ""
+
+  extensions:
+    icon:
+      glyph: ""
+
+  Figures:
+    icon:
+      glyph: ""
+
+  flash_cards:
+    icon:
+      glyph: ""
+
+  gpt2_model:
+    icon:
+      glyph: ""
+
+  Home:
+    icon:
+      glyph: ""
+
+  hash_table:
+    icon:
+      glyph: ""
+
+  hs:
+    icon:
+      glyph: ""
+
+  i18n:
+    icon:
+      glyph: ""
+
+  Images:
+    icon:
+      glyph: ""
+
+  ISSUE_TEMPLATE:
+    icon:
+      glyph: ""
+
+  kv_cache:
+    icon:
+      glyph: ""
+
+  kv_cache_batched:
+    icon:
+      glyph: ""
+
+  LinearRegression:
+    icon:
+      glyph: ""
+
+  licenses:
+    icon:
+      glyph: ""
+
+  llms_from_scratch:
+    icon:
+      glyph: ""
+
+  locales:
+    icon:
+      glyph: ""
+
+  LoginItems:
+    icon:
+      glyph: ""
+
+  LogisticRegression:
+    icon:
+      glyph: ""
+
+  lru_cache:
+    icon:
+      glyph: ""
+
+  mac:
+    icon:
+      glyph: ""
+
+  native:
+    icon:
+      glyph: ""
+
+  NeuralNetwork:
+    icon:
+      glyph: ""
+
+  object_oriented_design:
+    icon:
+      glyph: ""
+
+  online_chat:
+    icon:
+      glyph: ""
+
+  out:
+    icon:
+      glyph: ""
+
+  Output:
+    icon:
+      glyph: ""
+
+  parking_lot:
+    icon:
+      glyph: ""
+
+  pastebin:
+    icon:
+      glyph: ""
+
+  pkg:
+    icon:
+      glyph: ""
+
+  public:
+    icon:
+      glyph: ""
+
+  Patches:
+    icon:
+      glyph: ""
+
+  People:
+    icon:
+      glyph: ""
+
+  Plugins:
+    icon:
+      glyph: ""
+
+  policies:
+    icon:
+      glyph: ""
+
+  PreviewMovies:
+    icon:
+      glyph: ""
+
+  "Project Templates":
+    icon:
+      glyph: ""
+
+  query_cache:
+    icon:
+      glyph: ""
+
+  res:
+    icon:
+      glyph: ""
+
+  sales_rank:
+    icon:
+      glyph: ""
+
+  Safari:
+    icon:
+      glyph: ""
+
+  "Safari.app":
+    icon:
+      glyph: ""
+
+  scaling_aws:
+    icon:
+      glyph: ""
+
+  scores:
+    icon:
+      glyph: ""
+
+  setup:
+    icon:
+      glyph: ""
+
+  shell-completion:
+    icon:
+      glyph: ""
+
+  social_graph:
+    icon:
+      glyph: ""
+
+  Summaries:
+    icon:
+      glyph: ""
+
+  SupportVectorMachine:
+    icon:
+      glyph: ""
+
+  system_design:
+    icon:
+      glyph: ""
+
+  template:
+    icon:
+      glyph: ""
+
+  terminfo:
+    icon:
+      glyph: ""
+
+  Textures:
+    icon:
+      glyph: ""
+
+  tools:
+    icon:
+      glyph: ""
+
+  Trailers:
+    icon:
+      glyph: ""
+
+  Transportation:
+    icon:
+      glyph: ""
+
+  user:
+    icon:
+      glyph: ""
+
+  utilities:
+    icon:
+      glyph: ""
+
+  vendor_conf.d:
+    icon:
+      glyph: ""
+
+  win:
+    icon:
+      glyph: ""
+
+  worker:
+    icon:
+      glyph: ""
+
+  web_crawler:
+    icon:
+      glyph: ""
+
+  Applications:
+    icon:
+      glyph: ""
+
+  Audio:
+    icon:
+      glyph: ""
+
+  backup:
+    icon:
+      glyph: ""
+
+  Caches:
+    icon:
+      glyph: ""
+
+  caches:
+    icon:
+      glyph: ""
+
+  Caskroom:
+    icon:
+      glyph: ""
+
+  Cellar:
+    icon:
+      glyph: ""
+
+  Components:
+    icon:
+      glyph: ""
+
+  Configuration:
+    icon:
+      glyph: ""
+
+  Configurations:
+    icon:
+      glyph: ""
+
+  Contents:
+    icon:
+      glyph: ""
+
+  CoreServices:
+    icon:
+      glyph: ""
+
+  CrashReporter:
+    icon:
+      glyph: ""
+
+  data:
+    icon:
+      glyph: ""
+
+  db:
+    icon:
+      glyph: ""
+
+  debug:
+    icon:
+      glyph: ""
+
+  Default:
+    icon:
+      glyph: ""
+
+  dev:
+    icon:
+      glyph: ""
+
+  Devices:
+    icon:
+      glyph: ""
+
+  Diagnostics:
+    icon:
+      glyph: ""
+
+  Documentation:
+    icon:
+      glyph: ""
+
+  etc:
+    icon:
+      glyph: ""
+
+  Extensions:
+    icon:
+      glyph: ""
+
+  Fonts:
+    icon:
+      glyph: ""
+
+  fonts:
+    icon:
+      glyph: ""
+
+  Frameworks:
+    icon:
+      glyph: ""
+
+  Helpers:
+    icon:
+      glyph: ""
+
+  Homebrew:
+    icon:
+      glyph: ""
+
+  homebrew:
+    icon:
+      glyph: ""
+
+  Icons:
+    icon:
+      glyph: ""
+
+  include:
+    icon:
+      glyph: ""
+
+  "Input Methods":
+    icon:
+      glyph: ""
+
+  "Internet Plug-Ins":
+    icon:
+      glyph: ""
+
+  Java:
+    icon:
+      glyph: ""
+
+  JavaVirtualMachines:
+    icon:
+      glyph: ""
+
+  Keychains:
+    icon:
+      glyph: ""
+
+  LaunchAgents:
+    icon:
+      glyph: ""
+
+  LaunchDaemons:
+    icon:
+      glyph: ""
+
+  libexec:
+    icon:
+      glyph: ""
+
+  locale:
+    icon:
+      glyph: ""
+
+  Logging:
+    icon:
+      glyph: ""
+
+  MacOS:
+    icon:
+      glyph: ""
+
+  "MacOS Dev":
+    icon:
+      glyph: ""
+
+  man:
+    icon:
+      glyph: ""
+
+  Modules:
+    icon:
+      glyph: ""
+
+  opt:
+    icon:
+      glyph: ""
+
+  package:
+    icon:
+      glyph: ""
+
+  PreferencePanes:
+    icon:
+      glyph: ""
+
+  Preferences:
+    icon:
+      glyph: ""
+
+  private:
+    icon:
+      glyph: ""
+
+  PrivateFrameworks:
+    icon:
+      glyph: ""
+
+  Public:
+    icon:
+      glyph: ""
+
+  QuickLook:
+    icon:
+      glyph: ""
+
+  Receipts:
+    icon:
+      glyph: ""
+
+  receipts:
+    icon:
+      glyph: ""
+
+  Resources:
+    icon:
+      glyph: ""
+
+  root:
+    icon:
+      glyph: ""
+
+  run:
+    icon:
+      glyph: ""
+
+  sbin:
+    icon:
+      glyph: ""
+
+  Scripts:
+    icon:
+      glyph: ""
+
+  SDKs:
+    icon:
+      glyph: ""
+
+  Security:
+    icon:
+      glyph: ""
+
+  security:
+    icon:
+      glyph: ""
+
+  Servers:
+    icon:
+      glyph: ""
+
+  Services:
+    icon:
+      glyph: ""
+
+  Settings:
+    icon:
+      glyph: ""
+
+  Shared:
+    icon:
+      glyph: ""
+
+  SharedSupport:
+    icon:
+      glyph: ""
+
+  Sounds:
+    icon:
+      glyph: ""
+
+  Staging:
+    icon:
+      glyph: ""
+
+  staging:
+    icon:
+      glyph: ""
+
+  Support:
+    icon:
+      glyph: ""
+
+  System:
+    icon:
+      glyph: ""
+
+  SystemConfiguration:
+    icon:
+      glyph: ""
+
+  SystemExtensions:
+    icon:
+      glyph: ""
+
+  Templates:
+    icon:
+      glyph: ""
+
+  Tools:
+    icon:
+      glyph: ""
+
+  Updates:
+    icon:
+      glyph: ""
+
+  Users:
+    icon:
+      glyph: ""
+
+  users:
+    icon:
+      glyph: ""
+
+  usr:
+    icon:
+      glyph: ""
+
+  Utilities:
+    icon:
+      glyph: ""
+
+  Video:
+    icon:
+      glyph: ""
+
+  Volumes:
+    icon:
+      glyph: ""
+
+  WebKit:
+    icon:
+      glyph: ""
+
+  XPCServices:
+    icon:
+      glyph: ""
+
   lsp:
     icon:
       glyph: ""
