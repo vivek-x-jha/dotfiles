@@ -203,7 +203,14 @@ local highlights = {
   ['@diff.minus'] = { fg = thm.red },
   ['@diff.delta'] = { fg = thm.black },
 
-  ['@property.toml'] = { fg = thm.blue },
+  ['@property.toml'] = { fg = thm.white },
+  ['@type.toml'] = { fg = thm.magenta },
+
+  tomlKey = { fg = thm.white },
+  tomlKeyDq = { fg = thm.white },
+  tomlKeySq = { fg = thm.white },
+  tomlTable = { fg = thm.magenta },
+  tomlTableArray = { fg = thm.magenta },
 
   ------------------------------ Shell -----------------------------------
   bashStatement = { fg = thm.magenta },
