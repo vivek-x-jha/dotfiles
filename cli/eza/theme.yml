@@ -1184,6 +1184,18 @@ filenames:
     icon:
       glyph: ""
 
+  ambient-suggestions:
+    icon:
+      glyph: ""
+
+  archived_sessions:
+    icon:
+      glyph: ""
+
+  browser:
+    icon:
+      glyph: ""
+
   Spoons:
     icon:
       glyph: ""
@@ -1212,6 +1224,10 @@ filenames:
     icon:
       glyph: ""
 
+  bootstrap:
+    icon:
+      glyph: ""
+
   btop:
     icon:
       glyph: ""
@@ -1220,7 +1236,23 @@ filenames:
     icon:
       glyph: ""
 
+  computer-use:
+    icon:
+      glyph: ""
+
   funcs:
+    icon:
+      glyph: ""
+
+  node_repl:
+    icon:
+      glyph: ""
+
+  pets:
+    icon:
+      glyph: ""
+
+  process_manager:
     icon:
       glyph: ""
 
