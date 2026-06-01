@@ -87,7 +87,7 @@ eval "$(atuin init zsh)" && {
 eval "$(zoxide init zsh)" && bindkey -s '^p' 'zi\n'
 
 # Keybindings
-bindkey -s '^o' 'exec zsh\n'
+bindkey -s '^o' 'exec zsh -l\n'
 bindkey -s '^[l' 'clear\n'
 bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
 bindkey -s '^g' 'glg -5\n'
