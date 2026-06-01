@@ -1,6 +1,6 @@
 [tui]
 session_picker_view = "comfortable"
-status_line = ["model-with-reasoning", "current-dir", "run-state", "context-remaining", "five-hour-limit", "weekly-limit", "codex-version", "thread-title"]
+status_line = ["thread-title", "model-with-reasoning", "current-dir", "context-remaining", "five-hour-limit", "weekly-limit", "run-state"]
 status_line_use_colors = true
 
 [desktop]
