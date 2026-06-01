@@ -1424,6 +1424,10 @@ filenames:
     icon:
       glyph: ""
 
+  2fa:
+    icon:
+      glyph: ""
+
   _MASReceipt:
     icon:
       glyph: ""
@@ -1497,6 +1501,10 @@ filenames:
       glyph: ""
 
   "Codex.app":
+    icon:
+      glyph: ""
+
+  Codex:
     icon:
       glyph: ""
 
