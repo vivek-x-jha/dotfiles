@@ -121,7 +121,7 @@ Without 1Password integration:
 ~/.dotfiles/bootstrap.sh
 ```
 
-By default, bootstrap uses the tracked defaults in [`bootstrap/config/defaults.env`](./bootstrap/config/defaults.env) and runs without setup questions. Local overrides can be placed in `bootstrap/config/local.env` or `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`.
+By default, bootstrap uses the tracked defaults in [`bootstrap/defaults.env`](./bootstrap/defaults.env) and runs without setup questions. Local overrides can be placed in `bootstrap/defaults.local.env` or `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`.
 
 With explicit prompts:
 
@@ -605,7 +605,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 
 ## 🧑‍💻 Maintainer Notes
 
-- Keep orchestration in `bootstrap.sh`, defaults in `bootstrap/config/defaults.env`, and setup behavior in focused modules under `bootstrap/lib`.
+- Keep orchestration in `bootstrap.sh`, defaults in `bootstrap/defaults.env`, and setup behavior in focused modules under `bootstrap/lib`.
 - Keep source files in this repo; avoid editing generated files directly.
 - Update `README.md` and `AGENTS.md` when user-facing setup behavior changes.
 - Keep macOS, apt, and dnf branches explicit.

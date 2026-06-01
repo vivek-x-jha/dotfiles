@@ -41,7 +41,7 @@ It follows `bootstrap.sh` as the source of truth for setup order and behavior.
 
 Main flow in `bootstrap.sh`:
 
-1. Load XDG paths, `bootstrap/config/defaults.env`, optional local overrides, and sourced modules from `bootstrap/lib`
+1. Load XDG paths, `bootstrap/defaults.env`, optional local overrides, and sourced modules from `bootstrap/lib`
 2. Detect platform and package manager (`detect_platform`)
 3. Refresh sudo auth + detect 1Password (`authorize`, `use_op`)
 4. Install package sets (`setup_package_manager`, `install_package_sets`) and fzf (`install_fzf`)
@@ -161,8 +161,8 @@ now this is an agent-layer maintenance step.
 - Homebrew bundle file: `manifests/Brewfile`
   - Bootstrap defaults to this local Brewfile and can generate a temporary install Brewfile with selected `cask` entries omitted.
 - Bootstrap defaults and implementation:
-  - `bootstrap/config/defaults.env`
-  - `bootstrap/config/local.env` (ignored local override)
+  - `bootstrap/defaults.env`
+  - `bootstrap/defaults.local.env` (ignored local override)
   - `bootstrap/lib/*.sh`
 - Shared theme palette: `shells/sourdiesel`
 - Shared shell env: `shells/env`

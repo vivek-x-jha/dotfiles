@@ -53,7 +53,7 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/manifests/Brewfile"
   check_path "$HOME/.dotfiles/manifests/apt-packages.txt"
   check_path "$HOME/.dotfiles/manifests/dnf-packages.txt"
-  check_path "$HOME/.dotfiles/bootstrap/config/defaults.env"
+  check_path "$HOME/.dotfiles/bootstrap/defaults.env"
   check_path "$HOME/.dotfiles/bootstrap/lib/core.sh"
   check_path "$HOME/.dotfiles/bootstrap/lib/environment.sh"
   check_path "$HOME/.dotfiles/bootstrap/lib/extras.sh"
