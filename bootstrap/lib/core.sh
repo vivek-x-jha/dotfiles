@@ -192,8 +192,8 @@ source_if_exists() {
 }
 
 load_bootstrap_config() {
-  local default_config="$BOOTSTRAP_ROOT/bootstrap/config/defaults.env"
-  local repo_local_config="$BOOTSTRAP_ROOT/bootstrap/config/local.env"
+  local default_config="$BOOTSTRAP_ROOT/bootstrap/defaults.env"
+  local repo_local_config="$BOOTSTRAP_ROOT/bootstrap/defaults.local.env"
   local user_config="$XDG_CONFIG_HOME/dotfiles/bootstrap.env"
 
   source_if_exists "$default_config" || {
