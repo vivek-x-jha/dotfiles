@@ -303,6 +303,16 @@ local positionApp = function(appName, screen)
   end
 end
 
+--- Return screens sorted by their physical left-to-right position.
+--- @return ScreenLike[]
+local screens_left_to_right = function()
+  local screens = hs.screen.allScreens()
+
+  table.sort(screens, function(a, b) return a:frame().x < b:frame().x end)
+
+  return screens
+end
+
 --- Arrange single monitor workspace
 --- @return nil
 local arrange_monitor = function()
@@ -310,28 +320,31 @@ local arrange_monitor = function()
 
   if #screens < 1 then return hs.alert.show 'No displays detected!' end
 
+  positionApp('Codex', screens[1])
+  moveApp { x = 0, y = 0, w = 0.5, h = 0.5 }
+
+  positionApp('WezTerm', screens[1])
+  moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 }
+
   positionApp('Arc', screens[1])
   moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 }
 
   positionApp('ChatGPT', screens[1])
   moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 }
-
-  positionApp('WezTerm', screens[1])
-  moveApp { x = 0, y = 0, w = 0.5, h = 1 }
 end
 
 --- Arrange 3 monitor workspace
 --- @return nil
 local arrange_3_monitors = function()
-  local screens = hs.screen.allScreens()
+  local screens = screens_left_to_right()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
+  positionApp('Codex', screens[1])
+  moveApp 'maximize'
+  positionApp('WezTerm', screens[2])
+  moveApp 'maximize'
   positionApp('Arc', screens[3])
-  moveApp 'maximize'
-  positionApp('Codex', screens[2])
-  moveApp 'maximize'
-  positionApp('WezTerm', screens[1])
   moveApp 'maximize'
 end
 
@@ -340,7 +353,7 @@ end
 local remaps = {
   -- Workspaces
   { mods = ctrl_alt_cmd, key = '1', message = 'Set Single Monitor Workspace', pressedfn = arrange_monitor },
-  { mods = ctrl_alt_cmd, key = '2', message = 'Set 2 External Monitor Workspace', pressedfn = arrange_3_monitors },
+  { mods = ctrl_alt_cmd, key = '2', message = 'Set 3 Monitor Workspace', pressedfn = arrange_3_monitors },
 
   -- Monitor placement
   { mods = ctrl_alt_cmd, key = 'Left', message = 'Left Display', pressedfn = function() moveApp 'next' end },
@@ -363,3 +376,5 @@ local remaps = {
 for _, m in ipairs(remaps) do
   hs.hotkey.bind(m.mods, m.key, m.message, m.pressedfn)
 end
+
+_G.hammerspoon_config_watcher = hs.pathwatcher.new(hs.configdir, function() hs.reload() end):start()
