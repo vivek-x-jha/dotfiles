@@ -193,7 +193,6 @@ source_if_exists() {
 
 load_bootstrap_config() {
   local default_config="$BOOTSTRAP_ROOT/bootstrap/defaults.env"
-  local repo_local_config="$BOOTSTRAP_ROOT/bootstrap/defaults.local.env"
   local user_config="$XDG_CONFIG_HOME/dotfiles/bootstrap.env"
 
   source_if_exists "$default_config" || {
@@ -201,7 +200,6 @@ load_bootstrap_config() {
     exit 1
   }
 
-  source_if_exists "$repo_local_config" && logg -i "Loaded local bootstrap config: $(pretty_path "$repo_local_config")"
   source_if_exists "$user_config" && logg -i "Loaded user bootstrap config: $(pretty_path "$user_config")"
   if [[ -n ${BOOTSTRAP_CONFIG_PATH:-} ]]; then
     source_if_exists "$BOOTSTRAP_CONFIG_PATH" || {
