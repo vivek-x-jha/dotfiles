@@ -1,4 +1,4 @@
-tap "buo/cask-upgrade"
+tap "buo/cask-upgrade", trusted: true
 brew "bash"
 brew "node"
 brew "bash-language-server"
@@ -68,7 +68,6 @@ cask "wechat"
 cask "wezterm"
 cask "whatsapp"
 vscode "catppuccin.catppuccin-vsc"
-vscode "github.copilot-chat"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
