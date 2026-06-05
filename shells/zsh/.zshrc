@@ -24,6 +24,10 @@ setopt autocd
 # Plugin Manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
+# Zsh core helpers
+zmodload zsh/terminfo
+autoload -Uz add-zsh-hook add-zle-hook-widget is-at-least zmathfunc
+
 # Color ls + eza
 dircolors_bin="$(command -v dircolors || command -v gdircolors)"
 eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
