@@ -212,6 +212,10 @@ local highlights = {
   tomlTable = { fg = thm.magenta },
   tomlTableArray = { fg = thm.magenta },
 
+  envField = { fg = thm.white },
+  envValue = { fg = thm.green },
+  envComment = { fg = thm.brightblack, italic = true },
+
   ------------------------------ Shell -----------------------------------
   bashStatement = { fg = thm.magenta },
   shStatement = { fg = thm.magenta },
