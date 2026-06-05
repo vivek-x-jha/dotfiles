@@ -121,7 +121,7 @@ Without 1Password integration:
 ~/.dotfiles/bootstrap.sh
 ```
 
-By default, bootstrap uses the tracked defaults in [`bootstrap/defaults.env`](./bootstrap/defaults.env) and runs without setup questions. Local overrides can be placed in `bootstrap/defaults.local.env` or `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`.
+By default, bootstrap uses the tracked defaults in [`bootstrap/defaults.env`](./bootstrap/defaults.env) and runs without setup questions. User overrides can be placed in `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`.
 
 With explicit prompts:
 

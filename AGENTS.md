@@ -162,7 +162,6 @@ now this is an agent-layer maintenance step.
   - Bootstrap defaults to this local Brewfile and can generate a temporary install Brewfile with selected `cask` entries omitted.
 - Bootstrap defaults and implementation:
   - `bootstrap/defaults.env`
-  - `bootstrap/defaults.local.env` (ignored local override)
   - `bootstrap/lib/*.sh`
 - Shared theme palette: `shells/sourdiesel`
 - Shared shell env: `shells/env`
