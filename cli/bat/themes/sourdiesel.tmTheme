@@ -727,9 +727,35 @@
       </dict>
       <dict>
         <key>name</key>
+        <string>Shell paths</string>
+        <key>scope</key>
+        <string>source.shell meta.path, source.shell.bash meta.path, source.shell string.unquoted.path, source.shell.bash string.unquoted.path, source.shell variable.language.tilde, source.shell.bash variable.language.tilde</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#C4EFFA</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell builtin commands</string>
+        <key>scope</key>
+        <string>source.shell.bash meta.function-call.shell support.function.source.shell, source.shell.bash meta.function-call.shell support.function.eval.shell, source.shell.bash meta.function-call.shell support.function.export.shell, source.shell.bash meta.function-call.shell support.function.bind.shell, source.shell.bash meta.function-call.shell support.function.shopt.shell, support.function.source.shell, support.function.eval.shell, support.function.export.shell, support.function.bind.shell, support.function.shopt.shell</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#ECCEF0</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
         <string>Shell statements</string>
         <key>scope</key>
-        <string>source.shell keyword, source.shell support.function.builtin, source.shell storage.modifier, source.shell storage.type</string>
+        <string>source.shell keyword, source.shell.bash keyword, source.shell support.function.builtin, source.shell.bash support.function.builtin, source.shell storage.modifier, source.shell.bash storage.modifier, source.shell storage.type, source.shell.bash storage.type</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
@@ -742,11 +768,11 @@
         <key>name</key>
         <string>Shell repeats</string>
         <key>scope</key>
-        <string>source.shell keyword.control.loop</string>
+        <string>source.shell keyword.control.loop, source.shell.bash keyword.control.loop</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#FDF7CD</string>
+          <string>#ECCEF0</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -755,11 +781,11 @@
         <key>name</key>
         <string>Shell operators</string>
         <key>scope</key>
-        <string>source.shell keyword.operator, source.shell punctuation.separator, source.shell punctuation.terminator</string>
+        <string>source.shell keyword.operator, source.shell.bash keyword.operator, source.shell punctuation.separator, source.shell.bash punctuation.separator, source.shell punctuation.terminator, source.shell.bash punctuation.terminator</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#CCCCCC</string>
+          <string>#F4F3F2</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -768,7 +794,33 @@
         <key>name</key>
         <string>Shell aliases and commands</string>
         <key>scope</key>
-        <string>source.shell meta.function-call.identifier.shell, source.shell meta.function.shell entity.name.function.shell</string>
+        <string>source.shell meta.function-call.identifier.shell, source.shell.bash meta.function-call.identifier.shell, source.shell support.function.echo.shell, source.shell.bash support.function.echo.shell</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#CEFFC9</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell functions</string>
+        <key>scope</key>
+        <string>source.shell meta.function.shell entity.name.function.shell, source.shell.bash meta.function.shell entity.name.function.shell, source.shell entity.name.function, source.shell.bash entity.name.function, source.shell variable.function, source.shell.bash variable.function</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#ECCEF0</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell variable reads</string>
+        <key>scope</key>
+        <string>source.shell meta.group.expansion.parameter.shell, source.shell.bash meta.group.expansion.parameter.shell, source.shell punctuation.definition.variable.shell, source.shell.bash punctuation.definition.variable.shell, source.shell variable.other.readwrite.shell, source.shell.bash variable.other.readwrite.shell, variable.other.readwrite.shell</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
@@ -779,26 +831,26 @@
       </dict>
       <dict>
         <key>name</key>
-        <string>Shell functions</string>
+        <string>Shell variables</string>
         <key>scope</key>
-        <string>source.shell entity.name.function, source.shell variable.function</string>
+        <string>source.shell variable, source.shell.bash variable, source.shell variable.language, source.shell.bash variable.language</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#C4EFFA</string>
+          <string>#FFC7C7</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
       </dict>
       <dict>
         <key>name</key>
-        <string>Shell variables</string>
+        <string>Shell assignment variables</string>
         <key>scope</key>
-        <string>source.shell variable, source.shell variable.language, source.shell variable.other.assignment</string>
+        <string>source.shell variable.other.readwrite.assignment.shell, source.shell.bash variable.other.readwrite.assignment.shell</string>
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#CCCCCC</string>
+          <string>#F4F3F2</string>
           <key>fontStyle</key>
           <string></string>
         </dict>

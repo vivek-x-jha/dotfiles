@@ -30,6 +30,10 @@
 
 # Paths
 "dynamic.path" = "#c4effa"
+"dynamic.path.directory.complete.shell" = "#c4effa"
+"dynamic.path.directory.partial.shell" = "#c4effa"
+"dynamic.path.file.complete.shell" = "#c4effa"
+"dynamic.path.file.partial.shell" = "#c4effa"
 "variable.language.tilde" = "#c4effa"
 "meta.group.expansion.tilde" = "#c4effa"
 
@@ -42,10 +46,10 @@
 "support.function.double-brace" = "#eccef0"
 
 # Strings and substitutions
-"string" = "#f4f3f2"
-"string.quoted" = "#f4f3f2"
-"string.quoted.double" = "#f4f3f2"
-"string.unquoted" = "#f4f3f2"
+"string" = "#ceffc9"
+"string.quoted" = "#ceffc9"
+"string.quoted.double" = "#ceffc9"
+"string.unquoted" = "#ceffc9"
 "constant.character.escape" = "#fdf7cd"
 "meta.group.expansion.command" = "#fdf7cd"
 "meta.group.expansion.command.parens" = "#fdf7cd"
