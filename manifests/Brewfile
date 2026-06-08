@@ -1,71 +1,138 @@
 tap "buo/cask-upgrade", trusted: true
+# Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# Open-source, cross-platform JavaScript runtime environment
 brew "node"
+# Language Server for Bash
 brew "bash-language-server"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Mozilla CA bundle for Python
 brew "certifi"
+# Defines a standard way of committing rules and communicating it
 brew "commitizen"
+# GNU File, Shell, and Text utilities
 brew "coreutils"
+# Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# macOS CLI for managing custom icons for files and folders
 brew "fileicon"
+# GNU awk utility
 brew "gawk"
+# GitHub command-line tool
 brew "gh"
+# Distributed revision control system
 brew "git"
+# Render markdown on the CLI
 brew "glow"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Pager program similar to more
 brew "less"
+# C library implementing the SSH2 protocol
 brew "libssh2"
+# C library of Git core methods that is re-entrant and linkable
 brew "libgit2"
+# Access large language models from the command-line
 brew "llm"
+# Language Server for the Lua language
 brew "lua-language-server"
+# CLI for MySQL with auto-completion and syntax highlighting
 brew "mycli"
+# Protocol buffers (Google's data interchange format)
 brew "protobuf"
+# Open source relational database management system
 brew "mysql", restart_service: :changed
+# PAM module for reattaching to the user's GUI (Aqua) session
 brew "pam-reattach"
+# Swiss-army knife of markup format conversion
 brew "pandoc"
+# Highly capable, feature-rich programming language
 brew "perl"
+# Package compiler and linker metadata toolkit
 brew "pkgconf"
+# Perl-powered file rename script with many helpful built-ins
 brew "rename"
+# Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Autoformat shell script source code
 brew "shfmt"
+# Change macOS audio source from the command-line
 brew "switchaudio-osx"
+# Terminal multiplexer
 brew "tmux"
+# Internet file retriever
 brew "wget"
+# UNIX shell (command interpreter)
 brew "zsh"
+# Password manager that keeps all passwords secure behind one password
 cask "1password"
+# Command-line interface for 1Password
 cask "1password-cli"
+# Application launcher and productivity software
 cask "alfred"
+# Enable Windows-like alt-tab
 cask "alt-tab"
+# Memory training application
 cask "anki"
+# Chromium based browser
 cask "arc"
+# OpenAI's official ChatGPT desktop app
 cask "chatgpt"
+# Anthropic's official Claude AI desktop app
 cask "claude"
+# Screen capturing tool
 cask "cleanshot"
+# OpenAI's coding agent that runs in your terminal
 cask "codex"
+# OpenAI's Codex desktop app for managing coding agents
 cask "codex-app"
+# Voice and text chat software
 cask "discord"
+# Client for the Dropbox cloud storage service
 cask "dropbox"
+# Collaborative team software
 cask "figma"
+# Web browser
 cask "firefox"
 cask "font-jetbrains-mono-nerd-font"
+# Web browser
 cask "google-chrome"
+# Desktop automation application
 cask "hammerspoon"
+# Icon creator and file and folder customiser
 cask "image2icon"
+# Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# Keyboard customiser
 cask "karabiner-elements"
+# Open-source keystroke visualiser
 cask "keycastr"
+# Software for Logitech devices
 cask "logi-options+"
+# Full TeX Live distribution without GUI applications
 cask "mactex-no-gui"
+# Calendar for professionals and teams
 cask "notion-calendar"
+# Collaboration platform for API development
 cask "postman"
+# PDF reader and note-taking application
 cask "skim"
+# Team communication and collaboration software
 cask "slack"
+# Music streaming service
 cask "spotify"
+# Desktop client for TD Ameritrade trading platform
 cask "thinkorswim"
+# Open-source code editor
 cask "visual-studio-code"
+# Multimedia player
 cask "vlc"
+# Free messaging and calling application
 cask "wechat"
+# GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
+# Native desktop client for WhatsApp
 cask "whatsapp"
 vscode "catppuccin.catppuccin-vsc"
 vscode "ms-python.debugpy"
