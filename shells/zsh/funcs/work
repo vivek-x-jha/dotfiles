@@ -192,9 +192,24 @@ esac
 
 [[ -z "$top_right_label" ]] && top_right_label="${root:t}"
 
+configure_float_session() {
+  local target="$1"
+  [[ "$target" == float ]] || return 0
+
+  tmux set-option -t "$target" status off || return 1
+
+  local window_id
+  while IFS= read -r window_id; do
+    [[ -n "$window_id" ]] || continue
+    tmux set-window-option -t "$window_id" pane-border-status off || return 1
+  done < <(tmux list-windows -t "$target" -F '#{window_id}')
+}
+
 # Helper func: respects whether current shell is already inside tmux
 swatt() {
   local target="$1"
+  configure_float_session "$target" || return 1
+
   if [[ -n $TMUX ]]; then
     tmux switch-client -t "$target" 2>/dev/null || tmux switch-client -l
   else
