@@ -106,7 +106,7 @@ local highlights = {
   Todo = { fg = thm.cyan },
   Type = { fg = thm.yellow, sp = 'none' },
   Typedef = { fg = thm.yellow },
-  gitconfigVariable = { fg = thm.blue },
+  gitconfigVariable = { fg = thm.white },
 
   ---------------------------- Spectre ----------------------------------
   SpectreHeader = { fg = thm.brightmagenta, bg = thm.nvim_bg, bold = true },
@@ -155,7 +155,7 @@ local highlights = {
   ['@keyword.storage'] = { fg = thm.yellow },
   ['@keyword.directive.define'] = { fg = thm.magenta },
   ['@keyword.directive'] = { fg = thm.yellow },
-  ['@property.gitconfig'] = { fg = thm.blue },
+  ['@property.gitconfig'] = { fg = thm.white },
 
   ['@function'] = { fg = thm.blue },
   ['@function.builtin'] = { fg = thm.blue },
@@ -211,6 +211,10 @@ local highlights = {
   tomlKeySq = { fg = thm.white },
   tomlTable = { fg = thm.magenta },
   tomlTableArray = { fg = thm.magenta },
+
+  gitconfigSection = { fg = thm.magenta },
+  gitconfigAssignment = { fg = thm.green },
+  gitconfigNone = { fg = thm.black },
 
   envField = { fg = thm.white },
   envValue = { fg = thm.green },
