@@ -21,3 +21,6 @@ syntax keyword zshConfigBuiltin
       \ containedin=ALLBUT,zshComment,zshString,zshStringDelimiter
 
 syntax match zshConfigBuiltin /\(^\|[;|&({]\)\s*\zs\.\ze\_s/ containedin=ALLBUT,zshComment,zshString,zshStringDelimiter
+
+syntax match zshPathLike /\v%(\~|\.{1,2})?\/[A-Za-z0-9_@%+=:,./-]+/ containedin=ALLBUT,zshComment,zshDeref,zshSubst,zshSubstDelim,zshConfigBuiltin
+syntax match zshPathLike /\v[A-Za-z0-9_.-]+\/[A-Za-z0-9_@%+=:,./-]+/ containedin=ALLBUT,zshComment,zshDeref,zshSubst,zshSubstDelim,zshConfigBuiltin
