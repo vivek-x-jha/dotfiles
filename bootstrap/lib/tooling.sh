@@ -32,6 +32,7 @@ install_rust_tooling() {
     tokei
     uv
     zoxide
+    zsh-patina
   )
 
   # Install all packages

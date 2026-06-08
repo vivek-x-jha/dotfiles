@@ -21,6 +21,9 @@ export SHELL_THEME='sourdiesel'
 # Zsh: https://zsh.sourceforge.io/Intro/intro_3.html
 export ZDOTDIR="$SHELL_CONFIG/zsh"
 
+# zsh-patina: https://github.com/michel-kraemer/zsh-patina#configuration
+export ZSH_PATINA_CONFIG_PATH="$ZDOTDIR/patina/config.toml"
+
 # Zap: https://github.com/zap-zsh/zap?tab=readme-ov-file#example-usage
 export ZAP_GIT_PREFIX='git@github.com:'
 

@@ -112,6 +112,7 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 
 - Rustup/cargo installation
 - Cargo-managed CLI stack
+- `zsh-patina` for Zsh syntax highlighting, configured under `shells/zsh/patina`
 - Neovim managed via `bob` (stable + nightly)
 - Python CLI tools via `uv` (`basedpyright`, `ruff`)
 
