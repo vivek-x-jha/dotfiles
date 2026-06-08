@@ -32,6 +32,9 @@ autoload -Uz add-zsh-hook add-zle-hook-widget is-at-least zmathfunc
 dircolors_bin="$(command -v dircolors || command -v gdircolors)"
 eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 
+# Fuzzy finder
+source "$XDG_CONFIG_HOME/fzf/fzf.sh" && eval "$(fzf --zsh)"
+
 # Prompt
 {
   local XDG_CACHE_HOME="$XDG_CACHE_HOME/p10k"
@@ -76,9 +79,6 @@ for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 
 # Aliases
 source "$SHELL_CONFIG/aliases"
-
-# Fuzzy finder
-source <(fzf --zsh) && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 
 # Command history
 eval "$(atuin init zsh)" && {
