@@ -1,0 +1,91 @@
+# SourDiesel theme for zsh-patina.
+
+# Comments
+"comment" = "#5c617d"
+"comment.line.number-sign" = "#5c617d"
+"punctuation.definition.comment" = "#5c617d"
+
+# Commands and callables
+"variable.function" = "#ceffc9"
+"variable.function.shell" = "#ceffc9"
+"entity.name.function" = "#eccef0"
+"entity.name.function.shell" = "#eccef0"
+"dynamic.callable" = "#ceffc9"
+"dynamic.callable.alias.shell" = "#ceffc9"
+"dynamic.callable.builtin.shell" = "#eccef0"
+"dynamic.callable.command.shell" = "#ceffc9"
+"dynamic.callable.function.shell" = "#ceffc9"
+"dynamic.callable.missing" = "#ffc7c7"
+"dynamic.callable.missing.shell" = "#ffc7c7"
+"meta.function-call" = "#ceffc9"
+"meta.function.shell" = "#eccef0"
+
+# Zsh precommands
+"precommand.builtin.command.shell" = "#eccef0"
+"keyword.builtin.command.shell" = "#eccef0"
+"precommand.builtin.builtin.shell" = "#eccef0"
+"keyword.builtin.builtin.shell" = "#eccef0"
+"precommand.builtin.exec.shell" = "#eccef0"
+"keyword.builtin.exec.shell" = "#eccef0"
+
+# Paths
+"dynamic.path" = "#c4effa"
+"variable.language.tilde" = "#c4effa"
+"meta.group.expansion.tilde" = "#c4effa"
+
+# Keywords and control syntax
+"keyword" = "#eccef0"
+"keyword.control" = "#eccef0"
+"keyword.operator" = "#eccef0"
+"keyword.operator.logical" = "#eccef0"
+"meta.group.expansion.history" = "#eccef0"
+"support.function.double-brace" = "#eccef0"
+
+# Strings and substitutions
+"string" = "#f4f3f2"
+"string.quoted" = "#f4f3f2"
+"string.quoted.double" = "#f4f3f2"
+"string.unquoted" = "#f4f3f2"
+"constant.character.escape" = "#fdf7cd"
+"meta.group.expansion.command" = "#fdf7cd"
+"meta.group.expansion.command.parens" = "#fdf7cd"
+"meta.group.expansion.parameter" = "#ffc7c7"
+"meta.group.expansion.process" = "#fdf7cd"
+"meta.group.expansion.arithmetic" = "#fdf7cd"
+
+# Variables, assignments, options, redirections, and globs
+"variable.other" = "#ffc7c7"
+"variable.other.readwrite" = "#ffc7c7"
+"variable.other.readwrite.assignment" = "#f4f3f2"
+"variable.parameter" = "#ffc7c7"
+"variable.parameter.option" = "#f4f3f2"
+"punctuation.definition.variable" = "#ffc7c7"
+"storage" = "#f4f3f2"
+"storage.modifier" = "#f4f3f2"
+"storage.modifier.shell" = "#eccef0"
+"storage.type.function.shell" = "#eccef0"
+"support" = "#f4f3f2"
+"constant.numeric.integer.decimal.file-descriptor" = "#f4f3f2"
+"constant.other.option" = "#f3b175"
+"keyword.operator.assignment" = "#f4f3f2"
+"keyword.operator.assignment.shell" = "#f4f3f2"
+"keyword.operator.redirect" = "#f4f3f2"
+"keyword.operator.assignment.redirection" = "#f4f3f2"
+"keyword.operator.assignment.redirection.shell" = "#f4f3f2"
+"keyword.operator.assignment.redirection.process" = "#f4f3f2"
+"keyword.operator.assignment.redirection.process.shell" = "#f4f3f2"
+"keyword.operator.logical.and" = "#f4f3f2"
+"keyword.operator.logical.and.shell" = "#f4f3f2"
+"keyword.operator.logical.or" = "#f4f3f2"
+"keyword.operator.logical.or.shell" = "#f4f3f2"
+"keyword.operator.logical.pipe" = "#f4f3f2"
+"keyword.operator.logical.pipe.shell" = "#f4f3f2"
+"meta.glob" = "#f4f3f2"
+"meta.function-call.arguments" = "#f4f3f2"
+"punctuation.definition.parameter" = "#f4f3f2"
+
+# Separators and punctuation
+"punctuation.separator" = "#cccccc"
+"punctuation.section" = "#cccccc"
+"punctuation.section.parens" = "#cccccc"
+"punctuation.definition.string" = "#cccccc"

@@ -1,0 +1,5 @@
+[highlighting]
+theme = "file:~/.config/shells/zsh/patina/themes/sourdiesel.toml"
+dynamic = { callables = true, paths = "complete" }
+max_line_length = 20000
+timeout_ms = 500

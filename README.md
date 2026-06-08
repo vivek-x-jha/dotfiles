@@ -272,7 +272,8 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 ### 🐚 Shell
 
 - [Zsh](https://zsh.sourceforge.io/) is the primary interactive shell.
-- [Zap](https://www.zapzsh.com/) manages Zsh plugins.
+- [Zap](https://www.zapzsh.com/) manages source-only Zsh plugins.
+- [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Cargo-installed executable and repo-managed SourDiesel config.
 - [ble.sh](https://github.com/akinomyoga/ble.sh) provides Bash line editing and completion.
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
@@ -370,7 +371,7 @@ The Rust install flow:
 1. Installs rustup if missing.
 2. Updates the stable toolchain.
 3. Installs `cargo-update`.
-4. Installs cargo-managed CLI tools from the Brewfile cargo section.
+4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting.
 
 `update-all -n` updates Neovim plugins through `vim.pack.update(nil, { force = true })`. `update-all -r` updates the stable Rust toolchain and cargo-installed tools. Without these flags, Neovim and Rust updates are skipped.
 The macOS quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.

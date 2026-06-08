@@ -72,6 +72,9 @@ plug zsh-users/zsh-completions && {
     'reply=(${=${${(f)"$(cat /etc/ssh_hosts ~/.config/ssh/known_hosts 2>/dev/null)"}%%[# ]*}//,/ })'
 }
 
+# zsh-patina completion
+eval "$(zsh-patina completion)"
+
 # Functions
 fpath=("$ZDOTDIR/funcs" "${fpath[@]}")
 export FPATH
@@ -96,5 +99,5 @@ bindkey -s '^[l' 'clear\n'
 bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
 bindkey -s '^g' 'glg -5\n'
 
-# Syntax-highlighting
-plug zsh-users/zsh-syntax-highlighting
+# Syntax highlighting
+command -v zsh-patina &>/dev/null && eval "$(zsh-patina activate)"
