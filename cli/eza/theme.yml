@@ -156,6 +156,14 @@ filenames:
     icon:
       glyph: ""
 
+  .gitkeep:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
   .state.itermexport:
     filename:
       foreground: black
@@ -277,10 +285,6 @@ filenames:
       glyph: ""
 
   ssh-agent:
-    icon:
-      glyph: ""
-
-  ssh-agent-macos:
     icon:
       glyph: ""
 
