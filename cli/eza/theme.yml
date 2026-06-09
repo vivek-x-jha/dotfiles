@@ -1136,6 +1136,10 @@ filenames:
     icon:
       glyph: "󰊕"
 
+  patch-zsh-autocomplete:
+    icon:
+      glyph: "󰊕"
+
   t:
     icon:
       glyph: "󰊕"
