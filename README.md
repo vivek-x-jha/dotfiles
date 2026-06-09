@@ -495,7 +495,8 @@ Typical manual update checks:
 
 ```sh
 brew update
-brew upgrade
+brew upgrade --formula -y
+brew upgrade --cask --greedy -y
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
 git -C "$XDG_DATA_HOME/fzf" pull --ff-only
