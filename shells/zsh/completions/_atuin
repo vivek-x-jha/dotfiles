@@ -1,4 +1,5 @@
 #compdef atuin
+# shellcheck disable=all
 
 autoload -U is-at-least
 

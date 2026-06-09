@@ -1,4 +1,5 @@
 #compdef rg
+# shellcheck disable=all
 
 ##
 # zsh completion function for ripgrep
