@@ -112,7 +112,8 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 - Rustup/cargo installation
 - Cargo-managed CLI stack
 - `zsh-patina` for Zsh syntax highlighting, configured under `shells/zsh/patina`
-- `zsh-autocomplete` FD cleanup patch in `shells/zsh/patches`, maintained by `patch-zsh-autocomplete` and reapplied by `update-all` around `zap update all`
+- `zsh-autocomplete` FD cleanup patch in `shells/zsh/patches`, maintained by `patch-zsh-autocomplete` and reapplied by `update-tools` around `zap update all`
+- `update-tools` supports per-step flags in Bash and Zsh; no flags or `--all` run the complete maintenance workflow
 - Neovim managed via `bob` (stable + nightly)
 - Python CLI tools via `uv` (`basedpyright`, `ruff`)
 
