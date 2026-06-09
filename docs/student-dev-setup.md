@@ -159,8 +159,7 @@ GitHub: **Settings -> SSH and GPG keys -> New SSH key -> Signing Key**
 ```sh
 cat > "$HOME/.dotfiles/auth/ssh/config" <<'EOF'
 # Include ~/.config/ssh/identities/1password
-# Include ~/.config/ssh/identities/ssh-agent
-Include ~/.config/ssh/identities/ssh-agent-macos
+Include ~/.config/ssh/identities/ssh-agent
 
 Host github.com
   HostName           github.com
@@ -174,16 +173,11 @@ EOF
 cat > "$HOME/.dotfiles/auth/ssh/identities/ssh-agent" <<'EOF'
 Host github.com
   IdentityFile ~/.config/ssh/keys/github/auth.key
-
-Host *
   AddKeysToAgent yes
   IdentitiesOnly yes
-EOF
-
-cat > "$HOME/.dotfiles/auth/ssh/identities/ssh-agent-macos" <<'EOF'
-Include ~/.config/ssh/identities/ssh-agent
 
 Host *
+  IgnoreUnknown UseKeychain
   UseKeychain yes
 EOF
 ```

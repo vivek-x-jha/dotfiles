@@ -5,8 +5,7 @@
 
 auth/ssh/keys/**
 !auth/ssh/keys/**/
-!auth/ssh/keys/**/*.pub
-
+!auth/ssh/keys/**/.gitkeep
 
 apps/karabiner/**
 !apps/karabiner/

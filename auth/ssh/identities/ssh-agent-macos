@@ -1,4 +1,0 @@
-Include ~/.config/ssh/identities/ssh-agent
-
-Host *
-  UseKeychain        yes
