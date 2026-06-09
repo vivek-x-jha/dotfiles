@@ -28,6 +28,7 @@ require('nvim-web-devicons').setup {
     ['l'] = { icon = icons.command, name = 'l' },
     ['list-256'] = { icon = icons.command, name = 'list-256' },
     ['list-colors'] = { icon = icons.command, name = 'list-colors' },
+    ['patch-zsh-autocomplete'] = { icon = icons.command, name = 'patch-zsh-autocomplete' },
     ['t'] = { icon = icons.command, name = 't' },
     ['take'] = { icon = icons.command, name = 'take' },
     ['update-all'] = { icon = icons.command, name = 'update-all' },
