@@ -29,10 +29,7 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 -- [7/18] Sessions
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>write<CR>', { desc = '[S]ave file' })
-vim.keymap.set('n', '<leader>oo', function()
-  vim.cmd 'silent! mksession! Session.vim'
-  vim.notify('Updating workspace state: Session.vim', vim.log.levels.INFO)
-end, { desc = 'Save workspace config' })
+vim.keymap.set('n', '<leader>oo', function() require('workspace').sync_session() end, { desc = 'Save workspace config' })
 
 -- [8/18] Buffers
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
