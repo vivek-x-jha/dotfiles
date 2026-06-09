@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+local plugin_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zap/plugins/zsh-autocomplete"
+local patch_file="$HOME/.dotfiles/shells/zsh/patches/zsh-autocomplete-fd-cleanup.patch"
+local mode="${1:-apply}"
+
+case "$mode" in
+apply|--apply) mode=apply ;;
+reverse|--reverse|-R) mode=reverse ;;
+-h|--help)
+  printf 'Usage: patch-zsh-autocomplete [apply|reverse]\n'
+  return
+  ;;
+*)
+  printf 'patch-zsh-autocomplete: unknown mode: %s\n' "$mode" >&2
+  return 2
+  ;;
+esac
+
+[[ -d "$plugin_dir/.git" ]] || {
+  printf 'patch-zsh-autocomplete: plugin checkout not found: %s\n' "$plugin_dir" >&2
+  return 1
+}
+
+[[ -f "$patch_file" ]] || {
+  printf 'patch-zsh-autocomplete: patch file not found: %s\n' "$patch_file" >&2
+  return 1
+}
+
+[[ "$mode" == apply ]] && {
+  git -C "$plugin_dir" apply --reverse --check "$patch_file" 2>/dev/null && {
+    printf 'zsh-autocomplete fd cleanup patch already applied\n'
+    return
+  }
+
+  git -C "$plugin_dir" apply --check "$patch_file" &&
+    git -C "$plugin_dir" apply "$patch_file"
+  return
+}
+
+git -C "$plugin_dir" apply --check "$patch_file" 2>/dev/null && {
+  printf 'zsh-autocomplete fd cleanup patch already reversed\n'
+  return
+}
+
+git -C "$plugin_dir" apply --reverse --check "$patch_file" &&
+  git -C "$plugin_dir" apply --reverse "$patch_file"
