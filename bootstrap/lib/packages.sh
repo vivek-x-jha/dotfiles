@@ -214,10 +214,8 @@ install_package_sets() {
 
     if confirm_config BOOTSTRAP_BREW_UPGRADE "Update brew formulae & casks" 'N'; then
       notify -s 'Updating Homebrew packages'
-      run 'brew upgrade'
-      if command -v brew &>/dev/null && brew tap | grep -q '^buo/cask-upgrade$'; then
-        run 'brew cu -af'
-      fi
+      run 'brew upgrade --formula -y'
+      run 'brew upgrade --cask --greedy -y'
     fi
   elif [[ $PKG_MGR == dnf ]]; then
     local dnf_exec="${DNF_CMD:-$(command -v dnf 2>/dev/null || command -v dnf5 2>/dev/null)}"
