@@ -40,7 +40,9 @@ eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 
 # Completions
-source "$SHELL_CONFIG/bash/completions/atuin.bash"
+for completion in "$SHELL_CONFIG"/bash/completions/*.bash; do
+  [[ -f $completion ]] && source "$completion"
+done
 
 # Command history
 eval "$(atuin init bash --disable-ai)" && {
