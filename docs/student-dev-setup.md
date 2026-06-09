@@ -82,7 +82,6 @@ cd "$XDG_CONFIG_HOME"
 
 ln -sfn ../.dotfiles/cli/atuin
 ln -sfn ../.dotfiles/cli/bat
-ln -sfn ../.dotfiles/apps/webapps
 ln -sfn ../.dotfiles/cli/btop
 ln -sfn ../.dotfiles/cli/dust
 ln -sfn ../.dotfiles/cli/eza
