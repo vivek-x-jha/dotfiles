@@ -275,6 +275,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Zap](https://www.zapzsh.com/) manages source-only Zsh plugins.
 - [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Cargo-installed executable and repo-managed SourDiesel config.
 - `zsh-autocomplete` carries a repo-managed FD cleanup patch under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses it before `zap update all` and reapplies it afterward.
+- Zsh Atuin non-popup search carries a repo-managed tty/temp-file capture patch under [`shells/zsh/patches`](./shells/zsh/patches) so Tab/Enter selections work without relying on Atuin's generated fd-swapping path.
 - [ble.sh](https://github.com/akinomyoga/ble.sh) provides Bash line editing and completion.
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
@@ -537,6 +538,21 @@ tmux source-file "$XDG_CONFIG_HOME/tmux/tmux.conf"
 
 ```sh
 atuin info
+```
+
+### Debug Atuin Zsh Search Capture
+
+Zsh sources [`shells/zsh/patches/atuin-zsh-tty-capture.zsh`](./shells/zsh/patches/atuin-zsh-tty-capture.zsh) after `atuin init zsh --disable-ai`.
+
+```sh
+ATUIN_ZSH_TTY_CAPTURE_DEBUG=1 exec zsh
+tail -f "$XDG_STATE_HOME/atuin/zsh-tty-capture.log"
+```
+
+To temporarily bypass the patch and test Atuin's generated fd-swapping path:
+
+```sh
+ATUIN_ZSH_TTY_CAPTURE=0 exec zsh
 ```
 
 ### Inspect Neovim Paths

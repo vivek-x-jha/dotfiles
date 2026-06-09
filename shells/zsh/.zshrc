@@ -88,7 +88,7 @@ source "$SHELL_CONFIG/aliases"
 # Command history
 eval "$(atuin init zsh --disable-ai)" &&
   source "$ZDOTDIR/patches/atuin-zsh-tty-capture.zsh" && {
-  export ATUIN_TMUX_POPUP=true
+  export ATUIN_TMUX_POPUP=false
 
   bindkey -M vicmd '^r' atuin-search-viins
   bindkey -M vicmd '^[[A' atuin-up-search-viins

@@ -113,6 +113,7 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 - Cargo-managed CLI stack
 - `zsh-patina` for Zsh syntax highlighting, configured under `shells/zsh/patina`
 - `zsh-autocomplete` FD cleanup patch in `shells/zsh/patches`, maintained by `patch-zsh-autocomplete` and reapplied by `update-tools` around `zap update all`
+- Atuin Zsh non-popup search uses `shells/zsh/patches/atuin-zsh-tty-capture.zsh` to avoid Atuin's generated fd-swapping capture path; debug with `ATUIN_ZSH_TTY_CAPTURE_DEBUG=1` and bypass with `ATUIN_ZSH_TTY_CAPTURE=0`
 - `update-tools` supports per-step flags in Bash and Zsh; no flags or `--all` run the complete maintenance workflow
 - Neovim managed via `bob` (stable + nightly)
 - Python CLI tools via `uv` (`basedpyright`, `ruff`)
@@ -253,6 +254,8 @@ Codex may still need an escalation prompt when the sandbox blocks writes to Git 
   - ensure `PackChanged` build hook exists and `cargo` is available
 - completion dump written in wrong location:
   - ensure `compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"` in zsh init path
+- Atuin Tab/Enter selection failing in Zsh non-popup search:
+  - check `shells/zsh/patches/atuin-zsh-tty-capture.zsh`; enable `ATUIN_ZSH_TTY_CAPTURE_DEBUG=1` and inspect `$XDG_STATE_HOME/atuin/zsh-tty-capture.log`
 
 ## External Links (From Existing Config)
 
