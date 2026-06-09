@@ -62,7 +62,8 @@
 "variable.other.readwrite" = "#ffc7c7"
 "variable.other.readwrite.assignment" = "#f4f3f2"
 "variable.parameter" = "#ffc7c7"
-"variable.parameter.option" = "#f4f3f2"
+"variable.parameter.option" = "#f3b175"
+"variable.parameter.option.shell" = "#f3b175"
 "punctuation.definition.variable" = "#ffc7c7"
 "storage" = "#f4f3f2"
 "storage.modifier" = "#f4f3f2"
@@ -71,6 +72,7 @@
 "support" = "#f4f3f2"
 "constant.numeric.integer.decimal.file-descriptor" = "#f4f3f2"
 "constant.other.option" = "#f3b175"
+"keyword.operator.assignment.option.shell" = "#f3b175"
 "keyword.operator.assignment" = "#f4f3f2"
 "keyword.operator.assignment.shell" = "#f4f3f2"
 "keyword.operator.redirect" = "#f4f3f2"
@@ -86,7 +88,8 @@
 "keyword.operator.logical.pipe.shell" = "#f4f3f2"
 "meta.glob" = "#f4f3f2"
 "meta.function-call.arguments" = "#f4f3f2"
-"punctuation.definition.parameter" = "#f4f3f2"
+"punctuation.definition.parameter" = "#f3b175"
+"punctuation.definition.parameter.shell" = "#f3b175"
 
 # Separators and punctuation
 "punctuation.separator" = "#cccccc"
