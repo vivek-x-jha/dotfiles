@@ -68,3 +68,11 @@ require('nvim-tree').setup {
     },
   },
 }
+
+local ok, api = pcall(require, 'nvim-tree.api')
+if ok then
+  local events = api.events.Event
+  for _, event in ipairs { events.FileCreated, events.FileRemoved, events.FolderRemoved, events.NodeRenamed } do
+    api.events.subscribe(event, function() require('workspace').schedule_session_sync() end)
+  end
+end
