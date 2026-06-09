@@ -134,11 +134,29 @@ EOF
 
   ((update_zsh)) && {
     notify 'UPDATE ZSH PLUGINS'
-    logg -c 'zsh -fc '\''source "$HOME/.dotfiles/shells/env"; fpath=("$HOME/.dotfiles/shells/zsh/funcs" "${fpath[@]}"); autoload -Uz patch-zsh-autocomplete; patch-zsh-autocomplete reverse'\''' 2>/dev/null ||
+    local zsh_autocomplete_reverse_cmd
+    zsh_autocomplete_reverse_cmd=$(
+      printf '%s' \
+        "zsh -fc 'source \"\$HOME/.dotfiles/shells/env\"; " \
+        "fpath=(\"\$HOME/.dotfiles/shells/zsh/funcs\" \"\${fpath[@]}\"); " \
+        "autoload -Uz patch-zsh-autocomplete; " \
+        "patch-zsh-autocomplete reverse'"
+    )
+
+    local zsh_autocomplete_apply_cmd
+    zsh_autocomplete_apply_cmd=$(
+      printf '%s' \
+        "zsh -fc 'source \"\$HOME/.dotfiles/shells/env\"; " \
+        "fpath=(\"\$HOME/.dotfiles/shells/zsh/funcs\" \"\${fpath[@]}\"); " \
+        "autoload -Uz patch-zsh-autocomplete; " \
+        "patch-zsh-autocomplete apply'"
+    )
+
+    logg -c "$zsh_autocomplete_reverse_cmd" 2>/dev/null ||
       logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH REVERSE FAILED'
     logg -c 'zap update all' 2>/dev/null ||
       logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
-    logg -c 'zsh -fc '\''source "$HOME/.dotfiles/shells/env"; fpath=("$HOME/.dotfiles/shells/zsh/funcs" "${fpath[@]}"); autoload -Uz patch-zsh-autocomplete; patch-zsh-autocomplete apply'\''' 2>/dev/null ||
+    logg -c "$zsh_autocomplete_apply_cmd" 2>/dev/null ||
       logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
   }
 
