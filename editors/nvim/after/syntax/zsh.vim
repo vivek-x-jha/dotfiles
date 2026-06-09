@@ -1,4 +1,15 @@
 " Classify zsh setup/config builtins separately from external commands.
+syntax match zshCommandName /\(^\|[;|&({]\)\s*\zs[A-Za-z_][A-Za-z0-9_.:-]*/ containedin=ALLBUT,zshComment,zshString,zshStringDelimiter,zshDeref,zshSubst,zshSubstDelim
+syntax keyword zshCommandName
+      \ git
+      \ print
+      \ printf
+      \ containedin=ALLBUT,zshComment,zshString,zshStringDelimiter,zshDeref,zshSubst,zshSubstDelim
+
+syntax keyword zshControlKeyword
+      \ return
+      \ containedin=ALLBUT,zshComment,zshString,zshStringDelimiter,zshDeref,zshSubst,zshSubstDelim
+
 syntax keyword zshConfigBuiltin
       \ add-zsh-hook
       \ autoload

@@ -733,7 +733,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#C4EFFA</string>
+          <string>#F4F3F2</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -747,6 +747,19 @@
         <dict>
           <key>foreground</key>
           <string>#ECCEF0</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell command calls</string>
+        <key>scope</key>
+        <string>source.shell meta.function-call.identifier.shell, source.shell.bash meta.function-call.identifier.shell, source.shell meta.function-call.shell support.function.builtin.shell, source.shell.bash meta.function-call.shell support.function.builtin.shell, source.shell meta.function-call.shell support.function.echo.shell, source.shell.bash meta.function-call.shell support.function.echo.shell, source.shell meta.function-call.shell support.function.printf.shell, source.shell.bash meta.function-call.shell support.function.printf.shell, source.shell meta.function-call.shell support.function.print.shell, source.shell.bash meta.function-call.shell support.function.print.shell</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#C4EFFA</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -798,7 +811,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#CEFFC9</string>
+          <string>#C4EFFA</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
