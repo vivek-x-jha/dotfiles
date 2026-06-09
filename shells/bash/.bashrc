@@ -39,8 +39,12 @@ eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Fuzzy finder
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 
+# Completions
+source "$SHELL_CONFIG/bash/completions/atuin.bash"
+
 # Command history
-eval "$(atuin init bash)" && {
+eval "$(atuin init bash --disable-ai)" && {
+  export ATUIN_TMUX_POPUP=true
   bind -m vi-command '"\C-r": "i__atuin_history\n"'
   bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
   bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
