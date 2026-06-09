@@ -72,7 +72,6 @@ Symlinks are created from this repo into XDG paths, including:
 - `~/.config/vscode`
 - `~/.config/fzf/fzf.sh`
 - `~/.config/claude/settings.json -> ~/.dotfiles/ai/claude/settings.json`
-- `~/.config/webapps`
 - `~/.local/state/{zsh,bash,codex,jupyter,python,mysql,mycli,...}`
 - `~/.local/share/{jupyter,vscode,zsh,...}`
 
@@ -193,7 +192,6 @@ now this is an agent-layer maintenance step.
 - App config roots:
   - `apps/hammerspoon`
   - `apps/karabiner`
-  - `apps/webapps`
 - WezTerm config: `terminals/wezterm/wezterm.lua`
 - Linux package manifests:
   - `manifests/apt-packages.txt`
