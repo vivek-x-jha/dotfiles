@@ -74,8 +74,12 @@ logg -c "fd -HI .DS_Store / -x rm -f {} &>/dev/null &!" 2>/dev/null ||
   logg -c "find / -name '.DS_Store' -print -delete &>/dev/null &!"
 
 notify 'UPDATE ZSH PLUGINS'
+logg -c 'patch-zsh-autocomplete reverse' 2>/dev/null ||
+  logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH REVERSE FAILED'
 logg -c 'zap update all' 2>/dev/null ||
   logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
+logg -c 'patch-zsh-autocomplete apply' 2>/dev/null ||
+  logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
 
 notify 'UPDATE TMUX PLUGINS'
 logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||

@@ -1,0 +1,55 @@
+diff --git a/Functions/Init/.autocomplete__async b/Functions/Init/.autocomplete__async
+index e89e041..a58e7dd 100644
+--- a/Functions/Init/.autocomplete__async
++++ b/Functions/Init/.autocomplete__async
+@@ -152,12 +152,13 @@ ${0}:precmd() {
+ .autocomplete:async:clear() {
+   # If we exit the ZLE before the last hook widget called, then it won't be able to close the fd.
+   [[
+-    -v _autocomplete__async_fd && _autocomplete__async_fd -ge 10 && -t $_autocomplete__async_fd
+-  ]] &&
+-    exec {_autocomplete_async_fd}<&- &&
++    -v _autocomplete_async_fd && _autocomplete_async_fd -ge 10
++  ]] && {
++    builtin zle -F "$_autocomplete_async_fd" 2> /dev/null
++    exec {_autocomplete_async_fd}<&- 2> /dev/null
+     unset _autocomplete_async_fd
++  }
+   unset curcontext _autocomplete__isearch
+-
+   .autocomplete:async:reset-context
+   builtin zle -Rc
+   return 0
+@@ -197,7 +198,7 @@ ${0}:precmd() {
+ 
+   # Unhook ourselves immediately, so we don't get called more than once.
+   builtin zle -F "$fd" 2> /dev/null
+-  [[ -t $fd ]] && exec {fd}<&-
++  exec {fd}<&- 2> /dev/null
+ 
+   if [[ -n $_autocomplete__zle_flags ]]; then
+     builtin zle -f $_autocomplete__zle_flags
+@@ -212,6 +213,12 @@ ${0}:precmd() {
+ }
+ 
+ .autocomplete:async:start() {
++  if [[ -v _autocomplete_async_fd && _autocomplete_async_fd -ge 10 ]]; then
++    # Unhook and close the previous fd. If it no longer exists, this fails harmlessly.
++    builtin zle -F "$_autocomplete_async_fd" 2> /dev/null
++    exec {_autocomplete_async_fd}<&- 2> /dev/null
++  fi
++
+   typeset -g _autocomplete_async_fd=
+   sysopen -r -o cloexec -u _autocomplete_async_fd <(
+     local +h PS4=$_autocomplete__ps4
+@@ -370,7 +377,9 @@ ${0}:precmd() {
+       (( SECONDS += reply[2] ))
+ 
+     } always {
+-      [[ -t $fd ]] && exec {fd}<&-
++      exec {fd}<&- 2> /dev/null
++      [[ -v _autocomplete_async_fd && $_autocomplete_async_fd == $fd ]] &&
++        unset _autocomplete_async_fd
+     }
+ 
+     [[ -n $curcontext ]] &&
