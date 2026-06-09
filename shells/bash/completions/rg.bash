@@ -1,3 +1,5 @@
+# shellcheck shell=bash disable=SC2034,SC2068,SC2207
+
 _rg() {
   local i cur prev opts cmds
   COMPREPLY=()

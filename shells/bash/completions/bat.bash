@@ -1,4 +1,4 @@
-# shellcheck disable=SC2207
+# shellcheck shell=bash disable=SC2034,SC2207
 
 # Requires https://github.com/scop/bash-completion
 
@@ -247,4 +247,3 @@ _bat() {
 	## Completion of the 'cache' command itself is removed for better UX
 	## See https://github.com/sharkdp/bat/issues/2085#issuecomment-1271646802
 } && complete -F _bat bat
-

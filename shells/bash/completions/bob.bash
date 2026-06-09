@@ -1,3 +1,5 @@
+# shellcheck shell=bash disable=SC2207
+
 _bob() {
     local i cur prev opts cmd
     COMPREPLY=()

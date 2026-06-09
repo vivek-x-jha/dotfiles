@@ -1,4 +1,5 @@
 #compdef starship
+# shellcheck disable=all
 
 autoload -U is-at-least
 

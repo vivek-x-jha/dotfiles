@@ -1,4 +1,5 @@
 #compdef bob
+# shellcheck disable=all
 
 autoload -U is-at-least
 
