@@ -1,0 +1,204 @@
+#!/usr/bin/env zsh
+
+usage() {
+  cat <<'EOF'
+Usage: update-tools [OPTIONS] [IconsDir]
+
+Run every maintenance step by default, or only the selected steps.
+
+Options:
+  -a, --all            run every step
+  -d, --ds-store       prune .DS_Store artifacts
+  -z, --zsh            update Zsh plugins
+  -t, --tmux           update tmux plugins
+  -l, --tldr           update the TLDR cache
+  -f, --fzf            update the fzf checkout
+  -n, --nvim           update Neovim plugins
+  -r, --rust           update Rust and cargo-installed tools
+  -b, --brew           run Homebrew maintenance
+  -i, --icons          refresh macOS icons
+      --icons-dir PATH set the icons source directory
+  -h, --help           show this help
+EOF
+}
+
+# Run all steps by default, or only explicitly selected steps when flags are provided.
+local icons_dir="$HOME/Pictures/icons"
+local run_all=0
+local selected_steps=0
+local update_ds_store=0
+local update_zsh=0
+local update_tmux=0
+local update_tldr=0
+local update_fzf=0
+local update_nvim=0
+local update_rust=0
+local update_brew=0
+local update_icons=0
+
+while (( $# )); do
+  case "$1" in
+  -a|--all) run_all=1 ;;
+  -d|--ds-store) update_ds_store=1; selected_steps=1 ;;
+  -z|--zsh) update_zsh=1; selected_steps=1 ;;
+  -t|--tmux) update_tmux=1; selected_steps=1 ;;
+  -l|--tldr) update_tldr=1; selected_steps=1 ;;
+  -f|--fzf) update_fzf=1; selected_steps=1 ;;
+  -n|--nvim) update_nvim=1; selected_steps=1 ;;
+  -r|--rust) update_rust=1; selected_steps=1 ;;
+  -b|--brew) update_brew=1; selected_steps=1 ;;
+  -i|--icons) update_icons=1; selected_steps=1 ;;
+  --icons-dir)
+    [[ -n ${2-} ]] || {
+      printf 'update-tools: --icons-dir requires a path\n' >&2
+      usage >&2
+      return 2
+    }
+    icons_dir="$2"
+    shift
+    ;;
+  -h|--help)
+    usage
+    return
+    ;;
+  -*)
+    printf 'update-tools: unknown option: %s\n' "$1" >&2
+    usage >&2
+    return 2
+    ;;
+  *) icons_dir="$1" ;;
+  esac
+  shift
+done
+
+if ((run_all || !selected_steps)); then
+  update_ds_store=1
+  update_zsh=1
+  update_tmux=1
+  update_tldr=1
+  update_fzf=1
+  update_nvim=1
+  update_rust=1
+  update_brew=1
+  update_icons=1
+fi
+
+local ICON='󰓒'
+local STEP=0
+local SUBSTEP=0
+local TOTAL_STEPS=$((update_ds_store + update_zsh + update_tmux + update_tldr + update_fzf + update_nvim + update_rust + update_brew + update_icons))
+
+# Usage:
+#   logg "message"
+#   logg -w "warning"
+#   logg -e "error"
+#   logg -c "command"
+logg() {
+  local level=INFO color="$BLACK" cmd=''
+
+  case "${1-}" in
+  -w) level=WARN && color="$YELLOW" && shift ;;
+  -e) level=ERROR && color="$MAGENTA" && shift ;;
+  -c) cmd="$2" && shift 2 ;;
+  esac
+
+  local message="$*"
+  [[ -n $cmd ]] && message="Running ${GREEN}${cmd}${RESET}"
+
+  printf '%b[%s] %b%b\n' "$color" "$level" "$message" "$RESET"
+  [[ -z $cmd ]] && return
+
+  eval "$cmd"
+}
+
+# Usage:
+#   notify "major step"
+#   notify -s "minor step"
+notify() {
+  local minor=''
+  case "$1" in
+  -s) SUBSTEP=$((SUBSTEP + 1)) && minor=".$SUBSTEP" && shift ;;
+  *) STEP=$((STEP + 1)) && SUBSTEP=0 ;;
+  esac
+  printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
+}
+
+((update_ds_store)) && {
+  notify 'PRUNE .DS_STORE ARTIFACTS'
+  logg -c "fd -HI .DS_Store / -x rm -f {} &>/dev/null &!" 2>/dev/null ||
+    logg -c "find / -name '.DS_Store' -print -delete &>/dev/null &!"
+}
+
+((update_zsh)) && {
+  notify 'UPDATE ZSH PLUGINS'
+  logg -c 'patch-zsh-autocomplete reverse' 2>/dev/null ||
+    logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH REVERSE FAILED'
+  logg -c 'zap update all' 2>/dev/null ||
+    logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
+  logg -c 'patch-zsh-autocomplete apply' 2>/dev/null ||
+    logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
+}
+
+((update_tmux)) && {
+  notify 'UPDATE TMUX PLUGINS'
+  logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
+    logg -w 'UPDATE TMUX PLUGINS FAILED'
+}
+
+((update_tldr)) && {
+  notify 'UPDATE TLDR CACHE'
+  logg -c 'tldr --update' || logg -w 'UPDATE TLDR CACHE FAILED'
+}
+
+((update_fzf)) && {
+  notify 'UPDATE FZF'
+  logg -c "git -C \"$XDG_DATA_HOME/fzf\" pull --ff-only" || logg -w 'UPDATE FZF CHECKOUT FAILED'
+}
+
+((update_nvim)) && {
+  notify 'UPDATE NEOVIM PLUGINS'
+  logg -c "nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'" || logg -w 'UPDATE NEOVIM PLUGINS FAILED'
+}
+
+((update_rust)) && {
+  notify 'UPDATE RUST TOOLCHAIN AND TOOLS'
+  logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
+  notify -s 'UPDATE RUST TOOLS'
+  logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED'
+}
+
+((update_brew)) && {
+  notify 'RUN HOMEBREW MAINTENANCE'
+  notify -s 'UPGRADE FORMULAE AND CASKS'
+  logg -c 'brew upgrade --formula -y' || logg -w 'UPDATE HOMEBREW FORMULAE FAILED'
+  logg -c 'brew upgrade --cask --greedy -y' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
+
+  notify -s 'RUN QUARANTINE CHECKS'
+  local apps=('Arc' 'ChatGPT' 'Claude' 'Codex' 'Notion Calendar' 'Slack' 'Spotify' 'WhatsApp')
+  local app='' quarantine_cmd=''
+
+  for app in "${apps[@]}"; do
+    [[ -d "/Applications/${app}.app" ]] || {
+      logg -w "SKIPPING ${app^^} QUARANTINE CHECK; APP NOT FOUND"
+      continue
+    }
+    quarantine_cmd="sudo xattr -rd com.apple.quarantine '/Applications/${app}.app'"
+    logg -c "$quarantine_cmd" || logg -w "FAILED TO CLEAR ${app^^} QUARANTINE"
+  done
+
+  logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
+  logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
+
+  notify -s 'EXPORT BREWFILE'
+  logg -c "brew bundle dump --force" || logg -w 'UPDATE BREWFILE FAILED'
+}
+
+((update_icons)) && {
+  notify 'REFRESH MACOS ICONS'
+  update-icons "$icons_dir" || logg -w 'FAILED TO UPDATE MACOS ICONS'
+}
+
+# Optional: Update TeX Live Utility (uncomment if used)
+# sudo tlmgr update --self --all
+
+return 0
