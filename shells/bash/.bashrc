@@ -53,7 +53,7 @@ eval "$(atuin init bash --disable-ai)" && {
 }
 
 # Directory jumper
-eval "$(zoxide init bash)" && bind '"\C-p": "zi\n"'
+eval "$(zoxide init bash)" && bind '"\C-p": "zi || true\n"'
 
 # Keybindings
 bind -x '"\C-o": printf \"\\ec\"; exec '"$(which bash)"
