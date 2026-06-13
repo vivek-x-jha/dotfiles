@@ -377,7 +377,7 @@ The Rust install flow:
 4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting and completion generation.
 
 `update-tools` and `update-tools --all` run every maintenance step. Individual flags select only the requested steps, such as `--nvim`, `--rust`, `--brew`, `--zsh`, or `--tmux`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
-The macOS quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
+The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested helpers before the recursive quarantine pass completes. Restart upgraded apps manually to use their new versions. The quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
 
 ## 📦 Package Management
 
@@ -500,7 +500,7 @@ Typical manual update checks:
 ```sh
 brew update
 brew upgrade --formula -y
-brew upgrade --cask --greedy -y
+brew upgrade --cask --greedy --no-quit -y
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
 git -C "$XDG_DATA_HOME/fzf" pull --ff-only

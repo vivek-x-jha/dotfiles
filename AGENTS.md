@@ -116,6 +116,7 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 - `zsh-patina` completion script is generated with `zsh-patina completion`
 - Atuin Zsh non-popup search uses `shells/zsh/patches/atuin-zsh-tty-capture.zsh` to avoid Atuin's generated fd-swapping capture path; debug with `ATUIN_ZSH_TTY_CAPTURE_DEBUG=1` and bypass with `ATUIN_ZSH_TTY_CAPTURE=0`
 - `update-tools` supports per-step flags in Bash and Zsh; no flags or `--all` run the complete maintenance workflow
+- Homebrew cask maintenance uses `--no-quit`, then recursively clears quarantine from selected `/Applications/*.app` bundles; running apps must be restarted manually after updates
 - Neovim managed via `bob` (stable + nightly)
 - Python CLI tools via `uv` (`basedpyright`, `ruff`)
 
