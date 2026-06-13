@@ -2588,10 +2588,6 @@ filenames:
     icon:
       glyph: ""
 
-  webapps:
-    icon:
-      glyph: ""
-
   wezterm:
     icon:
       glyph: ""
