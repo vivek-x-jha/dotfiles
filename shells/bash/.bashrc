@@ -56,10 +56,7 @@ eval "$(atuin init bash --disable-ai)" && {
 eval "$(zoxide init bash)" && bind '"\C-p": "zi || true\n"'
 
 # Keybindings
-bind -x '"\C-o": printf \"\\ec\"; exec '"$(which bash)"
-bind -x '"\el": clear'
-bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
-bind '"\C-g": "glg -5\n"'
+source "$SHELL_CONFIG/bash/keybindings"
 
 # Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach

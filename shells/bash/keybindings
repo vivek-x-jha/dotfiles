@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+toggle-tmux-client() {
+  local client_tty state_file target
+
+  if [[ -n $TMUX ]]; then
+    client_tty=$(tmux display-message -p '#{client_tty}')
+    state_file="$XDG_STATE_HOME/tmux/last-session-${client_tty##*/}"
+    mkdir -p "${state_file%/*}"
+    tmux display-message -p '#S' >| "$state_file"
+    tmux detach-client
+  else
+    client_tty=$(tty)
+    state_file="$XDG_STATE_HOME/tmux/last-session-${client_tty##*/}"
+    [[ -r $state_file ]] && IFS= read -r target < "$state_file"
+
+    if [[ -n $target ]] && tmux has-session -t "$target" 2>/dev/null; then
+      tmux attach-session -t "$target"
+    else
+      tmux attach-session
+    fi
+  fi
+}
+
+bind '"\C-o": "exec bash\n"'
+bind -x '"\el": clear'
+bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
+bind '"\C-g": "glg -5\n"'
+bind '"\C-b": "btop\n"'
+bind -x '"\C-w": toggle-tmux-client'
