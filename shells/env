@@ -71,13 +71,12 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 # TPM: https://github.com/tmux-plugins/tpm/blob/master/docs/changing_plugins_install_dir.md#changing-plugins-install-dir
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"
 
-# Shared popup geometry for fzf in tmux and tmux-fzf.
-export FZF_POPUP_WIDTH='75%'
-export FZF_POPUP_HEIGHT='75%'
+# Fzf shell integration popup geometry.
+export FZF_TMUX_OPTS='-p 75%,75%'
 
 # Tmux fzf: https://github.com/sainnhe/tmux-fzf?tab=readme-ov-file#key-binding
 export TMUX_FZF_LAUNCH_KEY='f'
-export TMUX_FZF_OPTIONS="-p -w $FZF_POPUP_WIDTH -h $FZF_POPUP_HEIGHT -m --no-preview"
+export TMUX_FZF_OPTIONS='-p 75%,75% -m --no-preview'
 
 # 1password: https://developer.1password.com/docs/cli/shell-plugins
 export OP_PLUGIN_ALIASES_SOURCED=1
