@@ -239,6 +239,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | Tool | Mechanism | Local choice |
 |---|---|---|
 | [Zsh](https://zsh.sourceforge.io/Intro/intro_3.html) | `ZDOTDIR` | `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"` |
+| [zsh-patina](https://github.com/michel-kraemer/zsh-patina) | `ZSH_PATINA_CONFIG_PATH` | `ZSH_PATINA_CONFIG_PATH="$XDG_CONFIG_HOME/zsh-patina/config.toml"` |
 | Bash | home startup symlinks | `~/.bashrc` and `~/.bash_profile` source `~/.config/shells/bash`; shared PATH setup comes from `~/.config/shells/profile` |
 | [ble.sh](https://github.com/akinomyoga/ble.sh) | `--rcfile` | `source "$XDG_DATA_HOME/blesh/ble.sh" --rcfile "$SHELL_CONFIG/bash/.blerc"` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file) | `RIPGREP_CONFIG_PATH` | `~/.config/ripgrep/config` |
@@ -273,7 +274,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 - [Zsh](https://zsh.sourceforge.io/) is the primary interactive shell.
 - [Zap](https://www.zapzsh.com/) manages source-only Zsh plugins.
-- [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Cargo-installed executable and repo-managed SourDiesel config.
+- [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Cargo-installed executable and repo-managed SourDiesel config under [`cli/zsh-patina`](./cli/zsh-patina). Its Zsh completion script is generated with `zsh-patina completion`.
 - `zsh-autocomplete` carries a repo-managed FD cleanup patch under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses it before `zap update all` and reapplies it afterward.
 - Zsh Atuin non-popup search carries a repo-managed tty/temp-file capture patch under [`shells/zsh/patches`](./shells/zsh/patches) so Tab/Enter selections work without relying on Atuin's generated fd-swapping path.
 - [ble.sh](https://github.com/akinomyoga/ble.sh) provides Bash line editing and completion.
@@ -373,7 +374,7 @@ The Rust install flow:
 1. Installs rustup if missing.
 2. Updates the stable toolchain.
 3. Installs `cargo-update`.
-4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting.
+4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting and completion generation.
 
 `update-tools` and `update-tools --all` run every maintenance step. Individual flags select only the requested steps, such as `--nvim`, `--rust`, `--brew`, `--zsh`, or `--tmux`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
 The macOS quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
