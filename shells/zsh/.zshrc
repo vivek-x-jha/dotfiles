@@ -2,7 +2,8 @@
 # shellcheck shell=zsh
 
 # Instant Prompt
-source "$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh" 2>/dev/null
+inst_prompt="$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh"
+[[ -r $inst_prompt ]] && source "$inst_prompt"
 
 # Colorscheme
 source "$SHELL_CONFIG/colors/$SHELL_THEME"
