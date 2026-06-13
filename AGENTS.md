@@ -111,7 +111,7 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 
 - Rustup/cargo installation
 - Cargo-managed CLI stack
-- `zsh-patina` for Zsh syntax highlighting, configured under `cli/zsh-patina`
+- `zsh-patina` for Zsh syntax highlighting, configured under `cli/zsh-patina` and loaded from the default `~/.config/zsh-patina/config.toml`
 - `zsh-autocomplete` FD cleanup patch in `shells/zsh/patches`, maintained by `patch-zsh-autocomplete` and reapplied by `update-tools` around `zap update all`
 - `zsh-patina` completion script is generated with `zsh-patina completion`
 - Atuin Zsh non-popup search uses `shells/zsh/patches/atuin-zsh-tty-capture.zsh` to avoid Atuin's generated fd-swapping capture path; debug with `ATUIN_ZSH_TTY_CAPTURE_DEBUG=1` and bypass with `ATUIN_ZSH_TTY_CAPTURE=0`
