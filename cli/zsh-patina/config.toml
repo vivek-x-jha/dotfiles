@@ -1,5 +1,5 @@
 [highlighting]
-theme = "file:$XDG_CONFIG_HOME/zsh-patina/themes/sourdiesel.toml"
+theme = "file:~/.config/zsh-patina/themes/sourdiesel.toml"
 dynamic = { callables = true, paths = "complete" }
 max_line_length = 20000
 timeout_ms = 500

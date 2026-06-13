@@ -2592,6 +2592,10 @@ filenames:
     icon:
       glyph: ""
 
+  zsh-patina:
+    icon:
+      glyph: ""
+
   zsh:
     icon:
       glyph: ""
