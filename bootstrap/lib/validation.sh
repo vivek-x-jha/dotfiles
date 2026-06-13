@@ -264,6 +264,8 @@ doctor_bootstrap() {
   doctor_cmd cargo optional
 
   doctor_file "$XDG_CONFIG_HOME/atuin/config.toml"
+  doctor_symlink "$XDG_CONFIG_HOME/zsh-patina" ../.dotfiles/cli/zsh-patina
+  doctor_file "$XDG_CONFIG_HOME/zsh-patina/config.toml"
   doctor_file "$XDG_CONFIG_HOME/git/themes/sourdiesel"
   command -v atuin &>/dev/null && {
     doctor_run 'atuin info' atuin info

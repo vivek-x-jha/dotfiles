@@ -167,6 +167,7 @@ create_symlinks() {
     ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
+    ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
     ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow

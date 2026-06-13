@@ -39,6 +39,8 @@ install_rust_tooling() {
   for crate in "${crates[@]}"; do
     run "cargo install --locked $crate" || logg -w "cargo install failed for $crate"
   done
+
+  require zsh-patina && run 'zsh-patina restart'
 }
 
 setup_ide() {
