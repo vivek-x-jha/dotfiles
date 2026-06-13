@@ -22,7 +22,7 @@ export FZF_DEFAULT_COMMAND="$findfile"
 export FZF_DEFAULT_OPTS="
   --style full
   --layout reverse
-  --tmux center,$FZF_POPUP_WIDTH,$FZF_POPUP_HEIGHT
+  --popup center,75%,75%
   --border
   --header-first
   --padding 1,2
