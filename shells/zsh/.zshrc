@@ -96,7 +96,7 @@ eval "$(atuin init zsh --disable-ai)" &&
 }
 
 # Directory jumper
-eval "$(zoxide init zsh)" && bindkey -s '^p' 'zi\n'
+eval "$(zoxide init zsh)" && bindkey -s '^p' 'zi || true\n'
 
 # Keybindings
 bindkey -s '^o' 'exec zsh -l\n'
