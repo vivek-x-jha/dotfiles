@@ -3,8 +3,16 @@
 zstyle ':completion:*:unambiguous' format \
   $'%{\e[0;2m%}%Bcommon substring:%b %{\e[0m%}%{\e[38;5;1m%}%d%{\e[0m%}'
 
+# Keep completion menus structural; detailed filename patterns belong to eza.
 zsh_completion_colors=(
-  ${(s.:.)LS_COLORS}
+  'no=00;38;5;0'
+  'fi=00;38;5;7'
+  'di=00;38;5;4'
+  'ln=00;38;5;3'
+  'or=00;38;5;1'
+  'ex=00;38;5;10'
+  'st=00;38;5;50'
+  'so=00;38;5;6'
   'ma=00;38;5;14'
 )
 
