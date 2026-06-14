@@ -45,18 +45,13 @@ for completion in "$SHELL_CONFIG"/bash/comps/*.bash; do
 done
 
 # Command history
-eval "$(atuin init bash --disable-ai)" && {
-  export ATUIN_TMUX_POPUP=true
-  bind -m vi-command '"\C-r": "i__atuin_history\n"'
-  bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
-  bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
-}
+eval "$(atuin init bash --disable-ai)" && export ATUIN_TMUX_POPUP=true
 
 # Directory jumper
-eval "$(zoxide init bash)" && bind '"\C-p": "zi || true\n"'
+eval "$(zoxide init bash)"
 
 # Keymaps
-source "$SHELL_CONFIG/bash/keymaps/main"
+source "$SHELL_CONFIG/bash/keymaps/interactive"
 
 # Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach

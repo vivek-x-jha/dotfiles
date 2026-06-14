@@ -75,7 +75,7 @@ eval "$(atuin init zsh --disable-ai)" &&
 eval "$(zoxide init zsh)"
 
 # Keymaps
-source "$ZDOTDIR/keymaps/main"
+source "$ZDOTDIR/keymaps/interactive"
 
 # Syntax highlighting
 eval "$(zsh-patina activate)"
