@@ -9,7 +9,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # Homebrew (MacOS only)
 [[ $(uname) == Darwin ]] && {
   export HOMEBREW_NO_ENV_HINTS=1
-  export HOMEBREW_INSTALL_BADGE='📦'
+  export HOMEBREW_INSTALL_BADGE=$'\e[95m\e[0m'
   export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/manifests/Brewfile"
 }
 
