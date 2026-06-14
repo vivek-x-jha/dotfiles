@@ -1152,6 +1152,10 @@ filenames:
     icon:
       glyph: "󰊕"
 
+  toggle-tmux-client:
+    icon:
+      glyph: "󰊕"
+
   update-tools:
     icon:
       glyph: "󰊕"
