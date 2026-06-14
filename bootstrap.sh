@@ -104,18 +104,18 @@ main() {
   notify 'BEGIN BOOTSTRAP DEVELOPMENT SCRIPT'
   show_bootstrap_plan
 
-  if ((CHECK_MODE)); then
+  ((CHECK_MODE)) && {
     check_bootstrap
     exit $?
-  fi
+  }
 
   notify 'SET UNIX DISTRO + PACKAGE MANAGER'
   detect_platform
 
-  if ((DOCTOR_MODE)); then
+  ((DOCTOR_MODE)) && {
     doctor_bootstrap
     exit $?
-  fi
+  }
 
   notify 'AUTHORIZE & DETECT 1PASSWORD'
   authorize
@@ -172,7 +172,9 @@ main() {
   notify 'SETUP IDE TOOLS'
   run_configured_step BOOTSTRAP_SETUP_IDE 'IDE tooling setup' setup_ide
 
-  run "rmdir \"$XDG_CONFIG_HOME/homebrew\" 2>/dev/null || true"
+  local homebrew_config_dir="$XDG_CONFIG_HOME/homebrew"
+  local homebrew_config_cleanup_cmd="rmdir \"$homebrew_config_dir\" 2>/dev/null || true"
+  run "$homebrew_config_cleanup_cmd"
 
   printf '\n%s\n' "${CYAN}BOOTSTRAP COMPLETE - HAPPY DEVELOPING!...${RESET}"
   logg -w 'RESTART YOUR TERMINAL WINDOW TO LOAD THE NEW CONFIGURATION'
