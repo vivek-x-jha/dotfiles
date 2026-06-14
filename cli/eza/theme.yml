@@ -1320,13 +1320,13 @@ filenames:
     icon:
       glyph: ""
 
-  completion:
-    icon:
-      glyph: ""
-
   comps:
     icon:
       glyph: ""
+
+  .zstyle:
+    icon:
+      glyph: ""
 
   interactive:
     icon:
