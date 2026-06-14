@@ -77,6 +77,7 @@ require('nvim-web-devicons').setup {
     ['.zshenv'] = { icon = icons.shell, name = '.zshenv', color = thm.magenta },
     ['.zshrc'] = { icon = icons.shell, name = '.zshrc', color = thm.magenta },
     ['.zprofile'] = { icon = icons.shell, name = '.zprofile', color = thm.magenta },
+    ['.zstyle'] = { icon = icons.shell, name = '.zstyle' },
     ['.p10k.zsh'] = { icon = icons.shell, name = '.p10k.zsh', color = thm.magenta },
     ['.env'] = { icon = icons.key, name = '.env', color = thm.brightred },
     ['env'] = { icon = icons.key, name = 'env', color = thm.magenta },
