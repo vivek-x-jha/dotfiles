@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+bind '"\C-o": "exec bash\n"'
+bind -x '"\el": clear'
+bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
+bind '"\C-g": "glg -5\n"'
+bind '"\C-b": "btop\n"'
+declare -F toggle-tmux-client &>/dev/null && bind -x '"\C-w": toggle-tmux-client'
