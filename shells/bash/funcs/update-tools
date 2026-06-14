@@ -210,7 +210,7 @@ EOF
     logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
 
     notify -s 'EXPORT BREWFILE'
-    logg -c 'brew bundle dump --force' || logg -w 'UPDATE BREWFILE FAILED'
+    logg -c 'brew bundle dump --force --no-npm' || logg -w 'UPDATE BREWFILE FAILED'
   }
 
   ((update_icons)) && {
