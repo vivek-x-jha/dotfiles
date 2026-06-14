@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Shell
+bind '"\C-o": "exec bash\n"'
+bind -x '"\el": clear'
+
+# Editor
+bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
+
+# Applications
+bind '"\C-b": "btop\n"'
+
+# History
+bind '"\C-g": "glg -5\n"'
+
+# Functions
+declare -F toggle-tmux-client &>/dev/null && bind -x '"\C-w": toggle-tmux-client'
+
+# Atuin
+declare -F __atuin_history &>/dev/null && {
+  bind -m vi-command '"\C-r": "i__atuin_history\n"'
+  bind -m vi-command '"\e[A": "i__atuin_history --shell-up-key-binding\n"'
+  bind -m vi-command '"\eOA": "i__atuin_history --shell-up-key-binding\n"'
+}
+
+# Directories
+declare -F zi &>/dev/null && bind '"\C-p": "zi || true\n"'
