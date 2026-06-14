@@ -42,7 +42,6 @@ config.default_prog = wezterm.target_triple:match 'windows' and {
 config.term = 'xterm-256color'
 config.set_environment_variables = {
   COLORTERM = 'truecolor',
-  NO_COLOR = '',
 }
 
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
