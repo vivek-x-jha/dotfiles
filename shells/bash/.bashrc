@@ -45,7 +45,7 @@ for completion in "$SHELL_CONFIG"/bash/comps/*.bash; do
 done
 
 # Command history
-eval "$(atuin init bash --disable-ai)" && export ATUIN_TMUX_POPUP=true
+eval "$(atuin init bash --disable-ai)"
 
 # Directory jumper
 eval "$(zoxide init bash)"
