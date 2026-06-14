@@ -171,6 +171,7 @@ now this is an agent-layer maintenance step.
 - Shared theme palette: `shells/sourdiesel`
 - Shared shell env: `shells/env`
 - Shared shell profile/PATH setup: `shells/profile`
+  - `shells/zsh/.zprofile` is a relative symlink to `../profile`, so Zsh and Bash share the same login PATH and secret-loading source; bootstrap check and doctor modes enforce this target
 - Shared fzf config: `cli/fzf/fzf.sh`
 - Auth config roots:
   - `auth/git`
