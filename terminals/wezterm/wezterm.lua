@@ -39,6 +39,12 @@ config.default_prog = wezterm.target_triple:match 'windows' and {
   '/home/aflex',
 }
 
+config.term = 'xterm-256color'
+config.set_environment_variables = {
+  COLORTERM = 'truecolor',
+  NO_COLOR = '',
+}
+
 -- https://wezterm.org/config/appearance.html#defining-your-own-colors
 config.bold_brightens_ansi_colors = false
 config.colors = {
@@ -101,6 +107,10 @@ config.macos_window_background_blur = wezterm.target_triple:match 'apple%-darwin
 config.window_background_opacity = 0.9
 config.window_close_confirmation = 'NeverPrompt'
 config.window_decorations = 'RESIZE'
+
+config.keys = {
+  { key = 'w', mods = 'SUPER', action = wezterm.action.CloseCurrentTab { confirm = false } },
+}
 
 -- https://wezterm.org/config/lua/config/window_frame.html?h=window_frame
 config.window_frame = {

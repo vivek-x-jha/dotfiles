@@ -305,6 +305,30 @@ end
 
 local workspace_request_token = 0
 
+--- Ask an existing app to create a window.
+--- WezTerm's CLI creates a fresh pane with its configured terminal environment;
+--- synthetic Cmd-N events can reuse stale GUI process state.
+--- @param appName string
+--- @param app table
+--- @return nil
+local request_app_window = function(appName, app)
+  if appName == 'WezTerm' then
+    local wezterm = '/Applications/WezTerm.app/Contents/MacOS/wezterm'
+    local task = hs.task.new(wezterm, function(exitCode, _, stderr)
+      if exitCode ~= 0 then
+        hs.alert.show 'Unable to open WezTerm window'
+        print(stderr)
+      end
+    end, { 'start', '--cwd', os.getenv 'HOME' })
+
+    if not task or not task:start() then hs.alert.show 'Unable to start WezTerm' end
+    return
+  end
+
+  app:activate()
+  hs.eventtap.keyStroke({ 'cmd' }, 'n', 0, app)
+end
+
 --- Launch missing apps, create a window for windowless apps, then run a callback.
 --- A newer workspace request cancels retries from an older request.
 --- @param appNames string[]
@@ -333,8 +357,7 @@ local with_app_windows = function(appNames, callback)
 
         if not window_requested[appName] then
           window_requested[appName] = true
-          app:activate()
-          hs.eventtap.keyStroke({ 'cmd' }, 'n', 0, app)
+          request_app_window(appName, app)
         end
       end
     end
