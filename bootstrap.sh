@@ -172,6 +172,8 @@ main() {
   notify 'SETUP IDE TOOLS'
   run_configured_step BOOTSTRAP_SETUP_IDE 'IDE tooling setup' setup_ide
 
+  run "rmdir \"$XDG_CONFIG_HOME/homebrew\" 2>/dev/null || true"
+
   printf '\n%s\n' "${CYAN}BOOTSTRAP COMPLETE - HAPPY DEVELOPING!...${RESET}"
   logg -w 'RESTART YOUR TERMINAL WINDOW TO LOAD THE NEW CONFIGURATION'
   echo

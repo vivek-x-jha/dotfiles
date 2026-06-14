@@ -201,4 +201,6 @@ notify() {
 # Optional: Update TeX Live Utility (uncomment if used)
 # sudo tlmgr update --self --all
 
+rmdir "$XDG_CONFIG_HOME/homebrew" 2>/dev/null || true
+
 return 0
