@@ -218,5 +218,7 @@ EOF
     update-icons "$icons_dir" || logg -w 'FAILED TO UPDATE MACOS ICONS'
   }
 
+  rmdir "$XDG_CONFIG_HOME/homebrew" 2>/dev/null || true
+
   return 0
 }
