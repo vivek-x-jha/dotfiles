@@ -23,7 +23,7 @@ setopt sharehistory
 setopt autocd
 
 # Completion/function lookup path
-fpath=("$ZDOTDIR/completions" "$ZDOTDIR/funcs" "${fpath[@]}")
+fpath=("$ZDOTDIR/comps" "$ZDOTDIR/funcs" "${fpath[@]}")
 export FPATH
 
 # Plugin Manager
@@ -33,12 +33,15 @@ source "$XDG_DATA_HOME/zap/zap.zsh"
 zmodload zsh/terminfo
 autoload -Uz add-zsh-hook add-zle-hook-widget is-at-least zmathfunc
 
-# Color ls + eza
-dircolors_bin="$(command -v dircolors || command -v gdircolors)"
-eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
+# Completions
+plug zsh-users/zsh-completions
+plug marlonrichert/zsh-autocomplete || {
+  autoload -Uz compinit
+  compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
+}
 
-# Fuzzy finder
-source "$XDG_CONFIG_HOME/fzf/fzf.sh" && eval "$(fzf --zsh)"
+source "$ZDOTDIR/completion/styles"
+eval "$(zsh-patina completion)"
 
 # Prompt
 {
@@ -47,38 +50,14 @@ source "$XDG_CONFIG_HOME/fzf/fzf.sh" && eval "$(fzf --zsh)"
   export XDG_CACHE_HOME="$HOME/.cache"
 }
 
-# Auto-complete
-plug marlonrichert/zsh-autocomplete || {
-  autoload -Uz compinit
-  compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
-}
+# Color ls + eza
+dircolors_bin="$(command -v dircolors || command -v gdircolors)"
+eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 
-zstyle ':completion:*:unambiguous' format \
-  $'%{\e[0;2m%}%Bcommon substring:%b %{\e[0m%}%{\e[38;5;1m%}%d%{\e[0m%}'
-
-# Auto-pairs
+# Interactive plugins
+source "$XDG_CONFIG_HOME/fzf/fzf.sh" && eval "$(fzf --zsh)"
 plug hlissner/zsh-autopair
-
-# Auto-suggestions
-# https://github.com/zsh-users/zsh-autosuggestions?tab=readme-ov-file#key-bindings
-plug zsh-users/zsh-autosuggestions && {
-  bindkey '^e' autosuggest-accept
-  bindkey '^y' autosuggest-execute
-}
-
-# Completions
-plug zsh-users/zsh-completions && {
-  zsh_completion_colors=(${(s.:.)LS_COLORS} 'ma=00;38;5;14')
-
-  zstyle ':completion:*:default' list-colors "${zsh_completion_colors[@]}"
-  zstyle ':completion:*' use-cache on
-  zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
-  zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts \
-    'reply=(${=${${(f)"$(cat /etc/ssh_hosts ~/.config/ssh/known_hosts 2>/dev/null)"}%%[# ]*}//,/ })'
-}
-
-# zsh-patina completion
-eval "$(zsh-patina completion)"
+plug zsh-users/zsh-autosuggestions
 
 # Functions
 for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
