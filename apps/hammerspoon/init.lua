@@ -303,6 +303,54 @@ local positionApp = function(appName, screen)
   end
 end
 
+local workspace_request_token = 0
+
+--- Launch missing apps, create a window for windowless apps, then run a callback.
+--- A newer workspace request cancels retries from an older request.
+--- @param appNames string[]
+--- @param callback fun()
+--- @return nil
+local with_app_windows = function(appNames, callback)
+  workspace_request_token = workspace_request_token + 1
+  local token = workspace_request_token
+  local max_attempts = 20
+  local retry_delay = 0.5
+  local window_requested = {}
+  local check_windows
+
+  check_windows = function(attempt)
+    if token ~= workspace_request_token then return end
+
+    local missing = {}
+
+    for _, appName in ipairs(appNames) do
+      local app = hs.application.get(appName)
+      if not app then
+        missing[#missing + 1] = appName
+        hs.application.launchOrFocus(appName)
+      elseif not app:mainWindow() then
+        missing[#missing + 1] = appName
+
+        if not window_requested[appName] then
+          window_requested[appName] = true
+          app:activate()
+          hs.eventtap.keyStroke({ 'cmd' }, 'n', 0, app)
+        end
+      end
+    end
+
+    if #missing == 0 then
+      callback()
+    elseif attempt < max_attempts then
+      hs.timer.doAfter(retry_delay, function() check_windows(attempt + 1) end)
+    else
+      hs.alert.show('Unable to open windows: ' .. table.concat(missing, ', '))
+    end
+  end
+
+  check_windows(1)
+end
+
 --- Return screens sorted by their physical left-to-right position.
 --- @return ScreenLike[]
 local screens_left_to_right = function()
@@ -320,17 +368,22 @@ local arrange_monitor = function()
 
   if #screens < 1 then return hs.alert.show 'No displays detected!' end
 
-  positionApp('Codex', screens[1])
-  moveApp { x = 0, y = 0, w = 0.5, h = 0.5 }
+  with_app_windows({ 'Codex', 'WezTerm', 'Arc', 'ChatGPT' }, function()
+    screens = hs.screen.allScreens()
+    if #screens < 1 then return hs.alert.show 'No displays detected!' end
 
-  positionApp('WezTerm', screens[1])
-  moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 }
+    positionApp('Codex', screens[1])
+    moveApp { x = 0, y = 0, w = 0.5, h = 0.5 }
 
-  positionApp('Arc', screens[1])
-  moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 }
+    positionApp('WezTerm', screens[1])
+    moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 }
 
-  positionApp('ChatGPT', screens[1])
-  moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 }
+    positionApp('Arc', screens[1])
+    moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 }
+
+    positionApp('ChatGPT', screens[1])
+    moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 }
+  end)
 end
 
 --- Arrange 3 monitor workspace
@@ -340,12 +393,17 @@ local arrange_3_monitors = function()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-  positionApp('Codex', screens[1])
-  moveApp 'maximize'
-  positionApp('WezTerm', screens[2])
-  moveApp 'maximize'
-  positionApp('Arc', screens[3])
-  moveApp 'maximize'
+  with_app_windows({ 'Codex', 'WezTerm', 'Arc' }, function()
+    screens = screens_left_to_right()
+    if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
+
+    positionApp('Codex', screens[1])
+    moveApp 'maximize'
+    positionApp('Arc', screens[3])
+    moveApp 'maximize'
+    positionApp('WezTerm', screens[2])
+    moveApp 'maximize'
+  end)
 end
 
 -- All other hotkeys
