@@ -14,23 +14,19 @@ bindkey -s '^b' 'btop\n'
 bindkey -s '^g' 'glg -5\n'
 
 # Widgets
-(( $+functions[toggle-tmux-client] )) && {
-  zle -N toggle-tmux-client
-  bindkey '^w' toggle-tmux-client
-}
+(( ${+functions[toggle-tmux-client]} )) && zle -N toggle-tmux-client
+(( ${+widgets[toggle-tmux-client]} )) && bindkey '^w' toggle-tmux-client
 
 # Suggestions
-(( $+widgets[autosuggest-accept] )) && {
-  bindkey '^e' autosuggest-accept
-  bindkey '^y' autosuggest-execute
-}
+(( ${+widgets[autosuggest-accept]} )) && bindkey '^e' autosuggest-accept
+(( ${+widgets[autosuggest-execute]} )) && bindkey '^y' autosuggest-execute
 
 # Atuin
-(( $+widgets[atuin-search-viins] )) && {
-  bindkey -M vicmd '^r' atuin-search-viins
+(( ${+widgets[atuin-search-viins]} )) && bindkey -M vicmd '^r' atuin-search-viins
+(( ${+widgets[atuin-up-search-viins]} )) && {
   bindkey -M vicmd '^[[A' atuin-up-search-viins
   bindkey -M vicmd '^[OA' atuin-up-search-viins
 }
 
 # Directories
-(( $+functions[zi] )) && bindkey -s '^p' 'zi || true\n'
+(( ${+functions[zi]} )) && bindkey -s '^p' 'zi || true\n'

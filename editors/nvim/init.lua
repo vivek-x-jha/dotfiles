@@ -139,12 +139,14 @@ require('noice').setup {
 
 -- Configure Formatters
 require('conform').setup {
-  format_on_save = { timeout_ms = 2000, lsp_fallback = true },
+  format_on_save = function(bufnr)
+    if vim.bo[bufnr].filetype == 'zsh' then return end
+    return { timeout_ms = 2000, lsp_format = 'fallback' }
+  end,
   formatters_by_ft = {
     lua = { 'stylua' },
     python = { 'ruff_format', 'ruff_organize_imports' },
     bash = { 'shfmt' },
-    zsh = { 'shfmt' },
     sh = { 'shfmt' },
   },
 }
