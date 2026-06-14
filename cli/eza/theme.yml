@@ -4980,6 +4980,30 @@ filenames:
       style:
         foreground: red
 
+  .mycli_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .mysql_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .python_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
   .zsh_history:
     filename:
       foreground: red
