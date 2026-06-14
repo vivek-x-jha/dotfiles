@@ -55,7 +55,9 @@ dircolors_bin="$(command -v dircolors || command -v gdircolors)"
 eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Interactive plugins
-source "$XDG_CONFIG_HOME/fzf/fzf.sh" && eval "$(fzf --zsh)"
+source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source <(fzf --zsh)
+
 plug hlissner/zsh-autopair
 plug zsh-users/zsh-autosuggestions
 
@@ -66,8 +68,8 @@ for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
 source "$SHELL_CONFIG/aliases"
 
 # Command history
-eval "$(atuin init zsh --disable-ai)" &&
-  source "$ZDOTDIR/patches/atuin-zsh-tty-capture.zsh" && {
+eval "$(atuin init zsh --disable-ai)" && {
+  source "$ZDOTDIR/patches/atuin-zsh-tty-capture.zsh"
   export ATUIN_TMUX_POPUP=false
 }
 

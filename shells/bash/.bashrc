@@ -37,12 +37,12 @@ dircolors_bin="$(command -v dircolors || command -v gdircolors)"
 eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 
 # Fuzzy finder
-eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+eval "$(fzf --bash)"
 
 # Completions
-for completion in "$SHELL_CONFIG"/bash/comps/*.bash; do
-  [[ -f $completion ]] && source "$completion"
-done
+# shellcheck disable=SC1090
+for cmp in "$SHELL_CONFIG"/bash/comps/*.bash; do source "$cmp"; done
 
 # Command history
 eval "$(atuin init bash --disable-ai)"
