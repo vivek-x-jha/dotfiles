@@ -30,6 +30,23 @@ check_bootstrap() {
     fi
   }
 
+  check_symlink() {
+    local link="$1"
+    local target="$2"
+    local actual=''
+
+    if [[ -L $link ]]; then
+      actual=$(readlink "$link")
+      if [[ $actual == "$target" ]]; then
+        logg -i "ok: $(pretty_path "$link") -> $target"
+        return
+      fi
+    fi
+
+    logg -e "invalid symlink: $(pretty_path "$link") -> ${actual:-<not a symlink>} (expected $target)"
+    status=1
+  }
+
   check_cmd 'bootstrap shell syntax' bash -n "$bootstrap_path"
 
   while IFS= read -r path; do
@@ -44,6 +61,7 @@ check_bootstrap() {
     check_cmd "zsh syntax: $(pretty_path "$path")" zsh -n "$path"
   done < <(find "$HOME/.dotfiles/shells/zsh/funcs" -maxdepth 1 -type f -print | sort)
 
+  check_symlink "$HOME/.dotfiles/shells/zsh/.zprofile" ../profile
   check_cmd 'zsh profile syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zprofile"
   check_cmd 'zshrc syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zshrc"
   check_cmd 'bash profile syntax' bash -n "$HOME/.dotfiles/shells/bash/.bash_profile"
@@ -222,6 +240,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
   doctor_symlink "$XDG_CONFIG_HOME/nvim" ../.dotfiles/editors/nvim
   doctor_symlink "$XDG_CONFIG_HOME/shells" ../.dotfiles/shells
+  doctor_symlink "$XDG_CONFIG_HOME/shells/zsh/.zprofile" ../profile
   doctor_symlink "$XDG_CONFIG_HOME/ssh" ../.dotfiles/auth/ssh
   doctor_symlink "$XDG_CONFIG_HOME/tmux" ../.dotfiles/terminals/tmux
   doctor_symlink "$XDG_CONFIG_HOME/wezterm" ../.dotfiles/terminals/wezterm
