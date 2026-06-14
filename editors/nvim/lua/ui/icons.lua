@@ -29,6 +29,7 @@ return {
   search = '',
   socket = '',
   status = '󰦒',
+  keyboard = '󰌌',
   up = '',
   vim = '',
 
