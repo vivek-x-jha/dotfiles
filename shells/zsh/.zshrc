@@ -44,10 +44,9 @@ source "$ZDOTDIR/completion/zstyle.conf"
 eval "$(zsh-patina completion)"
 
 # Prompt
-{
-  local XDG_CACHE_HOME="$XDG_CACHE_HOME/p10k"
+() {
+  local -x XDG_CACHE_HOME="$XDG_CACHE_HOME/p10k"
   plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
-  export XDG_CACHE_HOME="$HOME/.cache"
 }
 
 # Color ls + eza
