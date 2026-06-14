@@ -1316,6 +1316,14 @@ filenames:
     icon:
       glyph: ""
 
+  interactive:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌌"
+      style:
+        foreground: 14
+
   patches:
     icon:
       glyph: ""
