@@ -21,10 +21,3 @@ toggle-tmux-client() {
     fi
   fi
 }
-
-bind '"\C-o": "exec bash\n"'
-bind -x '"\el": clear'
-bind -x '"\C-n": '"$EDITOR"' -S Session.vim'
-bind '"\C-g": "glg -5\n"'
-bind '"\C-b": "btop\n"'
-bind -x '"\C-w": toggle-tmux-client'

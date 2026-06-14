@@ -40,7 +40,7 @@ eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 eval "$(fzf --bash)" && source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 
 # Completions
-for completion in "$SHELL_CONFIG"/bash/completions/*.bash; do
+for completion in "$SHELL_CONFIG"/bash/comps/*.bash; do
   [[ -f $completion ]] && source "$completion"
 done
 
@@ -55,8 +55,8 @@ eval "$(atuin init bash --disable-ai)" && {
 # Directory jumper
 eval "$(zoxide init bash)" && bind '"\C-p": "zi || true\n"'
 
-# Keybindings
-source "$SHELL_CONFIG/bash/keybindings"
+# Keymaps
+source "$SHELL_CONFIG/bash/keymaps/main"
 
 # Plugins
 [[ ! ${BLE_VERSION-} ]] || ble-attach
