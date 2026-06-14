@@ -90,17 +90,13 @@ source "$SHELL_CONFIG/aliases"
 eval "$(atuin init zsh --disable-ai)" &&
   source "$ZDOTDIR/patches/atuin-zsh-tty-capture.zsh" && {
   export ATUIN_TMUX_POPUP=false
-
-  bindkey -M vicmd '^r' atuin-search-viins
-  bindkey -M vicmd '^[[A' atuin-up-search-viins
-  bindkey -M vicmd '^[OA' atuin-up-search-viins
 }
 
 # Directory jumper
-eval "$(zoxide init zsh)" && bindkey -s '^p' 'zi || true\n'
+eval "$(zoxide init zsh)"
 
-# Keybindings
-source "$ZDOTDIR/keybindings"
+# Keymaps
+source "$ZDOTDIR/keymaps/main"
 
 # Syntax highlighting
 eval "$(zsh-patina activate)"

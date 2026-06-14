@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+local client_tty state_file target
+
+if [[ -n $TMUX ]]; then
+  client_tty=$(tmux display-message -p '#{client_tty}')
+  state_file="$XDG_STATE_HOME/tmux/last-session-${client_tty##*/}"
+  mkdir -p "${state_file:h}"
+  tmux display-message -p '#S' >| "$state_file"
+  zle -I
+  tmux detach-client
+  zle reset-prompt
+else
+  client_tty=$(tty)
+  state_file="$XDG_STATE_HOME/tmux/last-session-${client_tty##*/}"
+  [[ -r $state_file ]] && IFS= read -r target < "$state_file"
+
+  zle push-line
+  if [[ -n $target ]] && tmux has-session -t "$target" 2>/dev/null; then
+    BUFFER="tmux attach-session -t ${(q)target}"
+  else
+    BUFFER='tmux attach-session'
+  fi
+  CURSOR=${#BUFFER}
+  zle accept-line
+fi
