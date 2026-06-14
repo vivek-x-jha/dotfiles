@@ -5,7 +5,7 @@ update-tools() {
   local icons_dir="$HOME/Pictures/icons"
   local run_all=0
   local selected_steps=0
-  local update_ds_store=0
+  local delete_ds_store=0
   local update_zsh=0
   local update_tmux=0
   local update_tldr=0
@@ -45,7 +45,7 @@ EOF
   while (($#)); do
     case "$1" in
     -a|--all) run_all=1 ;;
-    -d|--ds-store) update_ds_store=1; selected_steps=1 ;;
+    -d|--ds-store) delete_ds_store=1; selected_steps=1 ;;
     -z|--zsh) update_zsh=1; selected_steps=1 ;;
     -t|--tmux) update_tmux=1; selected_steps=1 ;;
     -l|--tldr) update_tldr=1; selected_steps=1 ;;
@@ -78,7 +78,7 @@ EOF
   done
 
   if ((run_all || !selected_steps)); then
-    update_ds_store=1
+    delete_ds_store=1
     update_zsh=1
     update_tmux=1
     update_tldr=1
@@ -89,7 +89,7 @@ EOF
     update_icons=1
   fi
 
-  TOTAL_STEPS=$((update_ds_store + update_zsh + update_tmux + update_tldr + update_fzf + update_nvim + update_rust + update_brew + update_icons))
+  TOTAL_STEPS=$((delete_ds_store + update_zsh + update_tmux + update_tldr + update_fzf + update_nvim + update_rust + update_brew + update_icons))
 
   # Usage:
   #   logg "message"
@@ -126,7 +126,7 @@ EOF
     printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
   }
 
-  ((update_ds_store)) && {
+  ((delete_ds_store)) && {
     notify 'PRUNE .DS_STORE ARTIFACTS'
     logg -c "nohup fd -HI .DS_Store / -x rm -f {} &>/dev/null & disown" 2>/dev/null ||
       logg -c "nohup find / -name '.DS_Store' -print -delete &>/dev/null & disown"
