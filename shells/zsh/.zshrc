@@ -40,7 +40,7 @@ plug marlonrichert/zsh-autocomplete || {
   compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
 }
 
-source "$ZDOTDIR/completion/styles"
+source "$ZDOTDIR/completion/zstyle.conf"
 eval "$(zsh-patina completion)"
 
 # Prompt
