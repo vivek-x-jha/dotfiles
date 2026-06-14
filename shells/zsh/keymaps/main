@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+# Shell
+bindkey -s '^o' 'exec zsh -l\n'
+bindkey -s '^[l' 'clear\n'
+
+# Editor
+bindkey -s '^n' '"$EDITOR" -S Session.vim\n'
+
+# Applications
+bindkey -s '^b' 'btop\n'
+
+# History
+bindkey -s '^g' 'glg -5\n'
+
+# Widgets
+(( $+functions[toggle-tmux-client] )) && {
+  zle -N toggle-tmux-client
+  bindkey '^w' toggle-tmux-client
+}
+
+# Suggestions
+(( $+widgets[autosuggest-accept] )) && {
+  bindkey '^e' autosuggest-accept
+  bindkey '^y' autosuggest-execute
+}
+
+# Atuin
+(( $+widgets[atuin-search-viins] )) && {
+  bindkey -M vicmd '^r' atuin-search-viins
+  bindkey -M vicmd '^[[A' atuin-up-search-viins
+  bindkey -M vicmd '^[OA' atuin-up-search-viins
+}
+
+# Directories
+(( $+functions[zi] )) && bindkey -s '^p' 'zi || true\n'
