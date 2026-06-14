@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # https://www.gnu.org/software/bash/
 
 # Environment
@@ -39,6 +40,9 @@ eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
 # Fuzzy finder
 source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 eval "$(fzf --bash)"
+
+# Compatibility for scripts that expect the bash-completion pkg
+source "$SHELL_CONFIG/bash/comps/_cmp-compat.bash"
 
 # Completions
 # shellcheck disable=SC1090
