@@ -1320,13 +1320,21 @@ filenames:
     icon:
       glyph: ""
 
-  completions:
+  completion:
+    icon:
+      glyph: ""
+
+  comps:
     icon:
       glyph: ""
 
   interactive:
     icon:
       glyph: ""
+
+  keymaps:
+    icon:
+      glyph: ""
 
   patches:
     icon:
