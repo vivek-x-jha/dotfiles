@@ -1116,6 +1116,14 @@ filenames:
     icon:
       glyph: ""
 
+  atuin-zsh-tty-capture.zsh:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
   cheatsheet:
     icon:
       glyph: "󰊕"
@@ -1317,12 +1325,8 @@ filenames:
       glyph: ""
 
   interactive:
-    filename:
-      foreground: 14
     icon:
-      glyph: "󰌌"
-      style:
-        foreground: 14
+      glyph: ""
 
   patches:
     icon:
@@ -4533,8 +4537,12 @@ filenames:
       glyph: ""
 
   log:
+    filename:
+      foreground: blue
     icon:
       glyph: ""
+      style:
+        foreground: blue
 
   logs:
     icon:
@@ -5028,6 +5036,13 @@ filenames:
       style:
         foreground: black
 extensions:
+  patch:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
   rs:
     filename:
       foreground: red

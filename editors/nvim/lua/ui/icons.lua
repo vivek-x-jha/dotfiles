@@ -25,11 +25,11 @@ return {
   macos = '󰘳',
   modified = '●',
   netrwhist = '󰋚',
+  patch = '',
   recent = '',
   search = '',
   socket = '',
   status = '󰦒',
-  keyboard = '󰌌',
   up = '',
   vim = '',
 
