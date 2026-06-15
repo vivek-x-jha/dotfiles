@@ -51,7 +51,9 @@ require('nvim-web-devicons').setup {
     ['rg.bash'] = { icon = icons.lightbulb, name = 'rg.bash', color = thm.brightcyan },
     ['starship.bash'] = { icon = icons.lightbulb, name = 'starship.bash', color = thm.brightcyan },
     ['tldr.bash'] = { icon = icons.lightbulb, name = 'tldr.bash', color = thm.brightcyan },
+    ['update-tools.bash'] = { icon = icons.lightbulb, name = 'update-tools.bash', color = thm.brightcyan },
     ['uv.bash'] = { icon = icons.lightbulb, name = 'uv.bash', color = thm.brightcyan },
+    ['work.bash'] = { icon = icons.lightbulb, name = 'work.bash', color = thm.brightcyan },
     ['_atuin'] = { icon = icons.lightbulb, name = '_atuin', color = thm.brightcyan },
     ['_bat'] = { icon = icons.lightbulb, name = '_bat', color = thm.brightcyan },
     ['_bob'] = { icon = icons.lightbulb, name = '_bob', color = thm.brightcyan },
@@ -62,7 +64,9 @@ require('nvim-web-devicons').setup {
     ['_rg'] = { icon = icons.lightbulb, name = '_rg', color = thm.brightcyan },
     ['_starship'] = { icon = icons.lightbulb, name = '_starship', color = thm.brightcyan },
     ['_tldr'] = { icon = icons.lightbulb, name = '_tldr', color = thm.brightcyan },
+    ['_update-tools'] = { icon = icons.lightbulb, name = '_update-tools', color = thm.brightcyan },
     ['_uv'] = { icon = icons.lightbulb, name = '_uv', color = thm.brightcyan },
+    ['_work'] = { icon = icons.lightbulb, name = '_work', color = thm.brightcyan },
 
     -- Dotfiles + environment helpers
     ['.dircolors'] = { icon = icons.gear, name = '.dircolors', color = thm.magenta },

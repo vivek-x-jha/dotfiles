@@ -1372,7 +1372,23 @@ filenames:
       style:
         foreground: 14
 
+  update-tools.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
   uv.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  work.bash:
     filename:
       foreground: 14
     icon:
@@ -1460,7 +1476,23 @@ filenames:
       style:
         foreground: 14
 
+  _update-tools:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
   _uv:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _work:
     filename:
       foreground: 14
     icon:
