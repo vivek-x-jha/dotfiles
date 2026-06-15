@@ -30,6 +30,7 @@ return {
   search = '',
   socket = '',
   status = '󰦒',
+  textlines = '󰦨',
   up = '',
   vim = '',
 
