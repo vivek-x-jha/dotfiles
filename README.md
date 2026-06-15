@@ -376,7 +376,7 @@ The Rust install flow:
 3. Installs `cargo-update`.
 4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting and completion generation.
 
-`update-tools` and `update-tools --all` run every maintenance step. Individual flags select only the requested steps, such as `--nvim`, `--rust`, `--brew`, `--zsh`, or `--tmux`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
+`update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
 The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested helpers before the recursive quarantine pass completes. Restart upgraded apps manually to use their new versions. The quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
 
 ## 📦 Package Management
@@ -475,13 +475,13 @@ Do not put Codex runtime state in `ai/codex/`: `config.toml`, `auth.json`, SQLit
 
 ## 🔄 Updates
 
-Interactive update helper:
+Run the standard update set without TeX Live:
 
 ```sh
 update-tools
 ```
 
-Run every update explicitly:
+Run every update, including TeX Live:
 
 ```sh
 update-tools --all
@@ -491,6 +491,12 @@ Run selected updates only:
 
 ```sh
 update-tools --brew --rust --nvim
+```
+
+Update only TeX Live:
+
+```sh
+update-tools --tex
 ```
 
 Use `update-tools --help` for all step flags and the `--icons-dir PATH` override.
