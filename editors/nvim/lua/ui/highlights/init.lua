@@ -267,6 +267,24 @@ local highlights = {
   zshVariableDef = { link = 'zshVariable' },
   zshTypes = { fg = thm.magenta },
 
+  --------------------------- AppleScript --------------------------------
+  applescriptAssignment = { fg = thm.magenta },
+  applescriptBlockComment = { fg = thm.brightblack, italic = true },
+  applescriptBoolean = { fg = thm.yellow },
+  applescriptCommand = { fg = thm.magenta },
+  applescriptComment = { fg = thm.brightblack, italic = true },
+  applescriptConditional = { fg = thm.magenta },
+  applescriptConstant = { fg = thm.yellow },
+  applescriptHandler = { fg = thm.magenta },
+  applescriptNumber = { fg = thm.brightyellow },
+  applescriptOperator = { fg = thm.black },
+  applescriptRepeat = { fg = thm.yellow },
+  applescriptStatement = { fg = thm.magenta },
+  applescriptString = { fg = thm.green },
+  applescriptTodo = { fg = thm.brightblue },
+  applescriptType = { fg = thm.yellow },
+  applescriptVariable = { fg = thm.white },
+
   ---------------------------- LSP / Completions -------------------------
   BlinkCmpMenu = { fg = thm.brightblack },
   BlinkCmpMenuBorder = { fg = thm.brightblack },
