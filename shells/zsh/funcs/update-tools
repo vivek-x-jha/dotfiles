@@ -4,10 +4,10 @@ usage() {
   cat <<'EOF'
 Usage: update-tools [OPTIONS] [IconsDir]
 
-Run every maintenance step by default, or only the selected steps.
+Run standard maintenance without TeX by default, or only the selected steps.
 
 Options:
-  -a, --all            run every step
+  -a, --all            run every step, including TeX
   -d, --ds-store       prune .DS_Store artifacts
   -z, --zsh            update Zsh plugins
   -t, --tmux           update tmux plugins
@@ -17,12 +17,28 @@ Options:
   -r, --rust           update Rust and cargo-installed tools
   -b, --brew           run Homebrew maintenance
   -i, --icons          refresh macOS icons
+  -e, --tex            update TeX Live
       --icons-dir PATH set the icons source directory
   -h, --help           show this help
 EOF
 }
 
-# Run all steps by default, or only explicitly selected steps when flags are provided.
+select_all_steps() {
+  local include_tex="$1"
+
+  delete_ds_store=1
+  update_zsh=1
+  update_tmux=1
+  update_tldr=1
+  update_fzf=1
+  update_nvim=1
+  update_rust=1
+  update_brew=1
+  update_icons=1
+  update_tex="$include_tex"
+}
+
+# Run the standard steps by default, or only explicitly selected steps when flags are provided.
 local icons_dir="$HOME/Pictures/icons"
 local run_all=0
 local selected_steps=0
@@ -35,10 +51,11 @@ local update_nvim=0
 local update_rust=0
 local update_brew=0
 local update_icons=0
+local update_tex=0
 
 while (( $# )); do
   case "$1" in
-  -a|--all) run_all=1 ;;
+  -a|--all) run_all=1; selected_steps=1 ;;
   -d|--ds-store) delete_ds_store=1; selected_steps=1 ;;
   -z|--zsh) update_zsh=1; selected_steps=1 ;;
   -t|--tmux) update_tmux=1; selected_steps=1 ;;
@@ -48,6 +65,7 @@ while (( $# )); do
   -r|--rust) update_rust=1; selected_steps=1 ;;
   -b|--brew) update_brew=1; selected_steps=1 ;;
   -i|--icons) update_icons=1; selected_steps=1 ;;
+  -e|--tex) update_tex=1; selected_steps=1 ;;
   --icons-dir)
     [[ -n ${2-} ]] || {
       printf 'update-tools: --icons-dir requires a path\n' >&2
@@ -71,22 +89,14 @@ while (( $# )); do
   shift
 done
 
-if ((run_all || !selected_steps)); then
-  delete_ds_store=1
-  update_zsh=1
-  update_tmux=1
-  update_tldr=1
-  update_fzf=1
-  update_nvim=1
-  update_rust=1
-  update_brew=1
-  update_icons=1
-fi
+# Explicit --all includes TeX; no step flags select the standard set without TeX.
+((run_all)) && select_all_steps 1
+((selected_steps)) || select_all_steps 0
 
 local ICON='󰓒'
 local STEP=0
 local SUBSTEP=0
-local TOTAL_STEPS=$((delete_ds_store + update_zsh + update_tmux + update_tldr + update_fzf + update_nvim + update_rust + update_brew + update_icons))
+local TOTAL_STEPS=$((delete_ds_store + update_zsh + update_tmux + update_tldr + update_fzf + update_nvim + update_rust + update_brew + update_icons + update_tex))
 
 # Usage:
 #   logg "message"
@@ -198,8 +208,10 @@ notify() {
   update-icons "$icons_dir" || logg -w 'FAILED TO UPDATE MACOS ICONS'
 }
 
-# Optional: Update TeX Live Utility (uncomment if used)
-# sudo tlmgr update --self --all
+((update_tex)) && {
+  notify 'UPDATE TEX LIVE'
+  logg -c 'sudo tlmgr update --self --all' || logg -w 'UPDATE TEX LIVE FAILED'
+}
 
 rmdir "$XDG_CONFIG_HOME/homebrew" 2>/dev/null || true
 
