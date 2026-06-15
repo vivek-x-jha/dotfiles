@@ -99,7 +99,18 @@ EOF
   ((run_all)) && select_all_steps 1
   ((selected_steps)) || select_all_steps 0
 
-  TOTAL_STEPS=$((delete_ds_store + update_zsh + update_tmux + update_tldr + update_fzf + update_nvim + update_rust + update_brew + update_icons + update_tex))
+  TOTAL_STEPS=$((
+    delete_ds_store +
+    update_zsh +
+    update_tmux +
+    update_tldr +
+    update_fzf +
+    update_nvim +
+    update_rust +
+    update_brew +
+    update_icons +
+    update_tex
+  ))
 
   # Usage:
   #   logg "message"
