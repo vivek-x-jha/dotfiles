@@ -266,7 +266,9 @@ create_symlinks() {
 
 configure_codex_environment() {
   local codex_home="${CODEX_HOME:-$XDG_STATE_HOME/codex}"
+  local nvim_log_file="${NVIM_LOG_FILE:-$XDG_STATE_HOME/nvim/nvim.log}"
   export CODEX_HOME="$codex_home"
+  export NVIM_LOG_FILE="$nvim_log_file"
 
   [[ $OS_TYPE == macos ]] || return
   require launchctl || return
@@ -276,7 +278,8 @@ configure_codex_environment() {
   run "launchctl setenv XDG_DATA_HOME \"$XDG_DATA_HOME\""
   run "launchctl setenv XDG_STATE_HOME \"$XDG_STATE_HOME\""
   run "launchctl setenv CODEX_HOME \"$codex_home\""
-  logg -i "Codex Desktop launch environment: CODEX_HOME=$(pretty_path "$codex_home")"
+  run "launchctl setenv NVIM_LOG_FILE \"$nvim_log_file\""
+  logg -i "Codex Desktop launch environment: CODEX_HOME=$(pretty_path "$codex_home"), NVIM_LOG_FILE=$(pretty_path "$nvim_log_file")"
 }
 
 configure_codex_ui() {

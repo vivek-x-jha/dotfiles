@@ -463,7 +463,7 @@ The SourDiesel fragment manages Desktop chrome colors and TUI status-line prefer
 
 Codex Desktop's integrated terminal is separate from the shell TUI. Its xterm.js palette is derived from the selected built-in code theme's VS Code terminal color variables, such as `terminal.ansiRed` and `terminal.ansiBrightBlue`. The repo pins `appearanceDarkCodeThemeId`, but does not add unsupported terminal ANSI keys to `config.toml`.
 
-On macOS, bootstrap also publishes `CODEX_HOME` and the XDG base directories through `launchctl setenv` so Codex Desktop launched from Finder, Spotlight, or Dock uses `$XDG_STATE_HOME/codex` instead of recreating `~/.codex`. Relaunch Codex Desktop after bootstrap for the launchd environment to take effect.
+On macOS, bootstrap also publishes `CODEX_HOME`, `NVIM_LOG_FILE`, and the XDG base directories through `launchctl setenv` so Codex Desktop launched from Finder, Spotlight, or Dock uses the same state locations as shell-launched tools. Relaunch Codex Desktop after bootstrap for the launchd environment to take effect.
 
 Keep `ai/codex/` limited to repo-managed Codex inputs:
 

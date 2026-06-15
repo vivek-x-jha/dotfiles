@@ -95,7 +95,7 @@ Update Neovim plugins using the repo's vim.pack flow. Run the headless forced up
 Useful command:
 
 ```sh
-nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'
+NVIM_LOG_FILE="$HOME/.local/state/nvim/nvim.log" nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'
 ```
 
 ## /package-sync

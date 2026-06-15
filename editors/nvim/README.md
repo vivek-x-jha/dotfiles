@@ -10,7 +10,7 @@ integration, and XDG state paths.
 
 `init.lua` is the startup orchestrator:
 
-1. Set `NVIM_LOG_FILE` for interactive and headless launches.
+1. Preserve the inherited `NVIM_LOG_FILE`, with an XDG-state fallback for launches that do not provide it.
 2. Select `vim.g.ui_theme`.
 3. Configure core options, diagnostics, and language servers inline.
 4. Register plugin sources with `vim.pack.add`.
@@ -27,9 +27,11 @@ integration, and XDG state paths.
 | --- | --- |
 | `init.lua` | Startup order, core options, LSP setup, and plugin source registration |
 | `lsp/*.lua` | Per-server LSP settings |
+| `after/syntax/{sh,zsh}.vim` | Shell syntax extensions for commands, control keywords, config builtins, and paths |
 | `lua/autocmds.lua` | Autocommands |
 | `lua/usercmds.lua` | Custom user commands |
 | `lua/keymaps.lua` | Keymaps |
+| `lua/workspace.lua` | Project-buffer discovery and root `Session.vim` synchronization |
 | `lua/ui/statusline.lua` | Local statusline implementation |
 | `lua/ui/icons.lua` | Shared icon table |
 | `lua/ui/highlights/init.lua` | Active palette selector, colorscheme apply helper, and highlight groups |
@@ -38,7 +40,9 @@ integration, and XDG state paths.
 | `lua/ui/terminal.lua` | Local terminal helper |
 | `colors/sourdiesel.lua` | Standard Neovim colorscheme entrypoint |
 | `lua/types.lua` | LuaLS-only type annotations |
-| `lua/plugins/*.lua` | Plugin-specific configuration |
+| `lua/plugins/` | Plugin configuration and custom `fzf-lua` pickers |
+| `.luarc.json` | LuaLS workspace and diagnostics settings |
+| `.stylua.toml` | StyLua formatting rules |
 | `nvim-pack-lock.json` | Native `vim.pack` lockfile |
 
 ## Plugin Management
@@ -80,6 +84,29 @@ blink.build():wait(60000)
 and `lua/autocmds.lua` includes a `PackChanged` hook that rebuilds the native
 fuzzy matcher after `blink.cmp` or `blink.lib` installs/updates.
 
+## Workspace And Sessions
+
+`lua/workspace.lua` keeps the root `Session.vim` aligned with the text files
+that `edit-all` would load. It uses `fd` for discovery, `file` for MIME checks,
+adds newly discovered files as buffers, and removes unmodified buffers whose
+files were deleted.
+
+Session synchronization is debounced after file writes, deletes, focus changes,
+shell commands, and relevant `nvim-tree` filesystem events. Use `<leader>oo` to
+run an immediate synchronization. `Session.vim` is intentionally ignored by Git.
+
+## Shell Syntax Overrides
+
+Files under `after/syntax/` extend Neovim's built-in shell syntax after the
+standard syntax scripts load:
+
+- `after/syntax/sh.vim` distinguishes command names, shell control keywords,
+  and path-like values.
+- `after/syntax/zsh.vim` additionally distinguishes Zsh configuration builtins
+  such as `autoload`, `bindkey`, `zstyle`, and `zmodload`.
+
+The matching highlight groups are defined by the local SourDiesel theme.
+
 ## Statusline
 
 The statusline is local to this repo in `lua/ui/statusline.lua`.
@@ -116,8 +143,9 @@ The main Neovim log is standardized to:
 ~/.local/state/nvim/nvim.log
 ```
 
-`init.lua` sets `NVIM_LOG_FILE` early so headless launches, including agent-run
-checks, do not create stray `nvim.log` files in project directories.
+Shell and macOS launch environments set `NVIM_LOG_FILE` before Neovim starts.
+Agent-run headless commands must also pass it explicitly so core startup logs do
+not fall back to `nvim.log` in the working directory.
 
 Other plugin logs may also exist under `~/.local/state/nvim/`.
 

@@ -127,7 +127,7 @@ Implementation: `install_rust_tooling`, `setup_ide`.
 - Source fragment: `ai/codex/themes/sourdiesel.toml`
 - Merge helper: `ai/codex/scripts/apply_preferences.py`
 - Runtime target: `$CODEX_HOME/config.toml`
-- Behavior: `configure_codex_environment` publishes `$CODEX_HOME` and XDG base directories through macOS `launchctl setenv`, then `configure_codex_ui` updates only managed UI preference keys and preserves Codex-owned sections such as `marketplaces`, `plugins`, `projects`, and `mcp_servers`.
+- Behavior: `configure_codex_environment` publishes `$CODEX_HOME`, `$NVIM_LOG_FILE`, and XDG base directories through macOS `launchctl setenv`, then `configure_codex_ui` updates only managed UI preference keys and preserves Codex-owned sections such as `marketplaces`, `plugins`, `projects`, and `mcp_servers`.
 - Managed preferences include Desktop chrome theme keys plus TUI `status_line` order and `status_line_use_colors`.
 - TUI colors use Codex and the terminal ANSI palette with `status_line_use_colors = true`; do not add unsupported TUI color keys.
 - Codex Desktop integrated terminal colors come from the selected built-in code theme's VS Code terminal variables. Do not add unsupported Desktop terminal ANSI keys unless Codex exposes them in the settings schema.
@@ -151,12 +151,16 @@ session restore behavior, run the Neovim validation first and then refresh the
 ignored root session file:
 
 ```sh
-nvim --headless '+silent! mksession! Session.vim' '+qa'
+NVIM_LOG_FILE="$HOME/.local/state/nvim/nvim.log" nvim --headless '+silent! mksession! Session.vim' '+qa'
 ```
 
 `Session.vim` is intentionally ignored, but keeping it fresh lets `:restart`
 resume against current paths. A native Neovim hook may replace this later; for
 now this is an agent-layer maintenance step.
+
+Prefix every agent-run `nvim --headless` command with
+`NVIM_LOG_FILE="$HOME/.local/state/nvim/nvim.log"`. Neovim core can choose its
+startup log before `init.lua` runs, so config-only redirection is insufficient.
 
 ## Important Paths and Manifests
 
