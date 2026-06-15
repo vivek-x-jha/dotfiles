@@ -5104,6 +5104,14 @@ filenames:
       style:
         foreground: black
 extensions:
+  scpt:
+    filename:
+      foreground: white
+    icon:
+      glyph: "󰘳"
+      style:
+        foreground: white
+
   patch:
     filename:
       foreground: 09
