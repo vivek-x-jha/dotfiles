@@ -1,0 +1,39 @@
+#compdef work
+# shellcheck disable=SC2034,SC2154,SC2206,SC2296
+
+_work_sessions() {
+  local -a projects tmux_sessions
+
+  [[ -d $HOME/developer ]] && projects=(${HOME}/developer/*(/N:t))
+
+  (( $+commands[tmux] )) && tmux_sessions=(${(f)"$(tmux list-sessions -F '#S' 2>/dev/null)"})
+
+  projects=(${(@u)projects})
+  tmux_sessions=(${(@u)tmux_sessions})
+
+  _describe -t projects 'project' projects
+  _describe -t tmux-sessions 'tmux session' tmux_sessions
+}
+
+_work() {
+  _arguments -s -S : \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '(-r --reload)'{-r,--reload}'[kill current tmux server and start fresh]' \
+    '(-p --python)'{-p,--python}'[initialize Python project if needed]' \
+    '--window-label[set main window name]:window name:' \
+    '--left-label[set left pane title]:pane title:' \
+    '--right-label[set right pane title]:pane title:' \
+    '--agents-label[set agent window name]:window name:' \
+    '--left-cmd[set left pane command]:command:_command_names' \
+    '--right-cmd[set right pane command]:command:_command_names' \
+    '--agents-cmd[set agent window command]:command:_command_names' \
+    '--top-right-label[legacy alias for --agents-label]:window name:' \
+    '--bottom-right-label[legacy alias for --right-label]:pane title:' \
+    '--top-right-cmd[legacy alias for --agents-cmd]:command:_command_names' \
+    '--bottom-right-cmd[legacy alias for --right-cmd]:command:_command_names' \
+    '1:session:_work_sessions' && return 0
+
+  return 1
+}
+
+_work "$@"
