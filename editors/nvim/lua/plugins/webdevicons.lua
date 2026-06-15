@@ -156,6 +156,7 @@ require('nvim-web-devicons').setup {
     ['jsonl'] = { icon = icons.gear, name = 'jsonl', color = thm.black },
     ['log'] = { icon = icons.log, name = 'log', color = thm.red },
     ['shada'] = { icon = icons.vim, name = 'shada', color = thm.brightblack },
+    ['scpt'] = { icon = icons.macos, name = 'scpt', color = thm.white },
     ['sqlite'] = { icon = icons.database, name = 'sqlite', color = thm.cyan },
     ['sqlite3'] = { icon = icons.database, name = 'sqlite3', color = thm.cyan },
     ['sqlite-shm'] = { icon = icons.database, name = 'sqlite-shm', color = thm.cyan },
