@@ -1,0 +1,28 @@
+#compdef update-tools
+# shellcheck disable=SC2034,SC2154,SC2296
+
+_update_tools() {
+  local -a opts
+
+  opts=(
+    '(-a --all)'{-a,--all}'[run every step, including TeX]'
+    '(-d --ds-store)'{-d,--ds-store}'[prune .DS_Store artifacts]'
+    '(-z --zsh)'{-z,--zsh}'[update Zsh plugins]'
+    '(-t --tmux)'{-t,--tmux}'[update tmux plugins]'
+    '(-l --tldr)'{-l,--tldr}'[update the TLDR cache]'
+    '(-f --fzf)'{-f,--fzf}'[update the fzf checkout]'
+    '(-n --nvim)'{-n,--nvim}'[update Neovim plugins]'
+    '(-r --rust)'{-r,--rust}'[update Rust and cargo-installed tools]'
+    '(-b --brew)'{-b,--brew}'[run Homebrew maintenance]'
+    '(-i --icons)'{-i,--icons}'[refresh macOS icons]'
+    '(-e --tex)'{-e,--tex}'[update TeX Live]'
+    '--icons-dir=[set the icons source directory]:path:_files -/'
+    '-h[show this help]'
+    '--help[show this help]'
+    '1:icons directory:_files -/'
+  )
+
+  _arguments -s -S : $opts
+}
+
+_update-tools "$@"
