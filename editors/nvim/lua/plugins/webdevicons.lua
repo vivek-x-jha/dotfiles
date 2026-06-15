@@ -17,7 +17,7 @@ require('nvim-web-devicons').setup {
     ['.gitignore'] = { icon = icons.branch, name = 'GitIgnore', color = thm.black },
     ['.gitkeep'] = { icon = icons.branch, name = 'GitKeep', color = thm.brightblack },
     ['Makefile'] = { icon = icons.makefile, name = 'Makefile' },
-    ['txt'] = { icon = icons.file, name = 'txt' },
+    ['txt'] = { icon = icons.textlines, name = 'txt', color = thm.black },
     ['config'] = { icon = icons.gear, name = 'config', color = thm.magenta },
     ['md'] = { icon = icons.markdown, name = 'md', color = thm.brightyellow },
 

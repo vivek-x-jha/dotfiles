@@ -5130,8 +5130,12 @@ extensions:
       style:
         foreground: white
   txt:
+    filename:
+      foreground: black
     icon:
-      glyph: ""
+      glyph: "󰦨"
+      style:
+        foreground: black
   md:
     filename:
       foreground: 11
