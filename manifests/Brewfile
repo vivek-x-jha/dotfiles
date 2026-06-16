@@ -10,8 +10,6 @@ brew "btop"
 brew "certifi"
 # Defines a standard way of committing rules and communicating it
 brew "commitizen"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # macOS CLI for managing custom icons for files and folders
