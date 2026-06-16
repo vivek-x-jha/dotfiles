@@ -29,10 +29,6 @@ export FPATH
 # Plugin Manager
 source "$XDG_DATA_HOME/zap/zap.zsh"
 
-# Zsh core helpers
-zmodload zsh/terminfo
-autoload -Uz add-zsh-hook add-zle-hook-widget is-at-least zmathfunc
-
 # Completions
 plug zsh-users/zsh-completions
 plug marlonrichert/zsh-autocomplete && source "$ZDOTDIR/.zstyle"
