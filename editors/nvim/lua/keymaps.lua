@@ -32,7 +32,6 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', '<cmd>write<CR>', { desc = '[S]ave fi
 vim.keymap.set('n', '<leader>oo', function() require('workspace').sync_session() end, { desc = 'Save workspace config' })
 
 -- [8/18] Buffers
-vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open [b]uffer' })
 vim.keymap.set('n', '<C-c>', '<cmd>%y+<CR>', { desc = '[C]opy file' })
 vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'Clear highlights' })
 
