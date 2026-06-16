@@ -27,6 +27,7 @@ require('nvim-web-devicons').setup {
     ['cheatsheet'] = { icon = icons.command, name = 'cheatsheet' },
     ['edit-all'] = { icon = icons.command, name = 'edit-all' },
     ['fix-tmux-remotes'] = { icon = icons.command, name = 'fix-tmux-remotes' },
+    ['glg'] = { icon = icons.log, name = 'glg', color = thm.red },
     ['l'] = { icon = icons.command, name = 'l' },
     ['list-256'] = { icon = icons.command, name = 'list-256' },
     ['list-colors'] = { icon = icons.command, name = 'list-colors' },
