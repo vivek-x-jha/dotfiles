@@ -28,6 +28,8 @@ local thm = {
 }
 
 -- https://www.hammerspoon.org/docs/
+hs.ipc.cliInstall()
+
 -- Set console theme
 hs.console.alpha(0.98)
 hs.console.consoleCommandColor { hex = thm.green }
@@ -409,22 +411,29 @@ local arrange_monitor = function()
   end)
 end
 
---- Arrange 3 monitor workspace
+--- Arrange 3 monitor workspace with either Codex or WezTerm centered.
+--- @param center_app '"Codex"'|'"WezTerm"'
 --- @return nil
-local arrange_3_monitors = function()
+local arrange_3_monitors = function(center_app)
   local screens = screens_left_to_right()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
+  if center_app ~= 'Codex' and center_app ~= 'WezTerm' then return hs.alert.show('Invalid center app: ' .. tostring(center_app)) end
 
   with_app_windows({ 'Codex', 'WezTerm', 'Arc' }, function()
     screens = screens_left_to_right()
     if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-    positionApp('Codex', screens[1])
+    local left_screen = screens[1]
+    local center_screen = screens[2]
+    local right_screen = screens[3]
+    local left_app = center_app == 'Codex' and 'WezTerm' or 'Codex'
+
+    positionApp(left_app, left_screen)
     moveApp 'maximize'
-    positionApp('Arc', screens[3])
+    positionApp('Arc', right_screen)
     moveApp 'maximize'
-    positionApp('WezTerm', screens[2])
+    positionApp(center_app, center_screen)
     moveApp 'maximize'
   end)
 end
@@ -434,7 +443,8 @@ end
 local remaps = {
   -- Workspaces
   { mods = ctrl_alt_cmd, key = '1', message = 'Set Single Monitor Workspace', pressedfn = arrange_monitor },
-  { mods = ctrl_alt_cmd, key = '2', message = 'Set 3 Monitor Workspace', pressedfn = arrange_3_monitors },
+  { mods = ctrl_alt_cmd, key = '2', message = 'Set 3 Monitor Workspace', pressedfn = function() arrange_3_monitors 'WezTerm' end },
+  { mods = ctrl_alt_cmd, key = '3', message = 'Set 3 Monitor Workspace (Codex Center)', pressedfn = function() arrange_3_monitors 'Codex' end },
 
   -- Monitor placement
   { mods = ctrl_alt_cmd, key = 'Left', message = 'Left Display', pressedfn = function() moveApp 'next' end },
