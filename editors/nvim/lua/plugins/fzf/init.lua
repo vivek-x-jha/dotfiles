@@ -1,9 +1,11 @@
 -- @type table<string, string> -- Custom icons
 local icons = require 'ui.icons'
+local previewers = require 'fzf-lua.previewer'
 
 require('fzf-lua').setup {
   winopts = {
     preview = {
+      default = 'bat',
       winopts = {
         number = false,
         relativenumber = false,
@@ -17,6 +19,17 @@ require('fzf-lua').setup {
         scrolloff = 0,
         winblend = 0,
       },
+    },
+  },
+
+  previewers = {
+    bat = {
+      args = '--color=always --style=changes',
+      _ctor = previewers.fzf.cmd,
+    },
+    bat_native = {
+      args = '--color=always --style=changes',
+      _ctor = previewers.fzf.cmd,
     },
   },
 

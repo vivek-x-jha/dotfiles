@@ -13,7 +13,7 @@ showdir="$(
     echo 'ls -lAh {}'
 )"
 
-showfile="$(command -v bat &>/dev/null && echo 'bat --color=always --style=changes {}' || echo 'cat {}')"
+showfile="$(command -v bat &>/dev/null && echo 'bat --color=always --style=changes -- {}' || echo 'cat -- {}')"
 findfile="$(command -v fd &>/dev/null && echo 'fd --type f' || echo 'find . -type f')"
 
 # https://github.com/junegunn/fzf?tab=readme-ov-file#environment-variables
