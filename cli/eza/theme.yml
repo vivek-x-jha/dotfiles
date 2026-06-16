@@ -1250,11 +1250,11 @@ filenames:
 
   fzf.sh:
     filename:
-      foreground: magenta
+      foreground: white
     icon:
       glyph: ""
       style:
-        foreground: magenta
+        foreground: white
 
   yarn.lock:
     icon:
