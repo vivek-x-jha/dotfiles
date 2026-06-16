@@ -12,6 +12,8 @@ brew "certifi"
 brew "commitizen"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
 # macOS CLI for managing custom icons for files and folders
 brew "fileicon"
 # GNU awk utility
