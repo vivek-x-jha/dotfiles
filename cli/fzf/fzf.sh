@@ -40,7 +40,7 @@ export FZF_DEFAULT_OPTS="
   --color header-label:$RED_HEX
 
   --preview-label ' preview '
-  --preview '[[ -d {} ]] && $showdir || $showfile'
+  --preview 'if [[ -d {} ]]; then $showdir; elif [[ -f {} ]]; then $showfile; fi'
   --bind 'ctrl-/:change-preview-window(hidden|)'
   --color preview-border:$BRIGHTBLACK_HEX
   --color preview-label:$CYAN_HEX
