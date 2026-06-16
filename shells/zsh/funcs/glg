@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+command -v git &>/dev/null || {
+  print -ru2 'glg: git is required but was not found on PATH'
+  return 127
+}
+
+command -v less &>/dev/null || {
+  print -ru2 'glg: less is required for paginated output but was not found on PATH'
+  return 127
+}
+
+git --no-pager log \
+  --color=always \
+  --graph \
+  --date=format:"%b-%d-%Y" \
+  --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset" \
+  "$@" |
+  LESS="${LESS:-FRX}" less -R
+
+local -a statuses=("${pipestatus[@]}")
+local git_status=${statuses[1]}
+local pager_status=${statuses[2]}
+
+((pager_status != 0)) && return "$pager_status"
+((git_status == 141)) && return 0
+return "$git_status"

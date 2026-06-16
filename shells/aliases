@@ -54,11 +54,6 @@ command -v git &>/dev/null && {
   alias grv='git remote --verbose'
   alias gst='git status -s'
 
-  alias glg='git log \
-    --graph \
-    --date=format:"%b-%d-%Y" \
-    --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset"'
-
   command -v fzf &>/dev/null && {
     alias gsw='git branch --format="%(refname:short)" \
       | fzf \
