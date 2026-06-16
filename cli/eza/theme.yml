@@ -108,6 +108,14 @@ filenames:
       style:
         foreground: magenta
 
+  .shellcheckrc:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
   .dircolors:
     filename:
       foreground: magenta
@@ -117,8 +125,12 @@ filenames:
         foreground: magenta
 
   .hushlogin:
+    filename:
+      foreground: 08
     icon:
       glyph: ""
+      style:
+        foreground: 08
 
   .python-version:
     filename:
@@ -607,6 +619,62 @@ filenames:
       glyph: ""
       style:
         foreground: 13
+
+  .dockerignore:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  Dockerfile:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  Containerfile:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  docker-compose.yml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  docker-compose.yaml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  compose.yml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  compose.yaml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
 
   go.mod:
     filename:
@@ -2288,6 +2356,10 @@ filenames:
     icon:
       glyph: ""
 
+  cellar:
+    icon:
+      glyph: ""
+
   Components:
     icon:
       glyph: ""
@@ -2433,6 +2505,10 @@ filenames:
       glyph: ""
 
   man:
+    icon:
+      glyph: ""
+
+  manpages:
     icon:
       glyph: ""
 
@@ -2688,6 +2764,10 @@ filenames:
     icon:
       glyph: ""
 
+  .claude:
+    icon:
+      glyph: ""
+
   .agents:
     icon:
       glyph: ""
@@ -2701,6 +2781,10 @@ filenames:
       glyph: ""
 
   .copilot:
+    icon:
+      glyph: ""
+
+  .cursor:
     icon:
       glyph: ""
 
@@ -2732,6 +2816,10 @@ filenames:
     icon:
       glyph: ""
 
+  .licenses:
+    icon:
+      glyph: ""
+
   .npm:
     icon:
       glyph: ""
@@ -2753,6 +2841,10 @@ filenames:
       glyph: ""
 
   .sigstore:
+    icon:
+      glyph: ""
+
+  .sublime:
     icon:
       glyph: ""
 
@@ -4456,6 +4548,10 @@ filenames:
     icon:
       glyph: ""
 
+  completions:
+    icon:
+      glyph: ""
+
   database_creation:
     icon:
       glyph: ""
@@ -5103,6 +5199,118 @@ filenames:
       glyph: ""
       style:
         foreground: black
+
+  README:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  metadata.yaml:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .lesshst:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .zlua:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  p10k-dump-mubuntu.zsh:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  p10k-instant-prompt-mubuntu.zsh:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  prompt-29:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  prompt-21:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .gitmodules:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  .editorconfig:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .gitattributes:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .vale.ini:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  CODEOWNERS:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  revision-hash:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
 extensions:
   scpt:
     filename:
@@ -5119,6 +5327,118 @@ extensions:
       glyph: ""
       style:
         foreground: 09
+  rc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+  env:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+  config:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+  version:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+  cache:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+  dump:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+  history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+  hist:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+  ignore:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  swp:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+  code-workspace:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+  editorconfig:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  gitattributes:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  zwc:
+    filename:
+      foreground: green
+    icon:
+      glyph: ""
+      style:
+        foreground: green
+  collection:
+    filename:
+      foreground: green
+    icon:
+      glyph: ""
+      style:
+        foreground: green
+  bin:
+    filename:
+      foreground: green
+    icon:
+      glyph: ""
+      style:
+        foreground: green
   rs:
     filename:
       foreground: red
@@ -5228,6 +5548,13 @@ extensions:
       style:
         foreground: 15
   conf:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+  ini:
     filename:
       foreground: black
     icon:
