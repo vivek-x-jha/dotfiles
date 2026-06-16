@@ -25,4 +25,4 @@ _update_tools() {
   _arguments -s -S : $opts
 }
 
-_update-tools "$@"
+_update_tools "$@"
