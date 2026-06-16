@@ -33,7 +33,7 @@ export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"
 
 # Pager: https://man7.org/linux/man-pages/man1/less.1.html
 export PAGER='less -R'
-export MANPAGER='less -R'
+export MANPAGER="$PAGER"
 
 # Glow: https://github.com/charmbracelet/glow/discussions/799#discussioncomment-14866750
 export GLAMOUR_STYLE="$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
