@@ -9,6 +9,7 @@ return {
   database = '',
   dotted_circle = '󱥸 ',
   down = '',
+  docker = '',
   download = ' ',
   file = '',
   folder = '',
