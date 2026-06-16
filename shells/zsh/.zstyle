@@ -3,6 +3,11 @@
 zstyle ':completion:*:unambiguous' format \
   $'%{\e[0;2m%}%Bcommon substring:%b %{\e[0m%}%{\e[38;5;1m%}%d%{\e[0m%}'
 
+zstyle ':completion:*:-command-:*' format \
+  $'%{\e[0;1;2m%}< %{\e[0m%}%{\e[38;5;5m%}%d%{\e[0m%}%{\e[0;1;2m%} >%{\e[0m%}'
+zstyle ':completion:*:descriptions' format \
+  $'%{\e[0;1;2m%}< %{\e[0m%}%{\e[38;5;5m%}%d%{\e[0m%}%{\e[0;1;2m%} >%{\e[0m%}'
+
 # Keep completion menus structural; detailed filename patterns belong to eza.
 zsh_completion_colors=(
   'no=00;38;5;0'
