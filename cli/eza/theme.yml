@@ -116,14 +116,6 @@ filenames:
       style:
         foreground: black
 
-  .dircolors:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-
   .hushlogin:
     filename:
       foreground: 08

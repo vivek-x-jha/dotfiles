@@ -49,10 +49,6 @@ eval "$(zsh-patina completion)"
   plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
 }
 
-# Color ls + eza
-dircolors_bin="$(command -v dircolors || command -v gdircolors)"
-eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
-
 # Interactive plugins
 source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 source <(fzf --zsh)

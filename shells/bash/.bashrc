@@ -33,10 +33,6 @@ for fn in "$SHELL_CONFIG"/bash/funcs/*; do [[ -f $fn ]] && source "$fn"; done
 # Aliases
 source "$SHELL_CONFIG/aliases"
 
-# Color ls + eza
-dircolors_bin="$(command -v dircolors || command -v gdircolors)"
-eval "$("$dircolors_bin" "$XDG_CONFIG_HOME/eza/.dircolors")"
-
 # Fuzzy finder
 source "$XDG_CONFIG_HOME/fzf/fzf.sh"
 eval "$(fzf --bash)"

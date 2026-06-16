@@ -69,7 +69,7 @@ require('nvim-web-devicons').setup {
     ['_work'] = { icon = icons.lightbulb, name = '_work', color = thm.brightcyan },
 
     -- Dotfiles + environment helpers
-    ['.dircolors'] = { icon = icons.gear, name = '.dircolors', color = thm.magenta },
+    ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap', color = thm.brightgreen },
     ['.editorconfig'] = { icon = icons.gear, name = '.editorconfig', color = thm.black },
     ['.gitattributes'] = { icon = icons.branch, name = '.gitattributes', color = thm.black },
     ['.hushlogin'] = { icon = icons.file, name = '.hushlogin', color = thm.brightblack },

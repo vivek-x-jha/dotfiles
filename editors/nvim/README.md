@@ -10,7 +10,7 @@ integration, and XDG state paths.
 
 `init.lua` is the startup orchestrator:
 
-1. Preserve the inherited `NVIM_LOG_FILE`, with an XDG-state fallback for launches that do not provide it.
+1. Read the inherited `NVIM_LOG_FILE` from the launch environment.
 2. Select `vim.g.ui_theme`.
 3. Configure core options, diagnostics, and language servers inline.
 4. Register plugin sources with `vim.pack.add`.
@@ -144,8 +144,8 @@ The main Neovim log is standardized to:
 ```
 
 Shell and macOS launch environments set `NVIM_LOG_FILE` before Neovim starts.
-Agent-run headless commands must also pass it explicitly so core startup logs do
-not fall back to `nvim.log` in the working directory.
+Agent-run headless commands must also pass it explicitly so core startup logs
+stay under `$XDG_STATE_HOME/nvim/nvim.log`.
 
 Other plugin logs may also exist under `~/.local/state/nvim/`.
 
