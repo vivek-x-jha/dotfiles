@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+glg() {
+  command -v git &>/dev/null || {
+    printf '%s\n' 'glg: git is required but was not found on PATH' >&2
+    return 127
+  }
+
+  command -v less &>/dev/null || {
+    printf '%s\n' 'glg: less is required for paginated output but was not found on PATH' >&2
+    return 127
+  }
+
+  git --no-pager log \
+    --color=always \
+    --graph \
+    --date=format:"%b-%d-%Y" \
+    --pretty="%C(yellow)%h %C(blue)%an %C(brightmagenta)%ad%C(auto)%d %C(white)%s %Creset" \
+    "$@" |
+    LESS="${LESS:-FRX}" less -R
+
+  local -a statuses=("${PIPESTATUS[@]}")
+  local git_status=${statuses[0]}
+  local pager_status=${statuses[1]}
+
+  ((pager_status != 0)) && return "$pager_status"
+  ((git_status == 141)) && return 0
+  return "$git_status"
+}
