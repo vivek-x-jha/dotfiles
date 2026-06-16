@@ -35,12 +35,7 @@ autoload -Uz add-zsh-hook add-zle-hook-widget is-at-least zmathfunc
 
 # Completions
 plug zsh-users/zsh-completions
-plug marlonrichert/zsh-autocomplete || {
-  autoload -Uz compinit
-  compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
-}
-
-source "$ZDOTDIR/.zstyle"
+plug marlonrichert/zsh-autocomplete && source "$ZDOTDIR/.zstyle"
 eval "$(zsh-patina completion)"
 
 # Prompt
