@@ -72,7 +72,7 @@ require('nvim-web-devicons').setup {
     ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap', color = thm.brightgreen },
     ['.editorconfig'] = { icon = icons.gear, name = '.editorconfig', color = thm.black },
     ['.gitattributes'] = { icon = icons.branch, name = '.gitattributes', color = thm.black },
-    ['.hushlogin'] = { icon = icons.file, name = '.hushlogin', color = thm.brightblack },
+    ['.hushlogin'] = { icon = icons.shell, name = '.hushlogin', color = thm.brightblack },
     ['.python-version'] = { icon = icons.gear, name = '.python-version', color = thm.black },
     ['.vale.ini'] = { icon = icons.gear, name = '.vale.ini', color = thm.black },
     ['config.sh'] = { icon = icons.shell, name = 'config.sh', color = thm.brightgreen },

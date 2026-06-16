@@ -120,7 +120,7 @@ filenames:
     filename:
       foreground: 08
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: 08
 
