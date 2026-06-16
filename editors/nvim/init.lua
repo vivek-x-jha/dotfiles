@@ -1,7 +1,4 @@
 ------------------------ Core -------------------------
--- Standardize Neovim logging for interactive and headless launches
-vim.env.NVIM_LOG_FILE = vim.env.NVIM_LOG_FILE or (vim.fn.stdpath 'state' .. '/nvim.log')
-
 -- Select the UI theme once for palette consumers and :colorscheme
 vim.g.ui_theme = 'sourdiesel'
 

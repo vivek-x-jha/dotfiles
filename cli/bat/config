@@ -7,7 +7,8 @@
 --italic-text=always
 
 # Syntaxes
---map-syntax "config:SSH Config"
---map-syntax "profile:Bourne Again Shell"
+--map-syntax "config:ssh_config"
+--map-syntax "profile:bash"
+--map-syntax "sourdiesel:bash"
 --map-syntax "*.ino:C++"
---map-syntax ".ignore:Git Ignore"
+--map-syntax ".ignore:gitignore"

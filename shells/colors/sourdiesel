@@ -1,5 +1,16 @@
 # Shared sourdiesel theme values for bash and zsh
 
+# Color ls + eza
+export LS_COLORS="\
+no=00;38;5;0:\
+fi=00;38;5;7:\
+di=00;38;5;4:\
+ln=00;38;5;3:\
+or=00;38;5;1:\
+ex=00;38;5;10:\
+st=00;38;5;50:\
+so=00;38;5;6:"
+
 # Less/man colors
 export LESS_TERMCAP_mb=$'\e[0;91m'
 export LESS_TERMCAP_md=$'\e[0;35m'
