@@ -5,11 +5,11 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "91774548bc358c02fcc327d33c9ac0d9830c8c47",
+      "rev": "26ec6f0a1a8101eb134f8b8568d6099be015fe70",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
-      "rev": "b127d48bf8e9ac9cf41f6e0fbead317503f76558",
+      "rev": "bf67998a314236cfba50fe311d60ef03d15d9426",
       "src": "https://github.com/saghen/blink.lib"
     },
     "conform.nvim": {
