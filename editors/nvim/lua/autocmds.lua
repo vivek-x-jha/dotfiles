@@ -189,7 +189,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- [14/15] Keep Session.vim aligned with edit-all file membership
-vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'FocusGained', 'ShellCmdPost' }, {
+vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'ShellCmdPost' }, {
   desc = 'Refresh workspace buffers and Session.vim after file membership changes',
   group = vim.api.nvim_create_augroup('WorkspaceSessionAU', {}),
   pattern = '*',
