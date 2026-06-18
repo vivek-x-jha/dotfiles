@@ -29,6 +29,7 @@ eval "$(starship init bash)"
 # Functions
 # shellcheck disable=SC1090
 for fn in "$SHELL_CONFIG"/bash/funcs/*; do [[ -f $fn ]] && source "$fn"; done
+unset fn
 
 # Aliases
 source "$SHELL_CONFIG/aliases"
@@ -43,6 +44,7 @@ source "$SHELL_CONFIG/bash/comps/_cmp-compat.bash"
 # Completions
 # shellcheck disable=SC1090
 for cmp in "$SHELL_CONFIG"/bash/comps/*.bash; do source "$cmp"; done
+unset cmp
 
 # Command history
 eval "$(atuin init bash --disable-ai)"

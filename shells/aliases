@@ -129,14 +129,16 @@ command -v SwitchAudioSource &>/dev/null && {
 # -------------------------------- Suffix Aliases ---------------------------------------
 
 # shellcheck disable=SC2128,SC2139,SC2086
-[ -n "${ZSH_VERSION:-}" ] && {
+[ -n "${ZSH_VERSION:-}" ] && () {
+  local ft
+
   # Images
-  _image_fts=(jpg jpeg png gif mng tiff tif xpm)
-  for ft in $_image_fts; do alias -s $ft='open -a Preview'; done
+  local image_fts=(jpg jpeg png gif mng tiff tif xpm)
+  for ft in $image_fts; do alias -s $ft='open -a Preview'; done
 
   # Videos
-  _media_fts=(ape avi flv m4a mkv mov mp3 mpeg mpg ogg ogm rm wav webm)
-  for ft in $_media_fts; do alias -s $ft='open -a VLC'; done
+  local media_fts=(ape avi flv m4a mkv mov mp3 mpeg mpg ogg ogm rm wav webm)
+  for ft in $media_fts; do alias -s $ft='open -a VLC'; done
 
   # Docs
   alias -s pdf='open -a Skim'

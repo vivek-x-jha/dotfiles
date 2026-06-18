@@ -1,20 +1,25 @@
 # Shared login profile for bash and zsh
 
-prepend_path() {
+remove_path() {
   PATH=":$PATH:"
   PATH="${PATH//:$1:/:}"
   PATH="${PATH#:}"
   PATH="${PATH%:}"
-  PATH="$1:$PATH"
 }
 
+prepend_path() { remove_path "$1" && PATH="$1${PATH:+:$PATH}"; }
+append_path() { remove_path "$1" && PATH="${PATH:+$PATH:}$1"; }
+
 # Add MacOS tools - Homebrew + iTerm2 utilities
-[[ $(/usr/bin/uname) == Darwin ]] && {
+prepend_macos_paths() {
+  local iterm_utilities='/Applications/iTerm.app/Contents/Resources/utilities'
+
   prepend_path '/opt/homebrew/sbin'
   prepend_path '/opt/homebrew/bin'
-  [[ :$PATH: == *":/Applications/iTerm.app/Contents/Resources/utilities:"* ]] ||
-    PATH="$PATH:/Applications/iTerm.app/Contents/Resources/utilities"
+  append_path "$iterm_utilities"
 }
+
+[[ $(uname) == Darwin ]] && prepend_macos_paths
 
 # Add user-managed tool directories
 prepend_path "$HOME/.local/bin"
@@ -28,3 +33,5 @@ export PATH
 # Use a regular file only; special files such as FIFOs can block shell startup
 # shellcheck disable=SC1091
 [[ -f "$HOME/.dotfiles/.env" ]] && source "$HOME/.dotfiles/.env"
+
+unset -f remove_path prepend_path append_path prepend_macos_paths
