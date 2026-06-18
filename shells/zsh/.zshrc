@@ -2,8 +2,10 @@
 # shellcheck shell=zsh
 
 # Instant Prompt
-inst_prompt="$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh"
-[[ -r $inst_prompt ]] && source "$inst_prompt"
+() {
+  local inst_prompt="$XDG_CACHE_HOME/p10k/p10k-instant-prompt-$USER.zsh"
+  [[ -r $inst_prompt ]] && source "$inst_prompt"
+}
 
 # Colorscheme
 source "$SHELL_CONFIG/colors/$SHELL_THEME"
@@ -48,7 +50,10 @@ plug hlissner/zsh-autopair
 plug zsh-users/zsh-autosuggestions
 
 # Functions
-for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
+() {
+  local fn
+  for fn in "$ZDOTDIR/funcs"/*(.N:t); do autoload -Uz "$fn"; done
+}
 
 # Aliases
 source "$SHELL_CONFIG/aliases"
