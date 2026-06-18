@@ -1260,6 +1260,22 @@ filenames:
       style:
         foreground: white
 
+  sh.vim:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
+  zsh.vim:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
   yarn.lock:
     icon:
       glyph: ""
@@ -5603,9 +5619,10 @@ extensions:
     filename:
       foreground: 12
     icon:
-      glyph: ""
+      glyph: "󰘦"
       style:
         foreground: 12
+
   yaml:
     filename:
       foreground: black
