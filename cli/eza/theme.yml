@@ -1197,12 +1197,8 @@ filenames:
       glyph: "󰊕"
 
   glg:
-    filename:
-      foreground: red
     icon:
-      glyph: ""
-      style:
-        foreground: red
+      glyph: "󰊕"
 
   l:
     icon:
