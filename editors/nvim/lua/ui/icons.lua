@@ -89,7 +89,7 @@ return {
   makefile = '',
   shell = '',
   signature = '󰷊',
-  syntax = '',
+  syntax = '󰘦',
   sync = '',
   star = '',
   lightbulb = '󰌶',
