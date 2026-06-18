@@ -1,10 +1,10 @@
 local icons = require 'ui.icons'
 local thm = require('ui.highlights').palette
 
-require('nvim-web-devicons').setup {
+local devicons_config = {
   override = {
     -- Defaults we lean on
-    ['sh'] = { icon = icons.shell, name = 'sh', color = thm.brightgreen },
+    ['sh'] = { icon = icons.shell, name = 'sh', color = thm.white },
     ['bash'] = { icon = icons.shell, name = 'bash' },
     ['zsh'] = { icon = icons.shell, name = 'zsh' },
     ['default_icon'] = { icon = icons.file, name = 'Default' },
@@ -24,22 +24,22 @@ require('nvim-web-devicons').setup {
     -- Zsh helpers (autoload + wrappers)
     ['aliases'] = { icon = icons.shell, name = 'aliases', color = thm.white },
     ['profile'] = { icon = icons.shell, name = 'profile', color = thm.white },
-    ['cheatsheet'] = { icon = icons.command, name = 'cheatsheet' },
-    ['edit-all'] = { icon = icons.command, name = 'edit-all' },
-    ['fix-tmux-remotes'] = { icon = icons.command, name = 'fix-tmux-remotes' },
-    ['glg'] = { icon = icons.command, name = 'glg' },
-    ['l'] = { icon = icons.command, name = 'l' },
-    ['list-256'] = { icon = icons.command, name = 'list-256' },
-    ['list-colors'] = { icon = icons.command, name = 'list-colors' },
-    ['patch-zsh-autocomplete'] = { icon = icons.command, name = 'patch-zsh-autocomplete' },
-    ['t'] = { icon = icons.command, name = 't' },
-    ['take'] = { icon = icons.command, name = 'take' },
-    ['interactive'] = { icon = icons.shell, name = 'interactive' },
-    ['toggle-tmux-client'] = { icon = icons.command, name = 'toggle-tmux-client' },
-    ['update-tools'] = { icon = icons.command, name = 'update-tools' },
-    ['update-icons'] = { icon = icons.command, name = 'update-icons' },
-    ['uvi'] = { icon = icons.command, name = 'uvi' },
-    ['work'] = { icon = icons.command, name = 'work' },
+    ['cheatsheet'] = { icon = icons.command, name = 'cheatsheet', color = thm.white },
+    ['edit-all'] = { icon = icons.command, name = 'edit-all', color = thm.white },
+    ['fix-tmux-remotes'] = { icon = icons.command, name = 'fix-tmux-remotes', color = thm.white },
+    ['glg'] = { icon = icons.command, name = 'glg', color = thm.white },
+    ['l'] = { icon = icons.command, name = 'l', color = thm.white },
+    ['list-256'] = { icon = icons.command, name = 'list-256', color = thm.white },
+    ['list-colors'] = { icon = icons.command, name = 'list-colors', color = thm.white },
+    ['patch-zsh-autocomplete'] = { icon = icons.command, name = 'patch-zsh-autocomplete', color = thm.white },
+    ['t'] = { icon = icons.command, name = 't', color = thm.white },
+    ['take'] = { icon = icons.command, name = 'take', color = thm.white },
+    ['interactive'] = { icon = icons.shell, name = 'interactive', color = thm.white },
+    ['toggle-tmux-client'] = { icon = icons.command, name = 'toggle-tmux-client', color = thm.white },
+    ['update-tools'] = { icon = icons.command, name = 'update-tools', color = thm.white },
+    ['update-icons'] = { icon = icons.command, name = 'update-icons', color = thm.white },
+    ['uvi'] = { icon = icons.command, name = 'uvi', color = thm.white },
+    ['work'] = { icon = icons.command, name = 'work', color = thm.white },
 
     -- Shell completions
     ['atuin.bash'] = { icon = icons.lightbulb, name = 'atuin.bash', color = thm.brightcyan },
@@ -76,7 +76,7 @@ require('nvim-web-devicons').setup {
     ['.hushlogin'] = { icon = icons.shell, name = '.hushlogin', color = thm.brightblack },
     ['.python-version'] = { icon = icons.gear, name = '.python-version', color = thm.black },
     ['.vale.ini'] = { icon = icons.gear, name = '.vale.ini', color = thm.black },
-    ['config.sh'] = { icon = icons.shell, name = 'config.sh', color = thm.brightgreen },
+    ['config.sh'] = { icon = icons.shell, name = 'config.sh', color = thm.white },
     ['atuin-zsh-tty-capture.zsh'] = { icon = icons.shell, name = 'AtuinZshTtyCapture', color = thm.brightred },
     ['fzf.sh'] = { icon = icons.shell, name = 'fzf.sh', color = thm.white },
     ['.bashrc'] = { icon = icons.shell, name = '.bashrc', color = thm.magenta },
@@ -86,7 +86,7 @@ require('nvim-web-devicons').setup {
     ['.zshenv'] = { icon = icons.shell, name = '.zshenv', color = thm.magenta },
     ['.zshrc'] = { icon = icons.shell, name = '.zshrc', color = thm.magenta },
     ['.zprofile'] = { icon = icons.shell, name = '.zprofile', color = thm.magenta },
-    ['.zstyle'] = { icon = icons.shell, name = '.zstyle' },
+    ['.zstyle'] = { icon = icons.shell, name = '.zstyle', color = thm.white },
     ['.p10k.zsh'] = { icon = icons.shell, name = '.p10k.zsh', color = thm.magenta },
     ['.env'] = { icon = icons.key, name = '.env', color = thm.brightred },
     ['env'] = { icon = icons.key, name = 'env', color = thm.magenta },
@@ -258,3 +258,8 @@ require('nvim-web-devicons').setup {
     ['main.shada.tmp.z'] = { icon = icons.vim, name = 'main.shada.tmp.z', color = thm.brightblack },
   },
 }
+
+devicons_config.override_by_filename = devicons_config.override
+devicons_config.override_by_extension = devicons_config.override
+
+require('nvim-web-devicons').setup(devicons_config)
