@@ -234,19 +234,19 @@ filenames:
 
   allowed_signers:
     filename:
-      foreground: 12
+      foreground: white
     icon:
       glyph: "󰷊"
       style:
-        foreground: 12
+        foreground: white
 
   known_hosts:
     filename:
-      foreground: 12
+      foreground: white
     icon:
       glyph: "󰒋"
       style:
-        foreground: 12
+        foreground: white
 
   identity:
     icon:
