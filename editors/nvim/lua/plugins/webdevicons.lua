@@ -57,6 +57,7 @@ local devicons_config = {
     ['work'] = { icon = icons.command, name = 'work', color = thm.white },
 
     -- Shell completions
+    ['_cmp-compat.bash'] = { icon = icons.shell, name = '_cmp-compat.bash', color = thm.white },
     ['atuin.bash'] = { icon = icons.lightbulb, name = 'atuin.bash', color = thm.brightcyan },
     ['bat.bash'] = { icon = icons.lightbulb, name = 'bat.bash', color = thm.brightcyan },
     ['bob.bash'] = { icon = icons.lightbulb, name = 'bob.bash', color = thm.brightcyan },
