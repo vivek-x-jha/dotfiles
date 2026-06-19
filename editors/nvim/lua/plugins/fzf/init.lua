@@ -1,4 +1,4 @@
--- @type table<string, string> -- Custom icons
+---@type table<string, string> Custom icons
 local icons = require 'ui.icons'
 local previewers = require 'fzf-lua.previewer'
 
@@ -23,10 +23,14 @@ require('fzf-lua').setup {
   },
 
   previewers = {
+    builtin = {},
+    git_diff = {},
+
     bat = {
       args = '--color=always --style=changes',
       _ctor = previewers.fzf.cmd,
     },
+
     bat_native = {
       args = '--color=always --style=changes',
       _ctor = previewers.fzf.cmd,
