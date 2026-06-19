@@ -114,6 +114,7 @@ local devicons_config = {
     ['theme.yml'] = { icon = icons.color, name = 'theme.yml', color = thm.cyan },
     ['sh.vim'] = { icon = icons.syntax, name = 'sh.vim', color = thm.brightblue },
     ['zsh.vim'] = { icon = icons.syntax, name = 'zsh.vim', color = thm.brightblue },
+    ['typescriptreact.vim'] = { icon = icons.syntax, name = 'typescriptreact.vim', color = thm.brightblue },
     ['secrets'] = { icon = icons.socket, name = 'secrets', color = thm.cyan },
     ['.sqlite'] = { icon = icons.database, name = '.sqlite', color = thm.cyan },
     ['.sqlite-shm'] = { icon = icons.database, name = '.sqlite-shm', color = thm.cyan },
