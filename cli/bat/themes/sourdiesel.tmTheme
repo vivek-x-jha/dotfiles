@@ -289,7 +289,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#FFC7C7</string>
+          <string>#ECCEF0</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -302,7 +302,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#CEFFC9</string>
+          <string>#ECCEF0</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -328,7 +328,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#f4dbd6</string>
+          <string>#ECCEF0</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -589,6 +589,45 @@
         <dict>
           <key>foreground</key>
           <string>#C6CFF0</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>JavaScript import/export keywords</string>
+        <key>scope</key>
+        <string>keyword.control.import-export.js, keyword.control.import.js, keyword.control.export.js, keyword.control.from.js, keyword.control.module.js</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#ECCEF0</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>JavaScript default keyword</string>
+        <key>scope</key>
+        <string>keyword.control.default.js, storage.modifier.default.js</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#FDF7CD</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>JavaScript boolean</string>
+        <key>scope</key>
+        <string>constant.language.boolean.true.js, constant.language.boolean.false.js, constant.language.boolean.js</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#FFC7C7</string>
           <key>fontStyle</key>
           <string></string>
         </dict>

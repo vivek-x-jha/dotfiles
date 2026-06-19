@@ -104,6 +104,9 @@ standard syntax scripts load:
   and path-like values.
 - `after/syntax/zsh.vim` additionally distinguishes Zsh configuration builtins
   such as `autoload`, `bindkey`, `zstyle`, and `zmodload`.
+- `after/syntax/typescriptreact.vim` distinguishes TSX callables from ordinary
+  identifiers so calls can match bat's blue callable styling without making
+  every variable read blue.
 
 The matching highlight groups are defined by the local SourDiesel theme.
 

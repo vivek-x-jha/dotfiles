@@ -124,6 +124,14 @@ filenames:
       style:
         foreground: 08
 
+  index.html:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   .python-version:
     filename:
       foreground: black
@@ -2848,6 +2856,10 @@ filenames:
     icon:
       glyph: ""
 
+  .vercel:
+    icon:
+      glyph: ""
+
   .vscode:
     icon:
       glyph: ""
@@ -5324,6 +5336,46 @@ filenames:
       style:
         foreground: 08
 extensions:
+  js:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  ts:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  tsx:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  css:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  html:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
   scpt:
     filename:
       foreground: white

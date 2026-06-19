@@ -10,5 +10,6 @@
 --map-syntax "config:ssh_config"
 --map-syntax "profile:bash"
 --map-syntax "sourdiesel:bash"
+--map-syntax "*.js:JavaScript"
 --map-syntax "*.ino:C++"
 --map-syntax ".ignore:gitignore"
