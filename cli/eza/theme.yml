@@ -1284,6 +1284,14 @@ filenames:
       style:
         foreground: 12
 
+  typescriptreact.vim:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
   yarn.lock:
     icon:
       glyph: ""
