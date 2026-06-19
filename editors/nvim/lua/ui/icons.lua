@@ -36,10 +36,13 @@ return {
   vim = '',
 
   -- devicons
-  javascript = '󰌞',
+  css = '',
+  html = '',
+  javascript = '',
   lua = '',
   python = '',
-  typescript = '󰛦',
+  tsx = '',
+  typescript = '',
   lock = '',
   robot = '󱙺',
 
