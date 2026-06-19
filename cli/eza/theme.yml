@@ -860,6 +860,22 @@ filenames:
       style:
         foreground: 08
 
+  CACHEDIR.TAG:
+    filename:
+      foreground: red
+    icon:
+      glyph: "󰋚"
+      style:
+        foreground: red
+
+  main.py:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   main.shada:
     filename:
       foreground: 08
@@ -2832,6 +2848,10 @@ filenames:
     icon:
       glyph: ""
 
+  api:
+    icon:
+      glyph: ""
+
   .ipython:
     icon:
       glyph: ""
@@ -2865,6 +2885,14 @@ filenames:
       glyph: ""
 
   .vercel:
+    icon:
+      glyph: ""
+
+  .ruff_cache:
+    icon:
+      glyph: ""
+
+  .vercel_python_packages:
     icon:
       glyph: ""
 
