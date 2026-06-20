@@ -748,6 +748,14 @@ filenames:
       style:
         foreground: 13
 
+  matplotlibrc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   npmrc:
     filename:
       foreground: magenta
