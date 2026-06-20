@@ -4028,6 +4028,10 @@ filenames:
     icon:
       glyph: ""
 
+  latex:
+    icon:
+      glyph: ""
+
   "latex_templates":
     icon:
       glyph: ""
