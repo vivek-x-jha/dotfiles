@@ -1,6 +1,6 @@
 model = "gpt-5.5"
 model_reasoning_effort = "medium"
-approval_policy = "never"
+approval_policy = "on-request"
 personality = "pragmatic"
 approvals_reviewer = "user"
 sandbox_mode = "workspace-write"
