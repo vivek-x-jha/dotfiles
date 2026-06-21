@@ -38,7 +38,6 @@ APT_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/apt-packages.txt"
 DNF_MANIFEST_URL_DEFAULT="$GITHUB_RAW_BASE/manifests/dnf-packages.txt"
 
 DEVELOPER_REPOS=(
-  vivek-x-jha/agent-smith
   vivek-x-jha/dcp
   vivek-x-jha/legacy-latex
   vivek-x-jha/notes

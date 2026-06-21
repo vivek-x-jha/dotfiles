@@ -4512,18 +4512,6 @@ filenames:
     icon:
       glyph: ""
 
-  agent-smith:
-    icon:
-      glyph: ""
-
-  agent_smith:
-    icon:
-      glyph: ""
-
-  agent_smith.egg-info:
-    icon:
-      glyph: ""
-
   agents:
     icon:
       glyph: ""
