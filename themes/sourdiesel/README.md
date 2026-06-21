@@ -39,21 +39,21 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Shell ANSI | WezTerm | Terminal.app | tmux | Starship | Powerlevel10k | Git | fzf |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 1 · palette export | 1 · line 51 | manual | 1 · line 153 | 1 · stashed | 1 · line 21 | 2 · header, meta | 1 · line 65 |
-| `red` | 1 · palette export | 1 · line 52 | manual | 1 · line 166 | 1 · untracked | 3 · line 22, line 200 | 4 · untracked, nobranch | 1 · line 40 |
-| `green` | 1 · palette export | 1 · line 53 | manual | 3 · line 11, line 117 | 1 · staged | 3 · line 23, line 69 | 2 · added, new | 1 · line 38 |
-| `yellow` | 1 · palette export | 1 · line 54 | manual | 3 · line 92, line 100 | 5 · modified, renamed | 4 · line 24, line 68 | 3 · changed, unmerged | 1 · line 59 |
-| `blue` | 1 · palette export | 1 · line 55 | manual | 3 · line 11, line 75 | 1 · style | 2 · line 25, line 72 | — | 1 · line 51 |
-| `magenta` | 1 · palette export | 1 · line 56 | manual | 4 · line 11, line 74 | — | 1 · line 26 | 4 · branch, localBranch | 2 · line 34, line 61 |
-| `cyan` | 1 · palette export | 1 · line 57 | manual | — | — | 1 · line 27 | 3 · remoteBranch, stash | 3 · line 46, line 53 |
-| `white` | 1 · palette export | 4 · line 58, cursor_border | manual | 1 · line 163 | 1 · success_symbol | 3 · line 28, line 68 | — | 2 · line 49, line 63 |
-| `brightblack` | 1 · palette export | 3 · line 62, selection_bg | manual | 6 · line 90, line 96 | — | 1 · line 30 | 1 · context | 6 · line 33, line 39 |
+| `black` | 1 · palette export | 1 · line 51 | manual | 1 · line 153 | 1 · stashed | 1 · line 21 | 2 · header, meta | 1 · line 91 |
+| `red` | 1 · palette export | 1 · line 52 | manual | 1 · line 166 | 1 · untracked | 3 · line 22, line 200 | 4 · untracked, nobranch | 1 · line 66 |
+| `green` | 1 · palette export | 1 · line 53 | manual | 3 · line 11, line 117 | 1 · staged | 3 · line 23, line 69 | 2 · added, new | 1 · line 64 |
+| `yellow` | 1 · palette export | 1 · line 54 | manual | 3 · line 92, line 100 | 5 · modified, renamed | 4 · line 24, line 68 | 3 · changed, unmerged | 1 · line 85 |
+| `blue` | 1 · palette export | 1 · line 55 | manual | 3 · line 11, line 75 | 1 · style | 2 · line 25, line 72 | — | 1 · line 77 |
+| `magenta` | 1 · palette export | 1 · line 56 | manual | 4 · line 11, line 74 | — | 1 · line 26 | 4 · branch, localBranch | 2 · line 60, line 87 |
+| `cyan` | 1 · palette export | 1 · line 57 | manual | — | — | 1 · line 27 | 3 · remoteBranch, stash | 3 · line 72, line 79 |
+| `white` | 1 · palette export | 4 · line 58, cursor_border | manual | 1 · line 163 | 1 · success_symbol | 3 · line 28, line 68 | — | 2 · line 75, line 89 |
+| `brightblack` | 1 · palette export | 3 · line 62, selection_bg | manual | 6 · line 90, line 96 | — | 1 · line 30 | 1 · context | 6 · line 59, line 65 |
 | `brightred` | 1 · palette export | 2 · line 63, compose_cursor | manual | 2 · line 154, line 167 | 2 · conflicted, error_symbol | 2 · line 31, line 232 | — | — |
 | `brightgreen` | 1 · palette export | 1 · line 64 | manual | 2 · line 104, line 160 | — | 1 · line 32 | 1 · HEAD | — |
-| `brightyellow` | 1 · palette export | 1 · line 65 | manual | 8 · line 93, line 94 | — | 1 · line 33 | 1 · tag | 1 · line 52 |
+| `brightyellow` | 1 · palette export | 1 · line 65 | manual | 8 · line 93, line 94 | — | 1 · line 33 | 1 · tag | 1 · line 78 |
 | `brightblue` | 1 · palette export | 1 · line 66 | manual | 2 · line 91, line 99 | 3 · ahead, behind | 1 · line 34 | — | — |
-| `brightmagenta` | 1 · palette export | 2 · line 67, cursor_bg | manual | 3 · line 82, line 96 | — | 2 · line 35, line 185 | — | 1 · line 54 |
-| `brightcyan` | 1 · palette export | 1 · line 68 | manual | 3 · line 119, line 120 | — | 1 · line 36 | — | 1 · line 66 |
+| `brightmagenta` | 1 · palette export | 2 · line 67, cursor_bg | manual | 3 · line 82, line 96 | — | 2 · line 35, line 185 | — | 1 · line 80 |
+| `brightcyan` | 1 · palette export | 1 · line 68 | manual | 3 · line 119, line 120 | — | 1 · line 36 | — | 1 · line 92 |
 | `brightwhite` | 1 · palette export | 1 · line 69 | manual | — | — | 1 · line 37 | — | — |
 | `dark` | 1 · palette export | — | — | — | — | — | — | — |
 | `grey` | 1 · palette export | 1 · cursor_fg | — | — | — | — | — | — |
