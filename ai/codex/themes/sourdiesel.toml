@@ -12,12 +12,13 @@ usePointerCursors = true
 mac-menu-bar-enabled = false
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
+dock-icon-preference = "app-default"
 
 [desktop.appearanceDarkChromeTheme]
 surface = "#212030"
 ink = "#cccccc"
 accent = "#eccef0"
-contrast = 60
+contrast = 100
 opaqueWindows = false
 
 [desktop.appearanceDarkChromeTheme.fonts]

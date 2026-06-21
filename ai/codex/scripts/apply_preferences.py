@@ -14,9 +14,9 @@ KEY_RE = re.compile(r"^\s*([A-Za-z0-9_-]+)\s*=")
 
 def parse_fragment(path: Path) -> tuple[list[str], dict[str, list[str]], dict[str, set[str]]]:
     section = ""
-    order: list[str] = []
-    lines_by_section: dict[str, list[str]] = {}
-    keys_by_section: dict[str, set[str]] = {}
+    order: list[str] = [""]
+    lines_by_section: dict[str, list[str]] = {"": []}
+    keys_by_section: dict[str, set[str]] = {"": set()}
 
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.rstrip()
@@ -30,7 +30,7 @@ def parse_fragment(path: Path) -> tuple[list[str], dict[str, list[str]], dict[st
             continue
 
         key_match = KEY_RE.match(line)
-        if section and key_match:
+        if key_match:
             lines_by_section[section].append(line)
             keys_by_section[section].add(key_match.group(1))
 
@@ -51,7 +51,7 @@ def apply_preferences(config_path: Path, fragment_path: Path) -> bool:
     current_section = ""
 
     def flush(section: str) -> None:
-        if section in managed_lines and section not in inserted_sections:
+        if managed_lines.get(section) and section not in inserted_sections:
             if output and output[-1] != "" and not SECTION_RE.match(output[-1]):
                 output.append("")
             output.extend(managed_lines[section])
@@ -88,7 +88,7 @@ def apply_preferences(config_path: Path, fragment_path: Path) -> bool:
     flush(current_section)
 
     for section in order:
-        if section in seen_sections:
+        if not section or section in seen_sections:
             continue
         if output and output[-1] != "":
             output.append("")

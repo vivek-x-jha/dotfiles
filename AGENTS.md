@@ -47,7 +47,7 @@ Main flow in `bootstrap.sh`:
 4. Install package sets (`setup_package_manager`, `install_package_sets`) and fzf (`install_fzf`)
 5. Collect runtime/user environment (`collect_environment`)
 6. Create symlinks + state directories (`create_symlinks`)
-7. Apply Codex SourDiesel UI preferences (`configure_codex_ui`)
+7. Apply portable Codex defaults and SourDiesel UI preferences (`configure_codex_ui`)
 8. Apply OS defaults (`configure_macos_defaults`)
 9. Configure git + GitHub CLI (`configure_git_and_github`)
 10. Optionally clone personal development repos (`clone_developer_repos`)
@@ -77,7 +77,7 @@ Symlinks are created from this repo into XDG paths, including:
 
 Bootstrap also links `~/.vscode` back to `$XDG_DATA_HOME/vscode`.
 Claude runtime state such as `~/.claude.json` is left unmanaged; only `ai/claude/settings.json` is tracked and linked.
-Codex runtime state and generated `config.toml` sections stay owned by Codex under `$CODEX_HOME`; bootstrap exports that path for shells and macOS GUI-launched Codex Desktop, then only merges known SourDiesel UI preference keys from `ai/codex/themes/sourdiesel.toml`.
+Codex runtime state and generated `config.toml` sections stay owned by Codex under `$CODEX_HOME`; bootstrap exports that path for shells and macOS GUI-launched Codex Desktop, merges known portable keys from `ai/codex/config/preferences.toml`, applies SourDiesel UI keys, and links global `AGENTS.md` instructions.
 
 Implementation: `create_symlinks`.
 
@@ -122,16 +122,18 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 
 Implementation: `install_rust_tooling`, `setup_ide`.
 
-### 6) Codex SourDiesel UI Preferences
+### 6) Codex Portable Configuration
 
-- Source fragment: `ai/codex/themes/sourdiesel.toml`
+- Portable source fragment: `ai/codex/config/preferences.toml`
+- UI source fragment: `ai/codex/themes/sourdiesel.toml`
+- Global instructions: `ai/codex/AGENTS.md`
 - Merge helper: `ai/codex/scripts/apply_preferences.py`
 - Runtime target: `$CODEX_HOME/config.toml`
-- Behavior: `configure_codex_environment` publishes `$CODEX_HOME`, `$NVIM_LOG_FILE`, and XDG base directories through macOS `launchctl setenv`, then `configure_codex_ui` updates only managed UI preference keys and preserves Codex-owned sections such as `marketplaces`, `plugins`, `projects`, and `mcp_servers`.
+- Behavior: `configure_codex_environment` publishes `$CODEX_HOME`, `$NVIM_LOG_FILE`, and XDG base directories through macOS `launchctl setenv`, then `configure_codex_ui` updates only managed portable/UI keys and preserves Codex-owned sections such as `marketplaces`, `plugins`, `projects`, and `mcp_servers`.
 - Managed preferences include Desktop chrome theme keys plus TUI `status_line` order and `status_line_use_colors`.
 - TUI colors use Codex and the terminal ANSI palette with `status_line_use_colors = true`; do not add unsupported TUI color keys.
 - Codex Desktop integrated terminal colors come from the selected built-in code theme's VS Code terminal variables. Do not add unsupported Desktop terminal ANSI keys unless Codex exposes them in the settings schema.
-- Keep `ai/codex/` for repo-managed themes, merge scripts, safe docs, and templates only. Do not track Codex runtime files such as `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, or generated skill/plugin/runtime folders.
+- Keep `ai/codex/` for repo-managed preferences, global instructions, themes, merge scripts, safe docs, personal skill sources, and templates only. Do not track Codex runtime files such as `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, or generated system/plugin/runtime folders.
 
 ## Neovim Plugin Update Hooks
 

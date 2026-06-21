@@ -169,6 +169,7 @@ create_symlinks() {
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
     ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
     ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
+    ../../../.dotfiles/ai/codex/AGENTS.md "$XDG_STATE_HOME/codex" AGENTS.md
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
@@ -286,21 +287,24 @@ configure_codex_ui() {
   local codex_home="${CODEX_HOME:-$XDG_STATE_HOME/codex}"
   local config_path="$codex_home/config.toml"
   local script_path="$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
-  local preferences_path="$HOME/.dotfiles/ai/codex/themes/sourdiesel.toml"
+  local preferences_path="$HOME/.dotfiles/ai/codex/config/preferences.toml"
+  local theme_path="$HOME/.dotfiles/ai/codex/themes/sourdiesel.toml"
 
   require python3 || {
     logg -w 'Python 3 unavailable. Skipping Codex UI preference configuration.'
     return
   }
 
-  [[ -f $script_path && -f $preferences_path ]] || {
-    logg -w 'Codex UI preference source files missing. Skipping Codex configuration.'
+  [[ -f $script_path && -f $preferences_path && -f $theme_path ]] || {
+    logg -w 'Codex preference source files missing. Skipping Codex configuration.'
     return
   }
 
   run "mkdir -p \"$codex_home\""
-  run "python3 \"$script_path\" \"$config_path\" \"$preferences_path\"" || logg -w 'Codex UI preference configuration failed.'
-  logg -i "Codex SourDiesel UI preferences: $(pretty_path "$preferences_path")"
+  run "python3 \"$script_path\" \"$config_path\" \"$preferences_path\"" || logg -w 'Codex portable preference configuration failed.'
+  run "python3 \"$script_path\" \"$config_path\" \"$theme_path\"" || logg -w 'Codex UI preference configuration failed.'
+  logg -i "Codex portable preferences: $(pretty_path "$preferences_path")"
+  logg -i "Codex SourDiesel UI preferences: $(pretty_path "$theme_path")"
 }
 
 configure_macos_defaults() {

@@ -453,11 +453,11 @@ Use them as slash-command style prompts in Codex, Claude, or another coding agen
 
 These labels are not shell commands by default. Paste the prompt text from the workflow doc into the AI client, or register them as custom slash commands if the client supports that.
 
-## 🤖 Codex UI Preferences
+## 🤖 Codex Preferences
 
 Codex runtime configuration stays in `$CODEX_HOME/config.toml` because Codex writes local state there, including marketplaces, plugins, MCP servers, and project trust.
 
-Bootstrap applies tracked SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only those managed UI keys and preserves unrelated Codex-owned sections.
+Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./ai/codex/config/preferences.toml) and SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only managed keys and preserves unrelated Codex-owned sections. It also links the tracked [`ai/codex/AGENTS.md`](./ai/codex/AGENTS.md) into `$CODEX_HOME` as global instructions.
 
 The SourDiesel fragment manages Desktop chrome colors and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
 
@@ -468,8 +468,10 @@ On macOS, bootstrap also publishes `CODEX_HOME`, `NVIM_LOG_FILE`, and the XDG ba
 Keep `ai/codex/` limited to repo-managed Codex inputs:
 
 - `themes/`: TOML fragments for managed UI preferences.
+- `config/`: portable, non-secret Codex defaults.
 - `scripts/`: idempotent helpers that merge or validate those fragments.
-- Optional docs or templates that are safe to share.
+- `AGENTS.md`: global instructions shared across machines.
+- Optional docs, personal skill sources, or templates that are safe to share.
 
 Do not put Codex runtime state in `ai/codex/`: `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, and generated skill/plugin/runtime folders belong under `$CODEX_HOME`.
 
