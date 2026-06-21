@@ -5568,6 +5568,13 @@ extensions:
       glyph: "󰦨"
       style:
         foreground: black
+  csv:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
   md:
     filename:
       foreground: 11

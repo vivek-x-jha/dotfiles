@@ -187,6 +187,7 @@ local devicons_config = {
 
     -- Generic config formats
     ['conf'] = { icon = icons.gear, name = 'conf', color = thm.black },
+    ['csv'] = { icon = icons.table, name = 'csv', color = thm.cyan },
     ['dat'] = { icon = icons.file, name = 'dat', color = thm.brightblack },
     ['ini'] = { icon = icons.gear, name = 'ini', color = thm.black },
     ['json'] = { icon = icons.gear, name = 'json', color = thm.black },

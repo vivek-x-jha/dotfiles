@@ -72,7 +72,7 @@ return {
   event = '',
   operator = '󰆕',
   typeparameter = '󰊄',
-  table = '',
+  table = '',
   object = '󰅩',
   tag = '',
   array = '[]',
