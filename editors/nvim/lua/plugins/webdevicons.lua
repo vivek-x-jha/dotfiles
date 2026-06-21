@@ -86,7 +86,6 @@ local devicons_config = {
     ['_work'] = { icon = icons.lightbulb, name = '_work', color = thm.brightcyan },
 
     -- Dotfiles + environment helpers
-    ['bootstrap.sh'] = { icon = icons.sync, name = 'bootstrap', color = thm.brightgreen },
     ['.editorconfig'] = { icon = icons.gear, name = '.editorconfig', color = thm.black },
     ['.gitattributes'] = { icon = icons.branch, name = '.gitattributes', color = thm.black },
     ['.hushlogin'] = { icon = icons.shell, name = '.hushlogin', color = thm.brightblack },
@@ -149,6 +148,7 @@ local devicons_config = {
     ['.luarc.json'] = { icon = icons.gear, name = '.luarc.json', color = thm.black },
     ['.netrwhist'] = { icon = icons.netrwhist, name = '.netrwhist', color = thm.brightblack },
     ['CACHEDIR.TAG'] = { icon = icons.netrwhist, name = 'CACHEDIR.TAG', color = thm.red },
+    ['_update-notifier-last-checked'] = { icon = icons.file, name = 'NpmUpdateNotifier', color = thm.black },
     ['main.shada'] = { icon = icons.vim, name = 'main.shada', color = thm.brightblack },
     ['main.py'] = { icon = icons.python, name = 'main.py', color = thm.magenta },
     ['vercel.json'] = { icon = icons.gear, name = 'vercel.json', color = thm.black },

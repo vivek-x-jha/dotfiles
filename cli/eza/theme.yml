@@ -2880,6 +2880,26 @@ filenames:
     icon:
       glyph: ""
 
+  _cacache:
+    icon:
+      glyph: ""
+
+  _logs:
+    icon:
+      glyph: ""
+
+  _npx:
+    icon:
+      glyph: ""
+
+  _update-notifier-last-checked:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
   .thinkorswim:
     icon:
       glyph: ""
@@ -5130,11 +5150,11 @@ filenames:
 
   bootstrap.sh:
     filename:
-      foreground: 10
+      foreground: white
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: 10
+        foreground: white
 
   .localized:
     filename:

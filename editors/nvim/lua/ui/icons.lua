@@ -93,7 +93,6 @@ return {
   shell = '',
   signature = '󰷊',
   syntax = '󰘦',
-  sync = '',
   star = '',
   lightbulb = '󰌶',
   cloud = '',
