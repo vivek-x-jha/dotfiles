@@ -1,0 +1,4 @@
+interface:
+  display_name: "SourDiesel"
+  short_description: "Maintain the shared SourDiesel color system"
+  default_prompt: "Use $sourdiesel to update and validate the shared color palette."

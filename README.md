@@ -308,6 +308,12 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).
 - Hammerspoon automates floating terminal behavior, window management, and app hotkeys.
 
+### 🎨 SourDiesel palette
+
+[`themes/sourdiesel/palette.toml`](./themes/sourdiesel/palette.toml) is the source of truth for the shared 16-color ANSI palette, common extras, consumer inventory, and approved legacy outliers. The generated [`themes/sourdiesel/README.md`](./themes/sourdiesel/README.md) groups actual color use across terminal, shell, icon, syntax, editor, and application consumers.
+
+Native application theme files remain hand-authored. After changing the palette or a consumer, run `python3 themes/sourdiesel/tool.py render`; `python3 themes/sourdiesel/tool.py check` validates palette mirrors, reports new or stale outliers, compares overlapping eza and web-devicons mappings, and detects a stale generated report. The Terminal.app profile is inventoried but remains a manual check because its NSColor values are archived in the profile plist.
+
 ### 🔐 Auth and Secrets
 
 - Git config, identity, and signing live in [`auth/git/config`](./auth/git/config), and theme settings are included from [`auth/git/themes/sourdiesel`](./auth/git/themes/sourdiesel).
@@ -461,6 +467,8 @@ Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./a
 
 The SourDiesel fragment manages Desktop chrome colors and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
 
+Shared color values are defined by [`themes/sourdiesel/palette.toml`](./themes/sourdiesel/palette.toml); the Codex fragment is a validated consumer of that palette.
+
 Codex Desktop's integrated terminal is separate from the shell TUI. Its xterm.js palette is derived from the selected built-in code theme's VS Code terminal color variables, such as `terminal.ansiRed` and `terminal.ansiBrightBlue`. The repo pins `appearanceDarkCodeThemeId`, but does not add unsupported terminal ANSI keys to `config.toml`.
 
 On macOS, bootstrap also publishes `CODEX_HOME`, `NVIM_LOG_FILE`, and the XDG base directories through `launchctl setenv` so Codex Desktop launched from Finder, Spotlight, or Dock uses the same state locations as shell-launched tools. Relaunch Codex Desktop after bootstrap for the launchd environment to take effect.
@@ -470,8 +478,9 @@ Keep `ai/codex/` limited to repo-managed Codex inputs:
 - `themes/`: TOML fragments for managed UI preferences.
 - `config/`: portable, non-secret Codex defaults.
 - `scripts/`: idempotent helpers that merge or validate those fragments.
+- `skills/`: personal skill sources. Bootstrap discovers each child directory containing `SKILL.md` and links it into `$CODEX_HOME/skills`; adding another skill does not require bootstrap edits.
 - `AGENTS.md`: global instructions shared across machines.
-- Optional docs, personal skill sources, or templates that are safe to share.
+- Optional docs or templates that are safe to share.
 
 Do not put Codex runtime state in `ai/codex/`: `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, and generated skill/plugin/runtime folders belong under `$CODEX_HOME`.
 

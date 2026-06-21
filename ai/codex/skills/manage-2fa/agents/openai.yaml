@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage 2FA Codes"
+  short_description: "Add sites and import downloaded 2FA recovery codes"
+  default_prompt: "Use $manage-2fa to add a site or import downloaded 2FA recovery codes into the personal 2FA repository."

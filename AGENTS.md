@@ -122,7 +122,18 @@ Implementation: `use_op`, `get_op_field`, `collect_environment`, `setup_atuin_sy
 
 Implementation: `install_rust_tooling`, `setup_ide`.
 
-### 6) Codex Portable Configuration
+### 6) SourDiesel Color Source of Truth
+
+- Canonical palette and consumer registry: `themes/sourdiesel/palette.toml`
+- Generated inventory: `themes/sourdiesel/README.md`
+- Render/check helper: `themes/sourdiesel/tool.py`
+- Workflow skill source: `ai/codex/skills/sourdiesel/SKILL.md` (linked into `$CODEX_HOME/skills/sourdiesel`)
+- Native consumer files stay hand-authored; update the manifest first, update affected consumers, run `python3 themes/sourdiesel/tool.py render`, then run `python3 themes/sourdiesel/tool.py check`.
+- Legacy colors must be explicitly allowlisted with a reason. New and stale allowlist entries fail validation.
+- Matching eza and web-devicons extensions must resolve to the same palette color. eza extension mappings take precedence over an exact filename collision because web-devicons uses one override table for both.
+- The Terminal.app profile is inventoried but requires manual visual verification because it stores archived NSColor values.
+
+### 7) Codex Portable Configuration
 
 - Portable source fragment: `ai/codex/config/preferences.toml`
 - UI source fragment: `ai/codex/themes/sourdiesel.toml`
@@ -134,6 +145,7 @@ Implementation: `install_rust_tooling`, `setup_ide`.
 - TUI colors use Codex and the terminal ANSI palette with `status_line_use_colors = true`; do not add unsupported TUI color keys.
 - Codex Desktop integrated terminal colors come from the selected built-in code theme's VS Code terminal variables. Do not add unsupported Desktop terminal ANSI keys unless Codex exposes them in the settings schema.
 - Keep `ai/codex/` for repo-managed preferences, global instructions, themes, merge scripts, safe docs, personal skill sources, and templates only. Do not track Codex runtime files such as `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, or generated system/plugin/runtime folders.
+- Bootstrap auto-discovers `ai/codex/skills/*/SKILL.md`, links each containing directory into `$CODEX_HOME/skills`, and removes only broken symlinks that point back to this repo.
 
 ## Neovim Plugin Update Hooks
 
@@ -174,7 +186,8 @@ startup log before `init.lua` runs, so config-only redirection is insufficient.
 - Bootstrap defaults and implementation:
   - `bootstrap/defaults.env`
   - `bootstrap/lib/*.sh`
-- Shared theme palette: `shells/sourdiesel`
+- Shared theme source of truth: `themes/sourdiesel/palette.toml`
+- Shared shell palette mirror: `shells/colors/sourdiesel`
 - Shared shell env: `shells/env`
 - Shared shell profile/PATH setup: `shells/profile`
   - `shells/zsh/.zprofile` is a relative symlink to `../profile`, so Zsh and Bash share the same login PATH and secret-loading source; bootstrap check and doctor modes enforce this target
@@ -238,6 +251,7 @@ startup log before `init.lua` runs, so config-only redirection is insufficient.
 - For `/update-branches`, inspect status and diff first, validate before committing, use commitizen-style messages, fast-forward `dev` from `main`, push `dev`, return to `main`, push `main`, and confirm refs match.
 - For bootstrap changes, preserve idempotence, dry-run behavior, XDG layout, and platform guards.
 - For package changes, update the relevant manifest and docs together.
+- For SourDiesel changes, update `themes/sourdiesel/palette.toml`, the affected native consumers, and the generated inventory together.
 
 ## Git Workflow Permissions
 
@@ -281,9 +295,10 @@ Codex may still need an escalation prompt when the sandbox blocks writes to Git 
 After major changes:
 
 1. `bootstrap.sh --check` (repo and shell syntax sanity)
-2. `bootstrap.sh --doctor` (installed state sanity)
-3. `bootstrap.sh -n` (dry-run sanity)
-4. Launch a new shell and verify XDG exports/symlinks
-5. Run `work`/tmux flow sanity
-6. Open Neovim and run `:checkhealth`
-7. Run `vim.pack.update()` and confirm blink rebuild hook behavior
+2. `python3 -m unittest discover -s themes/sourdiesel -p 'test_*.py'` (palette inventory tests)
+3. `bootstrap.sh --doctor` (installed state sanity)
+4. `bootstrap.sh -n` (dry-run sanity)
+5. Launch a new shell and verify XDG exports/symlinks
+6. Run `work`/tmux flow sanity
+7. Open Neovim and run `:checkhealth`
+8. Run `vim.pack.update()` and confirm blink rebuild hook behavior

@@ -1,0 +1,402 @@
+schema_version = 1
+name = "SourDiesel"
+
+[ansi.black]
+index = 0
+hex = "#cccccc"
+role = "soft neutral and structural text"
+
+[ansi.red]
+index = 1
+hex = "#ffc7c7"
+role = "errors, removals, and invalid state"
+
+[ansi.green]
+index = 2
+hex = "#ceffc9"
+role = "success, additions, strings, and commands"
+
+[ansi.yellow]
+index = 3
+hex = "#fdf7cd"
+role = "warnings, escapes, and secondary emphasis"
+
+[ansi.blue]
+index = 4
+hex = "#c4effa"
+role = "paths, directories, functions, and guidance"
+
+[ansi.magenta]
+index = 5
+hex = "#eccef0"
+role = "keywords, configuration, and primary accent"
+
+[ansi.cyan]
+index = 6
+hex = "#8ae7c5"
+role = "data, sockets, punctuation, and supporting accent"
+
+[ansi.white]
+index = 7
+hex = "#f4f3f2"
+role = "primary foreground"
+
+[ansi.brightblack]
+index = 8
+hex = "#5c617d"
+role = "muted text, comments, and inactive state"
+
+[ansi.brightred]
+index = 9
+hex = "#f096b7"
+role = "strong error and destructive emphasis"
+
+[ansi.brightgreen]
+index = 10
+hex = "#d2fd9d"
+role = "strong success and executable emphasis"
+
+[ansi.brightyellow]
+index = 11
+hex = "#f3b175"
+role = "strong warning and document emphasis"
+
+[ansi.brightblue]
+index = 12
+hex = "#80d7fe"
+role = "strong path, syntax, and informational emphasis"
+
+[ansi.brightmagenta]
+index = 13
+hex = "#c9ccfb"
+role = "secondary accent and selected state"
+
+[ansi.brightcyan]
+index = 14
+hex = "#47e7b1"
+role = "completion, note, and active supporting state"
+
+[ansi.brightwhite]
+index = 15
+hex = "#ffffff"
+role = "maximum-contrast foreground"
+
+[extras.dark]
+hex = "#1b1c28"
+role = "dark application background"
+
+[extras.grey]
+hex = "#313244"
+role = "selection and elevated surface"
+
+[extras.terminal_surface]
+hex = "#212030"
+role = "terminal and desktop chrome surface"
+
+[tokens]
+nvim_background = "NONE"
+
+[[mirrors]]
+id = "shell"
+path = "shells/colors/sourdiesel"
+parser = "shell"
+
+[[mirrors]]
+id = "wezterm"
+path = "terminals/wezterm/wezterm.lua"
+parser = "lua"
+
+[[mirrors]]
+id = "neovim"
+path = "editors/nvim/lua/ui/highlights/sourdiesel.lua"
+parser = "lua"
+
+[[mirrors]]
+id = "hammerspoon"
+path = "apps/hammerspoon/init.lua"
+parser = "lua"
+
+[[consumers]]
+id = "shell"
+label = "Shell ANSI"
+group = "Terminal and shell"
+paths = ["shells/colors/sourdiesel"]
+parser = "shell"
+
+[[consumers]]
+id = "wezterm"
+label = "WezTerm"
+group = "Terminal and shell"
+paths = ["terminals/wezterm/wezterm.lua"]
+parser = "lua"
+
+[[consumers]]
+id = "terminal-app"
+label = "Terminal.app"
+group = "Terminal and shell"
+paths = ["terminals/terminal/sourdiesel.terminal"]
+parser = "manual"
+manual_note = "ANSI profile uses archived NSColor values; inspect after palette changes"
+
+[[consumers]]
+id = "tmux"
+label = "tmux"
+group = "Terminal and shell"
+paths = ["terminals/tmux/tmux.conf"]
+parser = "ansi"
+
+[[consumers]]
+id = "starship"
+label = "Starship"
+group = "Terminal and shell"
+paths = ["shells/starship.toml"]
+parser = "ansi"
+
+[[consumers]]
+id = "powerlevel10k"
+label = "Powerlevel10k"
+group = "Terminal and shell"
+paths = ["shells/zsh/.p10k.zsh"]
+parser = "ansi"
+
+[[consumers]]
+id = "git"
+label = "Git"
+group = "Terminal and shell"
+paths = ["auth/git/themes/sourdiesel"]
+parser = "ansi"
+
+[[consumers]]
+id = "fzf"
+label = "fzf"
+group = "Terminal and shell"
+paths = ["cli/fzf/fzf.sh"]
+parser = "env"
+
+[[consumers]]
+id = "eza"
+label = "eza"
+group = "Files and icons"
+paths = ["cli/eza/theme.yml"]
+parser = "eza"
+
+[[consumers]]
+id = "webdevicons"
+label = "web-devicons"
+group = "Files and icons"
+paths = ["editors/nvim/lua/plugins/webdevicons.lua"]
+parser = "webdevicons"
+
+[[consumers]]
+id = "neovim"
+label = "Neovim"
+group = "Syntax and editors"
+paths = ["editors/nvim/lua/ui/highlights/init.lua", "editors/nvim/init.lua"]
+parser = "lua_env"
+
+[[consumers]]
+id = "zsh-patina"
+label = "zsh-patina"
+group = "Syntax and editors"
+paths = ["cli/zsh-patina/themes/sourdiesel.toml"]
+parser = "hex"
+allowed_hex = []
+
+[[consumers]]
+id = "ble-sh"
+label = "ble.sh"
+group = "Syntax and editors"
+paths = ["shells/bash/.blerc"]
+parser = "hex"
+allowed_hex = []
+
+[[consumers]]
+id = "bat"
+label = "bat"
+group = "Syntax and editors"
+paths = ["cli/bat/themes/sourdiesel.tmTheme"]
+parser = "hex"
+allowed_hex = [
+  "#1e1d2c",
+  "#1e2030",
+  "#24273a",
+  "#3d3f47",
+  "#5b6078",
+  "#676e95",
+  "#8bd5ca",
+  "#939ab7",
+  "#a5adcb",
+  "#b7bdf8",
+  "#b8c0e0",
+  "#c6cff0",
+  "#cad3f5",
+  "#ee99a0",
+  "#f0c6c6",
+  "#f4dbd6",
+  "#f5a97f",
+  "#fdf9bb",
+]
+legacy_reason = "Inherited TextMate theme colors retained for syntax compatibility"
+
+[[consumers]]
+id = "glow"
+label = "Glow"
+group = "Syntax and editors"
+paths = ["cli/glow/styles/sourdiesel.json"]
+parser = "hex"
+allowed_hex = [
+  "#1a1b26",
+  "#2ac3de",
+  "#565f89",
+  "#a9b1d6",
+  "#bb9af7",
+  "#f7768e",
+  "#ff9e64",
+]
+legacy_reason = "Inherited Glamour syntax colors retained pending theme normalization"
+
+[[consumers]]
+id = "vscode"
+label = "VS Code"
+group = "Syntax and editors"
+paths = ["editors/vscode/settings.json"]
+parser = "hex"
+allowed_hex = [
+  "#000000",
+  "#181a1f",
+  "#1f1f1f",
+  "#21252b",
+  "#252931",
+  "#2c3c2c",
+  "#342834",
+  "#34414b",
+  "#3a4258",
+  "#40a6ff",
+  "#40ad41",
+  "#40c4fe",
+  "#4480f4",
+  "#454963",
+  "#4e3939",
+  "#4ec150",
+  "#4ec15019",
+  "#4ec15033",
+  "#569cd6",
+  "#56b7c3",
+  "#598def",
+  "#598def00",
+  "#598def4c",
+  "#598def66",
+  "#598def72",
+  "#598defb3",
+  "#598defe6",
+  "#5e5e69",
+  "#5f668b",
+  "#607867ed",
+  "#6495ee",
+  "#676e95",
+  "#6796e6",
+  "#6c1717",
+  "#78807c7c",
+  "#80d6fe21",
+  "#84d2e7",
+  "#8792aa",
+  "#88888844",
+  "#8a97c3",
+  "#8b8b8b9c",
+  "#8e99b1",
+  "#98c379",
+  "#9da5b3",
+  "#a78cfa",
+  "#b0b7c3",
+  "#b267e6",
+  "#b6b6ce",
+  "#c1232942",
+  "#c5c5c5",
+  "#c6cff0",
+  "#c8ccff",
+  "#cd9731",
+  "#cf68e1",
+  "#d7dae0",
+  "#d7dae0bf",
+  "#dcdfe566",
+  "#e06c75",
+  "#e1e4ea",
+  "#e4bf7f",
+  "#e51400",
+  "#f14c4c",
+  "#f14c4c33",
+  "#f14c4c4c",
+  "#f44747",
+  "#ff0000",
+  "#ff6ab3",
+  "#ff80ab",
+  "#ff87ff",
+  "#ff8a4c",
+  "#ff9070",
+  "#ffa500",
+  "#fff6c7",
+]
+legacy_reason = "Existing editor semantic and workbench colors retained for compatibility"
+
+[[consumers]]
+id = "codex"
+label = "Codex"
+group = "Application UI"
+paths = ["ai/codex/themes/sourdiesel.toml"]
+parser = "hex"
+allowed_hex = []
+
+[[consumers]]
+id = "hammerspoon"
+label = "Hammerspoon"
+group = "Application UI"
+paths = ["apps/hammerspoon/init.lua"]
+parser = "lua"
+
+[[consumers]]
+id = "btop"
+label = "btop"
+group = "Application UI"
+paths = ["cli/btop/themes/sourdiesel.theme"]
+parser = "hex"
+allowed_hex = []
+
+[[consumers]]
+id = "atuin"
+label = "Atuin"
+group = "Application UI"
+paths = ["cli/atuin/themes/sourdiesel.toml"]
+parser = "hex"
+allowed_hex = []
+
+[[consumers]]
+id = "mycli"
+label = "mycli"
+group = "Application UI"
+paths = ["cli/mycli/config"]
+parser = "hex"
+allowed_hex = [
+  "#000000",
+  "#0000ff",
+  "#003333",
+  "#00ff5f",
+  "#222222",
+  "#282c34",
+  "#4444aa",
+  "#448888",
+  "#44aa44",
+  "#44aaaa",
+  "#6666aa",
+  "#676e95",
+  "#808080",
+  "#880000",
+  "#888888",
+  "#aaaaaa",
+  "#aaffff",
+  "#bef9be",
+  "#c6cff0",
+  "#f2cdf3",
+  "#fdf9bb",
+  "#ff005f",
+]
+legacy_reason = "Existing prompt-toolkit style colors retained pending normalization"

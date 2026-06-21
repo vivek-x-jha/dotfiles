@@ -4,6 +4,7 @@ check_bootstrap() {
   local status=0
   local bootstrap_path="${BOOTSTRAP_ENTRYPOINT:-$HOME/.dotfiles/bootstrap.sh}"
   local path=''
+  local skill_dir=''
 
   notify 'CHECK BOOTSTRAP'
 
@@ -89,7 +90,18 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
   check_path "$HOME/.dotfiles/ai/codex/config/preferences.toml"
   check_path "$HOME/.dotfiles/ai/codex/AGENTS.md"
+  for skill_dir in "$HOME/.dotfiles/ai/codex/skills"/*; do
+    [[ -d $skill_dir ]] || continue
+    check_path "$skill_dir/SKILL.md"
+    [[ -d $skill_dir/agents ]] && check_path "$skill_dir/agents/openai.yaml"
+  done
   check_path "$HOME/.dotfiles/ai/codex/themes/sourdiesel.toml"
+  check_path "$HOME/.dotfiles/themes/sourdiesel/palette.toml"
+  check_path "$HOME/.dotfiles/themes/sourdiesel/README.md"
+  check_path "$HOME/.dotfiles/themes/sourdiesel/tool.py"
+  check_cmd 'SourDiesel color inventory' python3 "$HOME/.dotfiles/themes/sourdiesel/tool.py" check
+  check_cmd 'SourDiesel color inventory tests' python3 -m unittest discover \
+    -s "$HOME/.dotfiles/themes/sourdiesel" -p 'test_*.py'
   check_path "$HOME/.dotfiles/editors/nvim/init.lua"
   check_path "$HOME/.dotfiles/editors/vscode/settings.json"
   check_path "$HOME/.dotfiles/terminals/tmux/tmux.conf"
@@ -112,6 +124,8 @@ doctor_bootstrap() {
   local status=0
   local expected=''
   local actual=''
+  local skill_dir=''
+  local skill_name=''
 
   notify 'DOCTOR BOOTSTRAP'
 
@@ -248,6 +262,13 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/tmux" ../.dotfiles/terminals/tmux
   doctor_symlink "$XDG_CONFIG_HOME/wezterm" ../.dotfiles/terminals/wezterm
   doctor_symlink "$XDG_CONFIG_HOME/claude/settings.json" ../../.dotfiles/ai/claude/settings.json
+  for skill_dir in "$HOME/.dotfiles/ai/codex/skills"/*; do
+    [[ -d $skill_dir && -f $skill_dir/SKILL.md ]] || continue
+    skill_name="${skill_dir##*/}"
+    doctor_symlink \
+      "$XDG_STATE_HOME/codex/skills/$skill_name" \
+      "../../../../.dotfiles/ai/codex/skills/$skill_name"
+  done
   doctor_symlink "$XDG_CONFIG_HOME/starship.toml" shells/starship.toml
   doctor_symlink "$HOME/.vscode" .local/share/vscode
   doctor_symlink "$HOME/.bash_profile" .config/shells/bash/.bash_profile

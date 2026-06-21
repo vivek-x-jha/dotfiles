@@ -137,6 +137,10 @@ EOF
 
 create_symlinks() {
   local vscode_src='../../../.dotfiles/editors/vscode/settings.json'
+  local skill_dir=''
+  local skill_name=''
+  local installed_skill=''
+  local installed_target=''
 
   local dirs=(
     "$XDG_CACHE_HOME"
@@ -144,6 +148,7 @@ create_symlinks() {
     "$HOME/.local/bin"
     "$XDG_STATE_HOME/bash"
     "$XDG_STATE_HOME/codex"
+    "$XDG_STATE_HOME/codex/skills"
     "$XDG_STATE_HOME/jupyter/runtime"
     "$XDG_STATE_HOME/less"
     "$XDG_STATE_HOME/mycli"
@@ -188,8 +193,31 @@ create_symlinks() {
     .config/shells/env "$HOME" .zshenv
   )
 
+  # Discover repo-managed Codex skills. A directory is installable when it
+  # contains the required SKILL.md entrypoint.
+  for skill_dir in "$HOME/.dotfiles/ai/codex/skills"/*; do
+    [[ -d $skill_dir && -f $skill_dir/SKILL.md ]] || continue
+    skill_name="${skill_dir##*/}"
+    symlinks+=(
+      "../../../../.dotfiles/ai/codex/skills/$skill_name" "$XDG_STATE_HOME/codex/skills" "$skill_name"
+    )
+  done
+
   # Ensure application directories are created
   for dir in "${dirs[@]}"; do run "mkdir -p \"$dir\""; done
+
+  # Remove only broken links created from this repo. Preserve system, plugin,
+  # and independently installed skills under the same Codex skills directory.
+  for installed_skill in "$XDG_STATE_HOME/codex/skills"/*; do
+    [[ -L $installed_skill ]] || continue
+    installed_target=$(readlink "$installed_skill") || continue
+    case "$installed_target" in
+    ../../../../.dotfiles/ai/codex/skills/*)
+      skill_name="${installed_skill##*/}"
+      [[ -f $HOME/.dotfiles/ai/codex/skills/$skill_name/SKILL.md ]] || run "rm -f \"$installed_skill\""
+      ;;
+    esac
+  done
 
   # Add macOS specific tools
   [[ $OS_TYPE == macos ]] && {

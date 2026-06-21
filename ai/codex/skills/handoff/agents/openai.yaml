@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handoff"
+  short_description: "Transfer current work into a fresh conversation"
+  default_prompt: "Use $handoff to prepare this work for a new Codex conversation."
