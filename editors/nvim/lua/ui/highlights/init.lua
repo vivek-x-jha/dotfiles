@@ -456,7 +456,7 @@ local highlights = {
   NvimTreeIndentMarker = { fg = thm.brightmagenta },
   NvimTreeSymlink = { fg = thm.yellow },
   NvimTreeSymlinkFolderName = { fg = thm.yellow },
-  NvimTreeModifiedIcon = { fg = thm.red },
+  NvimTreeModifiedIcon = { fg = thm.brightred },
 
   NvimTreeGitFileNewHl = { fg = thm.red },
   NvimTreeGitNewIcon = { link = 'NvimTreeGitFileNewHl' },
@@ -547,8 +547,9 @@ local highlights = {
 
   StText = { fg = thm.brightgreen, bg = thm.nvim_bg },
 
-  St_file = { fg = thm.black, bg = thm.nvim_bg },
-  St_filemod = { fg = thm.red, bold = true, underline = true },
+  St_file = { fg = thm.white, bg = thm.nvim_bg },
+  St_filemodIcon = { fg = thm.brightred },
+  St_filemod = { fg = thm.brightred, underline = true },
   St_cursor = { fg = thm.black, bg = thm.nvim_bg },
   St_cwd = { fg = thm.blue, bg = thm.nvim_bg },
   St_ft = { fg = thm.brightblue, bg = thm.nvim_bg },

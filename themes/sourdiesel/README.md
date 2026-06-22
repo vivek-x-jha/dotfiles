@@ -87,16 +87,16 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Neovim | zsh-patina | ble.sh | bat | Glow | VS Code |
 | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 35 · ColorColumn, Error | 4 · line 95, line 96 | — | — | 2 · color | 4 · commentsView.resolvedIcon, disabledForeground |
-| `red` | 33 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 5 · line 630, line 879 | 2 · color | 18 · foreground, debugConsole.errorForeground |
+| `black` | 34 · ColorColumn, Error | 4 · line 95, line 96 | — | — | 2 · color | 4 · commentsView.resolvedIcon, disabledForeground |
+| `red` | 31 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 5 · line 630, line 879 | 2 · color | 18 · foreground, debugConsole.errorForeground |
 | `green` | 31 · Added, ModeMsg | 11 · line 9, line 10 | 7 · command_alias, command_builtin | 5 · line 31, line 71 | 1 · color | 23 · foreground, activityBar.activeFocusBorder |
 | `yellow` | 44 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 8 · line 97, line 149 | 3 · color | 1 · terminal.ansiYellow |
 | `blue` | 38 · Directory, Question | 7 · line 32, line 33 | 3 · command_directory, filename_directory | 10 · line 136, line 383 | 6 · color | 18 · foreground, material-icon-theme.folders.color |
 | `magenta` | 67 · Exception, FloatTitle | 18 · line 11, line 12 | 2 · command_keyword, syntax_history_expansion | 21 · line 110, line 123 | 4 · color | 21 · foreground, activityBarBadge.background |
 | `cyan` | 20 · Character, Delimiter | — | — | — | 1 · color | 1 · terminal.ansiCyan |
-| `white` | 71 · Debug, Macro | 20 · line 63, line 68 | 12 · syntax_document, syntax_document_begin | 15 · line 21, line 45 | 2 · color | 23 · foreground, banner.foreground |
+| `white` | 72 · Debug, Macro | 20 · line 63, line 68 | 12 · syntax_document, syntax_document_begin | 15 · line 21, line 45 | 2 · color | 23 · foreground, banner.foreground |
 | `brightblack` | 29 · Comment, TabLine | 3 · line 4, line 5 | 18 · auto_complete, cmdinfo_cd_cdpath | 3 · line 35, line 58 | 5 · color | 6 · activityBar.inactiveForeground, editor.selectionBac… |
-| `brightred` | 21 · MatchWord, Substitute | — | — | 2 · line 214, line 1117 | 1 · color | 1 · terminal.ansiBrightRed |
+| `brightred` | 24 · MatchWord, Substitute | — | — | 2 · line 214, line 1117 | 1 · color | 1 · terminal.ansiBrightRed |
 | `brightgreen` | 13 · PmenuSel, SpectreReplace | — | 2 · filename_directory_sticky, filename_executable | — | 3 · color | 1 · terminal.ansiBrightGreen |
 | `brightyellow` | 22 · qfLineNr, YankFlash | 6 · line 65, line 66 | 5 · argument_option, filename_setgid | — | — | 1 · terminal.ansiBrightYellow |
 | `brightblue` | 16 · FoldColumn, @comment.todo | — | 1 · cmdinfo_cd_cdpath | — | — | 1 · terminal.ansiBrightBlue |

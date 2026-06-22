@@ -107,21 +107,28 @@ local modules = {
   end,
 
   file = function()
-    local path = vim.api.nvim_buf_get_name(stbufnr())
+    local bufnr = stbufnr()
+    local path = vim.api.nvim_buf_get_name(bufnr)
     local suppress = {
       path == '',
-      vim.bo.buftype == 'terminal',
-      vim.bo.buftype == 'nofile',
+      vim.bo[bufnr].buftype == 'terminal',
+      vim.bo[bufnr].buftype == 'nofile',
     }
 
     if vim.tbl_contains(suppress, true) then return '' end
 
     local name = path:match '([^/\\]+)[/\\]*$'
-    local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
-    local icon = devicons_present and devicons.get_icon(name) or icons.file
-    local hl_icon = vim.bo.modified and '%#St_filemod#' .. icons.modified or '%#St_file#' .. icon
+    if vim.bo[bufnr].modified then
+      return table.concat { '%#St_filemodIcon#', icons.modified, '%#Normal#%*', ' ', '%#St_filemod#', name, '%#Normal#%*', ' ' }
+    end
 
-    return table.concat { hl_icon, ' ', name, '%#Normal#%*', ' ' }
+    local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
+    local icon, icon_hl = icons.file, 'St_file'
+    if devicons_present then
+      icon, icon_hl = devicons.get_icon(name, nil, { default = true })
+    end
+
+    return table.concat { '%#', icon_hl, '#', icon, ' ', '%#St_file#', name, '%#Normal#%*', ' ' }
   end,
 
   git_diff = function()
