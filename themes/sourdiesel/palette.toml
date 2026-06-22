@@ -186,6 +186,9 @@ label = "web-devicons"
 group = "Files and icons"
 paths = ["editors/nvim/lua/plugins/webdevicons.lua"]
 parser = "webdevicons"
+# nvim-web-devicons defines these case-insensitive highlight group names with
+# different colors. Custom overrides must use unique SourDiesel-prefixed names.
+reserved_highlight_names = ["Dockerfile", "LICENSE", "Lua", "Readme", "Security"]
 
 [[consumers]]
 id = "neovim"

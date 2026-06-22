@@ -120,7 +120,7 @@ extensions:
                 encoding="utf-8",
             )
             (root / "icons.lua").write_text(
-                "['log'] = { color = thm.red }\n",
+                "['log'] = { name = 'FixtureLog', color = thm.red }\n",
                 encoding="utf-8",
             )
             manifest = copy.deepcopy(self.manifest)
@@ -142,13 +142,31 @@ extensions:
             ]
             self.assertEqual(tool.build_inventory(manifest, root).errors, [])
             (root / "icons.lua").write_text(
-                "['log'] = { color = thm.green }\n",
+                "['log'] = { name = 'FixtureLog', color = thm.green }\n",
                 encoding="utf-8",
             )
             self.assertIn(
                 "eza/web-devicons: log is red in eza and green in web-devicons",
                 tool.build_inventory(manifest, root).errors,
             )
+
+    def test_webdevicons_rejects_reserved_highlight_names_case_insensitively(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "icons.lua"
+            path.write_text(
+                "['lua'] = { name = 'lua', color = thm.brightwhite }\n",
+                encoding="utf-8",
+            )
+            _, _, errors = tool.scan_webdevicons(path, ["Lua"])
+        self.assertEqual(
+            errors,
+            [
+                "webdevicons: lua uses reserved highlight name lua; "
+                "use a unique SourDiesel name"
+            ],
+        )
 
     def test_report_drift_is_detected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

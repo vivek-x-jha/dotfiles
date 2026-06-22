@@ -24,7 +24,8 @@ LUA_THEME_RE = re.compile(r"\bthm\.([a-z][a-z0-9_]*)\b")
 SHELL_HEX_RE = re.compile(r"^\s*export\s+([A-Z][A-Z0-9_]*)_HEX=['\"]([^'\"]+)['\"]")
 ENV_HEX_RE = re.compile(r"\b([A-Z][A-Z0-9_]*)_HEX\b")
 WEBDEVICON_RE = re.compile(
-    r"^\s*\[['\"](.+?)['\"]\]\s*=.*?\bcolor\s*=\s*thm\.([a-z][a-z0-9_]*)"
+    r"^\s*\[['\"](.+?)['\"]\]\s*=.*?\bname\s*=\s*['\"](.+?)['\"]"
+    r".*?\bcolor\s*=\s*thm\.([a-z][a-z0-9_]*)"
 )
 ANSI_NAMES = (
     "brightblack",
@@ -365,17 +366,26 @@ def scan_eza(
     return usages, mappings, errors
 
 
-def scan_webdevicons(path: Path) -> tuple[list[Usage], dict[str, str]]:
+def scan_webdevicons(
+    path: Path, reserved_names: Iterable[str] = ()
+) -> tuple[list[Usage], dict[str, str], list[str]]:
     usages: list[Usage] = []
     mappings: dict[str, str] = {}
+    errors: list[str] = []
+    reserved = {name.casefold() for name in reserved_names}
     for line in path.read_text(encoding="utf-8").splitlines():
         match = WEBDEVICON_RE.match(line)
         if not match:
             continue
-        key, color = match.groups()
+        key, name, color = match.groups()
         usages.append(Usage(color, key))
         mappings[key] = color
-    return usages, mappings
+        if name.casefold() in reserved:
+            errors.append(
+                f"webdevicons: {key} uses reserved highlight name {name}; "
+                "use a unique SourDiesel name"
+            )
+    return usages, mappings, errors
 
 
 def build_inventory(manifest: dict[str, Any], root: Path = REPO_ROOT) -> Inventory:
@@ -416,8 +426,11 @@ def build_inventory(manifest: dict[str, Any], root: Path = REPO_ROOT) -> Invento
             mappings[consumer_id] = mapping
             errors.extend(scan_errors)
         elif parser == "webdevicons":
-            usages, mapping = scan_webdevicons(paths[0])
+            usages, mapping, scan_errors = scan_webdevicons(
+                paths[0], consumer.get("reserved_highlight_names", [])
+            )
             mappings[consumer_id] = mapping
+            errors.extend(scan_errors)
         elif parser == "manual":
             usages = [
                 Usage(color.name, "manual profile")
