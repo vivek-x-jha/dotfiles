@@ -473,6 +473,30 @@ Codex Desktop's integrated terminal is separate from the shell TUI. Its xterm.js
 
 On macOS, bootstrap also publishes `CODEX_HOME`, `NVIM_LOG_FILE`, and the XDG base directories through `launchctl setenv` so Codex Desktop launched from Finder, Spotlight, or Dock uses the same state locations as shell-launched tools. Relaunch Codex Desktop after bootstrap for the launchd environment to take effect.
 
+### Projectless Codex Desktop scratch files
+
+Codex Desktop currently creates projectless file workspaces under the hardcoded
+`~/Documents/Codex` path and does not expose a supported setting for changing
+that root. Keep the generated files physically under `~/Developer` by linking
+the hardcoded path to a dedicated scratch directory:
+
+```sh
+mkdir -p "$HOME/Developer/codex-scratch"
+ln -s "$HOME/Developer/codex-scratch" "$HOME/Documents/Codex"
+```
+
+Run this only when `~/Documents/Codex` does not already exist. Verify the link
+with:
+
+```sh
+readlink "$HOME/Documents/Codex"
+```
+
+Codex may continue displaying the logical `~/Documents/Codex/...` path even
+though the files are stored under `~/Developer/codex-scratch`. Use the actual
+saved project directory for repository work; reserve this location for
+projectless scratch chats and generated outputs.
+
 Keep `ai/codex/` limited to repo-managed Codex inputs:
 
 - `themes/`: TOML fragments for managed UI preferences.
