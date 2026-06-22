@@ -84,6 +84,14 @@ broken_path_overlay:
   foreground: red
 
 filenames:
+  .file:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
   .bash_profile:
     filename:
       foreground: magenta
@@ -2380,6 +2388,18 @@ filenames:
     icon:
       glyph: ""
 
+  .nofollow:
+    icon:
+      glyph: ""
+
+  .resolve:
+    icon:
+      glyph: ""
+
+  .vol:
+    icon:
+      glyph: ""
+
   Applications:
     icon:
       glyph: ""
@@ -2425,6 +2445,10 @@ filenames:
       glyph: ""
 
   Contents:
+    icon:
+      glyph: ""
+
+  cores:
     icon:
       glyph: ""
 
@@ -2493,6 +2517,10 @@ filenames:
       glyph: ""
 
   Homebrew:
+    icon:
+      glyph: ""
+
+  home:
     icon:
       glyph: ""
 
@@ -5431,6 +5459,86 @@ extensions:
       glyph: ""
       style:
         foreground: white
+
+  avif:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  gif:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  heic:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  heif:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  icns:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  jpeg:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  jpg:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  png:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  svg:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰜡"
+      style:
+        foreground: cyan
+
+  webp:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
 
   scpt:
     filename:

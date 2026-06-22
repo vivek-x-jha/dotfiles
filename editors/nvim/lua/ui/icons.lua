@@ -21,6 +21,7 @@ return {
   git_deleted = 'x',
   git_untracked = '?',
   host = '󰒋',
+  image = '',
   link = '',
   log = '',
   macos = '󰘳',
@@ -33,6 +34,7 @@ return {
   status = '󰦒',
   textlines = '󰦨',
   up = '',
+  vector = '󰜡',
   vim = '',
 
   -- devicons

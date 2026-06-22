@@ -124,6 +124,7 @@ local devicons_config = {
     ['session.vim'] = { icon = icons.vim, name = 'Session.vim', color = thm.brightblack },
     ['.state.itermexport'] = { icon = icons.gear, name = '.state.itermexport', color = thm.black },
     ['.localized'] = { icon = icons.file, name = '.localized', color = thm.brightblack },
+    ['.file'] = { icon = icons.file, name = 'SourdieselDotFile', color = thm.brightblack },
     ['.dbxignore'] = { icon = icons.file, name = '.dbxignore' },
     ['.dockerignore'] = { icon = icons.docker, name = '.dockerignore', color = thm.brightblue },
     ['.DS_Store'] = { icon = icons.macos, name = '.DS_Store', color = thm.brightblack },
@@ -184,6 +185,18 @@ local devicons_config = {
     ['LICENSE'] = { icon = icons.markdown, name = 'SourdieselLicense', color = thm.brightyellow },
     ['CONTRIBUTING.md'] = { icon = icons.markdown, name = 'CONTRIBUTING', color = thm.brightyellow },
     ['SECURITY.md'] = { icon = icons.markdown, name = 'SourdieselSecurity', color = thm.brightyellow },
+
+    -- Image formats
+    ['avif'] = { icon = icons.image, name = 'SourdieselAvif', color = thm.cyan },
+    ['gif'] = { icon = icons.image, name = 'SourdieselGif', color = thm.cyan },
+    ['heic'] = { icon = icons.image, name = 'SourdieselHeic', color = thm.cyan },
+    ['heif'] = { icon = icons.image, name = 'SourdieselHeif', color = thm.cyan },
+    ['icns'] = { icon = icons.image, name = 'SourdieselIcns', color = thm.cyan },
+    ['jpeg'] = { icon = icons.image, name = 'SourdieselJpeg', color = thm.cyan },
+    ['jpg'] = { icon = icons.image, name = 'SourdieselJpg', color = thm.cyan },
+    ['png'] = { icon = icons.image, name = 'SourdieselPng', color = thm.cyan },
+    ['svg'] = { icon = icons.vector, name = 'SourdieselSvg', color = thm.cyan },
+    ['webp'] = { icon = icons.image, name = 'SourdieselWebp', color = thm.cyan },
 
     -- Generic config formats
     ['conf'] = { icon = icons.gear, name = 'conf', color = thm.black },
