@@ -1,9 +1,9 @@
 [init]
 	defaultBranch = main
 [user]
-	name = Vivek Jha
-	email = vivek.x.jha@gmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9fFcycueFLoRagrZwmLRmWiA3KDOjnsXlz6cHasozv
+	name = Kristy Kamiyama
+	email = kristy.kamiyama@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhjG7V84zMNUo6QXOSYmp+T+bi+kZ2CrRXPOqHKofR4
 [core]
 	sshCommand = ssh -F ~/.config/ssh/config
 [gpg]
