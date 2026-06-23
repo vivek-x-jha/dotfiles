@@ -3028,6 +3028,10 @@ filenames:
     icon:
       glyph: ""
 
+  Google Drive:
+    icon:
+      glyph: ""
+
   Dropbox:
     icon:
       glyph: ""
