@@ -12,8 +12,8 @@ install_rust_tooling() {
   require rustup || return
   require cargo || return
 
-  # Install language server
-  run 'rustup component add rust-analyzer' || logg -w 'rust-analyzer component not installed'
+  # Install Rust editor tooling
+  run 'rustup component add rust-analyzer rustfmt clippy' || logg -w 'Rust editor components not installed'
 
   # Cargo managed packages
   local crates=(
