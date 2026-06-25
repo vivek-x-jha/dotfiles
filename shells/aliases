@@ -66,6 +66,21 @@ command -v git &>/dev/null && {
 
 # -------------------------------- CLI tools ---------------------------------------
 
+# Launch Codex Desktop directly so it inherits the shell's raised file limit.
+# Fully quit an already-running Dock/Finder instance before using this command.
+if [[ $(uname) == Darwin ]]; then
+  codex-desktop() {
+    local app='/Applications/Codex.app/Contents/MacOS/Codex'
+
+    if [[ ! -x $app ]]; then
+      printf 'Codex Desktop is not installed at %s\n' "$app" >&2
+      return 1
+    fi
+
+    nohup "$app" >/dev/null 2>&1 &
+  }
+fi
+
 # https://developer.1password.com/docs/cli/shell-plugins
 command -v op &>/dev/null && {
   command -v gh &>/dev/null && alias gh="op plugin run -- gh"

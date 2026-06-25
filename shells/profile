@@ -11,15 +11,14 @@ prepend_path() { remove_path "$1" && PATH="$1${PATH:+:$PATH}"; }
 append_path() { remove_path "$1" && PATH="${PATH:+$PATH:}$1"; }
 
 # Add MacOS tools - Homebrew + iTerm2 utilities
-prepend_macos_paths() {
-  local iterm_utilities='/Applications/iTerm.app/Contents/Resources/utilities'
-
+[[ $(uname) == Darwin ]] && {
   prepend_path '/opt/homebrew/sbin'
   prepend_path '/opt/homebrew/bin'
-  append_path "$iterm_utilities"
+  append_path '/Applications/iTerm.app/Contents/Resources/utilities'
 }
 
-[[ $(uname) == Darwin ]] && prepend_macos_paths
+# Give AI harnesses enough descriptors for MCP servers, skills, and subprocesses.
+[[ $(ulimit -Sn) != unlimited && $(ulimit -Sn) -lt 10240 ]] && ulimit -Sn 10240
 
 # Add user-managed tool directories
 prepend_path "$HOME/.local/bin"
@@ -34,4 +33,4 @@ export PATH
 # shellcheck disable=SC1091
 [[ -f "$HOME/.dotfiles/.env" ]] && source "$HOME/.dotfiles/.env"
 
-unset -f remove_path prepend_path append_path prepend_macos_paths
+unset -f remove_path prepend_path append_path
