@@ -15,6 +15,7 @@ local devicons_config = {
     ['html'] = { icon = icons.html, name = 'html', color = thm.white },
     ['lua'] = { icon = icons.lua, name = 'SourdieselLuaGeneric', color = thm.brightwhite },
     ['py'] = { icon = icons.python, name = 'py', color = thm.brightwhite },
+    ['rs'] = { icon = icons.rust, name = 'SourdieselRust', color = thm.white },
     ['vim'] = { icon = icons.vim, name = 'vim', color = thm.white },
     ['lock'] = { icon = icons.lock, name = 'lock' },
     ['patch'] = { icon = icons.patch, name = 'Patch', color = thm.brightred },

@@ -5677,9 +5677,11 @@ extensions:
         foreground: green
   rs:
     filename:
-      foreground: red
+      foreground: white
     icon:
-      glyph: "🦀"
+      glyph: ""
+      style:
+        foreground: white
   nix:
     icon:
       glyph: "❄"
