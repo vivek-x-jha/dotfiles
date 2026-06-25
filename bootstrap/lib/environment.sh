@@ -168,6 +168,7 @@ create_symlinks() {
     ../.dotfiles/cli/atuin "$XDG_CONFIG_HOME" atuin
     ../.dotfiles/cli/bat "$XDG_CONFIG_HOME" bat
     ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
+    ../.dotfiles/cli/cia "$XDG_CONFIG_HOME" cia
     ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
     ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf

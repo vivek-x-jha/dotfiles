@@ -60,7 +60,8 @@ Main flow in `bootstrap.sh`:
 17. Optionally set login shell (`change_shell_default`)
 18. Configure Hammerspoon path (`configure_hammerspoon`)
 19. Install Rust toolchain + cargo tools (`install_rust_tooling`)
-20. Setup editor tooling (`setup_ide`)
+20. Optionally install the standalone CIA agent manager (`install_cia`)
+21. Setup editor tooling (`setup_ide`)
 
 ## High-Value Features
 
@@ -204,6 +205,7 @@ startup log before `init.lua` runs, so config-only redirection is insufficient.
   - `cli/atuin`
   - `cli/bat`
   - `cli/btop`
+  - `cli/cia`
   - `cli/dust`
   - `cli/eza`
   - `cli/fzf`
