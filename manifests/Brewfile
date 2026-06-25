@@ -12,8 +12,6 @@ brew "certifi"
 brew "commitizen"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
-# Play, record, convert, and stream select audio and video codecs
-brew "ffmpeg"
 # macOS CLI for managing custom icons for files and folders
 brew "fileicon"
 # GNU awk utility
@@ -74,33 +72,21 @@ cask "alfred"
 cask "alt-tab"
 # Memory training application
 cask "anki"
-# Chromium based browser
-cask "arc"
 # OpenAI's official ChatGPT desktop app
 cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
-# Screen capturing tool
-cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # OpenAI's Codex desktop app for managing coding agents
 cask "codex-app"
-# Voice and text chat software
-cask "discord"
-# Client for the Dropbox cloud storage service
-cask "dropbox"
 # Collaborative team software
 cask "figma"
-# Web browser
-cask "firefox"
 cask "font-jetbrains-mono-nerd-font"
 # Web browser
 cask "google-chrome"
 # Desktop automation application
 cask "hammerspoon"
-# Icon creator and file and folder customiser
-cask "image2icon"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # Keyboard customiser
@@ -109,36 +95,18 @@ cask "karabiner-elements"
 cask "keycastr"
 # Software for Logitech devices
 cask "logi-options+"
-# Full TeX Live distribution without GUI applications
-cask "mactex-no-gui"
-# Calendar for professionals and teams
-cask "notion-calendar"
 # Collaboration platform for API development
 cask "postman"
 # PDF reader and note-taking application
 cask "skim"
-# Team communication and collaboration software
-cask "slack"
 # Music streaming service
 cask "spotify"
-# Desktop client for TD Ameritrade trading platform
-cask "thinkorswim"
 # Open-source code editor
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
-# Free messaging and calling application
-cask "wechat"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
-# Native desktop client for WhatsApp
-cask "whatsapp"
-vscode "catppuccin.catppuccin-vsc"
-vscode "ms-python.debugpy"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-python.vscode-python-envs"
-vscode "openai.chatgpt"
 cargo "atuin"
 cargo "bat"
 cargo "bob-nvim"

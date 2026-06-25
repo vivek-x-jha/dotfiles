@@ -61,17 +61,50 @@ EOF
 
   while (($#)); do
     case "$1" in
-    -a|--all) run_all=1; selected_steps=1 ;;
-    -d|--ds-store) delete_ds_store=1; selected_steps=1 ;;
-    -z|--zsh) update_zsh=1; selected_steps=1 ;;
-    -t|--tmux) update_tmux=1; selected_steps=1 ;;
-    -l|--tldr) update_tldr=1; selected_steps=1 ;;
-    -f|--fzf) update_fzf=1; selected_steps=1 ;;
-    -n|--nvim) update_nvim=1; selected_steps=1 ;;
-    -r|--rust) update_rust=1; selected_steps=1 ;;
-    -b|--brew) update_brew=1; selected_steps=1 ;;
-    -i|--icons) update_icons=1; selected_steps=1 ;;
-    -e|--tex) update_tex=1; selected_steps=1 ;;
+    -a | --all)
+      run_all=1
+      selected_steps=1
+      ;;
+    -d | --ds-store)
+      delete_ds_store=1
+      selected_steps=1
+      ;;
+    -z | --zsh)
+      update_zsh=1
+      selected_steps=1
+      ;;
+    -t | --tmux)
+      update_tmux=1
+      selected_steps=1
+      ;;
+    -l | --tldr)
+      update_tldr=1
+      selected_steps=1
+      ;;
+    -f | --fzf)
+      update_fzf=1
+      selected_steps=1
+      ;;
+    -n | --nvim)
+      update_nvim=1
+      selected_steps=1
+      ;;
+    -r | --rust)
+      update_rust=1
+      selected_steps=1
+      ;;
+    -b | --brew)
+      update_brew=1
+      selected_steps=1
+      ;;
+    -i | --icons)
+      update_icons=1
+      selected_steps=1
+      ;;
+    -e | --tex)
+      update_tex=1
+      selected_steps=1
+      ;;
     --icons-dir)
       [[ -n ${2-} ]] || {
         printf 'update-tools: --icons-dir requires a path\n' >&2
@@ -81,7 +114,7 @@ EOF
       icons_dir="$2"
       shift
       ;;
-    -h|--help)
+    -h | --help)
       usage
       return
       ;;
@@ -99,18 +132,17 @@ EOF
   ((run_all)) && select_all_steps 1
   ((selected_steps)) || select_all_steps 0
 
-  TOTAL_STEPS=$((
-    delete_ds_store +
-    update_zsh +
-    update_tmux +
-    update_tldr +
-    update_fzf +
-    update_nvim +
-    update_rust +
-    update_brew +
-    update_icons +
-    update_tex
-  ))
+  TOTAL_STEPS=$((\
+    delete_ds_store + \
+    update_zsh + \
+    update_tmux + \
+    update_tldr + \
+    update_fzf + \
+    update_nvim + \
+    update_rust + \
+    update_brew + \
+    update_icons + \
+    update_tex))
 
   # Usage:
   #   logg "message"
@@ -121,9 +153,20 @@ EOF
     local level=INFO color="$BLACK" cmd=''
 
     case "${1-}" in
-    -w) level=WARN; color="$YELLOW"; shift ;;
-    -e) level=ERROR; color="$MAGENTA"; shift ;;
-    -c) cmd="$2"; shift 2 ;;
+    -w)
+      level=WARN
+      color="$YELLOW"
+      shift
+      ;;
+    -e)
+      level=ERROR
+      color="$MAGENTA"
+      shift
+      ;;
+    -c)
+      cmd="$2"
+      shift 2
+      ;;
     esac
 
     local message="$*"
@@ -141,8 +184,15 @@ EOF
   notify() {
     local minor=''
     case "$1" in
-    -s) SUBSTEP=$((SUBSTEP + 1)); minor=".$SUBSTEP"; shift ;;
-    *) STEP=$((STEP + 1)); SUBSTEP=0 ;;
+    -s)
+      SUBSTEP=$((SUBSTEP + 1))
+      minor=".$SUBSTEP"
+      shift
+      ;;
+    *)
+      STEP=$((STEP + 1))
+      SUBSTEP=0
+      ;;
     esac
     printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
   }
@@ -216,7 +266,9 @@ EOF
     logg -c 'brew upgrade --cask --greedy --no-quit -y' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
     notify -s 'RUN QUARANTINE CHECKS'
-    local apps=('Arc' 'ChatGPT' 'Claude' 'Codex' 'Notion Calendar' 'Slack' 'Spotify' 'WhatsApp')
+
+    local apps=('ChatGPT' 'Claude' 'Codex' 'Spotify')
+
     local app quarantine_cmd
     for app in "${apps[@]}"; do
       [[ -d "/Applications/${app}.app" ]] || {
