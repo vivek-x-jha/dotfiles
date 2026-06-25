@@ -11,3 +11,9 @@
 - Use the `skill-creator` skill when available and validate every created skill.
 - Dotfiles bootstrap discovers each child directory containing `SKILL.md` and links it into `$CODEX_HOME/skills`; do not duplicate the source directly in Codex runtime state.
 - Preserve system, plugin, and independently installed skills outside this repo-managed source directory.
+
+# Codex Configuration Guidance
+
+- Treat `~/.dotfiles/ai/codex/config/preferences.toml` as the source of truth for portable Codex defaults.
+- When changing a preference managed by that fragment, update the dotfiles version first, then run `~/.dotfiles/ai/codex/scripts/apply_preferences.py` against `$CODEX_HOME/config.toml` and verify the generated runtime settings.
+- Preserve Codex-owned runtime sections and state that are not managed by the preferences fragment.
