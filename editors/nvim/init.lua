@@ -104,6 +104,7 @@ vim.pack.add {
 
   -- ui
   { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
+  { src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim' },
   { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- noice dependency
   { src = 'https://github.com/folke/noice.nvim' },
   { src = 'https://github.com/rcarriga/nvim-notify' },
@@ -143,6 +144,7 @@ require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
     python = { 'ruff_format', 'ruff_organize_imports' },
+    rust = { 'rustfmt' },
     bash = { 'shfmt' },
     sh = { 'shfmt' },
   },
@@ -156,6 +158,9 @@ require('nvim-surround').setup()
 
 -- Configure Indent Blankline guides
 require('ibl').setup { indent = { char = '┊' } }
+
+-- Configure rendered Markdown
+require 'plugins.render-markdown'
 
 -- Configure Git Info
 require 'plugins.gitsigns'

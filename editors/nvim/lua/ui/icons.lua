@@ -43,6 +43,7 @@ return {
   javascript = '',
   lua = '',
   python = '',
+  rust = '',
   tsx = '',
   typescript = '',
   lock = '',

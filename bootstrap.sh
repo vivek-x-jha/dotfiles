@@ -169,6 +169,9 @@ main() {
   notify 'INSTALL RUST TOOLING'
   run_configured_step BOOTSTRAP_INSTALL_RUST_TOOLING 'Rust tooling install' install_rust_tooling
 
+  notify 'INSTALL CIA AGENT MANAGER'
+  run_configured_step BOOTSTRAP_INSTALL_CIA 'CIA agent manager install' install_cia
+
   notify 'SETUP IDE TOOLS'
   run_configured_step BOOTSTRAP_SETUP_IDE 'IDE tooling setup' setup_ide
 

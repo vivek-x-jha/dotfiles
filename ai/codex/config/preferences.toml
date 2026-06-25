@@ -1,9 +1,17 @@
 model = "gpt-5.5"
 model_reasoning_effort = "medium"
-approval_policy = "on-request"
+approval_policy = "never"
 personality = "pragmatic"
 approvals_reviewer = "user"
-sandbox_mode = "workspace-write"
+sandbox_mode = "danger-full-access"
+
+[sandbox_workspace_write]
+writable_roots = ["/Users/kristylisakamiyama/.dotfiles"]
+
+[tui]
+terminal_title = ["activity", "thread-title", "current-dir", "git-branch"]
+status_line = ["model-with-reasoning", "context-remaining", "total-input-tokens", "five-hour-limit", "weekly-limit", "run-state"]
+status_line_use_colors = true
 
 [features]
 js_repl = false

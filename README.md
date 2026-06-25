@@ -183,7 +183,8 @@ Validate the installed workstation state any time after setup:
 16. 🐚 Optionally set login shell
 17. 🔨 Point Hammerspoon at XDG config
 18. 🦀 Install Rust toolchain and cargo tools
-19. 🧠 Install editor tooling
+19. 🕵️ Optionally install CIA from `~/Developer/cia`
+20. 🧠 Install editor tooling
 
 ## 📁 Repository Layout
 
@@ -193,7 +194,7 @@ Validate the installed workstation state any time after setup:
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`ai`](./ai) | AI assistant configs and managed theme fragments for Claude Code and Codex |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
-| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
+| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, CIA, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
 | [`terminals`](./terminals) | tmux, WezTerm, Terminal.app, and iTerm-related assets |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
@@ -303,6 +304,8 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 ### 🖥️ Terminals and tmux
 
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
+- CIA is a standalone Codex chat/project TUI at `~/Developer/cia`. Its personal SourDiesel config lives in [`cli/cia`](./cli/cia), and tmux prefix + `g` opens it in a 95% popup.
+- Install the local checkout explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and does not clone or publish the repository.
 - [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).

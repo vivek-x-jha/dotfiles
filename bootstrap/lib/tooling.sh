@@ -12,8 +12,8 @@ install_rust_tooling() {
   require rustup || return
   require cargo || return
 
-  # Install language server
-  run 'rustup component add rust-analyzer' || logg -w 'rust-analyzer component not installed'
+  # Install Rust editor tooling
+  run 'rustup component add rust-analyzer rustfmt clippy' || logg -w 'Rust editor components not installed'
 
   # Cargo managed packages
   local crates=(
@@ -41,6 +41,23 @@ install_rust_tooling() {
   done
 
   require zsh-patina && run 'zsh-patina restart'
+}
+
+install_cia() {
+  local source="$HOME/Developer/cia"
+
+  [[ -f $source/Cargo.toml ]] || {
+    logg -e "CIA checkout not found: $(pretty_path "$source")"
+    logg -i 'Create or clone the standalone CIA repository before running --only cia.'
+    return 1
+  }
+
+  require cargo || {
+    logg -e 'cargo is required to install CIA. Run the rust bootstrap target first.'
+    return 1
+  }
+
+  run "cargo install --locked --path \"$source\""
 }
 
 setup_ide() {

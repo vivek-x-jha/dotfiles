@@ -1,0 +1,22 @@
+[codex]
+command = "codex"
+transcript_turns = 3
+
+[tmux]
+command = "tmux"
+agent_window_names = ["agents"]
+new_window_prefix = "agent:"
+
+[ui]
+archived_default = false
+
+[theme]
+background = "#1b1c28"
+surface = "#212030"
+foreground = "#f4f3f2"
+muted = "#5c617d"
+accent = "#eccef0"
+selected = "#313244"
+success = "#d2fd9d"
+warning = "#f3b175"
+error = "#f096b7"
