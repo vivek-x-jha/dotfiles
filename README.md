@@ -183,7 +183,7 @@ Validate the installed workstation state any time after setup:
 16. 🐚 Optionally set login shell
 17. 🔨 Point Hammerspoon at XDG config
 18. 🦀 Install Rust toolchain and cargo tools
-19. 🕵️ Optionally install CIA from `~/Developer/cia`
+19. 🕵️ Optionally install CIA from upstream GitHub via Cargo
 20. 🧠 Install editor tooling
 
 ## 📁 Repository Layout
@@ -304,8 +304,8 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 ### 🖥️ Terminals and tmux
 
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
-- CIA is a standalone Codex chat/project TUI at `~/Developer/cia`. Its personal SourDiesel config lives in [`cli/cia`](./cli/cia), and tmux prefix + `g` opens it in a 95% popup.
-- Install the local checkout explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and does not clone or publish the repository.
+- CIA is a standalone Codex chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its personal SourDiesel config lives in [`cli/cia`](./cli/cia), and tmux prefix + `g` opens it in a 95% popup.
+- Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
 - [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).
