@@ -200,11 +200,11 @@ notify() {
 
   for app in "${apps[@]}"; do
     [[ -d "/Applications/${app}.app" ]] || {
-      logg -w "SKIPPING ${app^^} QUARANTINE CHECK; APP NOT FOUND"
+      logg -w "SKIPPING ${(U)app} QUARANTINE CHECK; APP NOT FOUND"
       continue
     }
     quarantine_cmd="sudo xattr -rd com.apple.quarantine '/Applications/${app}.app'"
-    logg -c "$quarantine_cmd" || logg -w "FAILED TO CLEAR ${app^^} QUARANTINE"
+    logg -c "$quarantine_cmd" || logg -w "FAILED TO CLEAR ${(U)app} QUARANTINE"
   done
 
   logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'

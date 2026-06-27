@@ -9,7 +9,7 @@ sandbox_mode = "danger-full-access"
 writable_roots = ["/Users/kristylisakamiyama/.dotfiles"]
 
 [tui]
-terminal_title = ["activity", "thread-title", "current-dir", "git-branch"]
+terminal_title = ["activity", "thread-title"]
 status_line = ["model-with-reasoning", "context-remaining", "total-input-tokens", "five-hour-limit", "weekly-limit", "run-state"]
 status_line_use_colors = true
 
