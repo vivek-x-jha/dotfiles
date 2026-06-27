@@ -1,4 +1,6 @@
 # Shared environment variables for bash and zsh
+# Zsh reaches this through ~/.zshenv, so keep essential CLI paths here for
+# login, interactive, non-interactive, and agent-launched shells.
 
 # XDG: https://specifications.freedesktop.org/basedir-spec/latest/#variables
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -98,3 +100,30 @@ export CODEX_HOME="$XDG_STATE_HOME/codex"
 
 # Pi coding agent: keep mutable auth, settings, packages, and sessions in XDG state.
 export PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"
+
+remove_path() {
+  PATH=":$PATH:"
+  PATH="${PATH//:$1:/:}"
+  PATH="${PATH#:}"
+  PATH="${PATH%:}"
+}
+
+prepend_path() { remove_path "$1" && PATH="$1${PATH:+:$PATH}"; }
+append_path() { remove_path "$1" && PATH="${PATH:+$PATH:}$1"; }
+
+# Add MacOS tools - Homebrew + iTerm2 utilities
+[[ $(uname) == Darwin ]] && {
+  prepend_path '/opt/homebrew/sbin'
+  prepend_path '/opt/homebrew/bin'
+  append_path '/Applications/iTerm.app/Contents/Resources/utilities'
+}
+
+# Add user-managed tool directories needed by editors, agents, and non-login zsh.
+prepend_path "$HOME/.local/bin"
+prepend_path "$XDG_DATA_HOME/fzf/bin"
+prepend_path "$CARGO_HOME/bin"
+prepend_path "$XDG_DATA_HOME/bob/nvim-bin"
+
+export PATH
+
+unset -f remove_path prepend_path append_path

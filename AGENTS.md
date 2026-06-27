@@ -189,9 +189,11 @@ startup log before `init.lua` runs, so config-only redirection is insufficient.
   - `bootstrap/lib/*.sh`
 - Shared theme source of truth: `themes/sourdiesel/palette.toml`
 - Shared shell palette mirror: `shells/colors/sourdiesel`
-- Shared shell env: `shells/env`
-- Shared shell profile/PATH setup: `shells/profile`
-  - `shells/zsh/.zprofile` is a relative symlink to `../profile`, so Zsh and Bash share the same login PATH and secret-loading source; bootstrap check and doctor modes enforce this target
+- Shared shell env/PATH setup: `shells/env`
+  - `~/.zshenv -> ~/.config/shells/env` is the always-on Zsh environment entry point, including PATH entries for Homebrew, user tools, fzf, Cargo, and bob-managed Neovim
+  - `shells/zsh/.zshenv` is a relative symlink to `../env`; bootstrap check and doctor modes enforce this target
+- Shared shell login profile and secret loading: `shells/profile`
+  - `shells/zsh/.zprofile` is a relative symlink to `../profile`, so Zsh and Bash share login-only secret loading; bootstrap check and doctor modes enforce this target
 - Shared fzf config: `cli/fzf/fzf.sh`
 - Auth config roots:
   - `auth/git`

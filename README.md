@@ -36,7 +36,7 @@ This repository is personal infrastructure. It is written to be repeatable, but 
 - macOS setup may request `sudo` for Homebrew setup, Touch ID sudo, and OS defaults.
 - 1Password integrations are optional, but secret-backed aliases and Git signing expect `op` and the 1Password desktop app to be configured.
 - Linux GUI app installation is implemented for `apt` and `dnf`, but desktop environments vary. Treat those steps as best effort.
-- Shell startup depends on `$HOME/.zshenv`, `$HOME/.bashrc`, and `$HOME/.bash_profile` symlinks created by bootstrap. Zsh loads the shared login setup through `$ZDOTDIR/.zprofile -> ../profile`; shared PATH and secret loading live in `shells/profile`. Bootstrap check and doctor modes validate the `.zprofile` target.
+- Shell startup depends on `$HOME/.zshenv`, `$HOME/.bashrc`, and `$HOME/.bash_profile` symlinks created by bootstrap. `$HOME/.zshenv -> ~/.config/shells/env` is the always-on environment entry point for Zsh and carries shared PATH/tool exports for login, interactive, non-interactive, and agent-launched shells. Zsh loads the shared login setup through `$ZDOTDIR/.zprofile -> ../profile`; login-only secret loading lives in `shells/profile`. Bootstrap check and doctor modes validate both Zsh symlink targets.
 
 ## ⚡ Requirements
 
@@ -239,9 +239,9 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 | Tool | Mechanism | Local choice |
 |---|---|---|
-| [Zsh](https://zsh.sourceforge.io/Intro/intro_3.html) | `ZDOTDIR` | `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"`; `.zprofile -> ../profile` loads the shared Bash/Zsh login profile |
+| [Zsh](https://zsh.sourceforge.io/Intro/intro_3.html) | home `.zshenv` + `ZDOTDIR` | `~/.zshenv -> ~/.config/shells/env` is the always-on env/PATH entry point; `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"`; `.zprofile -> ../profile` loads the shared Bash/Zsh login profile |
 | [zsh-patina](https://github.com/michel-kraemer/zsh-patina) | default config path | `~/.config/zsh-patina/config.toml` |
-| Bash | home startup symlinks | `~/.bashrc` and `~/.bash_profile` source `~/.config/shells/bash`; shared PATH setup comes from `~/.config/shells/profile` |
+| Bash | home startup symlinks | `~/.bashrc` and `~/.bash_profile` source `~/.config/shells/bash`; shared PATH setup comes from `~/.config/shells/env` and login-only secrets from `~/.config/shells/profile` |
 | [ble.sh](https://github.com/akinomyoga/ble.sh) | `--rcfile` | `source "$XDG_DATA_HOME/blesh/ble.sh" --rcfile "$SHELL_CONFIG/bash/.blerc"` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file) | `RIPGREP_CONFIG_PATH` | `~/.config/ripgrep/config` |
 | [mycli](https://www.mycli.net/connect) | `--myclirc` | 1Password-backed aliases pass `--myclirc "$XDG_CONFIG_HOME/mycli/config"` |
