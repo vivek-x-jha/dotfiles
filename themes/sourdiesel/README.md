@@ -111,19 +111,19 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Codex | CIA agent manager | Hammerspoon | btop | Atuin | mycli |
 | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 1 · ink | — | — | — | 1 · Title | — |
+| `black` | 1 · ink | 1 · status_threads | — | — | 1 · Title | — |
 | `red` | 1 · diffRemoved | — | 1 · consoleResultColor | 5 · graph_text, proc_misc | 1 · AlertInfo | — |
 | `green` | 1 · diffAdded | — | 2 · consoleCommandColor, textColor | 4 · mem_box, temp_start | 1 · AlertError | — |
 | `yellow` | — | — | — | — | 1 · Annotation | — |
-| `blue` | — | — | — | — | 1 · Guidance | — |
+| `blue` | — | 2 · status_search, preview_user | — | — | 1 · Guidance | — |
 | `magenta` | 1 · accent | 1 · accent | — | — | — | — |
-| `cyan` | — | — | — | — | — | — |
-| `white` | — | 1 · foreground | — | 2 · main_fg, title | — | 3 · sql.operator, sql.punctuation |
+| `cyan` | — | 1 · preview_codex | — | — | — | — |
+| `white` | — | 2 · foreground, status_projects | — | 2 · main_fg, title | — | 3 · sql.operator, sql.punctuation |
 | `brightblack` | — | 1 · muted | — | 2 · inactive_fg, div_line | 1 · Base | 1 · completion-menu.completion |
-| `brightred` | — | 1 · error | — | 3 · net_box, available_end | — | — |
-| `brightgreen` | — | 1 · success | — | — | 1 · Important | — |
-| `brightyellow` | — | 1 · warning | — | 4 · hi_fg, temp_mid | 1 · AlertWarn | — |
-| `brightblue` | — | — | — | 6 · selected_fg, proc_box | — | 1 · output.header |
+| `brightred` | — | 2 · error, status_archive | — | 3 · net_box, available_end | — | — |
+| `brightgreen` | — | 2 · success, status_new | — | — | 1 · Important | — |
+| `brightyellow` | — | 2 · warning, status_help | — | 4 · hi_fg, temp_mid | 1 · AlertWarn | — |
+| `brightblue` | — | 1 · status_open | — | 6 · selected_fg, proc_box | — | 1 · output.header |
 | `brightmagenta` | 1 · skill | — | 2 · consolePrintColor, strokeColor | 5 · cpu_box, cpu_end | — | — |
 | `brightcyan` | — | — | — | 8 · cpu_start, free_end | — | — |
 | `brightwhite` | — | — | — | — | — | 5 · completion-menu.meta.completion, selected |
