@@ -15,3 +15,9 @@ status_line_use_colors = true
 
 [features]
 js_repl = false
+
+[plugins."computer-use@openai-bundled".mcp_servers.computer-use]
+enabled = false
+
+[plugins."openai-developers@openai-curated".mcp_servers.openai-api-key-local-confirmation]
+enabled = false

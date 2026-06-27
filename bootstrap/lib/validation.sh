@@ -31,6 +31,19 @@ check_bootstrap() {
     fi
   }
 
+  find_toml_python() {
+    local candidate=''
+    for candidate in python3 /opt/homebrew/bin/python3 /usr/local/bin/python3; do
+      if command -v "$candidate" &>/dev/null \
+        && "$candidate" -c 'import tomllib' &>/dev/null; then
+        command -v "$candidate"
+        return
+      fi
+    done
+
+    command -v python3
+  }
+
   check_symlink() {
     local link="$1"
     local target="$2"
@@ -100,8 +113,10 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/themes/sourdiesel/palette.toml"
   check_path "$HOME/.dotfiles/themes/sourdiesel/README.md"
   check_path "$HOME/.dotfiles/themes/sourdiesel/tool.py"
-  check_cmd 'SourDiesel color inventory' python3 "$HOME/.dotfiles/themes/sourdiesel/tool.py" check
-  check_cmd 'SourDiesel color inventory tests' python3 -m unittest discover \
+  local toml_python
+  toml_python="$(find_toml_python)"
+  check_cmd 'SourDiesel color inventory' "$toml_python" "$HOME/.dotfiles/themes/sourdiesel/tool.py" check
+  check_cmd 'SourDiesel color inventory tests' "$toml_python" -m unittest discover \
     -s "$HOME/.dotfiles/themes/sourdiesel" -p 'test_*.py'
   check_path "$HOME/.dotfiles/editors/nvim/init.lua"
   check_path "$HOME/.dotfiles/editors/vscode/settings.json"
