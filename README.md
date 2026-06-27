@@ -634,6 +634,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 
 - Start with `zsh -dfi` to bypass startup files.
 - Check `~/.zshenv` points at `~/.config/shells/env`.
+- Check `$ZDOTDIR/.zshenv` points at `../env`; re-execed or nested zsh processes use this path once `ZDOTDIR` is exported.
 - Check `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"`.
 - Check `$PATH` includes Homebrew, Cargo, uv tools, and bob nvim bin paths.
 

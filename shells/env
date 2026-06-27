@@ -95,3 +95,6 @@ export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 
 # Codex: https://github.com/openai/codex/pull/4414
 export CODEX_HOME="$XDG_STATE_HOME/codex"
+
+# Pi coding agent: keep mutable auth, settings, packages, and sessions in XDG state.
+export PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"

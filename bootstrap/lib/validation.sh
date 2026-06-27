@@ -76,6 +76,8 @@ check_bootstrap() {
   done < <(find "$HOME/.dotfiles/shells/zsh/funcs" -maxdepth 1 -type f -print | sort)
 
   check_symlink "$HOME/.dotfiles/shells/zsh/.zprofile" ../profile
+  check_symlink "$HOME/.dotfiles/shells/zsh/.zshenv" ../env
+  check_cmd 'zsh env syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zshenv"
   check_cmd 'zsh profile syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zprofile"
   check_cmd 'zshrc syntax' zsh -n "$HOME/.dotfiles/shells/zsh/.zshrc"
   check_cmd 'bash profile syntax' bash -n "$HOME/.dotfiles/shells/bash/.bash_profile"
@@ -274,6 +276,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
   doctor_symlink "$XDG_CONFIG_HOME/nvim" ../.dotfiles/editors/nvim
   doctor_symlink "$XDG_CONFIG_HOME/shells" ../.dotfiles/shells
+  doctor_symlink "$XDG_CONFIG_HOME/shells/zsh/.zshenv" ../env
   doctor_symlink "$XDG_CONFIG_HOME/shells/zsh/.zprofile" ../profile
   doctor_symlink "$XDG_CONFIG_HOME/ssh" ../.dotfiles/auth/ssh
   doctor_symlink "$XDG_CONFIG_HOME/tmux" ../.dotfiles/terminals/tmux
