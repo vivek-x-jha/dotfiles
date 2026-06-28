@@ -1,19 +1,26 @@
-# Project Template Guidance
+# AGENTS.md
 
-- Before initializing or scaffolding a project, inspect `~/.local/share/templates` and reuse the matching stack template.
-- Use the `bootstrap-project` skill when it is available.
-- Compare template files with existing project files before applying them. Merge relevant settings and preserve project-specific configuration instead of overwriting files wholesale.
-- Validate the resulting diff before considering project setup complete.
+## Defaults
 
-# Personal Skill Guidance
+- Be concise, practical, and explicit about assumptions.
+- Inspect live source before conclusions: files, config, SQLite, logs, runtime state, or public endpoints as relevant.
+- Read before editing; keep patches narrow and preserve user-owned dirty work.
+- Implement concrete requests end-to-end, then run the smallest useful checks.
+- Ask before broad refactors, destructive cleanup, installs, commits, pushes, deploys, or global machine changes.
 
-- When creating portable personal skills, default their source location to `~/.dotfiles/ai/codex/skills/<skill-name>` unless the user chooses another location.
-- Use the `skill-creator` skill when available and validate every created skill.
-- Dotfiles bootstrap discovers each child directory containing `SKILL.md` and links it into `$CODEX_HOME/skills`; do not duplicate the source directly in Codex runtime state.
-- Preserve system, plugin, and independently installed skills outside this repo-managed source directory.
+## Safety
 
-# Codex Configuration Guidance
+- Audit before deleting; prefer reversible quarantine for cleanup.
+- Do not touch secrets, credentials, vendored/generated files, lockfiles, or agent runtime state unless explicitly requested.
+- For handoffs: read the named file, verify live repo/state, continue only if real work remains.
+- For recurring drift: fix the source of truth instead of adding another workaround.
 
-- Treat `~/.dotfiles/ai/codex/config/preferences.toml` as the source of truth for portable Codex defaults.
-- When changing a preference managed by that fragment, update the dotfiles version first, then run `~/.dotfiles/ai/codex/scripts/apply_preferences.py` against `$CODEX_HOME/config.toml` and verify the generated runtime settings.
-- Preserve Codex-owned runtime sections and state that are not managed by the preferences fragment.
+## Reporting
+
+- Summarize changed paths and checks run.
+- Call out stale-vs-current evidence when local state disagrees with visible behavior.
+
+## Project Instructions
+
+- Use repo-local `AGENTS.md` for commands, architecture, generated files, and project hazards only.
+- Keep project files short; link to docs/README for long reference material.
