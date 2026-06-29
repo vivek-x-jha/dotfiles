@@ -4512,6 +4512,10 @@ filenames:
     icon:
       glyph: ""
 
+  axiom-athena:
+    icon:
+      glyph: ""
+
   bin:
     icon:
       glyph: ""
@@ -4809,6 +4813,10 @@ filenames:
       glyph: ""
 
   openai-docs:
+    icon:
+      glyph: ""
+
+  otaku-tunes:
     icon:
       glyph: ""
 
