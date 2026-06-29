@@ -15,6 +15,12 @@
 - For handoffs: read the named file, verify live repo/state, continue only if real work remains.
 - For recurring drift: fix the source of truth instead of adding another workaround.
 
+## Git
+
+- Before committing, inspect recent history with `git log --oneline -10` and match its message style.
+- If history is mixed or unclear, fall back to Commitizen/Conventional Commit style: `type(scope): summary`.
+- For releases, use `release(scope): release x.y.z`.
+
 ## Reporting
 
 - Summarize changed paths and checks run.
