@@ -117,7 +117,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `yellow` | — | 1 · status_help | — | — | 1 · Annotation | — |
 | `blue` | — | 2 · status_threads, preview_user | — | — | 1 · Guidance | — |
 | `magenta` | 1 · accent | 2 · accent, status_archive | — | — | — | — |
-| `cyan` | — | 3 · status_unarchive, preview_codex | — | — | — | — |
+| `cyan` | — | 2 · status_unarchive, preview_codex | — | — | — | — |
 | `white` | — | 2 · foreground, status_open | — | 2 · main_fg, title | — | 3 · sql.operator, sql.punctuation |
 | `brightblack` | — | 1 · muted | — | 2 · inactive_fg, div_line | 1 · Base | 1 · completion-menu.completion |
 | `brightred` | — | 2 · error, status_delete | — | 3 · net_box, available_end | — | — |
