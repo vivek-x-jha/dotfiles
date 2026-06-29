@@ -4984,6 +4984,10 @@ filenames:
     icon:
       glyph: ""
 
+  target:
+    icon:
+      glyph: ""
+
   templates:
     icon:
       glyph: ""
