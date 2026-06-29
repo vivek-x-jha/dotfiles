@@ -66,6 +66,9 @@ command -v git &>/dev/null && {
 
 # -------------------------------- CLI tools ---------------------------------------
 
+# Quick one-shot Pi ask using the cheaper Codex mini model with low thinking.
+command -v pi &>/dev/null && alias ask='pi -p --provider openai-codex --model gpt-5.4-mini --thinking low --no-session'
+
 # Launch Codex Desktop directly so it inherits the shell's raised file limit.
 # Fully quit an already-running Dock/Finder instance before using this command.
 if [[ $(uname) == Darwin ]]; then
