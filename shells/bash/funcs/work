@@ -37,7 +37,8 @@ Command customization:
 
 Examples:
   work                           Attach or create default session
-  work myapp                     Open session in ~/developer/myapp
+  work myapp                     Open/create session in ~/developer/myapp
+  work ~/Developer/myapp         Open existing project path as session 'myapp'
   work --window-label dev myapp  Custom window name
   work -r                        Reset tmux server (tmux kill-server && tmux new-session)
 EOF
@@ -156,7 +157,7 @@ EOF
   done
 
   local session="$1"
-  local root="$HOME/developer/$session"
+  local root=''
 
   [[ -z $session ]] && {
     [[ -n $TMUX ]] && {
@@ -169,6 +170,26 @@ EOF
     tmux attach-session || tmux new-session
     return $?
   }
+
+  local session_arg="$session"
+  if [[ "$session_arg" == /* || "$session_arg" == "~" || "$session_arg" == "~/"* || "$session_arg" == ./* || "$session_arg" == ../* || "$session_arg" == *"/"* ]]; then
+    case "$session_arg" in
+    '~') root="$HOME" ;;
+    '~/'*) root="$HOME/${session_arg#~/}" ;;
+    /*) root="$session_arg" ;;
+    *) root="$PWD/$session_arg" ;;
+    esac
+
+    if [[ ! -d "$root" ]]; then
+      printf '\033[31mwork: path not found: %s\033[0m\n' "$session_arg" >&2
+      return 1
+    fi
+
+    root="$(cd "$root" && pwd -P)" || return 1
+    session="${root##*/}"
+  else
+    root="$HOME/developer/$session"
+  fi
 
   configure_float_session() {
     local target="$1"
@@ -202,7 +223,11 @@ EOF
   ((python_init)) && {
     local uvi_desc=''
     printf -v uvi_desc '%q' "$session"
-    right_cmd+=" if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
+    if [[ -n $right_cmd ]]; then
+      right_cmd="${right_cmd%;}; if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
+    else
+      right_cmd="if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
+    fi
   }
 
   tmux_template() {
@@ -210,7 +235,7 @@ EOF
     local right_id="$session:$window_label.2"
     local agents_id="$session:$agents_label.1"
 
-    mkdir -p "$root/prompts"
+    mkdir -p "$root" || return 1
     tmux new-session -d -s "$session" -c "$root" -n "$window_label"
     tmux split-window -h -t "$left_id" -c "$root"
     tmux select-pane -t "$left_id" -T "$left_label"

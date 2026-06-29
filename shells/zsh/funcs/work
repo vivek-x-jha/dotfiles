@@ -40,7 +40,8 @@ Command customization:
 
 Examples:
   work                           Attach or create default session
-  work myapp                     Open session in ~/developer/myapp
+  work myapp                     Open/create session in ~/developer/myapp
+  work ~/Developer/myapp         Open existing project path as session 'myapp'
   work --window-label dev myapp  Custom window name
   work -r                        Reset tmux server (tmux kill-server && tmux new-session)
 EOF
@@ -64,7 +65,7 @@ while [[ $# -gt 0 ]]; do
     tmux list-sessions &>/dev/null && tmux kill-server &>/dev/null
 
     local reload_session='__work_reload__'
-    local restore_script="$TMUX_PLUGIN_MANAGER_PATH/tmux-resurrect/scripts/restore.sh"
+    local restore_script="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins}/tmux-resurrect/scripts/restore.sh"
     local preferred_session=''
 
     local attempt=0
@@ -163,7 +164,7 @@ done
 
 # Handle <sessions> for different project setups
 local session="$1"
-local root="$HOME/developer/$session"
+local root=''
 
 [[ -z $session ]] && {
   # If run without args inside TMUX session -> mutate to `tmux list-sessions`
@@ -178,6 +179,26 @@ local root="$HOME/developer/$session"
   tmux attach-session || tmux new-session
   return $?
 }
+
+local session_arg="$session"
+if [[ "$session_arg" == /* || "$session_arg" == "~" || "$session_arg" == "~/"* || "$session_arg" == ./* || "$session_arg" == ../* || "$session_arg" == *"/"* ]]; then
+  case "$session_arg" in
+    '~') root="$HOME" ;;
+    '~/'*) root="$HOME/${session_arg#~/}" ;;
+    /*) root="$session_arg" ;;
+    *) root="$PWD/$session_arg" ;;
+  esac
+
+  if [[ ! -d "$root" ]]; then
+    printf '\033[31mwork: path not found: %s\033[0m\n' "$session_arg" >&2
+    return 1
+  fi
+
+  root="${root:A}"
+  session="${root:t}"
+else
+  root="$HOME/developer/$session"
+fi
 
 configure_float_session() {
   local target="$1"
@@ -213,7 +234,11 @@ tmux has-session -t "$session" &>/dev/null && {
 ((python_init)) && {
   local uvi_desc=''
   printf -v uvi_desc '%q' "$session"
-  right_cmd+=" if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
+  if [[ -n $right_cmd ]]; then
+    right_cmd="${right_cmd%;}; if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
+  else
+    right_cmd="if test ! -f pyproject.toml; then uvi -d $uvi_desc; fi"
+  fi
 }
 
 # General template creator
@@ -223,10 +248,8 @@ tmux_template() {
   local right_id="$session:$window_label.2"
   local agents_id="$session:$agents_label.1"
 
-  # Setup project structure
-  mkdir -p "$root/prompts"
-
   # Initialize session with given configuration
+  mkdir -p "$root" || return 1
   tmux new-session -d -s "$session" -c "$root" -n "$window_label"
 
   # Configure window layout
