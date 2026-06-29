@@ -10,6 +10,7 @@ new_window_prefix = "agent:"
 [ui]
 archived_default = false
 archive_icon = ""
+default_harness = "pi"
 
 [theme]
 background = "#1b1c28"
@@ -46,7 +47,7 @@ new_chat_unfocused = "$BRIGHTBLACK_HEX"
 new_chat_pi = "$MAGENTA_HEX"
 new_chat_claude = "$BRIGHTYELLOW_HEX"
 new_chat_codex = "$BRIGHTMAGENTA_HEX"
-new_chat_cursor = "$MAGENTA_HEX"
-new_chat_opencode = "$GREEN_HEX"
+new_chat_cursor = "$BLACK_HEX"
+new_chat_opencode = "$WHITE_HEX"
 new_chat_path = "$BLUE_HEX"
 new_chat_executable = "$BRIGHTGREEN_HEX"
