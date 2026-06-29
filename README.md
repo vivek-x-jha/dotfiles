@@ -313,7 +313,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 ### 🖥️ Terminals and tmux
 
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
-- CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its personal SourDiesel config lives in [`cli/cia`](./cli/cia), including v1.2 title, border, status, and archive-icon colors; tmux prefix + `g` opens it in a 75% popup.
+- CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`cli/cia`](./cli/cia), with transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
 - Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
 - [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
