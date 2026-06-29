@@ -184,7 +184,7 @@ local devicons_config = {
     ['CLAUDE.md'] = { icon = icons.robot, name = 'CLAUDE', color = thm.brightyellow },
     ['CODEOWNERS'] = { icon = icons.branch, name = 'CODEOWNERS', color = thm.black },
     ['README.md'] = { icon = icons.markdown, name = 'SourdieselREADME', color = thm.brightyellow },
-    ['LICENSE'] = { icon = icons.markdown, name = 'SourdieselLicense', color = thm.brightyellow },
+    ['LICENSE'] = { icon = icons.license, name = 'SourdieselLicense', color = thm.brightyellow },
     ['CONTRIBUTING.md'] = { icon = icons.markdown, name = 'CONTRIBUTING', color = thm.brightyellow },
     ['SECURITY.md'] = { icon = icons.markdown, name = 'SourdieselSecurity', color = thm.brightyellow },
 

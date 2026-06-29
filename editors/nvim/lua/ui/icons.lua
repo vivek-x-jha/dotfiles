@@ -24,6 +24,7 @@ return {
   host = '󰒋',
   image = '',
   link = '',
+  license = '',
   log = '',
   macos = '󰘳',
   modified = '●',

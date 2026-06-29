@@ -384,7 +384,7 @@ filenames:
     filename:
       foreground: 11
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: 11
 
@@ -5249,6 +5249,14 @@ filenames:
       foreground: 11
     icon:
       glyph: ""
+      style:
+        foreground: 11
+
+  LICENSE:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
       style:
         foreground: 11
 
