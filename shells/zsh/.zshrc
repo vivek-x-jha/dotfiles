@@ -7,6 +7,9 @@
   [[ -r $inst_prompt ]] && source "$inst_prompt"
 }
 
+# Profile
+source "$SHELL_CONFIG/profile"
+
 # Colorscheme
 source "$SHELL_CONFIG/colors/$SHELL_THEME"
 

@@ -239,9 +239,9 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 | Tool | Mechanism | Local choice |
 |---|---|---|
-| [Zsh](https://zsh.sourceforge.io/Intro/intro_3.html) | home `.zshenv` + `ZDOTDIR` | `~/.zshenv -> ~/.config/shells/env` is the always-on env/PATH entry point; `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"`; `.zprofile -> ../profile` loads the shared Bash/Zsh login profile |
+| [Zsh](https://zsh.sourceforge.io/Intro/intro_3.html) | home `.zshenv` + `ZDOTDIR` | `~/.zshenv -> ~/.config/shells/env` is the always-on env/PATH entry point; `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"`; `.zprofile -> ../profile` loads the shared Bash/Zsh profile for login shells, while `.zshrc` sources the same idempotent profile for non-login interactive shells |
 | [zsh-patina](https://github.com/michel-kraemer/zsh-patina) | default config path | `~/.config/zsh-patina/config.toml` |
-| Bash | home startup symlinks | `~/.bashrc` and `~/.bash_profile` source `~/.config/shells/bash`; shared PATH setup comes from `~/.config/shells/env` and login-only secrets from `~/.config/shells/profile` |
+| Bash | home startup symlinks | `~/.bashrc` and `~/.bash_profile` source `~/.config/shells/bash`; shared PATH setup comes from `~/.config/shells/env` and guarded login/interactive setup comes from `~/.config/shells/profile` |
 | [ble.sh](https://github.com/akinomyoga/ble.sh) | `--rcfile` | `source "$XDG_DATA_HOME/blesh/ble.sh" --rcfile "$SHELL_CONFIG/bash/.blerc"` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file) | `RIPGREP_CONFIG_PATH` | `~/.config/ripgrep/config` |
 | [mycli](https://www.mycli.net/connect) | `--myclirc` | 1Password-backed aliases pass `--myclirc "$XDG_CONFIG_HOME/mycli/config"` |
@@ -637,6 +637,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 - Check `$ZDOTDIR/.zshenv` points at `../env`; re-execed or nested zsh processes use this path once `ZDOTDIR` is exported.
 - Check `ZDOTDIR="$XDG_CONFIG_HOME/shells/zsh"`.
 - Check `$PATH` includes Homebrew, Cargo, uv tools, and bob nvim bin paths.
+- Check interactive shells set `DOTFILES_PROFILE_LOADED=1`; `shells/profile` is idempotent because login zsh can source it through both `.zprofile` and `.zshrc`.
 
 ### Bash Loads but ble.sh Fails
 

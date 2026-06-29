@@ -1,4 +1,9 @@
-# Shared login profile for bash and zsh
+# Shared login/interactive profile for bash and zsh
+
+# This file may be sourced by both login and interactive startup paths in the
+# same shell process. Keep side effects idempotent.
+[[ ${DOTFILES_PROFILE_LOADED:-0} == 1 ]] && return 0
+DOTFILES_PROFILE_LOADED=1
 
 # Essential environment and PATH setup lives in shells/env, reached by ~/.zshenv.
 # Give AI harnesses enough descriptors for MCP servers, skills, and subprocesses.
