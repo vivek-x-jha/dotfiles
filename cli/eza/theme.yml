@@ -3028,10 +3028,6 @@ filenames:
     icon:
       glyph: ""
 
-  Education:
-    icon:
-      glyph: ""
-
   Google Drive:
     icon:
       glyph: ""
@@ -3051,10 +3047,6 @@ filenames:
   "10_15_14":
     icon:
       glyph: ""
-
-  "1password":
-    icon:
-      glyph: ""
 
   "2.AP Calculus BC Additional Resources-STUDENT USE":
     icon:
@@ -3076,7 +3068,11 @@ filenames:
     icon:
       glyph: ""
 
-  "9294b86e0ea89c382a5d0f46a701fddfae9b0953":
+  "__MACOSX":
+    icon:
+      glyph: ""
+
+  "aas010":
     icon:
       glyph: ""
 
@@ -3092,23 +3088,27 @@ filenames:
     icon:
       glyph: ""
 
+  "about":
+    icon:
+      glyph: ""
+
   "ACT 607 Financial Accounting":
     icon:
       glyph: ""
 
-  "AK-CHP1-6":
-    icon:
-      glyph: ""
-
-  "AP Calculus BC Scoring Info and Keys":
-    icon:
-      glyph: ""
-
-  "AU Economics Comp Exam":
-    icon:
-      glyph: ""
-
   "Additional Papers":
+    icon:
+      glyph: ""
+
+  "advanced":
+    icon:
+      glyph: ""
+
+  "ai-engineering":
+    icon:
+      glyph: ""
+
+  "AK-CHP1-6":
     icon:
       glyph: ""
 
@@ -3117,6 +3117,10 @@ filenames:
       glyph: ""
 
   "Algebra":
+    icon:
+      glyph: ""
+
+  "amazon":
     icon:
       glyph: ""
 
@@ -3132,7 +3136,23 @@ filenames:
     icon:
       glyph: ""
 
+  "anime":
+    icon:
+      glyph: ""
+
+  "AP Calculus BC Scoring Info and Keys":
+    icon:
+      glyph: ""
+
+  "appearance":
+    icon:
+      glyph: ""
+
   "Appendix A The Time Value of Money":
+    icon:
+      glyph: ""
+
+  "applemaps":
     icon:
       glyph: ""
 
@@ -3148,7 +3168,43 @@ filenames:
     icon:
       glyph: ""
 
+  "ask":
+    icon:
+      glyph: ""
+
+  "attack-on-titan":
+    icon:
+      glyph: ""
+
+  "AU Economics Comp Exam":
+    icon:
+      glyph: ""
+
+  "au_courses":
+    icon:
+      glyph: ""
+
+  "au_research":
+    icon:
+      glyph: ""
+
+  "avatar-the-last-airbender":
+    icon:
+      glyph: ""
+
+  "avatar-the-legend-of-korra":
+    icon:
+      glyph: ""
+
   "Barron_s AP Calculus (14th ed.) - Selected Chapters":
+    icon:
+      glyph: ""
+
+  "better-caul-saul":
+    icon:
+      glyph: ""
+
+  "bing":
     icon:
       glyph: ""
 
@@ -3180,19 +3236,19 @@ filenames:
     icon:
       glyph: ""
 
+  "book pictures":
+    icon:
+      glyph: ""
+
   "Book Solutions":
     icon:
       glyph: ""
 
-  "CR1":
+  "breaking-bad":
     icon:
       glyph: ""
 
-  "CR2":
-    icon:
-      glyph: ""
-
-  "CR3":
+  "calculusbc":
     icon:
       glyph: ""
 
@@ -3248,11 +3304,51 @@ filenames:
     icon:
       glyph: ""
 
+  "clipboard":
+    icon:
+      glyph: ""
+
+  "cmn005":
+    icon:
+      glyph: ""
+
+  "code-geass":
+    icon:
+      glyph: ""
+
+  "collegeboard":
+    icon:
+      glyph: ""
+
+  "comedies":
+    icon:
+      glyph: ""
+
   "Company Research":
     icon:
       glyph: ""
 
-  "ComputerScience":
+  "contacts":
+    icon:
+      glyph: ""
+
+  "content":
+    icon:
+      glyph: ""
+
+  "cowboy-bebop":
+    icon:
+      glyph: ""
+
+  "CR1":
+    icon:
+      glyph: ""
+
+  "CR2":
+    icon:
+      glyph: ""
+
+  "CR3":
     icon:
       glyph: ""
 
@@ -3264,7 +3360,19 @@ filenames:
     icon:
       glyph: ""
 
+  "death-note":
+    icon:
+      glyph: ""
+
+  "defaultresults":
+    icon:
+      glyph: ""
+
   "Diagnostic Materials":
+    icon:
+      glyph: ""
+
+  "digimon":
     icon:
       glyph: ""
 
@@ -3280,15 +3388,39 @@ filenames:
     icon:
       glyph: ""
 
-  "Diplomas":
-    icon:
-      glyph: ""
-
   "Discussion":
     icon:
       glyph: ""
 
+  "do":
+    icon:
+      glyph: ""
+
   "Do_Files":
+    icon:
+      glyph: ""
+
+  "dramas":
+    icon:
+      glyph: ""
+
+  "drive":
+    icon:
+      glyph: ""
+
+  "drivesearch":
+    icon:
+      glyph: ""
+
+  "duckduckgo":
+    icon:
+      glyph: ""
+
+  "Ebay":
+    icon:
+      glyph: ""
+
+  "ebay":
     icon:
       glyph: ""
 
@@ -3321,542 +3453,6 @@ filenames:
       glyph: ""
 
   "ECN 691XN Internship":
-    icon:
-      glyph: ""
-
-  "Ebay":
-    icon:
-      glyph: ""
-
-  "Economics":
-    icon:
-      glyph: ""
-
-  "Examples":
-    icon:
-      glyph: ""
-
-  "Exams":
-    icon:
-      glyph: ""
-
-  "Excel":
-    icon:
-      glyph: ""
-
-  "FIN 614 Financial Management":
-    icon:
-      glyph: ""
-
-  "FIN 674 Derivatives & Risk Management":
-    icon:
-      glyph: ""
-
-  "FIN 677 Financial Statement Analysis":
-    icon:
-      glyph: ""
-
-  "Fall '12":
-    icon:
-      glyph: ""
-
-  "Fall '13":
-    icon:
-      glyph: ""
-
-  "Fall '14":
-    icon:
-      glyph: ""
-
-  "Final":
-    icon:
-      glyph: ""
-
-  "Final Exam Review":
-    icon:
-      glyph: ""
-
-  "Final Material":
-    icon:
-      glyph: ""
-
-  "Finance":
-    icon:
-      glyph: ""
-
-  "Fullmetal Alchemist Brotherhood":
-    icon:
-      glyph: ""
-
-  "Geometry":
-    icon:
-      glyph: ""
-
-  "Graphs":
-    icon:
-      glyph: ""
-
-  "H8":
-    icon:
-      glyph: ""
-
-  "Handouts":
-    icon:
-      glyph: ""
-
-  "Homework":
-    icon:
-      glyph: ""
-
-  "Homework 1":
-    icon:
-      glyph: ""
-
-  "Homework 2":
-    icon:
-      glyph: ""
-
-  "Homework 3":
-    icon:
-      glyph: ""
-
-  "Labs":
-    icon:
-      glyph: ""
-
-  "Larson Solutions":
-    icon:
-      glyph: ""
-
-  "Lecture Notes":
-    icon:
-      glyph: ""
-
-  "Lectures":
-    icon:
-      glyph: ""
-
-  "Logs":
-    icon:
-      glyph: ""
-
-  "MachineLearning":
-    icon:
-      glyph: ""
-
-  "Mama":
-    icon:
-      glyph: ""
-
-  "ManagementConsulting":
-    icon:
-      glyph: ""
-
-  "Mathematics":
-    icon:
-      glyph: ""
-
-  "Mercury Athletic Footwear  Valuing the opportunity by Jorge Morales on Prezi_files":
-    icon:
-      glyph: ""
-
-  "Midterm":
-    icon:
-      glyph: ""
-
-  "Midterm 1 Review":
-    icon:
-      glyph: ""
-
-  "Midterm 2 Review":
-    icon:
-      glyph: ""
-
-  "Midterm Material":
-    icon:
-      glyph: ""
-
-  "Midterm1":
-    icon:
-      glyph: ""
-
-  "Midterm2":
-    icon:
-      glyph: ""
-
-  "Midterm3":
-    icon:
-      glyph: ""
-
-  "Okun":
-    icon:
-      glyph: ""
-
-  "Output":
-    icon:
-      glyph: ""
-
-  "Paper":
-    icon:
-      glyph: ""
-
-  "Paper Graphs":
-    icon:
-      glyph: ""
-
-  "Perloff Solutions":
-    icon:
-      glyph: ""
-
-  "Powerpoints":
-    icon:
-      glyph: ""
-
-  "Ppts":
-    icon:
-      glyph: ""
-
-  "Practice Exams":
-    icon:
-      glyph: ""
-
-  "Practice Problems":
-    icon:
-      glyph: ""
-
-  "Princeton Review_s AP Calculus AB _ BC (2013) - Selected Chapters":
-    icon:
-      glyph: ""
-
-  "Princeton Review_s AP Calculus BC (2016) - Selected Chapters":
-    icon:
-      glyph: ""
-
-  "Project":
-    icon:
-      glyph: ""
-
-  "Project I":
-    icon:
-      glyph: ""
-
-  "Project II":
-    icon:
-      glyph: ""
-
-  "Quizzes":
-    icon:
-      glyph: ""
-
-  "R1":
-    icon:
-      glyph: ""
-
-  "R2":
-    icon:
-      glyph: ""
-
-  "Readings":
-    icon:
-      glyph: ""
-
-  "Recomended Readings":
-    icon:
-      glyph: ""
-
-  "Required Readings":
-    icon:
-      glyph: ""
-
-  "Research":
-    icon:
-      glyph: ""
-
-  "Research Updates":
-    icon:
-      glyph: ""
-
-  "S01":
-    icon:
-      glyph: ""
-
-  "S02":
-    icon:
-      glyph: ""
-
-  "S03":
-    icon:
-      glyph: ""
-
-  "S04":
-    icon:
-      glyph: ""
-
-  "S05":
-    icon:
-      glyph: ""
-
-  "S1":
-    icon:
-      glyph: ""
-
-  "S2":
-    icon:
-      glyph: ""
-
-  "S3":
-    icon:
-      glyph: ""
-
-  "Science":
-    icon:
-      glyph: ""
-
-  "Season 1":
-    icon:
-      glyph: ""
-
-  "Season 2":
-    icon:
-      glyph: ""
-
-  "Season 3":
-    icon:
-      glyph: ""
-
-  "Season 4":
-    icon:
-      glyph: ""
-
-  "Semester I":
-    icon:
-      glyph: ""
-
-  "Semester II":
-    icon:
-      glyph: ""
-
-  "Semester III":
-    icon:
-      glyph: ""
-
-  "Semester IV":
-    icon:
-      glyph: ""
-
-  "Shawn's Material":
-    icon:
-      glyph: ""
-
-  "Special & Extras":
-    icon:
-      glyph: ""
-
-  "Student Materials":
-    icon:
-      glyph: ""
-
-  "Student Solutions":
-    icon:
-      glyph: ""
-
-  "Study Questions":
-    icon:
-      glyph: ""
-
-  "Tables":
-    icon:
-      glyph: ""
-
-  "Take Home":
-    icon:
-      glyph: ""
-
-  "Test Bank":
-    icon:
-      glyph: ""
-
-  "Wk 1":
-    icon:
-      glyph: ""
-
-  "Wk 10":
-    icon:
-      glyph: ""
-
-  "Wk 11":
-    icon:
-      glyph: ""
-
-  "Wk 3":
-    icon:
-      glyph: ""
-
-  "Wk 4":
-    icon:
-      glyph: ""
-
-  "Wk 5":
-    icon:
-      glyph: ""
-
-  "Wk 6":
-    icon:
-      glyph: ""
-
-  "Wk 8":
-    icon:
-      glyph: ""
-
-  "Wk 9":
-    icon:
-      glyph: ""
-
-  "__MACOSX":
-    icon:
-      glyph: ""
-
-  "a74b19d61c7a901b3ae4267a2df0f03a64e223f0":
-    icon:
-      glyph: ""
-
-  "aas010":
-    icon:
-      glyph: ""
-
-  "about":
-    icon:
-      glyph: ""
-
-  "advanced":
-    icon:
-      glyph: ""
-
-  "amazon":
-    icon:
-      glyph: ""
-
-  "anime":
-    icon:
-      glyph: ""
-
-  "appearance":
-    icon:
-      glyph: ""
-
-  "applemaps":
-    icon:
-      glyph: ""
-
-  "ask":
-    icon:
-      glyph: ""
-
-  "attack-on-titan":
-    icon:
-      glyph: ""
-
-  "au_courses":
-    icon:
-      glyph: ""
-
-  "au_research":
-    icon:
-      glyph: ""
-
-  "avatar-the-last-airbender":
-    icon:
-      glyph: ""
-
-  "avatar-the-legend-of-korra":
-    icon:
-      glyph: ""
-
-  "better-caul-saul":
-    icon:
-      glyph: ""
-
-  "bing":
-    icon:
-      glyph: ""
-
-  "book pictures":
-    icon:
-      glyph: ""
-
-  "breaking-bad":
-    icon:
-      glyph: ""
-
-  "calculusbc":
-    icon:
-      glyph: ""
-
-  "clipboard":
-    icon:
-      glyph: ""
-
-  "cmn005":
-    icon:
-      glyph: ""
-
-  "code-geass":
-    icon:
-      glyph: ""
-
-  "collegeboard":
-    icon:
-      glyph: ""
-
-  "comedies":
-    icon:
-      glyph: ""
-
-  "contacts":
-    icon:
-      glyph: ""
-
-  "content":
-    icon:
-      glyph: ""
-
-  "cowboy-bebop":
-    icon:
-      glyph: ""
-
-  "death-note":
-    icon:
-      glyph: ""
-
-  "defaultresults":
-    icon:
-      glyph: ""
-
-  "digimon":
-    icon:
-      glyph: ""
-
-  "do":
-    icon:
-      glyph: ""
-
-  "dramas":
-    icon:
-      glyph: ""
-
-  "drive":
-    icon:
-      glyph: ""
-
-  "drivesearch":
-    icon:
-      glyph: ""
-
-  "duckduckgo":
-    icon:
-      glyph: ""
-
-  "ebay":
     icon:
       glyph: ""
 
@@ -3916,6 +3512,10 @@ filenames:
     icon:
       glyph: ""
 
+  "Economics":
+    icon:
+      glyph: ""
+
   "ed-tech":
     icon:
       glyph: ""
@@ -3928,15 +3528,23 @@ filenames:
     icon:
       glyph: ""
 
-  "education":
-    icon:
-      glyph: ""
-
   "email":
     icon:
       glyph: ""
 
   "eng006":
+    icon:
+      glyph: ""
+
+  "Examples":
+    icon:
+      glyph: ""
+
+  "Exams":
+    icon:
+      glyph: ""
+
+  "Excel":
     icon:
       glyph: ""
 
@@ -3952,6 +3560,18 @@ filenames:
     icon:
       glyph: ""
 
+  "Fall '12":
+    icon:
+      glyph: ""
+
+  "Fall '13":
+    icon:
+      glyph: ""
+
+  "Fall '14":
+    icon:
+      glyph: ""
+
   "features":
     icon:
       glyph: ""
@@ -3960,11 +3580,43 @@ filenames:
     icon:
       glyph: ""
 
+  "FIN 614 Financial Management":
+    icon:
+      glyph: ""
+
+  "FIN 674 Derivatives & Risk Management":
+    icon:
+      glyph: ""
+
+  "FIN 677 Financial Statement Analysis":
+    icon:
+      glyph: ""
+
+  "Final":
+    icon:
+      glyph: ""
+
+  "Final Exam Review":
+    icon:
+      glyph: ""
+
+  "Final Material":
+    icon:
+      glyph: ""
+
+  "Finance":
+    icon:
+      glyph: ""
+
   "finances":
     icon:
       glyph: ""
 
   "flickr":
+    icon:
+      glyph: ""
+
+  "Fullmetal Alchemist Brotherhood":
     icon:
       glyph: ""
 
@@ -4016,7 +3668,7 @@ filenames:
     icon:
       glyph: ""
 
-  "gmail":
+  "Geometry":
     icon:
       glyph: ""
 
@@ -4029,6 +3681,10 @@ filenames:
       glyph: ""
 
   "graphs":
+    icon:
+      glyph: ""
+
+  "Graphs":
     icon:
       glyph: ""
 
@@ -4060,7 +3716,31 @@ filenames:
     icon:
       glyph: ""
 
+  "H8":
+    icon:
+      glyph: ""
+
   "h9":
+    icon:
+      glyph: ""
+
+  "Handouts":
+    icon:
+      glyph: ""
+
+  "Homework":
+    icon:
+      glyph: ""
+
+  "Homework 1":
+    icon:
+      glyph: ""
+
+  "Homework 2":
+    icon:
+      glyph: ""
+
+  "Homework 3":
     icon:
       glyph: ""
 
@@ -4088,15 +3768,27 @@ filenames:
     icon:
       glyph: ""
 
+  "Labs":
+    icon:
+      glyph: ""
+
+  "Larson Solutions":
+    icon:
+      glyph: ""
+
   "last-dance":
     icon:
       glyph: ""
 
-  latex:
+  "latex_templates":
     icon:
       glyph: ""
 
-  "latex_templates":
+  "Lecture Notes":
+    icon:
+      glyph: ""
+
+  "Lectures":
     icon:
       glyph: ""
 
@@ -4108,11 +3800,19 @@ filenames:
     icon:
       glyph: ""
 
+  "Logs":
+    icon:
+      glyph: ""
+
   "lucky":
     icon:
       glyph: ""
 
   "mako":
+    icon:
+      glyph: ""
+
+  "Mama":
     icon:
       glyph: ""
 
@@ -4188,7 +3888,43 @@ filenames:
     icon:
       glyph: ""
 
+  "mathemathics":
+    icon:
+      glyph: ""
+
+  "Mercury Athletic Footwear  Valuing the opportunity by Jorge Morales on Prezi_files":
+    icon:
+      glyph: ""
+
   "microeconomics":
+    icon:
+      glyph: ""
+
+  "Midterm":
+    icon:
+      glyph: ""
+
+  "Midterm 1 Review":
+    icon:
+      glyph: ""
+
+  "Midterm 2 Review":
+    icon:
+      glyph: ""
+
+  "Midterm Material":
+    icon:
+      glyph: ""
+
+  "Midterm1":
+    icon:
+      glyph: ""
+
+  "Midterm2":
+    icon:
+      glyph: ""
+
+  "Midterm3":
     icon:
       glyph: ""
 
@@ -4208,6 +3944,10 @@ filenames:
     icon:
       glyph: ""
 
+  "Okun":
+    icon:
+      glyph: ""
+
   "options":
     icon:
       glyph: ""
@@ -4221,6 +3961,18 @@ filenames:
       glyph: ""
 
   "palette":
+    icon:
+      glyph: ""
+
+  "Paper":
+    icon:
+      glyph: ""
+
+  "Paper Graphs":
+    icon:
+      glyph: ""
+
+  "Perloff Solutions":
     icon:
       glyph: ""
 
@@ -4244,7 +3996,43 @@ filenames:
     icon:
       glyph: ""
 
+  "Powerpoints":
+    icon:
+      glyph: ""
+
+  "Ppts":
+    icon:
+      glyph: ""
+
+  "Practice Exams":
+    icon:
+      glyph: ""
+
+  "Practice Problems":
+    icon:
+      glyph: ""
+
   "preferences":
+    icon:
+      glyph: ""
+
+  "Princeton Review_s AP Calculus AB _ BC (2013) - Selected Chapters":
+    icon:
+      glyph: ""
+
+  "Princeton Review_s AP Calculus BC (2016) - Selected Chapters":
+    icon:
+      glyph: ""
+
+  "Project":
+    icon:
+      glyph: ""
+
+  "Project I":
+    icon:
+      glyph: ""
+
+  "Project II":
     icon:
       glyph: ""
 
@@ -4252,7 +4040,15 @@ filenames:
     icon:
       glyph: ""
 
-  "python-corey-schafer":
+  "Quizzes":
+    icon:
+      glyph: ""
+
+  "R1":
+    icon:
+      glyph: ""
+
+  "R2":
     icon:
       glyph: ""
 
@@ -4260,7 +4056,27 @@ filenames:
     icon:
       glyph: ""
 
+  "Readings":
+    icon:
+      glyph: ""
+
+  "Recomended Readings":
+    icon:
+      glyph: ""
+
   "remote":
+    icon:
+      glyph: ""
+
+  "Required Readings":
+    icon:
+      glyph: ""
+
+  "Research":
+    icon:
+      glyph: ""
+
+  "Research Updates":
     icon:
       glyph: ""
 
@@ -4269,6 +4085,38 @@ filenames:
       glyph: ""
 
   "rottentomatoes":
+    icon:
+      glyph: ""
+
+  "S01":
+    icon:
+      glyph: ""
+
+  "S02":
+    icon:
+      glyph: ""
+
+  "S03":
+    icon:
+      glyph: ""
+
+  "S04":
+    icon:
+      glyph: ""
+
+  "S05":
+    icon:
+      glyph: ""
+
+  "S1":
+    icon:
+      glyph: ""
+
+  "S2":
+    icon:
+      glyph: ""
+
+  "S3":
     icon:
       glyph: ""
 
@@ -4296,6 +4144,42 @@ filenames:
     icon:
       glyph: ""
 
+  "Season 1":
+    icon:
+      glyph: ""
+
+  "Season 2":
+    icon:
+      glyph: ""
+
+  "Season 3":
+    icon:
+      glyph: ""
+
+  "Season 4":
+    icon:
+      glyph: ""
+
+  "Semester I":
+    icon:
+      glyph: ""
+
+  "Semester II":
+    icon:
+      glyph: ""
+
+  "Semester III":
+    icon:
+      glyph: ""
+
+  "Semester IV":
+    icon:
+      glyph: ""
+
+  "Shawn's Material":
+    icon:
+      glyph: ""
+
   "shorts":
     icon:
       glyph: ""
@@ -4305,6 +4189,10 @@ filenames:
       glyph: ""
 
   "silicon-valley":
+    icon:
+      glyph: ""
+
+  "Special & Extras":
     icon:
       glyph: ""
 
@@ -4328,7 +4216,15 @@ filenames:
     icon:
       glyph: ""
 
-  "statistics":
+  "Student Materials":
+    icon:
+      glyph: ""
+
+  "Student Solutions":
+    icon:
+      glyph: ""
+
+  "Study Questions":
     icon:
       glyph: ""
 
@@ -4344,6 +4240,14 @@ filenames:
     icon:
       glyph: ""
 
+  "Tables":
+    icon:
+      glyph: ""
+
+  "Take Home":
+    icon:
+      glyph: ""
+
   "tasks":
     icon:
       glyph: ""
@@ -4352,7 +4256,7 @@ filenames:
     icon:
       glyph: ""
 
-  "terms":
+  "Test Bank":
     icon:
       glyph: ""
 
@@ -4360,7 +4264,7 @@ filenames:
     icon:
       glyph: ""
 
-  "theme.custom.8CE6CACA-4801-4586-BFD9-C4BD18F77A02":
+  "thumbnails":
     icon:
       glyph: ""
 
@@ -4385,46 +4289,6 @@ filenames:
       glyph: ""
 
   "update":
-    icon:
-      glyph: ""
-
-  "user.workflow.19DBFE98-269E-4F47-9E4F-50FBB3A1FF03":
-    icon:
-      glyph: ""
-
-  "user.workflow.60337457-922A-4FA8-A599-E6A950B5D879":
-    icon:
-      glyph: ""
-
-  "user.workflow.6EAB5CE2-53EC-401E-B464-8EB15F7326E8":
-    icon:
-      glyph: ""
-
-  "user.workflow.7A62F138-6B0C-40CA-B299-7E3B0B893CBC":
-    icon:
-      glyph: ""
-
-  "user.workflow.857E645B-D219-4B8B-8A6F-BDCE4C78D249":
-    icon:
-      glyph: ""
-
-  "user.workflow.AFB9BDEE-AA02-43ED-A5E8-C1C04F32937E":
-    icon:
-      glyph: ""
-
-  "user.workflow.DC8F078B-AD0C-4E33-AB63-C67F884FB1DB":
-    icon:
-      glyph: ""
-
-  "user.workflow.E062AB17-A7B9-4A9F-B806-2B117AAC8252":
-    icon:
-      glyph: ""
-
-  "user.workflow.E409A35D-C2F6-4ECA-B838-8A50A2FF1580":
-    icon:
-      glyph: ""
-
-  "user.workflow.EF25D7E2-6909-4731-B71D-93447DB89C5D":
     icon:
       glyph: ""
 
@@ -4500,6 +4364,42 @@ filenames:
     icon:
       glyph: ""
 
+  "Wk 1":
+    icon:
+      glyph: ""
+
+  "Wk 10":
+    icon:
+      glyph: ""
+
+  "Wk 11":
+    icon:
+      glyph: ""
+
+  "Wk 3":
+    icon:
+      glyph: ""
+
+  "Wk 4":
+    icon:
+      glyph: ""
+
+  "Wk 5":
+    icon:
+      glyph: ""
+
+  "Wk 6":
+    icon:
+      glyph: ""
+
+  "Wk 8":
+    icon:
+      glyph: ""
+
+  "Wk 9":
+    icon:
+      glyph: ""
+
   "wolfram":
     icon:
       glyph: ""
@@ -4517,6 +4417,18 @@ filenames:
       glyph: ""
 
   "yubnub":
+    icon:
+      glyph: ""
+
+  My Drive:
+    icon:
+      glyph: ""
+
+  "education":
+    icon:
+      glyph: ""
+
+  mathematics:
     icon:
       glyph: ""
 
