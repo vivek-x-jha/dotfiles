@@ -5,7 +5,12 @@
 [[ ${DOTFILES_PROFILE_LOADED:-0} == 1 ]] && return 0
 DOTFILES_PROFILE_LOADED=1
 
-# Essential environment and PATH setup lives in shells/env, reached by ~/.zshenv.
+# Re-apply the shared environment here as well as ~/.zshenv. On macOS,
+# /etc/zprofile runs path_helper after ~/.zshenv and can reorder PATH in login
+# shells; sourcing env from the user profile restores our intended precedence.
+# shellcheck disable=SC1091
+source "$HOME/.dotfiles/shells/env"
+
 # Give AI harnesses enough descriptors for MCP servers, skills, and subprocesses.
 [[ $(ulimit -Sn) != unlimited && $(ulimit -Sn) -lt 10240 ]] && ulimit -Sn 10240
 
