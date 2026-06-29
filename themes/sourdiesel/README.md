@@ -27,6 +27,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | ANSI | 15 | `brightwhite` | `#ffffff` | maximum-contrast foreground |
 | Extra | — | `dark` | `#1b1c28` | dark application background |
 | Extra | — | `grey` | `#313244` | selection and elevated surface |
+| Extra | — | `nvim_statusline` | `#27283a` | subtle Neovim statusline surface |
 | Extra | — | `terminal_surface` | `#212030` | terminal and desktop chrome surface |
 
 ## Non-color tokens
@@ -39,24 +40,25 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Shell ANSI | WezTerm | Terminal.app | tmux | Starship | Powerlevel10k | Git | fzf |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 1 · palette export | 1 · line 51 | manual | 1 · line 175 | 1 · stashed | 1 · line 21 | 2 · header, meta | 1 · line 91 |
-| `red` | 1 · palette export | 1 · line 52 | manual | 1 · line 188 | 1 · untracked | 3 · line 22, line 200 | 4 · untracked, nobranch | 1 · line 66 |
-| `green` | 1 · palette export | 1 · line 53 | manual | 3 · line 29, line 139 | 1 · staged | 3 · line 23, line 69 | 2 · added, new | 1 · line 64 |
-| `yellow` | 1 · palette export | 1 · line 54 | manual | 3 · line 114, line 122 | 5 · modified, renamed | 4 · line 24, line 68 | 3 · changed, unmerged | 1 · line 85 |
-| `blue` | 1 · palette export | 1 · line 55 | manual | 3 · line 29, line 97 | 1 · style | 2 · line 25, line 72 | — | 1 · line 77 |
-| `magenta` | 1 · palette export | 1 · line 56 | manual | 4 · line 29, line 96 | — | 1 · line 26 | 4 · branch, localBranch | 2 · line 60, line 87 |
-| `cyan` | 1 · palette export | 1 · line 57 | manual | — | — | 1 · line 27 | 3 · remoteBranch, stash | 3 · line 72, line 79 |
-| `white` | 1 · palette export | 4 · line 58, cursor_border | manual | 1 · line 185 | 1 · success_symbol | 3 · line 28, line 68 | — | 2 · line 75, line 89 |
-| `brightblack` | 1 · palette export | 3 · line 62, selection_bg | manual | 6 · line 112, line 118 | — | 1 · line 30 | 1 · context | 6 · line 59, line 65 |
-| `brightred` | 1 · palette export | 2 · line 63, compose_cursor | manual | 2 · line 176, line 189 | 2 · conflicted, error_symbol | 2 · line 31, line 232 | — | — |
-| `brightgreen` | 1 · palette export | 1 · line 64 | manual | 2 · line 126, line 182 | — | 1 · line 32 | 1 · HEAD | — |
-| `brightyellow` | 1 · palette export | 1 · line 65 | manual | 8 · line 115, line 116 | — | 1 · line 33 | 1 · tag | 1 · line 78 |
-| `brightblue` | 1 · palette export | 1 · line 66 | manual | 2 · line 113, line 121 | 3 · ahead, behind | 1 · line 34 | — | — |
-| `brightmagenta` | 1 · palette export | 2 · line 67, cursor_bg | manual | 4 · line 17, line 18 | — | 2 · line 35, line 185 | — | 1 · line 80 |
-| `brightcyan` | 1 · palette export | 1 · line 68 | manual | 3 · line 141, line 142 | — | 1 · line 36 | — | 1 · line 92 |
-| `brightwhite` | 1 · palette export | 1 · line 69 | manual | — | — | 1 · line 37 | — | — |
+| `black` | 1 · palette export | 1 · line 52 | manual | 1 · line 172 | 1 · stashed | 1 · line 21 | 2 · header, meta | 1 · line 91 |
+| `red` | 1 · palette export | 1 · line 53 | manual | — | 1 · untracked | 3 · line 22, line 200 | 4 · untracked, nobranch | 1 · line 66 |
+| `green` | 1 · palette export | 1 · line 54 | manual | 2 · line 29, line 136 | 1 · staged | 3 · line 23, line 69 | 2 · added, new | 1 · line 64 |
+| `yellow` | 1 · palette export | 1 · line 55 | manual | 2 · line 111, line 119 | 5 · modified, renamed | 4 · line 24, line 68 | 3 · changed, unmerged | 1 · line 85 |
+| `blue` | 1 · palette export | 1 · line 56 | manual | 2 · line 29, line 97 | 1 · style | 2 · line 25, line 72 | — | 1 · line 77 |
+| `magenta` | 1 · palette export | 1 · line 57 | manual | 3 · line 29, line 96 | — | 1 · line 26 | 4 · branch, localBranch | 2 · line 60, line 87 |
+| `cyan` | 1 · palette export | 1 · line 58 | manual | — | — | 1 · line 27 | 3 · remoteBranch, stash | 3 · line 72, line 79 |
+| `white` | 1 · palette export | 4 · line 59, cursor_border | manual | — | 1 · success_symbol | 3 · line 28, line 68 | — | 2 · line 75, line 89 |
+| `brightblack` | 1 · palette export | 3 · line 63, selection_bg | manual | 6 · line 109, line 115 | — | 1 · line 30 | 1 · context | 6 · line 59, line 65 |
+| `brightred` | 1 · palette export | 2 · line 64, compose_cursor | manual | 1 · line 173 | 2 · conflicted, error_symbol | 2 · line 31, line 232 | — | — |
+| `brightgreen` | 1 · palette export | 1 · line 65 | manual | 1 · line 123 | — | 1 · line 32 | 1 · HEAD | — |
+| `brightyellow` | 1 · palette export | 1 · line 66 | manual | 8 · line 112, line 113 | — | 1 · line 33 | 1 · tag | 1 · line 78 |
+| `brightblue` | 1 · palette export | 1 · line 67 | manual | 2 · line 110, line 118 | 3 · ahead, behind | 1 · line 34 | — | — |
+| `brightmagenta` | 1 · palette export | 2 · line 68, cursor_bg | manual | 4 · line 17, line 18 | — | 2 · line 35, line 185 | — | 1 · line 80 |
+| `brightcyan` | 1 · palette export | 1 · line 69 | manual | 3 · line 138, line 139 | — | 1 · line 36 | — | 1 · line 92 |
+| `brightwhite` | 1 · palette export | 1 · line 70 | manual | — | — | 1 · line 37 | — | — |
 | `dark` | 1 · palette export | — | — | — | — | — | — | — |
 | `grey` | 1 · palette export | 1 · cursor_fg | — | — | — | — | — | — |
+| `nvim_statusline` | 1 · palette export | — | — | — | — | — | — | — |
 | `terminal_surface` | 1 · palette export | 1 · background | — | — | — | — | — | — |
 
 ## Files and icons
@@ -81,6 +83,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `brightwhite` | 4 · extensions.lua.filename, extensions.lua.icon.style | 2 · lua, py |
 | `dark` | — | — |
 | `grey` | — | — |
+| `nvim_statusline` | — | — |
 | `terminal_surface` | — | — |
 
 ## Syntax and editors
@@ -90,7 +93,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `black` | 37 · ColorColumn, Error | 4 · line 95, line 96 | — | — | 2 · color | 4 · commentsView.resolvedIcon, disabledForeground |
 | `red` | 31 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 5 · line 630, line 879 | 2 · color | 18 · foreground, debugConsole.errorForeground |
 | `green` | 32 · Added, ModeMsg | 11 · line 9, line 10 | 7 · command_alias, command_builtin | 5 · line 31, line 71 | 1 · color | 23 · foreground, activityBar.activeFocusBorder |
-| `yellow` | 45 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 8 · line 97, line 149 | 3 · color | 1 · terminal.ansiYellow |
+| `yellow` | 46 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 8 · line 97, line 149 | 3 · color | 1 · terminal.ansiYellow |
 | `blue` | 41 · Directory, Question | 7 · line 32, line 33 | 3 · command_directory, filename_directory | 10 · line 136, line 383 | 6 · color | 18 · foreground, material-icon-theme.folders.color |
 | `magenta` | 70 · Exception, FloatTitle | 18 · line 11, line 12 | 2 · command_keyword, syntax_history_expansion | 21 · line 110, line 123 | 4 · color | 21 · foreground, activityBarBadge.background |
 | `cyan` | 24 · Character, Delimiter | — | — | — | 1 · color | 1 · terminal.ansiCyan |
@@ -105,6 +108,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `brightwhite` | 7 · @markup.heading.4.markdown, RenderMarkdownH4 | — | — | — | 1 · color | 4 · chat.requestBorder, editor.selectionForeground |
 | `dark` | 3 · Pmenu, PmenuSbar | — | — | — | — | — |
 | `grey` | 35 · Cursor, CursorColumn | — | — | — | 1 · background_color | 2 · editorCursor.background, terminalCursor.foreground |
+| `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | — | — |
 | `terminal_surface` | 1 · line 122 | — | — | — | — | 61 · activityBar.activeBackground, activityBar.activeBorder |
 
 ## Application UI
@@ -127,9 +131,10 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `brightmagenta` | 1 · skill | 1 · status_projects | 2 · consolePrintColor, strokeColor | 5 · cpu_box, cpu_end | — | — |
 | `brightcyan` | — | — | — | 8 · cpu_start, free_end | — | — |
 | `brightwhite` | — | — | — | — | — | 5 · completion-menu.meta.completion, selected |
-| `dark` | — | 1 · background | 4 · inputBackgroundColor, outputBackgroundColor | — | — | — |
+| `dark` | — | — | 4 · inputBackgroundColor, outputBackgroundColor | — | — | — |
 | `grey` | — | 1 · selected | — | 2 · selected_bg, meter_bg | — | — |
-| `terminal_surface` | 1 · surface | 1 · surface | — | — | — | — |
+| `nvim_statusline` | — | — | — | — | — | — |
+| `terminal_surface` | 1 · surface | — | — | — | — | — |
 
 ## File and icon mappings
 

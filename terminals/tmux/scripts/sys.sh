@@ -11,7 +11,18 @@ tmux_option() {
 }
 
 cpu_icon=$(tmux_option '@sys_cpu_icon' '')
+gpu_icon=$(tmux_option '@sys_gpu_icon' '󱙺')
 ram_icon=$(tmux_option '@sys_ram_icon' '')
+
+timeout_command() {
+  if command -v timeout >/dev/null 2>&1; then
+    timeout 1s "$@"
+  elif command -v gtimeout >/dev/null 2>&1; then
+    gtimeout 1s "$@"
+  else
+    return 127
+  fi
+}
 
 color_for_percentage() {
   local value=${1%.*}
@@ -51,6 +62,33 @@ cpu_percentage() {
     if (value > 100) value = 100
     printf "%.0f", value
   }'
+}
+
+gpu_percentage() {
+  local value
+
+  if command -v nvidia-smi >/dev/null 2>&1; then
+    value=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null \
+      | awk 'NF { sum += $1; count++ } END { if (count > 0) printf "%.0f", sum / count }')
+    [[ -n ${value:-} ]] && printf '%s' "$value"
+    return 0
+  fi
+
+  if command -v intel_gpu_top >/dev/null 2>&1; then
+    value=$(timeout_command intel_gpu_top -J -s 250 2>/dev/null \
+      | awk -F '[:,]' '/"Render\/3D\/0"/ { getline; gsub(/[^0-9.]/, "", $2); if ($2 != "") { printf "%.0f", $2; exit } }' || true)
+    [[ -n ${value:-} ]] && printf '%s' "$value"
+    return 0
+  fi
+
+  if command -v radeontop >/dev/null 2>&1; then
+    value=$(timeout_command radeontop -d - -l 1 2>/dev/null \
+      | awk -F '[,%]' '/gpu/ { for (i = 1; i <= NF; i++) if ($i ~ /gpu/) { gsub(/[^0-9.]/, "", $(i + 1)); printf "%.0f", $(i + 1); exit } }' || true)
+    [[ -n ${value:-} ]] && printf '%s' "$value"
+    return 0
+  fi
+
+  return 0
 }
 
 ram_percentage() {
@@ -130,8 +168,12 @@ battery_metrics() {
 }
 
 cpu=$(cpu_percentage)
+gpu=$(gpu_percentage)
 ram=$(ram_percentage)
 
 printf '#[fg=%s,bg=default]%s %3d%% ' "$(color_for_percentage "$cpu")" "$cpu_icon" "$cpu"
+if [[ -n ${gpu:-} ]]; then
+  printf '#[fg=%s,bg=default]%s %3d%% ' "$(color_for_percentage "$gpu")" "$gpu_icon" "$gpu"
+fi
 printf '#[fg=%s,bg=default]%s %3d%% ' "$(color_for_percentage "$ram")" "$ram_icon" "$ram"
 battery_metrics

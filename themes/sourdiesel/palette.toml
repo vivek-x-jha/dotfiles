@@ -89,6 +89,10 @@ role = "dark application background"
 hex = "#313244"
 role = "selection and elevated surface"
 
+[extras.nvim_statusline]
+hex = "#27283a"
+role = "subtle Neovim statusline surface"
+
 [extras.terminal_surface]
 hex = "#212030"
 role = "terminal and desktop chrome surface"

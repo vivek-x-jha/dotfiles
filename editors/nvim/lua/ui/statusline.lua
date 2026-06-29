@@ -72,17 +72,17 @@ local modules = {
     }
 
     local vmode = modes[vim.api.nvim_get_mode().mode]
-    return table.concat { '%#St_', vmode[2], 'mode#', icons.vim, ' ', vmode[1], ' ', '%#Normal#%*' }
+    return table.concat { '%#St_', vmode[2], 'mode#', icons.vim, ' ', vmode[1], ' ', '%#StatusLine#' }
   end,
 
   git_branch = function()
     local buf = vim.b[stbufnr()]
-    return buf.gitsigns_head and table.concat { '%#St_GitBranch#', icons.branch, ' ', buf.gitsigns_head, ' ', '%#Normal#%*' } or ''
+    return buf.gitsigns_head and table.concat { '%#St_GitBranch#', icons.branch, ' ', buf.gitsigns_head, ' ', '%#StatusLine#' } or ''
   end,
 
   lsp = function()
     for _, client in ipairs(vim.lsp.get_clients()) do
-      if client.attached_buffers[stbufnr()] then return table.concat { '%#St_lsp#', icons.lightbulb, ' ', client.name, ' ', '%#Normal#%*' } end
+      if client.attached_buffers[stbufnr()] then return table.concat { '%#St_lsp#', icons.lightbulb, ' ', client.name, ' ', '%#StatusLine#' } end
     end
 
     return ''
@@ -100,7 +100,7 @@ local modules = {
 
     for _, opts in ipairs(lsp_info) do
       local count = #vim.diagnostic.get(bufid, { severity = vim.diagnostic.severity[opts.level] })
-      if count > 0 then table.insert(lsp_diagnostics, table.concat { opts.text, count, '%#Normal#%* ' }) end
+      if count > 0 then table.insert(lsp_diagnostics, table.concat { opts.text, count, '%#StatusLine# ' }) end
     end
 
     return table.concat(lsp_diagnostics)
@@ -119,7 +119,7 @@ local modules = {
 
     local name = path:match '([^/\\]+)[/\\]*$'
     if vim.bo[bufnr].modified then
-      return table.concat { '%#St_filemodIcon#', icons.modified, '%#Normal#%*', ' ', '%#St_filemod#', name, '%#Normal#%*', ' ' }
+      return table.concat { '%#St_filemodIcon#', icons.modified, '%#StatusLine#', ' ', '%#St_filemod#', name, '%#StatusLine#', ' ' }
     end
 
     local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
@@ -128,7 +128,7 @@ local modules = {
       icon, icon_hl = devicons.get_icon(name, nil, { default = true })
     end
 
-    return table.concat { '%#', icon_hl, '#', icon, ' ', '%#St_file#', name, '%#Normal#%*', ' ' }
+    return table.concat { '%#', icon_hl, '#', icon, ' ', '%#St_file#', name, '%#StatusLine#', ' ' }
   end,
 
   git_diff = function()
@@ -145,13 +145,13 @@ local modules = {
 
     for _, mod in ipairs(statuses) do
       local count = mod.cnt or 0
-      if count > 0 then table.insert(modifications, table.concat { mod.hl, mod.icon, count, ' ', '%#Normal#%*' }) end
+      if count > 0 then table.insert(modifications, table.concat { mod.hl, mod.icon, count, ' ', '%#StatusLine#' }) end
     end
 
     return table.concat(modifications)
   end,
 
-  lsp_msg = function() return table.concat { '%#St_lspMsg#', lspmsg.lsp_msg, '%#Normal#%*' } end,
+  lsp_msg = function() return table.concat { '%#St_lspMsg#', lspmsg.lsp_msg, '%#StatusLine#' } end,
 
   cwd = function()
     local threshold = 70
@@ -161,7 +161,7 @@ local modules = {
     path = path:gsub('^' .. vim.env.HOME, '~')
     if #path > threshold then path = '.../' .. path:match '([^/\\]+)[/\\]*$' end
 
-    return table.concat { '%#St_cwd#', icons.folder, ' ', path, ' ', '%#Normal#%*' }
+    return table.concat { '%#St_cwd#', icons.folder, ' ', path, ' ', '%#StatusLine#' }
   end,
 
   git_status = function()
@@ -204,13 +204,13 @@ local modules = {
 
     for _, status in ipairs(statuses) do
       local count = status.cnt or 0
-      if count > 0 then table.insert(git_elements, table.concat { status.hl, status.icon, count, ' ', '%#Normal#%*' }) end
+      if count > 0 then table.insert(git_elements, table.concat { status.hl, status.icon, count, ' ', '%#StatusLine#' }) end
     end
 
     return table.concat(git_elements)
   end,
 
-  cursor = function() return table.concat { '%#St_cursor#', icons.cursor, ' ', '%l:%c', '%#Normal#%*' } end,
+  cursor = function() return table.concat { '%#St_cursor#', icons.cursor, ' ', '%l:%c', '%#StatusLine#' } end,
 }
 
 M.state = lspmsg

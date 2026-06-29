@@ -21,6 +21,7 @@ local thm = {
   -- Other
   dark = '#1b1c28',
   grey = '#313244',
+  nvim_statusline = '#27283a',
 
   -- App specific
   nvim_bg = 'NONE',
