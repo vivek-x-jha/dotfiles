@@ -4576,6 +4576,10 @@ filenames:
     icon:
       glyph: ""
 
+  com.vercel.cli:
+    icon:
+      glyph: ""
+
   completed:
     icon:
       glyph: ""
@@ -4825,6 +4829,10 @@ filenames:
       glyph: ""
 
   pokemon:
+    icon:
+      glyph: ""
+
+  pi:
     icon:
       glyph: ""
 
