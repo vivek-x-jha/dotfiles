@@ -31,6 +31,7 @@ Usage: bootstrap.sh [options]
   -d, --doctor             Validate installed workstation state, then exit
   -n, --dry-run            Print actions instead of executing them
   -i, --interactive        Prompt for configurable choices instead of using defaults
+      --tui                Open the sourdiesel-bootstrap orbital installer UI
       --config PATH        Load an additional bootstrap config override
       --fresh              Use the fresh-machine profile label
       --partial            Use the partial-machine profile label
@@ -49,6 +50,7 @@ parse_args() {
     -d | --doctor) DOCTOR_MODE=1 ;;
     -n | --dry-run) DRY_RUN=1 ;;
     -i | --interactive) INTERACTIVE_OVERRIDE=1 ;;
+    --tui) TUI_MODE=1 ;;
     --fresh) BOOTSTRAP_PROFILE_OVERRIDE=fresh ;;
     --partial) BOOTSTRAP_PROFILE_OVERRIDE=partial ;;
     --only)
@@ -100,6 +102,11 @@ main() {
   init_xdg
   load_bootstrap_config
   apply_bootstrap_target_selection
+
+  ((TUI_MODE)) && {
+    run_sourdiesel_bootstrap_tui
+    exit $?
+  }
 
   notify 'BEGIN BOOTSTRAP DEVELOPMENT SCRIPT'
   show_bootstrap_plan

@@ -42,7 +42,7 @@ This sets up bob under `~/.local/share/bob` and installs the nightly Neovim buil
 ## 4. Clone Vivek’s Dotfiles (HTTPS for now)
 ```bash
 rm -rf ~/.dotfiles
-git clone https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
+git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
 ```
 
 ## 5. Create Required Directories

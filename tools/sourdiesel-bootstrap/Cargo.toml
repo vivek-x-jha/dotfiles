@@ -1,0 +1,8 @@
+[package]
+name = "sourdiesel-bootstrap"
+version = "0.1.0"
+edition = "2021"
+description = "Orbital installer TUI for the SourDiesel dotfiles bootstrap"
+license = "MIT"
+
+[dependencies]

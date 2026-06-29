@@ -47,6 +47,7 @@ Sessionx.vim
 # Runtime Sockets
 # =========================
 *.sock
+**/target/
 
 # =========================
 # Swap Files
