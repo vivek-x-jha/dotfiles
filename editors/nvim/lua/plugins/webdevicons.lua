@@ -7,6 +7,7 @@ local devicons_config = {
     ['sh'] = { icon = icons.shell, name = 'sh', color = thm.white },
     ['bash'] = { icon = icons.shell, name = 'bash' },
     ['zsh'] = { icon = icons.shell, name = 'zsh' },
+    -- nvim-web-devicons handles file icons only; directory glyphs live in tree.lua.
     ['default_icon'] = { icon = icons.file, name = 'Default' },
     ['js'] = { icon = icons.javascript, name = 'js', color = thm.white },
     ['ts'] = { icon = icons.typescript, name = 'ts', color = thm.white },

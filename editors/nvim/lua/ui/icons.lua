@@ -13,6 +13,7 @@ return {
   download = ' ',
   file = '',
   folder = '',
+  folder_empty = '',
   fuzzy = '',
   gear = '',
   git = '',
