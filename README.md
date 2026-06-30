@@ -316,7 +316,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`cli/cia`](./cli/cia), with transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
 - Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
 - [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
-- tmux status uses one local `scripts/sys.sh` segment for CPU, GPU when measurable, RAM, and battery to avoid flicker from staggered plugin shell commands; icons are configurable with `@sys_cpu_icon`, `@sys_gpu_icon`, and `@sys_ram_icon`.
+- tmux status uses one local `scripts/sys.sh` segment for CPU, GPU when measurable, RAM, and battery to avoid flicker from staggered plugin shell commands. GPU and battery segments auto-hide when unsupported; icons are configurable with `@sys_cpu_icon`, `@sys_gpu_icon`, and `@sys_ram_icon`.
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).
 - Hammerspoon automates floating terminal behavior, window management, and app hotkeys.
