@@ -30,6 +30,8 @@
 # Custom bat syntax mirrors Neovim's built-in `sshconfig` filetype.
 --map-syntax "**/ssh/config*:Neovim SSH Config"
 --map-syntax "**/ssh/identities/*:Neovim SSH Config"
+--map-syntax "**/tmux/tmux.conf:Dotfiles Tmux"
+--map-syntax "tmux.conf:Dotfiles Tmux"
 --map-syntax "aliases:Dotfiles Zsh"
 --map-syntax "env:Dotfiles Zsh"
 --map-syntax "profile:Dotfiles Zsh"
