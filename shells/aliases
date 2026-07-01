@@ -147,7 +147,11 @@ command -v SwitchAudioSource &>/dev/null && {
 # -------------------------------- Suffix Aliases ---------------------------------------
 
 # shellcheck disable=SC2128,SC2139,SC2086
-[ -n "${ZSH_VERSION:-}" ] && () {
+# Keep this as an EOF guard: bash cannot parse zsh anonymous functions,
+# so return before bash reads the zsh-only syntax below.
+[ -z "${ZSH_VERSION:-}" ] && return 0
+
+() {
   local ft
 
   # Images
