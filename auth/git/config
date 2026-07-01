@@ -4,6 +4,8 @@
 	name = Vivek Jha
 	email = vivek.x.jha@gmail.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9fFcycueFLoRagrZwmLRmWiA3KDOjnsXlz6cHasozv
+[pull]
+	ff = only
 [core]
 	sshCommand = ssh -F ~/.config/ssh/config
 [gpg]
