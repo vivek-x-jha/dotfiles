@@ -84,8 +84,6 @@ cask "claude"
 cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
-# OpenAI's Codex desktop app for managing coding agents
-cask "codex-app"
 # Voice and text chat software
 cask "discord"
 # Client for the Dropbox cloud storage service

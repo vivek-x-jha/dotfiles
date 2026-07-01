@@ -309,7 +309,7 @@ configure_codex_environment() {
   run "launchctl setenv XDG_STATE_HOME \"$XDG_STATE_HOME\""
   run "launchctl setenv CODEX_HOME \"$codex_home\""
   run "launchctl setenv NVIM_LOG_FILE \"$nvim_log_file\""
-  logg -i "Codex Desktop launch environment: CODEX_HOME=$(pretty_path "$codex_home"), NVIM_LOG_FILE=$(pretty_path "$nvim_log_file")"
+  logg -i "Codex launch environment: CODEX_HOME=$(pretty_path "$codex_home"), NVIM_LOG_FILE=$(pretty_path "$nvim_log_file")"
 }
 
 configure_codex_ui() {

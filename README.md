@@ -267,7 +267,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Cargo](https://doc.rust-lang.org/cargo/) | `CARGO_HOME="$XDG_DATA_HOME/cargo"` | Cargo bin, registry, and cache-like data |
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
-| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex state and runtime-owned `config.toml`; bootstrap exports this for shells and macOS GUI launches, then only merges known SourDiesel UI preference keys from `ai/codex`. |
+| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells and only merges known SourDiesel UI preference keys from `ai/codex`. |
 | [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Only `settings.json` is repo-managed and linked into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
@@ -478,37 +478,11 @@ Codex runtime configuration stays in `$CODEX_HOME/config.toml` because Codex wri
 
 Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./ai/codex/config/preferences.toml) and SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only managed keys and preserves unrelated Codex-owned sections. It also links the tracked [`ai/codex/AGENTS.md`](./ai/codex/AGENTS.md) into `$CODEX_HOME` as global instructions.
 
-The SourDiesel fragment manages Desktop chrome colors and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
+The SourDiesel fragment manages Codex UI and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
 
 Shared color values are defined by [`themes/sourdiesel/palette.toml`](./themes/sourdiesel/palette.toml); the Codex fragment is a validated consumer of that palette.
 
-Codex Desktop's integrated terminal is separate from the shell TUI. Its xterm.js palette is derived from the selected built-in code theme's VS Code terminal color variables, such as `terminal.ansiRed` and `terminal.ansiBrightBlue`. The repo pins `appearanceDarkCodeThemeId`, but does not add unsupported terminal ANSI keys to `config.toml`.
-
-On macOS, bootstrap also publishes `CODEX_HOME`, `NVIM_LOG_FILE`, and the XDG base directories through `launchctl setenv` so Codex Desktop launched from Finder, Spotlight, or Dock uses the same state locations as shell-launched tools. Relaunch Codex Desktop after bootstrap for the launchd environment to take effect.
-
-### Projectless Codex Desktop scratch files
-
-Codex Desktop currently creates projectless file workspaces under the hardcoded
-`~/Documents/Codex` path and does not expose a supported setting for changing
-that root. Keep the generated files physically under `~/Developer` by linking
-the hardcoded path to a dedicated scratch directory:
-
-```sh
-mkdir -p "$HOME/Developer/codex-scratch"
-ln -s "$HOME/Developer/codex-scratch" "$HOME/Documents/Codex"
-```
-
-Run this only when `~/Documents/Codex` does not already exist. Verify the link
-with:
-
-```sh
-readlink "$HOME/Documents/Codex"
-```
-
-Codex may continue displaying the logical `~/Documents/Codex/...` path even
-though the files are stored under `~/Developer/codex-scratch`. Use the actual
-saved project directory for repository work; reserve this location for
-projectless scratch chats and generated outputs.
+On macOS, bootstrap also publishes `CODEX_HOME`, `NVIM_LOG_FILE`, and the XDG base directories through `launchctl setenv` for subprocesses that inherit launchd environment. The Homebrew `codex` CLI remains the supported Codex harness.
 
 Keep `ai/codex/` limited to repo-managed Codex inputs:
 
