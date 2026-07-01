@@ -27,12 +27,14 @@ require('fzf-lua').setup {
     git_diff = {},
 
     bat = {
-      args = '--color=always --style=changes',
+      cmd = vim.fn.expand '$HOME/.dotfiles/cli/fzf/preview.sh',
+      args = '',
       _ctor = previewers.fzf.cmd,
     },
 
     bat_native = {
-      args = '--color=always --style=changes',
+      cmd = vim.fn.expand '$HOME/.dotfiles/cli/fzf/preview.sh',
+      args = '',
       _ctor = previewers.fzf.cmd,
     },
   },

@@ -1,20 +1,7 @@
 # shellcheck shell=bash
 # Fzf: https://junegunn.github.io/fzf/
 
-showdir="$(
-  command -v eza &>/dev/null &&
-    echo 'eza \
-      --all \
-      --tree \
-      --level=3 \
-      --color=always \
-      --icons=always \
-      --group-directories-first \
-      --ignore-glob=".git|.github|.venv|__pycache__" {}' ||
-    echo 'ls -lAh {}'
-)"
-
-showfile="$(command -v bat &>/dev/null && echo 'bat --color=always --style=changes -- {}' || echo 'cat -- {}')"
+preview_cmd="$HOME/.dotfiles/cli/fzf/preview.sh"
 if command -v fd &>/dev/null; then
   findfile='fd --type f'
   findfile_absolute='fd --type f --absolute-path'
@@ -37,10 +24,8 @@ home_path_fields='awk -v home="$HOME" '\''{ original=$0; display=$0; if (display
 findfile_home_paths="$findfile_absolute | $home_path_fields"
 finddir_home_paths="$finddir_absolute | $home_path_fields"
 findpath_home_paths="$findpath_absolute | $home_path_fields"
-showfile_field2="$(printf '%s\n' "$showfile" | sed 's/{}/{2}/g')"
-showdir_field2="$(printf '%s\n' "$showdir" | sed 's/{}/{2}/g')"
-showdir_field3="$(printf '%s\n' "$showdir" | sed 's/{}/{3}/g')"
-preview_field2="if [[ -d {2} ]]; then $showdir_field2; elif [[ -f {2} ]]; then $showfile_field2; fi"
+preview_field2="$preview_cmd {2}"
+preview_field3="$preview_cmd {3}"
 
 # https://github.com/junegunn/fzf?tab=readme-ov-file#environment-variables
 export FZF_DEFAULT_COMMAND="$findfile"
@@ -66,7 +51,7 @@ export FZF_DEFAULT_OPTS="
   --color header-label:$RED_HEX
 
   --preview-label ' preview '
-  --preview 'if [[ -d {} ]]; then $showdir; elif [[ -f {} ]]; then $showfile; fi'
+  --preview '$preview_cmd {}'
   --bind 'ctrl-/:change-preview-window(hidden|)'
   --color preview-border:$BRIGHTBLACK_HEX
   --color preview-label:$CYAN_HEX
@@ -124,7 +109,7 @@ export FZF_ALT_C_OPTS="
   --delimiter '\x1c'
   --with-nth 1
   --accept-nth 2
-  --preview '$showdir_field2'
+  --preview '$preview_field2'
 "
 
 # https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#environment-variables
@@ -139,5 +124,5 @@ export _ZO_FZF_OPTS="
   --delimiter '\t'
   --with-nth 1
   --accept-nth 2
-  --preview '$showdir_field3'
+  --preview '$preview_field3'
 "
