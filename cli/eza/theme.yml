@@ -1396,6 +1396,14 @@ filenames:
       style:
         foreground: 14
 
+  cia.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
   dust.bash:
     filename:
       foreground: 14
@@ -1413,6 +1421,14 @@ filenames:
         foreground: 14
 
   fd.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  pi.bash:
     filename:
       foreground: 14
     icon:
@@ -1548,6 +1564,14 @@ filenames:
       style:
         foreground: 14
 
+  _cia:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
   _dust:
     filename:
       foreground: 14
@@ -1565,6 +1589,14 @@ filenames:
         foreground: 14
 
   _fd:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _pi:
     filename:
       foreground: 14
     icon:
