@@ -26,6 +26,7 @@ Personal macOS and Linux workstation configuration centered on a fast terminal w
 - [AI Workflows](#ai-workflows)
 - [Validation](#validation)
 - [Troubleshooting](#troubleshooting)
+- [Known Issues](./docs/known-issues.md)
 
 ## ⚠️ Read First
 
@@ -620,6 +621,8 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 ```
 
 ## 🧯 Troubleshooting
+
+See [`docs/known-issues.md`](./docs/known-issues.md) for pinned tool versions and active upstream workarounds, including the tmux 3.7/3.7a WezTerm rendering issue.
 
 ### Shell Does Not Load
 
