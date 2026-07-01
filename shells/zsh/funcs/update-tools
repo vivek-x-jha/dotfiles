@@ -209,7 +209,7 @@ notify() {
   logg -c 'brew upgrade --cask --greedy --no-quit -y' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
   notify -s 'RUN QUARANTINE CHECKS'
-  local apps=('Arc' 'ChatGPT' 'Claude' 'Codex' 'Notion Calendar' 'Slack' 'Spotify' 'WhatsApp')
+  local apps=('Arc' 'ChatGPT' 'Claude' 'Notion Calendar' 'Slack' 'Spotify' 'WhatsApp')
   local app='' quarantine_cmd=''
 
   for app in "${apps[@]}"; do
