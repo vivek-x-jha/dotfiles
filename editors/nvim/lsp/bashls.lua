@@ -6,7 +6,7 @@ return {
   filetypes = { 'bash', 'sh' },
   settings = {
     bashIde = {
-      globPattern = '*@(.sh|.inc|.bash|.command|profile|.bashrc|.bash_profile)',
+      globPattern = '*@(.sh|.inc|.bash|.command|profile|.bashrc|.bash_profile|config)',
     },
   },
 }

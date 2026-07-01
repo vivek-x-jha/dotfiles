@@ -1292,14 +1292,6 @@ filenames:
     icon:
       glyph: "󰊕"
 
-  fzf.sh:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
   sh.vim:
     filename:
       foreground: 12

@@ -8,6 +8,7 @@
 
 # Syntaxes
 --map-syntax "**/bat/config:conf"
+--map-syntax "**/fzf/config:Dotfiles Bash"
 --map-syntax "**/git/config:Dotfiles Git Config"
 --map-syntax "**/git/themes/*:Dotfiles Git Config"
 --map-syntax "**/mycli/config:ini"

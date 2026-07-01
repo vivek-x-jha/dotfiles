@@ -174,7 +174,7 @@ parser = "ansi"
 id = "fzf"
 label = "fzf"
 group = "Terminal and shell"
-paths = ["cli/fzf/fzf.sh"]
+paths = ["cli/fzf/config"]
 parser = "env"
 
 [[consumers]]

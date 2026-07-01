@@ -188,6 +188,13 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function() vim.bo.filetype = 'zsh' end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  desc = 'Treat fzf config as bash filetype',
+  group = vim.api.nvim_create_augroup('FzfConfigFtAU', {}),
+  pattern = '*/fzf/config',
+  callback = function() vim.bo.filetype = 'bash' end,
+})
+
 -- [14/15] Keep Session.vim aligned with edit-all file membership
 vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufDelete', 'ShellCmdPost' }, {
   desc = 'Refresh workspace buffers and Session.vim after file membership changes',

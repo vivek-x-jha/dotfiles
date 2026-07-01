@@ -98,7 +98,7 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/bootstrap/lib/validation.sh"
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
-  check_path "$HOME/.dotfiles/cli/fzf/fzf.sh"
+  check_path "$HOME/.dotfiles/cli/fzf/config"
   check_path "$HOME/.dotfiles/cli/cia/config.toml"
   check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"

@@ -35,7 +35,7 @@ unset fn
 source "$SHELL_CONFIG/aliases"
 
 # Fuzzy finder
-source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source "$XDG_CONFIG_HOME/fzf/config"
 eval "$(fzf --bash)"
 
 # Compatibility for scripts that expect the bash-completion pkg

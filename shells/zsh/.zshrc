@@ -46,7 +46,7 @@ eval "$(zsh-patina completion)"
 }
 
 # Interactive plugins
-source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source "$XDG_CONFIG_HOME/fzf/config"
 source <(fzf --zsh)
 
 plug hlissner/zsh-autopair

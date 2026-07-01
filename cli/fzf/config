@@ -1,7 +1,6 @@
 # shellcheck shell=bash
 # Fzf: https://junegunn.github.io/fzf/
 
-preview_cmd="${XDG_CONFIG_HOME:-$HOME/.config}/fzf/preview.sh"
 if command -v fd &>/dev/null; then
   findfile='fd --type f'
   findfile_absolute='fd --type f --absolute-path'
@@ -24,6 +23,8 @@ home_path_fields='awk -v home="$HOME" '\''{ original=$0; display=$0; if (display
 findfile_home_paths="$findfile_absolute | $home_path_fields"
 finddir_home_paths="$finddir_absolute | $home_path_fields"
 findpath_home_paths="$findpath_absolute | $home_path_fields"
+
+preview_cmd="$XDG_CONFIG_HOME/fzf/preview.sh"
 preview_field2="$preview_cmd {2}"
 preview_field3="$preview_cmd {3}"
 

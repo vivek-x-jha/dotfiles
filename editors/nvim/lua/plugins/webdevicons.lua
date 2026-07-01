@@ -96,7 +96,6 @@ local devicons_config = {
     ['.vale.ini'] = { icon = icons.gear, name = '.vale.ini', color = thm.black },
     ['config.sh'] = { icon = icons.shell, name = 'config.sh', color = thm.white },
     ['atuin-zsh-tty-capture.zsh'] = { icon = icons.shell, name = 'AtuinZshTtyCapture', color = thm.brightred },
-    ['fzf.sh'] = { icon = icons.shell, name = 'fzf.sh', color = thm.white },
     ['.bashrc'] = { icon = icons.shell, name = '.bashrc', color = thm.magenta },
     ['.bash_profile'] = { icon = icons.shell, name = '.bash_profile', color = thm.magenta },
     ['.blerc'] = { icon = icons.shell, name = 'Blerc', color = thm.magenta },

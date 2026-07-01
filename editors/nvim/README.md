@@ -108,7 +108,10 @@ standard syntax scripts load:
   identifiers so calls can match bat's blue callable styling without making
   every variable read blue.
 
-The matching highlight groups are defined by the local SourDiesel theme.
+The matching highlight groups are defined by the local SourDiesel theme. Files
+without shell extensions that still use shell syntax, such as `cli/fzf/config`,
+are assigned filetypes in `lua/autocmds.lua` so highlighting and shell LSPs stay
+aligned with bat preview mappings.
 
 ## Statusline
 

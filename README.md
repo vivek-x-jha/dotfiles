@@ -256,7 +256,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [mycli](https://www.mycli.net/connect) | `--myclirc` | 1Password-backed aliases pass `--myclirc "$XDG_CONFIG_HOME/mycli/config"` |
 | [Hammerspoon](https://www.hammerspoon.org/docs/hs.html#configdir) | macOS defaults override | `MJConfigFile="$XDG_CONFIG_HOME/hammerspoon/init.lua"` |
 | [OpenSSH](https://man.openbsd.org/ssh_config) | explicit config in Git | Git uses `ssh -F ~/.config/ssh/config` |
-| [fzf](https://junegunn.github.io/fzf/shell-integration/) | shell integration source | Bootstrap installs upstream fzf to `$XDG_DATA_HOME/fzf`; shell startup prepends `$XDG_DATA_HOME/fzf/bin` when present, then uses `fzf --zsh`/`fzf --bash` and `~/.config/fzf/fzf.sh` |
+| [fzf](https://junegunn.github.io/fzf/shell-integration/) | shell integration source | Bootstrap installs upstream fzf to `$XDG_DATA_HOME/fzf`; shell startup prepends `$XDG_DATA_HOME/fzf/bin` when present, then uses `fzf --zsh`/`fzf --bash` and `~/.config/fzf/config` |
 | [eza colors](https://www.mankier.com/5/eza_colors) | `LS_COLORS`/`EZA_COLORS` | shell startup exports the colors directly from `shells/colors/sourdiesel` |
 
 ### 📦 XDG Data and State Moves

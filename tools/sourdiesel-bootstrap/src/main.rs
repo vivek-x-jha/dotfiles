@@ -90,7 +90,7 @@ fn tasks() -> Vec<Task> {
             label: "install and wire fzf",
             risk: "safe",
             summary: "Ensure fzf binary and shell integration are available.",
-            inputs: &["command -v fzf", "cli/fzf/fzf.sh", "shell startup files"],
+            inputs: &["command -v fzf", "cli/fzf/config", "shell startup files"],
             outputs: &[
                 "fzf install only when missing",
                 "shell integration remains sourced",
