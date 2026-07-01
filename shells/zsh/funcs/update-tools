@@ -222,10 +222,16 @@ notify() {
   done
 
   logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
-  logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
+  logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR REPORTED WARNINGS'
 
   notify -s 'EXPORT BREWFILE'
-  logg -c "brew bundle dump --force --no-npm" || logg -w 'UPDATE BREWFILE FAILED'
+  if [[ -z ${HOMEBREW_BUNDLE_FILE:-} ]]; then
+    logg -w 'HOMEBREW_BUNDLE_FILE unset; skipping Brewfile export'
+  elif logg -c "brew bundle dump --force --no-npm"; then
+    perl -0pi -e 's/^tap "[^"]+\/local-versions"\n//mg; s/^brew "[^"]+\/local-versions\/tmux\@3\.6b"[^\n]*/brew "tmux"/mg' "$HOMEBREW_BUNDLE_FILE"
+  else
+    logg -w 'UPDATE BREWFILE FAILED'
+  fi
 }
 
 ((update_icons)) && {
@@ -237,7 +243,5 @@ notify() {
   notify 'UPDATE TEX LIVE'
   logg -c 'sudo tlmgr update --self --all' || logg -w 'UPDATE TEX LIVE FAILED'
 }
-
-rmdir "$XDG_CONFIG_HOME/homebrew" 2>/dev/null || true
 
 return 0
