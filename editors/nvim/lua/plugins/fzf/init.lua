@@ -1,6 +1,7 @@
 ---@type table<string, string> Custom icons
 local icons = require 'ui.icons'
 local previewers = require 'fzf-lua.previewer'
+local fzf_preview = (vim.env.XDG_CONFIG_HOME or vim.fn.expand '~/.config') .. '/fzf/preview.sh'
 
 require('fzf-lua').setup {
   winopts = {
@@ -27,13 +28,13 @@ require('fzf-lua').setup {
     git_diff = {},
 
     bat = {
-      cmd = vim.fn.expand '$HOME/.dotfiles/cli/fzf/preview.sh',
+      cmd = fzf_preview,
       args = '',
       _ctor = previewers.fzf.cmd,
     },
 
     bat_native = {
-      cmd = vim.fn.expand '$HOME/.dotfiles/cli/fzf/preview.sh',
+      cmd = fzf_preview,
       args = '',
       _ctor = previewers.fzf.cmd,
     },

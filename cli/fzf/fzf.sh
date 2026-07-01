@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 # Fzf: https://junegunn.github.io/fzf/
 
-preview_cmd="$HOME/.dotfiles/cli/fzf/preview.sh"
+preview_cmd="${XDG_CONFIG_HOME:-$HOME/.config}/fzf/preview.sh"
 if command -v fd &>/dev/null; then
   findfile='fd --type f'
   findfile_absolute='fd --type f --absolute-path'
