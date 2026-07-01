@@ -7,9 +7,19 @@
 --italic-text=always
 
 # Syntaxes
---map-syntax "config:ssh_config"
+--map-syntax "**/bat/config:conf"
+--map-syntax "**/git/config:gitconfig"
+--map-syntax "**/git/themes/*:gitconfig"
+--map-syntax "**/mycli/config:ini"
+--map-syntax "**/ripgrep/config:conf"
+--map-syntax "**/shells/colors/*:bash"
+--map-syntax "**/shells/zsh/comps/*:zsh"
+# Custom bat syntax mirrors Neovim's built-in `sshconfig` filetype.
+--map-syntax "**/ssh/config*:Neovim SSH Config"
+--map-syntax "**/ssh/identities/*:Neovim SSH Config"
+--map-syntax "aliases:bash"
+--map-syntax "env:bash"
 --map-syntax "profile:bash"
---map-syntax "sourdiesel:bash"
 --map-syntax "*.js:JavaScript"
 --map-syntax "*.ino:C++"
 --map-syntax ".ignore:gitignore"
