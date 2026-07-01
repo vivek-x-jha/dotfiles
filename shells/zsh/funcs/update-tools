@@ -14,6 +14,7 @@ Options:
   -l, --tldr           update the TLDR cache
   -f, --fzf            update the fzf checkout
   -n, --nvim           update Neovim plugins
+      --pi             update Pi coding agent
   -r, --rust           update Rust and cargo-installed tools
   -b, --brew           run Homebrew maintenance
   -i, --icons          refresh macOS icons
@@ -32,6 +33,7 @@ select_all_steps() {
   update_tldr=1
   update_fzf=1
   update_nvim=1
+  update_pi=1
   update_rust=1
   update_brew=1
   update_icons=1
@@ -48,6 +50,7 @@ local update_tmux=0
 local update_tldr=0
 local update_fzf=0
 local update_nvim=0
+local update_pi=0
 local update_rust=0
 local update_brew=0
 local update_icons=0
@@ -62,6 +65,7 @@ while (( $# )); do
   -l|--tldr) update_tldr=1; selected_steps=1 ;;
   -f|--fzf) update_fzf=1; selected_steps=1 ;;
   -n|--nvim) update_nvim=1; selected_steps=1 ;;
+  --pi) update_pi=1; selected_steps=1 ;;
   -r|--rust) update_rust=1; selected_steps=1 ;;
   -b|--brew) update_brew=1; selected_steps=1 ;;
   -i|--icons) update_icons=1; selected_steps=1 ;;
@@ -103,6 +107,7 @@ local TOTAL_STEPS=$((
   update_tldr +
   update_fzf +
   update_nvim +
+  update_pi +
   update_rust +
   update_brew +
   update_icons +
@@ -179,6 +184,15 @@ notify() {
 ((update_nvim)) && {
   notify 'UPDATE NEOVIM PLUGINS'
   logg -c "nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'" || logg -w 'UPDATE NEOVIM PLUGINS FAILED'
+}
+
+((update_pi)) && {
+  notify 'UPDATE PI CODING AGENT'
+  if command -v pi &>/dev/null; then
+    logg -c 'pi update --all' || logg -w 'UPDATE PI CODING AGENT FAILED'
+  else
+    logg -w 'PI NOT FOUND ON $PATH; SKIPPING PI UPDATE'
+  fi
 }
 
 ((update_rust)) && {

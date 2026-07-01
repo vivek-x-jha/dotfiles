@@ -12,6 +12,7 @@ _update_tools() {
     '(-l --tldr)'{-l,--tldr}'[update the TLDR cache]'
     '(-f --fzf)'{-f,--fzf}'[update the fzf checkout]'
     '(-n --nvim)'{-n,--nvim}'[update Neovim plugins]'
+    '--pi[update Pi coding agent]'
     '(-r --rust)'{-r,--rust}'[update Rust and cargo-installed tools]'
     '(-b --brew)'{-b,--brew}'[run Homebrew maintenance]'
     '(-i --icons)'{-i,--icons}'[refresh macOS icons]'

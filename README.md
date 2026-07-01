@@ -395,7 +395,7 @@ The Rust install flow:
 3. Installs `cargo-update`.
 4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting and completion generation.
 
-`update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
+`update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
 The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested helpers before the recursive quarantine pass completes. Restart upgraded apps manually to use their new versions. The quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
 
 ## 📦 Package Management
@@ -541,6 +541,12 @@ Run selected updates only:
 update-tools --brew --rust --nvim
 ```
 
+Update only Pi:
+
+```sh
+update-tools --pi
+```
+
 Update only TeX Live:
 
 ```sh
@@ -559,6 +565,7 @@ brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
 git -C "$XDG_DATA_HOME/fzf" pull --ff-only
 nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'
+pi update --all
 rustup update stable
 cargo install-update -a --git
 uv tool upgrade --all
