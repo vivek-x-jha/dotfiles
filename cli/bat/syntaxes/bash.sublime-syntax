@@ -1,0 +1,157 @@
+%YAML 1.2
+---
+name: Dotfiles Bash
+scope: source.shell.bash
+file_extensions:
+  - dotfiles_bash
+
+# Dotfiles shell syntax for bat previews, aligned with Neovim sh/bash highlights.
+# Goals:
+# - local/declare/typeset/export-style declaration keywords use shell statement magenta.
+# - single-quoted words are strings/green.
+# - double quotes are not blanket strings/green; variables inside remain red.
+# - path-like text stays neutral/white, while embedded shell variables remain red.
+
+variables:
+  ident: '[A-Za-z_][A-Za-z0-9_]*'
+  command_start: '(^|[;|&({])\s*'
+  path_chars: 'A-Za-z0-9_@%+=:,.$~{}-'
+
+contexts:
+  main:
+    - include: comments
+    - include: strings
+    - include: function-declarations
+    - include: variables
+    - include: declarations
+    - include: control
+    - include: builtins
+    - include: paths
+    - include: commands
+    - include: numbers
+    - include: operators
+
+  comments:
+    - match: '#.*$'
+      scope: comment.line.number-sign.shell
+
+  strings:
+    - match: "'"
+      scope: punctuation.definition.string.begin.shell
+      push: single-quoted
+    - match: '"(?=[^"\n]*\$)'
+      scope: punctuation.definition.string.begin.shell
+      push: double-quoted-with-variable
+    - match: '"'
+      scope: punctuation.definition.string.begin.shell
+      push: double-quoted-no-variable
+
+  single-quoted:
+    - meta_content_scope: string.quoted.single.shell
+    - match: "'"
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  double-quoted-no-variable:
+    - meta_content_scope: string.quoted.double.shell
+    - include: escapes
+    - match: '"'
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  double-quoted-with-variable:
+    # No string meta_scope: text in variable-bearing quotes stays neutral/white,
+    # while variable references remain red.
+    - include: variables
+    - include: escapes
+    - include: paths
+    - match: '"'
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  escapes:
+    - match: '\\.'
+      scope: constant.character.escape.shell
+
+  function-declarations:
+    - match: '^(\s*)(function)(\s+)({{ident}}[-A-Za-z0-9_]*)(\s*(?:\(\))?\s*)(\{)?'
+      captures:
+        2: storage.modifier.shell
+        4: entity.name.function.shell
+        5: punctuation.section.function.shell
+        6: punctuation.section.block.begin.shell
+    - match: '^(\s*)({{ident}}[-A-Za-z0-9_]*)(\s*)(\(\))(\s*)(\{)?'
+      captures:
+        2: entity.name.function.shell
+        4: punctuation.section.function.shell
+        6: punctuation.section.block.begin.shell
+
+  variables:
+    - match: '\$\{'
+      scope: variable.other.readwrite.shell
+      push: braced-variable
+    - match: '\$(?:{{ident}}|[0-9*@#?\$!-])'
+      scope: variable.other.readwrite.shell
+    - match: '\$[(][^)]*[)]'
+      scope: meta.function-call.shell
+
+  braced-variable:
+    - match: '\}'
+      scope: variable.other.readwrite.shell
+      pop: true
+    - include: variables
+    - match: '{{ident}}'
+      scope: variable.other.readwrite.shell
+    - match: '[:-]|[=+?]'
+      scope: keyword.operator.shell
+    - match: '(?:~|\.{1,2})?/[-A-Za-z0-9_@%+=:,.$~]+(?:/[-A-Za-z0-9_@%+=:,.$~]+)*'
+      scope: meta.path.shell
+
+  declarations:
+    - match: '{{command_start}}(local|declare|typeset|readonly|export)\b'
+      captures:
+        2: storage.modifier.shell
+    - match: '\b(local|declare|typeset|readonly|export)\b'
+      scope: storage.modifier.shell
+
+  control:
+    - match: '(?<=[;|&({])\s*(case|coproc|do|done|elif|else|esac|fi|for|function|if|in|return|select|then|time|until|while)\b'
+      captures:
+        1: keyword.control.shell
+    - match: '{{command_start}}(case|coproc|do|done|elif|else|esac|fi|for|function|if|in|return|select|then|time|until|while)\b'
+      captures:
+        2: keyword.control.shell
+    - match: '\b(case|coproc|do|done|elif|else|esac|fi|for|function|if|in|return|select|then|time|until|while)\b'
+      scope: keyword.control.shell
+
+  builtins:
+    - match: '(?<=[;|&({])\s*(alias|bind|builtin|cd|command|compgen|complete|eval|exec|let|printf|read|set|shopt|source|test|trap|type|ulimit|umask|unalias|unset)\b'
+      captures:
+        1: support.function.builtin.shell
+    - match: '{{command_start}}(alias|bind|builtin|cd|command|compgen|complete|eval|exec|let|printf|read|set|shopt|source|test|trap|type|ulimit|umask|unalias|unset)\b'
+      captures:
+        2: support.function.builtin.shell
+    - match: '\b(alias|bind|builtin|cd|command|compgen|complete|eval|exec|let|printf|read|set|shopt|source|test|trap|type|ulimit|umask|unalias|unset)\b'
+      scope: support.function.builtin.shell
+
+  paths:
+    - match: '(?:~|\.{1,2})?/[-{{path_chars}}]+(?:/[-{{path_chars}}]+)*'
+      scope: meta.path.shell
+    - match: '[-{{path_chars}}]+/[-{{path_chars}}]+(?:/[-{{path_chars}}]+)*'
+      scope: meta.path.shell
+
+  commands:
+    - match: '^\s*({{ident}}[-A-Za-z0-9_.:]*)(?=\s|$)'
+      captures:
+        1: meta.function-call.identifier.shell
+    - match: '(?<=[;|&({])\s*({{ident}}[-A-Za-z0-9_.:]*)(?=\s|$)'
+      captures:
+        1: meta.function-call.identifier.shell
+
+  numbers:
+    - match: '\b\d+\b'
+      scope: constant.numeric.shell
+
+  operators:
+    - match: '(\|\||&&|;;|[|&;<>])'
+      scope: keyword.operator.shell
