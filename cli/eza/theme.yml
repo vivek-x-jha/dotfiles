@@ -352,6 +352,14 @@ filenames:
     icon:
       glyph: ""
 
+  models:
+    icon:
+      glyph: ""
+
+  blob:
+    icon:
+      glyph: ""
+
   node:
     icon:
       glyph: ""
