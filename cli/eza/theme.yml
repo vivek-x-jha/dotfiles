@@ -284,6 +284,22 @@ filenames:
       style:
         foreground: white
 
+  id_ed25519:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
+  id_ed25519.pub:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
   signing.key:
     filename:
       foreground: 09
@@ -315,6 +331,10 @@ filenames:
       glyph: ""
       style:
         foreground: magenta
+
+  agents:
+    icon:
+      glyph: ""
 
   apps:
     icon:
@@ -356,7 +376,27 @@ filenames:
     icon:
       glyph: ""
 
+  library:
+    icon:
+      glyph: ""
+
+  llama3.1:
+    icon:
+      glyph: ""
+
+  qwen2.5-coder:
+    icon:
+      glyph: ""
+
+  registry.ollama.ai:
+    icon:
+      glyph: ""
+
   blob:
+    icon:
+      glyph: ""
+
+  blobs:
     icon:
       glyph: ""
 

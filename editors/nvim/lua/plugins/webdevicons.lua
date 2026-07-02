@@ -147,6 +147,8 @@ local devicons_config = {
     ['identity'] = { icon = icons.git, name = 'identity', color = thm.white },
     ['auth.key'] = { icon = icons.key, name = 'auth.key', color = thm.brightred },
     ['auth.key.pub'] = { icon = icons.key, name = 'auth.key.pub', color = thm.white },
+    ['id_ed25519'] = { icon = icons.key, name = 'id_ed25519', color = thm.brightred },
+    ['id_ed25519.pub'] = { icon = icons.key, name = 'id_ed25519.pub', color = thm.black },
     ['signing.key'] = { icon = icons.key, name = 'signing.key', color = thm.brightred },
     ['signing.key.pub'] = { icon = icons.key, name = 'signing.key.pub', color = thm.white },
     ['1password'] = { icon = icons.gear, name = '1password', color = thm.white },
