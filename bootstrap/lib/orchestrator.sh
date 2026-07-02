@@ -14,6 +14,67 @@ configure_codex_phase() {
   configure_codex_ui
 }
 
+run_bootstrap_target_selection() {
+  local target var
+
+  notify 'RUN SELECTED BOOTSTRAP TARGETS'
+  while IFS= read -r target; do
+    var="$(bootstrap_target_var "$target")" || {
+      logg -e "Unknown bootstrap target: $target"
+      return 1
+    }
+
+    bootstrap_config_bool "$var" 0 || {
+      logg -w "Skipping selected target $target (${var}=0)"
+      continue
+    }
+
+    notify -s "Target: $target"
+    run_bootstrap_target "$target"
+  done < <(bootstrap_words "$BOOTSTRAP_ONLY_TARGETS")
+}
+
+run_bootstrap_target() {
+  case "$1" in
+  packages)
+    setup_package_manager
+    install_package_sets
+    ;;
+  fzf) install_fzf ;;
+  gh) install_gh ;;
+  glow) install_glow ;;
+  env | environment) collect_environment ;;
+  symlinks | links) create_symlinks ;;
+  codex) configure_codex_phase ;;
+  os | macos) configure_macos_defaults ;;
+  git | github)
+    collect_environment
+    configure_git_and_github
+    ;;
+  repos | developer-repos) clone_developer_repos ;;
+  templates) install_templates ;;
+  shell-plugins | plugins) install_shell_plugins ;;
+  atuin)
+    collect_environment
+    setup_atuin_sync
+    ;;
+  bat | themes) load_bat_themes ;;
+  sudo | touchid)
+    authorize
+    configure_sudo_auth
+    ;;
+  shell) change_shell_default ;;
+  hammerspoon | desktop) configure_hammerspoon ;;
+  rust) install_rust_tooling ;;
+  cia | agents) install_cia ;;
+  ide | editor) setup_ide ;;
+  *)
+    logg -e "Unknown bootstrap target: $1"
+    return 1
+    ;;
+  esac
+}
+
 install_shell_plugins() {
   notify -s 'Install zap'
   [[ -f $XDG_DATA_HOME/zap/zap.zsh ]] || run 'zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k'

@@ -100,6 +100,8 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/config"
   check_path "$HOME/.dotfiles/cli/cia/config.toml"
+  check_path "$HOME/.dotfiles/cli/pi/models.json"
+  check_path "$HOME/.dotfiles/cli/pi/themes/sourdiesel.json"
   check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
@@ -251,6 +253,8 @@ doctor_bootstrap() {
   doctor_dir "$XDG_STATE_HOME/less"
   doctor_dir "$XDG_STATE_HOME/mycli"
   doctor_dir "$XDG_STATE_HOME/mysql"
+  doctor_dir "$XDG_STATE_HOME/pi/agent"
+  doctor_dir "$XDG_STATE_HOME/pi/agent/themes"
   doctor_dir "$XDG_STATE_HOME/python"
   doctor_dir "$XDG_STATE_HOME/ipython"
   doctor_dir "$XDG_STATE_HOME/zsh"
@@ -274,6 +278,8 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/git" ../.dotfiles/auth/git
   doctor_symlink "$XDG_CONFIG_HOME/glow" ../.dotfiles/cli/glow
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/models.json" ../../../../.dotfiles/cli/pi/models.json
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json" ../../../../../.dotfiles/cli/pi/themes/sourdiesel.json
   doctor_symlink "$XDG_CONFIG_HOME/nvim" ../.dotfiles/editors/nvim
   doctor_symlink "$XDG_CONFIG_HOME/shells" ../.dotfiles/shells
   doctor_symlink "$XDG_CONFIG_HOME/shells/zsh/.zshenv" ../env
@@ -323,6 +329,7 @@ doctor_bootstrap() {
   doctor_cmd bat optional
   doctor_cmd tmux optional
   doctor_cmd nvim optional
+  doctor_cmd ollama optional
   doctor_cmd uv optional
   doctor_cmd cargo optional
   doctor_cmd cia optional

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091,SC2034
 
-clear
-
 BOOTSTRAP_ENTRYPOINT="${BASH_SOURCE[0]}"
 BOOTSTRAP_ROOT="$(cd "$(dirname "$BOOTSTRAP_ENTRYPOINT")" && pwd)"
 
@@ -99,6 +97,7 @@ parse_args() {
 
 main() {
   parse_args "$@"
+  clear
   init_xdg
   load_bootstrap_config
   apply_bootstrap_target_selection
@@ -123,6 +122,14 @@ main() {
     doctor_bootstrap
     exit $?
   }
+
+  if [[ -n ${BOOTSTRAP_ONLY_TARGETS:-} ]]; then
+    notify 'DETECT 1PASSWORD'
+    use_op
+    run_bootstrap_target_selection
+    printf '\n%s\n' "${CYAN}SELECTED BOOTSTRAP TARGETS COMPLETE${RESET}"
+    exit 0
+  fi
 
   notify 'AUTHORIZE & DETECT 1PASSWORD'
   authorize

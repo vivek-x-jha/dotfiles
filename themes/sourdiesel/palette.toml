@@ -354,6 +354,14 @@ parser = "hex"
 allowed_hex = []
 
 [[consumers]]
+id = "pi"
+label = "Pi coding agent"
+group = "Application UI"
+paths = ["cli/pi/themes/sourdiesel.json"]
+parser = "hex"
+allowed_hex = []
+
+[[consumers]]
 id = "cia"
 label = "CIA agent manager"
 group = "Application UI"

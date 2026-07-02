@@ -153,6 +153,8 @@ create_symlinks() {
     "$XDG_STATE_HOME/less"
     "$XDG_STATE_HOME/mycli"
     "$XDG_STATE_HOME/mysql"
+    "$XDG_STATE_HOME/pi/agent"
+    "$XDG_STATE_HOME/pi/agent/themes"
     "$XDG_STATE_HOME/python"
     "$XDG_STATE_HOME/ipython"
     "$XDG_STATE_HOME/zsh"
@@ -181,6 +183,8 @@ create_symlinks() {
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
     ../.dotfiles/cli/npm "$XDG_CONFIG_HOME" npm
+    ../../../../.dotfiles/cli/pi/models.json "$XDG_STATE_HOME/pi/agent" models.json
+    ../../../../../.dotfiles/cli/pi/themes/sourdiesel.json "$XDG_STATE_HOME/pi/agent/themes" sourdiesel.json
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
     ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
@@ -297,8 +301,16 @@ create_symlinks() {
 configure_codex_environment() {
   local codex_home="${CODEX_HOME:-$XDG_STATE_HOME/codex}"
   local nvim_log_file="${NVIM_LOG_FILE:-$XDG_STATE_HOME/nvim/nvim.log}"
+  local pi_agent_dir="${PI_CODING_AGENT_DIR:-$XDG_STATE_HOME/pi/agent}"
+  local ollama_host="${OLLAMA_HOST:-127.0.0.1:11434}"
+  local ollama_flash_attention="${OLLAMA_FLASH_ATTENTION:-1}"
+  local ollama_kv_cache_type="${OLLAMA_KV_CACHE_TYPE:-q8_0}"
   export CODEX_HOME="$codex_home"
   export NVIM_LOG_FILE="$nvim_log_file"
+  export PI_CODING_AGENT_DIR="$pi_agent_dir"
+  export OLLAMA_HOST="$ollama_host"
+  export OLLAMA_FLASH_ATTENTION="$ollama_flash_attention"
+  export OLLAMA_KV_CACHE_TYPE="$ollama_kv_cache_type"
 
   [[ $OS_TYPE == macos ]] || return
   require launchctl || return
@@ -309,7 +321,11 @@ configure_codex_environment() {
   run "launchctl setenv XDG_STATE_HOME \"$XDG_STATE_HOME\""
   run "launchctl setenv CODEX_HOME \"$codex_home\""
   run "launchctl setenv NVIM_LOG_FILE \"$nvim_log_file\""
-  logg -i "Codex launch environment: CODEX_HOME=$(pretty_path "$codex_home"), NVIM_LOG_FILE=$(pretty_path "$nvim_log_file")"
+  run "launchctl setenv PI_CODING_AGENT_DIR \"$pi_agent_dir\""
+  run "launchctl setenv OLLAMA_HOST \"$ollama_host\""
+  run "launchctl setenv OLLAMA_FLASH_ATTENTION \"$ollama_flash_attention\""
+  run "launchctl setenv OLLAMA_KV_CACHE_TYPE \"$ollama_kv_cache_type\""
+  logg -i "Agent launch environment: CODEX_HOME=$(pretty_path "$codex_home"), PI_CODING_AGENT_DIR=$(pretty_path "$pi_agent_dir"), OLLAMA_HOST=$ollama_host"
 }
 
 configure_codex_ui() {

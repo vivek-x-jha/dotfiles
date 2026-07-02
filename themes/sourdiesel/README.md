@@ -40,21 +40,21 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Shell ANSI | WezTerm | Terminal.app | tmux | Starship | Powerlevel10k | Git | fzf |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 1 · palette export | 1 · line 52 | manual | 1 · line 172 | 1 · stashed | 1 · line 21 | 2 · header, meta | 1 · line 77 |
+| `black` | 1 · palette export | 1 · line 52 | manual | 1 · line 173 | 1 · stashed | 1 · line 21 | 2 · header, meta | 1 · line 77 |
 | `red` | 1 · palette export | 1 · line 53 | manual | — | 1 · untracked | 3 · line 22, line 200 | 4 · untracked, nobranch | 1 · line 52 |
-| `green` | 1 · palette export | 1 · line 54 | manual | 2 · line 29, line 136 | 1 · staged | 3 · line 23, line 69 | 2 · added, new | 1 · line 50 |
-| `yellow` | 1 · palette export | 1 · line 55 | manual | 2 · line 111, line 119 | 5 · modified, renamed | 4 · line 24, line 68 | 3 · changed, unmerged | 1 · line 71 |
-| `blue` | 1 · palette export | 1 · line 56 | manual | 2 · line 29, line 97 | 1 · style | 2 · line 25, line 72 | — | 1 · line 63 |
-| `magenta` | 1 · palette export | 1 · line 57 | manual | 3 · line 29, line 96 | — | 1 · line 26 | 4 · branch, localBranch | 2 · line 46, line 73 |
+| `green` | 1 · palette export | 1 · line 54 | manual | 2 · line 29, line 137 | 1 · staged | 3 · line 23, line 69 | 2 · added, new | 1 · line 50 |
+| `yellow` | 1 · palette export | 1 · line 55 | manual | 2 · line 112, line 120 | 5 · modified, renamed | 4 · line 24, line 68 | 3 · changed, unmerged | 1 · line 71 |
+| `blue` | 1 · palette export | 1 · line 56 | manual | 2 · line 29, line 98 | 1 · style | 2 · line 25, line 72 | — | 1 · line 63 |
+| `magenta` | 1 · palette export | 1 · line 57 | manual | 3 · line 29, line 97 | — | 1 · line 26 | 4 · branch, localBranch | 2 · line 46, line 73 |
 | `cyan` | 1 · palette export | 1 · line 58 | manual | — | — | 1 · line 27 | 3 · remoteBranch, stash | 3 · line 58, line 65 |
 | `white` | 1 · palette export | 4 · line 59, cursor_border | manual | — | 1 · success_symbol | 3 · line 28, line 68 | — | 2 · line 61, line 75 |
-| `brightblack` | 1 · palette export | 3 · line 63, selection_bg | manual | 6 · line 109, line 115 | — | 1 · line 30 | 1 · context | 6 · line 45, line 51 |
-| `brightred` | 1 · palette export | 2 · line 64, compose_cursor | manual | 1 · line 173 | 2 · conflicted, error_symbol | 2 · line 31, line 232 | — | — |
-| `brightgreen` | 1 · palette export | 1 · line 65 | manual | 1 · line 123 | — | 1 · line 32 | 1 · HEAD | — |
-| `brightyellow` | 1 · palette export | 1 · line 66 | manual | 8 · line 112, line 113 | — | 1 · line 33 | 1 · tag | 1 · line 64 |
-| `brightblue` | 1 · palette export | 1 · line 67 | manual | 2 · line 110, line 118 | 3 · ahead, behind | 1 · line 34 | — | — |
+| `brightblack` | 1 · palette export | 3 · line 63, selection_bg | manual | 6 · line 110, line 116 | — | 1 · line 30 | 1 · context | 6 · line 45, line 51 |
+| `brightred` | 1 · palette export | 2 · line 64, compose_cursor | manual | 1 · line 174 | 2 · conflicted, error_symbol | 2 · line 31, line 232 | — | — |
+| `brightgreen` | 1 · palette export | 1 · line 65 | manual | 1 · line 124 | — | 1 · line 32 | 1 · HEAD | — |
+| `brightyellow` | 1 · palette export | 1 · line 66 | manual | 8 · line 113, line 114 | — | 1 · line 33 | 1 · tag | 1 · line 64 |
+| `brightblue` | 1 · palette export | 1 · line 67 | manual | 2 · line 111, line 119 | 3 · ahead, behind | 1 · line 34 | — | — |
 | `brightmagenta` | 1 · palette export | 2 · line 68, cursor_bg | manual | 4 · line 17, line 18 | — | 2 · line 35, line 185 | — | 1 · line 66 |
-| `brightcyan` | 1 · palette export | 1 · line 69 | manual | 3 · line 138, line 139 | — | 1 · line 36 | — | 1 · line 78 |
+| `brightcyan` | 1 · palette export | 1 · line 69 | manual | 3 · line 139, line 140 | — | 1 · line 36 | — | 1 · line 78 |
 | `brightwhite` | 1 · palette export | 1 · line 70 | manual | — | — | 1 · line 37 | — | — |
 | `dark` | 1 · palette export | — | — | — | — | — | — | — |
 | `grey` | 1 · palette export | 1 · cursor_fg | — | — | — | — | — | — |
@@ -113,28 +113,28 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## Application UI
 
-| Color | Codex | CIA agent manager | Hammerspoon | btop | Atuin | mycli |
-| --- | --- | --- | --- | --- | --- | --- |
-| `black` | 1 · ink | 1 · preview_text | — | — | 1 · Title | — |
-| `red` | 1 · diffRemoved | 1 · status_archive_action | 1 · consoleResultColor | 5 · graph_text, proc_misc | 1 · AlertInfo | — |
-| `green` | 1 · diffAdded | 1 · status_new_chat | 2 · consoleCommandColor, textColor | 4 · mem_box, temp_start | 1 · AlertError | — |
-| `yellow` | — | 1 · status_help | — | — | 1 · Annotation | — |
-| `blue` | — | 2 · status_threads, preview_user | — | — | 1 · Guidance | — |
-| `magenta` | 1 · accent | 2 · accent, status_archive | — | — | — | — |
-| `cyan` | — | 2 · status_unarchive, preview_codex | — | — | — | — |
-| `white` | — | 2 · foreground, status_open | — | 2 · main_fg, title | — | 3 · sql.operator, sql.punctuation |
-| `brightblack` | — | 1 · muted | — | 2 · inactive_fg, div_line | 1 · Base | 1 · completion-menu.completion |
-| `brightred` | — | 2 · error, status_delete | — | 3 · net_box, available_end | — | — |
-| `brightgreen` | — | 1 · success | — | — | 1 · Important | — |
-| `brightyellow` | — | 2 · warning, status_search | — | 4 · hi_fg, temp_mid | 1 · AlertWarn | — |
-| `brightblue` | — | — | — | 6 · selected_fg, proc_box | — | 1 · output.header |
-| `brightmagenta` | 1 · skill | 1 · status_projects | 2 · consolePrintColor, strokeColor | 5 · cpu_box, cpu_end | — | — |
-| `brightcyan` | — | — | — | 8 · cpu_start, free_end | — | — |
-| `brightwhite` | — | — | — | — | — | 5 · completion-menu.meta.completion, selected |
-| `dark` | — | — | 4 · inputBackgroundColor, outputBackgroundColor | — | — | — |
-| `grey` | — | 1 · selected | — | 2 · selected_bg, meter_bg | — | — |
-| `nvim_statusline` | — | — | — | — | — | — |
-| `terminal_surface` | 1 · surface | — | — | — | — | — |
+| Color | Codex | Pi coding agent | CIA agent manager | Hammerspoon | btop | Atuin | mycli |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `black` | 1 · ink | 2 · black, BLACK_HEX | 1 · preview_text | — | — | 1 · Title | — |
+| `red` | 1 · diffRemoved | 1 · red | 1 · status_archive_action | 1 · consoleResultColor | 5 · graph_text, proc_misc | 1 · AlertInfo | — |
+| `green` | 1 · diffAdded | 1 · green | 1 · status_new_chat | 2 · consoleCommandColor, textColor | 4 · mem_box, temp_start | 1 · AlertError | — |
+| `yellow` | — | 1 · yellow | 1 · status_help | — | — | 1 · Annotation | — |
+| `blue` | — | 1 · blue | 2 · status_threads, preview_user | — | — | 1 · Guidance | — |
+| `magenta` | 1 · accent | 1 · magenta | 2 · accent, status_archive | — | — | — | — |
+| `cyan` | — | 1 · cyan | 2 · status_unarchive, preview_codex | — | — | — | — |
+| `white` | — | 1 · white | 2 · foreground, status_open | — | 2 · main_fg, title | — | 3 · sql.operator, sql.punctuation |
+| `brightblack` | — | 1 · brightblack | 1 · muted | — | 2 · inactive_fg, div_line | 1 · Base | 1 · completion-menu.completion |
+| `brightred` | — | 1 · brightred | 2 · error, status_delete | — | 3 · net_box, available_end | — | — |
+| `brightgreen` | — | 1 · brightgreen | 1 · success | — | — | 1 · Important | — |
+| `brightyellow` | — | 1 · brightyellow | 2 · warning, status_search | — | 4 · hi_fg, temp_mid | 1 · AlertWarn | — |
+| `brightblue` | — | 1 · brightblue | — | — | 6 · selected_fg, proc_box | — | 1 · output.header |
+| `brightmagenta` | 1 · skill | 1 · brightmagenta | 1 · status_projects | 2 · consolePrintColor, strokeColor | 5 · cpu_box, cpu_end | — | — |
+| `brightcyan` | — | 1 · brightcyan | — | — | 8 · cpu_start, free_end | — | — |
+| `brightwhite` | — | 1 · brightwhite | — | — | — | — | 5 · completion-menu.meta.completion, selected |
+| `dark` | — | 1 · DARK_HEX | — | 4 · inputBackgroundColor, outputBackgroundColor | — | — | — |
+| `grey` | — | 1 · grey | 1 · selected | — | 2 · selected_bg, meter_bg | — | — |
+| `nvim_statusline` | — | 1 · nvim_statusline | — | — | — | — | — |
+| `terminal_surface` | 1 · surface | 1 · terminal_surface | — | — | — | — | — |
 
 ## File and icon mappings
 

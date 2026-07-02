@@ -98,6 +98,11 @@ export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 # Codex: https://github.com/openai/codex/pull/4414
 export CODEX_HOME="$XDG_STATE_HOME/codex"
 
+# Ollama: local model runner/server used by Pi's OpenAI-compatible provider.
+export OLLAMA_HOST="${OLLAMA_HOST:-127.0.0.1:11434}"
+export OLLAMA_FLASH_ATTENTION="${OLLAMA_FLASH_ATTENTION:-1}"
+export OLLAMA_KV_CACHE_TYPE="${OLLAMA_KV_CACHE_TYPE:-q8_0}"
+
 # Pi coding agent: keep mutable auth, settings, packages, and sessions in XDG state.
 export PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"
 

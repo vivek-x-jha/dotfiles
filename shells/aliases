@@ -66,8 +66,23 @@ command -v git &>/dev/null && {
 
 # -------------------------------- CLI tools ---------------------------------------
 
-# Quick one-shot Pi ask using the cheaper Codex mini model with low thinking.
-command -v pi &>/dev/null && alias ask='pi -p --provider openai-codex --model gpt-5.4-mini --thinking low --no-session'
+# Pi quick entrypoints by cost/quality tier.
+command -v pi &>/dev/null && {
+  # Cheap cloud one-shot using the Codex mini model with low thinking.
+  alias ask='pi -p --provider openai-codex --model gpt-5.4-mini --thinking low --no-session'
+
+  # Free local one-shot for simple chat-style questions via Ollama.
+  alias askq='pi -p --model ollama/qwen2.5-coder:7b --no-session --no-tools --no-context-files --no-skills --no-prompt-templates'
+
+  # Free local coding chats via Ollama, from lightest to strongest.
+  alias piq='pi --model ollama/qwen2.5-coder:7b'
+  alias piq14='pi --model ollama/qwen2.5-coder:14b'
+  alias piq32='pi --model ollama/qwen2.5-coder:32b'
+
+  # Strong cloud coding/reasoning tasks.
+  alias pistrong='pi --provider openai-codex --model gpt-5.5 --thinking high'
+  alias pimax='pi --provider openai-codex --model gpt-5.5 --thinking xhigh'
+}
 
 # https://developer.1password.com/docs/cli/shell-plugins
 command -v op &>/dev/null && {

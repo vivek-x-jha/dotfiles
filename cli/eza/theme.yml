@@ -2928,6 +2928,10 @@ filenames:
     icon:
       glyph: ""
 
+  .ollama:
+    icon:
+      glyph: ""
+
   _cacache:
     icon:
       glyph: ""
@@ -4821,6 +4825,10 @@ filenames:
       glyph: ""
 
   objects:
+    icon:
+      glyph: ""
+
+  ollama:
     icon:
       glyph: ""
 
