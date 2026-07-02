@@ -257,6 +257,50 @@ local moveApp = function(app_pos)
   end
 end
 
+--- Clamp a number to a range.
+--- @param value number
+--- @param min_value number
+--- @param max_value number
+--- @return number
+local clamp = function(value, min_value, max_value)
+  return math.min(math.max(value, min_value), max_value)
+end
+
+--- Move the focused window to a unit rect, but keep it at least a terminal grid size.
+--- Used by ctrl-alt-c so centered terminals do not shrink below 100 columns x 25 rows.
+--- @param app_pos WindowRect
+--- @param min_cols number
+--- @param min_rows number
+--- @return nil
+local moveAppMinTerminalGrid = function(app_pos, min_cols, min_rows)
+  local win = hs.window.focusedWindow()
+
+  if not win then
+    hs.alert.show 'No window to move'
+    return
+  end
+
+  local screenFrame = win:screen():frame()
+  local cell = { w = 9, h = 18 }
+  local padding = { w = 35, h = 27 }
+  local min_size = {
+    w = (min_cols * cell.w) + padding.w,
+    h = (min_rows * cell.h) + padding.h,
+  }
+
+  local width = math.min(math.max(screenFrame.w * app_pos.w, min_size.w), screenFrame.w)
+  local height = math.min(math.max(screenFrame.h * app_pos.h, min_size.h), screenFrame.h)
+  local centerX = screenFrame.x + (screenFrame.w * (app_pos.x + (app_pos.w / 2)))
+  local centerY = screenFrame.y + (screenFrame.h * (app_pos.y + (app_pos.h / 2)))
+
+  win:setFrame {
+    x = clamp(centerX - (width / 2), screenFrame.x, screenFrame.x + screenFrame.w - width),
+    y = clamp(centerY - (height / 2), screenFrame.y, screenFrame.y + screenFrame.h - height),
+    w = width,
+    h = height,
+  }
+end
+
 --- Almost maximize the focused window with a uniform margin around border
 --- @return nil
 local almost_maximize = function()
@@ -493,7 +537,7 @@ local remaps = {
   -- Window sizing and placement
   { mods = ctrl_alt, key = 'Left', message = 'Left Half', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
   { mods = ctrl_alt, key = 'Right', message = 'Right Half', pressedfn = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveApp { x = 0.25, y = 0.25, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveAppMinTerminalGrid({ x = 0.25, y = 0.25, w = 0.5, h = 0.5 }, 100, 25) end },
   { mods = ctrl_alt, key = 'Up', message = 'Top Half', pressedfn = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'Down', message = 'Bottom Half', pressedfn = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'U', message = 'Top Left', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },
