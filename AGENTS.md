@@ -8,7 +8,8 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 
 - Setup flow: `bootstrap.sh`, `bootstrap/defaults.env`, `bootstrap/lib/*.sh`
 - Docs: `README.md`, `docs/ai-workflows.md`
-- Agent instruction source: `ai/AGENTS.md` (linked into Codex/Pi/Claude harnesses)
+- Global agent policy: `ai/AGENTS.md` (linked into Codex/Pi/Claude harnesses)
+- Agent memory/templates: `ai/templates/`, `docs/known-issues.md`, `docs/agent-memory.md`
 - Codex source: `ai/codex/config/preferences.toml`, `ai/codex/scripts/apply_preferences.py`
 - Theme source: `themes/sourdiesel/palette.toml`, `themes/sourdiesel/tool.py`
 - Neovim source: `editors/nvim/`
@@ -22,6 +23,8 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 - Update docs when user-facing bootstrap behavior changes.
 - Keep Linux/macOS branches explicit and guarded.
 - Do not edit Codex runtime state under `$CODEX_HOME` unless the task is specifically runtime debugging.
+- Keep AI memory layered: global behavior in `ai/AGENTS.md`; project instructions in `AGENTS.md`; recurring issues in `docs/known-issues.md`; durable facts in `docs/agent-memory.md`.
+- When changing `work`, keep Bash and Zsh implementations in parity and preserve tmux session behavior.
 
 ## Checks
 

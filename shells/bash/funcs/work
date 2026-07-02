@@ -14,6 +14,7 @@ work() {
   local right_cmd='clear;'
   local agents_cmd='cia --project "$PWD"'
   local python_init=0
+  local project_needs_scaffold=0
 
   usage() {
     cat <<'EOF'
@@ -23,6 +24,8 @@ Options:
   -h, --help                     Show this help message and exit
   -r, --reload                   Kill current tmux server and start a fresh session
   -p, --python                   Initialize Python project (runs 'uvi' if no pyproject.toml)
+
+New named projects are scaffolded with AGENTS.md and docs/agent-memory.md plus docs/known-issues.md.
 
 Layout customization:
   --window-label NAME            Set the tmux window name (default: main)
@@ -189,6 +192,7 @@ EOF
     session="${root##*/}"
   else
     root="$HOME/Developer/$session"
+    [[ -d "$root" ]] || project_needs_scaffold=1
   fi
 
   configure_float_session() {
@@ -230,12 +234,78 @@ EOF
     fi
   }
 
+  scaffold_agent_memory() {
+    local project_root="$1"
+    local template_root="$HOME/.dotfiles/ai/templates"
+
+    mkdir -p "$project_root/docs" || return 1
+
+    if [[ ! -e "$project_root/AGENTS.md" && ! -L "$project_root/AGENTS.md" ]]; then
+      if [[ -f "$template_root/AGENTS.md" ]]; then
+        command cp "$template_root/AGENTS.md" "$project_root/AGENTS.md" || return 1
+      else
+        cat >"$project_root/AGENTS.md" <<'EOF'
+# AGENTS.md
+
+## Scope
+
+- TODO
+
+## Commands
+
+- Validate: TODO
+- Test: TODO
+
+## Memory
+
+- Use `docs/known-issues.md` for recurring bugs and workarounds.
+- Use `docs/agent-memory.md` for durable project facts.
+EOF
+      fi
+    fi
+
+    if [[ ! -e "$project_root/docs/known-issues.md" && ! -L "$project_root/docs/known-issues.md" ]]; then
+      if [[ -f "$template_root/known-issues.md" ]]; then
+        command cp "$template_root/known-issues.md" "$project_root/docs/known-issues.md" || return 1
+      else
+        cat >"$project_root/docs/known-issues.md" <<'EOF'
+# Known Issues
+
+Managed ledger for recurring bugs, regressions, environment quirks, and active workarounds.
+
+## Active Issues
+
+_None yet._
+EOF
+      fi
+    fi
+
+    if [[ ! -e "$project_root/docs/agent-memory.md" && ! -L "$project_root/docs/agent-memory.md" ]]; then
+      if [[ -f "$template_root/agent-memory.md" ]]; then
+        command cp "$template_root/agent-memory.md" "$project_root/docs/agent-memory.md" || return 1
+      else
+        cat >"$project_root/docs/agent-memory.md" <<'EOF'
+# Agent Memory
+
+Durable project facts for future coding-agent sessions.
+
+## Facts
+
+_None yet._
+EOF
+      fi
+    fi
+  }
+
   tmux_template() {
     local left_id="$session:$window_label.1"
     local right_id="$session:$window_label.2"
     local agents_id="$session:$agents_label.1"
 
     mkdir -p "$root" || return 1
+    if ((project_needs_scaffold)); then
+      scaffold_agent_memory "$root" || return 1
+    fi
     tmux new-session -d -s "$session" -c "$root" -n "$window_label"
     tmux split-window -h -t "$left_id" -c "$root"
     tmux select-pane -t "$left_id" -T "$left_label"

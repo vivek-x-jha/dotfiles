@@ -202,7 +202,7 @@ Validate the installed workstation state any time after setup:
 | [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
-| [`ai`](./ai) | AI assistant configs and managed theme fragments for Claude Code and Codex |
+| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed theme fragments for Claude Code and Codex |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
 | [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, CIA, Pi local model providers and SourDiesel theme, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
@@ -210,7 +210,7 @@ Validate the installed workstation state any time after setup:
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
 | [`apps`](./apps) | Hammerspoon, Karabiner, and web extension config exports |
 | [`manifests`](./manifests) | Homebrew, apt, and dnf package manifests |
-| [`docs`](./docs) | Additional platform notes such as WSL setup |
+| [`docs`](./docs) | Additional platform notes, AI workflows, agent memory, and known issues |
 | [`AGENTS.md`](./AGENTS.md) | Agent workflow and repo maintenance rules |
 
 ## 🗂️ XDG Config Model
@@ -294,6 +294,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
 - Shared aliases and functions live under [`shells`](./shells).
+- `work <name>` creates tmux project sessions under `~/Developer`; when it creates a new named project, it also scaffolds `AGENTS.md`, `docs/known-issues.md`, and `docs/agent-memory.md` from [`ai/templates`](./ai/templates).
 - Bash functions mirror Zsh functions where practical so Bash does not rely on Zsh wrappers.
 
 ### 🔎 Search and Navigation
@@ -452,7 +453,7 @@ Then verify:
 
 - 🐚 Open a new Zsh shell and confirm prompt, aliases, functions, Atuin, fzf, and Starship load.
 - 🐚 Open Bash and confirm ble.sh, aliases, functions, Atuin, fzf, and Starship load.
-- 🧭 Run `work` and confirm tmux session layout and pane titles behave correctly.
+- 🧭 Run `work` and confirm tmux session layout, pane titles, and new-project AI memory scaffolding behave correctly.
 - 🧠 Open Neovim and run `:checkhealth`.
 - 📦 Run `vim.pack.update()` and confirm the `blink.cmp` Rust build hook runs when needed.
 - 🎨 Run `bat cache --build` after changing bat themes or syntaxes.
@@ -472,9 +473,22 @@ Use them as slash-command style prompts in Codex, Claude, or another coding agen
 /nvim-update
 /package-sync
 /xdg-audit
+/memory-refresh
 ```
 
 These labels are not shell commands by default. Paste the prompt text from the workflow doc into the AI client, or register them as custom slash commands if the client supports that.
+
+## 🤖 AI Memory Model
+
+Agent memory is layered so global policy stays portable and project facts stay close to the repo they describe:
+
+- [`ai/AGENTS.md`](./ai/AGENTS.md): global cross-harness behavior, safety, git/reporting preferences, and memory policy. Bootstrap links this into Codex, Pi, and Claude Code.
+- Project `AGENTS.md`: repo-specific commands, architecture, generated/vendor hazards, validation, and project-specific rules.
+- Project `docs/known-issues.md`: recurring bugs, active workarounds, reproduction/retest steps, and exit criteria.
+- Project `docs/agent-memory.md`: durable facts likely to matter in future agent sessions when they do not belong in normal docs.
+- [`ai/templates`](./ai/templates): starter templates used by `work` when it creates a new named project under `~/Developer`.
+
+Agents should update existing memory before adding duplicates, include verification dates for drift-prone facts, and never store secrets, credentials, private tokens, or sensitive raw logs.
 
 ## 🤖 Codex Preferences
 

@@ -133,6 +133,24 @@ find "$HOME" -maxdepth 1 -name '.*' -print
 find "$XDG_CONFIG_HOME" -xtype l -print
 ```
 
+## /memory-refresh
+
+Goal: keep project-level agent memory useful and current.
+
+Prompt:
+
+```text
+Review AGENTS.md, docs/known-issues.md, and docs/agent-memory.md. Tighten stale or duplicated guidance, add only durable facts that are likely to matter again, and remove or mark resolved entries only after verifying their exit criteria. Keep global behavior in ai/AGENTS.md and project facts in project-local files. Do not record secrets, credentials, private tokens, or raw sensitive logs. Validate Markdown links or nearby repo checks if files changed.
+```
+
+Expected files:
+
+```text
+AGENTS.md
+docs/known-issues.md
+docs/agent-memory.md
+```
+
 ## /debug-failure
 
 Goal: debug a failing command or workflow.
@@ -160,6 +178,7 @@ Use AI as a focused implementer:
 /nvim-update
 /package-sync
 /xdg-audit
+/memory-refresh
 ```
 
 Keep requests bounded. The best prompt names the target file, expected behavior, validation command, and whether to commit.
