@@ -113,6 +113,20 @@ without shell extensions that still use shell syntax, such as `cli/fzf/config`,
 are assigned filetypes in `lua/autocmds.lua` so highlighting and shell LSPs stay
 aligned with bat preview mappings.
 
+## Dashboard
+
+Blank startup is owned by the local dashboard in `lua/ui/dashboard.lua`.
+`lua/autocmds.lua` skips opening `nvim-tree` for an empty unnamed buffer so the
+dashboard can fill the initial window by itself. Dashboard buffers use window-
+local chrome suppression for line numbers, relative numbers, signs, statuscolumn,
+foldcolumn, wrapping, list chars, cursorline, and colorcolumn; the guard is
+reapplied on dashboard filetype/window events to keep tmux/work-session startup
+clean.
+
+Dashboard content is rendered with virtual text and is centered against the
+current window dimensions as closely as practical, including narrower split panes
+created by the `work` tmux helper.
+
 ## Statusline
 
 The statusline is local to this repo in `lua/ui/statusline.lua`.
