@@ -13,7 +13,7 @@ local agents_label='agents'
 
 local left_cmd='if test -f Session.vim; then "$EDITOR" -S Session.vim; else "$EDITOR"; fi'
 local right_cmd='clear;'
-local agents_cmd='codex resume'
+local agents_cmd='cia --project "$PWD"'
 
 local python_init=0
 
@@ -36,11 +36,11 @@ Layout customization:
 Command customization:
   --left-cmd CMD                 Command for left pane (default: restore Session.vim when present)
   --right-cmd CMD                Command for right pane (default: 'clear;')
-  --agents-cmd CMD               Command for agent window (default: 'codex resume')
+  --agents-cmd CMD               Command for agent window (default: 'cia --project "$PWD"')
 
 Examples:
   work                           Attach or create default session
-  work myapp                     Open/create session in ~/developer/myapp
+  work myapp                     Open/create session in ~/Developer/myapp
   work ~/Developer/myapp         Open existing project path as session 'myapp'
   work --window-label dev myapp  Custom window name
   work -r                        Reset tmux server (tmux kill-server && tmux new-session)
@@ -197,7 +197,7 @@ if [[ "$session_arg" == /* || "$session_arg" == "~" || "$session_arg" == "~/"* |
   root="${root:A}"
   session="${root:t}"
 else
-  root="$HOME/developer/$session"
+  root="$HOME/Developer/$session"
 fi
 
 configure_float_session() {

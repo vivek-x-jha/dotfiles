@@ -9,8 +9,8 @@ _work_sessions() {
     seen[$candidate]=1
     printf '%s\n' "$candidate"
   done < <(
-    if [[ -d $HOME/developer ]]; then
-      find "$HOME/developer" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; 2>/dev/null
+    if [[ -d $HOME/Developer ]]; then
+      find "$HOME/Developer" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; 2>/dev/null
     fi
 
     command -v tmux &>/dev/null && tmux list-sessions -F '#S' 2>/dev/null

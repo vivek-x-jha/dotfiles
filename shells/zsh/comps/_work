@@ -4,7 +4,7 @@
 _work_sessions() {
   local -a projects tmux_sessions
 
-  [[ -d $HOME/developer ]] && projects=(${HOME}/developer/*(/N:t))
+  [[ -d $HOME/Developer ]] && projects=(${HOME}/Developer/*(/N:t))
 
   (( $+commands[tmux] )) && tmux_sessions=(${(f)"$(tmux list-sessions -F '#S' 2>/dev/null)"})
 
