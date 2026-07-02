@@ -6,6 +6,7 @@ packages, and settings stay in state.
 
 ## Files
 
+- `AGENTS.md` is linked from `ai/AGENTS.md` as Pi's global instructions.
 - `models.json` registers the local OpenAI-compatible Ollama provider.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
 

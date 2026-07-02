@@ -8,7 +8,8 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 
 - Setup flow: `bootstrap.sh`, `bootstrap/defaults.env`, `bootstrap/lib/*.sh`
 - Docs: `README.md`, `docs/ai-workflows.md`
-- Codex source: `ai/codex/AGENTS.md`, `ai/codex/config/preferences.toml`, `ai/codex/scripts/apply_preferences.py`
+- Agent instruction source: `ai/AGENTS.md` (linked into Codex/Pi/Claude harnesses)
+- Codex source: `ai/codex/config/preferences.toml`, `ai/codex/scripts/apply_preferences.py`
 - Theme source: `themes/sourdiesel/palette.toml`, `themes/sourdiesel/tool.py`
 - Neovim source: `editors/nvim/`
 - Shell source: `shells/env`, `shells/profile`, `shells/zsh/`

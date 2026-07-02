@@ -176,13 +176,15 @@ create_symlinks() {
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
     ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
+    ../../.dotfiles/ai/AGENTS.md "$XDG_CONFIG_HOME/claude" CLAUDE.md
     ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
-    ../../../.dotfiles/ai/codex/AGENTS.md "$XDG_STATE_HOME/codex" AGENTS.md
+    ../../../.dotfiles/ai/AGENTS.md "$XDG_STATE_HOME/codex" AGENTS.md
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
     ../.dotfiles/cli/npm "$XDG_CONFIG_HOME" npm
+    ../../../../.dotfiles/ai/AGENTS.md "$XDG_STATE_HOME/pi/agent" AGENTS.md
     ../../../../.dotfiles/cli/pi/models.json "$XDG_STATE_HOME/pi/agent" models.json
     ../../../../../.dotfiles/cli/pi/themes/sourdiesel.json "$XDG_STATE_HOME/pi/agent/themes" sourdiesel.json
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim

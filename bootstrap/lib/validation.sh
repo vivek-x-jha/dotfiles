@@ -100,14 +100,17 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/config"
   check_path "$HOME/.dotfiles/cli/cia/config.toml"
+  check_path "$HOME/.dotfiles/cli/pi/AGENTS.md"
   check_path "$HOME/.dotfiles/cli/pi/models.json"
   check_path "$HOME/.dotfiles/cli/pi/themes/sourdiesel.json"
   check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
+  check_path "$HOME/.dotfiles/ai/AGENTS.md"
+  check_path "$HOME/.dotfiles/ai/claude/CLAUDE.md"
+  check_path "$HOME/.dotfiles/ai/codex/AGENTS.md"
   check_path "$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
   check_path "$HOME/.dotfiles/ai/codex/config/preferences.toml"
-  check_path "$HOME/.dotfiles/ai/codex/AGENTS.md"
   for skill_dir in "$HOME/.dotfiles/ai/codex/skills"/*; do
     [[ -d $skill_dir ]] || continue
     check_path "$skill_dir/SKILL.md"
@@ -265,7 +268,9 @@ doctor_bootstrap() {
   doctor_dir "$XDG_DATA_HOME/zsh"
   doctor_dir "$XDG_DATA_HOME/vscode"
   doctor_file "$XDG_STATE_HOME/codex/config.toml"
-  doctor_symlink "$XDG_STATE_HOME/codex/AGENTS.md" ../../../.dotfiles/ai/codex/AGENTS.md
+  doctor_symlink "$XDG_CONFIG_HOME/claude/CLAUDE.md" ../../.dotfiles/ai/AGENTS.md
+  doctor_symlink "$XDG_STATE_HOME/codex/AGENTS.md" ../../../.dotfiles/ai/AGENTS.md
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/AGENTS.md" ../../../../.dotfiles/ai/AGENTS.md
 
   doctor_symlink "$XDG_CONFIG_HOME/atuin" ../.dotfiles/cli/atuin
   doctor_symlink "$XDG_CONFIG_HOME/bat" ../.dotfiles/cli/bat
