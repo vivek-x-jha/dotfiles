@@ -3088,6 +3088,10 @@ filenames:
     icon:
       glyph: ""
 
+  agent:
+    icon:
+      glyph: ""
+
   llms-from-scratch:
     icon:
       glyph: ""
