@@ -8,7 +8,7 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 
 - Setup flow: `bootstrap.sh`, `bootstrap/defaults.env`, `bootstrap/lib/*.sh`
 - Docs: `README.md`, `docs/ai-workflows.md`
-- Global agent policy: `ai/AGENTS.md` (linked into Codex/Pi/Claude harnesses)
+- Global agent policy: `ai/AGENTS.md` (exposed as `~/AGENTS.md`; Pi/Claude link to it, while Codex state can carry project-level memory)
 - Agent memory/templates: `ai/templates/`, `docs/known-issues.md`, `docs/agent-memory.md`
 - Codex source: `ai/codex/config/preferences.toml`, `ai/codex/scripts/apply_preferences.py`
 - Theme source: `themes/sourdiesel/palette.toml`, `themes/sourdiesel/tool.py`

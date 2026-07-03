@@ -268,10 +268,10 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Cargo](https://doc.rust-lang.org/cargo/) | `CARGO_HOME="$XDG_DATA_HOME/cargo"` | Cargo bin, registry, and cache-like data |
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
-| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells, links global instructions from `ai/AGENTS.md`, and only merges known SourDiesel UI preference keys from `ai/codex`. |
-| Pi coding agent | `PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"` | Pi auth, sessions, settings, and runtime state stay in XDG state; bootstrap links repo-managed `ai/AGENTS.md`, `cli/pi/models.json`, and `cli/pi/themes/sourdiesel.json` into that agent dir for global instructions, local Ollama models, and the SourDiesel TUI theme. |
+| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells and only merges known SourDiesel UI preference keys from `ai/codex`. `$CODEX_HOME` can also carry project-level agent memory for Codex meta work. |
+| Pi coding agent | `PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"` | Pi auth, sessions, settings, and runtime state stay in XDG state; bootstrap links `AGENTS.md -> ~/AGENTS.md`, plus repo-managed `cli/pi/models.json` and `cli/pi/themes/sourdiesel.json`, into that agent dir for global instructions, local Ollama models, and the SourDiesel TUI theme. |
 | [Ollama](https://github.com/ollama/ollama) | `OLLAMA_HOST="127.0.0.1:11434"`, `OLLAMA_FLASH_ATTENTION=1`, `OLLAMA_KV_CACHE_TYPE=q8_0` | Local model runner endpoint and Apple Silicon-friendly runtime defaults used by Pi's OpenAI-compatible `ollama` provider. |
-| [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Bootstrap links `settings.json` plus `CLAUDE.md -> ai/AGENTS.md` into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
+| [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Bootstrap links `settings.json` plus `CLAUDE.md -> ~/AGENTS.md` into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
 | [IPython](https://ipython.readthedocs.io/en/stable/development/config.html) | `IPYTHONDIR="$XDG_STATE_HOME/ipython"` | IPython profiles mix config with runtime DB/history files |
@@ -294,7 +294,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
 - Shared aliases and functions live under [`shells`](./shells).
-- `work <name>` creates tmux project sessions under `~/Developer`; when it creates a new named project, it also scaffolds `AGENTS.md`, `docs/known-issues.md`, and `docs/agent-memory.md` from [`ai/templates`](./ai/templates).
+- `work <name>` creates tmux project sessions under `~/Developer`; when it creates a new named project, it also copies `AGENTS.md`, `docs/known-issues.md`, and `docs/agent-memory.md` from [`ai/templates`](./ai/templates), then creates `CLAUDE.md -> AGENTS.md` for Claude Code.
 - Bash functions mirror Zsh functions where practical so Bash does not rely on Zsh wrappers.
 
 ### 🔎 Search and Navigation
@@ -319,7 +319,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
 - CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`cli/cia`](./cli/cia), defaults to the Pi harness, uses transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
 - Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
-- Pi's repo-managed config lives under [`cli/pi`](./cli/pi): `AGENTS.md` points back to [`ai/AGENTS.md`](./ai/AGENTS.md), which bootstrap links to `$PI_CODING_AGENT_DIR/AGENTS.md`; `models.json` is symlinked to `$PI_CODING_AGENT_DIR/models.json` and points Pi at Ollama's OpenAI-compatible endpoint for free local models such as `qwen2.5-coder:7b`; `themes/sourdiesel.json` is symlinked into `$PI_CODING_AGENT_DIR/themes/` and keeps Markdown/code blocks on `BLACK_HEX` text with straight `color237` section separators matching unfocused tmux panes.
+- Pi's repo-managed config lives under [`cli/pi`](./cli/pi): bootstrap links `$PI_CODING_AGENT_DIR/AGENTS.md -> ~/AGENTS.md` for global instructions; `models.json` is symlinked to `$PI_CODING_AGENT_DIR/models.json` and points Pi at Ollama's OpenAI-compatible endpoint for free local models such as `qwen2.5-coder:7b`; `themes/sourdiesel.json` is symlinked into `$PI_CODING_AGENT_DIR/themes/` and keeps Markdown/code blocks on `BLACK_HEX` text with straight `color237` section separators matching unfocused tmux panes.
 - [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
 - tmux status uses one local `scripts/sys.sh` segment for CPU, GPU when measurable, RAM, and battery to avoid flicker from staggered plugin shell commands. GPU and battery segments auto-hide when unsupported; icons are configurable with `@sys_cpu_icon`, `@sys_gpu_icon`, and `@sys_ram_icon`.
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
@@ -482,11 +482,11 @@ These labels are not shell commands by default. Paste the prompt text from the w
 
 Agent memory is layered so global policy stays portable and project facts stay close to the repo they describe:
 
-- [`ai/AGENTS.md`](./ai/AGENTS.md): global cross-harness behavior, safety, git/reporting preferences, and memory policy. Bootstrap links this into Codex, Pi, and Claude Code.
+- [`ai/AGENTS.md`](./ai/AGENTS.md): version-controlled global cross-harness behavior, safety, git/reporting preferences, and memory policy. Bootstrap exposes it as `~/AGENTS.md`; Pi and Claude Code global config link to that home-level alias. Codex runtime state can carry its own project-level memory for Codex meta work.
 - Project `AGENTS.md`: repo-specific commands, architecture, generated/vendor hazards, validation, and project-specific rules.
 - Project `docs/known-issues.md`: recurring bugs, active workarounds, reproduction/retest steps, and exit criteria.
 - Project `docs/agent-memory.md`: durable facts likely to matter in future agent sessions when they do not belong in normal docs.
-- [`ai/templates`](./ai/templates): starter templates used by `work` when it creates a new named project under `~/Developer`.
+- [`ai/templates`](./ai/templates): starter templates used by `work` when it creates a new named project under `~/Developer`; `work` also creates project-level `CLAUDE.md -> AGENTS.md` so Claude Code shares the same instructions.
 
 Agents should update existing memory before adding duplicates, include verification dates for drift-prone facts, and never store secrets, credentials, private tokens, or sensitive raw logs.
 
@@ -494,7 +494,7 @@ Agents should update existing memory before adding duplicates, include verificat
 
 Codex runtime configuration stays in `$CODEX_HOME/config.toml` because Codex writes local state there, including marketplaces, plugins, MCP servers, and project trust.
 
-Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./ai/codex/config/preferences.toml) and SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only managed keys and preserves unrelated Codex-owned sections. Bootstrap also links the tracked [`ai/AGENTS.md`](./ai/AGENTS.md) into Codex, Pi, and Claude Code as global instructions (`CLAUDE.md` for Claude Code).
+Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./ai/codex/config/preferences.toml) and SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only managed keys and preserves unrelated Codex-owned sections. Bootstrap exposes the tracked [`ai/AGENTS.md`](./ai/AGENTS.md) as `~/AGENTS.md` and links Pi/Claude Code global instructions to it (`CLAUDE.md` for Claude Code), while `$CODEX_HOME/AGENTS.md` is left available for project-level Codex meta-work guidance.
 
 The SourDiesel fragment manages Codex UI and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
 
@@ -508,7 +508,7 @@ Keep `ai/codex/` limited to repo-managed Codex inputs:
 - `config/`: portable, non-secret Codex defaults.
 - `scripts/`: idempotent helpers that merge or validate those fragments.
 - `skills/`: personal skill sources. Bootstrap discovers each child directory containing `SKILL.md` and links it into `$CODEX_HOME/skills`; adding another skill does not require bootstrap edits.
-- `AGENTS.md`: symlink to the shared global instructions in [`ai/AGENTS.md`](./ai/AGENTS.md).
+- `AGENTS.md`: tracked symlink/reference to shared global guidance; `$CODEX_HOME/AGENTS.md` may be a project-level runtime/meta-work file instead of a global symlink.
 - Optional docs or templates that are safe to share.
 
 Do not put Codex runtime state in `ai/codex/`: `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, and generated skill/plugin/runtime folders belong under `$CODEX_HOME`.

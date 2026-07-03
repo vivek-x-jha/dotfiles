@@ -28,7 +28,7 @@ Options:
   -r, --reload                   Kill current tmux server and start a fresh session
   -p, --python                   Initialize Python project (runs 'uvi' if no pyproject.toml)
 
-New named projects are scaffolded with AGENTS.md and docs/agent-memory.md plus docs/known-issues.md.
+New named projects are scaffolded with AGENTS.md, CLAUDE.md, docs/agent-memory.md, and docs/known-issues.md.
 
 Layout customization:
   --window-label NAME            Set the tmux window name (default: main)
@@ -273,6 +273,10 @@ scaffold_agent_memory() {
 - Use `docs/agent-memory.md` for durable project facts.
 EOF
     fi
+  fi
+
+  if [[ ! -e "$project_root/CLAUDE.md" && ! -L "$project_root/CLAUDE.md" ]]; then
+    (cd "$project_root" && command ln -s AGENTS.md CLAUDE.md) || return 1
   fi
 
   if [[ ! -e "$project_root/docs/known-issues.md" && ! -L "$project_root/docs/known-issues.md" ]]; then
