@@ -39,8 +39,7 @@ uvi() {
     [[ -f "$tpl_dir/.ruff.toml" ]] && cp -f "$tpl_dir/.ruff.toml" "$dest_dir"
 
     if [[ -f "$tpl_dir/pyproject.toml" && -f "$dest_dir/pyproject.toml" ]]; then
-      grep -q '^\[tool\.commitizen\]' "$dest_dir/pyproject.toml" ||
-        cat "$tpl_dir/pyproject.toml" >>"$dest_dir/pyproject.toml"
+      cat "$tpl_dir/pyproject.toml" >>"$dest_dir/pyproject.toml"
     fi
   fi
 }

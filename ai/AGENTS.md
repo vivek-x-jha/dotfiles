@@ -30,7 +30,7 @@
 ## Git
 
 - Before committing, inspect recent history with `git log --oneline -10` and match its message style.
-- If history is mixed or unclear, fall back to Commitizen/Conventional Commit style: `type(scope): summary`.
+- If history is mixed or unclear, fall back to Conventional Commit style: `type(scope): summary`.
 - For releases, use `release(scope): release x.y.z`.
 
 ## Reporting

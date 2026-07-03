@@ -1,4 +1,4 @@
 interface:
   display_name: "Update Branches"
   short_description: "Validate, commit, merge existing branches, and push"
-  default_prompt: "Use $update-branches to inspect status and diff, validate changes, commit with commitizen-style messages, update existing branches that are behind the default branch without creating missing branches, push changed branches, and confirm refs match."
+  default_prompt: "Use $update-branches to inspect status and diff, validate changes, commit with Conventional Commit-style messages, update existing branches that are behind the default branch without creating missing branches, push changed branches, and confirm refs match."

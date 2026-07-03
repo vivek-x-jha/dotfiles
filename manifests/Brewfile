@@ -9,8 +9,6 @@ brew "bash-language-server"
 brew "btop"
 # Mozilla CA bundle for Python
 brew "certifi"
-# Defines a standard way of committing rules and communicating it
-brew "commitizen"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Play, record, convert, and stream select audio and video codecs

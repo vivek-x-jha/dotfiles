@@ -54,7 +54,7 @@ Goal: validate, commit, fast-forward `dev`, push both branches, and end on `main
 Prompt:
 
 ```text
-Run update branches. First inspect git status and current diff. Validate with ./bootstrap.sh --check and git diff --check plus any targeted checks relevant to the changed files. Stage logical parts, commit with commitizen-style messages, switch to dev, merge --ff-only main, push dev, switch back to main, push main, and confirm main/dev/origin refs match. Do not include manifests/Brewfile unless the package change is intentional.
+Run update branches. First inspect git status and current diff. Validate with ./bootstrap.sh --check and git diff --check plus any targeted checks relevant to the changed files. Stage logical parts, commit with Conventional Commit-style messages, switch to dev, merge --ff-only main, push dev, switch back to main, push main, and confirm main/dev/origin refs match. Do not include manifests/Brewfile unless the package change is intentional.
 ```
 
 Expected final state:
