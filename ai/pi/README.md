@@ -6,14 +6,21 @@ packages, and settings stay in state.
 
 ## Files
 
-- `AGENTS.md` is linked from `ai/AGENTS.md` as Pi's global instructions.
 - `models.json` registers the local OpenAI-compatible Ollama provider.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
 
+Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` to the shared
+`~/AGENTS.md` alias for `ai/AGENTS.md`; no harness-specific copy lives here.
+
 ## SourDiesel Markdown/code rendering v1
 
-The Pi theme keeps fenced command/code blocks aligned with the terminal palette:
+The Pi theme keeps Markdown headings and fenced command/code blocks aligned with the
+terminal palette:
 
+- Markdown heading colors mirror Neovim `render-markdown.nvim` and Glow's SourDiesel
+  style: H1 `cyan`, H2 `magenta`, H3 `blue`, H4 `brightwhite`, H5 `BLACK_HEX`,
+  and H6 `brightblack`. If render-markdown and Glow ever diverge, prefer
+  render-markdown.
 - `mdCodeBlock` uses `BLACK_HEX` (`#cccccc`) so unclassified shell text is neutral,
   not static green.
 - Syntax tokens reuse the shared SourDiesel roles (`magenta` keywords, `blue`

@@ -37,14 +37,14 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 ## KI-2026-07-01-tmux-37-blank-pane-rendering
 
 **Status:** Workaround active; tmux is pinned to `3.6b` locally.
-**Last verified:** 2026-07-02 (`tmux -V` reports `tmux 3.6b`; `brew list --pinned` includes `tmux@3.6b`).
+**Last verified:** 2026-07-02 (`tmux -V` reports `tmux 3.6b`; `brew list --pinned` includes `tmux@3.6b`; local tap has `origin` set to `~/.local/share/homebrew-local-versions.git`).
 **Area:** tmux / WezTerm / TUI rendering
 
 **Observed:** In WezTerm on macOS, tmux panes running heavy TUIs such as pi chats or Neovim could render blank or mostly blank. The pane content was still functional and appeared after hover/click/scroll or other external repaint events. The same pi and Neovim sessions rendered normally outside tmux.
 
 **Likely cause:** tmux 3.7 introduced DECSET 2026 synchronized-output handling. The failure reproduced with tmux `3.7a` and disappeared after downgrading to `3.6b`, so treat this as a tmux 3.7/3.7a + WezTerm repaint/synchronized-output regression until retested.
 
-**Workaround:** Keep `tmux@3.6b` linked and pinned locally.
+**Workaround:** Keep `tmux@3.6b` linked and pinned locally. The temporary `mubuntu/local-versions` tap is backed by a local bare `origin` at `~/.local/share/homebrew-local-versions.git` so `brew update` does not warn about a missing remote while this workaround remains active.
 
 ```sh
 brew list --pinned | grep '^tmux@3\.6b$'

@@ -202,9 +202,9 @@ Validate the installed workstation state any time after setup:
 | [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
-| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed theme fragments for Claude Code and Codex |
+| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, and CIA |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
-| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, CIA, Pi local model providers and SourDiesel theme, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
+| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
 | [`terminals`](./terminals) | tmux, WezTerm, Terminal.app, and iTerm-related assets |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
@@ -269,9 +269,9 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
 | Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells and only merges known SourDiesel UI preference keys from `ai/codex`. `$CODEX_HOME` can also carry project-level agent memory for Codex meta work. |
-| Pi coding agent | `PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"` | Pi auth, sessions, settings, and runtime state stay in XDG state; bootstrap links `AGENTS.md -> ~/AGENTS.md`, plus repo-managed `cli/pi/models.json` and `cli/pi/themes/sourdiesel.json`, into that agent dir for global instructions, local Ollama models, and the SourDiesel TUI theme. |
+| Pi coding agent | `PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"` | Pi auth, sessions, settings, and runtime state stay in XDG state; bootstrap links `AGENTS.md -> ~/AGENTS.md`, plus repo-managed `ai/pi/models.json` and `ai/pi/themes/sourdiesel.json`, into that agent dir for global instructions, local Ollama models, and the SourDiesel TUI theme. |
 | [Ollama](https://github.com/ollama/ollama) | `OLLAMA_HOST="127.0.0.1:11434"`, `OLLAMA_FLASH_ATTENTION=1`, `OLLAMA_KV_CACHE_TYPE=q8_0` | Local model runner endpoint and Apple Silicon-friendly runtime defaults used by Pi's OpenAI-compatible `ollama` provider. |
-| [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Bootstrap links `settings.json` plus `CLAUDE.md -> ~/AGENTS.md` into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
+| [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Bootstrap links repo-managed `ai/claude-code/settings.json` plus `CLAUDE.md -> ~/AGENTS.md` into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
 | Neovim | `NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"` | Neovim log |
 | Python | `PYTHON_HISTORY="$XDG_STATE_HOME/python/.python_history"` | Python REPL history |
 | [IPython](https://ipython.readthedocs.io/en/stable/development/config.html) | `IPYTHONDIR="$XDG_STATE_HOME/ipython"` | IPython profiles mix config with runtime DB/history files |
@@ -317,9 +317,9 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 ### 🖥️ Terminals and tmux
 
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
-- CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`cli/cia`](./cli/cia), defaults to the Pi harness, uses transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
+- CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`ai/cia`](./ai/cia), defaults to the Pi harness, uses transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
 - Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
-- Pi's repo-managed config lives under [`cli/pi`](./cli/pi): bootstrap links `$PI_CODING_AGENT_DIR/AGENTS.md -> ~/AGENTS.md` for global instructions; `models.json` is symlinked to `$PI_CODING_AGENT_DIR/models.json` and points Pi at Ollama's OpenAI-compatible endpoint for free local models such as `qwen2.5-coder:7b`; `themes/sourdiesel.json` is symlinked into `$PI_CODING_AGENT_DIR/themes/` and keeps Markdown/code blocks on `BLACK_HEX` text with straight `color237` section separators matching unfocused tmux panes.
+- Pi's repo-managed config lives under [`ai/pi`](./ai/pi): bootstrap links `$PI_CODING_AGENT_DIR/AGENTS.md -> ~/AGENTS.md` for global instructions; `models.json` is symlinked to `$PI_CODING_AGENT_DIR/models.json` and points Pi at Ollama's OpenAI-compatible endpoint for free local models such as `qwen2.5-coder:7b`; `themes/sourdiesel.json` is symlinked into `$PI_CODING_AGENT_DIR/themes/` and keeps Markdown/code blocks on `BLACK_HEX` text with straight `color237` section separators matching unfocused tmux panes.
 - [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
 - tmux status uses one local `scripts/sys.sh` segment for CPU, GPU when measurable, RAM, and battery to avoid flicker from staggered plugin shell commands. GPU and battery segments auto-hide when unsupported; icons are configurable with `@sys_cpu_icon`, `@sys_gpu_icon`, and `@sys_ram_icon`.
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).

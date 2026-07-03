@@ -170,7 +170,7 @@ create_symlinks() {
     ../.dotfiles/cli/atuin "$XDG_CONFIG_HOME" atuin
     ../.dotfiles/cli/bat "$XDG_CONFIG_HOME" bat
     ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
-    ../.dotfiles/cli/cia "$XDG_CONFIG_HOME" cia
+    ../.dotfiles/ai/cia "$XDG_CONFIG_HOME" cia
     ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
     ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
@@ -178,15 +178,15 @@ create_symlinks() {
     ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
     .dotfiles/ai/AGENTS.md "$HOME" AGENTS.md
     ../../AGENTS.md "$XDG_CONFIG_HOME/claude" CLAUDE.md
-    ../../.dotfiles/ai/claude/settings.json "$XDG_CONFIG_HOME/claude" settings.json
+    ../../.dotfiles/ai/claude-code/settings.json "$XDG_CONFIG_HOME/claude" settings.json
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
     ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
     ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
     ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
     ../.dotfiles/cli/npm "$XDG_CONFIG_HOME" npm
     ../../../../AGENTS.md "$XDG_STATE_HOME/pi/agent" AGENTS.md
-    ../../../../.dotfiles/cli/pi/models.json "$XDG_STATE_HOME/pi/agent" models.json
-    ../../../../../.dotfiles/cli/pi/themes/sourdiesel.json "$XDG_STATE_HOME/pi/agent/themes" sourdiesel.json
+    ../../../../.dotfiles/ai/pi/models.json "$XDG_STATE_HOME/pi/agent" models.json
+    ../../../../../.dotfiles/ai/pi/themes/sourdiesel.json "$XDG_STATE_HOME/pi/agent/themes" sourdiesel.json
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
     ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode
     ../.dotfiles/shells "$XDG_CONFIG_HOME" shells

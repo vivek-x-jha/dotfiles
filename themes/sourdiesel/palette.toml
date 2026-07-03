@@ -357,7 +357,7 @@ allowed_hex = []
 id = "pi"
 label = "Pi coding agent"
 group = "Application UI"
-paths = ["cli/pi/themes/sourdiesel.json"]
+paths = ["ai/pi/themes/sourdiesel.json"]
 parser = "hex"
 allowed_hex = []
 
@@ -365,7 +365,7 @@ allowed_hex = []
 id = "cia"
 label = "CIA agent manager"
 group = "Application UI"
-paths = ["cli/cia/config.toml"]
+paths = ["ai/cia/config.toml"]
 parser = "hex"
 allowed_hex = []
 

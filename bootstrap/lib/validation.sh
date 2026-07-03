@@ -101,10 +101,10 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/config"
-  check_path "$HOME/.dotfiles/cli/cia/config.toml"
-  check_path "$HOME/.dotfiles/cli/pi/AGENTS.md"
-  check_path "$HOME/.dotfiles/cli/pi/models.json"
-  check_path "$HOME/.dotfiles/cli/pi/themes/sourdiesel.json"
+  check_path "$HOME/.dotfiles/ai/cia/config.toml"
+  check_path "$HOME/.dotfiles/ai/pi/README.md"
+  check_path "$HOME/.dotfiles/ai/pi/models.json"
+  check_path "$HOME/.dotfiles/ai/pi/themes/sourdiesel.json"
   check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
   check_path "$HOME/.dotfiles/cli/npm/npmrc"
@@ -112,7 +112,8 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/ai/templates/AGENTS.md"
   check_path "$HOME/.dotfiles/ai/templates/known-issues.md"
   check_path "$HOME/.dotfiles/ai/templates/agent-memory.md"
-  check_path "$HOME/.dotfiles/ai/claude/CLAUDE.md"
+  check_path "$HOME/.dotfiles/ai/claude-code/CLAUDE.md"
+  check_path "$HOME/.dotfiles/ai/claude-code/settings.json"
   check_path "$HOME/.dotfiles/ai/codex/AGENTS.md"
   check_path "$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
   check_path "$HOME/.dotfiles/ai/codex/config/preferences.toml"
@@ -280,7 +281,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/atuin" ../.dotfiles/cli/atuin
   doctor_symlink "$XDG_CONFIG_HOME/bat" ../.dotfiles/cli/bat
   doctor_symlink "$XDG_CONFIG_HOME/btop" ../.dotfiles/cli/btop
-  doctor_symlink "$XDG_CONFIG_HOME/cia" ../.dotfiles/cli/cia
+  doctor_symlink "$XDG_CONFIG_HOME/cia" ../.dotfiles/ai/cia
   doctor_symlink "$XDG_CONFIG_HOME/dust" ../.dotfiles/cli/dust
   doctor_symlink "$XDG_CONFIG_HOME/eza" ../.dotfiles/cli/eza
   doctor_symlink "$XDG_CONFIG_HOME/fzf" ../.dotfiles/cli/fzf
@@ -288,8 +289,8 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/git" ../.dotfiles/auth/git
   doctor_symlink "$XDG_CONFIG_HOME/glow" ../.dotfiles/cli/glow
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
-  doctor_symlink "$XDG_STATE_HOME/pi/agent/models.json" ../../../../.dotfiles/cli/pi/models.json
-  doctor_symlink "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json" ../../../../../.dotfiles/cli/pi/themes/sourdiesel.json
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/models.json" ../../../../.dotfiles/ai/pi/models.json
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json" ../../../../../.dotfiles/ai/pi/themes/sourdiesel.json
   doctor_symlink "$XDG_CONFIG_HOME/nvim" ../.dotfiles/editors/nvim
   doctor_symlink "$XDG_CONFIG_HOME/shells" ../.dotfiles/shells
   doctor_symlink "$XDG_CONFIG_HOME/shells/zsh/.zshenv" ../env
@@ -297,7 +298,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/ssh" ../.dotfiles/auth/ssh
   doctor_symlink "$XDG_CONFIG_HOME/tmux" ../.dotfiles/terminals/tmux
   doctor_symlink "$XDG_CONFIG_HOME/wezterm" ../.dotfiles/terminals/wezterm
-  doctor_symlink "$XDG_CONFIG_HOME/claude/settings.json" ../../.dotfiles/ai/claude/settings.json
+  doctor_symlink "$XDG_CONFIG_HOME/claude/settings.json" ../../.dotfiles/ai/claude-code/settings.json
   for skill_dir in "$HOME/.dotfiles/ai/codex/skills"/*; do
     [[ -d $skill_dir && -f $skill_dir/SKILL.md ]] || continue
     skill_name="${skill_dir##*/}"
