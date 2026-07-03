@@ -176,7 +176,7 @@ create_symlinks() {
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
     ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
-    "$HOME/.dotfiles/ai/AGENTS.md" "$HOME" AGENTS.md
+    .dotfiles/ai/AGENTS.md "$HOME" AGENTS.md
     "$HOME/AGENTS.md" "$XDG_CONFIG_HOME/claude" CLAUDE.md
     ../../.dotfiles/ai/claude-code/settings.json "$XDG_CONFIG_HOME/claude" settings.json
     ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git

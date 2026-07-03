@@ -274,7 +274,7 @@ doctor_bootstrap() {
   doctor_dir "$XDG_DATA_HOME/zsh"
   doctor_dir "$XDG_DATA_HOME/vscode"
   doctor_file "$XDG_STATE_HOME/codex/config.toml"
-  doctor_symlink "$HOME/AGENTS.md" "$HOME/.dotfiles/ai/AGENTS.md"
+  doctor_symlink "$HOME/AGENTS.md" .dotfiles/ai/AGENTS.md
   doctor_symlink "$XDG_CONFIG_HOME/claude/CLAUDE.md" "$HOME/AGENTS.md"
   doctor_symlink "$XDG_STATE_HOME/codex/AGENTS.md" "$HOME/AGENTS.md"
   doctor_symlink "$XDG_STATE_HOME/pi/agent/AGENTS.md" "$HOME/AGENTS.md"
