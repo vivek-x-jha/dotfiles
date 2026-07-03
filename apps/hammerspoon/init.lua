@@ -267,7 +267,7 @@ local clamp = function(value, min_value, max_value)
 end
 
 --- Move the focused window to a unit rect, but keep it at least a terminal grid size.
---- Used by ctrl-alt-c so centered terminals do not shrink below 100 columns x 25 rows.
+--- Used by ctrl-alt-c so centered terminals do not shrink below 120 columns x 30 rows.
 --- @param app_pos WindowRect
 --- @param min_cols number
 --- @param min_rows number
@@ -537,7 +537,7 @@ local remaps = {
   -- Window sizing and placement
   { mods = ctrl_alt, key = 'Left', message = 'Left Half', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
   { mods = ctrl_alt, key = 'Right', message = 'Right Half', pressedfn = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveAppMinTerminalGrid({ x = 0.25, y = 0.25, w = 0.5, h = 0.5 }, 100, 25) end },
+  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveAppMinTerminalGrid({ x = 0.25, y = 0.25, w = 0.5, h = 0.5 }, 120, 30) end },
   { mods = ctrl_alt, key = 'Up', message = 'Top Half', pressedfn = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'Down', message = 'Bottom Half', pressedfn = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'U', message = 'Top Left', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },
