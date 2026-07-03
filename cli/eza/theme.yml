@@ -336,6 +336,10 @@ filenames:
     icon:
       glyph: ""
 
+  backups:
+    icon:
+      glyph: ""
+
   apps:
     icon:
       glyph: ""
