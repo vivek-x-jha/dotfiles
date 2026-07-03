@@ -268,7 +268,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Cargo](https://doc.rust-lang.org/cargo/) | `CARGO_HOME="$XDG_DATA_HOME/cargo"` | Cargo bin, registry, and cache-like data |
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
 | tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
-| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells and only merges known SourDiesel UI preference keys from `ai/codex`. `$CODEX_HOME` can also carry project-level agent memory for Codex meta work. |
+| Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells, links `$CODEX_HOME/AGENTS.md -> ~/AGENTS.md` for global instructions, and only merges known SourDiesel UI preference keys from `ai/codex`. |
 | Pi coding agent | `PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"` | Pi auth, sessions, settings, and runtime state stay in XDG state; bootstrap links `AGENTS.md -> ~/AGENTS.md`, plus repo-managed `ai/pi/models.json` and `ai/pi/themes/sourdiesel.json`, into that agent dir for global instructions, local Ollama models, and the SourDiesel TUI theme. |
 | [Ollama](https://github.com/ollama/ollama) | `OLLAMA_HOST="127.0.0.1:11434"`, `OLLAMA_FLASH_ATTENTION=1`, `OLLAMA_KV_CACHE_TYPE=q8_0` | Local model runner endpoint and Apple Silicon-friendly runtime defaults used by Pi's OpenAI-compatible `ollama` provider. |
 | [Claude Code](https://code.claude.com/docs/en/env-vars) | `CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"` | Bootstrap links repo-managed `ai/claude-code/settings.json` plus `CLAUDE.md -> ~/AGENTS.md` into Claude's config dir; Claude-owned runtime state such as `~/.claude.json` is left unmanaged. |
@@ -482,7 +482,7 @@ These labels are not shell commands by default. Paste the prompt text from the w
 
 Agent memory is layered so global policy stays portable and project facts stay close to the repo they describe:
 
-- [`ai/AGENTS.md`](./ai/AGENTS.md): version-controlled global cross-harness behavior, safety, git/reporting preferences, and memory policy. Bootstrap exposes it as `~/AGENTS.md`; Pi and Claude Code global config link to that home-level alias. Codex runtime state can carry its own project-level memory for Codex meta work.
+- [`ai/AGENTS.md`](./ai/AGENTS.md): version-controlled global cross-harness behavior, safety, git/reporting preferences, and memory policy. Bootstrap exposes it as `~/AGENTS.md`; Codex, Pi, and Claude Code global config link to that home-level alias.
 - Project `AGENTS.md`: repo-specific commands, architecture, generated/vendor hazards, validation, and project-specific rules.
 - Project `docs/known-issues.md`: recurring bugs, active workarounds, reproduction/retest steps, and exit criteria.
 - Project `docs/agent-memory.md`: durable facts likely to matter in future agent sessions when they do not belong in normal docs.
@@ -494,7 +494,7 @@ Agents should update existing memory before adding duplicates, include verificat
 
 Codex runtime configuration stays in `$CODEX_HOME/config.toml` because Codex writes local state there, including marketplaces, plugins, MCP servers, and project trust.
 
-Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./ai/codex/config/preferences.toml) and SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only managed keys and preserves unrelated Codex-owned sections. Bootstrap exposes the tracked [`ai/AGENTS.md`](./ai/AGENTS.md) as `~/AGENTS.md` and links Pi/Claude Code global instructions to it (`CLAUDE.md` for Claude Code), while `$CODEX_HOME/AGENTS.md` is left available for project-level Codex meta-work guidance.
+Bootstrap merges portable defaults from [`ai/codex/config/preferences.toml`](./ai/codex/config/preferences.toml) and SourDiesel UI preferences from [`ai/codex/themes/sourdiesel.toml`](./ai/codex/themes/sourdiesel.toml) with [`ai/codex/scripts/apply_preferences.py`](./ai/codex/scripts/apply_preferences.py). The helper rewrites only managed keys and preserves unrelated Codex-owned sections. Bootstrap exposes the tracked [`ai/AGENTS.md`](./ai/AGENTS.md) as `~/AGENTS.md` and links Codex, Pi, and Claude Code global instructions to it (`CLAUDE.md` for Claude Code).
 
 The SourDiesel fragment manages Codex UI and TUI status-line preferences. TUI segment order is managed through `status_line`; TUI colors still come from Codex and the configured terminal ANSI palette, with `status_line_use_colors = true` enabling colored status-line segments.
 
@@ -508,7 +508,7 @@ Keep `ai/codex/` limited to repo-managed Codex inputs:
 - `config/`: portable, non-secret Codex defaults.
 - `scripts/`: idempotent helpers that merge or validate those fragments.
 - `skills/`: personal skill sources. Bootstrap discovers each child directory containing `SKILL.md` and links it into `$CODEX_HOME/skills`; adding another skill does not require bootstrap edits.
-- `AGENTS.md`: tracked symlink/reference to shared global guidance; `$CODEX_HOME/AGENTS.md` may be a project-level runtime/meta-work file instead of a global symlink.
+- `AGENTS.md`: tracked symlink/reference to shared global guidance; bootstrap links `$CODEX_HOME/AGENTS.md -> ~/AGENTS.md`.
 - Optional docs or templates that are safe to share.
 
 Do not put Codex runtime state in `ai/codex/`: `config.toml`, `auth.json`, SQLite databases, sessions, logs, plugin caches, marketplace state, project trust, and generated skill/plugin/runtime folders belong under `$CODEX_HOME`.
