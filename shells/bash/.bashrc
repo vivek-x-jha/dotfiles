@@ -17,7 +17,7 @@ export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
 # Options
-shopt -s autocd
+shopt -s autocd 2>/dev/null || true
 set -o vi
 
 # PATH + Secrets

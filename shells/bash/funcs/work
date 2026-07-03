@@ -54,7 +54,7 @@ EOF
       return 0
       ;;
     -r | --reload)
-      [[ -n $TMUX ]] && {
+      [[ -n ${TMUX:-} ]] && {
         printf "Stopping tmux server... rerun \`work -r\` once tmux exits to start fresh.\n"
         tmux kill-server &>/dev/null
         return 0
@@ -64,14 +64,46 @@ EOF
 
       local reload_session='__work_reload__'
       local restore_script="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins}/tmux-resurrect/scripts/restore.sh"
+      local restore_lock_dir="${XDG_STATE_HOME:-$HOME/.local/state}/tmux"
+      local restore_lock="$restore_lock_dir/work-restore.lock"
       local preferred_session=''
       local attempt=0
+
+      mkdir -p "$restore_lock_dir" || return 1
+      printf '%s\t%s\n' "$$" "$(date +%s)" >| "$restore_lock"
 
       while ((attempt < 3)); do
         preferred_session=''
         TMUX='' tmux new-session -ds "$reload_session" -c "$HOME" && {
           [[ -x $restore_script ]] && {
+            # Do not replay captured TUI contents during `work -r` restore. For
+            # full-screen chat apps like cia, resurrect otherwise paints the old
+            # chat UI first, then sends the saved start command into that pane,
+            # which can look like the command is being typed into an already-live
+            # chat input. Also pause tmux-continuum auto-restore on fresh tmux
+            # server starts so a reboot path cannot race the manual restore here.
+            local restore_started_at
+            local restore_elapsed
+            local previous_capture_pane_contents
+            local previous_continuum_restore
+            restore_started_at="$(date +%s)"
+            previous_capture_pane_contents="$(tmux show-option -gqv '@resurrect-capture-pane-contents')"
+            previous_continuum_restore="$(tmux show-option -gqv '@continuum-restore')"
+            tmux set-option -gq '@continuum-restore' 'off'
+            tmux set-option -gq '@resurrect-capture-pane-contents' 'off'
             tmux run-shell "$restore_script"
+            restore_elapsed=$(( $(date +%s) - restore_started_at ))
+            ((restore_elapsed < 2)) && sleep $((2 - restore_elapsed))
+            if [[ -n $previous_capture_pane_contents ]]; then
+              tmux set-option -gq '@resurrect-capture-pane-contents' "$previous_capture_pane_contents"
+            else
+              tmux set-option -guq '@resurrect-capture-pane-contents'
+            fi
+            if [[ -n $previous_continuum_restore ]]; then
+              tmux set-option -gq '@continuum-restore' "$previous_continuum_restore"
+            else
+              tmux set-option -guq '@continuum-restore'
+            fi
 
             local test_pane
             while IFS= read -r test_pane; do
@@ -103,11 +135,12 @@ EOF
               tmux kill-session -t "$reload_session" &>/dev/null
           }
 
-          [[ -n $preferred_session ]] && {
-            tmux attach-session -t "$preferred_session"
-            return $?
-          }
+          if [[ -n $preferred_session ]]; then
+            rm -f "$restore_lock"
+            tmux attach-session -t "$preferred_session" && return $?
+          fi
 
+          rm -f "$restore_lock"
           tmux attach-session || tmux new-session
           return $?
         }
@@ -116,6 +149,7 @@ EOF
         attempt=$((attempt + 1))
       done
 
+      rm -f "$restore_lock"
       printf 'work: failed to start new tmux session after reload.\n' >&2
       return 1
       ;;
@@ -163,7 +197,7 @@ EOF
   local root=''
 
   [[ -z $session ]] && {
-    [[ -n $TMUX ]] && {
+    [[ -n ${TMUX:-} ]] && {
       [[ -t 0 ]] || return 0
       tmux list-sessions
       return $?
@@ -212,7 +246,7 @@ EOF
     local target="$1"
     configure_float_session "$target" || return 1
 
-    if [[ -n $TMUX ]]; then
+    if [[ -n ${TMUX:-} ]]; then
       tmux switch-client -t "$target" 2>/dev/null || tmux switch-client -l
     else
       tmux attach-session -t "$target" 2>/dev/null || tmux attach-session
