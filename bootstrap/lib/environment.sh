@@ -154,6 +154,7 @@ create_symlinks() {
     "$XDG_STATE_HOME/mycli"
     "$XDG_STATE_HOME/mysql"
     "$XDG_STATE_HOME/pi/agent"
+    "$XDG_STATE_HOME/pi/agent/extensions"
     "$XDG_STATE_HOME/pi/agent/themes"
     "$XDG_STATE_HOME/python"
     "$XDG_STATE_HOME/ipython"
@@ -187,6 +188,8 @@ create_symlinks() {
     "$HOME/AGENTS.md" "$XDG_STATE_HOME/codex" AGENTS.md
     "$HOME/AGENTS.md" "$XDG_STATE_HOME/pi/agent" AGENTS.md
     ../../../../.dotfiles/ai/pi/models.json "$XDG_STATE_HOME/pi/agent" models.json
+    ../../../../../.dotfiles/ai/pi/extensions/statusline.ts "$XDG_STATE_HOME/pi/agent/extensions" statusline.ts
+    ../../../../../.dotfiles/ai/pi/extensions/tsconfig.json "$XDG_STATE_HOME/pi/agent/extensions" tsconfig.json
     ../../../../../.dotfiles/ai/pi/themes/sourdiesel.json "$XDG_STATE_HOME/pi/agent/themes" sourdiesel.json
     ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
     ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode

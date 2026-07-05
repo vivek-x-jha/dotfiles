@@ -8,6 +8,7 @@ packages, and settings stay in state.
 
 - `models.json` registers the local OpenAI-compatible Ollama provider.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
+- `extensions/statusline.ts` is the custom SourDiesel statusline/turn-UI extension.
 
 Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` to the shared
 `~/AGENTS.md` alias for `ai/AGENTS.md`; no harness-specific copy lives here.
@@ -25,10 +26,10 @@ terminal palette:
   not static green.
 - Syntax tokens reuse the shared SourDiesel roles (`magenta` keywords, `blue`
   functions/commands, `green` strings, `brightblack` comments, etc.).
-- `mdCodeBlockBorder` uses `tmux_unfocused_pane_border` (`color237`) to match the
-  unfocused tmux pane border.
-- Code block sections are intended to render with straight separator lines and no
-  dark fill/background.
+- `mdCodeBlockBorder` uses `brightblack` so fenced code renders as a single muted
+  separator line.
+- Turn sections and code blocks are intended to render with straight separator
+  lines and no dark fill/background.
 
 After Pi package updates, re-test fenced `bash`, `zsh`, `python`, unknown-language,
 and no-language blocks because Markdown renderer behavior is package-owned while the
