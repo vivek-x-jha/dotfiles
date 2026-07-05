@@ -211,6 +211,10 @@ export default function (pi: ExtensionAPI) {
     return fgHex(envHex("BLACK_HEX", "#cccccc"), text);
   }
 
+  function whiteText(text: string): string {
+    return fgHex(envHex("WHITE_HEX", "#f4f3f2"), text);
+  }
+
   function brightBlackText(text: string): string {
     return fgHex(envHex("BRIGHTBLACK_HEX", "#5c617d"), text);
   }
@@ -497,7 +501,7 @@ export default function (pi: ExtensionAPI) {
   };
 
   function patchSectionSeparators(): void {
-    const patchVersion = 14;
+    const patchVersion = 15;
 
     const userPrototype = UserMessageComponent.prototype as SectionPrototype;
     if (userPrototype.__sourdieselSectionSeparatorPatchVersion !== patchVersion) {
@@ -547,6 +551,10 @@ export default function (pi: ExtensionAPI) {
 
   function magentaText(text: string): string {
     return fgHex(envHex("MAGENTA_HEX", "#eccef0"), text);
+  }
+
+  function brightMagentaText(text: string): string {
+    return fgHex(envHex("BRIGHTMAGENTA_HEX", "#c9ccfb"), text);
   }
 
   function cyanText(text: string): string {
@@ -958,8 +966,8 @@ export default function (pi: ExtensionAPI) {
     return iconText(
       TOKEN_ICON,
       formatCount(state.contextTokens),
-      brightCyanText,
-      cyanText,
+      whiteText,
+      brightBlackText,
     );
   }
 
@@ -968,7 +976,7 @@ export default function (pi: ExtensionAPI) {
       ? brightRedText
       : remaining < CONTEXT_WARNING_REMAINING_PERCENT
         ? brightYellowText
-        : brightBlackText;
+        : blackText;
   }
 
   function contextRemainingPart(_theme: Theme): string | undefined {
@@ -977,8 +985,8 @@ export default function (pi: ExtensionAPI) {
       return iconText(
         CONTEXT_REMAINING_ICON,
         "?%",
-        brightBlackText,
-        brightBlackText,
+        yellowText,
+        blackText,
       );
     }
 
@@ -987,25 +995,25 @@ export default function (pi: ExtensionAPI) {
       Math.min(100, Math.round(100 - state.contextPercent)),
     );
     const style = remainingPercentStyle(remaining);
-    return iconText(CONTEXT_REMAINING_ICON, `${remaining}%`, style, style);
+    return iconText(CONTEXT_REMAINING_ICON, `${remaining}%`, yellowText, style);
   }
 
   function codexQuotaWindowPart(label: string, window: CodexQuotaWindow | undefined): string | undefined {
     if (!window) return undefined;
     const remaining = Math.max(0, Math.min(100, Math.round(100 - window.usedPercent)));
-    return `${brightBlackText(label)} ${remainingPercentStyle(remaining)(`${remaining}%`)}`;
+    return `${blackText(label)} ${remainingPercentStyle(remaining)(`${remaining}%`)}`;
   }
 
   function codexQuotaPart(_theme: Theme): string | undefined {
     if (!isCodexQuotaRelevant()) return undefined;
     const quota = state.codexQuota;
-    if (!quota) return codexQuotaInFlight ? iconText("", "…", brightBlackText, brightBlackText) : undefined;
+    if (!quota) return codexQuotaInFlight ? `${brightMagentaText("")}  ${brightBlackText("…")}` : undefined;
     const windows = [
       codexQuotaWindowPart("5h", quota.primary),
       codexQuotaWindowPart("1w", quota.secondary),
     ].filter((part): part is string => Boolean(part));
     if (windows.length === 0) return undefined;
-    return `${brightBlueText("")} ${windows.join(" ")}`;
+    return `${brightMagentaText("")}  ${windows.join(" ")}`;
   }
 
   function gitPart(
@@ -1057,10 +1065,10 @@ export default function (pi: ExtensionAPI) {
       [
         title,
         modelPart(theme),
-        codexQuotaPart(theme),
         thinkingPart(theme),
-        tokenPart(theme),
+        codexQuotaPart(theme),
         contextRemainingPart(theme),
+        tokenPart(theme),
         phasePart(theme),
         gitPart(theme, footerData),
         extensionStatusPart(footerData),
