@@ -196,7 +196,13 @@ battery_metrics() {
   esac
 
   [[ $status == Charging ]] && icon='󰂄'
-  printf '#[fg=%s,bg=default]%s %3d%% ' "$color" "$icon" "$percentage"
+  printf '#[fg=%s,bg=default]%s %d%%  ' "$color" "$icon" "$percentage"
+}
+
+metric_segment() {
+  local icon=$1 value=$2 color
+  color=$(color_for_percentage "$value")
+  printf '#[fg=%s,bg=default]%s %d%%  ' "$color" "$icon" "$value"
 }
 
 # Emit a single tmux status command to avoid staggered redraws/flicker.
@@ -204,7 +210,7 @@ cpu=$(cpu_percentage)
 gpu=$(gpu_percentage)
 ram=$(ram_percentage)
 
-printf '#[fg=%s,bg=default]%s %3d%% ' "$(color_for_percentage "$cpu")" "$cpu_icon" "$cpu"
-[[ -n ${gpu:-} ]] && printf '#[fg=%s,bg=default]%s %3d%% ' "$(color_for_percentage "$gpu")" "$gpu_icon" "$gpu"
-printf '#[fg=%s,bg=default]%s %3d%% ' "$(color_for_percentage "$ram")" "$ram_icon" "$ram"
+metric_segment "$cpu_icon" "$cpu"
+[[ -n ${gpu:-} ]] && metric_segment "$gpu_icon" "$gpu"
+metric_segment "$ram_icon" "$ram"
 battery_metrics
