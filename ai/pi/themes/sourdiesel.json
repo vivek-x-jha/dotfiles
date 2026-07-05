@@ -82,11 +82,11 @@
     "syntaxPunctuation": "cyan",
 
     "thinkingOff": "brightblack",
-    "thinkingMinimal": "black",
-    "thinkingLow": "blue",
-    "thinkingMedium": "cyan",
-    "thinkingHigh": "brightmagenta",
-    "thinkingXhigh": "brightred",
+    "thinkingMinimal": "brightblack",
+    "thinkingLow": "brightblack",
+    "thinkingMedium": "brightblack",
+    "thinkingHigh": "brightblack",
+    "thinkingXhigh": "brightblack",
 
     "bashMode": "BLACK_HEX"
   },
