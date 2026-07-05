@@ -196,13 +196,28 @@ battery_metrics() {
   esac
 
   [[ $status == Charging ]] && icon='󰂄'
-  printf '#[fg=%s,bg=default]%s %d%%  ' "$color" "$icon" "$percentage"
+  printf '#[fg=%s,bg=default]%s %d%%' "$color" "$icon" "$percentage"
 }
 
 metric_segment() {
   local icon=$1 value=$2 color
   color=$(color_for_percentage "$value")
-  printf '#[fg=%s,bg=default]%s %d%%  ' "$color" "$icon" "$value"
+  printf '#[fg=%s,bg=default]%s %d%%' "$color" "$icon" "$value"
+}
+
+print_segments() {
+  local separator=' #[fg=brightblack,bg=default]· '
+  local first=1 segment
+
+  for segment in "$@"; do
+    [[ -n $segment ]] || continue
+    if (( first )); then
+      first=0
+    else
+      printf '%s' "$separator"
+    fi
+    printf '%s' "$segment"
+  done
 }
 
 # Emit a single tmux status command to avoid staggered redraws/flicker.
@@ -210,7 +225,8 @@ cpu=$(cpu_percentage)
 gpu=$(gpu_percentage)
 ram=$(ram_percentage)
 
-metric_segment "$cpu_icon" "$cpu"
-[[ -n ${gpu:-} ]] && metric_segment "$gpu_icon" "$gpu"
-metric_segment "$ram_icon" "$ram"
-battery_metrics
+segments=("$(metric_segment "$cpu_icon" "$cpu")")
+[[ -n ${gpu:-} ]] && segments+=("$(metric_segment "$gpu_icon" "$gpu")")
+segments+=("$(metric_segment "$ram_icon" "$ram")")
+segments+=("$(battery_metrics)")
+print_segments "${segments[@]}"
