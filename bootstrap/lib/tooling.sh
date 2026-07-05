@@ -71,4 +71,13 @@ setup_ide() {
     run 'uv tool install ruff'
     require ruff
   }
+
+  # Install TypeScript/JavaScript language server, linting, and formatting tooling
+  require npm && {
+    run 'npm install -g typescript typescript-language-server eslint prettier vscode-langservers-extracted'
+    require typescript-language-server
+    require vscode-eslint-language-server
+    require eslint
+    require prettier
+  }
 }
