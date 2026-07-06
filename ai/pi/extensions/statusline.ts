@@ -8,7 +8,7 @@ import {
   type ReadonlyFooterDataProvider,
   type Theme,
 } from "@earendil-works/pi-coding-agent";
-import { Container, truncateToWidth } from "@earendil-works/pi-tui";
+import { Container, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { existsSync } from "node:fs";
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { basename, isAbsolute, join as pathJoin } from "node:path";
@@ -310,14 +310,64 @@ export default function (pi: ExtensionAPI) {
     return [leading, rest];
   }
 
+  const RENDERED_CONTROL_PATTERN = /(?:\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07]*(?:\x07|\x1b\\)|\x1b_[^\x07]*(?:\x07|\x1b\\))/y;
+  const TRAILING_RENDERED_CONTROL_PATTERN = /(?:\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07]*(?:\x07|\x1b\\)|\x1b_[^\x07]*(?:\x07|\x1b\\))$/;
+
+  function trimRenderedTrailingSpaces(line: string): string {
+    const suffixes: string[] = [];
+    let rest = line;
+    while (true) {
+      const match = TRAILING_RENDERED_CONTROL_PATTERN.exec(rest);
+      if (!match) break;
+      suffixes.unshift(match[0]);
+      rest = rest.slice(0, match.index);
+    }
+    return `${rest.replace(/[ \t]+$/g, "")}${suffixes.join("")}`;
+  }
+
+  function skipRenderedControls(line: string, start: number): number {
+    let index = start;
+    while (index < line.length) {
+      RENDERED_CONTROL_PATTERN.lastIndex = index;
+      const match = RENDERED_CONTROL_PATTERN.exec(line);
+      if (!match || match.index !== index) break;
+      index += match[0].length;
+    }
+    return index;
+  }
+
+  function stripOneUserMessagePrefix(line: string): string {
+    let index = skipRenderedControls(line, 0);
+    if (!line.startsWith("▌ ", index)) return line;
+    index += "▌ ".length;
+    index = skipRenderedControls(line, index);
+    if (!line.startsWith(" ", index)) return line;
+    index += " ".length;
+    index = skipRenderedControls(line, index);
+    return line.slice(index);
+  }
+
+  function stripUserMessagePrefixes(line: string): string {
+    let rest = line;
+    for (let i = 0; i < 4; i++) {
+      const stripped = stripOneUserMessagePrefix(rest);
+      if (stripped === rest) return rest;
+      rest = stripped;
+    }
+    return rest;
+  }
+
   function styleUserMessageLines(lines: string[], width: number): string[] {
     const firstContentIndex = lines.findIndex((line) => !isBlankRenderedLine(line));
     if (firstContentIndex < 0) return lines;
     const prefix = `${brightBlueText("▌ ")}${blueText(" ")}`;
+    const prefixWidth = visibleWidth(prefix);
     const [leadingOsc, rest] = splitLeadingOsc(lines[firstContentIndex]);
+    const bodyWidth = Math.max(0, width - prefixWidth);
+    const body = truncateToWidth(trimRenderedTrailingSpaces(stripUserMessagePrefixes(rest)), bodyWidth, "…");
     return lines.map((line, index) =>
       index === firstContentIndex
-        ? truncateToWidth(`${leadingOsc}${prefix}${rest}`, width, "…")
+        ? truncateToWidth(`${leadingOsc}${prefix}${body}`, width, "…")
         : line,
     );
   }
@@ -537,7 +587,7 @@ export default function (pi: ExtensionAPI) {
   }
 
   function patchSectionSeparators(): void {
-    const patchVersion = 16;
+    const patchVersion = 17;
 
     const userPrototype = UserMessageComponent.prototype as SectionPrototype;
     if (userPrototype.__sourdieselSectionSeparatorPatchVersion !== patchVersion) {
