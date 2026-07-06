@@ -5,12 +5,12 @@ set -u
 target=${1:-}
 [[ -z $target ]] && exit 0
 
-# Handle directories with eza, falling back to ls.
+# Handle directories with eva, falling back to ls.
 [[ -d $target ]] && {
-  if command -v eza &>/dev/null; then
+  if command -v eva &>/dev/null; then
     (
       cd -- "$target" || exit
-      eza \
+      eva \
         --all \
         --long \
         --git \

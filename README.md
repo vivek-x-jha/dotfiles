@@ -9,7 +9,7 @@ Personal macOS and Linux workstation configuration centered on a fast terminal w
 - 🚀 One bootstrap entry point for packages, symlinks, shell setup, editor tooling, and OS defaults
 - 🗂️ XDG-first layout for config, cache, data, and state
 - 🐚 Zsh-first interactive shell with Bash parity where practical
-- 🔎 fzf, ripgrep, fd, bat, eza, zoxide, and Atuin wired into daily navigation
+- 🔎 fzf, ripgrep, fd, bat, eva, zoxide, and Atuin wired into daily navigation
 - 🧠 Neovim managed with native `vim.pack`, `bob`, LSPs, formatters, and custom SourDiesel theming
 - 🖥️ WezTerm, tmux, Hammerspoon, and macOS Terminal profiles for terminal workflows
 - 🔐 Optional 1Password CLI, shell plugin, Git signing, SSH agent, and Atuin sync setup
@@ -204,7 +204,7 @@ Validate the installed workstation state any time after setup:
 | [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
 | [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, and CIA |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
-| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eza, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
+| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eva, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
 | [`terminals`](./terminals) | tmux, WezTerm, Terminal.app, and iTerm-related assets |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
@@ -234,7 +234,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [bat](https://github.com/sharkdp/bat#configuration-file) | `~/.config/bat/config` | `bat --config-file`, `BAT_CONFIG_PATH`, and `BAT_CONFIG_DIR` are supported. |
 | [btop](https://github.com/aristocratos/btop) | `~/.config/btop/btop.conf` | btop uses XDG-style config and theme directories. |
 | [dust](https://github.com/bootandy/dust) | `~/.config/dust/config.toml` | Repo-managed TOML config. |
-| [eza](https://man.archlinux.org/man/extra/eza/eza.1.en) | `~/.config/eza` | `EZA_CONFIG_DIR` defaults to `$XDG_CONFIG_HOME/eza` or `~/.config/eza`. |
+| [eva](https://github.com/vivek-x-jha/eva) | `~/.config/eva` | `EVA_CONFIG_DIR` defaults to `$XDG_CONFIG_HOME/eva` or `~/.config/eva`; legacy config locations are checked as fallbacks. |
 | [GitHub CLI](https://cli.github.com/manual/) | `~/.config/gh/config.yml` | gh stores CLI config under XDG config. |
 | [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Git supports an XDG global config path. Main Git settings live in `auth/git/config`; SourDiesel styling is included from `auth/git/themes/sourdiesel`. |
 | [Glow](https://github.com/charmbracelet/glow) | `~/.config/glow/glow.yml` | Used with `GLAMOUR_STYLE` for the SourDiesel style. |
@@ -258,7 +258,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Hammerspoon](https://www.hammerspoon.org/docs/hs.html#configdir) | macOS defaults override | `MJConfigFile="$XDG_CONFIG_HOME/hammerspoon/init.lua"` |
 | [OpenSSH](https://man.openbsd.org/ssh_config) | explicit config in Git | Git uses `ssh -F ~/.config/ssh/config` |
 | [fzf](https://junegunn.github.io/fzf/shell-integration/) | shell integration source | Bootstrap installs upstream fzf to `$XDG_DATA_HOME/fzf`; shell startup prepends `$XDG_DATA_HOME/fzf/bin` when present, then uses `fzf --zsh`/`fzf --bash` and `~/.config/fzf/config` |
-| [eza colors](https://www.mankier.com/5/eza_colors) | `LS_COLORS`/`EZA_COLORS` | shell startup exports the colors directly from `shells/colors/sourdiesel` |
+| [eva colors](https://github.com/vivek-x-jha/eva) | `LS_COLORS`/`EVA_COLORS` | shell startup exports the colors directly from `shells/colors/sourdiesel` |
 
 ### 📦 XDG Data and State Moves
 
@@ -303,7 +303,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [ripgrep](https://github.com/BurntSushi/ripgrep) handles fast text search through `RIPGREP_CONFIG_PATH`.
 - [fd](https://github.com/sharkdp/fd) is used when available for file discovery.
 - [bat](https://github.com/sharkdp/bat) provides syntax-highlighted previews and manpage rendering.
-- [eza](https://github.com/eza-community/eza) replaces `ls` and tree-style directory display.
+- [eva](https://github.com/vivek-x-jha/eva) replaces `ls` and tree-style directory display.
 - [zoxide](https://github.com/ajeetdsouza/zoxide) provides smarter `cd`.
 
 ### 🧠 Editors
@@ -330,7 +330,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 [`themes/sourdiesel/palette.toml`](./themes/sourdiesel/palette.toml) is the source of truth for the shared 16-color ANSI palette, common extras, consumer inventory, and approved legacy outliers. The generated [`themes/sourdiesel/README.md`](./themes/sourdiesel/README.md) groups actual color use across terminal, shell, icon, syntax, editor, and application consumers.
 
-Native application theme files remain hand-authored. After changing the palette or a consumer, run `python3 themes/sourdiesel/tool.py render`; `python3 themes/sourdiesel/tool.py check` validates palette mirrors, reports new or stale outliers, compares overlapping eza and web-devicons mappings, and detects a stale generated report. The Terminal.app profile is inventoried but remains a manual check because its NSColor values are archived in the profile plist.
+Native application theme files remain hand-authored. After changing the palette or a consumer, run `python3 themes/sourdiesel/tool.py render`; `python3 themes/sourdiesel/tool.py check` validates palette mirrors, reports new or stale outliers, compares overlapping eva and web-devicons mappings, and detects a stale generated report. The Terminal.app profile is inventoried but remains a manual check because its NSColor values are archived in the profile plist.
 
 ### 🔐 Auth and Secrets
 

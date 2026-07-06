@@ -22,7 +22,6 @@ install_rust_tooling() {
     bob-nvim
     cargo-update
     dust
-    eza
     fd-find
     rainfrog
     ripgrep
@@ -39,6 +38,8 @@ install_rust_tooling() {
   for crate in "${crates[@]}"; do
     run "cargo install --locked $crate" || logg -w "cargo install failed for $crate"
   done
+
+  run 'cargo install --locked --git https://github.com/vivek-x-jha/eva eva' || logg -w 'cargo install failed for eva'
 
   require zsh-patina && run 'zsh-patina restart'
 }

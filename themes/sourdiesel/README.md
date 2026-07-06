@@ -63,7 +63,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## Files and icons
 
-| Color | eza | web-devicons |
+| Color | eva | web-devicons |
 | --- | --- | --- |
 | `black` | 51 · size.number_byte, filenames..shellcheckrc.filename | 26 · .gitignore, txt |
 | `red` | 56 · perms.user_write, perms.group_write | 15 · .bash_history, .histfile |
@@ -138,7 +138,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## File and icon mappings
 
-<details><summary>eza: 277 colored mappings</summary>
+<details><summary>eva: 277 colored mappings</summary>
 
 - `black` (25): `extensions:conf`, `extensions:editorconfig`, `extensions:gitattributes`, `extensions:ignore`, `extensions:ini`, `extensions:json`, `extensions:jsonc`, `extensions:jsonl`, `extensions:toml`, `extensions:txt`, `extensions:xml`, `extensions:yaml`, `extensions:yml`, `filenames:.editorconfig`, `filenames:.gitattributes`, `filenames:.gitignore`, `filenames:.luarc.json`, `filenames:.python-version`, `filenames:.shellcheckrc`, `filenames:.state.itermexport`, `filenames:.vale.ini`, `filenames:_update-notifier-last-checked`, `filenames:CODEOWNERS`, `filenames:id_ed25519.pub`, `filenames:session_index.jsonl`
 - `red` (25): `extensions:cache`, `extensions:dump`, `extensions:hist`, `extensions:history`, `extensions:log`, `filenames:.bash_history`, `filenames:.histfile`, `filenames:.history`, `filenames:.lesshst`, `filenames:.mycli_history`, `filenames:.mysql_history`, `filenames:.python_history`, `filenames:.zlua`, `filenames:.zsh_history`, `filenames:CACHEDIR.TAG`, `filenames:hist`, `filenames:histfile`, `filenames:history`, `filenames:history.jsonl`, `filenames:lesshst`, `filenames:metadata.yaml`, `filenames:p10k-dump-mubuntu.zsh`, `filenames:p10k-instant-prompt-mubuntu.zsh`, `filenames:prompt-21`, `filenames:prompt-29`
@@ -152,7 +152,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 - `brightyellow` (10): `extensions:md`, `extensions:version`, `filenames:AGENTS.md`, `filenames:CLAUDE.md`, `filenames:contributing.md`, `filenames:license`, `filenames:LICENSE`, `filenames:README`, `filenames:readme.md`, `filenames:security.md`
 - `brightblue` (11): `extensions:sublime-syntax`, `filenames:.dockerignore`, `filenames:compose.yaml`, `filenames:compose.yml`, `filenames:Containerfile`, `filenames:docker-compose.yaml`, `filenames:docker-compose.yml`, `filenames:Dockerfile`, `filenames:sh.vim`, `filenames:typescriptreact.vim`, `filenames:zsh.vim`
 - `brightmagenta` (49): `filenames:apt-packages.txt`, `filenames:brewfile`, `filenames:Brewfile`, `filenames:brewfile.lock.json`, `filenames:Brewfile.lock.json`, `filenames:build.gradle`, `filenames:build.gradle.kts`, `filenames:bun.lockb`, `filenames:cabal.project`, `filenames:cabal.project.freeze`, `filenames:cargo.lock`, `filenames:Cargo.lock`, `filenames:cargo.toml`, `filenames:Cargo.toml`, `filenames:composer.json`, `filenames:composer.lock`, `filenames:dnf-packages.txt`, `filenames:gemfile`, `filenames:Gemfile`, `filenames:gemfile.lock`, `filenames:Gemfile.lock`, `filenames:go.mod`, `filenames:go.sum`, `filenames:gradle.lockfile`, `filenames:mix.exs`, `filenames:mix.lock`, `filenames:nvim-pack-lock.json`, `filenames:package-lock.json`, `filenames:package.json`, `filenames:package.lock`, `filenames:package.resolved`, `filenames:Package.resolved`, `filenames:package.swift`, `filenames:Package.swift`, `filenames:packages.config`, `filenames:pipfile`, `filenames:Pipfile`, `filenames:pipfile.lock`, `filenames:Pipfile.lock`, `filenames:pnpm-lock.yaml`, `filenames:poetry.lock`, `filenames:pom.xml`, `filenames:project.assets.json`, `filenames:pubspec.lock`, `filenames:pubspec.yaml`, `filenames:pyproject.toml`, `filenames:requirements.txt`, `filenames:stack.yaml`, `filenames:uv.lock`
-- `brightcyan` (30): `filenames:_atuin`, `filenames:_bat`, `filenames:_bob`, `filenames:_cargo`, `filenames:_cia`, `filenames:_dust`, `filenames:_eza`, `filenames:_fd`, `filenames:_pi`, `filenames:_rg`, `filenames:_starship`, `filenames:_tldr`, `filenames:_update-tools`, `filenames:_uv`, `filenames:_work`, `filenames:atuin.bash`, `filenames:bat.bash`, `filenames:bob.bash`, `filenames:cargo.bash`, `filenames:cia.bash`, `filenames:dust.bash`, `filenames:eza.bash`, `filenames:fd.bash`, `filenames:pi.bash`, `filenames:rg.bash`, `filenames:starship.bash`, `filenames:tldr.bash`, `filenames:update-tools.bash`, `filenames:uv.bash`, `filenames:work.bash`
+- `brightcyan` (30): `filenames:_atuin`, `filenames:_bat`, `filenames:_bob`, `filenames:_cargo`, `filenames:_cia`, `filenames:_dust`, `filenames:_eva`, `filenames:_fd`, `filenames:_pi`, `filenames:_rg`, `filenames:_starship`, `filenames:_tldr`, `filenames:_update-tools`, `filenames:_uv`, `filenames:_work`, `filenames:atuin.bash`, `filenames:bat.bash`, `filenames:bob.bash`, `filenames:cargo.bash`, `filenames:cia.bash`, `filenames:dust.bash`, `filenames:eva.bash`, `filenames:fd.bash`, `filenames:pi.bash`, `filenames:rg.bash`, `filenames:starship.bash`, `filenames:tldr.bash`, `filenames:update-tools.bash`, `filenames:uv.bash`, `filenames:work.bash`
 - `brightwhite` (2): `extensions:lua`, `extensions:py`
 
 </details>
@@ -169,7 +169,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 - `brightyellow` (7): `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `LICENSE`, `md`, `README.md`, `SECURITY.md`
 - `brightblue` (11): `.dockerignore`, `compose.yaml`, `compose.yml`, `Containerfile`, `docker-compose.yaml`, `docker-compose.yml`, `Dockerfile`, `sh.vim`, `sublime-syntax`, `typescriptreact.vim`, `zsh.vim`
 - `brightmagenta` (40): `apt-packages.txt`, `Brewfile`, `Brewfile.lock.json`, `build.gradle`, `build.gradle.kts`, `bun.lockb`, `cabal.project`, `cabal.project.freeze`, `Cargo.lock`, `Cargo.toml`, `composer.json`, `composer.lock`, `dnf-packages.txt`, `Gemfile`, `Gemfile.lock`, `go.mod`, `go.sum`, `gradle.lockfile`, `mix.exs`, `mix.lock`, `nvim-pack-lock.json`, `package-lock.json`, `package.json`, `package.lock`, `Package.resolved`, `Package.swift`, `packages.config`, `Pipfile`, `Pipfile.lock`, `pnpm-lock.yaml`, `poetry.lock`, `pom.xml`, `project.assets.json`, `pubspec.lock`, `pubspec.yaml`, `pyproject.toml`, `requirements.txt`, `stack.yaml`, `uv.lock`, `yarn.lock`
-- `brightcyan` (30): `_atuin`, `_bat`, `_bob`, `_cargo`, `_cia`, `_dust`, `_eza`, `_fd`, `_pi`, `_rg`, `_starship`, `_tldr`, `_update-tools`, `_uv`, `_work`, `atuin.bash`, `bat.bash`, `bob.bash`, `cargo.bash`, `cia.bash`, `dust.bash`, `eza.bash`, `fd.bash`, `pi.bash`, `rg.bash`, `starship.bash`, `tldr.bash`, `update-tools.bash`, `uv.bash`, `work.bash`
+- `brightcyan` (30): `_atuin`, `_bat`, `_bob`, `_cargo`, `_cia`, `_dust`, `_eva`, `_fd`, `_pi`, `_rg`, `_starship`, `_tldr`, `_update-tools`, `_uv`, `_work`, `atuin.bash`, `bat.bash`, `bob.bash`, `cargo.bash`, `cia.bash`, `dust.bash`, `eva.bash`, `fd.bash`, `pi.bash`, `rg.bash`, `starship.bash`, `tldr.bash`, `update-tools.bash`, `uv.bash`, `work.bash`
 - `brightwhite` (2): `lua`, `py`
 
 </details>

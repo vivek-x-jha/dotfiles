@@ -144,7 +144,7 @@ cargo "bob-nvim"
 cargo "cargo-update"
 cargo "cia"
 cargo "du-dust"
-cargo "eza"
+cargo "eva", args: ["--git", "https://github.com/vivek-x-jha/eva"]
 cargo "fd-find"
 cargo "ripgrep"
 cargo "starship"

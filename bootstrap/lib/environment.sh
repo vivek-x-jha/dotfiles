@@ -173,7 +173,7 @@ create_symlinks() {
     ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
     ../.dotfiles/ai/cia "$XDG_CONFIG_HOME" cia
     ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
-    ../.dotfiles/cli/eza "$XDG_CONFIG_HOME" eza
+    ../.dotfiles/cli/eva "$XDG_CONFIG_HOME" eva
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
     ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
     ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
@@ -236,7 +236,6 @@ create_symlinks() {
     symlinks+=(
       ../.dotfiles/apps/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
       ../.dotfiles/apps/karabiner "$XDG_CONFIG_HOME" karabiner
-      ../../.dotfiles/cli/eza "$app_data" eza
     )
 
     vscode_src="../$vscode_src"

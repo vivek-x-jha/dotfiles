@@ -178,11 +178,11 @@ paths = ["cli/fzf/config"]
 parser = "env"
 
 [[consumers]]
-id = "eza"
-label = "eza"
+id = "eva"
+label = "eva"
 group = "Files and icons"
-paths = ["cli/eza/theme.yml"]
-parser = "eza"
+paths = ["cli/eva/theme.yml"]
+parser = "eva"
 
 [[consumers]]
 id = "webdevicons"

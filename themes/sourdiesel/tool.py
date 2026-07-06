@@ -332,7 +332,7 @@ def yaml_key(line: str) -> tuple[int, str, str] | None:
     return indent, key, value
 
 
-def scan_eza(
+def scan_eva(
     path: Path, by_index: dict[int, str]
 ) -> tuple[list[Usage], dict[str, str], list[str]]:
     usages: list[Usage] = []
@@ -357,7 +357,7 @@ def scan_eza(
                     previous = mappings.get(mapping_key)
                     if previous and previous != color:
                         errors.append(
-                            f"eza: {mapping_key} uses both {previous} and {color}"
+                            f"eva: {mapping_key} uses both {previous} and {color}"
                         )
                     mappings.setdefault(mapping_key, color)
             continue
@@ -421,8 +421,8 @@ def build_inventory(manifest: dict[str, Any], root: Path = REPO_ROOT) -> Invento
             usages = scan_env(paths, known_names)
         elif parser == "ansi":
             usages = scan_ansi(paths)
-        elif parser == "eza":
-            usages, mapping, scan_errors = scan_eza(paths[0], by_index)
+        elif parser == "eva":
+            usages, mapping, scan_errors = scan_eva(paths[0], by_index)
             mappings[consumer_id] = mapping
             errors.extend(scan_errors)
         elif parser == "webdevicons":
@@ -456,20 +456,20 @@ def build_inventory(manifest: dict[str, Any], root: Path = REPO_ROOT) -> Invento
         if unknown:
             legacy[consumer_id] = unknown
 
-    eza = mappings.get("eza", {})
+    eva = mappings.get("eva", {})
     webdevicons = mappings.get("webdevicons", {})
     for key in sorted(webdevicons):
-        eza_key = next(
+        eva_key = next(
             (
                 candidate
                 for candidate in (f"extensions:{key}", f"filenames:{key}")
-                if candidate in eza
+                if candidate in eva
             ),
             None,
         )
-        if eza_key and eza[eza_key] != webdevicons[key]:
+        if eva_key and eva[eva_key] != webdevicons[key]:
             errors.append(
-                f"eza/web-devicons: {key} is {eza[eza_key]} in eza and {webdevicons[key]} in web-devicons"
+                f"eva/web-devicons: {key} is {eva[eva_key]} in eva and {webdevicons[key]} in web-devicons"
             )
 
     return Inventory(usage_map, legacy, mappings, errors)
@@ -538,7 +538,7 @@ def render_report(manifest: dict[str, Any], inventory: Inventory) -> str:
             lines.append(f"| `{color.name}` | " + " | ".join(cells) + " |")
 
     lines.extend(["", "## File and icon mappings", ""])
-    for consumer_id, label in (("eza", "eza"), ("webdevicons", "web-devicons")):
+    for consumer_id, label in (("eva", "eva"), ("webdevicons", "web-devicons")):
         mapping = inventory.mappings.get(consumer_id, {})
         lines.extend(
             [

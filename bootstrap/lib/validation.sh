@@ -286,7 +286,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/btop" ../.dotfiles/cli/btop
   doctor_symlink "$XDG_CONFIG_HOME/cia" ../.dotfiles/ai/cia
   doctor_symlink "$XDG_CONFIG_HOME/dust" ../.dotfiles/cli/dust
-  doctor_symlink "$XDG_CONFIG_HOME/eza" ../.dotfiles/cli/eza
+  doctor_symlink "$XDG_CONFIG_HOME/eva" ../.dotfiles/cli/eva
   doctor_symlink "$XDG_CONFIG_HOME/fzf" ../.dotfiles/cli/fzf
   doctor_symlink "$XDG_CONFIG_HOME/gh" ../.dotfiles/cli/gh
   doctor_symlink "$XDG_CONFIG_HOME/git" ../.dotfiles/auth/git
@@ -320,7 +320,6 @@ doctor_bootstrap() {
   if [[ $OS_TYPE == macos ]]; then
     doctor_symlink "$XDG_CONFIG_HOME/hammerspoon" ../.dotfiles/apps/hammerspoon optional
     doctor_symlink "$XDG_CONFIG_HOME/karabiner" ../.dotfiles/apps/karabiner optional
-    doctor_symlink "$HOME/Library/Application Support/eza" ../../.dotfiles/cli/eza optional
     doctor_symlink "$HOME/Library/Application Support/Code/User/settings.json" ../../../../.dotfiles/editors/vscode/settings.json optional
   else
     doctor_symlink "$XDG_CONFIG_HOME/Code/User/settings.json" ../../../.dotfiles/editors/vscode/settings.json optional
@@ -338,7 +337,7 @@ doctor_bootstrap() {
   doctor_cmd bash
   doctor_cmd zsh
   doctor_cmd "$PKG_MGR"
-  doctor_cmd eza optional
+  doctor_cmd eva optional
   doctor_cmd fzf optional
   doctor_cmd rg optional
   doctor_cmd atuin optional

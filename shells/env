@@ -80,8 +80,8 @@ export TMUX_FZF_OPTIONS='-p 75%,75% -m --no-preview'
 # 1password: https://developer.1password.com/docs/cli/shell-plugins
 export OP_PLUGIN_ALIASES_SOURCED=1
 
-# Eza: https://man.archlinux.org/man/eza_colors.5.en
-export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
+# Eva: https://github.com/vivek-x-jha/eva
+export EVA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
 
 # Ripgrep: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"

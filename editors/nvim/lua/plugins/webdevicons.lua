@@ -27,7 +27,7 @@ local devicons_config = {
     ['config'] = { icon = icons.gear, name = 'config', color = thm.magenta },
     ['md'] = { icon = icons.markdown, name = 'md', color = thm.brightyellow },
 
-    -- Keep common project config special-cases aligned with eza extension rules.
+    -- Keep common project config special-cases aligned with eva extension rules.
     ['eslint.config.js'] = { icon = icons.javascript, name = 'eslint.config.js', color = thm.white },
     ['vite.config.js'] = { icon = icons.javascript, name = 'vite.config.js', color = thm.white },
     ['vite.config.ts'] = { icon = icons.typescript, name = 'vite.config.ts', color = thm.white },
@@ -66,7 +66,7 @@ local devicons_config = {
     ['cargo.bash'] = { icon = icons.lightbulb, name = 'cargo.bash', color = thm.brightcyan },
     ['cia.bash'] = { icon = icons.lightbulb, name = 'cia.bash', color = thm.brightcyan },
     ['dust.bash'] = { icon = icons.lightbulb, name = 'dust.bash', color = thm.brightcyan },
-    ['eza.bash'] = { icon = icons.lightbulb, name = 'eza.bash', color = thm.brightcyan },
+    ['eva.bash'] = { icon = icons.lightbulb, name = 'eva.bash', color = thm.brightcyan },
     ['fd.bash'] = { icon = icons.lightbulb, name = 'fd.bash', color = thm.brightcyan },
     ['pi.bash'] = { icon = icons.lightbulb, name = 'pi.bash', color = thm.brightcyan },
     ['rg.bash'] = { icon = icons.lightbulb, name = 'rg.bash', color = thm.brightcyan },
@@ -81,7 +81,7 @@ local devicons_config = {
     ['_cargo'] = { icon = icons.lightbulb, name = '_cargo', color = thm.brightcyan },
     ['_cia'] = { icon = icons.lightbulb, name = '_cia', color = thm.brightcyan },
     ['_dust'] = { icon = icons.lightbulb, name = '_dust', color = thm.brightcyan },
-    ['_eza'] = { icon = icons.lightbulb, name = '_eza', color = thm.brightcyan },
+    ['_eva'] = { icon = icons.lightbulb, name = '_eva', color = thm.brightcyan },
     ['_fd'] = { icon = icons.lightbulb, name = '_fd', color = thm.brightcyan },
     ['_pi'] = { icon = icons.lightbulb, name = '_pi', color = thm.brightcyan },
     ['_rg'] = { icon = icons.lightbulb, name = '_rg', color = thm.brightcyan },
