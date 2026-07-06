@@ -101,7 +101,7 @@ const THINKING_STYLES = {
     iconFallback: "#f3b175",
     textColor: "YELLOW_HEX",
     textFallback: "#fdf7cd",
-    label: "hi",
+    label: "hih",
   },
   xhigh: {
     iconColor: "BRIGHTRED_HEX",
