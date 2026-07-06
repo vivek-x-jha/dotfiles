@@ -1,5 +1,6 @@
 import {
   AssistantMessageComponent,
+  CompactionSummaryMessageComponent,
   ToolExecutionComponent,
   UserMessageComponent,
   type ExtensionAPI,
@@ -513,6 +514,7 @@ export default function (pi: ExtensionAPI) {
     render: (width: number) => string[];
     __sourdieselSectionSeparatorPatchVersion?: number;
     __sourdieselThinkingLabelPatchVersion?: number;
+    __sourdieselCompactionLabelPatchVersion?: number;
   };
   type ToolExecutionInternals = {
     hideComponent?: boolean;
@@ -525,8 +527,17 @@ export default function (pi: ExtensionAPI) {
     args?: unknown;
   };
 
+  function recolorCompactionLabel(lines: string[]): string[] {
+    let replaced = false;
+    return lines.map((line) => {
+      if (replaced || !line.includes("[compaction]")) return line;
+      replaced = true;
+      return line.replace("[compaction]", brightRedText("[compaction]"));
+    });
+  }
+
   function patchSectionSeparators(): void {
-    const patchVersion = 15;
+    const patchVersion = 16;
 
     const userPrototype = UserMessageComponent.prototype as SectionPrototype;
     if (userPrototype.__sourdieselSectionSeparatorPatchVersion !== patchVersion) {
@@ -559,6 +570,15 @@ export default function (pi: ExtensionAPI) {
         return withToolLine.length > 0 ? [sectionSeparator(width), ...withToolLine] : withToolLine;
       };
       toolPrototype.__sourdieselSectionSeparatorPatchVersion = patchVersion;
+    }
+
+    const compactionPrototype = CompactionSummaryMessageComponent.prototype as SectionPrototype;
+    if (compactionPrototype.__sourdieselCompactionLabelPatchVersion !== patchVersion) {
+      const originalRender = compactionPrototype.render;
+      compactionPrototype.render = function (this: unknown, width: number): string[] {
+        return recolorCompactionLabel(originalRender.call(this, width));
+      };
+      compactionPrototype.__sourdieselCompactionLabelPatchVersion = patchVersion;
     }
   }
 
