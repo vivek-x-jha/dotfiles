@@ -80,7 +80,7 @@ const THINKING_STYLES = {
     iconFallback: "#d2fd9d",
     textColor: "GREEN_HEX",
     textFallback: "#ceffc9",
-    label: "minimum",
+    label: "min",
   },
   low: {
     iconColor: "BRIGHTMAGENTA_HEX",
@@ -94,7 +94,7 @@ const THINKING_STYLES = {
     iconFallback: "#f4f3f2",
     textColor: "BLACK_HEX",
     textFallback: "#cccccc",
-    label: "medium",
+    label: "med",
   },
   high: {
     iconColor: "BRIGHTYELLOW_HEX",
