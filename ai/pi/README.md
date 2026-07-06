@@ -10,8 +10,8 @@ packages, and settings stay in state.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
 - `extensions/statusline.ts` is the custom SourDiesel statusline/turn-UI extension.
 
-Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` to the shared
-`~/AGENTS.md` alias for `ai/AGENTS.md`; no harness-specific copy lives here.
+Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` directly to
+`../../../../.dotfiles/ai/AGENTS.md` from the agent dir; no harness-specific copy lives here.
 
 ## SourDiesel Markdown/code rendering v1
 
