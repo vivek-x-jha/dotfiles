@@ -1464,7 +1464,7 @@ filenames:
       style:
         foreground: 14
 
-  eza.bash:
+  eva.bash:
     filename:
       foreground: 14
     icon:
@@ -1632,7 +1632,7 @@ filenames:
       style:
         foreground: 14
 
-  _eza:
+  _eva:
     filename:
       foreground: 14
     icon:
@@ -1820,7 +1820,7 @@ filenames:
     icon:
       glyph: ""
 
-  eza:
+  eva:
     icon:
       glyph: ""
 

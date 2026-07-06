@@ -1,17 +1,16 @@
-#compdef eza
-# shellcheck disable=all
+#compdef eva
 
-# Save this file as _eza in /usr/local/share/zsh/site-functions or in any
+# Save this file as _eva in /usr/local/share/zsh/site-functions or in any
 # other folder in $fpath.  E.g. save it in a folder called ~/.zfunc and add a
 # line containing `fpath=(~/.zfunc $fpath)` somewhere before `compinit` in your
 # ~/.zshrc.
 
-__eza() {
+__eva() {
     # Give completions using the `_arguments` utility function with
-    # `-s` for option stacking like `eza -ab` for `eza -a -b` and
-    # `-S` for delimiting options with `--` like in `eza -- -a`.
+    # `-s` for option stacking like `eva -ab` for `eva -a -b` and
+    # `-S` for delimiting options with `--` like in `eva -- -a`.
     _arguments -s -S \
-        "(- *)"{-v,--version}"[Show version of eza]" \
+        "(- *)"{-v,--version}"[Show version of eva]" \
         "(- *)"--help"[Show list of command-line options]" \
         {-1,--oneline}"[Display one entry per line]" \
         {-l,--long}"[Display extended file metadata as a table]" \
@@ -26,7 +25,7 @@ __eza() {
         --colo{,u}r-scale-mode"[Use gradient or fixed colors in --color-scale]:(mode):(fixed gradient)" \
         --icons="[When to display icons]:(when):(always auto automatic never)" \
         --no-quotes"[Don't quote filenames with spaces]" \
-        --hyperlink"[Display entries as hyperlinks]" \
+        --hyperlink="[When to display entries as hyperlinks]:(when):(always auto automatic never)" \
         --absolute"[Display entries with their absolute path]:(mode):(on follow off)" \
         --follow-symlinks"[Drill down into symbolic links that point to directories]" \
         --group-directories-first"[Sort directories before other files]" \
@@ -73,7 +72,7 @@ __eza() {
         {-M,--mounts}"[Show mount details (long mode only)]" \
         '*:filename:_files' \
         --smart-group"[Only show group if it has a different name from owner]" \
-        --stdin"[When piping to eza. Read file names from stdin]"
+        --stdin"[When piping to eva. Read file names from stdin]"
 }
 
-__eza
+__eva

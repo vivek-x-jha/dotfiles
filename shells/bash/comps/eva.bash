@@ -1,5 +1,5 @@
-# shellcheck shell=bash disable=SC2154
-_eza() {
+# shellcheck shell=bash
+_eva() {
     cur=${COMP_WORDS[COMP_CWORD]}
     prev=${COMP_WORDS[COMP_CWORD-1]}
 
@@ -14,6 +14,11 @@ _eza() {
             ;;
 
         --icons)
+            mapfile -t COMPREPLY < <(compgen -W 'always automatic auto never' -- "$cur")
+            return
+            ;;
+
+        --hyperlink)
             mapfile -t COMPREPLY < <(compgen -W 'always automatic auto never' -- "$cur")
             return
             ;;
@@ -58,13 +63,13 @@ _eza() {
         # _parse_help doesn’t pick up short options when they are on the same line than long options
         --*)
             # colo[u]r isn’t parsed correctly so we filter these options out and add them by hand
-            parse_help=$(eza --help | grep -oE ' (--[[:alnum:]@-]+)' | tr -d ' ' | grep -v '\--colo' | grep -v '\--list-dirs')
+            parse_help=$(eva --help | grep -oE ' (--[[:alnum:]@-]+)' | tr -d ' ' | grep -v '\--colo')
             completions=$(echo '--color --colour --color-scale --colour-scale --color-scale-mode --colour-scale-mode' "$parse_help")
             mapfile -t COMPREPLY < <(compgen -W "$completions" -- "$cur")
             ;;
 
         -*)
-            completions=$(eza --help | grep -oE ' (-[[:alnum:]@])' | tr -d ' ')
+            completions=$(eva --help | grep -oE ' (-[[:alnum:]@])' | tr -d ' ')
             mapfile -t COMPREPLY < <(compgen -W "$completions" -- "$cur")
             ;;
 
@@ -73,4 +78,4 @@ _eza() {
             ;;
     esac
 } &&
-complete -o filenames -o bashdefault -F _eza eza
+complete -o filenames -o bashdefault -F _eva eva
