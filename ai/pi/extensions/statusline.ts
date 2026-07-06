@@ -8,14 +8,15 @@ import {
   type Theme,
 } from "@earendil-works/pi-coding-agent";
 import { Container, truncateToWidth } from "@earendil-works/pi-tui";
+import { existsSync } from "node:fs";
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
-import { basename } from "node:path";
+import { basename, isAbsolute, join as pathJoin } from "node:path";
 
 const PI_ICON = "π";
 const GROUP_SEP = " · ";
 const MODEL_ICON = ""; // Nerd Font bolt glyph
 const THINKING_ICON = ""; // Nerd Font lightbulb glyph
-const TOKEN_ICON = "◉"; // compact coin/token glyph
+const TOKEN_ICON = "ctx"; // context token label
 const TOOL_ICON = ""; // Nerd Font wrench glyph
 const SHELL_ICON = ""; // same shell icon as nvim/web-devicons bash
 const CONTEXT_REMAINING_ICON = ""; // Nerd Font hourglass glyph
@@ -135,6 +136,26 @@ interface CodexQuotaSnapshot {
   fetchedAt: number;
 }
 
+interface GitSnapshot {
+  branch?: string;
+  tag?: string;
+  commit?: string;
+  upstream?: string;
+  remoteBranch?: string;
+  wip: boolean;
+  commitsAhead: number;
+  commitsBehind: number;
+  pushCommitsAhead: number;
+  pushCommitsBehind: number;
+  action?: string;
+  conflicted: number;
+  staged: number;
+  unstaged: number;
+  stashes: number;
+  untracked: number;
+  unknownDirty: boolean;
+}
+
 interface StatuslineState {
   enabled: boolean;
   phase: Phase;
@@ -149,7 +170,7 @@ interface StatuslineState {
   contextWindow?: number;
   contextPercent?: number | null;
   codexQuota?: CodexQuotaSnapshot;
-  gitDirty?: number;
+  gitStatus?: GitSnapshot;
   pendingMessages: boolean;
 }
 
@@ -213,6 +234,10 @@ export default function (pi: ExtensionAPI) {
 
   function whiteText(text: string): string {
     return fgHex(envHex("WHITE_HEX", "#f4f3f2"), text);
+  }
+
+  function brightWhiteText(text: string): string {
+    return fgHex(envHex("BRIGHTWHITE_HEX", "#ffffff"), text);
   }
 
   function brightBlackText(text: string): string {
@@ -537,6 +562,10 @@ export default function (pi: ExtensionAPI) {
     }
   }
 
+  function redText(text: string): string {
+    return fgHex(envHex("RED_HEX", "#ffc7c7"), text);
+  }
+
   function greenText(text: string): string {
     return fgHex(envHex("GREEN_HEX", "#ceffc9"), text);
   }
@@ -681,26 +710,141 @@ export default function (pi: ExtensionAPI) {
     }, FAILED_TOOL_HIGHLIGHT_MS);
   }
 
+  function truncateGitName(name: string): string {
+    return name.length > 32 ? `${name.slice(0, 12)}…${name.slice(-12)}` : name;
+  }
+
+  function shortRemoteBranch(upstream: string | undefined): string | undefined {
+    if (!upstream) return undefined;
+    const slashIndex = upstream.indexOf("/");
+    return slashIndex >= 0 ? upstream.slice(slashIndex + 1) : upstream;
+  }
+
+  function gitActionFromGitDir(gitDir: string | undefined, cwd: string): string | undefined {
+    if (!gitDir) return undefined;
+    const path = isAbsolute(gitDir) ? gitDir : pathJoin(cwd, gitDir);
+    if (existsSync(pathJoin(path, "rebase-merge")) || existsSync(pathJoin(path, "rebase-apply"))) return "rebase";
+    if (existsSync(pathJoin(path, "MERGE_HEAD"))) return "merge";
+    if (existsSync(pathJoin(path, "CHERRY_PICK_HEAD"))) return "cherry-pick";
+    if (existsSync(pathJoin(path, "REVERT_HEAD"))) return "revert";
+    if (existsSync(pathJoin(path, "BISECT_LOG"))) return "bisect";
+    return undefined;
+  }
+
+  function parseRevListCounts(stdout: string): { ahead: number; behind: number } {
+    const [ahead, behind] = stdout.trim().split(/\s+/).map((value) => Number.parseInt(value, 10));
+    return {
+      ahead: Number.isFinite(ahead) ? ahead : 0,
+      behind: Number.isFinite(behind) ? behind : 0,
+    };
+  }
+
+  function parseGitStatus(stdout: string): GitSnapshot {
+    const snapshot: GitSnapshot = {
+      wip: false,
+      commitsAhead: 0,
+      commitsBehind: 0,
+      pushCommitsAhead: 0,
+      pushCommitsBehind: 0,
+      conflicted: 0,
+      staged: 0,
+      unstaged: 0,
+      stashes: 0,
+      untracked: 0,
+      unknownDirty: false,
+    };
+
+    for (const line of stdout.split(/\r?\n/)) {
+      if (!line) continue;
+      if (line.startsWith("# branch.head ")) {
+        const branch = line.slice("# branch.head ".length).trim();
+        if (branch && branch !== "(detached)") snapshot.branch = branch;
+        continue;
+      }
+      if (line.startsWith("# branch.oid ")) {
+        const commit = line.slice("# branch.oid ".length).trim();
+        if (commit && commit !== "(initial)") snapshot.commit = commit.slice(0, 8);
+        continue;
+      }
+      if (line.startsWith("# branch.upstream ")) {
+        const upstream = line.slice("# branch.upstream ".length).trim();
+        snapshot.upstream = upstream || undefined;
+        const remoteBranch = shortRemoteBranch(upstream);
+        if (remoteBranch && remoteBranch !== snapshot.branch) snapshot.remoteBranch = remoteBranch;
+        continue;
+      }
+      const aheadBehind = /^# branch\.ab \+(\d+) -(\d+)$/.exec(line);
+      if (aheadBehind) {
+        snapshot.commitsAhead = Number.parseInt(aheadBehind[1], 10);
+        snapshot.commitsBehind = Number.parseInt(aheadBehind[2], 10);
+        continue;
+      }
+      const stash = /^# stash (\d+)$/.exec(line);
+      if (stash) {
+        snapshot.stashes = Number.parseInt(stash[1], 10);
+        continue;
+      }
+
+      const fields = line.split(" ");
+      const kind = fields[0];
+      if (kind === "1" || kind === "2") {
+        const status = fields[1] ?? "..";
+        if (status[0] && status[0] !== ".") snapshot.staged++;
+        if (status[1] && status[1] !== ".") snapshot.unstaged++;
+      } else if (kind === "u") {
+        snapshot.conflicted++;
+      } else if (kind === "?") {
+        snapshot.untracked++;
+      }
+    }
+
+    return snapshot;
+  }
+
   async function refreshGitDirty(ctx: ExtensionContext): Promise<void> {
     const generation = ++gitGeneration;
     try {
-      const result = await pi.exec("git", ["status", "--porcelain"], {
+      const statusResult = await pi.exec("git", ["status", "--porcelain=v2", "--branch", "--show-stash"], {
         cwd: ctx.cwd,
-        timeout: 1200,
+        timeout: 1500,
       });
       if (generation !== gitGeneration) return;
-
-      if (result.code !== 0) {
-        state.gitDirty = undefined;
-      } else {
-        const changed = result.stdout
-          .split(/\r?\n/)
-          .map((line) => line.trim())
-          .filter(Boolean).length;
-        state.gitDirty = changed;
+      if (statusResult.code !== 0) {
+        state.gitStatus = undefined;
+        return;
       }
+
+      const gitStatus = parseGitStatus(statusResult.stdout);
+      const [summaryResult, tagResult, gitDirResult, pushRefResult] = await Promise.all([
+        pi.exec("git", ["log", "-1", "--pretty=%s"], { cwd: ctx.cwd, timeout: 1200 }),
+        pi.exec("git", ["describe", "--tags", "--exact-match"], { cwd: ctx.cwd, timeout: 1200 }),
+        pi.exec("git", ["rev-parse", "--git-dir"], { cwd: ctx.cwd, timeout: 1200 }),
+        pi.exec("git", ["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{push}"], { cwd: ctx.cwd, timeout: 1200 }),
+      ]);
+      if (generation !== gitGeneration) return;
+
+      const summary = summaryResult.code === 0 ? summaryResult.stdout.trim() : "";
+      gitStatus.wip = /(^|[^A-Za-z0-9])(wip|WIP)($|[^A-Za-z0-9])/.test(summary);
+      if (!gitStatus.branch && tagResult.code === 0) gitStatus.tag = tagResult.stdout.trim() || undefined;
+      gitStatus.action = gitDirResult.code === 0 ? gitActionFromGitDir(gitDirResult.stdout.trim(), ctx.cwd) : undefined;
+
+      const pushRef = pushRefResult.code === 0 ? pushRefResult.stdout.trim() : "";
+      if (pushRef && pushRef !== gitStatus.upstream) {
+        const pushCountsResult = await pi.exec("git", ["rev-list", "--left-right", "--count", "HEAD...@{push}"], {
+          cwd: ctx.cwd,
+          timeout: 1200,
+        });
+        if (generation !== gitGeneration) return;
+        if (pushCountsResult.code === 0) {
+          const counts = parseRevListCounts(pushCountsResult.stdout);
+          gitStatus.pushCommitsAhead = counts.ahead;
+          gitStatus.pushCommitsBehind = counts.behind;
+        }
+      }
+
+      state.gitStatus = gitStatus;
     } catch {
-      if (generation === gitGeneration) state.gitDirty = undefined;
+      if (generation === gitGeneration) state.gitStatus = undefined;
     } finally {
       if (generation === gitGeneration) requestFooterRender?.();
     }
@@ -864,17 +1008,17 @@ export default function (pi: ExtensionAPI) {
       state.phase === "idle" && state.pendingMessages ? "waiting" : state.phase;
     switch (phase) {
       case "idle":
-        return greenText("○");
+        return iconText("○", "idle", greenText, greenText);
       case "thinking":
-        return yellowText("●");
+        return iconText("●", "thinking", yellowText, yellowText);
       case "streaming":
-        return cyanText("");
+        return iconText("", "streaming", cyanText, cyanText);
       case "tool":
-        return magentaText(TOOL_ICON);
+        return iconText(TOOL_ICON, "tool", magentaText, magentaText);
       case "waiting":
-        return brightYellowText("󰔚");
+        return iconText("󰔚", "queued", brightYellowText, brightYellowText);
       case "error":
-        return brightRedText("");
+        return iconText("", "error", brightRedText, brightRedText);
     }
   }
 
@@ -966,7 +1110,7 @@ export default function (pi: ExtensionAPI) {
     return iconText(
       TOKEN_ICON,
       formatCount(state.contextTokens),
-      whiteText,
+      brightWhiteText,
       brightBlackText,
     );
   }
@@ -985,7 +1129,7 @@ export default function (pi: ExtensionAPI) {
       return iconText(
         CONTEXT_REMAINING_ICON,
         "?%",
-        yellowText,
+        brightMagentaText,
         blackText,
       );
     }
@@ -995,47 +1139,63 @@ export default function (pi: ExtensionAPI) {
       Math.min(100, Math.round(100 - state.contextPercent)),
     );
     const style = remainingPercentStyle(remaining);
-    return iconText(CONTEXT_REMAINING_ICON, `${remaining}%`, yellowText, style);
+    return iconText(CONTEXT_REMAINING_ICON, `${remaining}%`, brightMagentaText, style);
   }
 
   function codexQuotaWindowPart(label: string, window: CodexQuotaWindow | undefined): string | undefined {
     if (!window) return undefined;
     const remaining = Math.max(0, Math.min(100, Math.round(100 - window.usedPercent)));
-    return `${blackText(label)} ${remainingPercentStyle(remaining)(`${remaining}%`)}`;
+    return `${yellowText(label)} ${remainingPercentStyle(remaining)(`${remaining}%`)}`;
   }
 
-  function codexQuotaPart(_theme: Theme): string | undefined {
-    if (!isCodexQuotaRelevant()) return undefined;
+  function codexQuotaLoadingPart(label: string): string {
+    return `${yellowText(label)} ${brightBlackText("…")}`;
+  }
+
+  function codexQuotaParts(_theme: Theme): string[] {
+    if (!isCodexQuotaRelevant()) return [];
     const quota = state.codexQuota;
-    if (!quota) return codexQuotaInFlight ? `${brightMagentaText("")}  ${brightBlackText("…")}` : undefined;
-    const windows = [
+    if (!quota) return codexQuotaInFlight ? [codexQuotaLoadingPart("5h"), codexQuotaLoadingPart("1w")] : [];
+    return [
       codexQuotaWindowPart("5h", quota.primary),
       codexQuotaWindowPart("1w", quota.secondary),
     ].filter((part): part is string => Boolean(part));
-    if (windows.length === 0) return undefined;
-    return `${brightMagentaText("")}  ${windows.join(" ")}`;
   }
 
   function gitPart(
-    theme: Theme,
+    _theme: Theme,
     footerData: ReadonlyFooterDataProvider,
   ): string | undefined {
-    const branch = footerData.getGitBranch();
-    if (!branch) return undefined;
-    const dirty = state.gitDirty;
-    const label =
-      dirty === undefined
-        ? branch
-        : dirty > 0
-          ? `${branch} ±${dirty}`
-          : `${branch} ✓`;
-    const iconStyle =
-      dirty === undefined
-        ? (value: string) => theme.fg("dim", value)
-        : dirty > 0
-          ? (value: string) => theme.fg("warning", value)
-          : (value: string) => theme.fg("success", value);
-    return iconText("", label, iconStyle, blackText);
+    const status = state.gitStatus;
+    const fallbackBranch = footerData.getGitBranch();
+    const branch = status?.branch ?? fallbackBranch;
+
+    let rendered = "";
+    if (branch) {
+      rendered = `${blackText("")} ${magentaText(truncateGitName(branch))}`;
+    } else if (status?.tag) {
+      rendered = `${blackText("#")}${magentaText(truncateGitName(status.tag))}`;
+    } else if (status?.commit) {
+      rendered = `${blackText("@")}${magentaText(status.commit)}`;
+    } else {
+      return undefined;
+    }
+
+    if (status?.remoteBranch) rendered += `${blackText(":")}${magentaText(truncateGitName(status.remoteBranch))}`;
+    if (status?.wip) rendered += ` ${yellowText("WIP")}`;
+    if (status?.commitsBehind) rendered += ` ${brightBlueText(` ${status.commitsBehind}`)}`;
+    if (status?.commitsAhead) rendered += `${status.commitsBehind ? "" : " "}${brightBlueText(` ${status.commitsAhead}`)}`;
+    if (status?.pushCommitsBehind) rendered += ` ${brightBlueText(` ${status.pushCommitsBehind}`)}`;
+    if (status?.pushCommitsAhead) rendered += `${status.pushCommitsBehind ? "" : " "}${brightBlueText(` ${status.pushCommitsAhead}`)}`;
+    if (status?.action) rendered += ` ${brightRedText(status.action)}`;
+    if (status?.conflicted) rendered += ` ${brightRedText(`!${status.conflicted}`)}`;
+    if (status?.staged) rendered += ` ${greenText(`+${status.staged}`)}`;
+    if (status?.unstaged) rendered += ` ${yellowText(`~${status.unstaged}`)}`;
+    if (status?.stashes) rendered += ` ${blackText(`*${status.stashes}`)}`;
+    if (status?.untracked) rendered += ` ${redText(`?${status.untracked}`)}`;
+    if (status?.unknownDirty) rendered += ` ${yellowText("─")}`;
+
+    return rendered;
   }
 
   function extensionStatusPart(
@@ -1055,22 +1215,15 @@ export default function (pi: ExtensionAPI) {
   ): string {
     if (width <= 0) return "";
 
-    const title = iconText(
-      PI_ICON,
-      state.title,
-      (value) => ciaColor("pi", theme.bold(value)),
-      blackText,
-    );
     const line = join(
       [
-        title,
         modelPart(theme),
         thinkingPart(theme),
-        codexQuotaPart(theme),
         contextRemainingPart(theme),
         tokenPart(theme),
-        phasePart(theme),
+        ...codexQuotaParts(theme),
         gitPart(theme, footerData),
+        phasePart(theme),
         extensionStatusPart(footerData),
       ],
       theme,
