@@ -1,10 +1,6 @@
 filekinds:
-  normal:
-    foreground: blue
   directory:
     foreground: blue
-    icon:
-      glyph: ""
   symlink:
     foreground: yellow
   executable:
@@ -83,8 +79,190 @@ broken_symlink:
 broken_path_overlay:
   foreground: red
 
-filenames:
-  .file:
+extensions:
+  # Filetype overrides: extension keys are written without a leading dot.
+  # Web
+  css:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  html:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  js:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  ts:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  tsx:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+
+  # Images
+  avif:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  gif:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  heic:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  heif:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  icns:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  jpeg:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  jpg:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  png:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  svg:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰜡"
+      style:
+        foreground: cyan
+
+  webp:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+
+  # Source and scripts
+  bash:
+    icon:
+      glyph: ""
+
+  lua:
+    filename:
+      foreground: 15
+    icon:
+      glyph: ""
+      style:
+        foreground: 15
+
+  nix:
+    icon:
+      glyph: "❄"
+      style:
+        foreground: white
+
+  py:
+    filename:
+      foreground: 15
+    icon:
+      glyph: ""
+      style:
+        foreground: 15
+
+  rs:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  scpt:
+    filename:
+      foreground: white
+    icon:
+      glyph: "󰘳"
+      style:
+        foreground: white
+
+  sh:
+    icon:
+      glyph: ""
+
+  vim:
+    icon:
+      glyph: ""
+
+  zsh:
+    icon:
+      glyph: ""
+
+
+  # Git and editor artifacts
+  code-workspace:
     filename:
       foreground: 08
     icon:
@@ -92,6 +270,346 @@ filenames:
       style:
         foreground: 08
 
+  gitattributes:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  ignore:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  patch:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
+  shada:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  sublime-syntax:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
+  swp:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  theme:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  tmTheme:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  tmtheme:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  zwc:
+    filename:
+      foreground: green
+    icon:
+      glyph: ""
+      style:
+        foreground: green
+
+
+  # Configuration
+  conf:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  config:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  editorconfig:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  env:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  ini:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  rc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  toml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+
+  # Runtime and state artifacts
+  bin:
+    filename:
+      foreground: green
+    icon:
+      glyph: ""
+      style:
+        foreground: green
+
+  cache:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  collection:
+    filename:
+      foreground: green
+    icon:
+      glyph: ""
+      style:
+        foreground: green
+
+  dat:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  dump:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  hist:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  log:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  sock:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  socket:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  version:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+
+  # Documents
+  md:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  txt:
+    filename:
+      foreground: black
+    icon:
+      glyph: "󰦨"
+      style:
+        foreground: black
+
+
+  # Data and markup
+  csv:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  json:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  jsonc:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  jsonl:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  sqlite:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  sqlite-shm:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  sqlite-wal:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  sqlite3:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  xml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  yaml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  yml:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+
+filenames:
+  # Exact filename overrides. These take precedence over extension rules.
+  # Dotfiles and platform files
   .bash_profile:
     filename:
       foreground: magenta
@@ -116,13 +634,25 @@ filenames:
       style:
         foreground: magenta
 
-  .shellcheckrc:
-    filename:
-      foreground: black
+  .dbxignore:
     icon:
-      glyph: ""
+      glyph: ""
+
+  .DS_Store:
+    filename:
+      foreground: 08
+    icon:
+      glyph: "󰘳"
       style:
-        foreground: black
+        foreground: 08
+
+  .file:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
 
   .hushlogin:
     filename:
@@ -132,13 +662,29 @@ filenames:
       style:
         foreground: 08
 
-  index.html:
+  .localized:
     filename:
-      foreground: magenta
+      foreground: 08
     icon:
-      glyph: ""
+      glyph: "󰲄"
       style:
-        foreground: magenta
+        foreground: 08
+
+  .luarc.json:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .netrwhist:
+    filename:
+      foreground: 08
+    icon:
+      glyph: "󰋚"
+      style:
+        foreground: 08
 
   .python-version:
     filename:
@@ -148,41 +694,37 @@ filenames:
       style:
         foreground: black
 
-  .env:
-    filename:
-      foreground: 09
-    icon:
-      glyph: ""
-      style:
-        foreground: 09
-
-  env:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-
-  .gitignore:
+  .shellcheckrc:
     filename:
       foreground: black
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: black
 
-  .git:
-    icon:
-      glyph: ""
-
-  .gitkeep:
+  .sqlite:
     filename:
-      foreground: 08
+      foreground: cyan
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: 08
+        foreground: cyan
+
+  .sqlite-shm:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  .sqlite-wal:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
 
   .state.itermexport:
     filename:
@@ -216,6 +758,20 @@ filenames:
       style:
         foreground: magenta
 
+  .zstyle:
+    icon:
+      glyph: ""
+
+
+  # Other exact filenames
+  "Icon\r":
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
   "icon\r":
     filename:
       foreground: 08
@@ -224,13 +780,143 @@ filenames:
       style:
         foreground: 08
 
-  "Icon\r":
+  index.html:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  Session.vim:
     filename:
       foreground: 08
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: 08
+
+
+  # Shell functions and completions
+  _atuin:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _bat:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _bob:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _cia:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _dust:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _eva:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _fd:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _pi:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _rg:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _starship:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _tldr:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _update-notifier-last-checked:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  _update-tools:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _uv:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  _work:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
 
   aliases:
     filename:
@@ -240,6 +926,166 @@ filenames:
       style:
         foreground: white
 
+  atuin-zsh-tty-capture.zsh:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
+  atuin.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  bat.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  bob.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  bootstrap.sh:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  cheatsheet:
+    icon:
+      glyph: "󰊕"
+
+  cia.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  config.sh:
+    icon:
+      glyph: ""
+
+  dust.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  edit-all:
+    icon:
+      glyph: "󰊕"
+
+  .env:
+    filename:
+      foreground: 09
+    icon:
+      glyph: ""
+      style:
+        foreground: 09
+
+  env:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  eva.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  fd.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  fix-tmux-remotes:
+    icon:
+      glyph: "󰊕"
+
+  glg:
+    icon:
+      glyph: "󰊕"
+
+  interactive:
+    icon:
+      glyph: ""
+
+  l:
+    icon:
+      glyph: "󰊕"
+
+  list-256:
+    icon:
+      glyph: "󰊕"
+
+  list-colors:
+    icon:
+      glyph: "󰊕"
+
+  p10k-dump-mubuntu.zsh:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  p10k-instant-prompt-mubuntu.zsh:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .p10k.zsh:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  patch-zsh-autocomplete:
+    icon:
+      glyph: "󰊕"
+
+  pi.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
   profile:
     filename:
       foreground: white
@@ -248,6 +1094,146 @@ filenames:
       style:
         foreground: white
 
+  rg.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  starship.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  t:
+    icon:
+      glyph: "󰊕"
+
+  take:
+    icon:
+      glyph: "󰊕"
+
+  tldr.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  toggle-tmux-client:
+    icon:
+      glyph: "󰊕"
+
+  update-icons:
+    icon:
+      glyph: "󰊕"
+
+  update-tools:
+    icon:
+      glyph: "󰊕"
+
+  update-tools.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  uv.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  uvi:
+    icon:
+      glyph: "󰊕"
+
+  work:
+    icon:
+      glyph: "󰊕"
+
+  work.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+
+  # Git and ignore files
+  .dockerignore:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  .editorconfig:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .gitattributes:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .gitignore:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .gitkeep:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  .gitmodules:
+    filename:
+      foreground: 08
+    icon:
+      glyph: ""
+      style:
+        foreground: 08
+
+  .vale.ini:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+
+  # Auth and secrets metadata
+  1password:
+    icon:
+      glyph: ""
+
   allowed_signers:
     filename:
       foreground: white
@@ -255,18 +1241,6 @@ filenames:
       glyph: "󰷊"
       style:
         foreground: white
-
-  known_hosts:
-    filename:
-      foreground: white
-    icon:
-      glyph: "󰒋"
-      style:
-        foreground: white
-
-  identity:
-    icon:
-      glyph: ""
 
   auth.key:
     filename:
@@ -300,6 +1274,26 @@ filenames:
       style:
         foreground: black
 
+  identity:
+    icon:
+      glyph: ""
+
+  known_hosts:
+    filename:
+      foreground: white
+    icon:
+      glyph: "󰒋"
+      style:
+        foreground: white
+
+  secrets:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
   signing.key:
     filename:
       foreground: 09
@@ -316,146 +1310,12 @@ filenames:
       style:
         foreground: white
 
-  1password:
-    icon:
-      glyph: ""
-
   ssh-agent:
     icon:
       glyph: ""
 
-  .p10k.zsh:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
 
-  agents:
-    icon:
-      glyph: ""
-
-  backups:
-    icon:
-      glyph: ""
-
-  apps:
-    icon:
-      glyph: ""
-
-  auth:
-    icon:
-      glyph: ""
-
-  identities:
-    icon:
-      glyph: ""
-
-  keys:
-    icon:
-      glyph: ""
-
-  cli:
-    icon:
-      glyph: ""
-
-  docs:
-    icon:
-      glyph: ""
-
-  editors:
-    icon:
-      glyph: ""
-
-  manifests:
-    icon:
-      glyph: ""
-
-  markdown:
-    icon:
-      glyph: ""
-
-  models:
-    icon:
-      glyph: ""
-
-  library:
-    icon:
-      glyph: ""
-
-  llama3.1:
-    icon:
-      glyph: ""
-
-  qwen2.5-coder:
-    icon:
-      glyph: ""
-
-  registry.ollama.ai:
-    icon:
-      glyph: ""
-
-  blob:
-    icon:
-      glyph: ""
-
-  blobs:
-    icon:
-      glyph: ""
-
-  node:
-    icon:
-      glyph: ""
-
-  node_modules:
-    icon:
-      glyph: ""
-
-  shells:
-    icon:
-      glyph: ""
-
-  src:
-    icon:
-      glyph: ""
-
-  terminals:
-    icon:
-      glyph: ""
-
-  readme.md:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-
-  license:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-
-  contributing.md:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-
-  security.md:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-
+  # Documentation and project metadata
   AGENTS.md:
     filename:
       foreground: 11
@@ -472,23 +1332,89 @@ filenames:
       style:
         foreground: 11
 
-  Session.vim:
+  CODEOWNERS:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  contributing.md:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  LICENSE:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  license:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  metadata.yaml:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  README:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  readme.md:
+    filename:
+      foreground: 11
+    icon:
+      glyph: ""
+      style:
+        foreground: 11
+
+  revision-hash:
     filename:
       foreground: 08
     icon:
-      glyph: ""
+      glyph: ""
       style:
         foreground: 08
 
-  brewfile.lock.json:
+  security.md:
     filename:
-      foreground: 13
+      foreground: 11
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: 13
+        foreground: 11
 
-  brewfile:
+
+  # Package and build manifests
+  _cargo:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  apt-packages.txt:
     filename:
       foreground: 13
     icon:
@@ -504,6 +1430,14 @@ filenames:
       style:
         foreground: 13
 
+  brewfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
   Brewfile.lock.json:
     filename:
       foreground: 13
@@ -512,13 +1446,133 @@ filenames:
       style:
         foreground: 13
 
-  apt-packages.txt:
+  brewfile.lock.json:
     filename:
       foreground: 13
     icon:
       glyph: ""
       style:
         foreground: 13
+
+  build.gradle:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  build.gradle.kts:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  bun.lockb:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cabal.project:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cabal.project.freeze:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cargo.bash:
+    filename:
+      foreground: 14
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: 14
+
+  Cargo.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cargo.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Cargo.toml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  cargo.toml:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  compose.yaml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  compose.yml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  composer.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  composer.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Containerfile:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
 
   dnf-packages.txt:
     filename:
@@ -528,7 +1582,31 @@ filenames:
       style:
         foreground: 13
 
-  gemfile.lock:
+  docker-compose.yaml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  docker-compose.yml:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  Dockerfile:
+    filename:
+      foreground: 12
+    icon:
+      glyph: ""
+      style:
+        foreground: 12
+
+  Gemfile:
     filename:
       foreground: 13
     icon:
@@ -552,189 +1630,13 @@ filenames:
       style:
         foreground: 13
 
-  Gemfile:
+  gemfile.lock:
     filename:
       foreground: 13
     icon:
       glyph: ""
       style:
         foreground: 13
-
-  package.resolved:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  package.swift:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  Package.resolved:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  Package.swift:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  pipfile.lock:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  pipfile:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  Pipfile.lock:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  Pipfile:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  build.gradle.kts:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  build.gradle:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  bun.lockb:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  cabal.project.freeze:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  cabal.project:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  composer.json:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  composer.lock:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  .dockerignore:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
-
-  Dockerfile:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
-
-  Containerfile:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
-
-  docker-compose.yml:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
-
-  docker-compose.yaml:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
-
-  compose.yml:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
-
-  compose.yaml:
-    filename:
-      foreground: 12
-    icon:
-      glyph: ""
-      style:
-        foreground: 12
 
   go.mod:
     filename:
@@ -776,14 +1678,6 @@ filenames:
       style:
         foreground: 13
 
-  nvim-pack-lock.json:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
   package-lock.json:
     filename:
       foreground: 13
@@ -808,21 +1702,37 @@ filenames:
       style:
         foreground: 13
 
-  matplotlibrc:
+  Package.resolved:
     filename:
-      foreground: magenta
+      foreground: 13
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: magenta
+        foreground: 13
 
-  npmrc:
+  package.resolved:
     filename:
-      foreground: magenta
+      foreground: 13
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: magenta
+        foreground: 13
+
+  Package.swift:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  package.swift:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
 
   packages.config:
     filename:
@@ -832,7 +1742,31 @@ filenames:
       style:
         foreground: 13
 
-  uv.lock:
+  Pipfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pipfile:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  Pipfile.lock:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  pipfile.lock:
     filename:
       foreground: 13
     icon:
@@ -912,30 +1846,20 @@ filenames:
       style:
         foreground: 13
 
-  .luarc.json:
+  uv.lock:
     filename:
-      foreground: black
+      foreground: 13
     icon:
-      glyph: ""
+      glyph: ""
       style:
-        foreground: black
+        foreground: 13
 
-  .netrwhist:
-    filename:
-      foreground: 08
+  yarn.lock:
     icon:
-      glyph: "󰋚"
-      style:
-        foreground: 08
+      glyph: ""
 
-  CACHEDIR.TAG:
-    filename:
-      foreground: red
-    icon:
-      glyph: "󰋚"
-      style:
-        foreground: red
 
+  # Editor files
   main.py:
     filename:
       foreground: magenta
@@ -1160,6 +2084,48 @@ filenames:
       style:
         foreground: 08
 
+  matplotlibrc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  nvim-pack-lock.json:
+    filename:
+      foreground: 13
+    icon:
+      glyph: ""
+      style:
+        foreground: 13
+
+  sh.vim:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
+  typescriptreact.vim:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
+  zsh.vim:
+    filename:
+      foreground: 12
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: 12
+
+
+  # Application configuration
   agent.toml:
     filename:
       foreground: magenta
@@ -1176,14 +2142,6 @@ filenames:
       style:
         foreground: magenta
 
-  config.yml:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-
   config:
     filename:
       foreground: magenta
@@ -1193,6 +2151,14 @@ filenames:
         foreground: magenta
 
   config.toml:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  config.yml:
     filename:
       foreground: magenta
     icon:
@@ -1232,6 +2198,14 @@ filenames:
       style:
         foreground: magenta
 
+  npmrc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
   settings.json:
     filename:
       foreground: magenta
@@ -1264,474 +2238,50 @@ filenames:
       style:
         foreground: magenta
 
-  config.sh:
-    icon:
-      glyph: ""
 
-  atuin-zsh-tty-capture.zsh:
+  # Runtime and state files
+  CACHEDIR.TAG:
     filename:
-      foreground: 09
+      foreground: red
     icon:
-      glyph: ""
+      glyph: "󰋚"
       style:
-        foreground: 09
+        foreground: red
 
-  cheatsheet:
-    icon:
-      glyph: "󰊕"
-
-  edit-all:
-    icon:
-      glyph: "󰊕"
-
-  fix-tmux-remotes:
-    icon:
-      glyph: "󰊕"
-
-  glg:
-    icon:
-      glyph: "󰊕"
-
-  l:
-    icon:
-      glyph: "󰊕"
-
-  list-256:
-    icon:
-      glyph: "󰊕"
-
-  list-colors:
-    icon:
-      glyph: "󰊕"
-
-  patch-zsh-autocomplete:
-    icon:
-      glyph: "󰊕"
-
-  t:
-    icon:
-      glyph: "󰊕"
-
-  take:
-    icon:
-      glyph: "󰊕"
-
-  toggle-tmux-client:
-    icon:
-      glyph: "󰊕"
-
-  update-tools:
-    icon:
-      glyph: "󰊕"
-
-  update-branches:
+  log:
+    filename:
+      foreground: blue
     icon:
       glyph: ""
-
-  update-icons:
-    icon:
-      glyph: "󰊕"
-
-  user-settings:
-    icon:
-      glyph: ""
-
-  uvi:
-    icon:
-      glyph: "󰊕"
-
-  work:
-    icon:
-      glyph: "󰊕"
-
-  sh.vim:
-    filename:
-      foreground: 12
-    icon:
-      glyph: "󰘦"
       style:
-        foreground: 12
+        foreground: blue
 
-  zsh.vim:
+  prompt-21:
     filename:
-      foreground: 12
+      foreground: red
     icon:
-      glyph: "󰘦"
+      glyph: ""
       style:
-        foreground: 12
+        foreground: red
 
-  typescriptreact.vim:
+  prompt-29:
     filename:
-      foreground: 12
+      foreground: red
     icon:
-      glyph: "󰘦"
+      glyph: ""
       style:
-        foreground: 12
+        foreground: red
 
-  yarn.lock:
-    icon:
-      glyph: ""
-
-  1Password:
-    icon:
-      glyph: ""
-
-  ambient-suggestions:
-    icon:
-      glyph: ""
-
-  after:
-    icon:
-      glyph: ""
-
-  archived_sessions:
-    icon:
-      glyph: ""
-
-  browser:
-    icon:
-      glyph: ""
-
-  Spoons:
-    icon:
-      glyph: ""
-
-  assets:
-    icon:
-      glyph: ""
-
-  automatic_backups:
-    icon:
-      glyph: ""
-
-  atuin:
-    icon:
-      glyph: ""
-
-  bash:
-    icon:
-      glyph: ""
-
-  bat:
-    icon:
-      glyph: ""
-
-  atuin.bash:
+  .zlua:
     filename:
-      foreground: 14
+      foreground: red
     icon:
-      glyph: "󰌶"
+      glyph: ""
       style:
-        foreground: 14
+        foreground: red
 
-  bat.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
 
-  bob.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  cargo.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  cia.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  dust.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  eva.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  fd.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  pi.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  blink:
-    icon:
-      glyph: ""
-
-  bootstrap:
-    icon:
-      glyph: ""
-
-  btop:
-    icon:
-      glyph: ""
-
-  cmp:
-    icon:
-      glyph: ""
-
-  computer-use:
-    icon:
-      glyph: ""
-
-  comps:
-    icon:
-      glyph: ""
-
-  .zstyle:
-    icon:
-      glyph: ""
-
-  interactive:
-    icon:
-      glyph: ""
-
-  keymaps:
-    icon:
-      glyph: ""
-
-  patches:
-    icon:
-      glyph: ""
-
-  patina:
-    icon:
-      glyph: ""
-
-  syntax:
-    icon:
-      glyph: ""
-
-  rg.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  starship.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  tldr.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  update-tools.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  uv.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  work.bash:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _atuin:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _bat:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _bob:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _cargo:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _cia:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _dust:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _eva:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _fd:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _pi:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _rg:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _starship:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _tldr:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _update-tools:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _uv:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  _work:
-    filename:
-      foreground: 14
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: 14
-
-  funcs:
-    icon:
-      glyph: ""
-
-  node_repl:
-    icon:
-      glyph: ""
-
-  pets:
-    icon:
-      glyph: ""
-
-  process_manager:
-    icon:
-      glyph: ""
-
-  colors:
-    icon:
-      glyph: ""
-
-  highlights:
-    icon:
-      glyph: ""
-
-  complex_modifications:
-    icon:
-      glyph: ""
-
+  # Themes
   sourdiesel:
     filename:
       foreground: cyan
@@ -1756,7 +2306,7 @@ filenames:
       style:
         foreground: cyan
 
-  sourdiesel.toml:
+  sourdiesel.terminal:
     filename:
       foreground: cyan
     icon:
@@ -1764,7 +2314,7 @@ filenames:
       style:
         foreground: cyan
 
-  sourdiesel.terminal:
+  sourdiesel.toml:
     filename:
       foreground: cyan
     icon:
@@ -1780,3459 +2330,17 @@ filenames:
       style:
         foreground: cyan
 
-  secrets:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
 
-  .sqlite:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  .sqlite-shm:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  .sqlite-wal:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  ai:
-    icon:
-      glyph: ""
-
-  dust:
-    icon:
-      glyph: ""
-
-  eva:
-    icon:
-      glyph: ""
-
-  fzf:
-    icon:
-      glyph: ""
-
-  gh:
-    icon:
-      glyph: ""
-
-  git:
-    icon:
-      glyph: ""
-
-  github:
-    icon:
-      glyph: ""
-
-  glow:
-    icon:
-      glyph: ""
-
-  gmail:
-    icon:
-      glyph: ""
-
-  google-drive:
-    icon:
-      glyph: ""
-
-  hammerspoon:
-    icon:
-      glyph: ""
-
-  iterm2:
-    icon:
-      glyph: ""
-
-  karabiner:
-    icon:
-      glyph: ""
-
-  mycli:
-    icon:
-      glyph: ""
-
-  netrw:
-    icon:
-      glyph: ""
-
-  nvim:
-    icon:
-      glyph: ""
-
-  lib:
-    icon:
-      glyph: ""
-
-  .devcontainer:
-    icon:
-      glyph: ""
-
-  .docker:
-    icon:
-      glyph: ""
-
-  2fa:
-    icon:
-      glyph: ""
-
-  _MASReceipt:
-    icon:
-      glyph: ""
-
-  app:
-    icon:
-      glyph: ""
-
-  Apps:
-    icon:
-      glyph: ""
-
-  ".Karabiner-VirtualHIDDevice-Manager.app":
-    icon:
-      glyph: ""
-
-  "1Password Browser Helper.app":
-    icon:
-      glyph: ""
-
-  "1Password for Safari.app":
-    icon:
-      glyph: ""
-
-  "1Password Launcher.app":
-    icon:
-      glyph: ""
-
-  "1Password.app":
-    icon:
-      glyph: ""
-
-  "Alfred 5.app":
-    icon:
-      glyph: ""
-
-  "Alfred Preferences.app":
-    icon:
-      glyph: ""
-
-  "AltTab.app":
-    icon:
-      glyph: ""
-
-  "Anki.app":
-    icon:
-      glyph: ""
-
-  "Arc.app":
-    icon:
-      glyph: ""
-
-  "ChatGPT.app":
-    icon:
-      glyph: ""
-
-  "ChromeNativeMessaging.app":
-    icon:
-      glyph: ""
-
-  "Chromium.app":
-    icon:
-      glyph: ""
-
-  "Claude.app":
-    icon:
-      glyph: ""
-
-  "CleanShot X.app":
-    icon:
-      glyph: ""
-
-  Codex:
-    icon:
-      glyph: ""
-
-  "crashreporter.app":
-    icon:
-      glyph: ""
-
-  "Dark Reader for Safari.app":
-    icon:
-      glyph: ""
-
-  "Discord.app":
-    icon:
-      glyph: ""
-
-  "Dropbox.app":
-    icon:
-      glyph: ""
-
-  "DropboxMacUpdate.app":
-    icon:
-      glyph: ""
-
-  "DropboxUpdater.app":
-    icon:
-      glyph: ""
-
-  "Figma Desktop.app":
-    icon:
-      glyph: ""
-
-  "Figma.app":
-    icon:
-      glyph: ""
-
-  "FigmaAgent.app":
-    icon:
-      glyph: ""
-
-  "Firefox.app":
-    icon:
-      glyph: ""
-
-  "GarageBand.app":
-    icon:
-      glyph: ""
-
-  "Google Chrome.app":
-    icon:
-      glyph: ""
-
-  "gpu-helper.app":
-    icon:
-      glyph: ""
-
-  "Hammerspoon.app":
-    icon:
-      glyph: ""
-
-  "Image2Icon.app":
-    icon:
-      glyph: ""
-
-  "iMovie.app":
-    icon:
-      glyph: ""
-
-  "iStatistica Pro.app":
-    icon:
-      glyph: ""
-
-  "iStatisticaProHelper.app":
-    icon:
-      glyph: ""
-
-  "iStatisticaSensors.app":
-    icon:
-      glyph: ""
-
-  "iStatisticaSensorsHelper.app":
-    icon:
-      glyph: ""
-
-  "iTerm.app":
-    icon:
-      glyph: ""
-
-  "iTerm2ImportStatus.app":
-    icon:
-      glyph: ""
-
-  "iTermAI.app":
-    icon:
-      glyph: ""
-
-  "Karabiner-Elements.app":
-    icon:
-      glyph: ""
-
-  "Karabiner-EventViewer.app":
-    icon:
-      glyph: ""
-
-  "KeyCastr.app":
-    icon:
-      glyph: ""
-
-  "LaunchAtLoginHelper.app":
-    icon:
-      glyph: ""
-
-  "Logi Options+ Driver Installer.app":
-    icon:
-      glyph: ""
-
-  "logioptionsplus.app":
-    icon:
-      glyph: ""
-
-  "LogiPluginService.app":
-    icon:
-      glyph: ""
-
-  "LogiPluginServiceTool.app":
-    icon:
-      glyph: ""
-
-  "LoupeDiagMac.app":
-    icon:
-      glyph: ""
-
-  "media-plugin-helper.app":
-    icon:
-      glyph: ""
-
-  "Neovim-iTerm.app":
-    icon:
-      glyph: ""
-
-  "Neovim-Wezterm.app":
-    icon:
-      glyph: ""
-
-  "Notion Calendar.app":
-    icon:
-      glyph: ""
-
-  "plugin-container.app":
-    icon:
-      glyph: ""
-
-  "Postman.app":
-    icon:
-      glyph: ""
-
-  "Prime Video.app":
-    icon:
-      glyph: ""
-
-  "Skim.app":
-    icon:
-      glyph: ""
-
-  "Slack.app":
-    icon:
-      glyph: ""
-
-  "Spotify.app":
-    icon:
-      glyph: ""
-
-  "StartUpHelper.app":
-    icon:
-      glyph: ""
-
-  "thinkorswim Uninstaller.app":
-    icon:
-      glyph: ""
-
-  "thinkorswim.app":
-    icon:
-      glyph: ""
-
-  "updater.app":
-    icon:
-      glyph: ""
-
-  "uTorrent.app":
-    icon:
-      glyph: ""
-
-  "Visual Studio Code.app":
-    icon:
-      glyph: ""
-
-  "VLC.app":
-    icon:
-      glyph: ""
-
-  "WeChat.app":
-    icon:
-      glyph: ""
-
-  "WeChatAppEx.app":
-    icon:
-      glyph: ""
-
-  "WezTerm.app":
-    icon:
-      glyph: ""
-
-  "WhatsApp.app":
-    icon:
-      glyph: ""
-
-  audio:
-    icon:
-      glyph: ""
-
-  book_images:
-    icon:
-      glyph: ""
-
-  call_center:
-    icon:
-      glyph: ""
-
-  complex-analysis:
-    icon:
-      glyph: ""
-
-  datasets:
-    icon:
-      glyph: ""
-
-  DecisionTrees:
-    icon:
-      glyph: ""
-
-  deck_of_cards:
-    icon:
-      glyph: ""
-
-  default_app:
-    icon:
-      glyph: ""
-
-  dist:
-    icon:
-      glyph: ""
-
-  extensions:
-    icon:
-      glyph: ""
-
-  Figures:
-    icon:
-      glyph: ""
-
-  flash_cards:
-    icon:
-      glyph: ""
-
-  gpt2_model:
-    icon:
-      glyph: ""
-
-  Home:
-    icon:
-      glyph: ""
-
-  hash_table:
-    icon:
-      glyph: ""
-
-  hs:
-    icon:
-      glyph: ""
-
-  i18n:
-    icon:
-      glyph: ""
-
-  Images:
-    icon:
-      glyph: ""
-
-  ISSUE_TEMPLATE:
-    icon:
-      glyph: ""
-
-  kv_cache:
-    icon:
-      glyph: ""
-
-  kv_cache_batched:
-    icon:
-      glyph: ""
-
-  LinearRegression:
-    icon:
-      glyph: ""
-
-  licenses:
-    icon:
-      glyph: ""
-
-  llms_from_scratch:
-    icon:
-      glyph: ""
-
-  locales:
-    icon:
-      glyph: ""
-
-  LoginItems:
-    icon:
-      glyph: ""
-
-  LogisticRegression:
-    icon:
-      glyph: ""
-
-  lru_cache:
-    icon:
-      glyph: ""
-
-  mac:
-    icon:
-      glyph: ""
-
-  native:
-    icon:
-      glyph: ""
-
-  NeuralNetwork:
-    icon:
-      glyph: ""
-
-  object_oriented_design:
-    icon:
-      glyph: ""
-
-  online_chat:
-    icon:
-      glyph: ""
-
-  out:
-    icon:
-      glyph: ""
-
-  Output:
-    icon:
-      glyph: ""
-
-  parking_lot:
-    icon:
-      glyph: ""
-
-  pastebin:
-    icon:
-      glyph: ""
-
-  pkg:
-    icon:
-      glyph: ""
-
-  public:
-    icon:
-      glyph: ""
-
-  Patches:
-    icon:
-      glyph: ""
-
-  People:
-    icon:
-      glyph: ""
-
-  Plugins:
-    icon:
-      glyph: ""
-
-  policies:
-    icon:
-      glyph: ""
-
-  PreviewMovies:
-    icon:
-      glyph: ""
-
-  "Project Templates":
-    icon:
-      glyph: ""
-
-  query_cache:
-    icon:
-      glyph: ""
-
-  res:
-    icon:
-      glyph: ""
-
-  sales_rank:
-    icon:
-      glyph: ""
-
-  Safari:
-    icon:
-      glyph: ""
-
-  "Safari.app":
-    icon:
-      glyph: ""
-
-  scaling_aws:
-    icon:
-      glyph: ""
-
-  scores:
-    icon:
-      glyph: ""
-
-  setup:
-    icon:
-      glyph: ""
-
-  shell-completion:
-    icon:
-      glyph: ""
-
-  social_graph:
-    icon:
-      glyph: ""
-
-  Summaries:
-    icon:
-      glyph: ""
-
-  SupportVectorMachine:
-    icon:
-      glyph: ""
-
-  system_design:
-    icon:
-      glyph: ""
-
-  template:
-    icon:
-      glyph: ""
-
-  terminfo:
-    icon:
-      glyph: ""
-
-  Textures:
-    icon:
-      glyph: ""
-
-  tools:
-    icon:
-      glyph: ""
-
-  Trailers:
-    icon:
-      glyph: ""
-
-  Transportation:
-    icon:
-      glyph: ""
-
-  user:
-    icon:
-      glyph: ""
-
-  utilities:
-    icon:
-      glyph: ""
-
-  vendor_conf.d:
-    icon:
-      glyph: ""
-
-  win:
-    icon:
-      glyph: ""
-
-  worker:
-    icon:
-      glyph: ""
-
-  web_crawler:
-    icon:
-      glyph: ""
-
-  .nofollow:
-    icon:
-      glyph: ""
-
-  .resolve:
-    icon:
-      glyph: ""
-
-  .vol:
-    icon:
-      glyph: ""
-
-  Applications:
-    icon:
-      glyph: ""
-
-  Audio:
-    icon:
-      glyph: ""
-
-  backup:
-    icon:
-      glyph: ""
-
-  Caches:
-    icon:
-      glyph: ""
-
-  caches:
-    icon:
-      glyph: ""
-
-  Caskroom:
-    icon:
-      glyph: ""
-
-  Cellar:
-    icon:
-      glyph: ""
-
-  cellar:
-    icon:
-      glyph: ""
-
-  Components:
-    icon:
-      glyph: ""
-
-  Configuration:
-    icon:
-      glyph: ""
-
-  Configurations:
-    icon:
-      glyph: ""
-
-  Contents:
-    icon:
-      glyph: ""
-
-  cores:
-    icon:
-      glyph: ""
-
-  CoreServices:
-    icon:
-      glyph: ""
-
-  CrashReporter:
-    icon:
-      glyph: ""
-
-  data:
-    icon:
-      glyph: ""
-
-  db:
-    icon:
-      glyph: ""
-
-  debug:
-    icon:
-      glyph: ""
-
-  Default:
-    icon:
-      glyph: ""
-
-  dev:
-    icon:
-      glyph: ""
-
-  Devices:
-    icon:
-      glyph: ""
-
-  Diagnostics:
-    icon:
-      glyph: ""
-
-  Documentation:
-    icon:
-      glyph: ""
-
-  etc:
-    icon:
-      glyph: ""
-
-  Extensions:
-    icon:
-      glyph: ""
-
-  Fonts:
-    icon:
-      glyph: ""
-
-  fonts:
-    icon:
-      glyph: ""
-
-  Frameworks:
-    icon:
-      glyph: ""
-
-  Helpers:
-    icon:
-      glyph: ""
-
-  Homebrew:
-    icon:
-      glyph: ""
-
-  home:
-    icon:
-      glyph: ""
-
-  homebrew:
-    icon:
-      glyph: ""
-
-  Icons:
-    icon:
-      glyph: ""
-
-  include:
-    icon:
-      glyph: ""
-
-  "Input Methods":
-    icon:
-      glyph: ""
-
-  "Internet Plug-Ins":
-    icon:
-      glyph: ""
-
-  Java:
-    icon:
-      glyph: ""
-
-  JavaVirtualMachines:
-    icon:
-      glyph: ""
-
-  Keychains:
-    icon:
-      glyph: ""
-
-  LaunchAgents:
-    icon:
-      glyph: ""
-
-  LaunchDaemons:
-    icon:
-      glyph: ""
-
-  libexec:
-    icon:
-      glyph: ""
-
-  locale:
-    icon:
-      glyph: ""
-
-  Logging:
-    icon:
-      glyph: ""
-
-  MacOS:
-    icon:
-      glyph: ""
-
-  "MacOS Dev":
-    icon:
-      glyph: ""
-
-  man:
-    icon:
-      glyph: ""
-
-  manpages:
-    icon:
-      glyph: ""
-
-  Modules:
-    icon:
-      glyph: ""
-
-  opt:
-    icon:
-      glyph: ""
-
-  package:
-    icon:
-      glyph: ""
-
-  PreferencePanes:
-    icon:
-      glyph: ""
-
-  Preferences:
-    icon:
-      glyph: ""
-
-  private:
-    icon:
-      glyph: ""
-
-  PrivateFrameworks:
-    icon:
-      glyph: ""
-
-  Public:
-    icon:
-      glyph: ""
-
-  QuickLook:
-    icon:
-      glyph: ""
-
-  Receipts:
-    icon:
-      glyph: ""
-
-  receipts:
-    icon:
-      glyph: ""
-
-  Resources:
-    icon:
-      glyph: ""
-
-  root:
-    icon:
-      glyph: ""
-
-  run:
-    icon:
-      glyph: ""
-
-  sbin:
-    icon:
-      glyph: ""
-
-  Scripts:
-    icon:
-      glyph: ""
-
-  SDKs:
-    icon:
-      glyph: ""
-
-  Security:
-    icon:
-      glyph: ""
-
-  security:
-    icon:
-      glyph: ""
-
-  Servers:
-    icon:
-      glyph: ""
-
-  Services:
-    icon:
-      glyph: ""
-
-  Settings:
-    icon:
-      glyph: ""
-
-  Shared:
-    icon:
-      glyph: ""
-
-  SharedSupport:
-    icon:
-      glyph: ""
-
-  Sounds:
-    icon:
-      glyph: ""
-
-  Staging:
-    icon:
-      glyph: ""
-
-  staging:
-    icon:
-      glyph: ""
-
-  Support:
-    icon:
-      glyph: ""
-
-  System:
-    icon:
-      glyph: ""
-
-  SystemConfiguration:
-    icon:
-      glyph: ""
-
-  SystemExtensions:
-    icon:
-      glyph: ""
-
-  Templates:
-    icon:
-      glyph: ""
-
-  Tools:
-    icon:
-      glyph: ""
-
-  Updates:
-    icon:
-      glyph: ""
-
-  Users:
-    icon:
-      glyph: ""
-
-  users:
-    icon:
-      glyph: ""
-
-  usr:
-    icon:
-      glyph: ""
-
-  Utilities:
-    icon:
-      glyph: ""
-
-  Video:
-    icon:
-      glyph: ""
-
-  Volumes:
-    icon:
-      glyph: ""
-
-  WebKit:
-    icon:
-      glyph: ""
-
-  XPCServices:
-    icon:
-      glyph: ""
-
-  lsp:
-    icon:
-      glyph: ""
-
-  lua:
-    icon:
-      glyph: ""
-
-  pickers:
-    icon:
-      glyph: ""
-
-  plugins:
-    icon:
-      glyph: ""
-
-  ripgrep:
-    icon:
-      glyph: ""
-
-  ssh:
-    icon:
-      glyph: ""
-
-  terminal:
-    icon:
-      glyph: ""
-
-  ui:
-    icon:
-      glyph: ""
-
-  tmux:
-    icon:
-      glyph: ""
-
-  vscode:
-    icon:
-      glyph: ""
-
-  wezterm:
-    icon:
-      glyph: ""
-
-  zsh-patina:
-    icon:
-      glyph: ""
-
-  zsh:
-    icon:
-      glyph: ""
-
-  styles:
-    icon:
-      glyph: ""
-
-  syntaxes:
-    icon:
-      glyph: ""
-
-  shada:
-    icon:
-      glyph: ""
-
-  sqlite:
-    icon:
-      glyph: ""
-
-  themes:
-    icon:
-      glyph: ""
-
-  undo:
-    icon:
-      glyph: ""
-
-  view:
-    icon:
-      glyph: ""
-
-  .cache:
-    icon:
-      glyph: ""
-
-  .claude:
-    icon:
-      glyph: ""
-
-  .agents:
-    icon:
-      glyph: ""
-
-  .codex:
-    icon:
-      glyph: ""
-
-  .config:
-    icon:
-      glyph: ""
-
-  .copilot:
-    icon:
-      glyph: ""
-
-  .cursor:
-    icon:
-      glyph: ""
-
-  .dotfiles:
-    icon:
-      glyph: ""
-
-  .dropbox:
-    icon:
-      glyph: ""
-
-  .github:
-    icon:
-      glyph: ""
-
-  '@jupyterlab':
-    icon:
-      glyph: ""
-
-  api:
-    icon:
-      glyph: ""
-
-  .ipython:
-    icon:
-      glyph: ""
-
-  .jupyter:
-    icon:
-      glyph: ""
-
-  .local:
-    icon:
-      glyph: ""
-
-  .licenses:
-    icon:
-      glyph: ""
-
-  .npm:
-    icon:
-      glyph: ""
-
-  .ollama:
-    icon:
-      glyph: ""
-
-  _cacache:
-    icon:
-      glyph: ""
-
-  _logs:
-    icon:
-      glyph: ""
-
-  _npx:
-    icon:
-      glyph: ""
-
-  _update-notifier-last-checked:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  .thinkorswim:
-    icon:
-      glyph: ""
-
-  .tmp:
-    icon:
-      glyph: ""
-
-  .Trash:
-    icon:
-      glyph: ""
-
-  .vercel:
-    icon:
-      glyph: ""
-
-  .ruff_cache:
-    icon:
-      glyph: ""
-
-  .vercel_python_packages:
-    icon:
-      glyph: ""
-
-  .vscode:
-    icon:
-      glyph: ""
-
-  .sigstore:
-    icon:
-      glyph: ""
-
-  .sublime:
-    icon:
-      glyph: ""
-
-  .system:
-    icon:
-      glyph: ""
-
-  .venv:
-    icon:
-      glyph: ""
-
-  .zcompcache:
-    icon:
-      glyph: ""
-
-  0:
-    icon:
-      glyph: ""
-
-  0.4:
-    icon:
-      glyph: ""
-
-  1:
-    icon:
-      glyph: ""
-
-  2e:
-    icon:
-      glyph: ""
-
-  5.3:
-    icon:
-      glyph: ""
-
-  Crashpad:
-    icon:
-      glyph: ""
-
-  AppSupport:
-    icon:
-      glyph: ""
-
-  Application Support:
-    icon:
-      glyph: ""
-
-  Developer:
-    icon:
-      glyph: ""
-
-  agent:
-    icon:
-      glyph: ""
-
-  llms-from-scratch:
-    icon:
-      glyph: ""
-
-  Desktop:
-    icon:
-      glyph: ""
-
-  Documents:
-    icon:
-      glyph: ""
-
-  Downloads:
-    icon:
-      glyph: ""
-
-  Google Drive:
-    icon:
-      glyph: ""
-
-  Dropbox:
-    icon:
-      glyph: ""
-
-  "09_17_14":
-    icon:
-      glyph: ""
-
-  "1.AP Calculus BC Printed Folder":
-    icon:
-      glyph: ""
-
-  "10_15_14":
-    icon:
-      glyph: ""
-
-  "2.AP Calculus BC Additional Resources-STUDENT USE":
-    icon:
-      glyph: ""
-
-  "2020 AP Exam Coronavirus Updates":
-    icon:
-      glyph: ""
-
-  "3.AP Calculus BC Additional Resources-TUTOR USE ONLY":
-    icon:
-      glyph: ""
-
-  "4. AP Calculus BC Supplemental Workbooks":
-    icon:
-      glyph: ""
-
-  "5. AP Calculus BC Mid-Year Prep Folder":
-    icon:
-      glyph: ""
-
-  "__MACOSX":
-    icon:
-      glyph: ""
-
-  "aas010":
-    icon:
-      glyph: ""
-
-  "AB-BC Calc packet Key":
-    icon:
-      glyph: ""
-
-  "AB-BC Packet Key (new)":
-    icon:
-      glyph: ""
-
-  "AB-BC Packet Key (old)":
-    icon:
-      glyph: ""
-
-  "about":
-    icon:
-      glyph: ""
-
-  "ACT 607 Financial Accounting":
-    icon:
-      glyph: ""
-
-  "Additional Papers":
-    icon:
-      glyph: ""
-
-  "advanced":
-    icon:
-      glyph: ""
-
-  "ai-engineering":
-    icon:
-      glyph: ""
-
-  "AK-CHP1-6":
-    icon:
-      glyph: ""
-
-  "Alfred.alfredpreferences":
-    icon:
-      glyph: ""
-
-  "Algebra":
-    icon:
-      glyph: ""
-
-  "amazon":
-    icon:
-      glyph: ""
-
-  "Amazon":
-    icon:
-      glyph: ""
-
-  "AmericanUniversity":
-    icon:
-      glyph: ""
-
-  "Amortization Schedule":
-    icon:
-      glyph: ""
-
-  "anime":
-    icon:
-      glyph: ""
-
-  "AP Calculus BC Scoring Info and Keys":
-    icon:
-      glyph: ""
-
-  "appearance":
-    icon:
-      glyph: ""
-
-  "Appendix A The Time Value of Money":
-    icon:
-      glyph: ""
-
-  "applemaps":
-    icon:
-      glyph: ""
-
-  "Archived Calc BC Packets":
-    icon:
-      glyph: ""
-
-  "Archived Diagnostic Materials":
-    icon:
-      glyph: ""
-
-  "Articles":
-    icon:
-      glyph: ""
-
-  "ask":
-    icon:
-      glyph: ""
-
-  "attack-on-titan":
-    icon:
-      glyph: ""
-
-  "AU Economics Comp Exam":
-    icon:
-      glyph: ""
-
-  "au_courses":
-    icon:
-      glyph: ""
-
-  "au_research":
-    icon:
-      glyph: ""
-
-  "avatar-the-last-airbender":
-    icon:
-      glyph: ""
-
-  "avatar-the-legend-of-korra":
-    icon:
-      glyph: ""
-
-  "Barron_s AP Calculus (14th ed.) - Selected Chapters":
-    icon:
-      glyph: ""
-
-  "better-caul-saul":
-    icon:
-      glyph: ""
-
-  "bing":
-    icon:
-      glyph: ""
-
-  "Book 1 - Air":
-    icon:
-      glyph: ""
-
-  "Book 1 - Water":
-    icon:
-      glyph: ""
-
-  "Book 2 - Earth":
-    icon:
-      glyph: ""
-
-  "Book 2 - Spirits":
-    icon:
-      glyph: ""
-
-  "Book 3 - Change":
-    icon:
-      glyph: ""
-
-  "Book 3 - Fire":
-    icon:
-      glyph: ""
-
-  "Book 4 - Balance":
-    icon:
-      glyph: ""
-
-  "book pictures":
-    icon:
-      glyph: ""
-
-  "Book Solutions":
-    icon:
-      glyph: ""
-
-  "breaking-bad":
-    icon:
-      glyph: ""
-
-  "calculusbc":
-    icon:
-      glyph: ""
-
-  "Case 1":
-    icon:
-      glyph: ""
-
-  "Case 2":
-    icon:
-      glyph: ""
-
-  "Cases":
-    icon:
-      glyph: ""
-
-  "Chapter 1 Accounting and its Economic Context":
-    icon:
-      glyph: ""
-
-  "Chapter 11 Long Term Liabilities, Notes, Bonds and Leases":
-    icon:
-      glyph: ""
-
-  "Chapter 12 Shareholders' Equity":
-    icon:
-      glyph: ""
-
-  "Chapter 14 Statement of Cash Flows":
-    icon:
-      glyph: ""
-
-  "Chapter 2 The Financial Statements":
-    icon:
-      glyph: ""
-
-  "Chapter 4 The Mechanics of Financial Accounting":
-    icon:
-      glyph: ""
-
-  "Chapter 5 Using Financial Statement Information":
-    icon:
-      glyph: ""
-
-  "Chapter 6 The Current Asset Classification, Cash and Accounts Receivable":
-    icon:
-      glyph: ""
-
-  "Chapter 7 Merchandise Inventory":
-    icon:
-      glyph: ""
-
-  "Chapter 9 Long Lived Assets and Cost Allocation":
-    icon:
-      glyph: ""
-
-  "clipboard":
-    icon:
-      glyph: ""
-
-  "cmn005":
-    icon:
-      glyph: ""
-
-  "code-geass":
-    icon:
-      glyph: ""
-
-  "collegeboard":
-    icon:
-      glyph: ""
-
-  "comedies":
-    icon:
-      glyph: ""
-
-  "Company Research":
-    icon:
-      glyph: ""
-
-  "contacts":
-    icon:
-      glyph: ""
-
-  "content":
-    icon:
-      glyph: ""
-
-  "cowboy-bebop":
-    icon:
-      glyph: ""
-
-  "CR1":
-    icon:
-      glyph: ""
-
-  "CR2":
-    icon:
-      glyph: ""
-
-  "CR3":
-    icon:
-      glyph: ""
-
-  "CraneFinanceLoan_files":
-    icon:
-      glyph: ""
-
-  "Data":
-    icon:
-      glyph: ""
-
-  "death-note":
-    icon:
-      glyph: ""
-
-  "defaultresults":
-    icon:
-      glyph: ""
-
-  "Diagnostic Materials":
-    icon:
-      glyph: ""
-
-  "digimon":
-    icon:
-      glyph: ""
-
-  "Digimon Adventure Last Evolution Kizuna":
-    icon:
-      glyph: ""
-
-  "Digimon Adventures S1":
-    icon:
-      glyph: ""
-
-  "Digimon Adventures S2":
-    icon:
-      glyph: ""
-
-  "Discussion":
-    icon:
-      glyph: ""
-
-  "do":
-    icon:
-      glyph: ""
-
-  "Do_Files":
-    icon:
-      glyph: ""
-
-  "dramas":
-    icon:
-      glyph: ""
-
-  "drive":
-    icon:
-      glyph: ""
-
-  "drivesearch":
-    icon:
-      glyph: ""
-
-  "duckduckgo":
-    icon:
-      glyph: ""
-
-  "Ebay":
-    icon:
-      glyph: ""
-
-  "ebay":
-    icon:
-      glyph: ""
-
-  "ECN 501 Macroeconomics":
-    icon:
-      glyph: ""
-
-  "ECN 505 Math Economics":
-    icon:
-      glyph: ""
-
-  "ECN 523 Econometrics I":
-    icon:
-      glyph: ""
-
-  "ECN 600 Microeconomics":
-    icon:
-      glyph: ""
-
-  "ECN 624 Econometrics II":
-    icon:
-      glyph: ""
-
-  "ECN 633 Financial Economics":
-    icon:
-      glyph: ""
-
-  "ECN 639 Policy Issues in Financial Economics":
-    icon:
-      glyph: ""
-
-  "ECN 691XN Internship":
-    icon:
-      glyph: ""
-
-  "ecn001a":
-    icon:
-      glyph: ""
-
-  "ecn001b":
-    icon:
-      glyph: ""
-
-  "ecn100":
-    icon:
-      glyph: ""
-
-  "ecn101":
-    icon:
-      glyph: ""
-
-  "ecn102":
-    icon:
-      glyph: ""
-
-  "ecn106":
-    icon:
-      glyph: ""
-
-  "ecn111a":
-    icon:
-      glyph: ""
-
-  "ecn111b":
-    icon:
-      glyph: ""
-
-  "ecn115a":
-    icon:
-      glyph: ""
-
-  "ecn122":
-    icon:
-      glyph: ""
-
-  "ecn135":
-    icon:
-      glyph: ""
-
-  "ecn137":
-    icon:
-      glyph: ""
-
-  "ecn140":
-    icon:
-      glyph: ""
-
-  "ecn624paper":
-    icon:
-      glyph: ""
-
-  "Economics":
-    icon:
-      glyph: ""
-
-  "ed-tech":
-    icon:
-      glyph: ""
-
-  "edu120":
-    icon:
-      glyph: ""
-
-  "edu181":
-    icon:
-      glyph: ""
-
-  "email":
-    icon:
-      glyph: ""
-
-  "eng006":
-    icon:
-      glyph: ""
-
-  "Examples":
-    icon:
-      glyph: ""
-
-  "Exams":
-    icon:
-      glyph: ""
-
-  "Excel":
-    icon:
-      glyph: ""
-
-  "excel":
-    icon:
-      glyph: ""
-
-  "ext":
-    icon:
-      glyph: ""
-
-  "facebook":
-    icon:
-      glyph: ""
-
-  "Fall '12":
-    icon:
-      glyph: ""
-
-  "Fall '13":
-    icon:
-      glyph: ""
-
-  "Fall '14":
-    icon:
-      glyph: ""
-
-  "features":
-    icon:
-      glyph: ""
-
-  "filesearch":
-    icon:
-      glyph: ""
-
-  "FIN 614 Financial Management":
-    icon:
-      glyph: ""
-
-  "FIN 674 Derivatives & Risk Management":
-    icon:
-      glyph: ""
-
-  "FIN 677 Financial Statement Analysis":
-    icon:
-      glyph: ""
-
-  "Final":
-    icon:
-      glyph: ""
-
-  "Final Exam Review":
-    icon:
-      glyph: ""
-
-  "Final Material":
-    icon:
-      glyph: ""
-
-  "Finance":
-    icon:
-      glyph: ""
-
-  "finances":
-    icon:
-      glyph: ""
-
-  "flickr":
-    icon:
-      glyph: ""
-
-  "Fullmetal Alchemist Brotherhood":
-    icon:
-      glyph: ""
-
-  "fullmetal-alchemist":
-    icon:
-      glyph: ""
-
-  "fy17":
-    icon:
-      glyph: ""
-
-  "fy18":
-    icon:
-      glyph: ""
-
-  "fy19":
-    icon:
-      glyph: ""
-
-  "fy20":
-    icon:
-      glyph: ""
-
-  "fy21":
-    icon:
-      glyph: ""
-
-  "fy22":
-    icon:
-      glyph: ""
-
-  "fy23":
-    icon:
-      glyph: ""
-
-  "fy24":
-    icon:
-      glyph: ""
-
-  "gallery":
-    icon:
-      glyph: ""
-
-  "game-of-thrones":
-    icon:
-      glyph: ""
-
-  "gel081":
-    icon:
-      glyph: ""
-
-  "Geometry":
-    icon:
-      glyph: ""
-
-  "gmailsearch":
-    icon:
-      glyph: ""
-
-  "google":
-    icon:
-      glyph: ""
-
-  "graphs":
-    icon:
-      glyph: ""
-
-  "Graphs":
-    icon:
-      glyph: ""
-
-  "h1":
-    icon:
-      glyph: ""
-
-  "h2":
-    icon:
-      glyph: ""
-
-  "h3":
-    icon:
-      glyph: ""
-
-  "h4":
-    icon:
-      glyph: ""
-
-  "h5":
-    icon:
-      glyph: ""
-
-  "h6":
-    icon:
-      glyph: ""
-
-  "h7":
-    icon:
-      glyph: ""
-
-  "H8":
-    icon:
-      glyph: ""
-
-  "h9":
-    icon:
-      glyph: ""
-
-  "Handouts":
-    icon:
-      glyph: ""
-
-  "Homework":
-    icon:
-      glyph: ""
-
-  "Homework 1":
-    icon:
-      glyph: ""
-
-  "Homework 2":
-    icon:
-      glyph: ""
-
-  "Homework 3":
-    icon:
-      glyph: ""
-
-  "hotkey":
-    icon:
-      glyph: ""
-
-  "icons":
-    icon:
-      glyph: ""
-
-  "img":
-    icon:
-      glyph: ""
-
-  "items":
-    icon:
-      glyph: ""
-
-  "kaiba":
-    icon:
-      glyph: ""
-
-  "kemonozume":
-    icon:
-      glyph: ""
-
-  "Labs":
-    icon:
-      glyph: ""
-
-  "Larson Solutions":
-    icon:
-      glyph: ""
-
-  "last-dance":
-    icon:
-      glyph: ""
-
-  "latex_templates":
-    icon:
-      glyph: ""
-
-  "Lecture Notes":
-    icon:
-      glyph: ""
-
-  "Lectures":
-    icon:
-      glyph: ""
-
-  "linkedin":
-    icon:
-      glyph: ""
-
-  "local":
-    icon:
-      glyph: ""
-
-  "Logs":
-    icon:
-      glyph: ""
-
-  "lucky":
-    icon:
-      glyph: ""
-
-  "mako":
-    icon:
-      glyph: ""
-
-  "Mama":
-    icon:
-      glyph: ""
-
-  "maps":
-    icon:
-      glyph: ""
-
-  "mat021c":
-    icon:
-      glyph: ""
-
-  "mat021d":
-    icon:
-      glyph: ""
-
-  "mat022b":
-    icon:
-      glyph: ""
-
-  "mat025":
-    icon:
-      glyph: ""
-
-  "mat067":
-    icon:
-      glyph: ""
-
-  "mat108":
-    icon:
-      glyph: ""
-
-  "mat111":
-    icon:
-      glyph: ""
-
-  "mat115a":
-    icon:
-      glyph: ""
-
-  "mat119a":
-    icon:
-      glyph: ""
-
-  "mat125a":
-    icon:
-      glyph: ""
-
-  "mat125b":
-    icon:
-      glyph: ""
-
-  "mat135a":
-    icon:
-      glyph: ""
-
-  "mat141":
-    icon:
-      glyph: ""
-
-  "mat145":
-    icon:
-      glyph: ""
-
-  "mat147":
-    icon:
-      glyph: ""
-
-  "mat150a":
-    icon:
-      glyph: ""
-
-  "mat150b":
-    icon:
-      glyph: ""
-
-  "mathemathics":
-    icon:
-      glyph: ""
-
-  "Mercury Athletic Footwear  Valuing the opportunity by Jorge Morales on Prezi_files":
-    icon:
-      glyph: ""
-
-  "microeconomics":
-    icon:
-      glyph: ""
-
-  "Midterm":
-    icon:
-      glyph: ""
-
-  "Midterm 1 Review":
-    icon:
-      glyph: ""
-
-  "Midterm 2 Review":
-    icon:
-      glyph: ""
-
-  "Midterm Material":
-    icon:
-      glyph: ""
-
-  "Midterm1":
-    icon:
-      glyph: ""
-
-  "Midterm2":
-    icon:
-      glyph: ""
-
-  "Midterm3":
-    icon:
-      glyph: ""
-
-  "movies":
-    icon:
-      glyph: ""
-
-  "mus011":
-    icon:
-      glyph: ""
-
-  "nba_logos":
-    icon:
-      glyph: ""
-
-  "nut010":
-    icon:
-      glyph: ""
-
-  "Okun":
-    icon:
-      glyph: ""
-
-  "options":
-    icon:
-      glyph: ""
-
-  "output":
-    icon:
-      glyph: ""
-
-  "pages":
-    icon:
-      glyph: ""
-
-  "palette":
-    icon:
-      glyph: ""
-
-  "Paper":
-    icon:
-      glyph: ""
-
-  "Paper Graphs":
-    icon:
-      glyph: ""
-
-  "Perloff Solutions":
-    icon:
-      glyph: ""
-
-  "phi012":
-    icon:
-      glyph: ""
-
-  "phy009a":
-    icon:
-      glyph: ""
-
-  "pinterest":
-    icon:
-      glyph: ""
-
-  "pol001":
-    icon:
-      glyph: ""
-
-  "pol003":
-    icon:
-      glyph: ""
-
-  "Powerpoints":
-    icon:
-      glyph: ""
-
-  "Ppts":
-    icon:
-      glyph: ""
-
-  "Practice Exams":
-    icon:
-      glyph: ""
-
-  "Practice Problems":
-    icon:
-      glyph: ""
-
-  "preferences":
-    icon:
-      glyph: ""
-
-  "Princeton Review_s AP Calculus AB _ BC (2013) - Selected Chapters":
-    icon:
-      glyph: ""
-
-  "Princeton Review_s AP Calculus BC (2016) - Selected Chapters":
-    icon:
-      glyph: ""
-
-  "Project":
-    icon:
-      glyph: ""
-
-  "Project I":
-    icon:
-      glyph: ""
-
-  "Project II":
-    icon:
-      glyph: ""
-
-  "psc001":
-    icon:
-      glyph: ""
-
-  "Quizzes":
-    icon:
-      glyph: ""
-
-  "R1":
-    icon:
-      glyph: ""
-
-  "R2":
-    icon:
-      glyph: ""
-
-  "raja-baba":
-    icon:
-      glyph: ""
-
-  "Readings":
-    icon:
-      glyph: ""
-
-  "Recomended Readings":
-    icon:
-      glyph: ""
-
-  "remote":
-    icon:
-      glyph: ""
-
-  "Required Readings":
-    icon:
-      glyph: ""
-
-  "Research":
-    icon:
-      glyph: ""
-
-  "Research Updates":
-    icon:
-      glyph: ""
-
-  "rick-and-morty":
-    icon:
-      glyph: ""
-
-  "rottentomatoes":
-    icon:
-      glyph: ""
-
-  "S01":
-    icon:
-      glyph: ""
-
-  "S02":
-    icon:
-      glyph: ""
-
-  "S03":
-    icon:
-      glyph: ""
-
-  "S04":
-    icon:
-      glyph: ""
-
-  "S05":
-    icon:
-      glyph: ""
-
-  "S1":
-    icon:
-      glyph: ""
-
-  "S2":
-    icon:
-      glyph: ""
-
-  "S3":
-    icon:
-      glyph: ""
-
-  "samurai-champloo":
-    icon:
-      glyph: ""
-
-  "sat":
-    icon:
-      glyph: ""
-
-  "scope":
-    icon:
-      glyph: ""
-
-  "screenplays":
-    icon:
-      glyph: ""
-
-  "screenshots":
-    icon:
-      glyph: ""
-
-  "scripts":
-    icon:
-      glyph: ""
-
-  "Season 1":
-    icon:
-      glyph: ""
-
-  "Season 2":
-    icon:
-      glyph: ""
-
-  "Season 3":
-    icon:
-      glyph: ""
-
-  "Season 4":
-    icon:
-      glyph: ""
-
-  "Semester I":
-    icon:
-      glyph: ""
-
-  "Semester II":
-    icon:
-      glyph: ""
-
-  "Semester III":
-    icon:
-      glyph: ""
-
-  "Semester IV":
-    icon:
-      glyph: ""
-
-  "Shawn's Material":
-    icon:
-      glyph: ""
-
-  "shorts":
-    icon:
-      glyph: ""
-
-  "shows":
-    icon:
-      glyph: ""
-
-  "silicon-valley":
-    icon:
-      glyph: ""
-
-  "Special & Extras":
-    icon:
-      glyph: ""
-
-  "sta013":
-    icon:
-      glyph: ""
-
-  "sta106":
-    icon:
-      glyph: ""
-
-  "sta108":
-    icon:
-      glyph: ""
-
-  "sta131b":
-    icon:
-      glyph: ""
-
-  "sta137":
-    icon:
-      glyph: ""
-
-  "Student Materials":
-    icon:
-      glyph: ""
-
-  "Student Solutions":
-    icon:
-      glyph: ""
-
-  "Study Questions":
-    icon:
-      glyph: ""
-
-  "subreddit_icons":
-    icon:
-      glyph: ""
-
-  "subtitles":
-    icon:
-      glyph: ""
-
-  "system":
-    icon:
-      glyph: ""
-
-  "Tables":
-    icon:
-      glyph: ""
-
-  "Take Home":
-    icon:
-      glyph: ""
-
-  "tasks":
-    icon:
-      glyph: ""
-
-  "taxes":
-    icon:
-      glyph: ""
-
-  "Test Bank":
-    icon:
-      glyph: ""
-
-  "the-boondocks":
-    icon:
-      glyph: ""
-
-  "thumbnails":
-    icon:
-      glyph: ""
-
-  "tutoring":
-    icon:
-      glyph: ""
-
-  "twitter":
-    icon:
-      glyph: ""
-
-  "twittersearch":
-    icon:
-      glyph: ""
-
-  "twitteruser":
-    icon:
-      glyph: ""
-
-  "ucdavis":
-    icon:
-      glyph: ""
-
-  "update":
-    icon:
-      glyph: ""
-
-  "uwp001":
-    icon:
-      glyph: ""
-
-  "uwp104a":
-    icon:
-      glyph: ""
-
-  "various":
-    icon:
-      glyph: ""
-
-  "vibes":
-    icon:
-      glyph: ""
-
-  "w1":
-    icon:
-      glyph: ""
-
-  "w10":
-    icon:
-      glyph: ""
-
-  "w11":
-    icon:
-      glyph: ""
-
-  "w12":
-    icon:
-      glyph: ""
-
-  "w13":
-    icon:
-      glyph: ""
-
-  "w2":
-    icon:
-      glyph: ""
-
-  "w3":
-    icon:
-      glyph: ""
-
-  "w4":
-    icon:
-      glyph: ""
-
-  "w6":
-    icon:
-      glyph: ""
-
-  "w7":
-    icon:
-      glyph: ""
-
-  "wallpapers":
-    icon:
-      glyph: ""
-
-  "webbookmarks":
-    icon:
-      glyph: ""
-
-  "websearch":
-    icon:
-      glyph: ""
-
-  "wiki":
-    icon:
-      glyph: ""
-
-  "Wk 1":
-    icon:
-      glyph: ""
-
-  "Wk 10":
-    icon:
-      glyph: ""
-
-  "Wk 11":
-    icon:
-      glyph: ""
-
-  "Wk 3":
-    icon:
-      glyph: ""
-
-  "Wk 4":
-    icon:
-      glyph: ""
-
-  "Wk 5":
-    icon:
-      glyph: ""
-
-  "Wk 6":
-    icon:
-      glyph: ""
-
-  "Wk 8":
-    icon:
-      glyph: ""
-
-  "Wk 9":
-    icon:
-      glyph: ""
-
-  "wolfram":
-    icon:
-      glyph: ""
-
-  "workflows":
-    icon:
-      glyph: ""
-
-  "yahoo":
-    icon:
-      glyph: ""
-
-  "youtube":
-    icon:
-      glyph: ""
-
-  "yubnub":
-    icon:
-      glyph: ""
-
-  My Drive:
-    icon:
-      glyph: ""
-
-  "education":
-    icon:
-      glyph: ""
-
-  mathematics:
-    icon:
-      glyph: ""
-
-  Library:
-    icon:
-      glyph: ""
-
-  Media.localized:
-    icon:
-      glyph: ""
-
-  Movies:
-    icon:
-      glyph: ""
-
-  Music:
-    icon:
-      glyph: ""
-
-  Pictures:
-    icon:
-      glyph: ""
-
-  PolynomialTool:
-    icon:
-      glyph: ""
-
-  Previous Libraries.localized:
-    icon:
-      glyph: ""
-
-  QuitReports:
-    icon:
-      glyph: ""
-
-  StatisticalLearning:
-    icon:
-      glyph: ""
-
-  TV:
-    icon:
-      glyph: ""
-
-  TV Library.tvlibrary:
-    icon:
-      glyph: ""
-
-  __pycache__:
-    icon:
-      glyph: ""
-
-  agents:
-    icon:
-      glyph: ""
-
-  ai-mastery:
-    icon:
-      glyph: ""
-
-  algebra:
-    icon:
-      glyph: ""
-
-  algebra2:
-    icon:
-      glyph: ""
-
-  archive-v0:
-    icon:
-      glyph: ""
-
-  arithmetic:
-    icon:
-      glyph: ""
-
-  arg0:
-    icon:
-      glyph: ""
-
-  attachments:
-    icon:
-      glyph: ""
-
-  axiom-athena:
-    icon:
-      glyph: ""
-
-  bin:
-    icon:
-      glyph: ""
-
-  blesh:
-    icon:
-      glyph: ""
-
-  build:
-    icon:
-      glyph: ""
-
-  bob:
-    icon:
-      glyph: ""
-
-  boston:
-    icon:
-      glyph: ""
-
-  builds-v0:
-    icon:
-      glyph: ""
-
-  cache:
-    icon:
-      glyph: ""
-
-  calculus:
-    icon:
-      glyph: ""
-
-  cargo:
-    icon:
-      glyph: ""
-
-  chatgpt-cli:
-    icon:
-      glyph: ""
-
-  claude:
-    icon:
-      glyph: ""
-
-  cheatsheets:
-    icon:
-      glyph: ""
-
-  cia:
-    icon:
-      glyph: ""
-
-  codex:
-    icon:
-      glyph: ""
-
-  codex_apps_tools:
-    icon:
-      glyph: ""
-
-  codex-runtimes:
-    icon:
-      glyph: ""
-
-  com.vercel.cli:
-    icon:
-      glyph: ""
-
-  completed:
-    icon:
-      glyph: ""
-
-  completions:
-    icon:
-      glyph: ""
-
-  database_creation:
-    icon:
-      glyph: ""
-
-  dcp:
-    icon:
-      glyph: ""
-
-  dcp1_data_structures:
-    icon:
-      glyph: ""
-
-  dcp2_algorithms:
-    icon:
-      glyph: ""
-
-  dcp3_applications:
-    icon:
-      glyph: ""
-
-  dcp4_design:
-    icon:
-      glyph: ""
-
-  doc:
-    icon:
-      glyph: ""
-
-  environments-v2:
-    icon:
-      glyph: ""
-
-  events:
-    icon:
-      glyph: ""
-
-  exceptions:
-    icon:
-      glyph: ""
-
-  float:
-    icon:
-      glyph: ""
-
-  gem:
-    icon:
-      glyph: ""
-
-  geometry:
-    icon:
-      glyph: ""
-
-  gitstatus:
-    icon:
-      glyph: ""
-
-  hooks:
-    icon:
-      glyph: ""
-
-  hub:
-    icon:
-      glyph: ""
-
-  huggingface:
-    icon:
-      glyph: ""
-
-  images:
-    icon:
-      glyph: ""
-
-  imagegen:
-    icon:
-      glyph: ""
-
-  info:
-    icon:
-      glyph: ""
-
-  instance1:
-    icon:
-      glyph: ""
-
-  instance_db:
-    icon:
-      glyph: ""
-
-  intermediate-macroeconomics:
-    icon:
-      glyph: ""
-
-  interpreter-v4:
-    icon:
-      glyph: ""
-
-  ipython:
-    icon:
-      glyph: ""
-
-  jupyter:
-    icon:
-      glyph: ""
-
-  lab:
-    icon:
-      glyph: ""
-
-  legacy-latex:
-    icon:
-      glyph: ""
-
-  less:
-    icon:
-      glyph: ""
-
-  linear-algebra:
-    icon:
-      glyph: ""
-
-  lock:
-    icon:
-      glyph: ""
-
-  log:
-    filename:
-      foreground: blue
-    icon:
-      glyph: ""
-      style:
-        foreground: blue
-
-  logs:
-    icon:
-      glyph: ""
-
-  lua-language-server:
-    icon:
-      glyph: ""
-
-  machine_storage:
-    icon:
-      glyph: ""
-
-  math-stats:
-    icon:
-      glyph: ""
-
-  matplotlib:
-    icon:
-      glyph: ""
-
-  meta:
-    icon:
-      glyph: ""
-
-  metrics:
-    icon:
-      glyph: ""
-
-  memories:
-    icon:
-      glyph: ""
-
-  mubuntu:
-    icon:
-      glyph: ""
-
-  mysql:
-    icon:
-      glyph: ""
-
-  new:
-    icon:
-      glyph: ""
-
-  notes:
-    icon:
-      glyph: ""
-
-  npm:
-    icon:
-      glyph: ""
-
-  nvim-dashboard:
-    icon:
-      glyph: ""
-
-  nvim-dev:
-    icon:
-      glyph: ""
-
-  nvim-launcher:
-    icon:
-      glyph: ""
-
-  nvim-sourdiesel:
-    icon:
-      glyph: ""
-
-  nvim-statusline:
-    icon:
-      glyph: ""
-
-  nvim-terminal:
-    icon:
-      glyph: ""
-
-  objects:
-    icon:
-      glyph: ""
-
-  ollama:
-    icon:
-      glyph: ""
-
-  op:
-    icon:
-      glyph: ""
-
-  openai-curated:
-    icon:
-      glyph: ""
-
-  openai-docs:
-    icon:
-      glyph: ""
-
-  otaku-tunes:
-    icon:
-      glyph: ""
-
-  p10k:
-    icon:
-      glyph: ""
-
-  p10k-mubuntu:
-    icon:
-      glyph: ""
-
-  path:
-    icon:
-      glyph: ""
-
-  pending:
-    icon:
-      glyph: ""
-
-  pokemon:
-    icon:
-      glyph: ""
-
-  pi:
-    icon:
-      glyph: ""
-
-  practice-sheets:
-    icon:
-      glyph: ""
-
-  practiceML:
-    icon:
-      glyph: ""
-
-  prompts:
-    icon:
-      glyph: ""
-
-  plugin-creator:
-    icon:
-      glyph: ""
-
-  python:
-    icon:
-      glyph: ""
-
-  real-analysis:
-    icon:
-      glyph: ""
-
-  real-estate:
-    icon:
-      glyph: ""
-
-  refs:
-    icon:
-      glyph: ""
-
-  resources:
-    icon:
-      glyph: ""
-
-  rustup:
-    icon:
-      glyph: ""
-
-  rules:
-    icon:
-      glyph: ""
-
-  sdists-v6:
-    icon:
-      glyph: ""
-
-  sdists-v8:
-    icon:
-      glyph: ""
-
-  sdists-v9:
-    icon:
-      glyph: ""
-
-  session-history:
-    icon:
-      glyph: ""
-
-  sessions:
-    icon:
-      glyph: ""
-
-  share:
-    icon:
-      glyph: ""
-
-  shell_snapshots:
-    icon:
-      glyph: ""
-
-  skill-creator:
-    icon:
-      glyph: ""
-
-  skill-installer:
-    icon:
-      glyph: ""
-
-  skills:
-    icon:
-      glyph: ""
-
-  simple-v14:
-    icon:
-      glyph: ""
-
-  simple-v15:
-    icon:
-      glyph: ""
-
-  simple-v16:
-    icon:
-      glyph: ""
-
-  simple-v18:
-    icon:
-      glyph: ""
-
-  sockets:
-    icon:
-      glyph: ""
-
-  solutions:
-    icon:
-      glyph: ""
-
-  source_data:
-    icon:
-      glyph: ""
-
-  specs:
-    icon:
-      glyph: ""
-
-  apputils-extension:
-    icon:
-      glyph: ""
-
-  ssa_events:
-    icon:
-      glyph: ""
-
-  starship:
-    icon:
-      glyph: ""
-
-  state:
-    icon:
-      glyph: ""
-
-  sync:
-    icon:
-      glyph: ""
-
-  sync_fp:
-    icon:
-      glyph: ""
-
-  system-design-primer:
-    icon:
-      glyph: ""
-
-  teasers:
-    icon:
-      glyph: ""
-
-  target:
-    icon:
-      glyph: ""
-
-  templates:
-    icon:
-      glyph: ""
-
-  tests:
-    icon:
-      glyph: ""
-
-  thinkorswim:
-    icon:
-      glyph: ""
-
-  tree-sitter:
-    icon:
-      glyph: ""
-
-  tmp:
-    icon:
-      glyph: ""
-
-  typescript:
-    icon:
-      glyph: ""
-
-  uv:
-    icon:
-      glyph: ""
-
-  vendor_imports:
-    icon:
-      glyph: ""
-
-  v6:
-    icon:
-      glyph: ""
-
-  var:
-    icon:
-      glyph: ""
-
-  vim:
-    icon:
-      glyph: ""
-
-  virtualenvs:
-    icon:
-      glyph: ""
-
-  weather:
-    icon:
-      glyph: ""
-
-  weather-tool:
-    icon:
-      glyph: ""
-
-  wheels-v3:
-    icon:
-      glyph: ""
-
-  wheels-v4:
-    icon:
-      glyph: ""
-
-  wheels-v5:
-    icon:
-      glyph: ""
-
-  workspaces:
-    icon:
-      glyph: ""
-
-  yarn:
-    icon:
-      glyph: ""
-
-  yazi:
-    icon:
-      glyph: ""
-
-  zap:
-    icon:
-      glyph: ""
-
-  zoxide:
-    icon:
-      glyph: ""
-
-  zsh-autocomplete:
-    icon:
-      glyph: ""
-
-  cargo.toml:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  cargo.lock:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  Cargo.toml:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  Cargo.lock:
-    filename:
-      foreground: 13
-    icon:
-      glyph: ""
-      style:
-        foreground: 13
-
-  bootstrap.sh:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
-  .localized:
-    filename:
-      foreground: 08
-    icon:
-      glyph: "󰲄"
-      style:
-        foreground: 08
-
-  .dbxignore:
-    icon:
-      glyph: ""
-
-  .DS_Store:
-    filename:
-      foreground: 08
-    icon:
-      glyph: "󰘳"
-      style:
-        foreground: 08
-
+  # History files
   .bash_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  hist:
     filename:
       foreground: red
     icon:
@@ -5248,7 +2356,47 @@ filenames:
       style:
         foreground: red
 
+  histfile:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
   .history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  history.jsonl:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .lesshst:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  lesshst:
     filename:
       foreground: red
     icon:
@@ -5280,54 +2428,6 @@ filenames:
       style:
         foreground: red
 
-  .zsh_history:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  history.jsonl:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  hist:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  histfile:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  history:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  lesshst:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
   session_index.jsonl:
     filename:
       foreground: black
@@ -5336,584 +2436,10 @@ filenames:
       style:
         foreground: black
 
-  README:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-
-  LICENSE:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-
-  metadata.yaml:
+  .zsh_history:
     filename:
       foreground: red
     icon:
       glyph: ""
       style:
         foreground: red
-
-  .lesshst:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  .zlua:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  p10k-dump-mubuntu.zsh:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  p10k-instant-prompt-mubuntu.zsh:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  prompt-29:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  prompt-21:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-
-  .gitmodules:
-    filename:
-      foreground: 08
-    icon:
-      glyph: ""
-      style:
-        foreground: 08
-
-  .editorconfig:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  .gitattributes:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  .vale.ini:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  CODEOWNERS:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-
-  revision-hash:
-    filename:
-      foreground: 08
-    icon:
-      glyph: ""
-      style:
-        foreground: 08
-extensions:
-  js:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
-  ts:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
-  tsx:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
-  css:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
-  html:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-
-  avif:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  gif:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  heic:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  heif:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  icns:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  jpeg:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  jpg:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  png:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  svg:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: "󰜡"
-      style:
-        foreground: cyan
-
-  webp:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-
-  scpt:
-    filename:
-      foreground: white
-    icon:
-      glyph: "󰘳"
-      style:
-        foreground: white
-
-  patch:
-    filename:
-      foreground: 09
-    icon:
-      glyph: ""
-      style:
-        foreground: 09
-  rc:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-  env:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-  config:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-  version:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-  cache:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-  dump:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-  history:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-  hist:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-  ignore:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  swp:
-    filename:
-      foreground: 08
-    icon:
-      glyph: ""
-      style:
-        foreground: 08
-  code-workspace:
-    filename:
-      foreground: 08
-    icon:
-      glyph: ""
-      style:
-        foreground: 08
-  editorconfig:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  gitattributes:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  zwc:
-    filename:
-      foreground: green
-    icon:
-      glyph: ""
-      style:
-        foreground: green
-  collection:
-    filename:
-      foreground: green
-    icon:
-      glyph: ""
-      style:
-        foreground: green
-  bin:
-    filename:
-      foreground: green
-    icon:
-      glyph: ""
-      style:
-        foreground: green
-  rs:
-    filename:
-      foreground: white
-    icon:
-      glyph: ""
-      style:
-        foreground: white
-  nix:
-    icon:
-      glyph: "❄"
-      style:
-        foreground: white
-  txt:
-    filename:
-      foreground: black
-    icon:
-      glyph: "󰦨"
-      style:
-        foreground: black
-  csv:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  md:
-    filename:
-      foreground: 11
-    icon:
-      glyph: ""
-      style:
-        foreground: 11
-  json:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  jsonc:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  jsonl:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  sock:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  socket:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  shada:
-    filename:
-      foreground: 08
-    icon:
-      glyph: ""
-      style:
-        foreground: 08
-  sqlite:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  sqlite3:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  sqlite-shm:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  sqlite-wal:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: ""
-      style:
-        foreground: cyan
-  lua:
-    filename:
-      foreground: 15
-    icon:
-      glyph: ""
-      style:
-        foreground: 15
-  py:
-    filename:
-      foreground: 15
-    icon:
-      glyph: ""
-      style:
-        foreground: 15
-  conf:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  ini:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  dat:
-    filename:
-      foreground: 08
-    icon:
-      glyph: ""
-      style:
-        foreground: 08
-  log:
-    filename:
-      foreground: red
-    icon:
-      glyph: ""
-      style:
-        foreground: red
-  toml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  tmTheme:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: "󰏘"
-      style:
-        foreground: cyan
-  tmtheme:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: "󰏘"
-      style:
-        foreground: cyan
-  theme:
-    filename:
-      foreground: cyan
-    icon:
-      glyph: "󰏘"
-      style:
-        foreground: cyan
-  sublime-syntax:
-    filename:
-      foreground: 12
-    icon:
-      glyph: "󰘦"
-      style:
-        foreground: 12
-
-  yaml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  yml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  xml:
-    filename:
-      foreground: black
-    icon:
-      glyph: ""
-      style:
-        foreground: black
-  sh:
-    icon:
-      glyph: ""
-  bash:
-    icon:
-      glyph: ""
-  zsh:
-    icon:
-      glyph: ""
-  vim:
-    icon:
-      glyph: ""
