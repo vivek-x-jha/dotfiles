@@ -248,7 +248,7 @@ EOF
     if [[ -z ${HOMEBREW_BUNDLE_FILE:-} ]]; then
       logg -w 'HOMEBREW_BUNDLE_FILE unset; skipping Brewfile export'
     elif logg -c 'brew bundle dump --force --no-npm'; then
-      perl -0pi -e 's/^tap "[^"]+\/local-versions"\n//mg; s/^brew "[^"]+\/local-versions\/tmux\@3\.6b"[^\n]*/brew "tmux"/mg' "$HOMEBREW_BUNDLE_FILE"
+      :
     else
       logg -w 'UPDATE BREWFILE FAILED'
     fi

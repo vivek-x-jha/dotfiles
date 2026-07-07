@@ -1,4 +1,3 @@
-tap "mubuntu/local-versions", "/Users/mubuntu/.local/share/homebrew-local-versions.git"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Open-source, cross-platform JavaScript runtime environment
@@ -144,7 +143,7 @@ cargo "bob-nvim"
 cargo "cargo-update"
 cargo "cia"
 cargo "du-dust"
-cargo "eva", args: ["--git", "https://github.com/vivek-x-jha/eva"]
+cargo "eva"
 cargo "fd-find"
 cargo "ripgrep"
 cargo "starship"

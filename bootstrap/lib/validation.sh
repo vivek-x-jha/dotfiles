@@ -102,6 +102,7 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/config"
   check_path "$HOME/.dotfiles/ai/cia/config.toml"
+  check_path "$HOME/.dotfiles/ai/herdr/config.toml"
   check_path "$HOME/.dotfiles/ai/pi/README.md"
   check_path "$HOME/.dotfiles/ai/pi/models.json"
   check_path "$HOME/.dotfiles/ai/pi/extensions/statusline.ts"
@@ -271,6 +272,7 @@ doctor_bootstrap() {
   doctor_dir "$XDG_STATE_HOME/ipython"
   doctor_dir "$XDG_STATE_HOME/zsh"
   doctor_dir "$XDG_CONFIG_HOME/claude"
+  doctor_dir "$XDG_CONFIG_HOME/herdr"
   doctor_dir "$XDG_CONFIG_HOME/jupyter"
   doctor_dir "$XDG_CONFIG_HOME/npm"
   doctor_dir "$XDG_DATA_HOME/jupyter"
@@ -285,6 +287,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/bat" ../.dotfiles/cli/bat
   doctor_symlink "$XDG_CONFIG_HOME/btop" ../.dotfiles/cli/btop
   doctor_symlink "$XDG_CONFIG_HOME/cia" ../.dotfiles/ai/cia
+  doctor_symlink "$XDG_CONFIG_HOME/herdr/config.toml" ../../.dotfiles/ai/herdr/config.toml
   doctor_symlink "$XDG_CONFIG_HOME/dust" ../.dotfiles/cli/dust
   doctor_symlink "$XDG_CONFIG_HOME/eva" ../.dotfiles/cli/eva
   doctor_symlink "$XDG_CONFIG_HOME/fzf" ../.dotfiles/cli/fzf
@@ -342,6 +345,7 @@ doctor_bootstrap() {
   doctor_cmd rg optional
   doctor_cmd atuin optional
   doctor_cmd bat optional
+  doctor_cmd herdr optional
   doctor_cmd tmux optional
   doctor_cmd nvim optional
   doctor_cmd ollama optional

@@ -65,22 +65,22 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | eva | web-devicons |
 | --- | --- | --- |
-| `black` | 51 · size.number_byte, filenames..shellcheckrc.filename | 26 · .gitignore, txt |
-| `red` | 56 · perms.user_write, perms.group_write | 15 · .bash_history, .histfile |
-| `green` | 11 · filekinds.executable, perms.user_execute_file | — |
+| `black` | 15 · size.number_byte, filenames..luarc.json.filename | 26 · .gitignore, txt |
+| `red` | 36 · perms.user_write, perms.group_write | 15 · .bash_history, .histfile |
+| `green` | 5 · filekinds.executable, perms.user_execute_file | — |
 | `yellow` | 8 · filekinds.symlink, perms.user_read | — |
-| `blue` | 5 · filekinds.normal, filekinds.directory | — |
-| `magenta` | 56 · filenames..bash_profile.filename, filenames..bash_p… | 25 · config, index.html |
-| `cyan` | 62 · filekinds.socket, size.number_kilo | 32 · sourdiesel, sourdiesel.json |
-| `white` | 29 · filenames.aliases.filename, filenames.aliases.icon.… | 43 · sh, js |
-| `brightblack` | 86 · users.user_you, users.group_yours | 37 · .gitkeep, .hushlogin |
-| `brightred` | 14 · users.user_root, users.group_root | 6 · patch, atuin-zsh-tty-capture.zsh |
+| `blue` | 2 · filekinds.directory, size.number_huge | — |
+| `magenta` | 30 · filenames..blerc.filename, filenames..blerc.icon.style | 25 · config, index.html |
+| `cyan` | 22 · filekinds.socket, size.number_kilo | 32 · sourdiesel, sourdiesel.json |
+| `white` | 14 · filenames.allowed_signers.filename, filenames.allow… | 43 · sh, js |
+| `brightblack` | 70 · users.user_you, users.group_yours | 37 · .gitkeep, .hushlogin |
+| `brightred` | 10 · users.user_root, users.group_root | 6 · patch, atuin-zsh-tty-capture.zsh |
 | `brightgreen` | — | — |
-| `brightyellow` | 20 · filenames.readme.md.filename, filenames.readme.md.i… | 7 · md, AGENTS.md |
-| `brightblue` | 22 · filenames..dockerignore.filename, filenames..docker… | 11 · sh.vim, zsh.vim |
-| `brightmagenta` | 99 · date, filenames.brewfile.lock.json.filename | 40 · apt-packages.txt, Brewfile |
-| `brightcyan` | 60 · filenames.atuin.bash.filename, filenames.atuin.bash… | 30 · atuin.bash, bat.bash |
-| `brightwhite` | 4 · extensions.lua.filename, extensions.lua.icon.style | 2 · lua, py |
+| `brightyellow` | — | 7 · md, AGENTS.md |
+| `brightblue` | 6 · filenames.sh.vim.filename, filenames.sh.vim.icon.style | 11 · sh.vim, zsh.vim |
+| `brightmagenta` | 3 · date, filenames.package.lock.filename | 40 · apt-packages.txt, Brewfile |
+| `brightcyan` | 60 · filenames._atuin.filename, filenames._atuin.icon.style | 30 · atuin.bash, bat.bash |
+| `brightwhite` | — | 2 · lua, py |
 | `dark` | — | — |
 | `grey` | — | — |
 | `nvim_statusline` | — | — |
@@ -138,22 +138,18 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## File and icon mappings
 
-<details><summary>eva: 277 colored mappings</summary>
+<details><summary>eva: 126 colored mappings</summary>
 
-- `black` (25): `extensions:conf`, `extensions:editorconfig`, `extensions:gitattributes`, `extensions:ignore`, `extensions:ini`, `extensions:json`, `extensions:jsonc`, `extensions:jsonl`, `extensions:toml`, `extensions:txt`, `extensions:xml`, `extensions:yaml`, `extensions:yml`, `filenames:.editorconfig`, `filenames:.gitattributes`, `filenames:.gitignore`, `filenames:.luarc.json`, `filenames:.python-version`, `filenames:.shellcheckrc`, `filenames:.state.itermexport`, `filenames:.vale.ini`, `filenames:_update-notifier-last-checked`, `filenames:CODEOWNERS`, `filenames:id_ed25519.pub`, `filenames:session_index.jsonl`
-- `red` (25): `extensions:cache`, `extensions:dump`, `extensions:hist`, `extensions:history`, `extensions:log`, `filenames:.bash_history`, `filenames:.histfile`, `filenames:.history`, `filenames:.lesshst`, `filenames:.mycli_history`, `filenames:.mysql_history`, `filenames:.python_history`, `filenames:.zlua`, `filenames:.zsh_history`, `filenames:CACHEDIR.TAG`, `filenames:hist`, `filenames:histfile`, `filenames:history`, `filenames:history.jsonl`, `filenames:lesshst`, `filenames:metadata.yaml`, `filenames:p10k-dump-mubuntu.zsh`, `filenames:p10k-instant-prompt-mubuntu.zsh`, `filenames:prompt-21`, `filenames:prompt-29`
-- `green` (3): `extensions:bin`, `extensions:collection`, `extensions:zwc`
-- `blue` (1): `filenames:log`
-- `magenta` (28): `extensions:config`, `extensions:env`, `extensions:rc`, `filenames:.bash_profile`, `filenames:.bashrc`, `filenames:.blerc`, `filenames:.p10k.zsh`, `filenames:.zprofile`, `filenames:.zshenv`, `filenames:.zshrc`, `filenames:agent.toml`, `filenames:btop.conf`, `filenames:config`, `filenames:config.toml`, `filenames:config.yml`, `filenames:env`, `filenames:extensions.json`, `filenames:glow.yml`, `filenames:index.html`, `filenames:init.lua`, `filenames:karabiner.json`, `filenames:main.py`, `filenames:matplotlibrc`, `filenames:npmrc`, `filenames:settings.json`, `filenames:starship.toml`, `filenames:tmux.conf`, `filenames:wezterm.lua`
-- `cyan` (30): `extensions:avif`, `extensions:csv`, `extensions:gif`, `extensions:heic`, `extensions:heif`, `extensions:icns`, `extensions:jpeg`, `extensions:jpg`, `extensions:png`, `extensions:sock`, `extensions:socket`, `extensions:sqlite`, `extensions:sqlite-shm`, `extensions:sqlite-wal`, `extensions:sqlite3`, `extensions:svg`, `extensions:theme`, `extensions:tmTheme`, `extensions:tmtheme`, `extensions:webp`, `filenames:.sqlite`, `filenames:.sqlite-shm`, `filenames:.sqlite-wal`, `filenames:secrets`, `filenames:sourdiesel`, `filenames:sourdiesel.json`, `filenames:sourdiesel.lua`, `filenames:sourdiesel.terminal`, `filenames:sourdiesel.toml`, `filenames:theme.yml`
-- `white` (15): `extensions:css`, `extensions:html`, `extensions:js`, `extensions:nix`, `extensions:rs`, `extensions:scpt`, `extensions:ts`, `extensions:tsx`, `filenames:aliases`, `filenames:allowed_signers`, `filenames:auth.key.pub`, `filenames:bootstrap.sh`, `filenames:known_hosts`, `filenames:profile`, `filenames:signing.key.pub`
-- `brightblack` (42): `extensions:code-workspace`, `extensions:dat`, `extensions:shada`, `extensions:swp`, `filenames:.DS_Store`, `filenames:.file`, `filenames:.gitkeep`, `filenames:.gitmodules`, `filenames:.hushlogin`, `filenames:.localized`, `filenames:.netrwhist`, `filenames:icon\r`, `filenames:Icon\r`, `filenames:main.shada`, `filenames:main.shada.tmp.a`, `filenames:main.shada.tmp.b`, `filenames:main.shada.tmp.c`, `filenames:main.shada.tmp.d`, `filenames:main.shada.tmp.e`, `filenames:main.shada.tmp.f`, `filenames:main.shada.tmp.g`, `filenames:main.shada.tmp.h`, `filenames:main.shada.tmp.i`, `filenames:main.shada.tmp.j`, `filenames:main.shada.tmp.k`, `filenames:main.shada.tmp.l`, `filenames:main.shada.tmp.m`, `filenames:main.shada.tmp.n`, `filenames:main.shada.tmp.o`, `filenames:main.shada.tmp.p`, `filenames:main.shada.tmp.q`, `filenames:main.shada.tmp.r`, `filenames:main.shada.tmp.s`, `filenames:main.shada.tmp.t`, `filenames:main.shada.tmp.u`, `filenames:main.shada.tmp.v`, `filenames:main.shada.tmp.w`, `filenames:main.shada.tmp.x`, `filenames:main.shada.tmp.y`, `filenames:main.shada.tmp.z`, `filenames:revision-hash`, `filenames:Session.vim`
-- `brightred` (6): `extensions:patch`, `filenames:.env`, `filenames:atuin-zsh-tty-capture.zsh`, `filenames:auth.key`, `filenames:id_ed25519`, `filenames:signing.key`
-- `brightyellow` (10): `extensions:md`, `extensions:version`, `filenames:AGENTS.md`, `filenames:CLAUDE.md`, `filenames:contributing.md`, `filenames:license`, `filenames:LICENSE`, `filenames:README`, `filenames:readme.md`, `filenames:security.md`
-- `brightblue` (11): `extensions:sublime-syntax`, `filenames:.dockerignore`, `filenames:compose.yaml`, `filenames:compose.yml`, `filenames:Containerfile`, `filenames:docker-compose.yaml`, `filenames:docker-compose.yml`, `filenames:Dockerfile`, `filenames:sh.vim`, `filenames:typescriptreact.vim`, `filenames:zsh.vim`
-- `brightmagenta` (49): `filenames:apt-packages.txt`, `filenames:brewfile`, `filenames:Brewfile`, `filenames:brewfile.lock.json`, `filenames:Brewfile.lock.json`, `filenames:build.gradle`, `filenames:build.gradle.kts`, `filenames:bun.lockb`, `filenames:cabal.project`, `filenames:cabal.project.freeze`, `filenames:cargo.lock`, `filenames:Cargo.lock`, `filenames:cargo.toml`, `filenames:Cargo.toml`, `filenames:composer.json`, `filenames:composer.lock`, `filenames:dnf-packages.txt`, `filenames:gemfile`, `filenames:Gemfile`, `filenames:gemfile.lock`, `filenames:Gemfile.lock`, `filenames:go.mod`, `filenames:go.sum`, `filenames:gradle.lockfile`, `filenames:mix.exs`, `filenames:mix.lock`, `filenames:nvim-pack-lock.json`, `filenames:package-lock.json`, `filenames:package.json`, `filenames:package.lock`, `filenames:package.resolved`, `filenames:Package.resolved`, `filenames:package.swift`, `filenames:Package.swift`, `filenames:packages.config`, `filenames:pipfile`, `filenames:Pipfile`, `filenames:pipfile.lock`, `filenames:Pipfile.lock`, `filenames:pnpm-lock.yaml`, `filenames:poetry.lock`, `filenames:pom.xml`, `filenames:project.assets.json`, `filenames:pubspec.lock`, `filenames:pubspec.yaml`, `filenames:pyproject.toml`, `filenames:requirements.txt`, `filenames:stack.yaml`, `filenames:uv.lock`
+- `black` (7): `filenames:.luarc.json`, `filenames:.state.itermexport`, `filenames:.vale.ini`, `filenames:_update-notifier-last-checked`, `filenames:CODEOWNERS`, `filenames:id_ed25519.pub`, `filenames:session_index.jsonl`
+- `red` (15): `filenames:.histfile`, `filenames:.history`, `filenames:.mycli_history`, `filenames:.mysql_history`, `filenames:.zlua`, `filenames:hist`, `filenames:histfile`, `filenames:history`, `filenames:history.jsonl`, `filenames:log`, `filenames:metadata.yaml`, `filenames:p10k-dump-mubuntu.zsh`, `filenames:p10k-instant-prompt-mubuntu.zsh`, `filenames:prompt-21`, `filenames:prompt-29`
+- `magenta` (15): `filenames:.blerc`, `filenames:agent.toml`, `filenames:btop.conf`, `filenames:env`, `filenames:extensions.json`, `filenames:glow.yml`, `filenames:index.html`, `filenames:init.lua`, `filenames:karabiner.json`, `filenames:main.py`, `filenames:matplotlibrc`, `filenames:npmrc`, `filenames:starship.toml`, `filenames:tmux.conf`, `filenames:wezterm.lua`
+- `cyan` (10): `filenames:.sqlite`, `filenames:.sqlite-shm`, `filenames:.sqlite-wal`, `filenames:secrets`, `filenames:sourdiesel`, `filenames:sourdiesel.json`, `filenames:sourdiesel.lua`, `filenames:sourdiesel.terminal`, `filenames:sourdiesel.toml`, `filenames:theme.yml`
+- `white` (7): `filenames:aliases`, `filenames:allowed_signers`, `filenames:auth.key.pub`, `filenames:bootstrap.sh`, `filenames:known_hosts`, `filenames:profile`, `filenames:signing.key.pub`
+- `brightblack` (34): `filenames:.file`, `filenames:.gitkeep`, `filenames:.netrwhist`, `filenames:Icon\r`, `filenames:icon\r`, `filenames:main.shada`, `filenames:main.shada.tmp.a`, `filenames:main.shada.tmp.b`, `filenames:main.shada.tmp.c`, `filenames:main.shada.tmp.d`, `filenames:main.shada.tmp.e`, `filenames:main.shada.tmp.f`, `filenames:main.shada.tmp.g`, `filenames:main.shada.tmp.h`, `filenames:main.shada.tmp.i`, `filenames:main.shada.tmp.j`, `filenames:main.shada.tmp.k`, `filenames:main.shada.tmp.l`, `filenames:main.shada.tmp.m`, `filenames:main.shada.tmp.n`, `filenames:main.shada.tmp.o`, `filenames:main.shada.tmp.p`, `filenames:main.shada.tmp.q`, `filenames:main.shada.tmp.r`, `filenames:main.shada.tmp.s`, `filenames:main.shada.tmp.t`, `filenames:main.shada.tmp.u`, `filenames:main.shada.tmp.v`, `filenames:main.shada.tmp.w`, `filenames:main.shada.tmp.x`, `filenames:main.shada.tmp.y`, `filenames:main.shada.tmp.z`, `filenames:revision-hash`, `filenames:Session.vim`
+- `brightred` (4): `filenames:atuin-zsh-tty-capture.zsh`, `filenames:auth.key`, `filenames:id_ed25519`, `filenames:signing.key`
+- `brightblue` (3): `filenames:sh.vim`, `filenames:typescriptreact.vim`, `filenames:zsh.vim`
+- `brightmagenta` (1): `filenames:package.lock`
 - `brightcyan` (30): `filenames:_atuin`, `filenames:_bat`, `filenames:_bob`, `filenames:_cargo`, `filenames:_cia`, `filenames:_dust`, `filenames:_eva`, `filenames:_fd`, `filenames:_pi`, `filenames:_rg`, `filenames:_starship`, `filenames:_tldr`, `filenames:_update-tools`, `filenames:_uv`, `filenames:_work`, `filenames:atuin.bash`, `filenames:bat.bash`, `filenames:bob.bash`, `filenames:cargo.bash`, `filenames:cia.bash`, `filenames:dust.bash`, `filenames:eva.bash`, `filenames:fd.bash`, `filenames:pi.bash`, `filenames:rg.bash`, `filenames:starship.bash`, `filenames:tldr.bash`, `filenames:update-tools.bash`, `filenames:uv.bash`, `filenames:work.bash`
-- `brightwhite` (2): `extensions:lua`, `extensions:py`
 
 </details>
 

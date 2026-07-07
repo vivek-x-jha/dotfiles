@@ -1,0 +1,54 @@
+[theme]
+name = "terminal"
+auto_switch = false
+
+[theme.custom]
+panel_bg = "reset"
+accent = "#cccccc"
+text = "#f4f3f2"
+subtext0 = "#f4f3f2"
+surface0 = "#5c617d"
+surface1 = "#5c617d"
+surface_dim = "#313244"
+overlay0 = "#5c617d"
+overlay1 = "#f4f3f2"
+red = "#f096b7"
+green = "#d2fd9d"
+yellow = "#f3b175"
+blue = "#80d7fe"
+magenta = "#c9ccfb"
+cyan = "#47e7b1"
+
+[ui]
+mouse_capture = true
+confirm_close = false
+prompt_new_tab_name = false
+pane_borders = true
+pane_gaps = false
+show_agent_labels_on_pane_borders = true
+accent = "#cccccc"
+
+[ui.toast]
+delivery = "system"
+
+[keys]
+prefix = "ctrl+a"
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+settings = "prefix+comma"
+split_horizontal = "prefix+s"
+close_pane = "prefix+c"
+new_tab = "prefix+ctrl+c"
+rename_pane = "prefix+n"
+rename_tab = "prefix+shift+n"
+new_workspace = "prefix+alt+n"
+next_tab = "prefix+ctrl+n"
+previous_tab = "prefix+ctrl+p"
+last_pane = "prefix+ctrl+b"
+toggle_sidebar = "prefix+h"
+
+[experimental]
+switch_ascii_input_source_in_prefix = true
+pane_history = true

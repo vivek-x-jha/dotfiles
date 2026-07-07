@@ -1,6 +1,6 @@
 # Dotfiles
 
-Personal macOS and Linux workstation configuration centered on a fast terminal workflow, XDG-aware paths, Neovim, tmux, WezTerm, Rust-based CLI tools, and 1Password-backed secrets.
+Personal macOS and Linux workstation configuration centered on a fast Herdr terminal workflow, XDG-aware paths, Neovim, WezTerm, Rust-based CLI tools, and 1Password-backed secrets.
 
 [`bootstrap.sh`](./bootstrap.sh) is the setup contract. [`AGENTS.md`](./AGENTS.md) is the operational guide for coding agents and maintainers.
 
@@ -11,7 +11,7 @@ Personal macOS and Linux workstation configuration centered on a fast terminal w
 - 🐚 Zsh-first interactive shell with Bash parity where practical
 - 🔎 fzf, ripgrep, fd, bat, eva, zoxide, and Atuin wired into daily navigation
 - 🧠 Neovim managed with native `vim.pack`, `bob`, LSPs, formatters, and custom SourDiesel theming
-- 🖥️ WezTerm, tmux, Hammerspoon, and macOS Terminal profiles for terminal workflows
+- 🖥️ Herdr, WezTerm, Hammerspoon, macOS Terminal profiles, and retained tmux config for terminal workflows
 - 🔐 Optional 1Password CLI, shell plugin, Git signing, SSH agent, and Atuin sync setup
 - 🧪 Dry-run support before setup changes touch the machine
 
@@ -94,7 +94,7 @@ git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
 ~/.dotfiles/bootstrap.sh
 ```
 
-On WSL, GUI application installs are best-effort and can be skipped. The shell, tmux, Neovim, CLI, Git, fzf, and XDG symlink setup are the useful paths there.
+On WSL, GUI application installs are best-effort and can be skipped. The shell, terminal workflow tooling, Neovim, CLI, Git, fzf, and XDG symlink setup are the useful paths there.
 
 ## 🚀 Installation
 
@@ -202,11 +202,11 @@ Validate the installed workstation state any time after setup:
 | [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
-| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, and CIA |
+| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, CIA, and Herdr |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
 | [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eva, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
-| [`terminals`](./terminals) | tmux, WezTerm, Terminal.app, and iTerm-related assets |
+| [`terminals`](./terminals) | WezTerm, Terminal.app, iTerm-related assets, and retained tmux config |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
 | [`apps`](./apps) | Hammerspoon, Karabiner, and web extension config exports |
 | [`manifests`](./manifests) | Homebrew, apt, and dnf package manifests |
@@ -236,6 +236,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [dust](https://github.com/bootandy/dust) | `~/.config/dust/config.toml` | Repo-managed TOML config. |
 | [eva](https://github.com/vivek-x-jha/eva) | `~/.config/eva` | `EVA_CONFIG_DIR` defaults to `$XDG_CONFIG_HOME/eva` or `~/.config/eva`; legacy config locations are checked as fallbacks. |
 | [GitHub CLI](https://cli.github.com/manual/) | `~/.config/gh/config.yml` | gh stores CLI config under XDG config. |
+| Herdr | `~/.config/herdr/config.toml` | Repo-managed terminal workspace config links from `ai/herdr`. |
 | [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Git supports an XDG global config path. Main Git settings live in `auth/git/config`; SourDiesel styling is included from `auth/git/themes/sourdiesel`. |
 | [Glow](https://github.com/charmbracelet/glow) | `~/.config/glow/glow.yml` | Used with `GLAMOUR_STYLE` for the SourDiesel style. |
 | [Karabiner-Elements](https://karabiner-elements.pqrs.org/docs/manual/) | `~/.config/karabiner/karabiner.json` | Native user config path. |
@@ -294,7 +295,8 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
 - Shared aliases and functions live under [`shells`](./shells).
-- `work <name>` creates tmux project sessions under `~/Developer`; when it creates a new named project, it also copies `AGENTS.md`, `docs/known-issues.md`, and `docs/agent-memory.md` from [`ai/templates`](./ai/templates), then creates `CLAUDE.md -> AGENTS.md` for Claude Code.
+- Herdr is the primary pane/workspace workflow for agent sessions. Repo-managed Herdr config lives under [`ai/herdr`](./ai/herdr) and links to `~/.config/herdr`.
+- The legacy `work <name>` helper still creates tmux project sessions under `~/Developer`; when it creates a new named project, it also copies `AGENTS.md`, `docs/known-issues.md`, and `docs/agent-memory.md` from [`ai/templates`](./ai/templates), then creates `CLAUDE.md -> AGENTS.md` for Claude Code.
 - Bash functions mirror Zsh functions where practical so Bash does not rely on Zsh wrappers.
 
 ### 🔎 Search and Navigation
@@ -314,13 +316,14 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [uv](https://docs.astral.sh/uv/) installs Python tools such as `basedpyright` and `ruff`.
 - VS Code settings live in [`editors/vscode`](./editors/vscode).
 
-### 🖥️ Terminals and tmux
+### 🖥️ Terminals, Herdr, and tmux
 
+- Herdr is the primary terminal workspace/pane workflow. Its repo-managed config lives in [`ai/herdr`](./ai/herdr) and bootstrap links it to `~/.config/herdr`.
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
 - CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`ai/cia`](./ai/cia), defaults to the Pi harness, uses transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
 - Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
 - Pi's repo-managed config lives under [`ai/pi`](./ai/pi): bootstrap links `$PI_CODING_AGENT_DIR/AGENTS.md -> ../../../../.dotfiles/ai/AGENTS.md` for global instructions; `models.json` is symlinked to `$PI_CODING_AGENT_DIR/models.json` and points Pi at Ollama's OpenAI-compatible endpoint for free local models such as `qwen2.5-coder:7b`; `themes/sourdiesel.json` is symlinked into `$PI_CODING_AGENT_DIR/themes/` and keeps Markdown/code blocks on `BLACK_HEX` text with straight `color237` section separators matching unfocused tmux panes.
-- [tmux](https://github.com/tmux/tmux/wiki) config lives in [`terminals/tmux`](./terminals/tmux).
+- [tmux](https://github.com/tmux/tmux/wiki) remains installed and configured for legacy sessions, fallback use, and existing integrations; config lives in [`terminals/tmux`](./terminals/tmux).
 - tmux status uses one local `scripts/sys.sh` segment for CPU, GPU when measurable, RAM, and battery to avoid flicker from staggered plugin shell commands. GPU and battery segments auto-hide when unsupported; icons are configurable with `@sys_cpu_icon`, `@sys_gpu_icon`, and `@sys_ram_icon`.
 - tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).
@@ -453,7 +456,7 @@ Then verify:
 
 - 🐚 Open a new Zsh shell and confirm prompt, aliases, functions, Atuin, fzf, and Starship load.
 - 🐚 Open Bash and confirm ble.sh, aliases, functions, Atuin, fzf, and Starship load.
-- 🧭 Run `work` and confirm tmux session layout, pane titles, and new-project AI memory scaffolding behave correctly.
+- 🧭 Open Herdr and confirm pane/workspace behavior; if changing legacy session helpers, run `work` and confirm tmux session layout, pane titles, and new-project AI memory scaffolding behave correctly.
 - 🧠 Open Neovim and run `:checkhealth`.
 - 📦 Run `vim.pack.update()` and confirm the `blink.cmp` Rust build hook runs when needed.
 - 🎨 Run `bat cache --build` after changing bat themes or syntaxes.
@@ -639,7 +642,7 @@ ls -l "$XDG_CONFIG_HOME/Code/User/settings.json"
 
 ## 🧯 Troubleshooting
 
-See [`docs/known-issues.md`](./docs/known-issues.md) for pinned tool versions and active upstream workarounds, including the tmux 3.7/3.7a WezTerm rendering issue.
+See [`docs/known-issues.md`](./docs/known-issues.md) for active upstream workarounds and local environment issues.
 
 ### Shell Does Not Load
 

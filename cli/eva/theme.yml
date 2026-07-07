@@ -1016,11 +1016,11 @@ filenames:
 
   log:
     filename:
-      foreground: blue
+      foreground: red
     icon:
       glyph: ""
       style:
-        foreground: blue
+        foreground: red
 
   prompt-21:
     filename:

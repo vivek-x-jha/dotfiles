@@ -160,6 +160,7 @@ create_symlinks() {
     "$XDG_STATE_HOME/ipython"
     "$XDG_STATE_HOME/zsh"
     "$XDG_CONFIG_HOME/claude"
+    "$XDG_CONFIG_HOME/herdr"
     "$XDG_CONFIG_HOME/jupyter"
     "$XDG_CONFIG_HOME/npm"
     "$XDG_DATA_HOME/jupyter"
@@ -172,6 +173,7 @@ create_symlinks() {
     ../.dotfiles/cli/bat "$XDG_CONFIG_HOME" bat
     ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
     ../.dotfiles/ai/cia "$XDG_CONFIG_HOME" cia
+    ../../.dotfiles/ai/herdr/config.toml "$XDG_CONFIG_HOME/herdr" config.toml
     ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
     ../.dotfiles/cli/eva "$XDG_CONFIG_HOME" eva
     ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf

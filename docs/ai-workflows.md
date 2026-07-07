@@ -49,19 +49,20 @@ Review the current git diff as a PR. Lead with findings ordered by severity. Foc
 
 ## /update-branches
 
-Goal: validate, commit, fast-forward `dev`, push both branches, and end on `main`.
+Goal: validate, commit, update any existing behind branches, push changed branches, and end on the default branch.
 
 Prompt:
 
 ```text
-Run update branches. First inspect git status and current diff. Validate with ./bootstrap.sh --check and git diff --check plus any targeted checks relevant to the changed files. Stage logical parts, commit with Conventional Commit-style messages, switch to dev, merge --ff-only main, push dev, switch back to main, push main, and confirm main/dev/origin refs match. Do not include manifests/Brewfile unless the package change is intentional.
+Run update branches. First inspect git status, current diff, branch tracking state, and the default branch. Validate with ./bootstrap.sh --check and git diff --check plus any targeted checks relevant to the changed files. Stage logical parts, commit with Conventional Commit-style messages, update existing behind branches without creating missing branches, push changed branches, switch back to the default branch, and confirm local/remote refs match. Do not include manifests/Brewfile unless the package change is intentional.
 ```
 
 Expected final state:
 
 ```sh
 git status --short --branch
-git rev-parse main dev origin/main origin/dev
+git branch -vv
+git remote show origin
 ```
 
 ## /bootstrap-change
@@ -112,7 +113,7 @@ Useful commands:
 
 ```sh
 cargo install --list
-command -v atuin bat btop eva fd fzf gh glow rg starship tldr uv zoxide
+command -v atuin bat btop eva fd fzf gh glow herdr rg starship tldr uv zoxide
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 ```
 
