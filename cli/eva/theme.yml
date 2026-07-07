@@ -48,22 +48,22 @@ size:
 
 users:
   user_you:
-    foreground: 08
+    foreground: brightblack
     is_italic: true
   user_root:
-    foreground: 09
+    foreground: brightred
     is_italic: true
   user_other:
     foreground: yellow
     is_italic: true
   group_yours:
-    foreground: 08
+    foreground: brightblack
     is_italic: true
   group_other:
     foreground: yellow
     is_italic: true
   group_root:
-    foreground: 09
+    foreground: brightred
     is_italic: true
 
 links:
@@ -71,7 +71,7 @@ links:
     foreground: yellow
 
 date:
-  foreground: 13
+  foreground: brightmagenta
 
 broken_symlink:
   foreground: red
@@ -92,19 +92,19 @@ filenames:
 
   .file:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   .gitkeep:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   .luarc.json:
     filename:
@@ -116,11 +116,11 @@ filenames:
 
   .netrwhist:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: "󰋚"
       style:
-        foreground: 08
+        foreground: brightblack
 
   .state.itermexport:
     filename:
@@ -158,11 +158,11 @@ filenames:
 
   auth.key:
     filename:
-      foreground: 09
+      foreground: brightred
     icon:
       glyph: ""
       style:
-        foreground: 09
+        foreground: brightred
 
   auth.key.pub:
     filename:
@@ -174,11 +174,11 @@ filenames:
 
   id_ed25519:
     filename:
-      foreground: 09
+      foreground: brightred
     icon:
       glyph: ""
       style:
-        foreground: 09
+        foreground: brightred
 
   id_ed25519.pub:
     filename:
@@ -210,11 +210,11 @@ filenames:
 
   signing.key:
     filename:
-      foreground: 09
+      foreground: brightred
     icon:
       glyph: ""
       style:
-        foreground: 09
+        foreground: brightred
 
   signing.key.pub:
     filename:
@@ -248,19 +248,19 @@ filenames:
 
   "Icon\r":
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   "icon\r":
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   index.html:
     filename:
@@ -288,125 +288,125 @@ filenames:
 
   package.lock:
     filename:
-      foreground: 13
+      foreground: brightmagenta
     icon:
       glyph: ""
       style:
-        foreground: 13
+        foreground: brightmagenta
 
   revision-hash:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   Session.vim:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
 
   # Shell functions and completions
   _atuin:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _bat:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _bob:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _cargo:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _cia:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _dust:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _eva:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _fd:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _pi:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _rg:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _starship:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _tldr:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _update-notifier-last-checked:
     filename:
@@ -418,27 +418,27 @@ filenames:
 
   _update-tools:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _uv:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   _work:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   aliases:
     filename:
@@ -450,43 +450,43 @@ filenames:
 
   atuin-zsh-tty-capture.zsh:
     filename:
-      foreground: 09
+      foreground: brightred
     icon:
       glyph: ""
       style:
-        foreground: 09
+        foreground: brightred
 
   atuin.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   bat.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   bob.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   cargo.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   cheatsheet:
     icon:
@@ -494,11 +494,11 @@ filenames:
 
   cia.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   config.sh:
     icon:
@@ -506,11 +506,11 @@ filenames:
 
   dust.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   edit-all:
     icon:
@@ -526,19 +526,19 @@ filenames:
 
   eva.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   fd.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   fix-tmux-remotes:
     icon:
@@ -586,11 +586,11 @@ filenames:
 
   pi.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   profile:
     filename:
@@ -602,19 +602,19 @@ filenames:
 
   rg.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   starship.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   t:
     icon:
@@ -626,11 +626,11 @@ filenames:
 
   tldr.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   toggle-tmux-client:
     icon:
@@ -646,19 +646,19 @@ filenames:
 
   update-tools.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   uv.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
   uvi:
     icon:
@@ -670,11 +670,11 @@ filenames:
 
   work.bash:
     filename:
-      foreground: 14
+      foreground: brightcyan
     icon:
       glyph: "󰌶"
       style:
-        foreground: 14
+        foreground: brightcyan
 
 
   # Editor files
@@ -688,243 +688,243 @@ filenames:
 
   main.shada:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.a:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.b:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.c:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.d:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.e:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.f:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.g:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.h:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.i:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.j:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.k:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.l:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.m:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.n:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.o:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.p:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.q:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.r:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.s:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.t:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.u:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.v:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.w:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.x:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.y:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   main.shada.tmp.z:
     filename:
-      foreground: 08
+      foreground: brightblack
     icon:
       glyph: ""
       style:
-        foreground: 08
+        foreground: brightblack
 
   sh.vim:
     filename:
-      foreground: 12
+      foreground: brightblue
     icon:
       glyph: "󰘦"
       style:
-        foreground: 12
+        foreground: brightblue
 
   typescriptreact.vim:
     filename:
-      foreground: 12
+      foreground: brightblue
     icon:
       glyph: "󰘦"
       style:
-        foreground: 12
+        foreground: brightblue
 
   zsh.vim:
     filename:
-      foreground: 12
+      foreground: brightblue
     icon:
       glyph: "󰘦"
       style:
-        foreground: 12
+        foreground: brightblue
 
 
   # Application configuration
