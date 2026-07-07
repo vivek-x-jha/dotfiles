@@ -525,15 +525,19 @@ export default function (pi: ExtensionAPI) {
     ];
   }
 
+  function clampRenderedLines(lines: string[], width: number): string[] {
+    return lines.map((line) => visibleWidth(line) > width ? truncateToWidth(line, width, "…") : line);
+  }
+
   function replaceToolCallLine(lines: string[], toolName: string | undefined, args: unknown, width: number): string[] {
-    if (!toolName || lines.length === 0) return lines;
+    if (!toolName || lines.length === 0) return clampRenderedLines(lines, width);
     const firstContentIndex = lines.findIndex((line) => !isBlankRenderedLine(line));
-    if (firstContentIndex < 0) return lines;
-    return [
+    if (firstContentIndex < 0) return clampRenderedLines(lines, width);
+    return clampRenderedLines([
       ...lines.slice(0, firstContentIndex),
       ...toolCallLines(toolName, args, width),
       ...lines.slice(firstContentIndex + 1),
-    ];
+    ], width);
   }
 
   function renderToolExecutionBase(self: ToolExecutionInternals, width: number): string[] {
@@ -617,7 +621,7 @@ export default function (pi: ExtensionAPI) {
         const self = this as ToolExecutionInternals;
         const lines = stripExistingLeadingSeparator(trimOuterBlankLines(renderToolExecutionBase(self, width)));
         const withToolLine = replaceToolCallLine(lines, self.toolName, self.args, width);
-        return withToolLine.length > 0 ? [sectionSeparator(width), ...withToolLine] : withToolLine;
+        return withToolLine.length > 0 ? [sectionSeparator(width), ...clampRenderedLines(withToolLine, width)] : withToolLine;
       };
       toolPrototype.__sourdieselSectionSeparatorPatchVersion = patchVersion;
     }
