@@ -16,6 +16,7 @@ Options:
   -n, --nvim           update Neovim plugins
       --pi             update Pi coding agent
   -r, --rust           update Rust and cargo-installed tools
+      --completions    regenerate managed shell completions
   -b, --brew           run Homebrew maintenance
   -i, --icons          refresh macOS icons
   -e, --tex            update TeX Live
@@ -35,6 +36,7 @@ select_all_steps() {
   update_nvim=1
   update_pi=1
   update_rust=1
+  update_completions=1
   update_brew=1
   update_icons=1
   update_tex="$include_tex"
@@ -52,6 +54,7 @@ local update_fzf=0
 local update_nvim=0
 local update_pi=0
 local update_rust=0
+local update_completions=0
 local update_brew=0
 local update_icons=0
 local update_tex=0
@@ -66,7 +69,8 @@ while (( $# )); do
   -f|--fzf) update_fzf=1; selected_steps=1 ;;
   -n|--nvim) update_nvim=1; selected_steps=1 ;;
   --pi) update_pi=1; selected_steps=1 ;;
-  -r|--rust) update_rust=1; selected_steps=1 ;;
+  -r|--rust) update_rust=1; update_completions=1; selected_steps=1 ;;
+  --completions) update_completions=1; selected_steps=1 ;;
   -b|--brew) update_brew=1; selected_steps=1 ;;
   -i|--icons) update_icons=1; selected_steps=1 ;;
   -e|--tex) update_tex=1; selected_steps=1 ;;
@@ -109,6 +113,7 @@ local TOTAL_STEPS=$((
   update_nvim +
   update_pi +
   update_rust +
+  update_completions +
   update_brew +
   update_icons +
   update_tex
@@ -147,6 +152,22 @@ notify() {
   *) STEP=$((STEP + 1)) && SUBSTEP=0 ;;
   esac
   printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
+}
+
+refresh_herdr_completions() {
+  local bash_completion="$HOME/.dotfiles/shells/bash/comps/herdr.bash"
+  local zsh_completion="$HOME/.dotfiles/shells/zsh/comps/_herdr"
+  local zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+
+  if ! command -v herdr &>/dev/null; then
+    logg -w 'HERDR NOT FOUND ON $PATH; SKIPPING HERDR COMPLETIONS'
+    return 0
+  fi
+
+  mkdir -p "${bash_completion:h}" "${zsh_completion:h}" || return 1
+  herdr completion bash >"$bash_completion" || return 1
+  herdr completion zsh >"$zsh_completion" || return 1
+  rm -f "$zsh_cache_dir"/compdump*(N) "$HOME"/.zcompdump*(N) 2>/dev/null || true
 }
 
 ((delete_ds_store)) && {
@@ -200,6 +221,11 @@ notify() {
   logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
   notify -s 'UPDATE RUST TOOLS'
   logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED'
+}
+
+((update_completions)) && {
+  notify 'REGENERATE SHELL COMPLETIONS'
+  refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
 }
 
 ((update_brew)) && {
