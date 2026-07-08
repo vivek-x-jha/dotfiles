@@ -66,7 +66,6 @@ run_bootstrap_target() {
   shell) change_shell_default ;;
   hammerspoon | desktop) configure_hammerspoon ;;
   rust) install_rust_tooling ;;
-  cia | agents) install_cia ;;
   ide | editor) setup_ide ;;
   *)
     logg -e "Unknown bootstrap target: $1"

@@ -44,15 +44,6 @@ install_rust_tooling() {
   require zsh-patina && run 'zsh-patina restart'
 }
 
-install_cia() {
-  require cargo || {
-    logg -e 'cargo is required to install CIA. Run the rust bootstrap target first.'
-    return 1
-  }
-
-  run 'cargo install --locked --git https://github.com/vivek-x-jha/cia'
-}
-
 setup_ide() {
   # Install and configure Neovim version manager
   require bob || return

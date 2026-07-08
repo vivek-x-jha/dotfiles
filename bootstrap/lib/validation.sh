@@ -101,7 +101,6 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/shells/env"
   check_path "$HOME/.dotfiles/shells/starship.toml"
   check_path "$HOME/.dotfiles/cli/fzf/config"
-  check_path "$HOME/.dotfiles/ai/cia/config.toml"
   check_path "$HOME/.dotfiles/ai/herdr/config.toml"
   check_path "$HOME/.dotfiles/ai/pi/README.md"
   check_path "$HOME/.dotfiles/ai/pi/models.json"
@@ -286,7 +285,6 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/atuin" ../.dotfiles/cli/atuin
   doctor_symlink "$XDG_CONFIG_HOME/bat" ../.dotfiles/cli/bat
   doctor_symlink "$XDG_CONFIG_HOME/btop" ../.dotfiles/cli/btop
-  doctor_symlink "$XDG_CONFIG_HOME/cia" ../.dotfiles/ai/cia
   doctor_symlink "$XDG_CONFIG_HOME/herdr/config.toml" ../../.dotfiles/ai/herdr/config.toml
   doctor_symlink "$XDG_CONFIG_HOME/dust" ../.dotfiles/cli/dust
   doctor_symlink "$XDG_CONFIG_HOME/eva" ../.dotfiles/cli/eva
@@ -351,7 +349,6 @@ doctor_bootstrap() {
   doctor_cmd ollama optional
   doctor_cmd uv optional
   doctor_cmd cargo optional
-  doctor_cmd cia optional
 
   doctor_file "$XDG_CONFIG_HOME/atuin/config.toml"
   doctor_symlink "$XDG_CONFIG_HOME/zsh-patina" ../.dotfiles/cli/zsh-patina

@@ -11,7 +11,7 @@ Personal macOS and Linux workstation configuration centered on a fast Herdr term
 - 🐚 Zsh-first interactive shell with Bash parity where practical
 - 🔎 fzf, ripgrep, fd, bat, eva, zoxide, and Atuin wired into daily navigation
 - 🧠 Neovim managed with native `vim.pack`, `bob`, LSPs, formatters, and custom SourDiesel theming
-- 🖥️ Herdr, WezTerm, Hammerspoon, macOS Terminal profiles, and retained tmux config for terminal workflows
+- 🖥️ Herdr, WezTerm, Hammerspoon, and macOS Terminal profiles for terminal workflows
 - 🔐 Optional 1Password CLI, shell plugin, Git signing, SSH agent, and Atuin sync setup
 - 🧪 Dry-run support before setup changes touch the machine
 
@@ -192,8 +192,7 @@ Validate the installed workstation state any time after setup:
 16. 🐚 Optionally set login shell
 17. 🔨 Point Hammerspoon at XDG config
 18. 🦀 Install Rust toolchain and cargo tools
-19. 🕵️ Optionally install CIA from upstream GitHub via Cargo
-20. 🧠 Install editor tooling
+19. 🧠 Install editor tooling
 
 ## 📁 Repository Layout
 
@@ -202,11 +201,11 @@ Validate the installed workstation state any time after setup:
 | [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
-| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, CIA, and Herdr |
+| [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, and Herdr |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
 | [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eva, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
-| [`terminals`](./terminals) | WezTerm, Terminal.app, iTerm-related assets, and retained tmux config |
+| [`terminals`](./terminals) | WezTerm, Terminal.app, iTerm-related assets, and terminal launch scripts |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
 | [`apps`](./apps) | Hammerspoon, Karabiner, and web extension config exports |
 | [`manifests`](./manifests) | Homebrew, apt, and dnf package manifests |
@@ -243,7 +242,6 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [Neovim](https://neovim.io/doc/user/starting/#standard-path) | `~/.config/nvim` | Neovim uses `stdpath()` and XDG base dirs. |
 | [1Password SSH agent](https://developer.1password.com/docs/ssh/agent/config) | `~/.config/1Password/ssh/agent.toml` | 1Password documents this config and supports `XDG_CONFIG_HOME`. |
 | [Starship](https://starship.rs/config/) | `~/.config/starship.toml` | Default config path; can be overridden with `STARSHIP_CONFIG`. |
-| [tmux](https://man7.org/linux/man-pages/man1/tmux.1.html) | `~/.config/tmux/tmux.conf` | Modern tmux can load XDG config. |
 | [WezTerm](https://wezterm.org/config/files.html) | `~/.config/wezterm/wezterm.lua` | WezTerm searches `$XDG_CONFIG_HOME/wezterm/wezterm.lua`. |
 
 ### 🔁 Explicitly Redirected Configs
@@ -268,7 +266,6 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [rustup](https://rust-lang.github.io/rustup/installation/index.html) | `RUSTUP_HOME="$XDG_DATA_HOME/rustup"` | Rust toolchains and rustup settings |
 | [Cargo](https://doc.rust-lang.org/cargo/) | `CARGO_HOME="$XDG_DATA_HOME/cargo"` | Cargo bin, registry, and cache-like data |
 | [zoxide](https://github.com/ajeetdsouza/zoxide#environment-variables) | `_ZO_DATA_DIR="$XDG_DATA_HOME/zoxide"` | Jump database |
-| tmux plugins | `TMUX_PLUGIN_MANAGER_PATH="$XDG_DATA_HOME/tmux/plugins"` | TPM plugin installs |
 | Codex | `CODEX_HOME="$XDG_STATE_HOME/codex"` | Codex CLI state and runtime-owned `config.toml`; bootstrap exports this for shells, links `$CODEX_HOME/AGENTS.md -> ../../../.dotfiles/ai/AGENTS.md` for global instructions, and only merges known SourDiesel UI preference keys from `ai/codex`. |
 | Pi coding agent | `PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"` | Pi auth, sessions, settings, and runtime state stay in XDG state; bootstrap links `AGENTS.md -> ../../../../.dotfiles/ai/AGENTS.md`, plus repo-managed `ai/pi/models.json` and `ai/pi/themes/sourdiesel.json`, into that agent dir for global instructions, local Ollama models, and the SourDiesel TUI theme. |
 | [Ollama](https://github.com/ollama/ollama) | `OLLAMA_HOST="127.0.0.1:11434"`, `OLLAMA_FLASH_ATTENTION=1`, `OLLAMA_KV_CACHE_TYPE=q8_0` | Local model runner endpoint and Apple Silicon-friendly runtime defaults used by Pi's OpenAI-compatible `ollama` provider. |
@@ -296,12 +293,12 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
 - Shared aliases and functions live under [`shells`](./shells).
 - Herdr is the primary pane/workspace workflow for agent sessions. Repo-managed Herdr config lives under [`ai/herdr`](./ai/herdr) and links to `~/.config/herdr`.
-- The legacy `work <name>` helper still creates tmux project sessions under `~/Developer`; when it creates a new named project, it also copies `AGENTS.md`, `docs/known-issues.md`, and `docs/agent-memory.md` from [`ai/templates`](./ai/templates), then creates `CLAUDE.md -> AGENTS.md` for Claude Code.
+- [`ai/templates`](./ai/templates) stores starter agent-memory files that can be copied into new repos or scratch workspaces when needed.
 - Bash functions mirror Zsh functions where practical so Bash does not rely on Zsh wrappers.
 
 ### 🔎 Search and Navigation
 
-- [fzf](https://junegunn.github.io/fzf/) powers fuzzy file, directory, history, and tmux flows.
+- [fzf](https://junegunn.github.io/fzf/) powers fuzzy file, directory, and history flows.
 - [ripgrep](https://github.com/BurntSushi/ripgrep) handles fast text search through `RIPGREP_CONFIG_PATH`.
 - [fd](https://github.com/sharkdp/fd) is used when available for file discovery.
 - [bat](https://github.com/sharkdp/bat) provides syntax-highlighted previews and manpage rendering.
@@ -316,16 +313,12 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [uv](https://docs.astral.sh/uv/) installs Python tools such as `basedpyright` and `ruff`.
 - VS Code settings live in [`editors/vscode`](./editors/vscode).
 
-### 🖥️ Terminals, Herdr, and tmux
+### 🖥️ Terminals and Herdr
 
 - Herdr is the primary terminal workspace/pane workflow. Its repo-managed config lives in [`ai/herdr`](./ai/herdr) and bootstrap links it to `~/.config/herdr`.
 - [WezTerm](https://wezterm.org/) config lives in [`terminals/wezterm`](./terminals/wezterm).
-- CIA is a standalone Codex/Pi chat/project TUI from [`vivek-x-jha/cia`](https://github.com/vivek-x-jha/cia). Its SourDiesel config lives in [`ai/cia`](./ai/cia), defaults to the Pi harness, uses transparent popup backgrounds, v1.4 status-pane colors, and Codex/Pi harness icons; tmux prefix + `g` opens it in a 75% popup.
-- Install it explicitly with `~/.dotfiles/bootstrap.sh --only cia`; the target is disabled by default and runs `cargo install --locked --git https://github.com/vivek-x-jha/cia`.
 - Pi's repo-managed config lives under [`ai/pi`](./ai/pi): bootstrap links `$PI_CODING_AGENT_DIR/AGENTS.md -> ../../../../.dotfiles/ai/AGENTS.md` for global instructions; `models.json` is symlinked to `$PI_CODING_AGENT_DIR/models.json` and points Pi at Ollama's OpenAI-compatible endpoint for free local models such as `qwen2.5-coder:7b`; `themes/sourdiesel.json` is symlinked into `$PI_CODING_AGENT_DIR/themes/` and keeps Markdown/code blocks on `BLACK_HEX` text with straight `color237` section separators matching unfocused tmux panes.
-- [tmux](https://github.com/tmux/tmux/wiki) remains installed and configured for legacy sessions, fallback use, and existing integrations; config lives in [`terminals/tmux`](./terminals/tmux).
-- tmux status uses one local `scripts/sys.sh` segment for CPU, GPU when measurable, RAM, and battery to avoid flicker from staggered plugin shell commands. GPU and battery segments auto-hide when unsupported; icons are configurable with `@sys_cpu_icon`, `@sys_gpu_icon`, and `@sys_ram_icon`.
-- tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm).
+- The iTerm floating profile should launch a dedicated Herdr session with `/bin/bash -lc 'exec "$HOME/.dotfiles/terminals/iterm2/scripts/float-herdr.sh"'` so it does not perturb the main WezTerm client. The helper at [`terminals/iterm2/scripts/float-herdr.sh`](./terminals/iterm2/scripts/float-herdr.sh) clears inherited `HERDR_*` variables and starts `/Users/mubuntu/.local/bin/herdr --session float`.
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).
 - Hammerspoon automates floating terminal behavior, window management, and app hotkeys.
 
@@ -456,7 +449,7 @@ Then verify:
 
 - 🐚 Open a new Zsh shell and confirm prompt, aliases, functions, Atuin, fzf, and Starship load.
 - 🐚 Open Bash and confirm ble.sh, aliases, functions, Atuin, fzf, and Starship load.
-- 🧭 Open Herdr and confirm pane/workspace behavior; if changing legacy session helpers, run `work` and confirm tmux session layout, pane titles, and new-project AI memory scaffolding behave correctly.
+- 🧭 Open Herdr and confirm pane/workspace behavior, including the dedicated `float` session when changing the floating-terminal launcher.
 - 🧠 Open Neovim and run `:checkhealth`.
 - 📦 Run `vim.pack.update()` and confirm the `blink.cmp` Rust build hook runs when needed.
 - 🎨 Run `bat cache --build` after changing bat themes or syntaxes.
@@ -489,7 +482,7 @@ Agent memory is layered so global policy stays portable and project facts stay c
 - Project `AGENTS.md`: repo-specific commands, architecture, generated/vendor hazards, validation, and project-specific rules.
 - Project `docs/known-issues.md`: recurring bugs, active workarounds, reproduction/retest steps, and exit criteria.
 - Project `docs/agent-memory.md`: durable facts likely to matter in future agent sessions when they do not belong in normal docs.
-- [`ai/templates`](./ai/templates): starter templates used by `work` when it creates a new named project under `~/Developer`; `work` also creates project-level `CLAUDE.md -> AGENTS.md` so Claude Code shares the same instructions.
+- [`ai/templates`](./ai/templates): starter templates for project-level agent memory files when bootstrapping a new repo or scratch workspace.
 
 Agents should update existing memory before adding duplicates, include verification dates for drift-prone facts, and never store secrets, credentials, private tokens, or sensitive raw logs.
 
@@ -575,20 +568,6 @@ Use `cargo install --list` to inspect cargo-managed tools. Use `cargo uninstall 
 
 ```sh
 bat cache --build
-```
-
-### Reload tmux Config
-
-Inside tmux:
-
-```tmux
-prefix r
-```
-
-Or:
-
-```sh
-tmux source-file "$XDG_CONFIG_HOME/tmux/tmux.conf"
 ```
 
 ### Check Atuin Paths

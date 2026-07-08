@@ -10,7 +10,7 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 - Docs: `README.md`, `docs/ai-workflows.md`
 - Global agent policy: `ai/AGENTS.md` (Codex/Pi link `AGENTS.md` to it directly; Claude Code links `CLAUDE.md` to it directly from configured harness paths)
 - Agent memory/templates: `ai/templates/`, `docs/known-issues.md`, `docs/agent-memory.md`
-- AI harness sources: `ai/codex/`, `ai/claude-code/`, `ai/pi/`, `ai/cia/`
+- AI harness sources: `ai/codex/`, `ai/claude-code/`, `ai/pi/`, `ai/herdr/`
 - Codex source: `ai/codex/config/preferences.toml`, `ai/codex/scripts/apply_preferences.py`
 - Theme source: `themes/sourdiesel/palette.toml`, `themes/sourdiesel/tool.py`
 - Neovim source: `editors/nvim/`
@@ -25,7 +25,6 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 - Keep Linux/macOS branches explicit and guarded.
 - Do not edit Codex runtime state under `$CODEX_HOME` unless the task is specifically runtime debugging.
 - Keep AI memory layered: global behavior in `ai/AGENTS.md`; project instructions in `AGENTS.md`; recurring issues in `docs/known-issues.md`; durable facts in `docs/agent-memory.md`.
-- When changing `work`, keep Bash and Zsh implementations in parity and preserve tmux session behavior.
 
 ## Checks
 

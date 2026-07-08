@@ -71,7 +71,6 @@ BOOTSTRAP_TASKS=(
   shell
   hammerspoon
   rust
-  cia
   ide
 )
 ```

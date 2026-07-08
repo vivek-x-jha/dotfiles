@@ -172,7 +172,6 @@ create_symlinks() {
     ../.dotfiles/cli/atuin "$XDG_CONFIG_HOME" atuin
     ../.dotfiles/cli/bat "$XDG_CONFIG_HOME" bat
     ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
-    ../.dotfiles/ai/cia "$XDG_CONFIG_HOME" cia
     ../../.dotfiles/ai/herdr/config.toml "$XDG_CONFIG_HOME/herdr" config.toml
     ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
     ../.dotfiles/cli/eva "$XDG_CONFIG_HOME" eva

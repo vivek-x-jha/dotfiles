@@ -40,7 +40,7 @@ const TOOL_SPECS: Record<
   other: { icon: "󰘦", color: "MAGENTA_HEX", fallback: "#eccef0" },
 };
 
-const CIA_FALLBACK_COLORS = {
+const HARNESS_FALLBACK_COLORS = {
   pi: "#eccef0",
   claude: "#f3b175",
   codex: "#80d7fe",
@@ -48,23 +48,23 @@ const CIA_FALLBACK_COLORS = {
   opencode: "#f4f3f2",
 } as const;
 
-const CIA_HARNESSES = {
-  pi: { icon: "π", env: "MAGENTA_HEX", fallback: CIA_FALLBACK_COLORS.pi },
+const HARNESSES = {
+  pi: { icon: "π", env: "MAGENTA_HEX", fallback: HARNESS_FALLBACK_COLORS.pi },
   claude: {
     icon: "",
     env: "BRIGHTYELLOW_HEX",
-    fallback: CIA_FALLBACK_COLORS.claude,
+    fallback: HARNESS_FALLBACK_COLORS.claude,
   },
   codex: {
     icon: "󱙺",
     env: "BRIGHTBLUE_HEX",
-    fallback: CIA_FALLBACK_COLORS.codex,
+    fallback: HARNESS_FALLBACK_COLORS.codex,
   },
-  cursor: { icon: "󰋙", env: "BLACK_HEX", fallback: CIA_FALLBACK_COLORS.cursor },
+  cursor: { icon: "󰋙", env: "BLACK_HEX", fallback: HARNESS_FALLBACK_COLORS.cursor },
   opencode: {
     icon: "",
     env: "WHITE_HEX",
-    fallback: CIA_FALLBACK_COLORS.opencode,
+    fallback: HARNESS_FALLBACK_COLORS.opencode,
   },
 } as const;
 
@@ -113,7 +113,7 @@ const THINKING_STYLES = {
   },
 } as const;
 
-type CiaHarness = keyof typeof CIA_HARNESSES;
+type HarnessName = keyof typeof HARNESSES;
 
 type ThinkingLevel = keyof typeof THINKING_STYLES;
 
@@ -224,8 +224,8 @@ export default function (pi: ExtensionAPI) {
     return prefix ? `${prefix}${text}\x1b[39m` : text;
   }
 
-  function ciaColor(harness: CiaHarness, text: string): string {
-    const spec = CIA_HARNESSES[harness];
+  function harnessColor(harness: HarnessName, text: string): string {
+    const spec = HARNESSES[harness];
     return fgHex(envHex(spec.env, spec.fallback), text);
   }
 
@@ -679,7 +679,7 @@ export default function (pi: ExtensionAPI) {
   function classifyProviderHarness(
     provider: string | undefined,
     modelId: string | undefined,
-  ): CiaHarness | undefined {
+  ): HarnessName | undefined {
     const value = `${provider ?? ""} ${modelId ?? ""}`.toLowerCase();
     if (!value.trim()) return undefined;
     if (value.includes("opencode")) return "opencode";
@@ -1137,12 +1137,12 @@ export default function (pi: ExtensionAPI) {
   function modelIconStyle(
     theme: Theme,
     modelId: string,
-    harness: CiaHarness | undefined,
+    harness: HarnessName | undefined,
   ): (value: string) => string {
     const id = modelId.toLowerCase();
     if (id.includes("llama"))
       return (value: string) => fgHex(envHex("WHITE_HEX", "#f4f3f2"), value);
-    if (harness) return (value: string) => ciaColor(harness, value);
+    if (harness) return (value: string) => harnessColor(harness, value);
     return (value: string) => theme.fg("accent", value);
   }
 

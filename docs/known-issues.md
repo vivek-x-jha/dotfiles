@@ -34,30 +34,26 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
-## KI-2026-07-02-iterm-float-work-restore-race
+## KI-2026-07-02-iterm-float-shared-session-redraw
 
-**Status:** Fixed pending verification after a reboot/full restore cycle.
-**Last verified:** 2026-07-02 (`laptop-dev-hotkey` no longer uses Initial Text; live and source iTerm profiles run `terminals/tmux/scripts/work-float`).
-**Area:** iTerm2 hotkey window / tmux / `work -r`
+**Status:** Mitigated in source; pending live verification in the iTerm floating profile.
+**Last verified:** 2026-07-07 (source only: float launcher now uses `herdr --session float`).
+**Area:** iTerm2 floating profile / Herdr multi-client redraw
 
-**Observed:** The iTerm floating hotkey window could appear attached to the restored `pi` tmux session instead of `float`, and `work float` could be delivered to an active chat pane, creating odd duplicate/inactive `cia` chats such as `pi:c`.
+**Observed:** Launching the floating iTerm2 profile while Herdr was already open in WezTerm could shift or redraw the WezTerm TUI.
 
-**Likely cause:** The iTerm hotkey profile mixed a real command with `Initial Text: work float`. Initial Text is keystroke injection, so restored/reused iTerm state could type into whatever tmux pane was active. `work float` could also race `work -r`/tmux-resurrect while tmux was restoring active clients.
+**Likely cause:** Both terminals were attaching to the same Herdr session, so the second client could perturb shared layout/geometry.
 
-**Workaround/fix:** The `laptop-dev-hotkey` profile now clears Initial Text and runs a real command:
-
-```sh
-/bin/bash -c 'exec "$HOME/.dotfiles/terminals/tmux/scripts/work-float"'
-```
-
-`work-float` waits on `~/.local/state/tmux/work-restore.lock` before running `work float`; `work -r` creates/removes that lock around restore.
-
-**Reproduce/retest:** Save tmux, restart, open WezTerm, run `work -r`, then summon the iTerm hotkey window. Check clients:
+**Workaround/fix:** Point the iTerm profile at the repo launcher:
 
 ```sh
-tmux list-clients -F '#{client_tty} #{client_session} #{client_last_session}'
+/bin/bash -lc 'exec "$HOME/.dotfiles/terminals/iterm2/scripts/float-herdr.sh"'
 ```
 
-**Exit criteria:** After a reboot/full restore cycle, WezTerm can remain on `pi`, the iTerm hotkey client attaches to `float`, and no `work float` text or duplicate `cia` chat appears in active chat input. If stable, archive this entry as resolved.
+`terminals/iterm2/scripts/float-herdr.sh` clears inherited `HERDR_*` variables and starts `/Users/mubuntu/.local/bin/herdr --session float`, isolating the floating terminal from the main Herdr session used elsewhere.
 
-**References:** Local verification only.
+**Reproduce/retest:** Open Herdr in WezTerm, then summon the iTerm floating profile. Confirm the float terminal lands in session `float` and WezTerm does not visibly reflow.
+
+**Exit criteria:** The floating iTerm profile consistently opens the separate Herdr `float` session without disturbing the WezTerm client.
+
+**References:** Local source update only.

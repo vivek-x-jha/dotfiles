@@ -242,7 +242,6 @@ bootstrap_target_var() {
   shell) printf 'BOOTSTRAP_CHANGE_SHELL' ;;
   hammerspoon | desktop) printf 'BOOTSTRAP_CONFIGURE_HAMMERSPOON' ;;
   rust) printf 'BOOTSTRAP_INSTALL_RUST_TOOLING' ;;
-  cia | agents) printf 'BOOTSTRAP_INSTALL_CIA' ;;
   ide | editor) printf 'BOOTSTRAP_SETUP_IDE' ;;
   *) return 1 ;;
   esac
@@ -268,7 +267,6 @@ sudo
 shell
 hammerspoon
 rust
-cia
 ide
 TARGETS
 }
@@ -330,5 +328,5 @@ show_bootstrap_plan() {
   logg -i "Only targets: ${BOOTSTRAP_ONLY_TARGETS:-<none>}"
   logg -i "Skipped targets: ${BOOTSTRAP_SKIP_TARGETS:-<none>}"
   logg -i "1Password integration: ${BOOTSTRAP_ENABLE_1PASSWORD:-0}${onepassword_note}"
-  logg -i "Optional extras: repos=${BOOTSTRAP_CLONE_DEVELOPER_REPOS:-0}, templates=${BOOTSTRAP_INSTALL_TEMPLATES:-0}, atuin=${BOOTSTRAP_SETUP_ATUIN_SYNC:-0}, cia=${BOOTSTRAP_INSTALL_CIA:-0}"
+  logg -i "Optional extras: repos=${BOOTSTRAP_CLONE_DEVELOPER_REPOS:-0}, templates=${BOOTSTRAP_INSTALL_TEMPLATES:-0}, atuin=${BOOTSTRAP_SETUP_ATUIN_SYNC:-0}"
 }

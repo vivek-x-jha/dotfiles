@@ -344,14 +344,6 @@ filenames:
       style:
         foreground: brightcyan
 
-  _cia:
-    filename:
-      foreground: brightcyan
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: brightcyan
-
   _dust:
     filename:
       foreground: brightcyan
@@ -491,14 +483,6 @@ filenames:
   cheatsheet:
     icon:
       glyph: "󰊕"
-
-  cia.bash:
-    filename:
-      foreground: brightcyan
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: brightcyan
 
   config.sh:
     icon:
@@ -663,18 +647,6 @@ filenames:
   uvi:
     icon:
       glyph: "󰊕"
-
-  work:
-    icon:
-      glyph: "󰊕"
-
-  work.bash:
-    filename:
-      foreground: brightcyan
-    icon:
-      glyph: "󰌶"
-      style:
-        foreground: brightcyan
 
 
   # Editor files

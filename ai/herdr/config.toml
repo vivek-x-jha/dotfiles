@@ -48,6 +48,7 @@ next_tab = "prefix+ctrl+n"
 previous_tab = "prefix+ctrl+p"
 last_pane = "prefix+ctrl+b"
 toggle_sidebar = "prefix+h"
+detach = "prefix+ctrl+d"
 
 [experimental]
 switch_ascii_input_source_in_prefix = true

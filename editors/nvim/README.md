@@ -133,12 +133,12 @@ Blank startup is owned by the local dashboard in `lua/ui/dashboard.lua`.
 dashboard can fill the initial window by itself. Dashboard buffers use window-
 local chrome suppression for line numbers, relative numbers, signs, statuscolumn,
 foldcolumn, wrapping, list chars, cursorline, and colorcolumn; the guard is
-reapplied on dashboard filetype/window events to keep tmux/work-session startup
+reapplied on dashboard filetype/window events to keep terminal-workspace startup
 clean.
 
 Dashboard content is rendered with virtual text and is centered against the
 current window dimensions as closely as practical, including narrower split panes
-created by the `work` tmux helper.
+created during terminal workspace setup.
 
 ## Statusline
 

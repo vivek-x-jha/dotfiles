@@ -56,7 +56,6 @@ local devicons_config = {
     ['update-tools'] = { icon = icons.command, name = 'update-tools', color = thm.white },
     ['update-icons'] = { icon = icons.command, name = 'update-icons', color = thm.white },
     ['uvi'] = { icon = icons.command, name = 'uvi', color = thm.white },
-    ['work'] = { icon = icons.command, name = 'work', color = thm.white },
 
     -- Shell completions
     ['_cmp-compat.bash'] = { icon = icons.shell, name = '_cmp-compat.bash', color = thm.white },
@@ -64,7 +63,6 @@ local devicons_config = {
     ['bat.bash'] = { icon = icons.lightbulb, name = 'bat.bash', color = thm.brightcyan },
     ['bob.bash'] = { icon = icons.lightbulb, name = 'bob.bash', color = thm.brightcyan },
     ['cargo.bash'] = { icon = icons.lightbulb, name = 'cargo.bash', color = thm.brightcyan },
-    ['cia.bash'] = { icon = icons.lightbulb, name = 'cia.bash', color = thm.brightcyan },
     ['dust.bash'] = { icon = icons.lightbulb, name = 'dust.bash', color = thm.brightcyan },
     ['eva.bash'] = { icon = icons.lightbulb, name = 'eva.bash', color = thm.brightcyan },
     ['fd.bash'] = { icon = icons.lightbulb, name = 'fd.bash', color = thm.brightcyan },
@@ -74,12 +72,10 @@ local devicons_config = {
     ['tldr.bash'] = { icon = icons.lightbulb, name = 'tldr.bash', color = thm.brightcyan },
     ['update-tools.bash'] = { icon = icons.lightbulb, name = 'update-tools.bash', color = thm.brightcyan },
     ['uv.bash'] = { icon = icons.lightbulb, name = 'uv.bash', color = thm.brightcyan },
-    ['work.bash'] = { icon = icons.lightbulb, name = 'work.bash', color = thm.brightcyan },
     ['_atuin'] = { icon = icons.lightbulb, name = '_atuin', color = thm.brightcyan },
     ['_bat'] = { icon = icons.lightbulb, name = '_bat', color = thm.brightcyan },
     ['_bob'] = { icon = icons.lightbulb, name = '_bob', color = thm.brightcyan },
     ['_cargo'] = { icon = icons.lightbulb, name = '_cargo', color = thm.brightcyan },
-    ['_cia'] = { icon = icons.lightbulb, name = '_cia', color = thm.brightcyan },
     ['_dust'] = { icon = icons.lightbulb, name = '_dust', color = thm.brightcyan },
     ['_eva'] = { icon = icons.lightbulb, name = '_eva', color = thm.brightcyan },
     ['_fd'] = { icon = icons.lightbulb, name = '_fd', color = thm.brightcyan },

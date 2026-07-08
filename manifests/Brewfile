@@ -62,8 +62,6 @@ brew "switchaudio-osx"
 brew "wget"
 # UNIX shell (command interpreter)
 brew "zsh"
-# Terminal multiplexer
-brew "tmux"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
@@ -141,7 +139,6 @@ cargo "atuin"
 cargo "bat"
 cargo "bob-nvim"
 cargo "cargo-update"
-cargo "cia"
 cargo "du-dust"
 cargo "eva"
 cargo "fd-find"
