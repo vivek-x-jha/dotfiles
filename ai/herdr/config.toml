@@ -1,3 +1,4 @@
+onboarding = false
 [theme]
 name = "terminal"
 auto_switch = false
@@ -29,7 +30,10 @@ show_agent_labels_on_pane_borders = true
 accent = "#cccccc"
 
 [ui.toast]
-delivery = "system"
+delivery = "herdr"
+
+[ui.toast.herdr]
+position = "top-right"
 
 [keys]
 prefix = "ctrl+a"
@@ -50,6 +54,16 @@ previous_tab = "prefix+ctrl+p"
 last_pane = "prefix+ctrl+b"
 toggle_sidebar = "prefix+h"
 detach = "prefix+ctrl+d"
+
+[[keys.command]]
+key = "prefix+ctrl+s"
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" save 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Resurrect saved" --body "$out"; exit $status' '''
+description = "Save Herdr process restore state"
+
+[[keys.command]]
+key = "prefix+ctrl+r"
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" restore 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Resurrect restored" --body "$out"; exit $status' '''
+description = "Restore Herdr processes"
 
 [experimental]
 switch_ascii_input_source_in_prefix = true

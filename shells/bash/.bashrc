@@ -26,6 +26,9 @@ source "$SHELL_CONFIG/profile"
 # Prompt
 eval "$(starship init bash)"
 
+# Herdr helpers
+source "$HOME/.dotfiles/ai/herdr/default_pane_title.sh"
+
 # Functions
 # shellcheck disable=SC1090
 for fn in "$SHELL_CONFIG"/bash/funcs/*; do [[ -f $fn ]] && source "$fn"; done
