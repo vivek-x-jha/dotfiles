@@ -7,7 +7,7 @@ update-tools() {
   local selected_steps=0
   local delete_ds_store=0
   local update_zsh=0
-  local update_tmux=0
+  local update_herdr=0
   local update_tldr=0
   local update_fzf=0
   local update_nvim=0
@@ -32,7 +32,7 @@ Options:
   -a, --all       run every step, including TeX
   -d, --ds-store  prune .DS_Store artifacts
   -z, --zsh       update Zsh plugins
-  -t, --tmux      update tmux plugins
+      --herdr     update Herdr and regenerate Herdr completions
   -l, --tldr      update the TLDR cache
   -f, --fzf       update the fzf checkout
   -n, --nvim      update Neovim plugins
@@ -54,7 +54,7 @@ EOF
 
     delete_ds_store=1
     update_zsh=1
-    update_tmux=1
+    update_herdr=1
     update_tldr=1
     update_fzf=1
     update_nvim=1
@@ -71,7 +71,7 @@ EOF
     -a|--all) run_all=1; selected_steps=1 ;;
     -d|--ds-store) delete_ds_store=1; selected_steps=1 ;;
     -z|--zsh) update_zsh=1; selected_steps=1 ;;
-    -t|--tmux) update_tmux=1; selected_steps=1 ;;
+    --herdr) update_herdr=1; selected_steps=1 ;;
     -l|--tldr) update_tldr=1; selected_steps=1 ;;
     -f|--fzf) update_fzf=1; selected_steps=1 ;;
     -n|--nvim) update_nvim=1; selected_steps=1 ;;
@@ -111,7 +111,7 @@ EOF
   TOTAL_STEPS=$((
     delete_ds_store +
     update_zsh +
-    update_tmux +
+    update_herdr +
     update_tldr +
     update_fzf +
     update_nvim +
@@ -164,7 +164,7 @@ EOF
     local zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
     if ! command -v herdr &>/dev/null; then
-      logg -w 'HERDR NOT FOUND ON $PATH; SKIPPING HERDR COMPLETIONS'
+      logg -w 'HERDR NOT FOUND ON PATH; SKIPPING HERDR COMPLETIONS'
       return 0
     fi
 
@@ -208,10 +208,14 @@ EOF
       logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
   }
 
-  ((update_tmux)) && {
-    notify 'UPDATE TMUX PLUGINS'
-    logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
-      logg -w 'UPDATE TMUX PLUGINS FAILED'
+  ((update_herdr)) && {
+    notify 'UPDATE HERDR'
+    if command -v herdr &>/dev/null; then
+      logg -c 'herdr update --handoff' || logg -w 'UPDATE HERDR FAILED'
+      refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
+    else
+      logg -w 'HERDR NOT FOUND ON PATH; SKIPPING HERDR UPDATE'
+    fi
   }
 
   ((update_tldr)) && {
@@ -234,7 +238,7 @@ EOF
     if command -v pi &>/dev/null; then
       logg -c 'pi update --all' || logg -w 'UPDATE PI CODING AGENT FAILED'
     else
-      logg -w 'PI NOT FOUND ON $PATH; SKIPPING PI UPDATE'
+      logg -w 'PI NOT FOUND ON PATH; SKIPPING PI UPDATE'
     fi
   }
 
