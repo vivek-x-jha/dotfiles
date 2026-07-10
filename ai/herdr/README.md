@@ -17,7 +17,7 @@ Current restore support:
 
 - `nvim` foreground commands, including `nvim -S Session.vim`
 - `pi` panes, using `pi --session <session-file>` when Herdr reports a session path
-- `codex` panes, using `codex resume <session-id>` when Herdr reports a session id/path, otherwise `codex resume --last`
+- `codex` panes, using `codex resume <session-id>` from Herdr metadata or the live Codex session file, otherwise `codex resume --last`
 
 State is local runtime data at `$XDG_STATE_HOME/herdr/resurrect.json` and is intentionally not tracked.
 

@@ -30,6 +30,20 @@ json_quote() {
   jq -Rn --arg v "$1" '$v'
 }
 
+codex_session_from_pid() {
+  local pid="$1" path session_id
+  [[ -n "$pid" ]] || return 1
+  command -v lsof >/dev/null || return 1
+  path="$(lsof -p "$pid" -Fn 2>/dev/null \
+    | sed 's/^n//' \
+    | rg '/codex/sessions/.+\.jsonl$|/rollout-.+\.jsonl$' \
+    | head -1 || true)"
+  [[ -n "$path" ]] || return 1
+  session_id="$(basename "$path" | sed -E 's/^rollout-[0-9T:-]+-([0-9a-f-]{36})\.jsonl$/\1/')"
+  [[ "$session_id" =~ ^[0-9a-f-]{36}$ ]] || return 1
+  printf '%s\n' "$session_id"
+}
+
 pane_is_idle() {
   local pane_id="$1" info shell_pid fg_count non_shell_count
   info="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null || true)"
@@ -52,7 +66,7 @@ save_state() {
 
   {
     printf '{\n  "version": 1,\n  "saved_at": %s,\n  "commands": [\n' "$(json_quote "$(date -u +%Y-%m-%dT%H:%M:%SZ)")"
-    local first=1 pane_id pinfo kind cmd cwd session_path
+    local first=1 pane_id pinfo kind cmd cwd session_path codex_pid
     while IFS= read -r pane_id; do
       [[ -n "$pane_id" ]] || continue
       pinfo="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null || true)"
@@ -76,6 +90,10 @@ save_state() {
       elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "codex") or (.name == "codex") or (.cmdline // "" | test("(^|/)codex( |$)")))' <<<"$pinfo" >/dev/null; then
         kind="codex"
         session_path="$(jq -r --arg pane_id "$pane_id" '.result.agents[]? | select(.pane_id == $pane_id and .agent == "codex") | .agent_session.value // empty' <<<"$agents" | head -1)"
+        if [[ -z "$session_path" ]]; then
+          codex_pid="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "codex") or (.name == "codex") or (.cmdline // "" | test("(^|/)codex( |$)"))) | .pid' <<<"$pinfo" | head -1)"
+          session_path="$(codex_session_from_pid "$codex_pid" || true)"
+        fi
         if [[ -n "$session_path" ]]; then
           cmd="codex resume $(printf '%q' "$session_path")"
         else

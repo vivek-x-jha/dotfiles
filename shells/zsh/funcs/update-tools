@@ -4,10 +4,10 @@ usage() {
   cat <<'EOF'
 Usage: update-tools [OPTIONS] [IconsDir]
 
-Run standard maintenance without TeX by default, or only the selected steps.
+Run standard maintenance without TeX/Herdr by default, or only selected steps.
 
 Options:
-  -a, --all            run every step, including TeX
+  -a, --all            run every step, including TeX and Herdr
   -d, --ds-store       prune .DS_Store artifacts
   -z, --zsh            update Zsh plugins
       --herdr          update Herdr and regenerate Herdr completions
@@ -30,7 +30,7 @@ select_all_steps() {
 
   delete_ds_store=1
   update_zsh=1
-  update_herdr=1
+  update_herdr=0
   update_tldr=1
   update_fzf=1
   update_nvim=1
@@ -97,8 +97,8 @@ while (( $# )); do
   shift
 done
 
-# Explicit --all includes TeX; no step flags select the standard set without TeX.
-((run_all)) && select_all_steps 1
+# Explicit --all includes TeX and Herdr; no step flags select the standard set without them.
+((run_all)) && { select_all_steps 1; update_herdr=1; }
 ((selected_steps)) || select_all_steps 0
 
 local ICON='󰓒'
@@ -188,7 +188,9 @@ refresh_herdr_completions() {
 
 ((update_herdr)) && {
   notify 'UPDATE HERDR'
-  if command -v herdr &>/dev/null; then
+  if [[ ${HERDR_ENV:-} == 1 ]]; then
+    logg -w 'RUNNING INSIDE HERDR; SKIPPING HERDR UPDATE. RUN `update-tools --herdr` OUTSIDE HERDR.'
+  elif command -v herdr &>/dev/null; then
     logg -c 'herdr update --handoff' || logg -w 'UPDATE HERDR FAILED'
     refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
   else
