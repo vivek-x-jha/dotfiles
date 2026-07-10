@@ -104,8 +104,10 @@ check_bootstrap() {
   check_path "$HOME/.dotfiles/ai/herdr/config.toml"
   check_path "$HOME/.dotfiles/ai/pi/README.md"
   check_path "$HOME/.dotfiles/ai/pi/models.json"
+  check_path "$HOME/.dotfiles/ai/pi/extensions/handoff-alias.ts"
   check_path "$HOME/.dotfiles/ai/pi/extensions/statusline.ts"
   check_path "$HOME/.dotfiles/ai/pi/extensions/tsconfig.json"
+  check_path "$HOME/.dotfiles/ai/pi/skills/handoff/SKILL.md"
   check_path "$HOME/.dotfiles/ai/pi/themes/sourdiesel.json"
   check_path "$HOME/.dotfiles/auth/git/themes/sourdiesel"
   check_path "$HOME/.dotfiles/cli/matplotlib/matplotlibrc"
@@ -294,8 +296,10 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/glow" ../.dotfiles/cli/glow
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
   doctor_symlink "$XDG_STATE_HOME/pi/agent/models.json" ../../../../.dotfiles/ai/pi/models.json
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/handoff-alias.ts" ../../../../../.dotfiles/ai/pi/extensions/handoff-alias.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/statusline.ts" ../../../../../.dotfiles/ai/pi/extensions/statusline.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/tsconfig.json" ../../../../../.dotfiles/ai/pi/extensions/tsconfig.json
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/skills/handoff" ../../../../../.dotfiles/ai/pi/skills/handoff
   doctor_symlink "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json" ../../../../../.dotfiles/ai/pi/themes/sourdiesel.json
   doctor_symlink "$XDG_CONFIG_HOME/nvim" ../.dotfiles/editors/nvim
   doctor_symlink "$XDG_CONFIG_HOME/shells" ../.dotfiles/shells

@@ -9,6 +9,10 @@ packages, and settings stay in state.
 - `models.json` registers the local OpenAI-compatible Ollama provider.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
 - `extensions/statusline.ts` is the custom SourDiesel statusline/turn-UI extension.
+- `skills/handoff/` creates goal-focused session handoffs and copies the suggested
+  first message to the clipboard when a supported clipboard command is available.
+- `extensions/handoff-alias.ts` exposes that skill as `/handoff <goal>` in addition
+  to Pi's standard `/skill:handoff <goal>` command.
 
 Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` directly to
 `../../../../.dotfiles/ai/AGENTS.md` from the agent dir; no harness-specific copy lives here.
