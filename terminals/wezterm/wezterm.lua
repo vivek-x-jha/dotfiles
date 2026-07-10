@@ -81,7 +81,7 @@ config.colors = {
   split = thm.brightblack,
 }
 
--- Command Palette: activate with <Ctrl + Shift + p>
+-- Command Palette: activate with <Ctrl + Shift + o>
 config.command_palette_fg_color = config.colors.cursor_bg
 config.command_palette_bg_color = config.colors.background
 config.command_palette_font_size = 16
@@ -110,6 +110,7 @@ config.window_decorations = 'RESIZE'
 
 config.keys = {
   { key = 'w', mods = 'SUPER', action = wezterm.action.CloseCurrentTab { confirm = false } },
+  { key = 'o', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateCommandPalette },
 }
 
 -- https://wezterm.org/config/lua/config/window_frame.html?h=window_frame
