@@ -79,7 +79,8 @@ command -v pi &>/dev/null && {
   alias piq14='pi --model ollama/qwen2.5-coder:14b'
   alias piq32='pi --model ollama/qwen2.5-coder:32b'
 
-  # Strong cloud coding/reasoning tasks.
+  # Cloud coding/reasoning tiers supported by ChatGPT-account authentication.
+  alias pilight='pi --provider openai-codex --model gpt-5.4-mini --thinking low'
   alias pistrong='pi --provider openai-codex --model gpt-5.5 --thinking high'
   alias pimax='pi --provider openai-codex --model gpt-5.5 --thinking xhigh'
 }
