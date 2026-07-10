@@ -187,14 +187,6 @@ BOOTSTRAP_BREW_CASKS="1password 1password-cli wezterm visual-studio-code"
 
 Open a new terminal window after setup completes so login and interactive shell startup are reloaded.
 
-Open the optional SourDiesel orbital installer UI:
-
-```sh
-~/.dotfiles/bootstrap.sh --tui
-```
-
-`--tui` launches the Rust `sourdiesel-bootstrap` frontend when `cargo` or an installed binary is available, and falls back to a plain numbered Bash menu on fresh machines.
-
 Validate the installed workstation state any time after setup:
 
 ```sh
@@ -218,7 +210,6 @@ Validate the installed workstation state any time after setup:
 | [`install.sh`](./install.sh) | POSIX one-shot shallow clone/update entrypoint |
 | [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
-| [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
 | [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, and Herdr |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
 | [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eva, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |

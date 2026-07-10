@@ -32,7 +32,6 @@ Usage: bootstrap.sh [options]
   -n, --dry-run            Print actions instead of executing them
   -r, --resume             Resume checkpoints from the last incomplete matching plan
   -i, --interactive        Prompt for configurable choices instead of using defaults
-      --tui                Open the sourdiesel-bootstrap orbital installer UI
       --config PATH        Load an additional bootstrap config override
       --fresh              Use the fresh-machine profile label
       --partial            Use the partial-machine profile label
@@ -52,7 +51,6 @@ parse_args() {
     -n | --dry-run) DRY_RUN=1 ;;
     -r | --resume) RESUME_MODE=1 ;;
     -i | --interactive) INTERACTIVE_OVERRIDE=1 ;;
-    --tui) TUI_MODE=1 ;;
     --fresh) BOOTSTRAP_PROFILE_OVERRIDE=fresh ;;
     --partial) BOOTSTRAP_PROFILE_OVERRIDE=partial ;;
     --only)
@@ -108,11 +106,6 @@ main() {
   apply_bootstrap_target_selection
   resolve_bootstrap_profile
   resolve_bootstrap_dependency_plan
-
-  ((TUI_MODE)) && {
-    run_sourdiesel_bootstrap_tui
-    exit $?
-  }
 
   notify 'BEGIN BOOTSTRAP DEVELOPMENT SCRIPT'
   show_bootstrap_plan
