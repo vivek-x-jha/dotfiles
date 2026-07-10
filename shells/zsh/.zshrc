@@ -46,7 +46,7 @@ eval "$(zsh-patina completion)"
 }
 
 # Herdr helpers
-source "$HOME/.dotfiles/ai/herdr/default_pane_title.sh"
+source "$DOTFILES_DIR/ai/herdr/default_pane_title.sh"
 
 # Interactive plugins
 source "$XDG_CONFIG_HOME/fzf/config"

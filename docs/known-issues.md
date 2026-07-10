@@ -34,6 +34,24 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
+## KI-2026-07-09-clean-macos-bootstrap-validation
+
+**Status:** Open; guarded validation harness implemented, destructive VM run pending.
+**Last verified:** 2026-07-09 (source fixtures and dry-runs only).
+**Area:** Bootstrap / clean Apple Silicon macOS
+
+**Observed:** Installer, profile composition, dependency/checkpoint behavior, idempotence, and full dry-run fixtures pass, but a complete package-installing run and convergence rerun have not yet been executed on a clean Apple Silicon macOS VM.
+
+**Likely cause:** No disposable clean macOS VM is available in the current agent environment, and running the test on the live workstation would make broad global package and OS changes.
+
+**Workaround:** In a disposable arm64 macOS VM, finish Command Line Tools installation and run `BOOTSTRAP_ALLOW_VM_INSTALL=1 bootstrap/tests/macos-vm.sh`. The harness records first-run, rerun, doctor, and timing logs under `$XDG_STATE_HOME/dotfiles/vm-validation/`.
+
+**Reproduce/retest:** Start with a clean VM user that has no bootstrap completion marker, clone the repository, run the guarded harness, and inspect both timing logs and doctor output.
+
+**Exit criteria:** The complete core install, immediate convergence rerun, and doctor all pass on a clean Apple Silicon VM; record the tested macOS version and elapsed timings, then resolve this entry.
+
+**References:** `bootstrap/tests/macos-vm.sh`, `bootstrap/tests/macos-vm.env`.
+
 ## KI-2026-07-02-iterm-float-shared-session-redraw
 
 **Status:** Mitigated in source; pending live verification in the iTerm floating profile.

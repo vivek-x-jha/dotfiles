@@ -1,0 +1,11 @@
+# Portable SSH defaults included by the user-owned XDG SSH config.
+# Optional identity backend selected by bootstrap when identity.conf exists.
+Include ~/.config/ssh/identity.conf
+
+Host github.com
+  HostName           github.com
+  User               git
+
+Host *
+  UserKnownHostsFile ~/.config/ssh/known_hosts
+  SendEnv            LANG LC_*

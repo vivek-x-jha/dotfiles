@@ -41,7 +41,7 @@ update-icons() {
     "$icon_dir" "$icon_dir/png.png"
     "$HOME/Pictures/screenshots" "$icon_dir/screenshot.png"
     "$HOME/Pictures/wallpapers" "$icon_dir/wallpaper.png"
-    "$HOME/.dotfiles" "$icon_dir/gear.png"
+    "$DOTFILES_DIR" "$icon_dir/gear.png"
   )
 
   print_separator() {

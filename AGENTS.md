@@ -6,7 +6,8 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 
 ## High-Signal Entry Points
 
-- Setup flow: `bootstrap.sh`, `bootstrap/defaults.env`, `bootstrap/lib/*.sh`
+- Setup flow: `install.sh`, `bootstrap.sh`, `bootstrap/defaults.env`, `bootstrap/lib/*.sh`, `bootstrap/tests/*.sh`
+- Homebrew profiles: `manifests/Brewfile` (core), `manifests/Brewfile.developer`, `manifests/Brewfile.personal`; opt-in additions: `manifests/Brewfile.rust`, `manifests/Brewfile.1password`
 - Docs: `README.md`, `docs/ai-workflows.md`
 - Global agent policy: `ai/AGENTS.md` (Codex/Pi link `AGENTS.md` to it directly; Claude Code links `CLAUDE.md` to it directly from configured harness paths)
 - Agent memory/templates: `ai/templates/`, `docs/known-issues.md`, `docs/agent-memory.md`
@@ -18,7 +19,7 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 
 ## Rules
 
-- Preserve XDG layout and bootstrap idempotence.
+- Preserve XDG layout and bootstrap idempotence across clean, conflicting, and partial homes; keep `install.sh` POSIX-compatible.
 - Keep secrets optional and gated by 1Password; never expose secret values.
 - Route bootstrap shell actions through existing helpers when practical.
 - Update docs when user-facing bootstrap behavior changes.
@@ -28,7 +29,8 @@ Personal dotfiles/bootstrap repo. Prefer source-of-truth files over generated or
 
 ## Checks
 
-- Bootstrap sanity: `./bootstrap.sh --check`
+- Bootstrap sanity: `./bootstrap.sh --check` (includes isolated installer, profile, dependency/checkpoint, and idempotence fixtures)
+- Disposable Apple Silicon VM only: `BOOTSTRAP_ALLOW_VM_INSTALL=1 bootstrap/tests/macos-vm.sh`
 - Shell syntax: `bash -n bootstrap.sh`
 - Diff whitespace: `git diff --check`
 - Theme work: `python3 themes/sourdiesel/tool.py render && python3 themes/sourdiesel/tool.py check`

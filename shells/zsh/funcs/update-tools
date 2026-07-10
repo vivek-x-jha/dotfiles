@@ -155,8 +155,8 @@ notify() {
 }
 
 refresh_herdr_completions() {
-  local bash_completion="$HOME/.dotfiles/shells/bash/comps/herdr.bash"
-  local zsh_completion="$HOME/.dotfiles/shells/zsh/comps/_herdr"
+  local bash_completion="$DOTFILES_DIR/shells/bash/comps/herdr.bash"
+  local zsh_completion="$DOTFILES_DIR/shells/zsh/comps/_herdr"
   local zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
   if ! command -v herdr &>/dev/null; then
@@ -259,7 +259,8 @@ refresh_herdr_completions() {
   notify -s 'EXPORT BREWFILE'
   if [[ -z ${HOMEBREW_BUNDLE_FILE:-} ]]; then
     logg -w 'HOMEBREW_BUNDLE_FILE unset; skipping Brewfile export'
-  elif logg -c "brew bundle dump --force --no-npm"; then
+  elif mkdir -p "${HOMEBREW_BUNDLE_FILE:h}" \
+    && logg -c "brew bundle dump --force --no-npm"; then
     :
   else
     logg -w 'UPDATE BREWFILE FAILED'

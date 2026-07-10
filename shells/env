@@ -8,11 +8,18 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# Checkout location is persisted by bootstrap so non-default clones remain usable.
+if [[ -z ${DOTFILES_DIR:-} && -r $XDG_STATE_HOME/dotfiles/root ]]; then
+  IFS= read -r DOTFILES_DIR <"$XDG_STATE_HOME/dotfiles/root"
+fi
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
 # Homebrew (MacOS only)
 [[ $(uname) == Darwin ]] && {
   export HOMEBREW_NO_ENV_HINTS=1
   export HOMEBREW_INSTALL_BADGE=$'\e[95m\e[0m'
-  export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/manifests/Brewfile"
+  # Inventory dumps are runtime snapshots; tracked profile manifests stay curated.
+  export HOMEBREW_BUNDLE_FILE="$XDG_STATE_HOME/homebrew/Brewfile.snapshot"
 }
 
 # Shells

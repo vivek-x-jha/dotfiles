@@ -9,7 +9,7 @@ DOTFILES_PROFILE_LOADED=1
 # /etc/zprofile runs path_helper after ~/.zshenv and can reorder PATH in login
 # shells; sourcing env from the user profile restores our intended precedence.
 # shellcheck disable=SC1091
-source "$HOME/.dotfiles/shells/env"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/env"
 
 # Give AI harnesses enough descriptors for MCP servers, skills, and subprocesses.
 [[ $(ulimit -Sn) != unlimited && $(ulimit -Sn) -lt 10240 ]] && ulimit -Sn 10240
@@ -17,4 +17,4 @@ source "$HOME/.dotfiles/shells/env"
 # Load secrets after PATH setup so private overrides see the final baseline environment
 # Use a regular file only; special files such as FIFOs can block shell startup
 # shellcheck disable=SC1091
-[[ -f "$HOME/.dotfiles/.env" ]] && source "$HOME/.dotfiles/.env"
+[[ -f "$DOTFILES_DIR/.env" ]] && source "$DOTFILES_DIR/.env"

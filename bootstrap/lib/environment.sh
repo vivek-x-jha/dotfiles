@@ -20,7 +20,7 @@ collect_environment() {
   # Sign into 1Password CLI when integration is enabled
   if ((USE_1PASSWORD)); then
     notify -s 'Signing into 1Password CLI'
-    run 'op signin' || {
+    run_optional 'op signin' || {
       logg -w 'Skipping 1Password features (signin failed).'
       USE_1PASSWORD=0
     }
@@ -32,22 +32,27 @@ collect_environment() {
 
   existing_git_name=$(git config --global user.name 2>/dev/null || true)
   existing_git_email=$(git config --global user.email 2>/dev/null || true)
-  existing_origin=$(git -C "$HOME/.dotfiles" remote get-url origin 2>/dev/null || true)
+  GIT_SIGNING_KEY_EXISTING=$(git config --global user.signingkey 2>/dev/null || true)
+  GIT_SIGNING_PROGRAM_EXISTING=$(git config --global gpg.ssh.program 2>/dev/null || true)
+  GIT_ALLOWED_SIGNERS_EXISTING=$(git config --global gpg.ssh.allowedSignersFile 2>/dev/null || true)
+  GIT_SIGN_COMMITS_EXISTING=$(git config --global commit.gpgsign 2>/dev/null || true)
+  SSH_IDENTITY_BACKEND_EXISTING=''
+  if grep -q 'identities/1password' "$XDG_CONFIG_HOME/ssh/config" 2>/dev/null \
+    || [[ $(bootstrap_realpath "$XDG_CONFIG_HOME/ssh/identity.conf" || true) == "$BOOTSTRAP_ROOT/auth/ssh/identities/1password" ]]; then
+    SSH_IDENTITY_BACKEND_EXISTING=1password
+  fi
+  existing_origin=$(git -C "$BOOTSTRAP_ROOT" remote get-url origin 2>/dev/null || true)
   existing_github_name="$(printf '%s' "$existing_origin" | sed -n 's#.*github.com[:/]\([^/]*\)/.*#\1#p')"
 
   if ! bootstrap_config_bool BOOTSTRAP_INTERACTIVE 0; then
-    local host fallback_email
-    host="$(hostname -f 2>/dev/null || hostname 2>/dev/null || printf local)"
-    fallback_email="${USER:-user}@$host"
-
-    GIT_NAME="${BOOTSTRAP_GIT_NAME:-${existing_git_name:-${USER:-User}}}"
-    GIT_EMAIL="${BOOTSTRAP_GIT_EMAIL:-${existing_git_email:-$fallback_email}}"
-    GITHUB_NAME="${BOOTSTRAP_GITHUB_NAME:-${existing_github_name:-${GIT_EMAIL%@*}}}"
+    GIT_NAME="${BOOTSTRAP_GIT_NAME:-$existing_git_name}"
+    GIT_EMAIL="${BOOTSTRAP_GIT_EMAIL:-$existing_git_email}"
+    GITHUB_NAME="${BOOTSTRAP_GITHUB_NAME:-$existing_github_name}"
 
     if ((USE_1PASSWORD)); then
       OP_VAULT="${BOOTSTRAP_OP_VAULT:-Private}"
       ATUIN_OP_TITLE="${BOOTSTRAP_ATUIN_OP_TITLE:-Atuin Sync}"
-      ATUIN_USERNAME="${BOOTSTRAP_ATUIN_USERNAME:-${GIT_EMAIL%@*}}"
+      ATUIN_USERNAME="${BOOTSTRAP_ATUIN_USERNAME:-${GIT_EMAIL:+${GIT_EMAIL%@*}}}"
       ATUIN_EMAIL="${BOOTSTRAP_ATUIN_EMAIL:-$GIT_EMAIL}"
     else
       OP_VAULT=''
@@ -58,8 +63,8 @@ collect_environment() {
 
     MEDIA="${BOOTSTRAP_MEDIA:-}"
 
-    logg -i "Git identity: $GIT_NAME <$GIT_EMAIL>"
-    logg -i "GitHub user: $GITHUB_NAME"
+    logg -i "Git identity: ${GIT_NAME:-<preserved/unset>} <${GIT_EMAIL:-preserved/unset}>"
+    logg -i "GitHub user: ${GITHUB_NAME:-<preserved/unset>}"
     logg -i "Media directory: ${MEDIA:-<not set>}"
     return
   fi
@@ -135,176 +140,293 @@ EOF
   done
 }
 
-create_symlinks() {
-  local vscode_src='../../../.dotfiles/editors/vscode/settings.json'
-  local skill_dir=''
-  local skill_name=''
-  local installed_skill=''
-  local installed_target=''
+backup_bootstrap_target() {
+  local target="$1"
+  local relative backup suffix=0
 
-  local dirs=(
-    "$XDG_CACHE_HOME"
-    "$XDG_CACHE_HOME/npm"
-    "$HOME/.local/bin"
-    "$XDG_STATE_HOME/bash"
-    "$XDG_STATE_HOME/codex"
-    "$XDG_STATE_HOME/codex/skills"
-    "$XDG_STATE_HOME/jupyter/runtime"
-    "$XDG_STATE_HOME/less"
-    "$XDG_STATE_HOME/mycli"
-    "$XDG_STATE_HOME/mysql"
-    "$XDG_STATE_HOME/pi/agent"
-    "$XDG_STATE_HOME/pi/agent/extensions"
-    "$XDG_STATE_HOME/pi/agent/skills"
-    "$XDG_STATE_HOME/pi/agent/themes"
-    "$XDG_STATE_HOME/python"
-    "$XDG_STATE_HOME/ipython"
-    "$XDG_STATE_HOME/zsh"
-    "$XDG_CONFIG_HOME/claude"
-    "$XDG_CONFIG_HOME/herdr"
-    "$XDG_CONFIG_HOME/jupyter"
-    "$XDG_CONFIG_HOME/npm"
-    "$XDG_DATA_HOME/jupyter"
-    "$XDG_DATA_HOME/zsh"
-    "$XDG_DATA_HOME/vscode"
-  )
+  case "$target" in
+  "$HOME"/*) relative="${target#"$HOME"/}" ;;
+  *) relative="external/${target#/}" ;;
+  esac
 
-  local symlinks=(
-    ../.dotfiles/cli/atuin "$XDG_CONFIG_HOME" atuin
-    ../.dotfiles/cli/bat "$XDG_CONFIG_HOME" bat
-    ../.dotfiles/cli/btop "$XDG_CONFIG_HOME" btop
-    ../../.dotfiles/ai/herdr/config.toml "$XDG_CONFIG_HOME/herdr" config.toml
-    ../../.dotfiles/ai/herdr/scripts/herdr-resurrect "$HOME/.local/bin" herdr-resurrect
-    ../.dotfiles/cli/dust "$XDG_CONFIG_HOME" dust
-    ../.dotfiles/cli/eva "$XDG_CONFIG_HOME" eva
-    ../.dotfiles/cli/fzf "$XDG_CONFIG_HOME" fzf
-    ../.dotfiles/cli/gh "$XDG_CONFIG_HOME" gh
-    ../.dotfiles/cli/zsh-patina "$XDG_CONFIG_HOME" zsh-patina
-    ../../.dotfiles/ai/AGENTS.md "$XDG_CONFIG_HOME/claude" CLAUDE.md
-    ../../.dotfiles/ai/claude-code/settings.json "$XDG_CONFIG_HOME/claude" settings.json
-    ../.dotfiles/auth/git "$XDG_CONFIG_HOME" git
-    ../.dotfiles/cli/glow "$XDG_CONFIG_HOME" glow
-    ../.dotfiles/cli/matplotlib "$XDG_CONFIG_HOME" matplotlib
-    ../.dotfiles/cli/mycli "$XDG_CONFIG_HOME" mycli
-    ../.dotfiles/cli/npm "$XDG_CONFIG_HOME" npm
-    ../../../.dotfiles/ai/AGENTS.md "$XDG_STATE_HOME/codex" AGENTS.md
-    ../../../../.dotfiles/ai/AGENTS.md "$XDG_STATE_HOME/pi/agent" AGENTS.md
-    ../../../../.dotfiles/ai/pi/models.json "$XDG_STATE_HOME/pi/agent" models.json
-    ../../../../../.dotfiles/ai/pi/extensions/handoff-alias.ts "$XDG_STATE_HOME/pi/agent/extensions" handoff-alias.ts
-    ../../../../../.dotfiles/ai/pi/extensions/statusline.ts "$XDG_STATE_HOME/pi/agent/extensions" statusline.ts
-    ../../../../../.dotfiles/ai/pi/extensions/tsconfig.json "$XDG_STATE_HOME/pi/agent/extensions" tsconfig.json
-    ../../../../../.dotfiles/ai/pi/skills/handoff "$XDG_STATE_HOME/pi/agent/skills" handoff
-    ../../../../../.dotfiles/ai/pi/themes/sourdiesel.json "$XDG_STATE_HOME/pi/agent/themes" sourdiesel.json
-    ../.dotfiles/editors/nvim "$XDG_CONFIG_HOME" nvim
-    ../.dotfiles/editors/vscode "$XDG_CONFIG_HOME" vscode
-    ../.dotfiles/shells "$XDG_CONFIG_HOME" shells
-    ../.dotfiles/auth/ssh "$XDG_CONFIG_HOME" ssh
-    ../.dotfiles/terminals/tmux "$XDG_CONFIG_HOME" tmux
-    ../.dotfiles/terminals/wezterm "$XDG_CONFIG_HOME" wezterm
-    shells/starship.toml "$XDG_CONFIG_HOME" starship.toml
-    .local/share/vscode "$HOME" .vscode
-    .config/shells/bash/.bash_profile "$HOME" .bash_profile
-    .config/shells/bash/.bashrc "$HOME" .bashrc
-    .config/shells/env "$HOME" .zshenv
-  )
-
-  # Discover repo-managed Codex skills. A directory is installable when it
-  # contains the required SKILL.md entrypoint.
-  for skill_dir in "$HOME/.dotfiles/ai/codex/skills"/*; do
-    [[ -d $skill_dir && -f $skill_dir/SKILL.md ]] || continue
-    skill_name="${skill_dir##*/}"
-    symlinks+=(
-      "../../../../.dotfiles/ai/codex/skills/$skill_name" "$XDG_STATE_HOME/codex/skills" "$skill_name"
-    )
+  backup="$XDG_STATE_HOME/dotfiles/backups/$BOOTSTRAP_RUN_ID/$relative"
+  local base_backup="$backup"
+  while [[ -e $backup || -L $backup ]]; do
+    suffix=$((suffix + 1))
+    backup="$base_backup.$suffix"
   done
 
-  # Ensure application directories are created
-  for dir in "${dirs[@]}"; do run "mkdir -p \"$dir\""; done
+  run "mkdir -p \"$(dirname "$backup")\"" || return
+  run "mv \"$target\" \"$backup\"" || return
+  logg -w "Preserved existing $(pretty_path "$target") at $(pretty_path "$backup")"
+}
 
-  # Remove only broken links created from this repo. Preserve system, plugin,
-  # and independently installed skills under the same Codex skills directory.
+ensure_bootstrap_dir() {
+  local target="$1"
+
+  [[ -d $target && ! -L $target ]] && return 0
+  if [[ -e $target || -L $target ]]; then
+    ((DRY_RUN)) && BOOTSTRAP_PLANNED_REPLACED_DIRS+=("$target")
+    backup_bootstrap_target "$target"
+  fi
+  run "mkdir -p \"$target\""
+}
+
+ensure_bootstrap_symlink() {
+  local source="$1"
+  local target="$2"
+  local current=''
+  local current_real=''
+  local source_real=''
+  local planned_dir=''
+  local target_is_planned=0
+
+  if [[ ! -e $source && ! -L $source ]]; then
+    if ! ((DRY_RUN)) || [[ $source != "$XDG_DATA_HOME/vscode" ]]; then
+      logg -e "Managed source missing: $(pretty_path "$source")"
+      BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+      return 1
+    fi
+  fi
+
+  if [[ -L $target ]]; then
+    current=$(readlink "$target" 2>/dev/null || true)
+    if [[ $current == "$source" ]]; then
+      logg -i "ok: $(pretty_path "$target") -> $(pretty_path "$source")"
+      return 0
+    fi
+
+    current_real=$(bootstrap_realpath "$target" || true)
+    source_real=$(bootstrap_realpath "$source" || true)
+    if [[ -n $current_real && $current_real == "$source_real" ]]; then
+      logg -i "ok: $(pretty_path "$target") -> $(pretty_path "$source")"
+      return 0
+    fi
+  fi
+
+  run "mkdir -p \"$(dirname "$target")\"" || return
+  if ((DRY_RUN)); then
+    for planned_dir in "${BOOTSTRAP_PLANNED_REPLACED_DIRS[@]}"; do
+      [[ $target == "$planned_dir"/* ]] && target_is_planned=1 && break
+    done
+  fi
+  ((target_is_planned)) || { [[ ! -e $target && ! -L $target ]] || backup_bootstrap_target "$target"; }
+  run "ln -s \"$source\" \"$target\"" || return
+  logg -i "linked: $(pretty_path "$target") -> $(pretty_path "$source")"
+}
+
+seed_bootstrap_file() {
+  local source="$1"
+  local target="$2"
+
+  [[ -e $target || -L $target ]] && return 0
+  run "mkdir -p \"$(dirname "$target")\"" || return
+  run "cp \"$source\" \"$target\""
+}
+
+set_git_file_value() {
+  local file="$1"
+  local key="$2"
+  local value="$3"
+  local status=0
+
+  [[ -n $value ]] || return 0
+  if ((DRY_RUN)); then
+    logg -i "[dry-run] preserve Git key $key in $(pretty_path "$file")"
+    return 0
+  fi
+
+  git config --file "$file" "$key" "$value"
+  status=$?
+  if ((status != 0)); then
+    BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+    logg -e "Unable to preserve Git key: $key"
+  fi
+  return "$status"
+}
+
+prepare_git_config_home() {
+  local git_dir="$XDG_CONFIG_HOME/git"
+  local git_config="$git_dir/config"
+  local include_path="$BOOTSTRAP_ROOT/auth/git/base"
+  local legacy_layout=0
+  local legacy_name='' legacy_email='' legacy_signing_key=''
+  local legacy_format='' legacy_allowed_signers='' legacy_program='' legacy_sign=''
+
+  if [[ -L $git_dir ]] \
+    && [[ $(bootstrap_realpath "$git_dir" || true) == "$BOOTSTRAP_ROOT/auth/git" ]]; then
+    legacy_layout=1
+    legacy_name=$(git config --file "$git_config" user.name 2>/dev/null || true)
+    legacy_email=$(git config --file "$git_config" user.email 2>/dev/null || true)
+    legacy_signing_key=$(git config --file "$git_config" user.signingkey 2>/dev/null || true)
+    legacy_format=$(git config --file "$git_config" gpg.format 2>/dev/null || true)
+    legacy_allowed_signers=$(git config --file "$git_config" gpg.ssh.allowedSignersFile 2>/dev/null || true)
+    legacy_program=$(git config --file "$git_config" gpg.ssh.program 2>/dev/null || true)
+    legacy_sign=$(git config --file "$git_config" commit.gpgsign 2>/dev/null || true)
+    GIT_NAME="${GIT_NAME:-$legacy_name}"
+    GIT_EMAIL="${GIT_EMAIL:-$legacy_email}"
+    GIT_SIGNING_KEY_EXISTING="${GIT_SIGNING_KEY_EXISTING:-$legacy_signing_key}"
+    GIT_SIGNING_PROGRAM_EXISTING="${GIT_SIGNING_PROGRAM_EXISTING:-$legacy_program}"
+    GIT_ALLOWED_SIGNERS_EXISTING="${GIT_ALLOWED_SIGNERS_EXISTING:-$legacy_allowed_signers}"
+    GIT_SIGN_COMMITS_EXISTING="${GIT_SIGN_COMMITS_EXISTING:-$legacy_sign}"
+  fi
+
+  ensure_bootstrap_dir "$git_dir" || return
+  ensure_bootstrap_symlink "$BOOTSTRAP_ROOT/auth/git/themes/sourdiesel" "$git_dir/themes/sourdiesel" || return
+
+  if [[ ! -f $git_config ]] || ! git config --file "$git_config" --get-all include.path 2>/dev/null | grep -Fxq "$include_path"; then
+    run "git config --file \"$git_config\" --add include.path \"$include_path\"" || return
+  fi
+
+  if ((legacy_layout)); then
+    set_git_file_value "$git_config" user.name "$legacy_name" || return
+    set_git_file_value "$git_config" user.email "$legacy_email" || return
+    set_git_file_value "$git_config" user.signingkey "$legacy_signing_key" || return
+    set_git_file_value "$git_config" gpg.format "$legacy_format" || return
+    set_git_file_value "$git_config" gpg.ssh.allowedSignersFile "$legacy_allowed_signers" || return
+    set_git_file_value "$git_config" gpg.ssh.program "$legacy_program" || return
+    set_git_file_value "$git_config" commit.gpgsign "$legacy_sign" || return
+  fi
+}
+
+prepare_ssh_config_home() {
+  local ssh_dir="$XDG_CONFIG_HOME/ssh"
+  local ssh_config="$ssh_dir/config"
+  local include_line="Include \"$BOOTSTRAP_ROOT/auth/ssh/base\""
+
+  if [[ ${SSH_IDENTITY_BACKEND_EXISTING:-} != 1password ]] \
+    && grep -q 'identities/1password' "$ssh_config" 2>/dev/null; then
+    SSH_IDENTITY_BACKEND_EXISTING=1password
+  fi
+
+  ensure_bootstrap_dir "$ssh_dir" || return
+  if [[ -L $ssh_config ]]; then
+    backup_bootstrap_target "$ssh_config" || return
+  fi
+  if [[ ! -f $ssh_config ]] || ! grep -Fxq "$include_line" "$ssh_config"; then
+    if ((DRY_RUN)); then
+      logg -i "[dry-run] append managed include to $(pretty_path "$ssh_config")"
+    else
+      printf '%s\n' "$include_line" >>"$ssh_config" || {
+        BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+        logg -e "Unable to update $(pretty_path "$ssh_config")"
+        return 1
+      }
+      chmod 600 "$ssh_config" || true
+    fi
+  fi
+  seed_bootstrap_file "$BOOTSTRAP_ROOT/auth/ssh/known_hosts" "$ssh_dir/known_hosts" || return
+  if [[ -n ${GIT_SIGNING_KEY_EXISTING:-} ]]; then
+    seed_bootstrap_file "$BOOTSTRAP_ROOT/auth/ssh/allowed_signers" "$ssh_dir/allowed_signers" || return
+  fi
+
+  if ((USE_1PASSWORD)) || [[ ${SSH_IDENTITY_BACKEND_EXISTING:-} == 1password ]]; then
+    ensure_bootstrap_symlink "$BOOTSTRAP_ROOT/auth/ssh/identities/1password" "$ssh_dir/identity.conf" || return
+  fi
+
+  if ((USE_1PASSWORD)); then
+    ensure_bootstrap_dir "$XDG_CONFIG_HOME/1Password/ssh" || return
+    seed_bootstrap_file "$BOOTSTRAP_ROOT/auth/1Password/ssh/agent.toml" "$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
+  fi
+}
+
+create_symlinks() {
+  local dir source target skill_dir skill_name installed_skill installed_real
+  local dirs=(
+    "$XDG_CACHE_HOME" "$XDG_CACHE_HOME/npm" "$HOME/.local/bin"
+    "$XDG_STATE_HOME/bash" "$XDG_STATE_HOME/codex" "$XDG_STATE_HOME/codex/skills"
+    "$XDG_STATE_HOME/jupyter/runtime" "$XDG_STATE_HOME/less" "$XDG_STATE_HOME/mycli"
+    "$XDG_STATE_HOME/mysql" "$XDG_STATE_HOME/pi/agent" "$XDG_STATE_HOME/pi/agent/extensions"
+    "$XDG_STATE_HOME/pi/agent/skills" "$XDG_STATE_HOME/pi/agent/themes" "$XDG_STATE_HOME/python"
+    "$XDG_STATE_HOME/ipython" "$XDG_STATE_HOME/zsh" "$XDG_CONFIG_HOME/claude"
+    "$XDG_CONFIG_HOME/herdr" "$XDG_CONFIG_HOME/jupyter"
+    "$XDG_DATA_HOME/jupyter" "$XDG_DATA_HOME/zsh" "$XDG_DATA_HOME/vscode"
+  )
+  local symlinks=(
+    "$BOOTSTRAP_ROOT/cli/atuin" "$XDG_CONFIG_HOME/atuin"
+    "$BOOTSTRAP_ROOT/cli/bat" "$XDG_CONFIG_HOME/bat"
+    "$BOOTSTRAP_ROOT/cli/btop" "$XDG_CONFIG_HOME/btop"
+    "$BOOTSTRAP_ROOT/ai/herdr/config.toml" "$XDG_CONFIG_HOME/herdr/config.toml"
+    "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-resurrect" "$HOME/.local/bin/herdr-resurrect"
+    "$BOOTSTRAP_ROOT/cli/dust" "$XDG_CONFIG_HOME/dust"
+    "$BOOTSTRAP_ROOT/cli/eva" "$XDG_CONFIG_HOME/eva"
+    "$BOOTSTRAP_ROOT/cli/fzf" "$XDG_CONFIG_HOME/fzf"
+    "$BOOTSTRAP_ROOT/cli/gh" "$XDG_CONFIG_HOME/gh"
+    "$BOOTSTRAP_ROOT/cli/zsh-patina" "$XDG_CONFIG_HOME/zsh-patina"
+    "$BOOTSTRAP_ROOT/ai/AGENTS.md" "$XDG_CONFIG_HOME/claude/CLAUDE.md"
+    "$BOOTSTRAP_ROOT/ai/claude-code/settings.json" "$XDG_CONFIG_HOME/claude/settings.json"
+    "$BOOTSTRAP_ROOT/cli/glow" "$XDG_CONFIG_HOME/glow"
+    "$BOOTSTRAP_ROOT/cli/matplotlib" "$XDG_CONFIG_HOME/matplotlib"
+    "$BOOTSTRAP_ROOT/cli/mycli" "$XDG_CONFIG_HOME/mycli"
+    "$BOOTSTRAP_ROOT/cli/npm" "$XDG_CONFIG_HOME/npm"
+    "$BOOTSTRAP_ROOT/ai/AGENTS.md" "$XDG_STATE_HOME/codex/AGENTS.md"
+    "$BOOTSTRAP_ROOT/ai/AGENTS.md" "$XDG_STATE_HOME/pi/agent/AGENTS.md"
+    "$BOOTSTRAP_ROOT/ai/pi/models.json" "$XDG_STATE_HOME/pi/agent/models.json"
+    "$BOOTSTRAP_ROOT/ai/pi/extensions/handoff-alias.ts" "$XDG_STATE_HOME/pi/agent/extensions/handoff-alias.ts"
+    "$BOOTSTRAP_ROOT/ai/pi/extensions/statusline.ts" "$XDG_STATE_HOME/pi/agent/extensions/statusline.ts"
+    "$BOOTSTRAP_ROOT/ai/pi/extensions/tsconfig.json" "$XDG_STATE_HOME/pi/agent/extensions/tsconfig.json"
+    "$BOOTSTRAP_ROOT/ai/pi/skills/handoff" "$XDG_STATE_HOME/pi/agent/skills/handoff"
+    "$BOOTSTRAP_ROOT/ai/pi/themes/sourdiesel.json" "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json"
+    "$BOOTSTRAP_ROOT/editors/nvim" "$XDG_CONFIG_HOME/nvim"
+    "$BOOTSTRAP_ROOT/editors/vscode" "$XDG_CONFIG_HOME/vscode"
+    "$BOOTSTRAP_ROOT/shells" "$XDG_CONFIG_HOME/shells"
+    "$BOOTSTRAP_ROOT/terminals/tmux" "$XDG_CONFIG_HOME/tmux"
+    "$BOOTSTRAP_ROOT/terminals/wezterm" "$XDG_CONFIG_HOME/wezterm"
+    "$BOOTSTRAP_ROOT/shells/starship.toml" "$XDG_CONFIG_HOME/starship.toml"
+    "$XDG_DATA_HOME/vscode" "$HOME/.vscode"
+    "$BOOTSTRAP_ROOT/shells/bash/.bash_profile" "$HOME/.bash_profile"
+    "$BOOTSTRAP_ROOT/shells/bash/.bashrc" "$HOME/.bashrc"
+    "$BOOTSTRAP_ROOT/shells/env" "$HOME/.zshenv"
+  )
+
+  for dir in "${dirs[@]}"; do ensure_bootstrap_dir "$dir" || return; done
+  prepare_git_config_home || return
+  prepare_ssh_config_home || return
+
   for installed_skill in "$XDG_STATE_HOME/codex/skills"/*; do
     [[ -L $installed_skill ]] || continue
-    installed_target=$(readlink "$installed_skill") || continue
-    case "$installed_target" in
-    ../../../../.dotfiles/ai/codex/skills/*)
-      skill_name="${installed_skill##*/}"
-      [[ -f $HOME/.dotfiles/ai/codex/skills/$skill_name/SKILL.md ]] || run "rm -f \"$installed_skill\""
-      ;;
-    esac
+    skill_name="${installed_skill##*/}"
+    bootstrap_codex_skill_enabled "$skill_name" && continue
+    installed_real=$(bootstrap_realpath "$installed_skill" || true)
+    [[ $installed_real == "$BOOTSTRAP_ROOT/ai/codex/skills/$skill_name" ]] || continue
+    run "rm -f \"$installed_skill\"" || return
+    logg -i "removed disabled personal Codex skill: $skill_name"
   done
 
-  # Add macOS specific tools
-  [[ $OS_TYPE == macos ]] && {
-    local app_data="$HOME/Library/Application Support"
+  for skill_dir in "$BOOTSTRAP_ROOT/ai/codex/skills"/*; do
+    [[ -d $skill_dir && -f $skill_dir/SKILL.md ]] || continue
+    skill_name="${skill_dir##*/}"
+    bootstrap_codex_skill_enabled "$skill_name" || continue
+    symlinks+=("$skill_dir" "$XDG_STATE_HOME/codex/skills/$skill_name")
+  done
 
+  if [[ $OS_TYPE == macos ]]; then
     symlinks+=(
-      ../.dotfiles/apps/hammerspoon "$XDG_CONFIG_HOME" hammerspoon
-      ../.dotfiles/apps/karabiner "$XDG_CONFIG_HOME" karabiner
+      "$BOOTSTRAP_ROOT/apps/hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+      "$BOOTSTRAP_ROOT/apps/karabiner" "$XDG_CONFIG_HOME/karabiner"
+      "$BOOTSTRAP_ROOT/editors/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
     )
+  else
+    symlinks+=("$BOOTSTRAP_ROOT/editors/vscode/settings.json" "$XDG_CONFIG_HOME/Code/User/settings.json")
+  fi
 
-    vscode_src="../$vscode_src"
-  }
+  [[ -z ${MEDIA:-} ]] && logg -w 'Media path not set. Skipping media symlinks...'
+  if [[ -n ${MEDIA:-} && -d $HOME/$MEDIA ]]; then
+    symlinks+=(
+      "$HOME/$MEDIA/content" "$HOME/Movies/content"
+      "$HOME/$MEDIA/icons" "$HOME/Pictures/icons"
+      "$HOME/$MEDIA/screenshots" "$HOME/Pictures/screenshots"
+      "$HOME/$MEDIA/wallpapers" "$HOME/Pictures/wallpapers"
+      "$HOME/$MEDIA/education" "$HOME/Documents/education"
+      "$HOME/$MEDIA/finances" "$HOME/Documents/finances"
+    )
+  fi
 
-  # Link Visual Studio Code settings
-  local vscode_target="${app_data:-$XDG_CONFIG_HOME}/Code/User"
-  symlinks+=("$vscode_src" "$vscode_target" settings.json)
-
-  # Link 1Password ssh config
-  ((USE_1PASSWORD)) && symlinks+=(../.dotfiles/auth/1Password "$XDG_CONFIG_HOME" 1Password)
-
-  # Link MEDIA directory (i.e. Dropbox/)
-  [[ -z $MEDIA ]] && logg -w 'Media path not set. Skipping media symlinks...'
-
-  [[ -n $MEDIA && -d "$HOME/$MEDIA" ]] && symlinks+=(
-    "../$MEDIA/content" "$HOME/Movies" content
-    "../$MEDIA/icons" "$HOME/Pictures" icons
-    "../$MEDIA/screenshots" "$HOME/Pictures" screenshots
-    "../$MEDIA/wallpapers" "$HOME/Pictures" wallpapers
-    "../$MEDIA/education" "$HOME/Documents" education
-    "../$MEDIA/finances" "$HOME/Documents" finances
-  )
-
-  # Ensure all links are created
-  for ((i = 0; i < ${#symlinks[@]}; i += 3)); do
-    local src="${symlinks[i]}"
-    local base="${symlinks[i+1]}"
-    local target="${symlinks[i+2]}"
-
-    # Ensure required args are present
-    [[ -n $src && -n $base && -n $target ]] || {
-      logg -e 'Missing required arg(s): Usage: symlink <source> <base_dir> <target>'
-      continue
-    }
-
-    # Ensure base directory of target link exists
-    [[ -d $base ]] || run "mkdir -p \"$base\""
-
-    # Bail early if we can't enter the base directory (e.g., permissions)
-    pushd "$base" &>/dev/null || {
-      logg -w "Skipping link (unable to enter $base)"
-      continue
-    }
-
-    # Skip if the source path is missing
-    [[ -e $src || -L $src ]] || {
-      logg -w "Skipping link (missing source: $base/$src)"
-      popd >/dev/null || true
-      continue
-    }
-
-    # Remove an existing symlink before relinking. `ln -sf` may follow a
-    # symlinked directory and create nested links inside the source tree.
-    [[ -L $target ]] && run "rm -f \"$target\""
-
-    # Backup target directory
-    [[ -d $target && ! -L $target ]] && run "mv -f \"$target\" \"${target}.bak\""
-
-    # Create symlink (respects DRY_RUN via run)
-    run "ln -sf \"$src\" \"$target\"" && logg -i "[+ Link: $src -> $base/$target]"
-    popd >/dev/null || true
+  for ((dir = 0; dir < ${#symlinks[@]}; dir += 2)); do
+    source="${symlinks[dir]}"
+    target="${symlinks[dir + 1]}"
+    ensure_bootstrap_symlink "$source" "$target" || return
   done
-
 }
 
 configure_codex_environment() {
@@ -340,9 +462,9 @@ configure_codex_environment() {
 configure_codex_ui() {
   local codex_home="${CODEX_HOME:-$XDG_STATE_HOME/codex}"
   local config_path="$codex_home/config.toml"
-  local script_path="$HOME/.dotfiles/ai/codex/scripts/apply_preferences.py"
-  local preferences_path="$HOME/.dotfiles/ai/codex/config/preferences.toml"
-  local theme_path="$HOME/.dotfiles/ai/codex/themes/sourdiesel.toml"
+  local script_path="$BOOTSTRAP_ROOT/ai/codex/scripts/apply_preferences.py"
+  local preferences_path="$BOOTSTRAP_ROOT/ai/codex/config/preferences.toml"
+  local theme_path="$BOOTSTRAP_ROOT/ai/codex/themes/sourdiesel.toml"
 
   require python3 || {
     logg -w 'Python 3 unavailable. Skipping Codex UI preference configuration.'
@@ -389,35 +511,106 @@ configure_macos_defaults() {
     read -r dom key opt val <<<"$entry"
     local setting="$dom $key $opt $val"
 
-    run "defaults write \"$setting\""
+    run "defaults write \"$dom\" \"$key\" \"$opt\" \"$val\""
   done
 
   # Reset dock for settings to take effect
-  run 'killall Dock'
+  run_optional 'killall Dock' || true
+}
+
+set_git_global() {
+  local key="$1"
+  local value="$2"
+  local status=0
+
+  ((DRY_RUN)) && {
+    logg -i "[dry-run] git config --global $key <configured value>"
+    return 0
+  }
+
+  git config --global "$key" "$value"
+  status=$?
+  if ((status != 0)); then
+    BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+    logg -e "Unable to configure Git key: $key"
+  fi
+  return "$status"
 }
 
 configure_git_and_github() {
-  local github="git@github.com:$GITHUB_NAME/dotfiles.git"
+  local remote_url="${BOOTSTRAP_GIT_REMOTE:-}"
+  local signing_key="${BOOTSTRAP_GIT_SIGNING_KEY:-${GIT_SIGNING_KEY_EXISTING:-}}"
+  local signing_program="${BOOTSTRAP_GIT_SIGNING_PROGRAM:-${GIT_SIGNING_PROGRAM_EXISTING:-}}"
+  local allowed_signers="${BOOTSTRAP_GIT_ALLOWED_SIGNERS_FILE:-${GIT_ALLOWED_SIGNERS_EXISTING:-$XDG_CONFIG_HOME/ssh/allowed_signers}}"
 
-  run "git config --global user.name \"$GIT_NAME\""
-  run "git config --global user.email \"$GIT_EMAIL\""
+  prepare_git_config_home || return
+  prepare_ssh_config_home || return
 
-  if ((DRY_RUN)); then
-    logg -i "[dry-run] git -C $HOME/.dotfiles remote set-url origin $github"
+  if [[ -n ${GIT_NAME:-} ]]; then
+    set_git_global user.name "$GIT_NAME" || return
   else
-    git -C "$HOME/.dotfiles" remote set-url origin "$github" 2>/dev/null || logg -w 'Failed to update origin remote.'
-    if [[ $GITHUB_NAME != "vivek-x-jha" ]]; then
-      git -C "$HOME/.dotfiles" remote add upstream "$github" 2>/dev/null || true
+    logg -w 'Git user.name is unset; preserving that state. Set BOOTSTRAP_GIT_NAME or rerun with --interactive.'
+  fi
+
+  if [[ -n ${GIT_EMAIL:-} ]]; then
+    set_git_global user.email "$GIT_EMAIL" || return
+  else
+    logg -w 'Git user.email is unset; preserving that state. Set BOOTSTRAP_GIT_EMAIL or rerun with --interactive.'
+  fi
+
+  if bootstrap_config_bool BOOTSTRAP_GIT_SIGN_COMMITS 0; then
+    [[ -n $signing_key ]] || {
+      logg -e 'BOOTSTRAP_GIT_SIGN_COMMITS=1 requires BOOTSTRAP_GIT_SIGNING_KEY or an existing signing key.'
+      BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+      return 1
+    }
+    set_git_global user.signingkey "$signing_key" || return
+    set_git_global gpg.format ssh || return
+    [[ -n $signing_program ]] && set_git_global gpg.ssh.program "$signing_program"
+    set_git_global gpg.ssh.allowedSignersFile "$allowed_signers" || return
+    set_git_global commit.gpgsign true || return
+  elif [[ ${GIT_SIGN_COMMITS_EXISTING:-} == true && -n $signing_key ]]; then
+    set_git_global user.signingkey "$signing_key" || return
+    set_git_global gpg.format ssh || return
+    [[ -n $signing_program ]] && set_git_global gpg.ssh.program "$signing_program"
+    [[ -n $allowed_signers ]] && set_git_global gpg.ssh.allowedSignersFile "$allowed_signers"
+    set_git_global commit.gpgsign true || return
+  fi
+
+  if bootstrap_config_bool BOOTSTRAP_CONFIGURE_GIT_REMOTE 0; then
+    if [[ -z $remote_url && -z ${GITHUB_NAME:-} ]]; then
+      logg -e 'Remote configuration requires BOOTSTRAP_GIT_REMOTE or BOOTSTRAP_GITHUB_NAME.'
+      BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+      return 1
     fi
+    [[ -n $remote_url ]] || remote_url="git@github.com:$GITHUB_NAME/dotfiles.git"
+    if ((DRY_RUN)); then
+      logg -i "[dry-run] git -C $BOOTSTRAP_ROOT remote set-url origin $remote_url"
+    else
+      git -C "$BOOTSTRAP_ROOT" remote set-url origin "$remote_url" || {
+        BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+        logg -e 'Failed to update the dotfiles origin remote.'
+        return 1
+      }
+    fi
+
+    if [[ $remote_url != *vivek-x-jha/dotfiles.git* ]] && ! git -C "$BOOTSTRAP_ROOT" remote get-url upstream &>/dev/null; then
+      run "git -C \"$BOOTSTRAP_ROOT\" remote add upstream https://github.com/vivek-x-jha/dotfiles.git" || return
+    fi
+  else
+    logg -i 'Preserving the dotfiles Git remotes.'
   fi
 
   if ((USE_1PASSWORD)); then
     local agent_file="$XDG_CONFIG_HOME/1Password/ssh/agent.toml"
     if [[ -f $agent_file ]]; then
       if ((DRY_RUN)); then
-        logg -i "[dry-run] perl -pi -e \"s/vault = \\\"Private\\\"/vault = \\\"$OP_VAULT\\\"/g\" $agent_file"
+        logg -i "[dry-run] update 1Password SSH agent vault in $(pretty_path "$agent_file")"
       else
-        perl -pi -e "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$agent_file"
+        perl -pi -e "s/vault = \"Private\"/vault = \"$OP_VAULT\"/g" "$agent_file" || {
+          BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+          return 1
+        }
       fi
     else
       logg -w "1Password SSH agent config not found at $agent_file"
@@ -425,16 +618,9 @@ configure_git_and_github() {
   fi
 
   if command -v gh &>/dev/null && confirm_config BOOTSTRAP_GH_AUTH 'Authenticate GitHub CLI' 'N'; then
-    if ((DRY_RUN)); then
-      logg -i '[dry-run] gh auth login'
-      logg -i "[dry-run] gh repo set-default $GITHUB_NAME/dotfiles"
-    else
-      run "cd \"$HOME/.dotfiles\" && gh auth login"
-      run "cd \"$HOME/.dotfiles\" && gh repo set-default \"$GITHUB_NAME/dotfiles\""
-    fi
+    run "cd \"$BOOTSTRAP_ROOT\" && gh auth login" || return
+    [[ -n ${GITHUB_NAME:-} ]] && run "cd \"$BOOTSTRAP_ROOT\" && gh repo set-default \"$GITHUB_NAME/dotfiles\""
   elif ! command -v gh &>/dev/null; then
     logg -w 'GitHub CLI not installed. Skipping gh auth.'
   fi
-
-  run "rm -f \"$HOME/.dotfiles/cli/gh/hosts.yml\""
 }

@@ -1,3 +1,6 @@
+# Legacy personal config retained so pre-refactor directory symlinks keep
+# working until bootstrap migrates them to a user-owned XDG Git directory.
+# New installations include auth/git/base instead of this file.
 [init]
 	defaultBranch = main
 [user]

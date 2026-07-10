@@ -3,7 +3,7 @@
 
 # Environment
 # shellcheck disable=SC1091
-source "$HOME/.dotfiles/shells/env"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/env"
 
 # Colorscheme
 # shellcheck disable=SC1090
@@ -27,7 +27,7 @@ source "$SHELL_CONFIG/profile"
 eval "$(starship init bash)"
 
 # Herdr helpers
-source "$HOME/.dotfiles/ai/herdr/default_pane_title.sh"
+source "$DOTFILES_DIR/ai/herdr/default_pane_title.sh"
 
 # Functions
 # shellcheck disable=SC1090

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 local plugin_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zap/plugins/zsh-autocomplete"
-local patch_file="$HOME/.dotfiles/shells/zsh/patches/zsh-autocomplete-fd-cleanup.patch"
+local patch_file="$DOTFILES_DIR/shells/zsh/patches/zsh-autocomplete-fd-cleanup.patch"
 local mode="${1:-apply}"
 
 case "$mode" in

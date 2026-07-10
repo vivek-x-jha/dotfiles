@@ -13,7 +13,8 @@ Personal macOS and Linux workstation configuration centered on a fast Herdr term
 - 🧠 Neovim managed with native `vim.pack`, `bob`, LSPs, formatters, and custom SourDiesel theming
 - 🖥️ Herdr, WezTerm, Hammerspoon, and macOS Terminal profiles for terminal workflows
 - 🔐 Optional 1Password CLI, shell plugin, Git signing, SSH agent, and Atuin sync setup
-- 🧪 Dry-run support before setup changes touch the machine
+- 🧪 Dry-run support plus clean/partial-state idempotence fixtures
+- 📥 POSIX one-shot installer that shallow-clones the last 10 commits
 
 ## 📚 Contents
 
@@ -33,7 +34,7 @@ Personal macOS and Linux workstation configuration centered on a fast Herdr term
 This repository is personal infrastructure. It is written to be repeatable, but it still changes shell startup files, package sets, symlinks, OS defaults, Git configuration, and optional privileged macOS settings.
 
 - Run `bootstrap.sh --dry-run` before applying changes.
-- Review [`manifests/Brewfile`](./manifests/Brewfile), [`manifests/apt-packages.txt`](./manifests/apt-packages.txt), and [`manifests/dnf-packages.txt`](./manifests/dnf-packages.txt) before installing packages.
+- Review the cumulative [`manifests/Brewfile*`](./manifests), [`manifests/apt-packages.txt`](./manifests/apt-packages.txt), and [`manifests/dnf-packages.txt`](./manifests/dnf-packages.txt) before installing packages.
 - macOS setup may request `sudo` for Homebrew setup, Touch ID sudo, and OS defaults.
 - 1Password integrations are optional, but secret-backed aliases and Git signing expect `op` and the 1Password desktop app to be configured.
 - Linux GUI app installation is implemented for `apt` and `dnf`, but desktop environments vary. Treat those steps as best effort.
@@ -87,7 +88,7 @@ sudo apt install -y git curl sudo bash zsh
 Then clone this repo and run bootstrap from the local checkout:
 
 ```sh
-git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
+git clone --depth 10 https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
 ~/.dotfiles/bootstrap.sh --check
 ~/.dotfiles/bootstrap.sh --doctor
 ~/.dotfiles/bootstrap.sh --dry-run
@@ -98,17 +99,27 @@ On WSL, GUI application installs are best-effort and can be skipped. The shell, 
 
 ## 🚀 Installation
 
-On macOS, use Safari for the optional 1Password install. Run the command blocks below in Terminal.
-
-Clone the repository:
+On macOS, complete `xcode-select --install` first. The recommended entrypoint works on both an empty home directory and a partially configured machine:
 
 ```sh
-git clone --depth 1 https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
+curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/install.sh | sh
 ```
 
-Use `git clone` rather than `curl | sh` because bootstrap symlinks files from the local `~/.dotfiles` checkout. `--depth 1` is fastest for a fresh machine; run `git fetch --unshallow` later if full history is needed.
+The POSIX installer clones `main` to `~/.dotfiles` with only the latest 10 commits, then starts the Bash bootstrap. If the checkout already exists, it fast-forwards a clean `main` checkout; dirty or non-main checkouts are preserved and used without updating. A pre-existing `~/.dotfiles` that is not a Git checkout causes a safe error rather than being overwritten.
 
-Preview setup:
+Preview bootstrap changes (the shallow clone itself still occurs when absent):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/vivek-x-jha/dotfiles/main/install.sh | sh -s -- --dry-run
+```
+
+A manual clone remains supported:
+
+```sh
+git clone --depth 10 https://github.com/vivek-x-jha/dotfiles.git ~/.dotfiles
+```
+
+Preview setup from an existing checkout:
 
 ```sh
 ~/.dotfiles/bootstrap.sh --dry-run
@@ -122,7 +133,9 @@ Without 1Password integration:
 ~/.dotfiles/bootstrap.sh
 ```
 
-By default, bootstrap uses the tracked defaults in [`bootstrap/defaults.env`](./bootstrap/defaults.env) and runs without setup questions. User overrides can be placed in `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`.
+By default, bootstrap uses the tracked defaults in [`bootstrap/defaults.env`](./bootstrap/defaults.env), detects whether the machine is fresh or partial, and runs without setup questions. User overrides can be placed in `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`. Existing managed links are reused; conflicting files, directories, or links are moved to timestamped paths under `$XDG_STATE_HOME/dotfiles/backups/` before replacement.
+
+Bootstrap never invents a Git identity or rewrites the checkout remote. Existing Git identity/signing values are preserved during migration. On a new account, set `BOOTSTRAP_GIT_NAME` and `BOOTSTRAP_GIT_EMAIL` in `bootstrap.env` or use `--interactive`. Remote rewriting and commit signing require explicit config.
 
 With explicit prompts:
 
@@ -145,9 +158,29 @@ Fresh and partial setup are both first-class:
 ~/.dotfiles/bootstrap.sh --list-targets
 ```
 
-For Homebrew app selection, keep the Brewfile as the source of truth and choose casks by config:
+Selected targets run their prerequisites automatically. For example, `--only ide` runs packages, Rust, environment collection, and symlink setup first; it also raises the effective Homebrew profile to `developer`. An explicitly skipped prerequisite blocks downstream work instead of producing cascading failures.
+
+Homebrew manifests are cumulative profiles configured in `$XDG_CONFIG_HOME/dotfiles/bootstrap.env`:
 
 ```sh
+BOOTSTRAP_BREW_PROFILE=core       # portable shell/terminal tools; default
+BOOTSTRAP_BREW_PROFILE=developer  # core + language/tooling/VS Code
+BOOTSTRAP_BREW_PROFILE=personal   # developer + personal GUI inventory
+```
+
+The sources are [`manifests/Brewfile`](./manifests/Brewfile), [`Brewfile.developer`](./manifests/Brewfile.developer), and [`Brewfile.personal`](./manifests/Brewfile.personal). Rust selection adds [`Brewfile.rust`](./manifests/Brewfile.rust) for prebuilt `cargo-binstall`; `--with-1password` independently adds [`Brewfile.1password`](./manifests/Brewfile.1password). Rust, IDE setup, and nightly Neovim are opt-in:
+
+```sh
+BOOTSTRAP_INSTALL_RUST_TOOLING=1
+BOOTSTRAP_SETUP_IDE=1
+BOOTSTRAP_INSTALL_NVIM_NIGHTLY=1  # optional; stable is otherwise selected
+```
+
+Casks can still be narrowed inside the selected profile:
+
+```sh
+BOOTSTRAP_BREW_PROFILE=developer
+BOOTSTRAP_ENABLE_1PASSWORD=1
 BOOTSTRAP_BREW_CASK_MODE=only
 BOOTSTRAP_BREW_CASKS="1password 1password-cli wezterm visual-studio-code"
 ```
@@ -168,36 +201,21 @@ Validate the installed workstation state any time after setup:
 ~/.dotfiles/bootstrap.sh --doctor
 ```
 
-`--doctor` is read-only and does not request elevated privileges.
+`--doctor` is read-only and does not request elevated privileges. A successful bootstrap records its checkout root and completion metadata under `$XDG_STATE_HOME/dotfiles/`; reruns converge on the same managed state. Each target also records duration and a checkpoint under `$XDG_STATE_HOME/dotfiles/runs/`. After a failed run, fix the cause and resume a matching plan without repeating successful targets:
+
+```sh
+~/.dotfiles/bootstrap.sh --resume
+```
 
 ## 🧭 Bootstrap Flow
 
-`bootstrap.sh` is now a thin orchestrator. It loads defaults and local overrides, sources implementation modules from [`bootstrap/lib`](./bootstrap/lib), then executes a fixed phase list:
-
-1. 🧬 Detect platform and package manager
-2. 🔑 Refresh sudo credentials and detect 1Password
-3. 📦 Install platform package sets
-4. 🧾 Collect user/runtime environment
-5. 🔗 Create symlinks and XDG state directories
-6. 🎨 Apply Codex SourDiesel UI preferences
-7. 🍎 Apply macOS defaults
-8. 🔐 Configure Git and GitHub CLI
-9. 🧑‍💻 Optionally clone curated repos into `~/Developer`
-10. 🧱 Optionally install templates
-11. 🐚 Install shell plugin managers
-12. 🕰️ Optionally provision Atuin sync
-13. 🎨 Build the bat cache
-14. 👆 Optionally configure Touch ID sudo on macOS
-15. 🤫 Create `~/.hushlogin`
-16. 🐚 Optionally set login shell
-17. 🔨 Point Hammerspoon at XDG config
-18. 🦀 Install Rust toolchain and cargo tools
-19. 🧠 Install editor tooling
+`bootstrap.sh` is a thin orchestrator. It loads defaults and local overrides, detects the platform, resolves a target dependency graph, then executes enabled targets in a stable order. Shared prerequisites run once, failed prerequisites block downstream targets, and independent targets continue so the final report remains useful. Network-sensitive installers use bounded retry/backoff. Every executed target reports elapsed time and writes a success checkpoint for explicit `--resume` recovery.
 
 ## 📁 Repository Layout
 
 | Path | Purpose |
 |---|---|
+| [`install.sh`](./install.sh) | POSIX one-shot shallow clone/update entrypoint |
 | [`bootstrap.sh`](./bootstrap.sh) | Thin setup entrypoint and phase orchestrator |
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`tools/sourdiesel-bootstrap`](./tools/sourdiesel-bootstrap) | Optional Rust orbital installer TUI frontend for bootstrap tasks |
@@ -236,7 +254,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [eva](https://github.com/vivek-x-jha/eva) | `~/.config/eva` | `EVA_CONFIG_DIR` defaults to `$XDG_CONFIG_HOME/eva` or `~/.config/eva`; legacy config locations are checked as fallbacks. |
 | [GitHub CLI](https://cli.github.com/manual/) | `~/.config/gh/config.yml` | gh stores CLI config under XDG config. |
 | Herdr | `~/.config/herdr/config.toml` | Repo-managed terminal workspace config links from `ai/herdr`. |
-| [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Git supports an XDG global config path. Main Git settings live in `auth/git/config`; SourDiesel styling is included from `auth/git/themes/sourdiesel`. |
+| [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Bootstrap keeps this user-owned file and adds an include for portable defaults in `auth/git/base`; identity, signing, and remotes are not stored in the portable defaults. SourDiesel styling links from `auth/git/themes/sourdiesel`. |
 | [Glow](https://github.com/charmbracelet/glow) | `~/.config/glow/glow.yml` | Used with `GLAMOUR_STYLE` for the SourDiesel style. |
 | [Karabiner-Elements](https://karabiner-elements.pqrs.org/docs/manual/) | `~/.config/karabiner/karabiner.json` | Native user config path. |
 | [Neovim](https://neovim.io/doc/user/starting/#standard-path) | `~/.config/nvim` | Neovim uses `stdpath()` and XDG base dirs. |
@@ -330,8 +348,8 @@ Native application theme files remain hand-authored. After changing the palette 
 
 ### 🔐 Auth and Secrets
 
-- Git config, identity, and signing live in [`auth/git/config`](./auth/git/config), and theme settings are included from [`auth/git/themes/sourdiesel`](./auth/git/themes/sourdiesel).
-- SSH client config, known hosts, and allowed signers live under [`auth/ssh`](./auth/ssh). File-backed private keys live under `~/.config/ssh/keys/`, and the base SSH config includes the selected backend file directly from `~/.config/ssh/identities/`, such as `1password` or `ssh-agent`.
+- Portable Git defaults live in [`auth/git/base`](./auth/git/base), while identity and signing remain in the user-owned XDG Git config. [`auth/git/config`](./auth/git/config) is retained only to migrate pre-refactor directory symlinks safely. Theme settings are included from [`auth/git/themes/sourdiesel`](./auth/git/themes/sourdiesel).
+- Portable SSH defaults live in [`auth/ssh/base`](./auth/ssh/base). Bootstrap keeps `~/.config/ssh/config` user-owned, appends one managed include, and seeds `known_hosts` without replacing existing state. [`auth/ssh/config`](./auth/ssh/config) remains only for safe migration of pre-refactor directory symlinks. The optional backend is selected through `~/.config/ssh/identity.conf`; 1Password is linked only when explicitly enabled.
 - [1Password CLI](https://developer.1password.com/docs/cli/) is optional but enables secret-backed aliases.
 - [1Password Shell Plugins](https://developer.1password.com/docs/cli/shell-plugins) wrap supported CLIs such as `gh`.
 - [1Password SSH Agent](https://developer.1password.com/docs/ssh/agent/) signs SSH requests without private keys leaving 1Password.
@@ -358,8 +376,8 @@ Notes:
 1Password is optional. When enabled, bootstrap can:
 
 - sign in to `op`
-- fetch Git identity and signing material
-- configure Git signing through 1Password or OpenSSH
+- select the 1Password SSH agent backend
+- configure Git signing when an existing or explicitly supplied signing key is available
 - create or update Atuin sync credentials
 - link 1Password SSH agent configuration
 - wrap supported CLI aliases such as `gh` through `op plugin run`
@@ -389,12 +407,14 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export PATH="$CARGO_HOME/bin:$PATH"
 ```
 
-The Rust install flow:
+Rust setup is disabled in the core profile unless `BOOTSTRAP_INSTALL_RUST_TOOLING=1` or a selected target requires it. The install flow:
 
-1. Installs rustup if missing.
-2. Updates the stable toolchain.
-3. Installs `cargo-update`.
-4. Installs cargo-managed CLI tools from the Brewfile cargo section, including `zsh-patina` for Zsh syntax highlighting and completion generation.
+1. Installs rustup and stable editor components when missing.
+2. Reuses commands supplied as prebuilt Homebrew formulae.
+3. Uses `cargo-binstall` for missing tools when available.
+4. Compiles with `cargo install --locked` only as a fallback; already available commands are skipped.
+
+IDE setup selects stable Neovim by default. `BOOTSTRAP_INSTALL_NVIM_NIGHTLY=1` installs and selects nightly as well. Existing uv and npm tools are not reinstalled on every rerun.
 
 `update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
 The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested helpers before the recursive quarantine pass completes. Restart upgraded apps manually to use their new versions. The quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
@@ -403,25 +423,21 @@ The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested h
 
 ### macOS
 
-Homebrew setup uses [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile) and [`manifests/Brewfile`](./manifests/Brewfile). Cask selection supports `BOOTSTRAP_BREW_CASK_MODE=all`, `skip`, or `only` with `BOOTSTRAP_BREW_CASKS`; formulae, VS Code extensions, cargo tools, and uv tools remain installed from the selected Brewfile.
+Homebrew setup assembles cumulative `core`, `developer`, or `personal` manifests before running [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile). Cask selection supports `BOOTSTRAP_BREW_CASK_MODE=all`, `skip`, or `only` with `BOOTSTRAP_BREW_CASKS`. The core profile contains portable prebuilt CLI tools and a small terminal/automation cask baseline; developer adds language tooling and VS Code; personal adds the larger GUI inventory. A non-empty `BOOTSTRAP_BREWFILE` replaces profile assembly with a custom local path or URL.
 
 fzf is installed from upstream git into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc` instead of through Homebrew, apt, or dnf.
 
-The Brewfile includes:
+Profile manifests contain Homebrew formulae, casks, and—under the developer profile—VS Code extensions. Cargo and uv tools are handled by their dedicated opt-in phases.
 
-- Homebrew formulae
-- casks
-- VS Code extensions
-- cargo-installed tools
-- uv-installed Python tools
-
-Useful checks:
+Useful core checks:
 
 ```sh
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 brew bundle install --file "$HOME/.dotfiles/manifests/Brewfile"
 brew doctor
 ```
+
+Bootstrap assembles additive profiles into a temporary Brewfile; use `--dry-run` to inspect the selected plan without installing it. `brew bundle dump` maintenance writes an observed inventory to `$XDG_STATE_HOME/homebrew/Brewfile.snapshot` rather than overwriting curated profile sources.
 
 ### Linux
 
@@ -444,6 +460,16 @@ After significant changes:
 ~/.dotfiles/bootstrap.sh --dry-run
 bash -n ~/.dotfiles/bootstrap.sh
 ```
+
+`--check` includes isolated fixtures for clean setup, conflict backup, repeated symlink convergence, Homebrew profile composition, target dependency ordering, checkpoint resume, downstream failure skipping, ten-commit shallow cloning, and preservation of dirty existing checkouts.
+
+For a destructive end-to-end test in a disposable clean Apple Silicon VM, finish Command Line Tools installation and run:
+
+```sh
+BOOTSTRAP_ALLOW_VM_INSTALL=1 bootstrap/tests/macos-vm.sh
+```
+
+The harness performs a complete core install, a convergence rerun, and doctor validation while retaining logs and timings under `$XDG_STATE_HOME/dotfiles/vm-validation/`. It intentionally refuses non-arm64 macOS hosts, previously bootstrapped accounts, and runs without the explicit safety variable.
 
 Then verify:
 
@@ -503,7 +529,7 @@ Keep `ai/codex/` limited to repo-managed Codex inputs:
 - `themes/`: TOML fragments for managed UI preferences.
 - `config/`: portable, non-secret Codex defaults.
 - `scripts/`: idempotent helpers that merge or validate those fragments.
-- `skills/`: personal skill sources. Bootstrap discovers each child directory containing `SKILL.md` and links it into `$CODEX_HOME/skills`; adding another skill does not require bootstrap edits.
+- `skills/`: skill sources. Bootstrap discovers each child directory containing `SKILL.md` and links portable skills into `$CODEX_HOME/skills`; machine/personal workflow skills require `BOOTSTRAP_INSTALL_PERSONAL_AI_SKILLS=1`.
 - `AGENTS.md`: tracked symlink/reference to shared global guidance; bootstrap links `$CODEX_HOME/AGENTS.md -> ../../../.dotfiles/ai/AGENTS.md`.
 - Optional docs or templates that are safe to share.
 

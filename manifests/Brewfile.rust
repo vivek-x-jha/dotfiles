@@ -1,0 +1,3 @@
+# Optional Rust tooling bootstrap addition.
+
+brew "cargo-binstall"

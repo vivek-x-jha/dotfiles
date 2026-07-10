@@ -1,3 +1,6 @@
+# Legacy personal config retained so pre-refactor directory symlinks keep
+# working until bootstrap migrates them to a user-owned XDG SSH directory.
+# New installations include auth/ssh/base instead of this file.
 Include ~/.config/ssh/identities/1password
 
 Host github.com

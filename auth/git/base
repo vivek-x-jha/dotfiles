@@ -1,0 +1,9 @@
+# Portable Git defaults included by the user-owned XDG Git config.
+[init]
+	defaultBranch = main
+[pull]
+	ff = only
+[core]
+	sshCommand = ssh -F ~/.config/ssh/config
+[include]
+	path = ~/.config/git/themes/sourdiesel

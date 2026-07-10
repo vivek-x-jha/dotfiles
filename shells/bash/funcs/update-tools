@@ -159,8 +159,8 @@ EOF
   }
 
   refresh_herdr_completions() {
-    local bash_completion="$HOME/.dotfiles/shells/bash/comps/herdr.bash"
-    local zsh_completion="$HOME/.dotfiles/shells/zsh/comps/_herdr"
+    local bash_completion="$DOTFILES_DIR/shells/bash/comps/herdr.bash"
+    local zsh_completion="$DOTFILES_DIR/shells/zsh/comps/_herdr"
     local zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
     if ! command -v herdr &>/dev/null; then
@@ -185,8 +185,8 @@ EOF
     local zsh_autocomplete_reverse_cmd
     zsh_autocomplete_reverse_cmd=$(
       printf '%s' \
-        "zsh -fc 'source \"\$HOME/.dotfiles/shells/env\"; " \
-        "fpath=(\"\$HOME/.dotfiles/shells/zsh/funcs\" \"\${fpath[@]}\"); " \
+        "zsh -fc 'source \"\$DOTFILES_DIR/shells/env\"; " \
+        "fpath=(\"\$DOTFILES_DIR/shells/zsh/funcs\" \"\${fpath[@]}\"); " \
         "autoload -Uz patch-zsh-autocomplete; " \
         "patch-zsh-autocomplete reverse'"
     )
@@ -194,8 +194,8 @@ EOF
     local zsh_autocomplete_apply_cmd
     zsh_autocomplete_apply_cmd=$(
       printf '%s' \
-        "zsh -fc 'source \"\$HOME/.dotfiles/shells/env\"; " \
-        "fpath=(\"\$HOME/.dotfiles/shells/zsh/funcs\" \"\${fpath[@]}\"); " \
+        "zsh -fc 'source \"\$DOTFILES_DIR/shells/env\"; " \
+        "fpath=(\"\$DOTFILES_DIR/shells/zsh/funcs\" \"\${fpath[@]}\"); " \
         "autoload -Uz patch-zsh-autocomplete; " \
         "patch-zsh-autocomplete apply'"
     )
@@ -280,7 +280,8 @@ EOF
     notify -s 'EXPORT BREWFILE'
     if [[ -z ${HOMEBREW_BUNDLE_FILE:-} ]]; then
       logg -w 'HOMEBREW_BUNDLE_FILE unset; skipping Brewfile export'
-    elif logg -c 'brew bundle dump --force --no-npm'; then
+    elif mkdir -p "$(dirname "$HOMEBREW_BUNDLE_FILE")" \
+      && logg -c 'brew bundle dump --force --no-npm'; then
       :
     else
       logg -w 'UPDATE BREWFILE FAILED'

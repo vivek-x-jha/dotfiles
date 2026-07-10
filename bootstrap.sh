@@ -3,6 +3,8 @@
 
 BOOTSTRAP_ENTRYPOINT="${BASH_SOURCE[0]}"
 BOOTSTRAP_ROOT="$(cd "$(dirname "$BOOTSTRAP_ENTRYPOINT")" && pwd)"
+export BOOTSTRAP_ROOT
+export DOTFILES_DIR="$BOOTSTRAP_ROOT"
 
 # shellcheck source=bootstrap/lib/core.sh
 source "$BOOTSTRAP_ROOT/bootstrap/lib/core.sh"
@@ -28,6 +30,7 @@ Usage: bootstrap.sh [options]
   -c, --check              Validate repo files and shell syntax, then exit
   -d, --doctor             Validate installed workstation state, then exit
   -n, --dry-run            Print actions instead of executing them
+  -r, --resume             Resume checkpoints from the last incomplete matching plan
   -i, --interactive        Prompt for configurable choices instead of using defaults
       --tui                Open the sourdiesel-bootstrap orbital installer UI
       --config PATH        Load an additional bootstrap config override
@@ -47,6 +50,7 @@ parse_args() {
     -c | --check) CHECK_MODE=1 ;;
     -d | --doctor) DOCTOR_MODE=1 ;;
     -n | --dry-run) DRY_RUN=1 ;;
+    -r | --resume) RESUME_MODE=1 ;;
     -i | --interactive) INTERACTIVE_OVERRIDE=1 ;;
     --tui) TUI_MODE=1 ;;
     --fresh) BOOTSTRAP_PROFILE_OVERRIDE=fresh ;;
@@ -97,10 +101,13 @@ parse_args() {
 
 main() {
   parse_args "$@"
-  clear
+  [[ -t 1 && -n ${TERM:-} ]] && clear
   init_xdg
+  init_tool_environment
   load_bootstrap_config
   apply_bootstrap_target_selection
+  resolve_bootstrap_profile
+  resolve_bootstrap_dependency_plan
 
   ((TUI_MODE)) && {
     run_sourdiesel_bootstrap_tui
@@ -123,74 +130,22 @@ main() {
     exit $?
   }
 
-  if [[ -n ${BOOTSTRAP_ONLY_TARGETS:-} ]]; then
-    notify 'DETECT 1PASSWORD'
-    use_op
-    run_bootstrap_target_selection
-    printf '\n%s\n' "${CYAN}SELECTED BOOTSTRAP TARGETS COMPLETE${RESET}"
-    exit 0
-  fi
+  init_bootstrap_run_state || exit 1
 
   notify 'AUTHORIZE & DETECT 1PASSWORD'
-  authorize
+  bootstrap_needs_sudo && authorize
   use_op
 
-  notify 'INSTALL COMMANDS & APPS'
-  install_command_phase
+  if [[ -n ${BOOTSTRAP_ONLY_TARGETS:-} ]]; then
+    run_bootstrap_target_selection || true
+  else
+    run_all_bootstrap_targets
+  fi
 
-  notify 'SET ENVIRONMENT'
-  run_configured_step BOOTSTRAP_COLLECT_ENVIRONMENT 'environment collection' collect_environment
-
-  notify 'CREATE SYMLINKS & DIRECTORIES'
-  run_configured_step BOOTSTRAP_CREATE_SYMLINKS 'XDG symlink setup' create_symlinks
-
-  notify 'CONFIGURE CODEX UI'
-  run_configured_step BOOTSTRAP_CONFIGURE_CODEX 'Codex configuration' configure_codex_phase
-
-  notify 'CONFIGURE OS OPTIONS'
-  run_configured_step BOOTSTRAP_CONFIGURE_OS 'OS defaults' configure_macos_defaults
-
-  notify 'CONFIGURE GIT AND GITHUB CLI'
-  run_configured_step BOOTSTRAP_CONFIGURE_GIT 'Git and GitHub configuration' configure_git_and_github
-
-  notify 'CLONE DEVELOPER REPOS'
-  run_configured_step BOOTSTRAP_CLONE_DEVELOPER_REPOS 'developer repo clone' clone_developer_repos
-
-  notify 'INSTALL TEMPLATES'
-  run_configured_step BOOTSTRAP_INSTALL_TEMPLATES 'template repository install' install_templates
-
-  notify 'INSTALL SHELL PLUGIN MANAGERS'
-  run_configured_step BOOTSTRAP_INSTALL_SHELL_PLUGINS 'shell plugin manager install' install_shell_plugins
-
-  notify 'SETUP ATUIN SYNC'
-  run_configured_step BOOTSTRAP_SETUP_ATUIN_SYNC 'Atuin sync setup' setup_atuin_sync
-
-  notify 'LOAD BAT THEMES'
-  run_configured_step BOOTSTRAP_LOAD_BAT_THEMES 'bat cache rebuild' load_bat_themes
-
-  notify 'SETUP SUDO AUTH'
-  run_configured_step BOOTSTRAP_CONFIGURE_SUDO_AUTH 'Touch ID sudo setup' configure_sudo_auth
-
-  notify 'SUPPRESS LOGIN BANNER'
   run 'touch ~/.hushlogin' && logg -i 'Ensured ~/.hushlogin exists'
-
-  notify 'CHANGE SHELL'
-  run_configured_step BOOTSTRAP_CHANGE_SHELL 'default shell change' change_shell_default
-
-  notify 'DESKTOP INTEGRATION'
-  run_configured_step BOOTSTRAP_CONFIGURE_HAMMERSPOON 'desktop integration' configure_hammerspoon
-
-  notify 'INSTALL RUST TOOLING'
-  run_configured_step BOOTSTRAP_INSTALL_RUST_TOOLING 'Rust tooling install' install_rust_tooling
-
-  notify 'SETUP IDE TOOLS'
-  run_configured_step BOOTSTRAP_SETUP_IDE 'IDE tooling setup' setup_ide
-
   run "rmdir \"$XDG_CONFIG_HOME/homebrew\" 2>/dev/null || true"
 
-  printf '\n%s\n' "${CYAN}BOOTSTRAP COMPLETE - HAPPY DEVELOPING!...${RESET}"
-  logg -w 'RESTART YOUR TERMINAL WINDOW TO LOAD THE NEW CONFIGURATION'
-  echo
+  finish_bootstrap
 }
 
 main "$@"
