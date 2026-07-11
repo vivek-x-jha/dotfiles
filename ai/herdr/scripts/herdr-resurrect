@@ -142,13 +142,18 @@ restore_state() {
   require_jq
   [[ -f "$state_file" ]] || { echo "herdr-resurrect: no state file: $state_file" >&2; exit 1; }
 
-  local pane_id cmd kind exists restored=0 skipped=0 missing=0 restored_file
+  local pane_id cmd kind cwd run_cmd exists restored=0 skipped=0 missing=0 restored_file
   restored_file="$(mktemp)"
   trap 'rm -f "$restored_file"' RETURN
   while IFS= read -r row; do
     pane_id="$(jq -r '.pane_id' <<<"$row")"
     kind="$(jq -r '.kind' <<<"$row")"
+    cwd="$(jq -r '.cwd // empty' <<<"$row")"
     cmd="$(jq -r '.command' <<<"$row")"
+    run_cmd="$cmd"
+    if [[ -n "$cwd" && -d "$cwd" ]]; then
+      run_cmd="cd $(printf '%q' "$cwd") && exec $cmd"
+    fi
 
     exists="$($herdr_bin pane get "$pane_id" 2>/dev/null || true)"
     if [[ -z "$exists" ]]; then
@@ -163,11 +168,13 @@ restore_state() {
       continue
     fi
 
-    printf 'restore %s in %s: %s\n' "$kind" "$pane_id" "$cmd"
-    if jq -e '.result.pane.title == "terminal"' <<<"$exists" >/dev/null; then
+    printf 'restore %s in %s: %s\n' "$kind" "$pane_id" "$run_cmd"
+    $herdr_bin pane run "$pane_id" "$run_cmd" >/dev/null
+    if [[ "$kind" == "nvim" ]]; then
+      $herdr_bin pane rename "$pane_id" editor >/dev/null 2>&1 || true
+    elif jq -e '.result.pane.label == "terminal"' <<<"$exists" >/dev/null; then
       $herdr_bin pane rename "$pane_id" --clear >/dev/null 2>&1 || true
     fi
-    $herdr_bin pane run "$pane_id" "$cmd" >/dev/null
     printf '%s\n' "$pane_id" >> "$restored_file"
     restored=$((restored + 1))
   done < <(jq -c '.commands[]' "$state_file")
