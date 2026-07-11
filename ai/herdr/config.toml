@@ -65,6 +65,11 @@ key = "prefix+ctrl+r"
 command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" restore 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Resurrect restored" --body "$out"; exit $status' '''
 description = "Restore Herdr processes"
 
+[[keys.command]]
+key = "prefix+="
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-balance-panes" 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Panes balanced" --body "$out"; exit $status' '''
+description = "Balance panes in the current tab"
+
 [experimental]
 switch_ascii_input_source_in_prefix = true
 pane_history = true
