@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "71dc7545c1f399c7f76eeef80efa1d8bda0ff471",
+      "rev": "cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
@@ -57,7 +57,7 @@
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-web-devicons": {
-      "rev": "dad71387de386a946b123079d0e53f23028f3abd",
+      "rev": "09d1324e264c6950262dbe02a9bce2933a6800db",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "render-markdown.nvim": {
