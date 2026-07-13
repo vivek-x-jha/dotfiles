@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+herdr_bin="${HERDR_BIN:-herdr}"
+codex_home="${CODEX_HOME:-${XDG_STATE_HOME:-$HOME/.local/state}/codex}"
+session_index="$codex_home/session_index.jsonl"
+pane_id="${HERDR_PANE_ID:-}"
+source_name="codex-thread-title"
+icon=$'\U000f167a'
+interval="${HERDR_CODEX_TITLE_INTERVAL:-1}"
+max_wait="${HERDR_CODEX_TITLE_WAIT_SECONDS:-20}"
+
+[[ -n "$pane_id" && "${HERDR_ENV:-}" == 1 ]] || exit 0
+command -v "$herdr_bin" >/dev/null || exit 0
+command -v jq >/dev/null || exit 0
+[[ -f "$session_index" ]] || exit 0
+
+session_id_for_pane() {
+  "$herdr_bin" pane get "$pane_id" 2>/dev/null \
+    | jq -r '
+      .result.pane.agent_session
+      | select(.agent == "codex" and .kind == "id")
+      | .value
+      | select(type == "string" and length > 0)
+    '
+}
+
+pane_has_codex_agent() {
+  "$herdr_bin" pane get "$pane_id" 2>/dev/null \
+    | jq -e '.result.pane.agent == "codex"' >/dev/null
+}
+
+thread_name() {
+  local session_id="$1"
+  [[ "$session_id" =~ ^[0-9a-f-]{36}$ && -f "$session_index" ]] || return 1
+  jq -r --arg session_id "$session_id" '
+    select(.id == $session_id)
+    | .thread_name
+    | select(type == "string" and length > 0)
+  ' "$session_index" 2>/dev/null | tail -1
+}
+
+report_title() {
+  local title="$1"
+  "$herdr_bin" pane report-metadata "$pane_id" \
+    --source "$source_name" \
+    --agent codex \
+    --title "$title" \
+    --display-agent "$title" \
+    >/dev/null 2>&1 || true
+}
+
+last_title=""
+deadline=$((SECONDS + max_wait))
+
+while :; do
+  if ! pane_has_codex_agent; then
+    (( SECONDS >= deadline )) && exit 0
+    sleep "$interval"
+    continue
+  fi
+
+  session_id="$(session_id_for_pane || true)"
+  if [[ -z "$session_id" ]]; then
+    (( SECONDS >= deadline )) && exit 0
+    sleep "$interval"
+    continue
+  fi
+
+  title="$(thread_name "$session_id" || true)"
+  if [[ -n "$title" ]]; then
+    display_title="$icon $title"
+    if [[ "$display_title" != "$last_title" ]]; then
+      report_title "$display_title"
+      last_title="$display_title"
+    fi
+  fi
+
+  sleep "$interval"
+done

@@ -108,6 +108,7 @@ check_bootstrap() {
   check_path "$BOOTSTRAP_ROOT/shells/starship.toml"
   check_path "$BOOTSTRAP_ROOT/cli/fzf/config"
   check_path "$BOOTSTRAP_ROOT/ai/herdr/config.toml"
+  check_path "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-codex-title-watch"
   check_path "$BOOTSTRAP_ROOT/ai/pi/README.md"
   check_path "$BOOTSTRAP_ROOT/ai/pi/models.json"
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/handoff-alias.ts"
@@ -308,6 +309,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_CONFIG_HOME/bat" ../.dotfiles/cli/bat
   doctor_symlink "$XDG_CONFIG_HOME/btop" ../.dotfiles/cli/btop
   doctor_symlink "$XDG_CONFIG_HOME/herdr/config.toml" ../../.dotfiles/ai/herdr/config.toml
+  doctor_symlink "$HOME/.local/bin/herdr-codex-title-watch" ../../.dotfiles/ai/herdr/scripts/herdr-codex-title-watch
   doctor_symlink "$XDG_CONFIG_HOME/dust" ../.dotfiles/cli/dust
   doctor_symlink "$XDG_CONFIG_HOME/eva" ../.dotfiles/cli/eva
   doctor_symlink "$XDG_CONFIG_HOME/fzf" ../.dotfiles/cli/fzf

@@ -3,6 +3,7 @@ set -euo pipefail
 
 state_file="${HERDR_RESURRECT_FILE:-${XDG_STATE_HOME:-$HOME/.local/state}/herdr/resurrect.json}"
 herdr_bin="${HERDR_BIN:-herdr}"
+codex_title_watch="${HERDR_CODEX_TITLE_WATCH:-$HOME/.dotfiles/ai/herdr/scripts/herdr-codex-title-watch}"
 
 usage() {
   cat <<'EOF'
@@ -98,6 +99,9 @@ save_state() {
           cmd="codex resume $(printf '%q' "$session_path")"
         else
           cmd="codex resume --last"
+        fi
+        if [[ -x "$codex_title_watch" ]]; then
+          cmd="$(printf '%q' "$codex_title_watch") & $cmd"
         fi
       fi
 
