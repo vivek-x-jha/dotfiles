@@ -9,6 +9,10 @@ packages, and settings stay in state.
 - `models.json` registers the local OpenAI-compatible Ollama provider.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
 - `extensions/statusline.ts` is the custom SourDiesel statusline/turn-UI extension.
+- `extensions/thread-title.ts` keeps the terminal and Herdr pane title aligned with
+  the current Pi session name.
+- `extensions/herdr-agent-state.ts` is the tracked copy of Herdr's managed Pi
+  integration. `herdr integration install pi` updates it through the runtime symlink.
 - `skills/handoff/` creates goal-focused session handoffs and copies the suggested
   first message to the clipboard when a supported clipboard command is available.
 - `extensions/handoff-alias.ts` exposes that skill as `/handoff <goal>` in addition
