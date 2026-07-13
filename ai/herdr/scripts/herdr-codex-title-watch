@@ -42,6 +42,14 @@ thread_name() {
 
 report_title() {
   local title="$1"
+  local pane_info label
+
+  pane_info="$($herdr_bin pane get "$pane_id" 2>/dev/null || true)"
+  label="$(jq -r '.result.pane.label // empty' <<<"$pane_info")"
+  if [[ "$label" == "terminal" ]]; then
+    "$herdr_bin" pane rename "$pane_id" --clear >/dev/null 2>&1 || true
+  fi
+
   "$herdr_bin" pane report-metadata "$pane_id" \
     --source "$source_name" \
     --agent codex \

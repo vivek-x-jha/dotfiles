@@ -100,9 +100,6 @@ save_state() {
         else
           cmd="codex resume --last"
         fi
-        if [[ -x "$codex_title_watch" ]]; then
-          cmd="$(printf '%q' "$codex_title_watch") & $cmd"
-        fi
       fi
 
       [[ -n "$kind" && -n "$cmd" ]] || continue
@@ -146,7 +143,7 @@ restore_state() {
   require_jq
   [[ -f "$state_file" ]] || { echo "herdr-resurrect: no state file: $state_file" >&2; exit 1; }
 
-  local pane_id cmd kind cwd run_cmd exists restored=0 skipped=0 missing=0 restored_file
+  local pane_id cmd kind cwd launch_cmd run_cmd exists restored=0 skipped=0 missing=0 restored_file
   restored_file="$(mktemp)"
   trap 'rm -f "$restored_file"' RETURN
   while IFS= read -r row; do
@@ -154,9 +151,17 @@ restore_state() {
     kind="$(jq -r '.kind' <<<"$row")"
     cwd="$(jq -r '.cwd // empty' <<<"$row")"
     cmd="$(jq -r '.command' <<<"$row")"
-    run_cmd="$cmd"
+    if [[ "$kind" == "codex" && "$cmd" == *herdr-codex-title-watch* ]]; then
+      cmd="${cmd#* & }"
+    fi
+    if [[ "$kind" == "codex" && -x "$codex_title_watch" ]]; then
+      launch_cmd="{ $(printf '%q' "$codex_title_watch") & exec $cmd; }"
+    else
+      launch_cmd="exec $cmd"
+    fi
+    run_cmd="$launch_cmd"
     if [[ -n "$cwd" && -d "$cwd" ]]; then
-      run_cmd="cd $(printf '%q' "$cwd") && exec $cmd"
+      run_cmd="cd $(printf '%q' "$cwd") && $launch_cmd"
     fi
 
     exists="$($herdr_bin pane get "$pane_id" 2>/dev/null || true)"
