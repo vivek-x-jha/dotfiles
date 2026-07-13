@@ -27,8 +27,15 @@ setopt incappendhistory
 setopt sharehistory
 setopt autocd
 
-# Completion/function lookup path
-fpath=("$ZDOTDIR/comps" "$ZDOTDIR/funcs" "${fpath[@]}")
+# Completion/function lookup path. Prefer Homebrew's stable symlink because
+# long-lived Herdr servers can retain a removed Cellar path after zsh upgrades.
+fpath=(
+  "$ZDOTDIR/comps"
+  "$ZDOTDIR/funcs"
+  /opt/homebrew/share/zsh/functions(N/)
+  "${fpath[@]}"
+)
+typeset -U fpath
 export FPATH
 
 # Plugin Manager
