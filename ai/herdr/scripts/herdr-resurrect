@@ -46,11 +46,18 @@ codex_session_from_pid() {
 }
 
 pane_is_idle() {
-  local pane_id="$1" info shell_pid fg_count non_shell_count
+  local pane_id="$1" info shell_pid shell_name fg_count non_shell_count
   info="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null || true)"
   [[ -n "$info" ]] || return 1
   shell_pid="$(jq -r '.result.process_info.shell_pid // empty' <<<"$info")"
   [[ -n "$shell_pid" ]] || return 1
+  shell_name="$(jq -r --argjson shell_pid "$shell_pid" '.result.process_info.foreground_processes[]? | select(.pid == $shell_pid) | (.argv0 // .name // empty)' <<<"$info" | head -1)"
+  shell_name="${shell_name##*/}"
+  shell_name="${shell_name#-}"
+  case "$shell_name" in
+    sh|bash|dash|fish|ksh|zsh) ;;
+    *) return 1 ;;
+  esac
   fg_count="$(jq '.result.process_info.foreground_processes | length' <<<"$info")"
   non_shell_count="$(jq --argjson shell_pid "$shell_pid" '[.result.process_info.foreground_processes[] | select(.pid != $shell_pid)] | length' <<<"$info")"
   [[ "$fg_count" -gt 0 && "$non_shell_count" -eq 0 ]]
@@ -155,9 +162,9 @@ restore_state() {
       cmd="${cmd#* & }"
     fi
     if [[ "$kind" == "codex" && -x "$codex_title_watch" ]]; then
-      launch_cmd="{ $(printf '%q' "$codex_title_watch") & exec $cmd; }"
+      launch_cmd="{ $(printf '%q' "$codex_title_watch") & $cmd; }"
     else
-      launch_cmd="exec $cmd"
+      launch_cmd="$cmd"
     fi
     run_cmd="$launch_cmd"
     if [[ -n "$cwd" && -d "$cwd" ]]; then

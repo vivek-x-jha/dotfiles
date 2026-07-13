@@ -34,6 +34,24 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
+## KI-2026-07-12-herdr-resurrect-command-injection
+
+**Status:** Fixed pending verification.
+**Last verified:** 2026-07-12 (live process evidence and shell validation).
+**Area:** Herdr process resurrection
+
+**Observed:** Re-running resurrection could insert a session-specific restore command as text into a pane where Neovim was already running.
+
+**Likely cause:** Restore commands used `exec`, replacing the pane shell. Herdr then reported the foreground application PID as `shell_pid`, and the idle check incorrectly treated that application as an idle shell.
+
+**Workaround/fix:** `herdr-resurrect` no longer wraps restored commands with `exec`, and `pane_is_idle` now verifies that the reported shell process is a recognized shell before injecting a command.
+
+**Reproduce/retest:** Save and restore panes containing Neovim, Pi, and Codex, then invoke restore again while they remain active. Confirm all panes are reported busy and no restore command is inserted into an application.
+
+**Exit criteria:** A complete save/restore cycle followed by repeated restore attempts leaves every active application unchanged and still restores idle panes correctly.
+
+**References:** `ai/herdr/scripts/herdr-resurrect`.
+
 ## KI-2026-07-09-clean-macos-bootstrap-validation
 
 **Status:** Open; guarded validation harness implemented, destructive VM run pending.
