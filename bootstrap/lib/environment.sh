@@ -348,6 +348,7 @@ create_symlinks() {
     "$BOOTSTRAP_ROOT/cli/btop" "$XDG_CONFIG_HOME/btop"
     "$BOOTSTRAP_ROOT/ai/herdr/config.toml" "$XDG_CONFIG_HOME/herdr/config.toml"
     "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-balance-panes" "$HOME/.local/bin/herdr-balance-panes"
+    "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-codex-title-watch" "$HOME/.local/bin/herdr-codex-title-watch"
     "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-resurrect" "$HOME/.local/bin/herdr-resurrect"
     "$BOOTSTRAP_ROOT/cli/dust" "$XDG_CONFIG_HOME/dust"
     "$BOOTSTRAP_ROOT/cli/eva" "$XDG_CONFIG_HOME/eva"

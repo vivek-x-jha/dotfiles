@@ -33,4 +33,19 @@
   }
 
   _herdr_default_pane_title
+
+  _herdr_codex_title_watch() {
+    local watcher="${DOTFILES_DIR:-$HOME/.dotfiles}/ai/herdr/scripts/herdr-codex-title-watch"
+    [[ -x $watcher ]] || return 0
+    if [[ -n ${ZSH_VERSION:-} ]]; then
+      eval "$watcher &>/dev/null &!"
+    else
+      "$watcher" &>/dev/null &
+    fi
+  }
+
+  codex() {
+    _herdr_codex_title_watch
+    command codex "$@"
+  }
 }
