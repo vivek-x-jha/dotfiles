@@ -1,127 +1,30 @@
-# Bourne-Again SHell, a UNIX command interpreter
+# Core profile: portable shell and terminal baseline.
+# Add Brewfile.developer or Brewfile.personal through BOOTSTRAP_BREW_PROFILE.
+
+brew "atuin"
 brew "bash"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
-# Language Server for Bash
-brew "bash-language-server"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "bat"
 brew "btop"
-# Mozilla CA bundle for Python
-brew "certifi"
-# Defines a standard way of committing rules and communicating it
-brew "commitizen"
-# Like neofetch, but much faster because written mostly in C
+brew "dust"
 brew "fastfetch"
-# macOS CLI for managing custom icons for files and folders
-brew "fileicon"
-# GNU awk utility
-brew "gawk"
-# GitHub command-line tool
+brew "fd"
 brew "gh"
-# Distributed revision control system
 brew "git"
-# Render markdown on the CLI
 brew "glow"
-# Lightweight and flexible command-line JSON processor
 brew "jq"
-# Pager program similar to more
 brew "less"
-# C library implementing the SSH2 protocol
-brew "libssh2"
-# C library of Git core methods that is re-entrant and linkable
-brew "libgit2"
-# Access large language models from the command-line
-brew "llm"
-# Language Server for the Lua language
-brew "lua-language-server"
-# CLI for MySQL with auto-completion and syntax highlighting
-brew "mycli"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
-# Open source relational database management system
-brew "mysql", restart_service: :changed
-# PAM module for reattaching to the user's GUI (Aqua) session
-brew "pam-reattach"
-# Swiss-army knife of markup format conversion
-brew "pandoc"
-# Highly capable, feature-rich programming language
-brew "perl"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
-# Perl-powered file rename script with many helpful built-ins
-brew "rename"
-# Static analysis and lint tool, for (ba)sh scripts
+brew "ripgrep"
 brew "shellcheck"
-# Autoformat shell script source code
 brew "shfmt"
-# Change macOS audio source from the command-line
-brew "switchaudio-osx"
-# Terminal multiplexer
-brew "tmux"
-# Internet file retriever
+brew "starship"
+brew "tealdeer"
+brew "tokei"
+brew "uv"
 brew "wget"
-# UNIX shell (command interpreter)
+brew "zoxide"
 brew "zsh"
-# Password manager that keeps all passwords secure behind one password
-cask "1password"
-# Command-line interface for 1Password
-cask "1password-cli"
-# Application launcher and productivity software
-cask "alfred"
-# Enable Windows-like alt-tab
-cask "alt-tab"
-# Memory training application
-cask "anki"
-# OpenAI's official ChatGPT desktop app
-cask "chatgpt"
-# Anthropic's official Claude AI desktop app
-cask "claude"
-# OpenAI's coding agent that runs in your terminal
-cask "codex"
-# OpenAI's Codex desktop app for managing coding agents
-cask "codex-app"
-# Collaborative team software
-cask "figma"
+
 cask "font-jetbrains-mono-nerd-font"
-# Web browser
-cask "google-chrome"
-# Desktop automation application
 cask "hammerspoon"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
-# Keyboard customiser
 cask "karabiner-elements"
-# Open-source keystroke visualiser
-cask "keycastr"
-# Software for Logitech devices
-cask "logi-options+"
-# Collaboration platform for API development
-cask "postman"
-# PDF reader and note-taking application
-cask "skim"
-# Music streaming service
-cask "spotify"
-# Open-source code editor
-cask "visual-studio-code"
-# Multimedia player
-cask "vlc"
-# GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
-cargo "atuin"
-cargo "bat"
-cargo "bob-nvim"
-cargo "cargo-update"
-cargo "cia"
-cargo "du-dust"
-cargo "eza"
-cargo "fd-find"
-cargo "ripgrep"
-cargo "starship"
-cargo "stylua"
-cargo "tealdeer"
-cargo "tokei"
-cargo "uv"
-cargo "zoxide"
-cargo "zsh-patina"
-uv "basedpyright"
-uv "ruff"

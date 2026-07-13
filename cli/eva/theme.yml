@@ -1,0 +1,1167 @@
+filekinds:
+  directory:
+    foreground: blue
+  symlink:
+    foreground: yellow
+  executable:
+    foreground: green
+  socket:
+    foreground: cyan
+
+perms:
+  user_read:
+    foreground: yellow
+    is_bold: true
+  user_write:
+    foreground: red
+    is_bold: true
+  user_execute_file:
+    foreground: green
+    is_bold: true
+  user_execute_other:
+    foreground: green
+    is_bold: true
+  group_read:
+    foreground: yellow
+  group_write:
+    foreground: red
+  group_execute:
+    foreground: green
+  other_read:
+    foreground: yellow
+  other_write:
+    foreground: red
+  other_execute:
+    foreground: green
+
+size:
+  number_byte:
+    foreground: black
+  number_kilo:
+    foreground: cyan
+  number_mega:
+    foreground: yellow
+  number_giga:
+    foreground: red
+  number_huge:
+    foreground: blue
+
+users:
+  user_you:
+    foreground: brightblack
+    is_italic: true
+  user_root:
+    foreground: brightred
+    is_italic: true
+  user_other:
+    foreground: yellow
+    is_italic: true
+  group_yours:
+    foreground: brightblack
+    is_italic: true
+  group_other:
+    foreground: yellow
+    is_italic: true
+  group_root:
+    foreground: brightred
+    is_italic: true
+
+links:
+  normal:
+    foreground: yellow
+
+date:
+  foreground: brightmagenta
+
+broken_symlink:
+  foreground: red
+
+broken_path_overlay:
+  foreground: red
+
+filenames:
+  # Exact filename overrides that are personal or narrower than eva defaults.
+  # Dotfiles and platform files
+  .blerc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  .file:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  .gitkeep:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  .luarc.json:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .netrwhist:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: "󰋚"
+      style:
+        foreground: brightblack
+
+  .state.itermexport:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .vale.ini:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  .zstyle:
+    icon:
+      glyph: ""
+
+
+  # Auth and secrets metadata
+  1password:
+    icon:
+      glyph: ""
+
+  allowed_signers:
+    filename:
+      foreground: white
+    icon:
+      glyph: "󰷊"
+      style:
+        foreground: white
+
+  auth.key:
+    filename:
+      foreground: brightred
+    icon:
+      glyph: ""
+      style:
+        foreground: brightred
+
+  auth.key.pub:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  id_ed25519:
+    filename:
+      foreground: brightred
+    icon:
+      glyph: ""
+      style:
+        foreground: brightred
+
+  id_ed25519.pub:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  identity:
+    icon:
+      glyph: ""
+
+  known_hosts:
+    filename:
+      foreground: white
+    icon:
+      glyph: "󰒋"
+      style:
+        foreground: white
+
+  secrets:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  signing.key:
+    filename:
+      foreground: brightred
+    icon:
+      glyph: ""
+      style:
+        foreground: brightred
+
+  signing.key.pub:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  ssh-agent:
+    icon:
+      glyph: ""
+
+
+  # Other exact filenames
+  bootstrap.sh:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  CODEOWNERS:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  "Icon\r":
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  "icon\r":
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  index.html:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  matplotlibrc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  metadata.yaml:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  package.lock:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
+  revision-hash:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  Session.vim:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+
+  # Shell functions and completions
+  _atuin:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _bat:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _bob:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _cargo:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _dust:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _eva:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _fd:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _pi:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _rg:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _starship:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _tldr:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _update-notifier-last-checked:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black
+
+  _update-tools:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _uv:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _work:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  aliases:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  atuin-zsh-tty-capture.zsh:
+    filename:
+      foreground: brightred
+    icon:
+      glyph: ""
+      style:
+        foreground: brightred
+
+  atuin.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  bat.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  bob.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  cargo.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  cheatsheet:
+    icon:
+      glyph: "󰊕"
+
+  config.sh:
+    icon:
+      glyph: ""
+
+  dust.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  edit-all:
+    icon:
+      glyph: "󰊕"
+
+  env:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  eva.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  fd.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  fix-tmux-remotes:
+    icon:
+      glyph: "󰊕"
+
+  glg:
+    icon:
+      glyph: "󰊕"
+
+  interactive:
+    icon:
+      glyph: ""
+
+  l:
+    icon:
+      glyph: "󰊕"
+
+  list-256:
+    icon:
+      glyph: "󰊕"
+
+  list-colors:
+    icon:
+      glyph: "󰊕"
+
+  p10k-dump-mubuntu.zsh:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  p10k-instant-prompt-mubuntu.zsh:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  patch-zsh-autocomplete:
+    icon:
+      glyph: "󰊕"
+
+  pi.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  profile:
+    filename:
+      foreground: white
+    icon:
+      glyph: ""
+      style:
+        foreground: white
+
+  rg.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  starship.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  t:
+    icon:
+      glyph: "󰊕"
+
+  take:
+    icon:
+      glyph: "󰊕"
+
+  tldr.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  toggle-tmux-client:
+    icon:
+      glyph: "󰊕"
+
+  update-icons:
+    icon:
+      glyph: "󰊕"
+
+  update-tools:
+    icon:
+      glyph: "󰊕"
+
+  update-tools.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  uv.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  uvi:
+    icon:
+      glyph: "󰊕"
+
+
+  # Editor files
+  main.py:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  main.shada:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.a:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.b:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.c:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.d:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.e:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.f:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.g:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.h:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.i:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.j:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.k:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.l:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.m:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.n:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.o:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.p:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.q:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.r:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.s:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.t:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.u:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.v:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.w:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.x:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.y:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  main.shada.tmp.z:
+    filename:
+      foreground: brightblack
+    icon:
+      glyph: ""
+      style:
+        foreground: brightblack
+
+  sh.vim:
+    filename:
+      foreground: brightblue
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: brightblue
+
+  typescriptreact.vim:
+    filename:
+      foreground: brightblue
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: brightblue
+
+  zsh.vim:
+    filename:
+      foreground: brightblue
+    icon:
+      glyph: "󰘦"
+      style:
+        foreground: brightblue
+
+
+  # Application configuration
+  agent.toml:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  btop.conf:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  extensions.json:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  glow.yml:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  init.lua:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  karabiner.json:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  npmrc:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  starship.toml:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  tmux.conf:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+  wezterm.lua:
+    filename:
+      foreground: magenta
+    icon:
+      glyph: ""
+      style:
+        foreground: magenta
+
+
+  # Runtime and state files
+  .dbxignore:
+    icon:
+      glyph: ""
+
+  log:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  prompt-21:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  prompt-29:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .sqlite:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  .sqlite-shm:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  .sqlite-wal:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: ""
+      style:
+        foreground: cyan
+
+  .zlua:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+
+  # Themes
+  sourdiesel:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  sourdiesel.json:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  sourdiesel.lua:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  sourdiesel.terminal:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  sourdiesel.toml:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+  theme.yml:
+    filename:
+      foreground: cyan
+    icon:
+      glyph: "󰏘"
+      style:
+        foreground: cyan
+
+
+  # History files
+  hist:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .histfile:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  histfile:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  history.jsonl:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .mycli_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  .mysql_history:
+    filename:
+      foreground: red
+    icon:
+      glyph: ""
+      style:
+        foreground: red
+
+  session_index.jsonl:
+    filename:
+      foreground: black
+    icon:
+      glyph: ""
+      style:
+        foreground: black

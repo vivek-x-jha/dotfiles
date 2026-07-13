@@ -1,5 +1,68 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2034
+prepare_brew_profile_file() {
+  local requested_profile="${BOOTSTRAP_EFFECTIVE_BREW_PROFILE:-${BOOTSTRAP_BREW_PROFILE:-core}}"
+  local custom_brewfile="${BOOTSTRAP_BREWFILE:-}"
+  local manifests=("$BOOTSTRAP_ROOT/manifests/Brewfile")
+  local manifest=''
+
+  BREWFILE_PROFILE_TEMP=''
+  if [[ -n $custom_brewfile ]]; then
+    printf '%s\n' "$custom_brewfile"
+    return 0
+  fi
+
+  case "$requested_profile" in
+  core) ;;
+  developer)
+    manifests+=("$BOOTSTRAP_ROOT/manifests/Brewfile.developer")
+    ;;
+  personal)
+    manifests+=(
+      "$BOOTSTRAP_ROOT/manifests/Brewfile.developer"
+      "$BOOTSTRAP_ROOT/manifests/Brewfile.personal"
+    )
+    ;;
+  *)
+    logg -e "Unknown Homebrew profile: $requested_profile (expected core, developer, or personal)"
+    BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+    return 1
+    ;;
+  esac
+
+  if bootstrap_config_bool BOOTSTRAP_INSTALL_RUST_TOOLING 0 \
+    || bootstrap_config_bool BOOTSTRAP_SETUP_IDE 0 \
+    || bootstrap_words_contain rust "${BOOTSTRAP_ONLY_TARGETS:-}" \
+    || bootstrap_words_contain ide "${BOOTSTRAP_ONLY_TARGETS:-}" \
+    || bootstrap_words_contain editor "${BOOTSTRAP_ONLY_TARGETS:-}"; then
+    manifests+=("$BOOTSTRAP_ROOT/manifests/Brewfile.rust")
+  fi
+
+  if ((FORCE_1PASSWORD)) || bootstrap_config_bool BOOTSTRAP_ENABLE_1PASSWORD 0; then
+    manifests+=("$BOOTSTRAP_ROOT/manifests/Brewfile.1password")
+  fi
+
+  for manifest in "${manifests[@]}"; do
+    [[ -f $manifest ]] || {
+      logg -e "Homebrew profile manifest missing: $manifest"
+      BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+      return 1
+    }
+  done
+
+  BREWFILE_PROFILE_TEMP="$(mktemp "${TMPDIR:-/tmp}/dotfiles-brewfile.XXXXXX")" || return 1
+  for manifest in "${manifests[@]}"; do
+    {
+      printf '# source: %s\n' "$manifest"
+      cat "$manifest"
+      printf '\n'
+    } >>"$BREWFILE_PROFILE_TEMP"
+  done
+
+  logg -i "Homebrew profile: $requested_profile (${#manifests[@]} manifest(s))" >&2
+  printf '%s\n' "$BREWFILE_PROFILE_TEMP"
+}
+
 prepare_brewfile_install_file() {
   local brewfile="$1"
   local casks=()
@@ -28,10 +91,7 @@ prepare_brewfile_install_file() {
       return 0
     fi
 
-    curl -fsSL "$brewfile" -o "$BREWFILE_SOURCE_TEMP" || {
-      logg -w "Unable to download Brewfile: $brewfile"
-      return 1
-    }
+    download_with_retry "$brewfile" "$BREWFILE_SOURCE_TEMP" || return 1
     BREWFILE_INSTALL_PATH="$BREWFILE_SOURCE_TEMP"
   fi
 
@@ -57,7 +117,13 @@ prepare_brewfile_install_file() {
 
     read -rp '>>> Enter casks to skip (names or numbers, comma/space separated; <Enter> for none): ' selected_tokens
   fi
-  [[ $cask_mode == all || -z $selected_tokens ]] && return 0
+  [[ $cask_mode == all ]] && return 0
+  if [[ $cask_mode == only && -z $selected_tokens ]]; then
+    logg -e 'Homebrew cask mode=only requires BOOTSTRAP_BREW_CASKS; refusing to install every profile cask.'
+    BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+    return 1
+  fi
+  [[ -z $selected_tokens ]] && return 0
   [[ $cask_mode == skip || $cask_mode == only ]] || {
     logg -w "Unknown Homebrew cask mode '$cask_mode'; expected all, skip, or only. Installing all casks."
     return 0
@@ -84,7 +150,14 @@ prepare_brewfile_install_file() {
     fi
   done
 
-  ((matched)) || return 0
+  if ((matched == 0)); then
+    if [[ $cask_mode == only ]]; then
+      logg -e 'No valid casks were selected in Homebrew cask mode=only; refusing to install the full cask inventory.'
+      BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
+      return 1
+    fi
+    return 0
+  fi
 
   if [[ $cask_mode == skip ]]; then
     skip_names="$keep_names"
@@ -127,19 +200,30 @@ setup_package_manager() {
   [[ $PKG_MGR == brew ]] && {
     notify -s 'Ensuring Homebrew is available'
 
-    local brew_cmd='/opt/homebrew/bin/brew'
-    [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
+    local brew_cmd=''
+    brew_cmd="$(command -v brew 2>/dev/null || true)"
+    if [[ -z $brew_cmd ]]; then
+      brew_cmd='/opt/homebrew/bin/brew'
+      [[ $(uname -m) == x86_64 ]] && brew_cmd=/usr/local/bin/brew
+    fi
 
-    # run installer if homebrew executable not in $PATH
-    [[ -x $brew_cmd ]] || {
+    if [[ ! -x $brew_cmd ]]; then
       notify -s 'Installing Homebrew'
-      run 'curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | /bin/bash' 2>/dev/null
-    }
+      # shellcheck disable=SC2016
+      run_retry "${BOOTSTRAP_RETRY_ATTEMPTS:-3}" "${BOOTSTRAP_RETRY_DELAY:-3}" \
+        'NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"' || return 1
+    fi
 
-    # Ensure homebrew is in $PATH for current shell session
-    run "eval \"\$($brew_cmd shellenv)\"" || {
-      logg -e 'Homebrew failed to install - please check install instructions @ https://brew.sh/'
-      exit 1
+    if ((!DRY_RUN)) && [[ ! -x $brew_cmd ]]; then
+      logg -e 'Homebrew failed to install - see https://brew.sh/'
+      return 1
+    fi
+
+    # shellcheck disable=SC1090
+    ((DRY_RUN)) || eval "$($brew_cmd shellenv)"
+    command -v brew &>/dev/null || ((DRY_RUN)) || {
+      logg -e 'Homebrew is installed but unavailable in the current bootstrap PATH.'
+      return 1
     }
   }
 
@@ -158,6 +242,8 @@ setup_package_manager() {
     notify -s 'Ensuring apt is available'
     require apt-get || exit 1
   }
+
+  return 0
 }
 
 install_package_sets() {
@@ -167,10 +253,15 @@ install_package_sets() {
       local brewfile
       local brewfile_input=''
       local install_brewfile
-      brewfile="${BOOTSTRAP_BREWFILE:-$BREWFILE_DEFAULT}"
+      local assembled_brewfile=''
+      brewfile="$(prepare_brew_profile_file)" || return 1
+      assembled_brewfile="$brewfile"
       if bootstrap_config_bool BOOTSTRAP_INTERACTIVE 0; then
         read -rp ">>> Enter Brewfile path or URL (<Enter> to use $brewfile): " brewfile_input
-        [[ -n $brewfile_input ]] && brewfile="$brewfile_input"
+        if [[ -n $brewfile_input ]]; then
+          [[ $assembled_brewfile == "${TMPDIR:-/tmp}"/dotfiles-brewfile.* ]] && rm -f "$assembled_brewfile"
+          brewfile="$brewfile_input"
+        fi
       fi
       [[ -z $brewfile ]] && brewfile="$BREWFILE_DEFAULT"
       logg -i "Using Brewfile: $brewfile"
@@ -194,16 +285,20 @@ install_package_sets() {
             install_brewfile="$BREWFILE_INSTALL_PATH"
             run "brew bundle --file=\"$install_brewfile\""
             [[ -n $BREWFILE_SELECTED_TEMP ]] && rm -f "$BREWFILE_SELECTED_TEMP"
+            [[ $brewfile == "${TMPDIR:-/tmp}"/dotfiles-brewfile.* ]] && rm -f "$brewfile"
           fi
         else
-          logg -w "Invalid Brewfile path: $brewfile"
+          logg -e "Invalid Brewfile path: $brewfile"
+          BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
         fi
       fi
     fi
 
     if confirm_config BOOTSTRAP_BREW_REFRESH_SNAPSHOT 'Refresh Brewfile snapshot' 'N'; then
       notify -s 'Refresh Brewfile snapshot'
-      run "brew bundle dump --force --file=\"$HOME/.dotfiles/Brewfile\""
+      local snapshot_file="$XDG_STATE_HOME/homebrew/Brewfile.snapshot"
+      run "mkdir -p \"$(dirname "$snapshot_file")\""
+      run "brew bundle dump --force --file=\"$snapshot_file\""
     fi
 
     if confirm_config BOOTSTRAP_BREW_CLEANUP "Run brew cleanup & doctor" 'N'; then
@@ -317,17 +412,16 @@ install_package_sets() {
       rm -f "$apt_manifest_tmp"
     fi
 
-    # Install 1Password CLI on Linux (apt-based)
-    notify -s 'Install 1Password CLI'
-    require op || {
-      # Import signing key, add repo, then install
-      run "curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg"
-
-      run "printf '%s\n' 'deb [signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list >/dev/null"
-
-      run 'sudo apt update'
-      run 'sudo apt install -y 1password-cli'
-    }
+    # Install 1Password CLI on Linux only when its integration is requested.
+    if ((FORCE_1PASSWORD)) || bootstrap_config_bool BOOTSTRAP_ENABLE_1PASSWORD 0; then
+      notify -s 'Install 1Password CLI'
+      require op || {
+        run "curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg"
+        run "printf '%s\n' 'deb [signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list >/dev/null"
+        run 'sudo apt update'
+        run 'sudo apt install -y 1password-cli'
+      }
+    fi
 
     install_linux_gui_apps
   fi
@@ -340,13 +434,15 @@ install_fzf() {
   run "mkdir -p \"$XDG_DATA_HOME\""
 
   if [[ -d $fzf_dir/.git ]]; then
-    run "git -C \"$fzf_dir\" pull --ff-only"
+    run_retry "${BOOTSTRAP_RETRY_ATTEMPTS:-3}" "${BOOTSTRAP_RETRY_DELAY:-3}" \
+      "git -C \"$fzf_dir\" pull --ff-only"
   elif [[ -e $fzf_dir ]]; then
     logg -w "fzf path already exists and is not a git checkout: $(pretty_path "$fzf_dir")"
     logg -w 'Skipping fzf git install.'
     return
   else
-    run "git clone --depth 1 https://github.com/junegunn/fzf.git \"$fzf_dir\""
+    run_retry "${BOOTSTRAP_RETRY_ATTEMPTS:-3}" "${BOOTSTRAP_RETRY_DELAY:-3}" \
+      "git clone --depth 1 https://github.com/junegunn/fzf.git \"$fzf_dir\""
   fi
 
   [[ -L $fzf_dir/bin/fzf ]] && run "rm -f \"$fzf_dir/bin/fzf\""
@@ -390,7 +486,7 @@ ensure_dnf_repo_file() {
 }
 
 install_gh() {
-  [[ $OS_TYPE == linux ]] || return
+  [[ $OS_TYPE == linux ]] || return 0
   command -v gh &>/dev/null && return
 
   notify -s 'Installing GitHub CLI'
@@ -428,7 +524,7 @@ install_gh() {
 }
 
 install_glow() {
-  [[ $OS_TYPE == linux ]] || return
+  [[ $OS_TYPE == linux ]] || return 0
   command -v glow &>/dev/null && return
 
   notify -s 'Installing Glow'
@@ -473,7 +569,7 @@ gpgkey=https://repo.charm.sh/yum/gpg.key"
 }
 
 install_linux_gui_apps() {
-  [[ $OS_TYPE == linux ]] || return
+  [[ $OS_TYPE == linux ]] || return 0
 
   bootstrap_config_bool BOOTSTRAP_INSTALL_LINUX_GUI_APPS 0 || {
     logg -w 'Skipping Linux GUI application installs.'

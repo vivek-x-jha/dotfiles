@@ -11,16 +11,24 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   end,
 })
 
--- [2/15] Auto-open nvim-tree on startup
+-- [2/15] Auto-open nvim-tree on startup when editing real buffers
 vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Open nvim-tree when Neovim starts',
+  desc = 'Open nvim-tree when Neovim starts with a real buffer',
   group = vim.api.nvim_create_augroup('TreeOpenAU', {}),
   callback = function()
+    local emptylines = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] == ''
+    local emptyrows = vim.api.nvim_buf_line_count(0) == 1
+    local untitled = vim.api.nvim_buf_get_name(0) == ''
+
+    -- Blank startup is owned by the dashboard; do not open nvim-tree beside it.
+    if emptylines and emptyrows and untitled then return end
+
     local ok_api, api = pcall(require, 'nvim-tree.api')
     local ok_view, view = pcall(require, 'nvim-tree.view')
     if not ok_api or not ok_view then return end
 
     vim.schedule(function()
+      if vim.g.dashboard_displayed then return end
       api.tree.open()
       api.tree.reload()
       if view.get_winnr() ~= nil then vim.cmd 'wincmd p' end
@@ -67,6 +75,32 @@ vim.api.nvim_create_autocmd('VimEnter', {
       local ok, dashboard = pcall(require, 'ui.dashboard')
       if ok then dashboard.setup() end
     end
+  end,
+})
+
+local hide_dashboard_chrome = function(buf)
+  if not buf or not vim.api.nvim_buf_is_valid(buf) or vim.bo[buf].filetype ~= 'dashboard' then return end
+
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    pcall(vim.api.nvim_set_option_value, 'number', false, { win = win })
+    pcall(vim.api.nvim_set_option_value, 'relativenumber', false, { win = win })
+    pcall(vim.api.nvim_set_option_value, 'signcolumn', 'no', { win = win })
+    pcall(vim.api.nvim_set_option_value, 'statuscolumn', '', { win = win })
+    pcall(vim.api.nvim_set_option_value, 'list', false, { win = win })
+    pcall(vim.api.nvim_set_option_value, 'wrap', false, { win = win })
+    pcall(vim.api.nvim_set_option_value, 'cursorline', false, { win = win })
+    pcall(vim.api.nvim_set_option_value, 'colorcolumn', '0', { win = win })
+    pcall(vim.api.nvim_set_option_value, 'foldcolumn', '0', { win = win })
+    pcall(vim.api.nvim__redraw, { win = win, valid = false })
+  end
+end
+
+vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter', 'WinEnter' }, {
+  desc = 'Keep dashboard chrome hidden',
+  group = vim.api.nvim_create_augroup('DashboardChromeAU', {}),
+  callback = function(args)
+    hide_dashboard_chrome(args.buf)
+    vim.schedule(function() hide_dashboard_chrome(args.buf) end)
   end,
 })
 
@@ -186,6 +220,13 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   group = vim.api.nvim_create_augroup('ShellConfigFtAU', {}),
   pattern = { '*/shells/env', '*/shells/profile', '*/shells/aliases', '*/shells/colors/*' },
   callback = function() vim.bo.filetype = 'zsh' end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  desc = 'Treat fzf config as bash filetype',
+  group = vim.api.nvim_create_augroup('FzfConfigFtAU', {}),
+  pattern = '*/fzf/config',
+  callback = function() vim.bo.filetype = 'bash' end,
 })
 
 -- [14/15] Keep Session.vim aligned with edit-all file membership

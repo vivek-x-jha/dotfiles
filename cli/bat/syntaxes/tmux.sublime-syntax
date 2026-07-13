@@ -1,0 +1,132 @@
+%YAML 1.2
+---
+name: Dotfiles Tmux
+scope: source.tmux
+file_extensions:
+  - dotfiles_tmux
+
+# Bat syntax aligned with Neovim's built-in syntax/tmux.vim and SourDiesel:
+# - tmuxCommands -> keyword / magenta
+# - tmuxOptions  -> function / blue
+# - tmuxEnums    -> boolean / red
+# - tmuxFormatString, tmuxVariableExpansion, tmuxFlags -> identifier / red
+# - tmuxKey      -> special / blue
+# - tmuxControl  -> precondition / yellow
+# - strings      -> green, with tmux formats and shell vars red inside
+
+variables:
+  ident: '[A-Za-z_][A-Za-z0-9_-]*'
+  command: '(?:attach(?:-session)?|bind(?:-key)?|break-pane|capture-pane|choose-(?:buffer|client|session|tree|window)|clear-(?:history|prompt-history)|command-prompt|confirm(?:-before)?|copy-mode|delete-buffer|detach(?:-client)?|display(?:-(?:menu|message|panes|popup))?|find-window|has(?:-session)?|if(?:-shell)?|info|join-pane|kill-(?:pane|server|session|window)|last(?:-(?:pane|window))?|link-window|list-(?:buffers|clients|commands|keys|panes|sessions|windows)|load-buffer|lock(?:-(?:client|server|session))?|menu|move-(?:pane|window)|new(?:-(?:session|window))?|next(?:-(?:layout|window))?|paste-buffer|pipe-pane|popup|prev(?:ious-(?:layout|window))?|refresh(?:-client)?|rename(?:-(?:session|window))?|resize-(?:pane|window)|respawn-(?:pane|window)|rotate-window|run(?:-shell)?|save-buffer|select-(?:layout|pane|window)|send(?:-(?:keys|prefix))?|server-(?:access|info)|set(?:-(?:buffer|environment|hook|option|window-option))?|show(?:-(?:buffer|environment|hooks|messages|options|prompt-history|window-options))?|source(?:-file)?|split-(?:pane|window)|start(?:-server)?|suspend-client|swap-(?:pane|window)|switch-client|unbind(?:-key)?|unlink-window|wait(?:-for)?)'
+  option: '(?:[A-Za-z0-9_-]+|@[A-Za-z0-9_-]+)'
+
+contexts:
+  main:
+    - include: comments
+    - include: controls
+    - include: strings
+    - include: variables
+    - include: flags
+    - include: options
+    - include: commands
+    - include: enums
+    - include: keys
+    - include: numbers
+    - include: escapes
+
+  comments:
+    - match: '#.*$'
+      scope: comment.line.number-sign.tmux
+
+  controls:
+    - match: '^\s*(%(?:if|elif|else|endif|hidden))\b'
+      captures:
+        1: keyword.control.preprocessor.tmux
+
+  commands:
+    - match: '\b({{command}})\b'
+      captures:
+        1: keyword.other.command.tmux
+
+  options:
+    # Options commonly appear after set/set-option/set-window-option/set-hook.
+    - match: '\b(set|set-option|set-window-option|setw|set-hook)\b(?:\s+-[A-Za-z]+)*\s+({{option}})'
+      captures:
+        1: keyword.other.command.tmux
+        2: entity.name.function.option.tmux
+    # User options are meaningful anywhere.
+    - match: '@[A-Za-z0-9_-]+'
+      scope: entity.name.function.option.tmux
+
+  flags:
+    - match: '(?<=\s)-[A-Za-z]+'
+      scope: variable.parameter.flag.tmux
+
+  keys:
+    - match: '\b(?:C-|M-|\^)+\S+'
+      scope: support.constant.key.tmux
+
+  enums:
+    - match: '\b(?:yes|no|on|off|true|false|all|always|any|none|current|default|left|right|top|bottom|centre|center|vi|emacs|external|manual|number|both|block|rounded|single|double)\b'
+      scope: constant.language.boolean.tmux
+
+  numbers:
+    - match: '\b\d+%?\b'
+      scope: constant.numeric.tmux
+    - match: '\bcolou?r\d+\b'
+      scope: constant.numeric.tmux
+
+  variables:
+    - match: '#[#{DFhHIPSTW]'
+      scope: variable.other.readwrite.tmux
+    - match: '#\{'
+      scope: variable.other.readwrite.tmux
+      push: tmux-format
+    - match: '#\('
+      scope: variable.other.readwrite.tmux
+      push: tmux-command-substitution
+    - match: '\$\{?[A-Za-z_][A-Za-z0-9_]*\}?'
+      scope: variable.other.readwrite.tmux
+
+  tmux-format:
+    - include: variables
+    - match: '\}'
+      scope: variable.other.readwrite.tmux
+      pop: true
+    - match: '[,:=!<>|&+-]+'
+      scope: variable.other.readwrite.tmux
+    - match: '[A-Za-z_][A-Za-z0-9_]*'
+      scope: variable.other.readwrite.tmux
+
+  tmux-command-substitution:
+    - include: strings
+    - include: variables
+    - match: '\)'
+      scope: variable.other.readwrite.tmux
+      pop: true
+
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.tmux
+      push: double-quoted
+    - match: "'"
+      scope: punctuation.definition.string.begin.tmux
+      push: single-quoted
+
+  double-quoted:
+    - meta_content_scope: string.quoted.double.tmux
+    - include: variables
+    - include: escapes
+    - match: '"'
+      scope: punctuation.definition.string.end.tmux
+      pop: true
+
+  single-quoted:
+    - meta_content_scope: string.quoted.single.tmux
+    - include: variables
+    - match: "'"
+      scope: punctuation.definition.string.end.tmux
+      pop: true
+
+  escapes:
+    - match: '\\(?:u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8}|[0-7]{3}|[\\ernt$])'
+      scope: constant.character.escape.tmux

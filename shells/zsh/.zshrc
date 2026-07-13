@@ -7,6 +7,9 @@
   [[ -r $inst_prompt ]] && source "$inst_prompt"
 }
 
+# Profile
+source "$SHELL_CONFIG/profile"
+
 # Colorscheme
 source "$SHELL_CONFIG/colors/$SHELL_THEME"
 
@@ -42,8 +45,11 @@ eval "$(zsh-patina completion)"
   plug romkatv/powerlevel10k && source "$ZDOTDIR/.p10k.zsh"
 }
 
+# Herdr helpers
+source "$DOTFILES_DIR/ai/herdr/default_pane_title.sh"
+
 # Interactive plugins
-source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source "$XDG_CONFIG_HOME/fzf/config"
 source <(fzf --zsh)
 
 plug hlissner/zsh-autopair

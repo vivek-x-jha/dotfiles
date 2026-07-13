@@ -1,6 +1,6 @@
 # Shared sourdiesel theme values for bash and zsh
 
-# Color ls + eza
+# Color ls + eva
 export LS_COLORS="\
 no=00;38;5;0:\
 fi=00;38;5;7:\
@@ -63,5 +63,6 @@ export BRIGHTWHITE_HEX='#ffffff'
 
 export DARK_HEX='#1b1c28'
 export GREY_HEX='#313244'
+export NVIM_STATUSLINE_HEX='#27283a'
 export NVIM_BG_HEX='NONE'
 export WEZTERM_BG_HEX='#212030'

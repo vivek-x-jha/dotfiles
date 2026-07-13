@@ -1,4 +1,6 @@
 # Shared environment variables for bash and zsh
+# Zsh reaches this through ~/.zshenv, so keep essential CLI paths here for
+# login, interactive, non-interactive, and agent-launched shells.
 
 # XDG: https://specifications.freedesktop.org/basedir-spec/latest/#variables
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -6,11 +8,18 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# Checkout location is persisted by bootstrap so non-default clones remain usable.
+if [[ -z ${DOTFILES_DIR:-} && -r $XDG_STATE_HOME/dotfiles/root ]]; then
+  IFS= read -r DOTFILES_DIR <"$XDG_STATE_HOME/dotfiles/root"
+fi
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
 # Homebrew (MacOS only)
 [[ $(uname) == Darwin ]] && {
   export HOMEBREW_NO_ENV_HINTS=1
   export HOMEBREW_INSTALL_BADGE=$'\e[95m\e[0m'
-  export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/manifests/Brewfile"
+  # Inventory dumps are runtime snapshots; tracked profile manifests stay curated.
+  export HOMEBREW_BUNDLE_FILE="$XDG_STATE_HOME/homebrew/Brewfile.snapshot"
 }
 
 # Shells
@@ -78,8 +87,8 @@ export TMUX_FZF_OPTIONS='-p 75%,75% -m --no-preview'
 # 1password: https://developer.1password.com/docs/cli/shell-plugins
 export OP_PLUGIN_ALIASES_SOURCED=1
 
-# Eza: https://man.archlinux.org/man/eza_colors.5.en
-export EZA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
+# Eva: https://github.com/vivek-x-jha/eva
+export EVA_COLORS="nb=00;38;5;0:nk=00;38;5;7:nm=00;38;5;3:ng=00;38;5;1:nt=00;38;5;6:lp=00;38;5;4:"
 
 # Ripgrep: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
@@ -95,3 +104,38 @@ export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 
 # Codex: https://github.com/openai/codex/pull/4414
 export CODEX_HOME="$XDG_STATE_HOME/codex"
+
+# Ollama: local model runner/server used by Pi's OpenAI-compatible provider.
+export OLLAMA_HOST="${OLLAMA_HOST:-127.0.0.1:11434}"
+export OLLAMA_FLASH_ATTENTION="${OLLAMA_FLASH_ATTENTION:-1}"
+export OLLAMA_KV_CACHE_TYPE="${OLLAMA_KV_CACHE_TYPE:-q8_0}"
+
+# Pi coding agent: keep mutable auth, settings, packages, and sessions in XDG state.
+export PI_CODING_AGENT_DIR="$XDG_STATE_HOME/pi/agent"
+
+remove_path() {
+  PATH=":$PATH:"
+  PATH="${PATH//:$1:/:}"
+  PATH="${PATH#:}"
+  PATH="${PATH%:}"
+}
+
+prepend_path() { remove_path "$1" && PATH="$1${PATH:+:$PATH}"; }
+append_path() { remove_path "$1" && PATH="${PATH:+$PATH:}$1"; }
+
+# Add MacOS tools - Homebrew + iTerm2 utilities
+[[ $(uname) == Darwin ]] && {
+  prepend_path '/opt/homebrew/sbin'
+  prepend_path '/opt/homebrew/bin'
+  append_path '/Applications/iTerm.app/Contents/Resources/utilities'
+}
+
+# Add user-managed tool directories needed by editors, agents, and non-login zsh.
+prepend_path "$HOME/.local/bin"
+prepend_path "$XDG_DATA_HOME/fzf/bin"
+prepend_path "$CARGO_HOME/bin"
+prepend_path "$XDG_DATA_HOME/bob/nvim-bin"
+
+export PATH
+
+unset -f remove_path prepend_path append_path

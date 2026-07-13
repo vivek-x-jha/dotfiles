@@ -3,12 +3,22 @@
 detect_platform() {
   case "$(uname -s)" in
   Darwin)
-    # Ensure xcode installed for macOS
     require xcode-select || exit 1
+    xcode-select -p &>/dev/null || {
+      logg -e "Apple Command Line Tools are not installed. Run 'xcode-select --install', finish the installer, and rerun bootstrap."
+      exit 1
+    }
 
     DISTRO=macOS
     OS_TYPE=macos
     PKG_MGR=brew
+    if ! command -v brew &>/dev/null; then
+      if [[ -x /opt/homebrew/bin/brew ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      elif [[ -x /usr/local/bin/brew ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+      fi
+    fi
     ;;
 
   Linux)
@@ -39,7 +49,7 @@ detect_platform() {
 authorize() {
   require sudo || return
 
-  run 'sudo -v' || {
+  run_optional 'sudo -v' || {
     logg -w 'Unable to refresh sudo credentials; privileged steps may prompt for password.'
     return
   }

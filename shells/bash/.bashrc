@@ -3,7 +3,7 @@
 
 # Environment
 # shellcheck disable=SC1091
-source "$HOME/.dotfiles/shells/env"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/env"
 
 # Colorscheme
 # shellcheck disable=SC1090
@@ -17,7 +17,7 @@ export HISTFILE="$XDG_STATE_HOME/bash/.bash_history"
 export HISTTIMEFORMAT="%F %T "
 
 # Options
-shopt -s autocd
+shopt -s autocd 2>/dev/null || true
 set -o vi
 
 # PATH + Secrets
@@ -25,6 +25,9 @@ source "$SHELL_CONFIG/profile"
 
 # Prompt
 eval "$(starship init bash)"
+
+# Herdr helpers
+source "$DOTFILES_DIR/ai/herdr/default_pane_title.sh"
 
 # Functions
 # shellcheck disable=SC1090
@@ -35,7 +38,7 @@ unset fn
 source "$SHELL_CONFIG/aliases"
 
 # Fuzzy finder
-source "$XDG_CONFIG_HOME/fzf/fzf.sh"
+source "$XDG_CONFIG_HOME/fzf/config"
 eval "$(fzf --bash)"
 
 # Compatibility for scripts that expect the bash-completion pkg

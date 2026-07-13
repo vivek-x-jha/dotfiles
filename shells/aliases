@@ -66,20 +66,24 @@ command -v git &>/dev/null && {
 
 # -------------------------------- CLI tools ---------------------------------------
 
-# Launch Codex Desktop directly so it inherits the shell's raised file limit.
-# Fully quit an already-running Dock/Finder instance before using this command.
-if [[ $(uname) == Darwin ]]; then
-  codex-desktop() {
-    local app='/Applications/Codex.app/Contents/MacOS/Codex'
+# Pi quick entrypoints by cost/quality tier.
+command -v pi &>/dev/null && {
+  # Cheap cloud one-shot using the Codex mini model with low thinking.
+  alias ask='pi -p --provider openai-codex --model gpt-5.4-mini --thinking low --no-session'
 
-    if [[ ! -x $app ]]; then
-      printf 'Codex Desktop is not installed at %s\n' "$app" >&2
-      return 1
-    fi
+  # Free local one-shot for simple chat-style questions via Ollama.
+  alias askq='pi -p --model ollama/qwen2.5-coder:7b --no-session --no-tools --no-context-files --no-skills --no-prompt-templates'
 
-    nohup "$app" >/dev/null 2>&1 &
-  }
-fi
+  # Free local coding chats via Ollama, from lightest to strongest.
+  alias piq='pi --model ollama/qwen2.5-coder:7b'
+  alias piq14='pi --model ollama/qwen2.5-coder:14b'
+  alias piq32='pi --model ollama/qwen2.5-coder:32b'
+
+  # Cloud coding/reasoning tiers supported by ChatGPT-account authentication.
+  alias pilight='pi --provider openai-codex --model gpt-5.4-mini --thinking low'
+  alias pistrong='pi --provider openai-codex --model gpt-5.5 --thinking high'
+  alias pimax='pi --provider openai-codex --model gpt-5.5 --thinking xhigh'
+}
 
 # https://developer.1password.com/docs/cli/shell-plugins
 command -v op &>/dev/null && {
@@ -144,7 +148,11 @@ command -v SwitchAudioSource &>/dev/null && {
 # -------------------------------- Suffix Aliases ---------------------------------------
 
 # shellcheck disable=SC2128,SC2139,SC2086
-[ -n "${ZSH_VERSION:-}" ] && () {
+# Keep this as an EOF guard: bash cannot parse zsh anonymous functions,
+# so return before bash reads the zsh-only syntax below.
+[ -z "${ZSH_VERSION:-}" ] && return 0
+
+() {
   local ft
 
   # Images

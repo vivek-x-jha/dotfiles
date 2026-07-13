@@ -8,7 +8,7 @@ _update_tools() {
   cur=${COMP_WORDS[COMP_CWORD]}
   prev=${COMP_WORDS[COMP_CWORD - 1]}
 
-  opts='-a --all -d --ds-store -z --zsh -t --tmux -l --tldr -f --fzf -n --nvim -r --rust -b --brew -i --icons -e --tex --icons-dir -h --help'
+  opts='-a --all -d --ds-store -z --zsh --herdr -l --tldr -f --fzf -n --nvim --pi -r --rust --completions -b --brew -i --icons -e --tex --icons-dir -h --help'
 
   case "$prev" in
   --icons-dir)

@@ -48,8 +48,8 @@ require('nvim-tree').setup {
 
         folder = {
           default = icons.folder,
-          empty = icons.folder,
-          empty_open = icons.folder,
+          empty = icons.folder_empty,
+          empty_open = icons.folder_empty,
           open = icons.folder,
           symlink = icons.folder,
         },

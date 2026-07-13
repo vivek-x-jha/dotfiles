@@ -1,0 +1,16 @@
+# Personal workstation GUI additions. Installed after the developer profile.
+
+cask "alfred"
+cask "alt-tab"
+cask "anki"
+cask "chatgpt"
+cask "claude"
+cask "figma"
+cask "google-chrome"
+cask "iterm2"
+cask "keycastr"
+cask "logi-options+"
+cask "postman"
+cask "skim"
+cask "spotify"
+cask "vlc"

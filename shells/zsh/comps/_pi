@@ -1,0 +1,166 @@
+#compdef pi
+# shellcheck shell=zsh
+
+# Static completion for pi (@earendil-works/pi-coding-agent).
+
+_pi_providers() {
+  local -a providers
+  providers=(
+    anthropic ant-ling openai azure-openai deepseek nvidia google google-vertex
+    amazon-bedrock mistral groq cerebras cloudflare-ai-gateway cloudflare-workers-ai
+    xai openrouter vercel zai zai-cn opencode opencode-go huggingface fireworks
+    together kimi minimax xiaomi xiaomi-cn xiaomi-ams xiaomi-sgp github-copilot
+  )
+  _describe -t providers 'provider' providers
+}
+
+_pi_thinking_levels() {
+  local -a levels
+  levels=(off minimal low medium high xhigh)
+  _describe -t thinking-levels 'thinking level' levels
+}
+
+_pi_tools() {
+  local -a tools
+  tools=(read bash edit write grep find ls)
+  _describe -t tools 'tool' tools
+}
+
+_pi_modes() {
+  local -a modes
+  modes=(text json rpc)
+  _describe -t modes 'mode' modes
+}
+
+_pi_update_targets() {
+  local -a targets
+  targets=(pi self)
+  _describe -t update-targets 'update target' targets
+}
+
+_pi_package_source() {
+  _alternative \
+    'npm-packages:npm package:_message "npm:@scope/name or npm:name"' \
+    'git-sources:git source:_message "git:github.com/user/repo[@ref]"' \
+    'urls:url:_urls' \
+    'files:local path:_files'
+}
+
+_pi_commands() {
+  local -a commands
+  commands=(
+    'install:install package source and add to settings'
+    'remove:remove package source from settings'
+    'uninstall:alias for remove'
+    'update:update pi or installed packages'
+    'list:list installed packages'
+    'config:open package resource configuration TUI'
+  )
+  _describe -t commands 'pi command' commands
+}
+
+_pi_global_options=(
+  '--provider[provider name]:provider:_pi_providers'
+  '--model[model pattern or id]:model pattern:'
+  '--api-key[API key]:key:'
+  '--system-prompt[replace default system prompt]:prompt:'
+  '--append-system-prompt[append text or file contents to system prompt]:text or file:_files'
+  '--mode[output mode]:mode:_pi_modes'
+  '(-p --print)'{-p,--print}'[non-interactive mode: process prompt and exit]'
+  '(-c --continue)'{-c,--continue}'[continue previous session]'
+  '(-r --resume)'{-r,--resume}'[select a session to resume]'
+  '--session[use specific session file or partial UUID]:session:_files -g "*.jsonl(-.)"'
+  '--session-id[use exact project session ID, creating it if missing]:id:'
+  '--fork[fork specific session file or partial UUID]:session:_files -g "*.jsonl(-.)"'
+  '--session-dir[directory for session storage and lookup]:directory:_files -/'
+  '--no-session[do not save session]'
+  '(-n --name)'{-n,--name}'[set session display name]:name:'
+  '--models[comma-separated model patterns for Ctrl+P cycling]:patterns:'
+  '(-nt --no-tools)'{-nt,--no-tools}'[disable all tools by default]'
+  '(-nbt --no-builtin-tools)'{-nbt,--no-builtin-tools}'[disable built-in tools by default]'
+  '(-t --tools)'{-t,--tools}'[comma-separated allowlist of tool names]:tools:_pi_tools'
+  '(-xt --exclude-tools)'{-xt,--exclude-tools}'[comma-separated denylist of tool names]:tools:_pi_tools'
+  '--thinking[thinking level]:level:_pi_thinking_levels'
+  '(-e --extension)'{-e,--extension}'[load an extension file]:extension:_files'
+  '(-ne --no-extensions)'{-ne,--no-extensions}'[disable extension discovery]'
+  '--skill[load a skill file or directory]:skill:_files'
+  '(-ns --no-skills)'{-ns,--no-skills}'[disable skills discovery and loading]'
+  '--prompt-template[load a prompt template file or directory]:template:_files'
+  '(-np --no-prompt-templates)'{-np,--no-prompt-templates}'[disable prompt template discovery and loading]'
+  '--theme[load a theme file or directory]:theme:_files'
+  '--no-themes[disable theme discovery and loading]'
+  '(-nc --no-context-files)'{-nc,--no-context-files}'[disable AGENTS.md and CLAUDE.md discovery]'
+  '--export[export session file to HTML and exit]:session:_files -g "*.jsonl(-.)"'
+  '--list-models[list available models with optional fuzzy search]::search:'
+  '--verbose[force verbose startup]'
+  '(-a --approve)'{-a,--approve}'[trust project-local files for this run]'
+  '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this run]'
+  '--offline[disable startup network operations]'
+  '(-h --help)'{-h,--help}'[show help]'
+  '(-v --version)'{-v,--version}'[show version]'
+)
+
+_pi() {
+  local -a commands
+  commands=(
+    'install:install package source and add to settings'
+    'remove:remove package source from settings'
+    'uninstall:alias for remove'
+    'update:update pi or installed packages'
+    'list:list installed packages'
+    'config:open package resource configuration TUI'
+  )
+
+  if (( CURRENT == 2 )); then
+    if [[ ${words[CURRENT]} == -* ]]; then
+      _arguments -s -S $_pi_global_options '*:message or file:_files'
+    else
+      _alternative \
+        'commands:pi command:_pi_commands' \
+        'files:message or file:_files'
+    fi
+    return
+  fi
+
+  case ${words[2]} in
+    install)
+      _arguments -s -S \
+        '(-l --local)'{-l,--local}'[install project-locally (.pi/settings.json)]' \
+        '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
+        '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this command]' \
+        '(-h --help)'{-h,--help}'[show help]' \
+        '1:source:_pi_package_source'
+      ;;
+    remove|uninstall)
+      _arguments -s -S \
+        '(-l --local)'{-l,--local}'[remove from project settings (.pi/settings.json)]' \
+        '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
+        '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this command]' \
+        '(-h --help)'{-h,--help}'[show help]' \
+        '1:source:_pi_package_source'
+      ;;
+    update)
+      _arguments -s -S \
+        '--self[update pi only]' \
+        '--extensions[update installed packages only]' \
+        '--all[update pi and installed packages]' \
+        '--extension[update one package only]:source:_pi_package_source' \
+        '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
+        '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this command]' \
+        '--force[reinstall pi even if current version is latest]' \
+        '(-h --help)'{-h,--help}'[show help]' \
+        '1:update target or source:_pi_update_targets'
+      ;;
+    list|config)
+      _arguments -s -S \
+        '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
+        '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this command]' \
+        '(-h --help)'{-h,--help}'[show help]'
+      ;;
+    *)
+      _arguments -s -S $_pi_global_options '*:message or file:_files'
+      ;;
+  esac
+}
+
+_pi "$@"

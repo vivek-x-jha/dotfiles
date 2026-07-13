@@ -3,7 +3,6 @@ build-essential
 curl
 git
 zsh
-tmux
 neovim
 ripgrep
 fd-find

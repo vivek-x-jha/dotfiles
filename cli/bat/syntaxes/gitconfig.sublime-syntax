@@ -1,0 +1,66 @@
+%YAML 1.2
+---
+name: Dotfiles Git Config
+scope: source.gitconfig
+file_extensions:
+  - dotfiles_gitconfig
+
+# Aligned with Neovim's built-in syntax/gitconfig.vim and SourDiesel colors:
+# - gitconfigSection  -> keyword / magenta
+# - gitconfigVariable -> variable / white
+# - gitconfigBoolean  -> boolean / red
+# - gitconfigNumber   -> number / yellow
+# - gitconfigString   -> string / green, including unquoted values
+
+variables:
+  ident: '[A-Za-z][A-Za-z0-9-]*'
+
+contexts:
+  main:
+    - include: comments
+    - include: sections
+    - include: assignments
+
+  comments:
+    - match: '[#;].*$'
+      scope: comment.line.gitconfig
+
+  sections:
+    - match: '^\s*(\[[A-Za-z0-9.-]+(?:\s+"(?:[^"\\]|\\.)*")?\])'
+      captures:
+        1: keyword.other.section.gitconfig
+
+  assignments:
+    - match: '^\s*({{ident}})(\s*)(=)'
+      captures:
+        1: variable.other.gitconfig
+        3: punctuation.separator.key-value.gitconfig
+      push: value
+    - match: '^\s*({{ident}})(?=\s*(?:[#;]|$))'
+      captures:
+        1: variable.other.gitconfig
+
+  value:
+    - meta_content_scope: meta.assignment.value.gitconfig
+    - include: comments
+    - match: '\b(true|false|yes|no)\b'
+      scope: constant.language.boolean.js
+    - match: '\b\d+\b'
+      scope: constant.numeric.gitconfig
+    - match: '"'
+      scope: punctuation.definition.string.begin.gitconfig
+      push: string
+    - match: '[^\s#;][^#;]*'
+      scope: string.unquoted.gitconfig
+    - match: '$'
+      pop: true
+
+  string:
+    - meta_content_scope: string.quoted.double.gitconfig
+    - match: '\\[\\"ntb$]'
+      scope: constant.character.escape.gitconfig
+    - match: '\\.'
+      scope: invalid.illegal.escape.gitconfig
+    - match: '"'
+      scope: punctuation.definition.string.end.gitconfig
+      pop: true

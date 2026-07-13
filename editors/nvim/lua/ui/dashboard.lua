@@ -72,6 +72,29 @@ local button_text = function(txt)
   return txt
 end
 
+--- Set a window-local option for a dashboard window.
+---@param win integer
+---@param name string
+---@param value any
+local set_win_option = function(win, name, value)
+  if not vim.api.nvim_win_is_valid(win) then return end
+  pcall(vim.api.nvim_set_option_value, name, value, { win = win })
+end
+
+--- Hide editor chrome for the dashboard window.
+---@param win integer
+local hide_window_chrome = function(win)
+  set_win_option(win, 'number', false)
+  set_win_option(win, 'relativenumber', false)
+  set_win_option(win, 'signcolumn', 'no')
+  set_win_option(win, 'statuscolumn', '')
+  set_win_option(win, 'list', false)
+  set_win_option(win, 'wrap', false)
+  set_win_option(win, 'cursorline', false)
+  set_win_option(win, 'colorcolumn', '0')
+  set_win_option(win, 'foldcolumn', '0')
+end
+
 --- Setup handler
 --- @param buf? integer  -- Buffer handle, defaults to a new scratch buffer
 --- @param win? integer  -- Window handle, defaults to current window
@@ -91,7 +114,8 @@ M.setup = function(buf, win, action)
   ---@type integer dashboard width
   local dashboard_w = 0
 
-  if action == 'open' then vim.api.nvim_win_set_buf(0, buf) end
+  if action == 'open' then vim.api.nvim_win_set_buf(win, buf) end
+  hide_window_chrome(win)
 
   ------------------------ find largest string's width -----------------------------
   for _, val in ipairs(header) do
@@ -139,8 +163,8 @@ M.setup = function(buf, win, action)
   -- if screen height is small
   if #dashboard > winh then winh = #dashboard + 10 end
 
-  local row_i = math.floor((winh / 2) - (#dashboard / 2))
-  local col_i = math.floor((winw / 2) - math.floor(dashboard_w / 2)) - 6 -- (5 is textoff)
+  local row_i = math.max(0, math.floor((winh - #dashboard) / 2))
+  local col_i = math.max(0, math.floor((winw - dashboard_w - 4) / 2))
 
   -- make all lines available
   local empty_str = {}
@@ -190,24 +214,17 @@ M.setup = function(buf, win, action)
   vim.keymap.set('n', '<down>', navigate_down, { buffer = buf })
   vim.keymap.set('n', '<cr>', run_selected, { buffer = buf })
 
-  ------------------------------ clean buffer options ------------------------------------
-  local opt_local = {
-    { 'buflisted', false, { scope = 'local' } },
-    { 'modifiable', false, { scope = 'local' } },
-    { 'buftype', 'nofile', { buf = buf } },
-    { 'number', false, { scope = 'local' } },
-    { 'list', false, { scope = 'local' } },
-    { 'wrap', false, { scope = 'local' } },
-    { 'relativenumber', false, { scope = 'local' } },
-    { 'cursorline', false, { scope = 'local' } },
-    { 'colorcolumn', '0', { scope = 'local' } },
-    { 'foldcolumn', '0', { scope = 'local' } },
-    { 'ft', 'dashboard', { buf = buf } },
-  }
+  ------------------------------ clean buffer/window options -----------------------------
+  vim.bo[buf].buflisted = false
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].buftype = 'nofile'
+  vim.bo[buf].filetype = 'dashboard'
 
-  for _, optl in ipairs(opt_local) do
-    vim.api.nvim_set_option_value(optl[1], optl[2], optl[3])
-  end
+  hide_window_chrome(win)
+  vim.schedule(function()
+    hide_window_chrome(win)
+    if vim.api.nvim_win_is_valid(win) then pcall(vim.api.nvim__redraw, { win = win, valid = false }) end
+  end)
 
   vim.g['dashboard_displayed'] = true
 

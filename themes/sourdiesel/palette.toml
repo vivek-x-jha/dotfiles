@@ -89,6 +89,10 @@ role = "dark application background"
 hex = "#313244"
 role = "selection and elevated surface"
 
+[extras.nvim_statusline]
+hex = "#27283a"
+role = "subtle Neovim statusline surface"
+
 [extras.terminal_surface]
 hex = "#212030"
 role = "terminal and desktop chrome surface"
@@ -170,15 +174,15 @@ parser = "ansi"
 id = "fzf"
 label = "fzf"
 group = "Terminal and shell"
-paths = ["cli/fzf/fzf.sh"]
+paths = ["cli/fzf/config"]
 parser = "env"
 
 [[consumers]]
-id = "eza"
-label = "eza"
+id = "eva"
+label = "eva"
 group = "Files and icons"
-paths = ["cli/eza/theme.yml"]
-parser = "eza"
+paths = ["cli/eva/theme.yml"]
+parser = "eva"
 
 [[consumers]]
 id = "webdevicons"
@@ -350,10 +354,10 @@ parser = "hex"
 allowed_hex = []
 
 [[consumers]]
-id = "cia"
-label = "CIA agent manager"
+id = "pi"
+label = "Pi coding agent"
 group = "Application UI"
-paths = ["cli/cia/config.toml"]
+paths = ["ai/pi/themes/sourdiesel.json"]
 parser = "hex"
 allowed_hex = []
 

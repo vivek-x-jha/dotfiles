@@ -21,6 +21,7 @@ local thm = {
   -- Other
   dark = '#1b1c28',
   grey = '#313244',
+  nvim_statusline = '#27283a',
 
   -- App specific
   nvim_bg = 'NONE',
@@ -160,7 +161,6 @@ local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
 local applications = {
   a = 'Anki',
   b = 'Arc',
-  c = 'Codex',
   d = 'Discord',
   e = 'Notion Calendar',
   f = 'iPhone Mirroring',
@@ -255,6 +255,50 @@ local moveApp = function(app_pos)
     -- Treat as a unit-rect (fractions of screen); accepts numbers in [0,1]
     win:moveToUnit(hs.geometry.rect(app_pos.x, app_pos.y, app_pos.w, app_pos.h))
   end
+end
+
+--- Clamp a number to a range.
+--- @param value number
+--- @param min_value number
+--- @param max_value number
+--- @return number
+local clamp = function(value, min_value, max_value)
+  return math.min(math.max(value, min_value), max_value)
+end
+
+--- Move the focused window to a unit rect, but keep it at least a terminal grid size.
+--- Used by ctrl-alt-c so centered terminals do not shrink below 120 columns x 30 rows.
+--- @param app_pos WindowRect
+--- @param min_cols number
+--- @param min_rows number
+--- @return nil
+local moveAppMinTerminalGrid = function(app_pos, min_cols, min_rows)
+  local win = hs.window.focusedWindow()
+
+  if not win then
+    hs.alert.show 'No window to move'
+    return
+  end
+
+  local screenFrame = win:screen():frame()
+  local cell = { w = 9, h = 18 }
+  local padding = { w = 35, h = 27 }
+  local min_size = {
+    w = (min_cols * cell.w) + padding.w,
+    h = (min_rows * cell.h) + padding.h,
+  }
+
+  local width = math.min(math.max(screenFrame.w * app_pos.w, min_size.w), screenFrame.w)
+  local height = math.min(math.max(screenFrame.h * app_pos.h, min_size.h), screenFrame.h)
+  local centerX = screenFrame.x + (screenFrame.w * (app_pos.x + (app_pos.w / 2)))
+  local centerY = screenFrame.y + (screenFrame.h * (app_pos.y + (app_pos.h / 2)))
+
+  win:setFrame {
+    x = clamp(centerX - (width / 2), screenFrame.x, screenFrame.x + screenFrame.w - width),
+    y = clamp(centerY - (height / 2), screenFrame.y, screenFrame.y + screenFrame.h - height),
+    w = width,
+    h = height,
+  }
 end
 
 --- Almost maximize the focused window with a uniform margin around border
@@ -386,6 +430,40 @@ local screens_left_to_right = function()
   return screens
 end
 
+local browser_apps = {
+  { name = 'Arc', bundle_id = 'company.thebrowser.Browser' },
+  { name = 'Google Chrome', bundle_id = 'com.google.Chrome' },
+  { name = 'Safari', bundle_id = 'com.apple.Safari' },
+}
+
+--- Pick the preferred available browser: Arc, then Google Chrome, then Safari.
+--- @return string
+local select_browser_app = function()
+  for _, browser in ipairs(browser_apps) do
+    if hs.application.get(browser.name) or hs.application.pathForBundleID(browser.bundle_id) then return browser.name end
+  end
+
+  return 'Safari'
+end
+
+--- Hide an app after workspace placement.
+--- @param appName string
+--- @return nil
+local hide_app = function(appName)
+  local app = hs.application.get(appName)
+  if app then app:hide() end
+end
+
+--- Move an app to a screen and enter native macOS fullscreen.
+--- @param appName string
+--- @param screen ScreenLike
+--- @return nil
+local fullscreen_app = function(appName, screen)
+  positionApp(appName, screen)
+  local win = hs.window.focusedWindow()
+  if win and not win:isFullScreen() then win:setFullScreen(true) end
+end
+
 --- Arrange single monitor workspace
 --- @return nil
 local arrange_monitor = function()
@@ -393,48 +471,55 @@ local arrange_monitor = function()
 
   if #screens < 1 then return hs.alert.show 'No displays detected!' end
 
-  with_app_windows({ 'Codex', 'WezTerm', 'Arc', 'ChatGPT' }, function()
+  local browser = select_browser_app()
+
+  with_app_windows({ 'WezTerm', browser, 'Messages', 'Spotify' }, function()
     screens = hs.screen.allScreens()
     if #screens < 1 then return hs.alert.show 'No displays detected!' end
 
-    positionApp('Codex', screens[1])
-    moveApp { x = 0, y = 0, w = 0.5, h = 0.5 }
+    positionApp(browser, screens[1])
+    moveApp 'maximize'
+
+    positionApp('Messages', screens[1])
+    moveApp 'maximize'
+    hide_app 'Messages'
+
+    positionApp('Spotify', screens[1])
+    moveApp 'maximize'
+    hide_app 'Spotify'
 
     positionApp('WezTerm', screens[1])
-    moveApp { x = 0, y = 0.5, w = 0.5, h = 0.5 }
-
-    positionApp('Arc', screens[1])
-    moveApp { x = 0.5, y = 0, w = 0.5, h = 0.5 }
-
-    positionApp('ChatGPT', screens[1])
-    moveApp { x = 0.5, y = 0.5, w = 0.5, h = 0.5 }
+    moveApp 'maximize'
   end)
 end
 
---- Arrange 3 monitor workspace with either Codex or WezTerm centered.
---- @param center_app '"Codex"'|'"WezTerm"'
+--- Arrange 3 monitor workspace with WezTerm centered for terminal harnesses.
 --- @return nil
-local arrange_3_monitors = function(center_app)
+local arrange_3_monitors = function()
   local screens = screens_left_to_right()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
-  if center_app ~= 'Codex' and center_app ~= 'WezTerm' then return hs.alert.show('Invalid center app: ' .. tostring(center_app)) end
 
-  with_app_windows({ 'Codex', 'WezTerm', 'Arc' }, function()
+  with_app_windows({ 'Messages', 'Spotify', 'VLC', 'Photos', 'WezTerm', 'Arc' }, function()
     screens = screens_left_to_right()
     if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-    local left_screen = screens[1]
-    local center_screen = screens[2]
-    local right_screen = screens[3]
-    local left_app = center_app == 'Codex' and 'WezTerm' or 'Codex'
+    positionApp('Messages', screens[1])
+    moveApp 'maximize'
+    positionApp('Spotify', screens[1])
+    moveApp 'maximize'
+    fullscreen_app('VLC', screens[1])
 
-    positionApp(left_app, left_screen)
+    positionApp('Arc', screens[3])
     moveApp 'maximize'
-    positionApp('Arc', right_screen)
+    fullscreen_app('Photos', screens[2])
+
+    positionApp('WezTerm', screens[2])
     moveApp 'maximize'
-    positionApp(center_app, center_screen)
-    moveApp 'maximize'
+    hs.timer.doAfter(1, function()
+      positionApp('WezTerm', screens[2])
+      moveApp 'maximize'
+    end)
   end)
 end
 
@@ -443,8 +528,7 @@ end
 local remaps = {
   -- Workspaces
   { mods = ctrl_alt_cmd, key = '1', message = 'Set Single Monitor Workspace', pressedfn = arrange_monitor },
-  { mods = ctrl_alt_cmd, key = '2', message = 'Set 3 Monitor Workspace', pressedfn = function() arrange_3_monitors 'WezTerm' end },
-  { mods = ctrl_alt_cmd, key = '3', message = 'Set 3 Monitor Workspace (Codex Center)', pressedfn = function() arrange_3_monitors 'Codex' end },
+  { mods = ctrl_alt_cmd, key = '2', message = 'Set 3 Monitor Workspace', pressedfn = arrange_3_monitors },
 
   -- Monitor placement
   { mods = ctrl_alt_cmd, key = 'Left', message = 'Left Display', pressedfn = function() moveApp 'next' end },
@@ -453,7 +537,7 @@ local remaps = {
   -- Window sizing and placement
   { mods = ctrl_alt, key = 'Left', message = 'Left Half', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
   { mods = ctrl_alt, key = 'Right', message = 'Right Half', pressedfn = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveApp { x = 0.25, y = 0.25, w = 0.5, h = 0.5 } end },
+  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveAppMinTerminalGrid({ x = 0.25, y = 0.25, w = 0.5, h = 0.5 }, 120, 30) end },
   { mods = ctrl_alt, key = 'Up', message = 'Top Half', pressedfn = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'Down', message = 'Bottom Half', pressedfn = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'U', message = 'Top Left', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },

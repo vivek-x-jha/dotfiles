@@ -1,0 +1,34 @@
+# Developer profile additions. Installed after manifests/Brewfile.
+
+brew "bash-language-server"
+brew "certifi"
+brew "ffmpeg"
+brew "fileicon"
+brew "gawk"
+brew "libgit2"
+brew "libssh2"
+brew "llm"
+brew "lua-language-server"
+brew "mycli"
+brew "mysql", restart_service: :changed
+brew "node"
+brew "ollama", restart_service: :changed
+brew "pam-reattach"
+brew "pandoc"
+brew "perl"
+brew "pkgconf"
+brew "protobuf"
+brew "rainfrog"
+brew "rename"
+brew "stylua"
+brew "switchaudio-osx"
+brew "tmux"
+
+cask "visual-studio-code"
+
+vscode "catppuccin.catppuccin-vsc"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "openai.chatgpt"

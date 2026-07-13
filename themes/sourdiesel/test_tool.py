@@ -52,7 +52,7 @@ class SourDieselToolTests(unittest.TestCase):
             [usage.color for usage in usages], ["brightmagenta", "terminal_surface"]
         )
 
-    def test_eza_numeric_slots_and_qualified_mappings(self) -> None:
+    def test_eva_numeric_slots_and_qualified_mappings(self) -> None:
         content = """\
 extensions:
   cache:
@@ -65,7 +65,7 @@ extensions:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "theme.yml"
             path.write_text(content, encoding="utf-8")
-            usages, mappings, errors = tool.scan_eza(path, self.by_index)
+            usages, mappings, errors = tool.scan_eva(path, self.by_index)
         self.assertEqual(errors, [])
         self.assertEqual(
             [usage.color for usage in usages], ["brightblack", "brightwhite"]
@@ -103,10 +103,10 @@ extensions:
             self.assertIn("fixture: unapproved colors: #123456", errors)
             self.assertIn("fixture: stale legacy colors: #654321", errors)
 
-    def test_eza_webdevicons_parity_uses_extension_precedence(self) -> None:
+    def test_eva_webdevicons_parity_uses_extension_precedence(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "eza.yml").write_text(
+            (root / "eva.yml").write_text(
                 """\
 filenames:
   log:
@@ -126,11 +126,11 @@ extensions:
             manifest = copy.deepcopy(self.manifest)
             manifest["consumers"] = [
                 {
-                    "id": "eza",
-                    "label": "eza",
+                    "id": "eva",
+                    "label": "eva",
                     "group": "Tests",
-                    "paths": ["eza.yml"],
-                    "parser": "eza",
+                    "paths": ["eva.yml"],
+                    "parser": "eva",
                 },
                 {
                     "id": "webdevicons",
@@ -146,7 +146,7 @@ extensions:
                 encoding="utf-8",
             )
             self.assertIn(
-                "eza/web-devicons: log is red in eza and green in web-devicons",
+                "eva/web-devicons: log is red in eva and green in web-devicons",
                 tool.build_inventory(manifest, root).errors,
             )
 

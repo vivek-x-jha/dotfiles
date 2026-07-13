@@ -1,0 +1,75 @@
+onboarding = false
+[theme]
+name = "terminal"
+auto_switch = false
+
+[theme.custom]
+panel_bg = "reset"
+accent = "#cccccc"
+text = "#f4f3f2"
+subtext0 = "#f4f3f2"
+surface0 = "#5c617d"
+surface1 = "#5c617d"
+surface_dim = "#313244"
+overlay0 = "#5c617d"
+overlay1 = "#f4f3f2"
+red = "#f096b7"
+green = "#d2fd9d"
+yellow = "#f3b175"
+blue = "#80d7fe"
+magenta = "#c9ccfb"
+cyan = "#47e7b1"
+
+[ui]
+mouse_capture = true
+confirm_close = false
+prompt_new_tab_name = false
+pane_borders = true
+pane_gaps = false
+show_agent_labels_on_pane_borders = true
+accent = "#cccccc"
+
+[ui.toast]
+delivery = "herdr"
+
+[ui.toast.herdr]
+position = "top-right"
+
+[keys]
+prefix = "ctrl+a"
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+settings = "prefix+comma"
+split_horizontal = "prefix+s"
+close_pane = "prefix+c"
+swap_pane_down = "prefix+x"
+new_tab = "prefix+ctrl+c"
+rename_pane = "prefix+n"
+rename_tab = "prefix+shift+n"
+new_workspace = "prefix+alt+n"
+next_tab = "prefix+ctrl+n"
+previous_tab = "prefix+ctrl+p"
+last_pane = "prefix+ctrl+b"
+toggle_sidebar = "prefix+h"
+detach = "prefix+ctrl+d"
+
+[[keys.command]]
+key = "prefix+ctrl+s"
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" save 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Resurrect saved" --body "$out"; exit $status' '''
+description = "Save Herdr process restore state"
+
+[[keys.command]]
+key = "prefix+ctrl+r"
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" restore 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Resurrect restored" --body "$out"; exit $status' '''
+description = "Restore Herdr processes"
+
+[[keys.command]]
+key = "prefix+="
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-balance-panes" 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Panes balanced" --body "$out"; exit $status' '''
+description = "Balance panes in the current tab"
+
+[experimental]
+switch_ascii_input_source_in_prefix = true
+pane_history = true

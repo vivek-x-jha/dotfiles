@@ -1,0 +1,177 @@
+%YAML 1.2
+---
+name: Dotfiles Zsh
+scope: source.shell.zsh
+file_extensions:
+  - dotfiles_zsh
+
+# Dotfiles zsh syntax for bat previews, aligned with editors/nvim/after/syntax/zsh.vim
+# and SourDiesel's shell highlight choices.
+
+variables:
+  ident: '[A-Za-z_][A-Za-z0-9_]*'
+  command_start: '(^|[;|&({])\s*'
+  path_chars: 'A-Za-z0-9_@%+=:,.$~{}-'
+
+contexts:
+  main:
+    - include: comments
+    - include: strings
+    - include: function-declarations
+    - include: variables
+    - include: declarations
+    - include: control
+    - include: zsh-builtins
+    - include: builtins
+    - include: paths
+    - include: commands
+    - include: numbers
+    - include: operators
+
+  comments:
+    - match: '#.*$'
+      scope: comment.line.number-sign.shell
+
+  strings:
+    - match: "'"
+      scope: punctuation.definition.string.begin.shell
+      push: single-quoted
+    - match: "\\$'"
+      scope: punctuation.definition.string.begin.shell
+      push: ansi-c-quoted
+    - match: '"(?=[^"\n]*\$)'
+      scope: punctuation.definition.string.begin.shell
+      push: double-quoted-with-variable
+    - match: '"'
+      scope: punctuation.definition.string.begin.shell
+      push: double-quoted-no-variable
+
+  single-quoted:
+    - meta_content_scope: string.quoted.single.shell
+    - match: "'"
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  ansi-c-quoted:
+    - meta_content_scope: string.quoted.single.shell
+    - include: escapes
+    - match: "'"
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  double-quoted-no-variable:
+    - meta_content_scope: string.quoted.double.shell
+    - include: escapes
+    - match: '"'
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  double-quoted-with-variable:
+    # No string meta_scope: text in variable-bearing quotes stays neutral/white,
+    # while variable references remain red.
+    - include: variables
+    - include: escapes
+    - include: paths
+    - match: '"'
+      scope: punctuation.definition.string.end.shell
+      pop: true
+
+  escapes:
+    - match: '\\.'
+      scope: constant.character.escape.shell
+
+  variables:
+    - match: '\$\{'
+      scope: variable.other.readwrite.shell
+      push: braced-variable
+    - match: '\$(?:{{ident}}|[0-9*@#?\$!-])'
+      scope: variable.other.readwrite.shell
+    - match: '\$[(][^)]*[)]'
+      scope: meta.function-call.shell
+
+  braced-variable:
+    - match: '\}'
+      scope: variable.other.readwrite.shell
+      pop: true
+    - include: variables
+    - match: '{{ident}}'
+      scope: variable.other.readwrite.shell
+    - match: '[:-]|[=+?]'
+      scope: keyword.operator.shell
+    - match: '(?:~|\.{1,2})?/[-A-Za-z0-9_@%+=:,.$~]+(?:/[-A-Za-z0-9_@%+=:,.$~]+)*'
+      scope: meta.path.shell
+
+  function-declarations:
+    - match: '^(\s*)(function)(\s+)({{ident}}[-A-Za-z0-9_]*)(\s*(?:\(\))?\s*)(\{)?'
+      captures:
+        2: storage.modifier.shell
+        4: entity.name.function.shell
+        5: punctuation.section.function.shell
+        6: punctuation.section.block.begin.shell
+    - match: '^(\s*)({{ident}}[-A-Za-z0-9_]*)(\s*)(\(\))(\s*)(\{)?'
+      captures:
+        2: entity.name.function.shell
+        4: punctuation.section.function.shell
+        6: punctuation.section.block.begin.shell
+
+  declarations:
+    - match: '{{command_start}}(local|typeset|integer|float|readonly|export)\b'
+      captures:
+        2: storage.modifier.shell
+    - match: '\b(local|typeset|integer|float|readonly|export)\b'
+      scope: storage.modifier.shell
+
+  control:
+    - match: '(?<=[;|&({])\s*(case|coproc|do|done|elif|else|end|esac|fi|for|foreach|function|if|in|repeat|return|select|then|time|until|while)\b'
+      captures:
+        1: keyword.control.shell
+    - match: '{{command_start}}(case|coproc|do|done|elif|else|end|esac|fi|for|foreach|function|if|in|repeat|return|select|then|time|until|while)\b'
+      captures:
+        2: keyword.control.shell
+    - match: '\b(case|coproc|do|done|elif|else|end|esac|fi|for|foreach|function|if|in|repeat|return|select|then|time|until|while)\b'
+      scope: keyword.control.shell
+
+  zsh-builtins:
+    - match: '(?<=[;|&({])\s*(add-zsh-hook|autoload|bindkey|compdef|compinit|disable|emulate|enable|eval|source|unfunction|unhash|zcompile|zformat|zmodload|zparseopts|zstyle)\b'
+      captures:
+        1: support.function.builtin.shell
+    - match: '{{command_start}}(add-zsh-hook|autoload|bindkey|compdef|compinit|disable|emulate|enable|eval|source|unfunction|unhash|zcompile|zformat|zmodload|zparseopts|zstyle)\b'
+      captures:
+        2: support.function.builtin.shell
+    - match: '\b(add-zsh-hook|autoload|bindkey|compdef|compinit|disable|emulate|enable|eval|source|unfunction|unhash|zcompile|zformat|zmodload|zparseopts|zstyle)\b'
+      scope: support.function.builtin.shell
+    - match: '{{command_start}}(\.)\s'
+      captures:
+        2: support.function.builtin.shell
+
+  builtins:
+    - match: '(?<=[;|&({])\s*(alias|builtin|cd|command|exec|print|printf|read|set|test|trap|type|ulimit|umask|unalias|unset|whence)\b'
+      captures:
+        1: support.function.builtin.shell
+    - match: '{{command_start}}(alias|builtin|cd|command|exec|print|printf|read|set|test|trap|type|ulimit|umask|unalias|unset|whence)\b'
+      captures:
+        2: support.function.builtin.shell
+    - match: '\b(alias|builtin|cd|command|exec|print|printf|read|set|test|trap|type|ulimit|umask|unalias|unset|whence)\b'
+      scope: support.function.builtin.shell
+
+  paths:
+    - match: '(?:~|\.{1,2})?/[-{{path_chars}}]+(?:/[-{{path_chars}}]+)*'
+      scope: meta.path.shell
+    - match: '[-{{path_chars}}]+/[-{{path_chars}}]+(?:/[-{{path_chars}}]+)*'
+      scope: meta.path.shell
+
+  commands:
+    - match: '^\s*({{ident}}[-A-Za-z0-9_.:]*)(?=\s|$)'
+      captures:
+        1: meta.function-call.identifier.shell
+    - match: '(?<=[;|&({])\s*({{ident}}[-A-Za-z0-9_.:]*)(?=\s|$)'
+      captures:
+        1: meta.function-call.identifier.shell
+
+  numbers:
+    - match: '\b\d+\b'
+      scope: constant.numeric.shell
+
+  operators:
+    - match: '(\|\||&&|;;|[|&;<>])'
+      scope: keyword.operator.shell

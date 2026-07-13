@@ -1,6 +1,6 @@
 ---
 name: "update-branches"
-description: "Run a validated git flow: inspect status and diff, run checks, stage logical changes, commit with commitizen-style messages, merge behind existing branches with the default branch, push updated branches, and leave the repo on the default branch."
+description: "Run a validated git flow: inspect status and diff, run checks, stage logical changes, commit with conventional messages, merge behind existing branches with the default branch, push updated branches, and leave the repo on the default branch."
 metadata:
   short-description: "Run validated git flow"
 ---
@@ -21,7 +21,7 @@ This skill cannot switch the active model mid-run on its own. If a different mod
    - Run targeted checks only for files changed in the staged commit set.
    - Run `./bootstrap.sh --check` only when bootstrap behavior, shell files, manifests, setup-managed config, or other repo-wide setup contracts changed, or when the user explicitly asks for full validation.
    - For simple docs, theme fragments, lockfiles, generated metadata, or other low-risk data-only changes, prefer git commands plus the smallest relevant smoke check over full bootstrap validation.
-3. Stage logical parts and commit with commitizen-style messages.
+3. Stage logical parts and commit with Conventional Commit-style messages.
    In an active chat, stage only changes made in the current chat or explicitly approved by the user for inclusion. Treat pre-existing dirty worktree changes as user-owned and leave them unstaged unless the user explicitly asks to include all local changes.
    Use `git add -p` when the diff naturally splits into separate logical hunks.
 4. Push the default branch if it gained commits.

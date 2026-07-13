@@ -1,0 +1,202 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+state_file="${HERDR_RESURRECT_FILE:-${XDG_STATE_HOME:-$HOME/.local/state}/herdr/resurrect.json}"
+herdr_bin="${HERDR_BIN:-herdr}"
+
+usage() {
+  cat <<'EOF'
+Usage: herdr-resurrect <save|restore|list|clear-idle>
+
+Save and restore selected foreground commands in Herdr panes.
+Currently records:
+  - nvim foreground commands, e.g. nvim -S Session.vim
+  - pi foreground agents, restored with pi --session <session-file> when Herdr reports one
+  - codex foreground agents, restored with codex resume <session-id> when Herdr reports one
+
+State defaults to: $XDG_STATE_HOME/herdr/resurrect.json
+Override with HERDR_RESURRECT_FILE=/path/to/file.
+
+Restore clears idle panes that did not get a process restored, to avoid stale
+pane-history artifacts. Disable with HERDR_RESURRECT_CLEAR_IDLE=0.
+EOF
+}
+
+require_jq() {
+  command -v jq >/dev/null || { echo "herdr-resurrect: jq is required" >&2; exit 1; }
+}
+
+json_quote() {
+  jq -Rn --arg v "$1" '$v'
+}
+
+codex_session_from_pid() {
+  local pid="$1" path session_id
+  [[ -n "$pid" ]] || return 1
+  command -v lsof >/dev/null || return 1
+  path="$(lsof -p "$pid" -Fn 2>/dev/null \
+    | sed 's/^n//' \
+    | rg '/codex/sessions/.+\.jsonl$|/rollout-.+\.jsonl$' \
+    | head -1 || true)"
+  [[ -n "$path" ]] || return 1
+  session_id="$(basename "$path" | sed -E 's/^rollout-[0-9T:-]+-([0-9a-f-]{36})\.jsonl$/\1/')"
+  [[ "$session_id" =~ ^[0-9a-f-]{36}$ ]] || return 1
+  printf '%s\n' "$session_id"
+}
+
+pane_is_idle() {
+  local pane_id="$1" info shell_pid fg_count non_shell_count
+  info="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null || true)"
+  [[ -n "$info" ]] || return 1
+  shell_pid="$(jq -r '.result.process_info.shell_pid // empty' <<<"$info")"
+  [[ -n "$shell_pid" ]] || return 1
+  fg_count="$(jq '.result.process_info.foreground_processes | length' <<<"$info")"
+  non_shell_count="$(jq --argjson shell_pid "$shell_pid" '[.result.process_info.foreground_processes[] | select(.pid != $shell_pid)] | length' <<<"$info")"
+  [[ "$fg_count" -gt 0 && "$non_shell_count" -eq 0 ]]
+}
+
+save_state() {
+  require_jq
+  mkdir -p "$(dirname "$state_file")"
+
+  local panes agents tmp
+  panes="$($herdr_bin pane list)"
+  agents="$($herdr_bin agent list 2>/dev/null || printf '{"result":{"agents":[]}}')"
+  tmp="$(mktemp)"
+
+  {
+    printf '{\n  "version": 1,\n  "saved_at": %s,\n  "commands": [\n' "$(json_quote "$(date -u +%Y-%m-%dT%H:%M:%SZ)")"
+    local first=1 pane_id pinfo kind cmd cwd session_path codex_pid
+    while IFS= read -r pane_id; do
+      [[ -n "$pane_id" ]] || continue
+      pinfo="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null || true)"
+      [[ -n "$pinfo" ]] || continue
+
+      kind=""
+      cmd=""
+      cwd="$(jq -r '.result.process_info.foreground_processes[0].cwd // empty' <<<"$pinfo")"
+
+      if jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim"))' <<<"$pinfo" >/dev/null; then
+        kind="nvim"
+        cmd="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim")) | if (.argv | type) == "array" then (.argv | @sh) else (.cmdline // "nvim") end' <<<"$pinfo" | head -1)"
+      elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "pi") or (.name == "pi") or ((.name == "node") and (.argv0 == "pi")))' <<<"$pinfo" >/dev/null; then
+        kind="pi"
+        session_path="$(jq -r --arg pane_id "$pane_id" '.result.agents[]? | select(.pane_id == $pane_id and .agent == "pi") | .agent_session.value // empty' <<<"$agents" | head -1)"
+        if [[ -n "$session_path" ]]; then
+          cmd="pi --session $(printf '%q' "$session_path")"
+        else
+          cmd="pi"
+        fi
+      elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "codex") or (.name == "codex") or (.cmdline // "" | test("(^|/)codex( |$)")))' <<<"$pinfo" >/dev/null; then
+        kind="codex"
+        session_path="$(jq -r --arg pane_id "$pane_id" '.result.agents[]? | select(.pane_id == $pane_id and .agent == "codex") | .agent_session.value // empty' <<<"$agents" | head -1)"
+        if [[ -z "$session_path" ]]; then
+          codex_pid="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "codex") or (.name == "codex") or (.cmdline // "" | test("(^|/)codex( |$)"))) | .pid' <<<"$pinfo" | head -1)"
+          session_path="$(codex_session_from_pid "$codex_pid" || true)"
+        fi
+        if [[ -n "$session_path" ]]; then
+          cmd="codex resume $(printf '%q' "$session_path")"
+        else
+          cmd="codex resume --last"
+        fi
+      fi
+
+      [[ -n "$kind" && -n "$cmd" ]] || continue
+      if [[ "$first" -eq 0 ]]; then printf ',\n'; fi
+      first=0
+      jq -n \
+        --arg pane_id "$pane_id" \
+        --arg kind "$kind" \
+        --arg cwd "$cwd" \
+        --arg cmd "$cmd" \
+        '{pane_id:$pane_id, kind:$kind, cwd:$cwd, command:$cmd}'
+    done < <(jq -r '.result.panes[].pane_id' <<<"$panes")
+    printf '\n  ]\n}\n'
+  } > "$tmp"
+
+  mv "$tmp" "$state_file"
+  printf 'saved %s command(s) to %s\n' "$(jq '.commands | length' "$state_file")" "$state_file"
+}
+
+clear_idle_panes() {
+  require_jq
+  local exclude_file="${1:-}"
+  local pane_id cleared=0 skipped=0
+  while IFS= read -r pane_id; do
+    [[ -n "$pane_id" ]] || continue
+    if [[ -n "$exclude_file" ]] && grep -Fxq "$pane_id" "$exclude_file" 2>/dev/null; then
+      skipped=$((skipped + 1))
+      continue
+    fi
+    if pane_is_idle "$pane_id"; then
+      $herdr_bin pane run "$pane_id" clear >/dev/null || true
+      cleared=$((cleared + 1))
+    else
+      skipped=$((skipped + 1))
+    fi
+  done < <($herdr_bin pane list | jq -r '.result.panes[].pane_id')
+  printf 'cleared=%d skipped=%d\n' "$cleared" "$skipped"
+}
+
+restore_state() {
+  require_jq
+  [[ -f "$state_file" ]] || { echo "herdr-resurrect: no state file: $state_file" >&2; exit 1; }
+
+  local pane_id cmd kind cwd run_cmd exists restored=0 skipped=0 missing=0 restored_file
+  restored_file="$(mktemp)"
+  trap 'rm -f "$restored_file"' RETURN
+  while IFS= read -r row; do
+    pane_id="$(jq -r '.pane_id' <<<"$row")"
+    kind="$(jq -r '.kind' <<<"$row")"
+    cwd="$(jq -r '.cwd // empty' <<<"$row")"
+    cmd="$(jq -r '.command' <<<"$row")"
+    run_cmd="$cmd"
+    if [[ -n "$cwd" && -d "$cwd" ]]; then
+      run_cmd="cd $(printf '%q' "$cwd") && exec $cmd"
+    fi
+
+    exists="$($herdr_bin pane get "$pane_id" 2>/dev/null || true)"
+    if [[ -z "$exists" ]]; then
+      printf 'missing pane %s for %s\n' "$pane_id" "$kind" >&2
+      missing=$((missing + 1))
+      continue
+    fi
+
+    if ! pane_is_idle "$pane_id"; then
+      printf 'skip busy pane %s (%s)\n' "$pane_id" "$kind" >&2
+      skipped=$((skipped + 1))
+      continue
+    fi
+
+    printf 'restore %s in %s: %s\n' "$kind" "$pane_id" "$run_cmd"
+    $herdr_bin pane run "$pane_id" "$run_cmd" >/dev/null
+    if [[ "$kind" == "nvim" ]]; then
+      $herdr_bin pane rename "$pane_id" editor >/dev/null 2>&1 || true
+    elif jq -e '.result.pane.label == "terminal"' <<<"$exists" >/dev/null; then
+      $herdr_bin pane rename "$pane_id" --clear >/dev/null 2>&1 || true
+    fi
+    printf '%s\n' "$pane_id" >> "$restored_file"
+    restored=$((restored + 1))
+  done < <(jq -c '.commands[]' "$state_file")
+
+  if [[ "${HERDR_RESURRECT_CLEAR_IDLE:-1}" != 0 ]]; then
+    clear_idle_panes "$restored_file"
+  fi
+
+  printf 'restored=%d skipped=%d missing=%d\n' "$restored" "$skipped" "$missing"
+}
+
+list_state() {
+  require_jq
+  [[ -f "$state_file" ]] || { echo "herdr-resurrect: no state file: $state_file" >&2; exit 1; }
+  jq -r '.commands[] | [.pane_id, .kind, .cwd, .command] | @tsv' "$state_file"
+}
+
+case "${1:-}" in
+  save) save_state ;;
+  restore) restore_state ;;
+  clear-idle) clear_idle_panes ;;
+  list) list_state ;;
+  -h|--help|help) usage ;;
+  *) usage >&2; exit 2 ;;
+esac

@@ -13,8 +13,9 @@ apps/karabiner/**
 
 cli/gh/hosts.yml
 
-ai/claude/*
-!ai/claude/settings.json
+ai/claude-code/*
+!ai/claude-code/CLAUDE.md
+!ai/claude-code/settings.json
 
 cli/matplotlib/*
 !cli/matplotlib/
@@ -47,6 +48,7 @@ Sessionx.vim
 # Runtime Sockets
 # =========================
 *.sock
+**/target/
 
 # =========================
 # Swap Files

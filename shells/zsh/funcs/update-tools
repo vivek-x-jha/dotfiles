@@ -4,17 +4,19 @@ usage() {
   cat <<'EOF'
 Usage: update-tools [OPTIONS] [IconsDir]
 
-Run standard maintenance without TeX by default, or only the selected steps.
+Run standard maintenance without TeX/Herdr by default, or only selected steps.
 
 Options:
-  -a, --all            run every step, including TeX
+  -a, --all            run every step, including TeX and Herdr
   -d, --ds-store       prune .DS_Store artifacts
   -z, --zsh            update Zsh plugins
-  -t, --tmux           update tmux plugins
+      --herdr          update Herdr and regenerate Herdr completions
   -l, --tldr           update the TLDR cache
   -f, --fzf            update the fzf checkout
   -n, --nvim           update Neovim plugins
+      --pi             update Pi coding agent
   -r, --rust           update Rust and cargo-installed tools
+      --completions    regenerate managed shell completions
   -b, --brew           run Homebrew maintenance
   -i, --icons          refresh macOS icons
   -e, --tex            update TeX Live
@@ -28,11 +30,13 @@ select_all_steps() {
 
   delete_ds_store=1
   update_zsh=1
-  update_tmux=1
+  update_herdr=0
   update_tldr=1
   update_fzf=1
   update_nvim=1
+  update_pi=1
   update_rust=1
+  update_completions=1
   update_brew=1
   update_icons=1
   update_tex="$include_tex"
@@ -44,11 +48,13 @@ local run_all=0
 local selected_steps=0
 local delete_ds_store=0
 local update_zsh=0
-local update_tmux=0
+local update_herdr=0
 local update_tldr=0
 local update_fzf=0
 local update_nvim=0
+local update_pi=0
 local update_rust=0
+local update_completions=0
 local update_brew=0
 local update_icons=0
 local update_tex=0
@@ -58,11 +64,13 @@ while (( $# )); do
   -a|--all) run_all=1; selected_steps=1 ;;
   -d|--ds-store) delete_ds_store=1; selected_steps=1 ;;
   -z|--zsh) update_zsh=1; selected_steps=1 ;;
-  -t|--tmux) update_tmux=1; selected_steps=1 ;;
+  --herdr) update_herdr=1; selected_steps=1 ;;
   -l|--tldr) update_tldr=1; selected_steps=1 ;;
   -f|--fzf) update_fzf=1; selected_steps=1 ;;
   -n|--nvim) update_nvim=1; selected_steps=1 ;;
-  -r|--rust) update_rust=1; selected_steps=1 ;;
+  --pi) update_pi=1; selected_steps=1 ;;
+  -r|--rust) update_rust=1; update_completions=1; selected_steps=1 ;;
+  --completions) update_completions=1; selected_steps=1 ;;
   -b|--brew) update_brew=1; selected_steps=1 ;;
   -i|--icons) update_icons=1; selected_steps=1 ;;
   -e|--tex) update_tex=1; selected_steps=1 ;;
@@ -89,8 +97,8 @@ while (( $# )); do
   shift
 done
 
-# Explicit --all includes TeX; no step flags select the standard set without TeX.
-((run_all)) && select_all_steps 1
+# Explicit --all includes TeX and Herdr; no step flags select the standard set without them.
+((run_all)) && { select_all_steps 1; update_herdr=1; }
 ((selected_steps)) || select_all_steps 0
 
 local ICON='󰓒'
@@ -99,11 +107,13 @@ local SUBSTEP=0
 local TOTAL_STEPS=$((
   delete_ds_store +
   update_zsh +
-  update_tmux +
+  update_herdr +
   update_tldr +
   update_fzf +
   update_nvim +
+  update_pi +
   update_rust +
+  update_completions +
   update_brew +
   update_icons +
   update_tex
@@ -144,6 +154,22 @@ notify() {
   printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
 }
 
+refresh_herdr_completions() {
+  local bash_completion="$DOTFILES_DIR/shells/bash/comps/herdr.bash"
+  local zsh_completion="$DOTFILES_DIR/shells/zsh/comps/_herdr"
+  local zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+
+  if ! command -v herdr &>/dev/null; then
+    logg -w 'HERDR NOT FOUND ON PATH; SKIPPING HERDR COMPLETIONS'
+    return 0
+  fi
+
+  mkdir -p "${bash_completion:h}" "${zsh_completion:h}" || return 1
+  herdr completion bash >"$bash_completion" || return 1
+  herdr completion zsh >"$zsh_completion" || return 1
+  rm -f "$zsh_cache_dir"/compdump*(N) "$HOME"/.zcompdump*(N) 2>/dev/null || true
+}
+
 ((delete_ds_store)) && {
   notify 'PRUNE .DS_STORE ARTIFACTS'
   logg -c "fd -HI .DS_Store / -x rm -f {} &>/dev/null &!" 2>/dev/null ||
@@ -160,10 +186,16 @@ notify() {
     logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
 }
 
-((update_tmux)) && {
-  notify 'UPDATE TMUX PLUGINS'
-  logg -c "$TMUX_PLUGIN_MANAGER_PATH/tpm/bin/update_plugins all" 2>/dev/null ||
-    logg -w 'UPDATE TMUX PLUGINS FAILED'
+((update_herdr)) && {
+  notify 'UPDATE HERDR'
+  if [[ ${HERDR_ENV:-} == 1 ]]; then
+    logg -w 'RUNNING INSIDE HERDR; SKIPPING HERDR UPDATE. RUN `update-tools --herdr` OUTSIDE HERDR.'
+  elif command -v herdr &>/dev/null; then
+    logg -c 'herdr update --handoff' || logg -w 'UPDATE HERDR FAILED'
+    refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
+  else
+    logg -w 'HERDR NOT FOUND ON PATH; SKIPPING HERDR UPDATE'
+  fi
 }
 
 ((update_tldr)) && {
@@ -181,11 +213,25 @@ notify() {
   logg -c "nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'" || logg -w 'UPDATE NEOVIM PLUGINS FAILED'
 }
 
+((update_pi)) && {
+  notify 'UPDATE PI CODING AGENT'
+  if command -v pi &>/dev/null; then
+    logg -c 'pi update --all' || logg -w 'UPDATE PI CODING AGENT FAILED'
+  else
+    logg -w 'PI NOT FOUND ON PATH; SKIPPING PI UPDATE'
+  fi
+}
+
 ((update_rust)) && {
   notify 'UPDATE RUST TOOLCHAIN AND TOOLS'
   logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
   notify -s 'UPDATE RUST TOOLS'
   logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED'
+}
+
+((update_completions)) && {
+  notify 'REGENERATE SHELL COMPLETIONS'
+  refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
 }
 
 ((update_brew)) && {
@@ -208,10 +254,17 @@ notify() {
   done
 
   logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
-  logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR FAILED'
+  logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR REPORTED WARNINGS'
 
   notify -s 'EXPORT BREWFILE'
-  logg -c "brew bundle dump --force --no-npm" || logg -w 'UPDATE BREWFILE FAILED'
+  if [[ -z ${HOMEBREW_BUNDLE_FILE:-} ]]; then
+    logg -w 'HOMEBREW_BUNDLE_FILE unset; skipping Brewfile export'
+  elif mkdir -p "${HOMEBREW_BUNDLE_FILE:h}" \
+    && logg -c "brew bundle dump --force --no-npm"; then
+    :
+  else
+    logg -w 'UPDATE BREWFILE FAILED'
+  fi
 }
 
 ((update_icons)) && {
@@ -223,7 +276,5 @@ notify() {
   notify 'UPDATE TEX LIVE'
   logg -c 'sudo tlmgr update --self --all' || logg -w 'UPDATE TEX LIVE FAILED'
 }
-
-rmdir "$XDG_CONFIG_HOME/homebrew" 2>/dev/null || true
 
 return 0

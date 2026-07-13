@@ -26,7 +26,7 @@ integration, and XDG state paths.
 | Path | Purpose |
 | --- | --- |
 | `init.lua` | Startup order, core options, LSP setup, and plugin source registration |
-| `lsp/*.lua` | Per-server LSP settings |
+| `lsp/*.lua` | Per-server LSP settings; `ts_ls.lua` uses `typescript-language-server` and `eslint.lua` uses `vscode-eslint-language-server` for JS/TS/React files |
 | `after/syntax/{sh,zsh}.vim` | Shell syntax extensions for commands, control keywords, config builtins, and paths |
 | `lua/autocmds.lua` | Autocommands |
 | `lua/usercmds.lua` | Custom user commands |
@@ -65,6 +65,19 @@ Rules:
   one plugin, for example `plugins/gitsigns.lua`.
 - Use a broader module name only when it coordinates multiple plugins, for example
   `plugins/noice.lua` or `plugins/tree.lua`.
+
+## Language Servers
+
+`init.lua` enables every Lua config under `lsp/`. Bootstrap installs editor
+tooling in `bootstrap/lib/tooling.sh`, including `typescript`,
+`typescript-language-server`, `eslint`, `prettier`, and
+`vscode-langservers-extracted` through npm.
+
+The JS/TS stack is:
+
+- `lsp/ts_ls.lua` for TypeScript/JavaScript language intelligence.
+- `lsp/eslint.lua` for ESLint diagnostics and code actions.
+- `conform.nvim` with `prettier` for JS/TS/React/JSON format-on-save.
 
 ## Completion
 
@@ -108,7 +121,24 @@ standard syntax scripts load:
   identifiers so calls can match bat's blue callable styling without making
   every variable read blue.
 
-The matching highlight groups are defined by the local SourDiesel theme.
+The matching highlight groups are defined by the local SourDiesel theme. Files
+without shell extensions that still use shell syntax, such as `cli/fzf/config`,
+are assigned filetypes in `lua/autocmds.lua` so highlighting and shell LSPs stay
+aligned with bat preview mappings.
+
+## Dashboard
+
+Blank startup is owned by the local dashboard in `lua/ui/dashboard.lua`.
+`lua/autocmds.lua` skips opening `nvim-tree` for an empty unnamed buffer so the
+dashboard can fill the initial window by itself. Dashboard buffers use window-
+local chrome suppression for line numbers, relative numbers, signs, statuscolumn,
+foldcolumn, wrapping, list chars, cursorline, and colorcolumn; the guard is
+reapplied on dashboard filetype/window events to keep terminal-workspace startup
+clean.
+
+Dashboard content is rendered with virtual text and is centered against the
+current window dimensions as closely as practical, including narrower split panes
+created during terminal workspace setup.
 
 ## Statusline
 

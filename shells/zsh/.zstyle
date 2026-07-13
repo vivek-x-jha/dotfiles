@@ -8,7 +8,7 @@ zstyle ':completion:*:-command-:*' format \
 zstyle ':completion:*:descriptions' format \
   $'%{\e[38;5;5m%}%d%{\e[0m%}'
 
-# Keep completion menus structural; detailed filename patterns belong to eza.
+# Keep completion menus structural; detailed filename patterns belong to eva.
 zsh_completion_colors=(
   'no=00;38;5;0'
   'fi=00;38;5;7'

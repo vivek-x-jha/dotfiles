@@ -75,6 +75,45 @@
       </dict>
       <dict>
         <key>name</key>
+        <string>tmux control</string>
+        <key>scope</key>
+        <string>source.tmux keyword.control.preprocessor</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#FDF7CD</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>tmux variables and flags</string>
+        <key>scope</key>
+        <string>source.tmux variable.other, source.tmux variable.parameter</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#FFC7C7</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Shell string delimiters</string>
+        <key>scope</key>
+        <string>source.shell punctuation.definition.string, source.shell.bash punctuation.definition.string</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#CCCCCC</string>
+          <key>fontStyle</key>
+          <string></string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
         <string>String regex</string>
         <key>scope</key>
         <string>string.regexp</string>
@@ -837,7 +876,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#F4F3F2</string>
+          <string>#CCCCCC</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
@@ -863,7 +902,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#ECCEF0</string>
+          <string>#C4EFFA</string>
           <key>fontStyle</key>
           <string></string>
         </dict>
