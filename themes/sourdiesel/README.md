@@ -78,7 +78,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `brightgreen` | — | — |
 | `brightyellow` | — | 7 · md, AGENTS.md |
 | `brightblue` | 6 · filenames.sh.vim.filename, filenames.sh.vim.icon.style | 11 · sh.vim, zsh.vim |
-| `brightmagenta` | 3 · date, filenames.package.lock.filename | 40 · apt-packages.txt, Brewfile |
+| `brightmagenta` | 15 · date, filenames.Brewfile.filename | 44 · apt-packages.txt, Brewfile |
 | `brightcyan` | 54 · filenames._atuin.filename, filenames._atuin.icon.style | 27 · atuin.bash, bat.bash |
 | `brightwhite` | — | 2 · lua, py |
 | `dark` | — | — |
@@ -109,7 +109,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `dark` | 3 · Pmenu, PmenuSbar | — | — | — | — | — |
 | `grey` | 35 · Cursor, CursorColumn | — | — | — | 1 · background_color | 2 · editorCursor.background, terminalCursor.foreground |
 | `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | — | — |
-| `terminal_surface` | 1 · line 122 | — | — | — | — | 61 · activityBar.activeBackground, activityBar.activeBorder |
+| `terminal_surface` | 1 · line 123 | — | — | — | — | 61 · activityBar.activeBackground, activityBar.activeBorder |
 
 ## Application UI
 
@@ -138,7 +138,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## File and icon mappings
 
-<details><summary>eva: 123 colored mappings</summary>
+<details><summary>eva: 129 colored mappings</summary>
 
 - `black` (7): `filenames:.luarc.json`, `filenames:.state.itermexport`, `filenames:.vale.ini`, `filenames:_update-notifier-last-checked`, `filenames:CODEOWNERS`, `filenames:id_ed25519.pub`, `filenames:session_index.jsonl`
 - `red` (15): `filenames:.histfile`, `filenames:.history`, `filenames:.mycli_history`, `filenames:.mysql_history`, `filenames:.zlua`, `filenames:hist`, `filenames:histfile`, `filenames:history`, `filenames:history.jsonl`, `filenames:log`, `filenames:metadata.yaml`, `filenames:p10k-dump-mubuntu.zsh`, `filenames:p10k-instant-prompt-mubuntu.zsh`, `filenames:prompt-21`, `filenames:prompt-29`
@@ -148,12 +148,12 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 - `brightblack` (34): `filenames:.file`, `filenames:.gitkeep`, `filenames:.netrwhist`, `filenames:Icon\r`, `filenames:icon\r`, `filenames:main.shada`, `filenames:main.shada.tmp.a`, `filenames:main.shada.tmp.b`, `filenames:main.shada.tmp.c`, `filenames:main.shada.tmp.d`, `filenames:main.shada.tmp.e`, `filenames:main.shada.tmp.f`, `filenames:main.shada.tmp.g`, `filenames:main.shada.tmp.h`, `filenames:main.shada.tmp.i`, `filenames:main.shada.tmp.j`, `filenames:main.shada.tmp.k`, `filenames:main.shada.tmp.l`, `filenames:main.shada.tmp.m`, `filenames:main.shada.tmp.n`, `filenames:main.shada.tmp.o`, `filenames:main.shada.tmp.p`, `filenames:main.shada.tmp.q`, `filenames:main.shada.tmp.r`, `filenames:main.shada.tmp.s`, `filenames:main.shada.tmp.t`, `filenames:main.shada.tmp.u`, `filenames:main.shada.tmp.v`, `filenames:main.shada.tmp.w`, `filenames:main.shada.tmp.x`, `filenames:main.shada.tmp.y`, `filenames:main.shada.tmp.z`, `filenames:revision-hash`, `filenames:Session.vim`
 - `brightred` (4): `filenames:atuin-zsh-tty-capture.zsh`, `filenames:auth.key`, `filenames:id_ed25519`, `filenames:signing.key`
 - `brightblue` (3): `filenames:sh.vim`, `filenames:typescriptreact.vim`, `filenames:zsh.vim`
-- `brightmagenta` (1): `filenames:package.lock`
+- `brightmagenta` (7): `filenames:Brewfile`, `filenames:Brewfile.1password`, `filenames:Brewfile.developer`, `filenames:Brewfile.lock.json`, `filenames:Brewfile.personal`, `filenames:Brewfile.rust`, `filenames:package.lock`
 - `brightcyan` (27): `filenames:_atuin`, `filenames:_bat`, `filenames:_bob`, `filenames:_cargo`, `filenames:_dust`, `filenames:_eva`, `filenames:_fd`, `filenames:_pi`, `filenames:_rg`, `filenames:_starship`, `filenames:_tldr`, `filenames:_update-tools`, `filenames:_uv`, `filenames:_work`, `filenames:atuin.bash`, `filenames:bat.bash`, `filenames:bob.bash`, `filenames:cargo.bash`, `filenames:dust.bash`, `filenames:eva.bash`, `filenames:fd.bash`, `filenames:pi.bash`, `filenames:rg.bash`, `filenames:starship.bash`, `filenames:tldr.bash`, `filenames:update-tools.bash`, `filenames:uv.bash`
 
 </details>
 
-<details><summary>web-devicons: 270 colored mappings</summary>
+<details><summary>web-devicons: 274 colored mappings</summary>
 
 - `black` (26): `.editorconfig`, `.gitattributes`, `.gitignore`, `.luarc.json`, `.python-version`, `.shellcheckrc`, `.state.itermexport`, `.vale.ini`, `_update-notifier-last-checked`, `CODEOWNERS`, `conf`, `id_ed25519.pub`, `ini`, `json`, `jsonc`, `jsonl`, `session_index.jsonl`, `toml`, `tsconfig.app.json`, `tsconfig.json`, `tsconfig.node.json`, `txt`, `vercel.json`, `xml`, `yaml`, `yml`
 - `red` (15): `.bash_history`, `.histfile`, `.history`, `.mycli_history`, `.mysql_history`, `.python_history`, `.zsh_history`, `btop.log`, `CACHEDIR.TAG`, `hist`, `histfile`, `history`, `history.jsonl`, `lesshst`, `log`
@@ -164,7 +164,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 - `brightred` (6): `.env`, `atuin-zsh-tty-capture.zsh`, `auth.key`, `id_ed25519`, `patch`, `signing.key`
 - `brightyellow` (7): `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `LICENSE`, `md`, `README.md`, `SECURITY.md`
 - `brightblue` (11): `.dockerignore`, `compose.yaml`, `compose.yml`, `Containerfile`, `docker-compose.yaml`, `docker-compose.yml`, `Dockerfile`, `sh.vim`, `sublime-syntax`, `typescriptreact.vim`, `zsh.vim`
-- `brightmagenta` (40): `apt-packages.txt`, `Brewfile`, `Brewfile.lock.json`, `build.gradle`, `build.gradle.kts`, `bun.lockb`, `cabal.project`, `cabal.project.freeze`, `Cargo.lock`, `Cargo.toml`, `composer.json`, `composer.lock`, `dnf-packages.txt`, `Gemfile`, `Gemfile.lock`, `go.mod`, `go.sum`, `gradle.lockfile`, `mix.exs`, `mix.lock`, `nvim-pack-lock.json`, `package-lock.json`, `package.json`, `package.lock`, `Package.resolved`, `Package.swift`, `packages.config`, `Pipfile`, `Pipfile.lock`, `pnpm-lock.yaml`, `poetry.lock`, `pom.xml`, `project.assets.json`, `pubspec.lock`, `pubspec.yaml`, `pyproject.toml`, `requirements.txt`, `stack.yaml`, `uv.lock`, `yarn.lock`
+- `brightmagenta` (44): `apt-packages.txt`, `Brewfile`, `Brewfile.1password`, `Brewfile.developer`, `Brewfile.lock.json`, `Brewfile.personal`, `Brewfile.rust`, `build.gradle`, `build.gradle.kts`, `bun.lockb`, `cabal.project`, `cabal.project.freeze`, `Cargo.lock`, `Cargo.toml`, `composer.json`, `composer.lock`, `dnf-packages.txt`, `Gemfile`, `Gemfile.lock`, `go.mod`, `go.sum`, `gradle.lockfile`, `mix.exs`, `mix.lock`, `nvim-pack-lock.json`, `package-lock.json`, `package.json`, `package.lock`, `Package.resolved`, `Package.swift`, `packages.config`, `Pipfile`, `Pipfile.lock`, `pnpm-lock.yaml`, `poetry.lock`, `pom.xml`, `project.assets.json`, `pubspec.lock`, `pubspec.yaml`, `pyproject.toml`, `requirements.txt`, `stack.yaml`, `uv.lock`, `yarn.lock`
 - `brightcyan` (27): `_atuin`, `_bat`, `_bob`, `_cargo`, `_dust`, `_eva`, `_fd`, `_pi`, `_rg`, `_starship`, `_tldr`, `_update-tools`, `_uv`, `_work`, `atuin.bash`, `bat.bash`, `bob.bash`, `cargo.bash`, `dust.bash`, `eva.bash`, `fd.bash`, `pi.bash`, `rg.bash`, `starship.bash`, `tldr.bash`, `update-tools.bash`, `uv.bash`
 - `brightwhite` (2): `lua`, `py`
 

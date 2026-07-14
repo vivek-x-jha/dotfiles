@@ -286,6 +286,54 @@ filenames:
       style:
         foreground: red
 
+  Brewfile:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
+  Brewfile.1password:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
+  Brewfile.developer:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
+  Brewfile.lock.json:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
+  Brewfile.personal:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
+  Brewfile.rust:
+    filename:
+      foreground: brightmagenta
+    icon:
+      glyph: ""
+      style:
+        foreground: brightmagenta
+
   package.lock:
     filename:
       foreground: brightmagenta

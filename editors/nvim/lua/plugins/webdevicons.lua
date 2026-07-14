@@ -231,7 +231,11 @@ local devicons_config = {
     -- Package / lock manifests
     ['apt-packages.txt'] = { icon = icons.package, name = 'apt-packages', color = thm.brightmagenta },
     ['Brewfile'] = { icon = icons.package, name = 'Brewfile', color = thm.brightmagenta },
-    ['Brewfile.lock.json'] = { icon = icons.package, name = 'Brewfile.lock', color = thm.brightmagenta },
+    ['Brewfile.1password'] = { icon = icons.package, name = 'Brewfile1Password', color = thm.brightmagenta },
+    ['Brewfile.developer'] = { icon = icons.package, name = 'BrewfileDeveloper', color = thm.brightmagenta },
+    ['Brewfile.lock.json'] = { icon = icons.package, name = 'BrewfileLock', color = thm.brightmagenta },
+    ['Brewfile.personal'] = { icon = icons.package, name = 'BrewfilePersonal', color = thm.brightmagenta },
+    ['Brewfile.rust'] = { icon = icons.package, name = 'BrewfileRust', color = thm.brightmagenta },
     ['dnf-packages.txt'] = { icon = icons.package, name = 'dnf-packages', color = thm.brightmagenta },
     ['package.lock'] = { icon = icons.package, name = 'package.lock', color = thm.brightmagenta },
     ['package-lock.json'] = { icon = icons.package, name = 'package-lock', color = thm.brightmagenta },
