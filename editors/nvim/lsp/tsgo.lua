@@ -1,6 +1,6 @@
--- https://github.com/typescript-language-server/typescript-language-server#configuration
+-- TypeScript 7 native language server from microsoft/typescript-go.
 return {
-  cmd = { 'typescript-language-server', '--stdio' },
+  cmd = { 'tsc', '--lsp', '--stdio' },
   filetypes = {
     'javascript',
     'javascriptreact',
@@ -13,9 +13,5 @@ return {
     'tsconfig.json',
     'jsconfig.json',
     '.git',
-  },
-
-  init_options = {
-    hostInfo = 'neovim',
   },
 }

@@ -5,8 +5,9 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "db8ea0b7c7ab8c8f8faa3912833c1671381e6304",
-      "src": "https://github.com/saghen/blink.cmp"
+      "rev": "cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "'cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16'"
     },
     "blink.lib": {
       "rev": "5876dd95deeb70aadbe9f1c0b7117a135061cdac",

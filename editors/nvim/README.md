@@ -26,7 +26,7 @@ integration, and XDG state paths.
 | Path | Purpose |
 | --- | --- |
 | `init.lua` | Startup order, core options, LSP setup, and plugin source registration |
-| `lsp/*.lua` | Per-server LSP settings; `ts_ls.lua` uses `typescript-language-server` and `eslint.lua` uses `vscode-eslint-language-server` for JS/TS/React files |
+| `lsp/*.lua` | Per-server LSP settings; `tsgo.lua` uses TypeScript 7's native LSP and `eslint.lua` uses `vscode-eslint-language-server` for JS/TS/React files |
 | `after/syntax/{sh,zsh}.vim` | Shell syntax extensions for commands, control keywords, config builtins, and paths |
 | `lua/autocmds.lua` | Autocommands |
 | `lua/usercmds.lua` | Custom user commands |
@@ -69,13 +69,14 @@ Rules:
 ## Language Servers
 
 `init.lua` enables every Lua config under `lsp/`. Bootstrap installs editor
-tooling in `bootstrap/lib/tooling.sh`, including `typescript`,
-`typescript-language-server`, `eslint`, `prettier`, and
-`vscode-langservers-extracted` through npm.
+tooling in `bootstrap/lib/tooling.sh`, including `typescript@7`, `eslint`,
+`prettier`, and `vscode-langservers-extracted` through npm. Neovim launches
+TypeScript 7's native `typescript-go` language server with `tsc --lsp --stdio`,
+so the legacy `tsserver` bridge is not required.
 
 The JS/TS stack is:
 
-- `lsp/ts_ls.lua` for TypeScript/JavaScript language intelligence.
+- `lsp/tsgo.lua` for native TypeScript/JavaScript language intelligence.
 - `lsp/eslint.lua` for ESLint diagnostics and code actions.
 - `conform.nvim` with `prettier` for JS/TS/React/JSON format-on-save.
 

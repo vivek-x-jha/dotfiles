@@ -95,16 +95,17 @@ setup_ide() {
   require ruff || return
 
   require npm || return
-  if ! command -v typescript-language-server &>/dev/null \
+  if ! command -v tsc &>/dev/null \
+    || ! tsc --version 2>/dev/null | grep -q '^Version 7\.' \
     || ! command -v vscode-eslint-language-server &>/dev/null \
     || ! command -v eslint &>/dev/null \
     || ! command -v prettier &>/dev/null; then
     run_retry "${BOOTSTRAP_RETRY_ATTEMPTS:-3}" "${BOOTSTRAP_RETRY_DELAY:-3}" \
-      'npm install -g typescript typescript-language-server eslint prettier vscode-langservers-extracted'
+      'npm install -g typescript@7 eslint prettier vscode-langservers-extracted'
   else
     logg -i 'Global TypeScript/JavaScript IDE tools already available.'
   fi
-  require typescript-language-server || return
+  require tsc || return
   require vscode-eslint-language-server || return
   require eslint || return
   require prettier || return

@@ -87,7 +87,8 @@ vim.lsp.enable(servers)
 vim.pack.add {
   -- autocomplete
   { src = 'https://github.com/saghen/blink.lib' },
-  { src = 'https://github.com/saghen/blink.cmp' },
+  -- Later revisions call the changed vim.Pos API with the old 0.12 signature.
+  { src = 'https://github.com/saghen/blink.cmp', version = 'cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16' },
   { src = 'https://github.com/L3MON4D3/LuaSnip' }, -- blink snippets
   { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
 

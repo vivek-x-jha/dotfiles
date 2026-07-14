@@ -34,6 +34,24 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
+## KI-2026-07-13-blink-cmp-neovim-012-pos-regression
+
+**Status:** Workaround active.
+**Last verified:** 2026-07-13 (Neovim 0.12.0 with blink.cmp `db8ea0b`).
+**Area:** Neovim completion / blink.cmp
+
+**Observed:** Typing with blink.cmp enabled raised `vim/pos.lua:206: attempt to index local 'pos' (a number value)` from `blink.cmp` completion triggers.
+
+**Likely cause:** blink.cmp `db8ea0b` added a Neovim 0.12 compatibility branch that calls `vim.pos.cursor(buf, pos)`, but the installed Neovim 0.12.0 runtime expects `vim.pos.cursor(pos, opts)`. Calling `blink.cmp.completion.trigger.context.get_pos()` reproduced the same error directly.
+
+**Workaround:** Pin blink.cmp to the last known-good revision, `cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16`, in both `editors/nvim/init.lua` and `editors/nvim/nvim-pack-lock.json` so routine plugin updates do not restore the broken revision.
+
+**Reproduce/retest:** On the broken revision, run `NVIM_LOG_FILE="$HOME/.local/state/nvim/nvim.log" nvim --headless "+lua local ok,res=pcall(require('blink.cmp.completion.trigger.context').get_pos); print(ok, res)" '+qa'`. After removing the pin for an upstream fix, verify completion while typing in insert and terminal modes.
+
+**Exit criteria:** A newer blink.cmp revision uses the installed Neovim 0.12 `vim.Pos` signature and completion works in insert and terminal modes; then remove the explicit version pin and this entry.
+
+**References:** `editors/nvim/init.lua`, `editors/nvim/nvim-pack-lock.json`, upstream blink.cmp commits `f187527` and `db8ea0b`.
+
 ## KI-2026-07-12-herdr-resurrect-command-injection
 
 **Status:** Fixed pending verification.
