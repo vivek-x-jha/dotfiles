@@ -111,6 +111,13 @@ const THINKING_STYLES = {
     textFallback: "#ffc7c7",
     label: "xhi",
   },
+  max: {
+    iconColor: "BRIGHTWHITE_HEX",
+    iconFallback: "#ffffff",
+    textColor: "BRIGHTRED_HEX",
+    textFallback: "#f096b7",
+    label: "max",
+  },
 } as const;
 
 type HarnessName = keyof typeof HARNESSES;
