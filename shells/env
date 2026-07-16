@@ -8,6 +8,9 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# VS Code: portable mode keeps macOS user, extension, and shared data out of $HOME.
+[[ $(uname) == Darwin ]] && export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"
+
 # Checkout location is persisted by bootstrap so non-default clones remain usable.
 if [[ -z ${DOTFILES_DIR:-} && -r $XDG_STATE_HOME/dotfiles/root ]]; then
   IFS= read -r DOTFILES_DIR <"$XDG_STATE_HOME/dotfiles/root"

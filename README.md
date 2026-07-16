@@ -351,19 +351,21 @@ Native application theme files remain hand-authored. After changing the palette 
 
 ## 🧩 VS Code
 
-This repository tracks VS Code settings in [`editors/vscode/settings.json`](./editors/vscode/settings.json).
+This repository tracks VS Code settings in [`editors/vscode/settings.json`](./editors/vscode/settings.json). The setup uses VS Code's built-in dark theme with direct SourDiesel workbench, semantic-token, TextMate, and ANSI overrides, so it does not depend on a third-party color theme. Editor and integrated-terminal typography mirrors WezTerm's JetBrains Mono Nerd Font ExtraLight at 15px; external terminals open in WezTerm.
 
 Bootstrap configures:
 
 - `~/.config/vscode -> ~/.dotfiles/editors/vscode`
-- macOS settings symlink at `~/Library/Application Support/Code/User/settings.json`
+- macOS portable root at `$XDG_DATA_HOME/vscode` through `VSCODE_PORTABLE`
+- macOS settings symlink at `$XDG_DATA_HOME/vscode/user-data/User/settings.json`
 - Linux settings symlink at `$XDG_CONFIG_HOME/Code/User/settings.json`
-- extension and CLI data under `~/.vscode -> $XDG_DATA_HOME/vscode`
+- compatibility extension/CLI path at `~/.vscode -> $XDG_DATA_HOME/vscode`
 
 Notes:
 
-- macOS VS Code does not use `~/.config/Code/User/settings.json`; it uses `~/Library/Application Support/Code/User`.
-- Linux VS Code uses `$XDG_CONFIG_HOME/Code/User/settings.json`.
+- macOS shell and launchd environments both export `VSCODE_PORTABLE`, so terminal, Finder, Spotlight, and Dock launches use the same root.
+- Portable mode stores macOS user data in `$XDG_DATA_HOME/vscode/user-data`, extensions in `$XDG_DATA_HOME/vscode/extensions`, and shared state in `$XDG_DATA_HOME/vscode/shared-data`; this prevents VS Code 1.129 from recreating `~/.vscode-shared`.
+- Linux continues to use its native `$XDG_CONFIG_HOME/Code/User` settings path.
 - `~/.config/vscode` is the repo source grouping, not VS Code's native app config target.
 
 ## 🔐 1Password Integration
@@ -631,7 +633,9 @@ ls -l "$HOME/.vscode"
 On macOS:
 
 ```sh
-ls -l "$HOME/Library/Application Support/Code/User/settings.json"
+printf '%s\n' "$VSCODE_PORTABLE"
+ls -l "$XDG_DATA_HOME/vscode/user-data/User/settings.json"
+test ! -e "$HOME/.vscode-shared"
 ```
 
 On Linux:

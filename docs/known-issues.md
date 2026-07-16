@@ -34,6 +34,24 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
+## KI-2026-07-16-vscode-shared-home-directory
+
+**Status:** Workaround active.
+**Last verified:** 2026-07-16 (VS Code 1.129.0).
+**Area:** VS Code shared application state
+
+**Observed:** Without a portable root, starting VS Code creates `~/.vscode-shared/sharedStorage/state.vscdb`, a small SQLite store for cross-profile recent-workspace and workspace-trust state.
+
+**Likely cause:** VS Code's product metadata sets `sharedDataFolderName` to `.vscode-shared`, and the application environment service resolves that name directly below the user home directory unless a launch argument or portable root overrides it. XDG environment variables alone do not affect this path.
+
+**Workaround:** Set `VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"` in the shell and macOS launchd environments. Existing native macOS user data is migrated to `$VSCODE_PORTABLE/user-data`, and existing shared state is migrated to `$VSCODE_PORTABLE/shared-data`. This handles CLI and GUI launches without a home-directory compatibility symlink.
+
+**Reproduce/retest:** Confirm the VS Code process inherits `VSCODE_PORTABLE`, launch from both `code` and Finder/Dock, and verify state changes under `$XDG_DATA_HOME/vscode/shared-data` while `~/.vscode-shared` remains absent. Retest after VS Code upgrades.
+
+**Exit criteria:** VS Code supports an XDG-aware shared-data path or a persistent setting/environment variable that relocates only shared state; then remove portable mode after migrating user data back to the platform-native location.
+
+**References:** `shells/env`, `launchd/set-xdg-environment.sh`, `bootstrap/lib/environment.sh`, installed VS Code `product.json` (`sharedDataFolderName`), and `appSharedDataHome` in the main process bundle.
+
 ## KI-2026-07-15-codex-desktop-home-fallback
 
 **Status:** Workaround active.

@@ -305,6 +305,10 @@ doctor_bootstrap() {
   doctor_dir "$XDG_DATA_HOME/jupyter"
   doctor_dir "$XDG_DATA_HOME/zsh"
   doctor_dir "$XDG_DATA_HOME/vscode"
+  if [[ $OS_TYPE == macos ]]; then
+    doctor_dir "$XDG_DATA_HOME/vscode/shared-data"
+    doctor_dir "$XDG_DATA_HOME/vscode/user-data"
+  fi
   doctor_file "$XDG_STATE_HOME/codex/config.toml"
   doctor_symlink "$XDG_CONFIG_HOME/claude/CLAUDE.md" ../../.dotfiles/ai/AGENTS.md
   doctor_symlink "$XDG_STATE_HOME/codex/AGENTS.md" ../../../.dotfiles/ai/AGENTS.md
@@ -375,7 +379,7 @@ doctor_bootstrap() {
   if [[ $OS_TYPE == macos ]]; then
     doctor_symlink "$XDG_CONFIG_HOME/hammerspoon" ../.dotfiles/apps/hammerspoon optional
     doctor_symlink "$XDG_CONFIG_HOME/karabiner" ../.dotfiles/apps/karabiner optional
-    doctor_symlink "$HOME/Library/Application Support/Code/User/settings.json" ../../../../.dotfiles/editors/vscode/settings.json optional
+    doctor_symlink "$XDG_DATA_HOME/vscode/user-data/User/settings.json" "$BOOTSTRAP_ROOT/editors/vscode/settings.json" optional
     doctor_symlink "$HOME/Library/LaunchAgents/com.mubuntu.xdg-environment.plist" "$BOOTSTRAP_ROOT/launchd/com.mubuntu.xdg-environment.plist"
     if command -v cliproxyapi &>/dev/null && command -v brew &>/dev/null; then
       brew_prefix=$(brew --prefix)

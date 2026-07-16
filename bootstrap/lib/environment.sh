@@ -341,6 +341,7 @@ create_symlinks() {
     "$XDG_STATE_HOME/ipython" "$XDG_STATE_HOME/zsh" "$XDG_CONFIG_HOME/claude"
     "$XDG_CONFIG_HOME/herdr" "$XDG_CONFIG_HOME/jupyter"
     "$XDG_DATA_HOME/hermes" "$XDG_DATA_HOME/jupyter" "$XDG_DATA_HOME/zsh" "$XDG_DATA_HOME/vscode"
+    "$XDG_DATA_HOME/vscode/shared-data" "$XDG_DATA_HOME/vscode/user-data/User"
   )
   local symlinks=(
     "$BOOTSTRAP_ROOT/cli/atuin" "$XDG_CONFIG_HOME/atuin"
@@ -410,7 +411,7 @@ create_symlinks() {
     symlinks+=(
       "$BOOTSTRAP_ROOT/apps/hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
       "$BOOTSTRAP_ROOT/apps/karabiner" "$XDG_CONFIG_HOME/karabiner"
-      "$BOOTSTRAP_ROOT/editors/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+      "$BOOTSTRAP_ROOT/editors/vscode/settings.json" "$XDG_DATA_HOME/vscode/user-data/User/settings.json"
       "$BOOTSTRAP_ROOT/launchd/com.mubuntu.xdg-environment.plist" "$HOME/Library/LaunchAgents/com.mubuntu.xdg-environment.plist"
     )
     if command -v brew &>/dev/null; then
@@ -447,6 +448,7 @@ configure_codex_environment() {
   local hermes_home="${HERMES_HOME:-$XDG_DATA_HOME/hermes}"
   local nvim_log_file="${NVIM_LOG_FILE:-$XDG_STATE_HOME/nvim/nvim.log}"
   local pi_agent_dir="${PI_CODING_AGENT_DIR:-$XDG_STATE_HOME/pi/agent}"
+  local vscode_portable="${VSCODE_PORTABLE:-$XDG_DATA_HOME/vscode}"
   local ollama_host="${OLLAMA_HOST:-127.0.0.1:11434}"
   local ollama_flash_attention="${OLLAMA_FLASH_ATTENTION:-1}"
   local ollama_kv_cache_type="${OLLAMA_KV_CACHE_TYPE:-q8_0}"
@@ -454,6 +456,7 @@ configure_codex_environment() {
   export HERMES_HOME="$hermes_home"
   export NVIM_LOG_FILE="$nvim_log_file"
   export PI_CODING_AGENT_DIR="$pi_agent_dir"
+  [[ $OS_TYPE == macos ]] && export VSCODE_PORTABLE="$vscode_portable"
   export OLLAMA_HOST="$ollama_host"
   export OLLAMA_FLASH_ATTENTION="$ollama_flash_attention"
   export OLLAMA_KV_CACHE_TYPE="$ollama_kv_cache_type"
@@ -462,7 +465,7 @@ configure_codex_environment() {
   require launchctl || return
 
   run "/bin/sh \"$BOOTSTRAP_ROOT/launchd/set-xdg-environment.sh\""
-  logg -i "Agent launch environment: CODEX_HOME=$(pretty_path "$codex_home"), HERMES_HOME=$(pretty_path "$hermes_home"), PI_CODING_AGENT_DIR=$(pretty_path "$pi_agent_dir"), OLLAMA_HOST=$ollama_host"
+  logg -i "GUI launch environment: CODEX_HOME=$(pretty_path "$codex_home"), HERMES_HOME=$(pretty_path "$hermes_home"), PI_CODING_AGENT_DIR=$(pretty_path "$pi_agent_dir"), VSCODE_PORTABLE=$(pretty_path "$vscode_portable"), OLLAMA_HOST=$ollama_host"
 }
 
 configure_codex_ui() {
