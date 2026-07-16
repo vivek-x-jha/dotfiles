@@ -4,19 +4,25 @@ Repo-managed Herdr config and helpers.
 
 ## Agent pane titles
 
-`herdr-codex-title-watch` labels Codex panes with the Codex thread name and the
-Nerd Font robot-outline icon. A new Codex session has no thread name until its
-first prompt, so the pane keeps its initial label until Codex writes that name
-to `$CODEX_HOME/session_index.jsonl`.
+`herdr-claude-title-watch` labels Claude Code panes with the generated session
+name and the Nerd Font star icon (``). This also applies to `claudex`, since
+that alias launches the wrapped `claude` command. Until Claude writes an
+`ai-title` or `custom-title` event, the pane displays `  Claude Code`.
 
-When a thread name becomes available, the watcher clears the generated
-`terminal` label before reporting Codex metadata because explicit Herdr labels
+`herdr-codex-title-watch` similarly labels Codex panes with the Codex thread
+name and the Nerd Font robot-outline icon. A new Codex session has no thread
+name until its first prompt, so the pane keeps its initial label until Codex
+writes that name to `$CODEX_HOME/session_index.jsonl`.
+
+When a session name becomes available, the watchers clear generated `terminal`
+or agent-name labels before reporting metadata because explicit Herdr labels
 take precedence over agent metadata. Other manually assigned labels are left
 untouched.
 
-Interactive shells start the watcher through the `codex` shell wrapper.
-`herdr-resurrect restore` starts it explicitly alongside restored Codex
-commands because its `exec` launch bypasses shell functions. Saved state keeps
+Interactive shells start the watchers through the `claude` and `codex` shell
+wrappers. `herdr-resurrect restore` starts the Codex watcher explicitly
+alongside restored Codex commands because its `exec` launch bypasses shell
+functions. Saved state keeps
 the canonical `codex resume ...` command; restore also accepts older state that
 contains a watcher prefix.
 

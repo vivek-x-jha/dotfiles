@@ -12,7 +12,7 @@
 
     # Panes recorded for process restore will briefly start as shells after a
     # Herdr layout restore. Do not name those "terminal" before resurrect starts
-    # nvim/pi/codex in them.
+    # nvim/pi/claude/codex in them.
     if [[ -f $resurrect_file ]] && jq -e --arg pane_id "$HERDR_PANE_ID" '.commands[]? | select(.pane_id == $pane_id)' "$resurrect_file" >/dev/null 2>&1; then
       return 0
     fi
@@ -34,8 +34,9 @@
 
   _herdr_default_pane_title
 
-  _herdr_codex_title_watch() {
-    local watcher="${DOTFILES_DIR:-$HOME/.dotfiles}/ai/herdr/scripts/herdr-codex-title-watch"
+  _herdr_agent_title_watch() {
+    local agent="$1"
+    local watcher="${DOTFILES_DIR:-$HOME/.dotfiles}/ai/herdr/scripts/herdr-${agent}-title-watch"
     [[ -x $watcher ]] || return 0
     if [[ -n ${ZSH_VERSION:-} ]]; then
       eval "$watcher &>/dev/null &!"
@@ -44,8 +45,13 @@
     fi
   }
 
+  claude() {
+    _herdr_agent_title_watch claude
+    command claude "$@"
+  }
+
   codex() {
-    _herdr_codex_title_watch
+    _herdr_agent_title_watch codex
     command codex "$@"
   }
 }

@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+herdr_bin="${HERDR_BIN:-herdr}"
+claude_home="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/claude}"
+pane_id="${HERDR_PANE_ID:-}"
+source_name="claude-session-title"
+icon=$'\uf4f5'
+interval="${HERDR_CLAUDE_TITLE_INTERVAL:-1}"
+max_wait="${HERDR_CLAUDE_TITLE_WAIT_SECONDS:-20}"
+
+[[ -n "$pane_id" && "${HERDR_ENV:-}" == 1 ]] || exit 0
+command -v "$herdr_bin" >/dev/null || exit 0
+command -v jq >/dev/null || exit 0
+
+pane_info() {
+  "$herdr_bin" pane get "$pane_id" 2>/dev/null
+}
+
+pane_has_claude_agent() {
+  pane_info | jq -e '.result.pane.agent == "claude"' >/dev/null
+}
+
+session_path_for_pane() {
+  pane_info | jq -r '
+    .result.pane.agent_session
+    | select(.agent == "claude" and .kind == "path")
+    | .value
+    | select(type == "string" and length > 0)
+  '
+}
+
+session_path_from_pid() {
+  local pid session_id
+  pid="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null \
+    | jq -r '.result.process_info.foreground_processes[]? | select(.argv0 == "claude") | .pid' \
+    | head -1)"
+  [[ -n "$pid" && -f "$claude_home/sessions/$pid.json" ]] || return 1
+  session_id="$(jq -r '.sessionId // empty' "$claude_home/sessions/$pid.json")"
+  [[ -n "$session_id" ]] || return 1
+  find "$claude_home/projects" -type f -name "$session_id.jsonl" -print -quit 2>/dev/null
+}
+
+session_title() {
+  local session_path="$1"
+  [[ -f "$session_path" ]] || return 1
+  jq -r '
+    select(.type == "custom-title" or .type == "ai-title")
+    | (.customTitle // .aiTitle // empty)
+    | select(type == "string" and length > 0)
+  ' "$session_path" 2>/dev/null | tail -1
+}
+
+report_title() {
+  local title="$1" info label
+  info="$(pane_info || true)"
+  label="$(jq -r '.result.pane.label // empty' <<<"$info")"
+  if [[ "$label" == "terminal" || "$label" == "claude" ]]; then
+    "$herdr_bin" pane rename "$pane_id" --clear >/dev/null 2>&1 || true
+  fi
+  "$herdr_bin" pane report-metadata "$pane_id" \
+    --source "$source_name" \
+    --agent claude \
+    --title "$title" \
+    --display-agent "$title" \
+    >/dev/null 2>&1 || true
+}
+
+last_title=""
+seen_agent=0
+deadline=$((SECONDS + max_wait))
+
+while :; do
+  if ! pane_has_claude_agent; then
+    (( seen_agent == 1 || SECONDS >= deadline )) && exit 0
+    sleep "$interval"
+    continue
+  fi
+  seen_agent=1
+
+  title="$icon  Claude Code"
+  session_path="$(session_path_for_pane || true)"
+  [[ -n "$session_path" ]] || session_path="$(session_path_from_pid || true)"
+  if [[ -n "$session_path" ]]; then
+    generated_title="$(session_title "$session_path" || true)"
+    [[ -n "$generated_title" ]] && title="$icon  $generated_title"
+  fi
+
+  if [[ "$title" != "$last_title" ]]; then
+    report_title "$title"
+    last_title="$title"
+  fi
+  sleep "$interval"
+done
