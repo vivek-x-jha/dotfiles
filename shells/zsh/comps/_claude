@@ -1,0 +1,113 @@
+#compdef claude claudex
+# shellcheck shell=zsh
+
+# Static completion for Claude Code. Claude currently ships no completion command.
+
+_claude_sessions() {
+  local root="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/claude}/projects"
+  local -a sessions
+  sessions=("$root"/**/*.jsonl(N:t:r))
+  (( ${#sessions} )) && _describe -t sessions 'Claude session' sessions
+}
+
+_claude_models() {
+  local -a models
+  models=(default sonnet opus haiku gpt-5.6-sol)
+  _describe -t models 'model' models
+}
+
+_claude_commands() {
+  local -a commands
+  commands=(
+    'agents:manage background agents'
+    'auth:manage authentication'
+    'auto-mode:inspect auto mode classifier configuration'
+    'doctor:check Claude Code installation health'
+    'gateway:run the enterprise auth and telemetry gateway'
+    'install:install a Claude Code native build'
+    'mcp:configure and manage MCP servers'
+    'plugin:manage Claude Code plugins'
+    'plugins:manage Claude Code plugins'
+    'project:manage project state'
+    'setup-token:set up a long-lived authentication token'
+    'ultrareview:run a cloud-hosted multi-agent review'
+    'update:check for updates and install'
+    'upgrade:check for updates and install'
+  )
+  _describe -t commands 'Claude command' commands
+}
+
+_claude() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C -s -S \
+    '*--add-dir[add a directory Claude may access]:directory:_directories' \
+    '--agent[use a configured agent]:agent:' \
+    '--agents[define agents as JSON]:JSON:' \
+    '--allow-dangerously-skip-permissions[allow permission bypass mode]' \
+    '*--allowedTools[comma or space-separated allowed tools]:tools:' \
+    '*--allowed-tools[comma or space-separated allowed tools]:tools:' \
+    '--append-system-prompt[append to the system prompt]:prompt:' \
+    '--ax-screen-reader[use screen-reader-friendly rendering]' \
+    '(-c --continue)'{-c,--continue}'[continue the latest conversation in this directory]' \
+    '(-r --resume)'{-r,--resume}'[resume a conversation by session ID]::session:_claude_sessions' \
+    '(-p --print)'{-p,--print}'[print a response and exit]' \
+    '(-d --debug)'{-d,--debug}'[enable debug mode]::filter:' \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '(-v --version)'{-v,--version}'[show version]' \
+    '(-n --name)'{-n,--name}'[set the session display name]:name:' \
+    '(-w --worktree)'{-w,--worktree}'[create a worktree for the session]::name:' \
+    '--background[start as a background agent]' \
+    '--bg[start as a background agent]' \
+    '--bare[start with minimal integrations]' \
+    '*--betas[send beta headers]:header:' \
+    '--brief[enable SendUserMessage]' \
+    '--chrome[enable Chrome integration]' \
+    '--no-chrome[disable Chrome integration]' \
+    '--dangerously-skip-permissions[bypass permission checks]' \
+    '--debug-file[write debug logs to a file]:file:_files' \
+    '--disable-slash-commands[disable skills]' \
+    '*--disallowedTools[comma or space-separated denied tools]:tools:' \
+    '*--disallowed-tools[comma or space-separated denied tools]:tools:' \
+    '--effort[set effort level]:level:(low medium high xhigh max)' \
+    '--fallback-model[set fallback models]:model:_claude_models' \
+    '*--file[download a file resource at startup]:resource spec:' \
+    '--fork-session[create a new session ID when resuming]' \
+    '--from-pr[resume a session linked to a pull request]::PR:' \
+    '--ide[connect to an IDE]' \
+    '--input-format[set print-mode input format]:format:(text stream-json)' \
+    '--json-schema[set structured-output JSON schema]:schema:' \
+    '--max-budget-usd[set print-mode spending limit]:amount:' \
+    '*--mcp-config[load an MCP configuration]:config:_files' \
+    '--model[select model]:model:_claude_models' \
+    '--no-session-persistence[disable session persistence]' \
+    '--output-format[set print-mode output format]:format:(text json stream-json)' \
+    '--permission-mode[set permission mode]:mode:(acceptEdits auto bypassPermissions manual dontAsk plan)' \
+    '*--plugin-dir[load a plugin directory or archive]:path:_files' \
+    '*--plugin-url[load a plugin URL]:URL:_urls' \
+    '--prompt-suggestions[enable prompt suggestions]::enabled:(true false)' \
+    '--remote-control[start with Remote Control]::name:' \
+    '--safe-mode[disable customizations for troubleshooting]' \
+    '--session-id[use a specific session UUID]:session:_claude_sessions' \
+    '--setting-sources[select setting sources]:sources:(user project local)' \
+    '--settings[load settings from a file or JSON]:settings:_files' \
+    '--strict-mcp-config[ignore MCP configurations not explicitly supplied]' \
+    '--system-prompt[replace the system prompt]:prompt:' \
+    '--tmux[create a terminal session for the worktree]' \
+    '*--tools[set available tools]:tools:' \
+    '--verbose[enable verbose startup]' \
+    '1:command or prompt:->command' \
+    '*::argument:->arguments'
+
+  case $state in
+    command)
+      _alternative 'commands:Claude command:_claude_commands' 'files:file:_files'
+      ;;
+    arguments)
+      _files
+      ;;
+  esac
+}
+
+_claude "$@"
