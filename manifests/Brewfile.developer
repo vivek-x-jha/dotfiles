@@ -26,7 +26,6 @@ brew "switchaudio-osx"
 
 cask "visual-studio-code"
 
-vscode "catppuccin.catppuccin-vsc"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"

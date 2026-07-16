@@ -90,26 +90,26 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Neovim | zsh-patina | ble.sh | bat | Glow | VS Code |
 | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 37 · ColorColumn, Error | 4 · line 95, line 96 | — | 2 · line 110, line 879 | 2 · color | 4 · commentsView.resolvedIcon, disabledForeground |
-| `red` | 32 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 6 · line 97, line 669 | 2 · color | 18 · foreground, debugConsole.errorForeground |
-| `green` | 32 · Added, ModeMsg | 11 · line 9, line 10 | 7 · command_alias, command_builtin | 5 · line 31, line 71 | 1 · color | 23 · foreground, activityBar.activeFocusBorder |
-| `yellow` | 44 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 9 · line 84, line 136 | 3 · color | 1 · terminal.ansiYellow |
-| `blue` | 43 · Directory, Question | 7 · line 32, line 33 | 3 · command_directory, filename_directory | 11 · line 175, line 422 | 6 · color | 18 · foreground, material-icon-theme.folders.color |
-| `magenta` | 69 · Exception, FloatTitle | 18 · line 11, line 12 | 2 · command_keyword, syntax_history_expansion | 20 · line 149, line 162 | 4 · color | 21 · foreground, activityBarBadge.background |
-| `cyan` | 24 · Character, Delimiter | — | — | — | 1 · color | 1 · terminal.ansiCyan |
-| `white` | 75 · Debug, Macro | 20 · line 63, line 68 | 12 · syntax_document, syntax_document_begin | 14 · line 21, line 45 | 2 · color | 23 · foreground, banner.foreground |
-| `brightblack` | 39 · Comment, TabLine | 3 · line 4, line 5 | 18 · auto_complete, cmdinfo_cd_cdpath | 3 · line 35, line 58 | 5 · color | 6 · activityBar.inactiveForeground, editor.selectionBac… |
-| `brightred` | 25 · MatchWord, Substitute | — | — | 2 · line 253, line 1156 | 1 · color | 1 · terminal.ansiBrightRed |
-| `brightgreen` | 13 · PmenuSel, SpectreReplace | — | 2 · filename_directory_sticky, filename_executable | — | 3 · color | 1 · terminal.ansiBrightGreen |
-| `brightyellow` | 23 · qfLineNr, YankFlash | 6 · line 65, line 66 | 5 · argument_option, filename_setgid | — | — | 1 · terminal.ansiBrightYellow |
-| `brightblue` | 16 · FoldColumn, @comment.todo | — | 1 · cmdinfo_cd_cdpath | — | — | 1 · terminal.ansiBrightBlue |
-| `brightmagenta` | 17 · CursorLineNr, CursorLineFold | — | 1 · region_target | 2 · line 695, line 1091 | — | 3 · editorCursor.foreground, terminal.ansiBrightMagenta |
+| `black` | 37 · ColorColumn, Error | 4 · line 95, line 96 | — | 2 · line 110, line 879 | 2 · color | 7 · variable, operator |
+| `red` | 32 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 6 · line 97, line 669 | 2 · color | 10 · enum, number |
+| `green` | 32 · Added, ModeMsg | 11 · line 9, line 10 | 7 · command_alias, command_builtin | 5 · line 31, line 71 | 1 · color | 8 · string, settings |
+| `yellow` | 44 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 9 · line 84, line 136 | 3 · color | 10 · type, typeParameter |
+| `blue` | 43 · Directory, Question | 7 · line 32, line 33 | 3 · command_directory, filename_directory | 11 · line 175, line 422 | 6 · color | 13 · function, method |
+| `magenta` | 69 · Exception, FloatTitle | 18 · line 11, line 12 | 2 · command_keyword, syntax_history_expansion | 20 · line 149, line 162 | 4 · color | 8 · keyword, modifier |
+| `cyan` | 24 · Character, Delimiter | — | — | — | 1 · color | 9 · regexp, settings |
+| `white` | 75 · Debug, Macro | 20 · line 63, line 68 | 12 · syntax_document, syntax_document_begin | 14 · line 21, line 45 | 2 · color | 26 · variable.readonly, parameter |
+| `brightblack` | 39 · Comment, TabLine | 3 · line 4, line 5 | 18 · auto_complete, cmdinfo_cd_cdpath | 3 · line 35, line 58 | 5 · color | 20 · foreground, settings |
+| `brightred` | 25 · MatchWord, Substitute | — | — | 2 · line 253, line 1156 | 1 · color | 4 · list.errorForeground, editorError.foreground |
+| `brightgreen` | 13 · PmenuSel, SpectreReplace | — | 2 · filename_directory_sticky, filename_executable | — | 3 · color | 2 · terminal.ansiBrightGreen, gitDecoration.untrackedRe… |
+| `brightyellow` | 23 · qfLineNr, YankFlash | 6 · line 65, line 66 | 5 · argument_option, filename_setgid | — | — | 4 · settings, list.warningForeground |
+| `brightblue` | 16 · FoldColumn, @comment.todo | — | 1 · cmdinfo_cd_cdpath | — | — | 3 · editorInfo.foreground, terminal.ansiBrightBlue |
+| `brightmagenta` | 17 · CursorLineNr, CursorLineFold | — | 1 · region_target | 2 · line 695, line 1091 | — | 9 · focusBorder, statusBarItem.remoteForeground |
 | `brightcyan` | 12 · TabLineSel, @comment.note | — | 2 · filename_orphan, overwrite_mode | — | — | 1 · terminal.ansiBrightCyan |
-| `brightwhite` | 7 · @markup.heading.4.markdown, RenderMarkdownH4 | — | — | — | 1 · color | 4 · chat.requestBorder, editor.selectionForeground |
-| `dark` | 3 · Pmenu, PmenuSbar | — | — | — | — | — |
-| `grey` | 35 · Cursor, CursorColumn | — | — | — | 1 · background_color | 2 · editorCursor.background, terminalCursor.foreground |
-| `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | — | — |
-| `terminal_surface` | 1 · line 123 | — | — | — | — | 61 · activityBar.activeBackground, activityBar.activeBorder |
+| `brightwhite` | 7 · @markup.heading.4.markdown, RenderMarkdownH4 | — | — | — | 1 · color | 8 · list.activeSelectionForeground, list.hoverForeground |
+| `dark` | 3 · Pmenu, PmenuSbar | — | — | — | — | 14 · activityBarBadge.foreground, badge.foreground |
+| `grey` | 35 · Cursor, CursorColumn | — | — | — | 1 · background_color | 28 · titleBar.border, statusBar.border |
+| `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | — | 3 · statusBar.background, statusBar.debuggingBackground |
+| `terminal_surface` | 1 · line 123 | — | — | — | — | 11 · activityBar.background, titleBar.activeBackground |
 
 ## Application UI
 
@@ -177,7 +177,6 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | bat | `#1e1d2c`, `#1e2030`, `#24273a`, `#3d3f47`, `#5b6078`, `#676e95`, `#8bd5ca`, `#939ab7`, `#a5adcb`, `#b7bdf8`, `#b8c0e0`, `#c6cff0`, `#cad3f5`, `#ee99a0`, `#f0c6c6`, `#f4dbd6`, `#f5a97f`, `#fdf9bb` | Inherited TextMate theme colors retained for syntax compatibility |
 | Glow | `#1a1b26`, `#2ac3de`, `#565f89`, `#a9b1d6`, `#bb9af7`, `#f7768e`, `#ff9e64` | Inherited Glamour syntax colors retained pending theme normalization |
 | mycli | `#000000`, `#0000ff`, `#003333`, `#00ff5f`, `#222222`, `#282c34`, `#4444aa`, `#448888`, `#44aa44`, `#44aaaa`, `#6666aa`, `#676e95`, `#808080`, `#880000`, `#888888`, `#aaaaaa`, `#aaffff`, `#bef9be`, `#c6cff0`, `#f2cdf3`, `#fdf9bb`, `#ff005f` | Existing prompt-toolkit style colors retained pending normalization |
-| VS Code | `#000000`, `#181a1f`, `#1f1f1f`, `#21252b`, `#252931`, `#2c3c2c`, `#342834`, `#34414b`, `#3a4258`, `#40a6ff`, `#40ad41`, `#40c4fe`, `#4480f4`, `#454963`, `#4e3939`, `#4ec150`, `#4ec15019`, `#4ec15033`, `#569cd6`, `#56b7c3`, `#598def`, `#598def00`, `#598def4c`, `#598def66`, `#598def72`, `#598defb3`, `#598defe6`, `#5e5e69`, `#5f668b`, `#607867ed`, `#6495ee`, `#676e95`, `#6796e6`, `#6c1717`, `#78807c7c`, `#80d6fe21`, `#84d2e7`, `#8792aa`, `#88888844`, `#8a97c3`, `#8b8b8b9c`, `#8e99b1`, `#98c379`, `#9da5b3`, `#a78cfa`, `#b0b7c3`, `#b267e6`, `#b6b6ce`, `#c1232942`, `#c5c5c5`, `#c6cff0`, `#c8ccff`, `#cd9731`, `#cf68e1`, `#d7dae0`, `#d7dae0bf`, `#dcdfe566`, `#e06c75`, `#e1e4ea`, `#e4bf7f`, `#e51400`, `#f14c4c`, `#f14c4c33`, `#f14c4c4c`, `#f44747`, `#ff0000`, `#ff6ab3`, `#ff80ab`, `#ff87ff`, `#ff8a4c`, `#ff9070`, `#ffa500`, `#fff6c7` | Existing editor semantic and workbench colors retained for compatibility |
 
 ## Manual consumers
 
