@@ -2,6 +2,7 @@
 
 brew "bash-language-server"
 brew "certifi"
+brew "cliproxyapi", restart_service: :changed
 brew "ffmpeg"
 brew "fileicon"
 brew "gawk"

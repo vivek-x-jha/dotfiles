@@ -1,0 +1,17 @@
+# Local Anthropic-compatible bridge from Claude Code to Codex models.
+# Provider credentials are user-owned and created with `cliproxyapi -codex-login`.
+host: "127.0.0.1"
+port: 8317
+
+auth-dir: "~/.local/state/cli-proxy-api"
+api-keys:
+  - "sk-dummy"
+
+remote-management:
+  allow-remote: false
+  secret-key: ""
+  disable-control-panel: true
+
+debug: false
+logging-to-file: false
+usage-statistics-enabled: false

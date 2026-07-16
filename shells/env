@@ -105,6 +105,9 @@ export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 # Codex: https://github.com/openai/codex/pull/4414
 export CODEX_HOME="$XDG_STATE_HOME/codex"
 
+# Hermes Agent: unified config, data, state, cache, and installation root.
+export HERMES_HOME="$XDG_DATA_HOME/hermes"
+
 # Ollama: local model runner/server used by Pi's OpenAI-compatible provider.
 export OLLAMA_HOST="${OLLAMA_HOST:-127.0.0.1:11434}"
 export OLLAMA_FLASH_ATTENTION="${OLLAMA_FLASH_ATTENTION:-1}"

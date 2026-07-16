@@ -182,7 +182,7 @@ ensure_bootstrap_symlink() {
   local target_is_planned=0
 
   if [[ ! -e $source && ! -L $source ]]; then
-    if ! ((DRY_RUN)) || [[ $source != "$XDG_DATA_HOME/vscode" ]]; then
+    if ! ((DRY_RUN)) || [[ $source != "$XDG_DATA_HOME/vscode" && $source != "$XDG_STATE_HOME/codex" ]]; then
       logg -e "Managed source missing: $(pretty_path "$source")"
       BOOTSTRAP_FAILURES=$((BOOTSTRAP_FAILURES + 1))
       return 1
@@ -331,7 +331,7 @@ prepare_ssh_config_home() {
 }
 
 create_symlinks() {
-  local dir source target skill_dir skill_name installed_skill installed_real
+  local dir source target skill_dir skill_name installed_skill installed_real brew_prefix
   local dirs=(
     "$XDG_CACHE_HOME" "$XDG_CACHE_HOME/npm" "$HOME/.local/bin"
     "$XDG_STATE_HOME/bash" "$XDG_STATE_HOME/codex" "$XDG_STATE_HOME/codex/skills"
@@ -340,7 +340,7 @@ create_symlinks() {
     "$XDG_STATE_HOME/pi/agent/skills" "$XDG_STATE_HOME/pi/agent/themes" "$XDG_STATE_HOME/python"
     "$XDG_STATE_HOME/ipython" "$XDG_STATE_HOME/zsh" "$XDG_CONFIG_HOME/claude"
     "$XDG_CONFIG_HOME/herdr" "$XDG_CONFIG_HOME/jupyter"
-    "$XDG_DATA_HOME/jupyter" "$XDG_DATA_HOME/zsh" "$XDG_DATA_HOME/vscode"
+    "$XDG_DATA_HOME/hermes" "$XDG_DATA_HOME/jupyter" "$XDG_DATA_HOME/zsh" "$XDG_DATA_HOME/vscode"
   )
   local symlinks=(
     "$BOOTSTRAP_ROOT/cli/atuin" "$XDG_CONFIG_HOME/atuin"
@@ -377,6 +377,7 @@ create_symlinks() {
     "$BOOTSTRAP_ROOT/terminals/tmux" "$XDG_CONFIG_HOME/tmux"
     "$BOOTSTRAP_ROOT/terminals/wezterm" "$XDG_CONFIG_HOME/wezterm"
     "$BOOTSTRAP_ROOT/shells/starship.toml" "$XDG_CONFIG_HOME/starship.toml"
+    "$XDG_STATE_HOME/codex" "$HOME/.codex"
     "$XDG_DATA_HOME/vscode" "$HOME/.vscode"
     "$BOOTSTRAP_ROOT/shells/bash/.bash_profile" "$HOME/.bash_profile"
     "$BOOTSTRAP_ROOT/shells/bash/.bashrc" "$HOME/.bashrc"
@@ -384,6 +385,7 @@ create_symlinks() {
   )
 
   for dir in "${dirs[@]}"; do ensure_bootstrap_dir "$dir" || return; done
+  run "chmod 700 \"$XDG_DATA_HOME/hermes\"" || return
   prepare_git_config_home || return
   prepare_ssh_config_home || return
 
@@ -409,7 +411,14 @@ create_symlinks() {
       "$BOOTSTRAP_ROOT/apps/hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
       "$BOOTSTRAP_ROOT/apps/karabiner" "$XDG_CONFIG_HOME/karabiner"
       "$BOOTSTRAP_ROOT/editors/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+      "$BOOTSTRAP_ROOT/launchd/com.mubuntu.xdg-environment.plist" "$HOME/Library/LaunchAgents/com.mubuntu.xdg-environment.plist"
     )
+    if command -v brew &>/dev/null; then
+      brew_prefix=$(brew --prefix)
+      symlinks+=(
+        "$BOOTSTRAP_ROOT/ai/cliproxyapi/config.yaml" "$brew_prefix/etc/cliproxyapi.conf"
+      )
+    fi
   else
     symlinks+=("$BOOTSTRAP_ROOT/editors/vscode/settings.json" "$XDG_CONFIG_HOME/Code/User/settings.json")
   fi
@@ -435,12 +444,14 @@ create_symlinks() {
 
 configure_codex_environment() {
   local codex_home="${CODEX_HOME:-$XDG_STATE_HOME/codex}"
+  local hermes_home="${HERMES_HOME:-$XDG_DATA_HOME/hermes}"
   local nvim_log_file="${NVIM_LOG_FILE:-$XDG_STATE_HOME/nvim/nvim.log}"
   local pi_agent_dir="${PI_CODING_AGENT_DIR:-$XDG_STATE_HOME/pi/agent}"
   local ollama_host="${OLLAMA_HOST:-127.0.0.1:11434}"
   local ollama_flash_attention="${OLLAMA_FLASH_ATTENTION:-1}"
   local ollama_kv_cache_type="${OLLAMA_KV_CACHE_TYPE:-q8_0}"
   export CODEX_HOME="$codex_home"
+  export HERMES_HOME="$hermes_home"
   export NVIM_LOG_FILE="$nvim_log_file"
   export PI_CODING_AGENT_DIR="$pi_agent_dir"
   export OLLAMA_HOST="$ollama_host"
@@ -450,17 +461,8 @@ configure_codex_environment() {
   [[ $OS_TYPE == macos ]] || return
   require launchctl || return
 
-  run "launchctl setenv XDG_CONFIG_HOME \"$XDG_CONFIG_HOME\""
-  run "launchctl setenv XDG_CACHE_HOME \"$XDG_CACHE_HOME\""
-  run "launchctl setenv XDG_DATA_HOME \"$XDG_DATA_HOME\""
-  run "launchctl setenv XDG_STATE_HOME \"$XDG_STATE_HOME\""
-  run "launchctl setenv CODEX_HOME \"$codex_home\""
-  run "launchctl setenv NVIM_LOG_FILE \"$nvim_log_file\""
-  run "launchctl setenv PI_CODING_AGENT_DIR \"$pi_agent_dir\""
-  run "launchctl setenv OLLAMA_HOST \"$ollama_host\""
-  run "launchctl setenv OLLAMA_FLASH_ATTENTION \"$ollama_flash_attention\""
-  run "launchctl setenv OLLAMA_KV_CACHE_TYPE \"$ollama_kv_cache_type\""
-  logg -i "Agent launch environment: CODEX_HOME=$(pretty_path "$codex_home"), PI_CODING_AGENT_DIR=$(pretty_path "$pi_agent_dir"), OLLAMA_HOST=$ollama_host"
+  run "/bin/sh \"$BOOTSTRAP_ROOT/launchd/set-xdg-environment.sh\""
+  logg -i "Agent launch environment: CODEX_HOME=$(pretty_path "$codex_home"), HERMES_HOME=$(pretty_path "$hermes_home"), PI_CODING_AGENT_DIR=$(pretty_path "$pi_agent_dir"), OLLAMA_HOST=$ollama_host"
 }
 
 configure_codex_ui() {

@@ -85,6 +85,23 @@ command -v pi &>/dev/null && {
   alias pimax='pi --provider openai-codex --model gpt-5.5 --thinking xhigh'
 }
 
+# CLIProxyAPI creates OAuth files using the caller's umask; keep credentials private.
+command -v cliproxyapi &>/dev/null && cliproxyapi() (
+  umask 077
+  command cliproxyapi "$@"
+)
+
+# Run Claude Code against GPT-5.6-Sol through the loopback-only CLIProxyAPI service.
+command -v claude &>/dev/null && command -v cliproxyapi &>/dev/null && {
+  alias claudex='ANTHROPIC_BASE_URL=http://127.0.0.1:8317 \
+    ANTHROPIC_AUTH_TOKEN=sk-dummy \
+    CLAUDE_CODE_SUBAGENT_MODEL=gpt-5.6-sol \
+    CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 \
+    CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
+    ENABLE_TOOL_SEARCH=false \
+    claude --model gpt-5.6-sol'
+}
+
 # https://developer.1password.com/docs/cli/shell-plugins
 command -v op &>/dev/null && {
   command -v gh &>/dev/null && alias gh="op plugin run -- gh"

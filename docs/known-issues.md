@@ -34,6 +34,42 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
+## KI-2026-07-15-codex-desktop-home-fallback
+
+**Status:** Workaround active.
+**Last verified:** 2026-07-15 (ChatGPT/Codex desktop 26.707.72221; bundled Codex CLI 0.144.2).
+**Area:** Codex desktop state relocation
+
+**Observed:** With `CODEX_HOME="$XDG_STATE_HOME/codex"` present in the ChatGPT process environment, both the desktop frontend database and bundled app-server use the XDG root. However, every clean desktop restart also recreates `~/.codex/config.toml` containing the same Computer Use `notify` setting already present in the XDG config.
+
+**Likely cause:** The desktop's macOS Computer Use notification bootstrap still writes its notifier configuration through the default `~/.codex` path independently of the main Codex-home resolver.
+
+**Workaround:** Publish the XDG and agent variables at GUI login with `com.mubuntu.xdg-environment`, keep canonical state at `~/.local/state/codex`, and manage the relative compatibility link `~/.codex -> .local/state/codex` so the remaining fallback write reaches the same config.
+
+**Reproduce/retest:** Confirm the ChatGPT process inherits `CODEX_HOME`, inspect its open `codex-dev.db` path, temporarily test without the compatibility link, and restart the app twice. Version 26.707.72221 opens the XDG database but recreates the legacy config on each restart.
+
+**Exit criteria:** A supported ChatGPT/Codex desktop release restarts repeatedly with `CODEX_HOME` set without accessing or creating `~/.codex`; then remove the compatibility link and this entry.
+
+**References:** `launchd/com.mubuntu.xdg-environment.plist`, `launchd/set-xdg-environment.sh`, `shells/env`, and the installed desktop app's `resolveCodexHome` and Computer Use notifier code.
+
+## KI-2026-07-14-cliproxyapi-oauth-file-mode
+
+**Status:** Workaround active.
+**Last verified:** 2026-07-15 (CLIProxyAPI 7.2.75 installed by Homebrew; relocated auth directory verified against the running service).
+**Area:** CLIProxyAPI OAuth credential storage
+
+**Observed:** `cliproxyapi -codex-login` created its Codex OAuth JSON file with mode `0644` under the private configured auth directory. CLIProxyAPI may also write fallback error logs containing sensitive request metadata or bodies in that directory.
+
+**Likely cause:** CLIProxyAPI creates the file with Go's `os.Create`, so the final mode inherits the caller's usual `022` umask instead of being forced to `0600`.
+
+**Workaround:** YAML `auth-dir` points at the private `0700` directory `~/.local/state/cli-proxy-api`. The shared `cliproxyapi` shell function runs the binary in a subshell with umask `077`; existing OAuth JSON files were corrected to mode `0600`. Treat the entire directory as sensitive.
+
+**Reproduce/retest:** Authenticate a new account with a direct CLIProxyAPI binary invocation under umask `022`, then inspect the resulting file in the configured auth directory with `stat`. Retest without the wrapper after an upstream release changes credential creation.
+
+**Exit criteria:** A supported CLIProxyAPI release creates new OAuth credential files with mode `0600` independently of the caller's umask; then remove the shell wrapper and this entry.
+
+**References:** `ai/cliproxyapi/config.yaml`, `shells/aliases`, upstream `internal/auth/codex/token.go`.
+
 ## KI-2026-07-13-blink-cmp-neovim-012-pos-regression
 
 **Status:** Workaround active.
