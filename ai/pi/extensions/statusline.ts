@@ -20,7 +20,8 @@ const THINKING_ICON = ""; // Nerd Font lightbulb glyph
 const TOKEN_ICON = "ctx"; // context token label
 const TOOL_ICON = ""; // Nerd Font wrench glyph
 const SHELL_ICON = ""; // same shell icon as nvim/web-devicons bash
-const CONTEXT_REMAINING_ICON = ""; // Nerd Font hourglass glyph
+const CONTEXT_REMAINING_ICON = "󰧑"; // Nerd Font brain glyph
+const CODEX_QUOTA_ICON = ""; // Nerd Font hourglass glyph
 const CONTEXT_WARNING_REMAINING_PERCENT = 40;
 const CONTEXT_CRITICAL_REMAINING_PERCENT = 20;
 const CODEX_QUOTA_REFRESH_MS = 5 * 60 * 1000;
@@ -1223,24 +1224,39 @@ export default function (pi: ExtensionAPI) {
     return iconText(CONTEXT_REMAINING_ICON, `${remaining}%`, brightMagentaText, style);
   }
 
-  function codexQuotaWindowPart(label: string, window: CodexQuotaWindow | undefined): string | undefined {
-    if (!window) return undefined;
+  function approximateWindow(minutes: number, expectedMinutes: number): boolean {
+    return minutes >= expectedMinutes * 0.95 && minutes <= expectedMinutes * 1.05;
+  }
+
+  function codexQuotaWindowLabel(window: CodexQuotaWindow): string {
+    const minutes = window.windowDurationMins;
+    if (minutes === null) return "usage";
+    if (approximateWindow(minutes, 5 * 60)) return "5h";
+    if (approximateWindow(minutes, 7 * 24 * 60)) return "1w";
+    if (minutes >= 24 * 60 && minutes % (24 * 60) === 0) return `${minutes / (24 * 60)}d`;
+    if (minutes >= 60 && minutes % 60 === 0) return `${minutes / 60}h`;
+    return `${minutes}m`;
+  }
+
+  function codexQuotaWindowPart(window: CodexQuotaWindow): string {
     const remaining = Math.max(0, Math.min(100, Math.round(100 - window.usedPercent)));
-    return `${yellowText(label)} ${remainingPercentStyle(remaining)(`${remaining}%`)}`;
+    return `${yellowText(codexQuotaWindowLabel(window))} ${remainingPercentStyle(remaining)(`${remaining}%`)}`;
   }
 
-  function codexQuotaLoadingPart(label: string): string {
-    return `${yellowText(label)} ${brightBlackText("…")}`;
-  }
-
-  function codexQuotaParts(_theme: Theme): string[] {
-    if (!isCodexQuotaRelevant()) return [];
+  function codexQuotaPart(_theme: Theme): string | undefined {
+    if (!isCodexQuotaRelevant()) return undefined;
     const quota = state.codexQuota;
-    if (!quota) return codexQuotaInFlight ? [codexQuotaLoadingPart("5h"), codexQuotaLoadingPart("1w")] : [];
-    return [
-      codexQuotaWindowPart("5h", quota.primary),
-      codexQuotaWindowPart("1w", quota.secondary),
-    ].filter((part): part is string => Boolean(part));
+    if (!quota) {
+      return codexQuotaInFlight
+        ? `${yellowText(CODEX_QUOTA_ICON)} ${brightBlackText("…")}`
+        : undefined;
+    }
+    const windows = [quota.primary, quota.secondary].filter(
+      (window): window is CodexQuotaWindow => window !== undefined,
+    );
+    if (windows.length === 0) return undefined;
+    const separator = ` ${brightBlackText("/")} `;
+    return `${yellowText(CODEX_QUOTA_ICON)} ${windows.map(codexQuotaWindowPart).join(separator)}`;
   }
 
   function gitPart(
@@ -1302,7 +1318,7 @@ export default function (pi: ExtensionAPI) {
         thinkingPart(theme),
         contextRemainingPart(theme),
         tokenPart(theme),
-        ...codexQuotaParts(theme),
+        codexQuotaPart(theme),
         gitPart(theme, footerData),
         phasePart(theme),
         extensionStatusPart(footerData),
