@@ -88,7 +88,11 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:herdr-config-command-$line[1]:"
         case $line[1] in
-            (reset-keys)
+            (check)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(reset-keys)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -224,6 +228,16 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 ':workspace_id:_default' \
 '*::label:_default' \
+&& ret=0
+;;
+(report-metadata)
+_arguments "${_arguments_options[@]}" : \
+'--source[]:ID:_default' \
+'*--token[]:NAME=VALUE:_default' \
+'*--clear-token[]:NAME:_default' \
+'--seq[]:N:_default' \
+'--ttl-ms[]:N:_default' \
+':workspace_id:_default' \
 && ret=0
 ;;
 (close)
@@ -616,7 +630,6 @@ _arguments "${_arguments_options[@]}" : \
 '--agent[]:LABEL:_default' \
 '--state[]:STATUS:(idle working blocked unknown)' \
 '--message[]:TEXT:_default' \
-'--custom-status[]:TEXT:_default' \
 '--seq[]:N:_default' \
 '--agent-session-id[]:ID:_default' \
 '--agent-session-path[]:PATH:_files' \
@@ -649,13 +662,13 @@ _arguments "${_arguments_options[@]}" : \
 '--applies-to-source[]:ID:_default' \
 '--title[]:TEXT:_default' \
 '--display-agent[]:TEXT:_default' \
-'--custom-status[]:TEXT:_default' \
 '--state-label[]:STATUS=TEXT:_default' \
+'*--token[]:NAME=VALUE:_default' \
+'*--clear-token[]:NAME:_default' \
 '--seq[]:N:_default' \
 '--ttl-ms[]:N:_default' \
 '--clear-title[]' \
 '--clear-display-agent[]' \
-'--clear-custom-status[]' \
 '--clear-state-labels[]' \
 ':pane_id:_default' \
 && ret=0
@@ -1150,9 +1163,15 @@ _herdr__subcmd__completion_commands() {
 (( $+functions[_herdr__subcmd__config_commands] )) ||
 _herdr__subcmd__config_commands() {
     local commands; commands=(
+'check:Validate config.toml and print diagnostics' \
 'reset-keys:Reset custom keybindings' \
     )
     _describe -t commands 'herdr config commands' commands "$@"
+}
+(( $+functions[_herdr__subcmd__config__subcmd__check_commands] )) ||
+_herdr__subcmd__config__subcmd__check_commands() {
+    local commands; commands=()
+    _describe -t commands 'herdr config check commands' commands "$@"
 }
 (( $+functions[_herdr__subcmd__config__subcmd__reset-keys_commands] )) ||
 _herdr__subcmd__config__subcmd__reset-keys_commands() {
@@ -1652,6 +1671,7 @@ _herdr__subcmd__workspace_commands() {
 'get:Show a workspace' \
 'focus:Focus a workspace' \
 'rename:Rename a workspace' \
+'report-metadata:Report display-only workspace metadata' \
 'close:Close a workspace' \
     )
     _describe -t commands 'herdr workspace commands' commands "$@"
@@ -1685,6 +1705,11 @@ _herdr__subcmd__workspace__subcmd__list_commands() {
 _herdr__subcmd__workspace__subcmd__rename_commands() {
     local commands; commands=()
     _describe -t commands 'herdr workspace rename commands' commands "$@"
+}
+(( $+functions[_herdr__subcmd__workspace__subcmd__report-metadata_commands] )) ||
+_herdr__subcmd__workspace__subcmd__report-metadata_commands() {
+    local commands; commands=()
+    _describe -t commands 'herdr workspace report-metadata commands' commands "$@"
 }
 (( $+functions[_herdr__subcmd__worktree_commands] )) ||
 _herdr__subcmd__worktree_commands() {

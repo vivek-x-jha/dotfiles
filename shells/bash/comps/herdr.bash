@@ -115,6 +115,9 @@ _herdr() {
             herdr__subcmd__channel,show)
                 cmd="herdr__subcmd__channel__subcmd__show"
                 ;;
+            herdr__subcmd__config,check)
+                cmd="herdr__subcmd__config__subcmd__check"
+                ;;
             herdr__subcmd__config,reset-keys)
                 cmd="herdr__subcmd__config__subcmd__reset__subcmd__keys"
                 ;;
@@ -345,6 +348,9 @@ _herdr() {
                 ;;
             herdr__subcmd__workspace,rename)
                 cmd="herdr__subcmd__workspace__subcmd__rename"
+                ;;
+            herdr__subcmd__workspace,report-metadata)
+                cmd="herdr__subcmd__workspace__subcmd__report__subcmd__metadata"
                 ;;
             herdr__subcmd__worktree,create)
                 cmd="herdr__subcmd__worktree__subcmd__create"
@@ -699,8 +705,22 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__config)
-            opts="reset-keys"
+            opts="check reset-keys"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        herdr__subcmd__config__subcmd__check)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -1107,7 +1127,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__pane__subcmd__report__subcmd__agent)
-            opts="--source --agent --state --message --custom-status --seq --agent-session-id --agent-session-path <PANE_ID>"
+            opts="--source --agent --state --message --seq --agent-session-id --agent-session-path <PANE_ID>"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1126,10 +1146,6 @@ _herdr() {
                     return 0
                     ;;
                 --message)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --custom-status)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
@@ -1191,7 +1207,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__pane__subcmd__report__subcmd__metadata)
-            opts="--source --agent --applies-to-source --title --clear-title --display-agent --clear-display-agent --custom-status --clear-custom-status --state-label --clear-state-labels --seq --ttl-ms <PANE_ID>"
+            opts="--source --agent --applies-to-source --title --clear-title --display-agent --clear-display-agent --state-label --clear-state-labels --token --clear-token --seq --ttl-ms <PANE_ID>"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1217,11 +1233,15 @@ _herdr() {
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
-                --custom-status)
+                --state-label)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
-                --state-label)
+                --token)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --clear-token)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
@@ -2199,7 +2219,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__workspace)
-            opts="list create get focus rename close"
+            opts="list create get focus rename report-metadata close"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2301,6 +2321,40 @@ _herdr() {
                 return 0
             fi
             case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        herdr__subcmd__workspace__subcmd__report__subcmd__metadata)
+            opts="--source --token --clear-token --seq --ttl-ms <WORKSPACE_ID>"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --source)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --token)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --clear-token)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --seq)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --ttl-ms)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;
