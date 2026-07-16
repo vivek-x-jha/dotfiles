@@ -20,18 +20,17 @@ take precedence over agent metadata. Other manually assigned labels are left
 untouched.
 
 Interactive shells start the watchers through the `claude` and `codex` shell
-wrappers. `herdr-resurrect restore` starts the Codex watcher explicitly
-alongside restored Codex commands because its `exec` launch bypasses shell
-functions. Saved state keeps
-the canonical `codex resume ...` command; restore also accepts older state that
-contains a watcher prefix.
+wrappers. `herdr-resurrect restore` also starts the matching watcher explicitly
+alongside restored Claude Code and Codex commands. Saved state keeps canonical
+resume commands; restore also accepts older Codex state containing a watcher
+prefix.
 
 ## Process restore
 
 Herdr persists spaces, tabs, panes, cwd, and pane history, but OS processes do not survive a machine reboot. `herdr-resurrect` is a small tmux-resurrect-style helper for the first-priority interactive processes:
 
 ```sh
-herdr-resurrect save     # record foreground nvim/pi/codex commands in panes
+herdr-resurrect save     # record foreground nvim/pi/claude/codex commands in panes
 herdr-resurrect restore  # rerun them in the same panes if those panes are idle
 herdr-resurrect list     # inspect saved commands
 herdr-resurrect clear-idle # run clear in idle panes
@@ -41,7 +40,10 @@ Current restore support:
 
 - `nvim` foreground commands, including `nvim -S Session.vim`
 - `pi` panes, using `pi --session <session-file>` when Herdr reports a session path
-- `codex` panes, using `codex resume <session-id>` from Herdr metadata or the live Codex session file, otherwise `codex resume --last`; restore starts the title watcher in the saved working directory
+- Claude Code panes, using `claude --resume <session-id>`; `claudex` sessions retain the local proxy/model launcher
+- `codex` panes, using `codex resume <session-id>` from Herdr metadata or the live Codex session file, otherwise `codex resume --last`
+
+Claude Code and Codex restore start their title watcher in the saved working directory.
 
 State is local runtime data at `$XDG_STATE_HOME/herdr/resurrect.json` and is intentionally not tracked.
 

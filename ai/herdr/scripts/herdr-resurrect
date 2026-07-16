@@ -4,6 +4,8 @@ set -euo pipefail
 state_file="${HERDR_RESURRECT_FILE:-${XDG_STATE_HOME:-$HOME/.local/state}/herdr/resurrect.json}"
 herdr_bin="${HERDR_BIN:-herdr}"
 codex_title_watch="${HERDR_CODEX_TITLE_WATCH:-$HOME/.dotfiles/ai/herdr/scripts/herdr-codex-title-watch}"
+claude_title_watch="${HERDR_CLAUDE_TITLE_WATCH:-$HOME/.dotfiles/ai/herdr/scripts/herdr-claude-title-watch}"
+claude_home="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/claude}"
 
 usage() {
   cat <<'EOF'
@@ -14,6 +16,7 @@ Currently records:
   - nvim foreground commands, e.g. nvim -S Session.vim
   - pi foreground agents, restored with pi --session <session-file> when Herdr reports one
   - codex foreground agents, restored with codex resume <session-id> when Herdr reports one
+  - Claude Code foreground agents, including claudex, restored by session ID
 
 State defaults to: $XDG_STATE_HOME/herdr/resurrect.json
 Override with HERDR_RESURRECT_FILE=/path/to/file.
@@ -29,6 +32,16 @@ require_jq() {
 
 json_quote() {
   jq -Rn --arg v "$1" '$v'
+}
+
+claude_session_from_pid() {
+  local pid="$1" metadata session_id
+  [[ -n "$pid" ]] || return 1
+  metadata="$claude_home/sessions/$pid.json"
+  [[ -f "$metadata" ]] || return 1
+  session_id="$(jq -r '.sessionId // empty' "$metadata" 2>/dev/null)"
+  [[ "$session_id" =~ ^[0-9a-f-]{36}$ ]] || return 1
+  printf '%s\n' "$session_id"
 }
 
 codex_session_from_pid() {
@@ -74,7 +87,7 @@ save_state() {
 
   {
     printf '{\n  "version": 1,\n  "saved_at": %s,\n  "commands": [\n' "$(json_quote "$(date -u +%Y-%m-%dT%H:%M:%SZ)")"
-    local first=1 pane_id pinfo kind cmd cwd session_path codex_pid
+    local first=1 pane_id pinfo kind cmd cwd session_path agent_pid
     while IFS= read -r pane_id; do
       [[ -n "$pane_id" ]] || continue
       pinfo="$($herdr_bin pane process-info --pane "$pane_id" 2>/dev/null || true)"
@@ -87,6 +100,20 @@ save_state() {
       if jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim"))' <<<"$pinfo" >/dev/null; then
         kind="nvim"
         cmd="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim")) | if (.argv | type) == "array" then (.argv | @sh) else (.cmdline // "nvim") end' <<<"$pinfo" | head -1)"
+      elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "claude") or (.cmdline // "" | test("(^|/)claude( |$)")))' <<<"$pinfo" >/dev/null; then
+        kind="claude"
+        agent_pid="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "claude") or (.cmdline // "" | test("(^|/)claude( |$)"))) | .pid' <<<"$pinfo" | head -1)"
+        session_path="$(claude_session_from_pid "$agent_pid" || true)"
+        if ps eww -p "$agent_pid" 2>/dev/null | grep -Fq 'ANTHROPIC_BASE_URL=http://127.0.0.1:8317'; then
+          cmd="claudex"
+        else
+          cmd="claude"
+        fi
+        if [[ -n "$session_path" ]]; then
+          cmd="$cmd --resume $(printf '%q' "$session_path")"
+        else
+          cmd="$cmd --continue"
+        fi
       elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "pi") or (.name == "pi") or ((.name == "node") and (.argv0 == "pi")))' <<<"$pinfo" >/dev/null; then
         kind="pi"
         session_path="$(jq -r --arg pane_id "$pane_id" '.result.agents[]? | select(.pane_id == $pane_id and .agent == "pi") | .agent_session.value // empty' <<<"$agents" | head -1)"
@@ -99,8 +126,8 @@ save_state() {
         kind="codex"
         session_path="$(jq -r --arg pane_id "$pane_id" '.result.agents[]? | select(.pane_id == $pane_id and .agent == "codex") | .agent_session.value // empty' <<<"$agents" | head -1)"
         if [[ -z "$session_path" ]]; then
-          codex_pid="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "codex") or (.name == "codex") or (.cmdline // "" | test("(^|/)codex( |$)"))) | .pid' <<<"$pinfo" | head -1)"
-          session_path="$(codex_session_from_pid "$codex_pid" || true)"
+          agent_pid="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "codex") or (.name == "codex") or (.cmdline // "" | test("(^|/)codex( |$)"))) | .pid' <<<"$pinfo" | head -1)"
+          session_path="$(codex_session_from_pid "$agent_pid" || true)"
         fi
         if [[ -n "$session_path" ]]; then
           cmd="codex resume $(printf '%q' "$session_path")"
@@ -163,6 +190,8 @@ restore_state() {
     fi
     if [[ "$kind" == "codex" && -x "$codex_title_watch" ]]; then
       launch_cmd="{ $(printf '%q' "$codex_title_watch") & $cmd; }"
+    elif [[ "$kind" == "claude" && -x "$claude_title_watch" ]]; then
+      launch_cmd="{ $(printf '%q' "$claude_title_watch") & $cmd; }"
     else
       launch_cmd="$cmd"
     fi
