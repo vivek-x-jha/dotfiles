@@ -22,6 +22,7 @@ run_fixture() {
 }
 
 run_fixture "$LOG_ONE"
+printf '{"defaultMode":"lite"}\n' >"$FIXTURE/home/.config/ponytail/config.json"
 run_fixture "$LOG_TWO"
 
 mkdir -p "$FIXTURE/clean-home"
@@ -46,6 +47,7 @@ grep -q 'User preserve-me' "$FIXTURE/home/.config/ssh/config"
 grep -Fxq "$ROOT/auth/git/base" < <(git config --file "$FIXTURE/home/.config/git/config" --get-all include.path)
 [[ $(git config --file "$FIXTURE/home/.config/git/config" user.name) == 'Vivek Jha' ]]
 [[ $(git config --file "$FIXTURE/home/.config/git/config" commit.gpgsign) == true ]]
+grep -Fxq '{"defaultMode":"lite"}' "$FIXTURE/home/.config/ponytail/config.json"
 grep -Fxq "$ROOT" "$FIXTURE/home/.local/state/dotfiles/root"
 
 find "$FIXTURE/home/.local/state/dotfiles/backups" -type f -path '*/.bashrc' \

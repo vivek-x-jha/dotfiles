@@ -122,6 +122,8 @@ check_bootstrap() {
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/tsconfig.json"
   check_path "$BOOTSTRAP_ROOT/ai/pi/skills/handoff/SKILL.md"
   check_path "$BOOTSTRAP_ROOT/ai/pi/themes/sourdiesel.json"
+  check_path "$BOOTSTRAP_ROOT/ai/ponytail/README.md"
+  check_path "$BOOTSTRAP_ROOT/ai/ponytail/config.json"
   check_path "$BOOTSTRAP_ROOT/auth/git/base"
   check_path "$BOOTSTRAP_ROOT/auth/git/themes/sourdiesel"
   check_path "$BOOTSTRAP_ROOT/auth/ssh/base"
@@ -302,6 +304,7 @@ doctor_bootstrap() {
   doctor_dir "$XDG_CONFIG_HOME/herdr"
   doctor_dir "$XDG_CONFIG_HOME/jupyter"
   doctor_dir "$XDG_CONFIG_HOME/npm"
+  doctor_dir "$XDG_CONFIG_HOME/ponytail"
   doctor_dir "$XDG_DATA_HOME/jupyter"
   doctor_dir "$XDG_DATA_HOME/zsh"
   doctor_dir "$XDG_DATA_HOME/vscode"
@@ -333,6 +336,7 @@ doctor_bootstrap() {
   fi
   doctor_symlink "$XDG_CONFIG_HOME/glow" ../.dotfiles/cli/glow
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
+  doctor_file "$XDG_CONFIG_HOME/ponytail/config.json"
   doctor_symlink "$XDG_STATE_HOME/pi/agent/models.json" ../../../../.dotfiles/ai/pi/models.json
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/handoff-alias.ts" ../../../../../.dotfiles/ai/pi/extensions/handoff-alias.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/herdr-agent-state.ts" ../../../../../.dotfiles/ai/pi/extensions/herdr-agent-state.ts

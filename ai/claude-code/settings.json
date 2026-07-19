@@ -1,3 +1,18 @@
 {
-  "theme": "dark-ansi"
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
+  "theme": "dark-ansi",
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"${XDG_CONFIG_HOME:-$HOME/.config}/claude/plugins/marketplaces/ponytail/hooks/ponytail-statusline.sh\""
+  },
+  "enabledPlugins": {
+    "ponytail@ponytail": true
+  }
 }

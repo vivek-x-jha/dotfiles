@@ -339,7 +339,7 @@ create_symlinks() {
     "$XDG_STATE_HOME/mysql" "$XDG_STATE_HOME/pi/agent" "$XDG_STATE_HOME/pi/agent/extensions"
     "$XDG_STATE_HOME/pi/agent/skills" "$XDG_STATE_HOME/pi/agent/themes" "$XDG_STATE_HOME/python"
     "$XDG_STATE_HOME/ipython" "$XDG_STATE_HOME/zsh" "$XDG_CONFIG_HOME/claude"
-    "$XDG_CONFIG_HOME/herdr" "$XDG_CONFIG_HOME/jupyter"
+    "$XDG_CONFIG_HOME/herdr" "$XDG_CONFIG_HOME/jupyter" "$XDG_CONFIG_HOME/ponytail"
     "$XDG_DATA_HOME/hermes" "$XDG_DATA_HOME/jupyter" "$XDG_DATA_HOME/zsh" "$XDG_DATA_HOME/vscode"
     "$XDG_DATA_HOME/vscode/shared-data" "$XDG_DATA_HOME/vscode/user-data/User"
   )
@@ -389,6 +389,7 @@ create_symlinks() {
   run "chmod 700 \"$XDG_DATA_HOME/hermes\"" || return
   prepare_git_config_home || return
   prepare_ssh_config_home || return
+  seed_bootstrap_file "$BOOTSTRAP_ROOT/ai/ponytail/config.json" "$XDG_CONFIG_HOME/ponytail/config.json" || return
 
   for installed_skill in "$XDG_STATE_HOME/codex/skills"/*; do
     [[ -L $installed_skill ]] || continue

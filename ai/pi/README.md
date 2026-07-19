@@ -17,6 +17,9 @@ packages, and settings stay in state.
   first message to the clipboard when a supported clipboard command is available.
 - `extensions/handoff-alias.ts` exposes that skill as `/handoff <goal>` in addition
   to Pi's standard `/skill:handoff <goal>` command.
+- Ponytail is installed as a Pi runtime package rather than vendored here. It reads the
+  shared `$XDG_CONFIG_HOME/ponytail/config.json` seeded from `ai/ponytail/config.json`,
+  and its status is rendered by the custom footer through Pi's extension-status API.
 
 Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` directly to
 `../../../../.dotfiles/ai/AGENTS.md` from the agent dir; no harness-specific copy lives here.
