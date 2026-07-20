@@ -1,0 +1,22 @@
+#compdef hs
+# shellcheck shell=zsh
+
+_hs() {
+  _arguments -s -S \
+    '-A[automatically launch Hammerspoon]' \
+    '*-c+[execute a Hammerspoon command]:Lua command:' \
+    '-C[clone console output to this instance]' \
+    '-h[show help]' \
+    '-i[enable interactive mode]' \
+    '-m+[connect to a named remote port]:port name:' \
+    '-n[disable colorized output]' \
+    '-N[force colorized output]' \
+    '-P[mirror output to the Hammerspoon Console]' \
+    '-q[only print errors and command results]' \
+    '-s[read code from standard input]' \
+    '-t+[set the send and receive timeout]:seconds:' \
+    '1:Hammerspoon code file:_files' \
+    '*:custom argument:'
+}
+
+_hs "$@"

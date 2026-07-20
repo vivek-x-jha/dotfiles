@@ -392,6 +392,22 @@ filenames:
       style:
         foreground: brightcyan
 
+  _claude:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _cmp-compat.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
   _dust:
     filename:
       foreground: brightcyan
@@ -409,6 +425,22 @@ filenames:
         foreground: brightcyan
 
   _fd:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _herdr:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  _hs:
     filename:
       foreground: brightcyan
     icon:
@@ -528,6 +560,14 @@ filenames:
       style:
         foreground: brightcyan
 
+  claude.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
   cheatsheet:
     icon:
       glyph: "󰊕"
@@ -565,6 +605,22 @@ filenames:
         foreground: brightcyan
 
   fd.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  herdr.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
+  hs.bash:
     filename:
       foreground: brightcyan
     icon:
