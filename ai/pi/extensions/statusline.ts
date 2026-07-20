@@ -1297,10 +1297,17 @@ export default function (pi: ExtensionAPI) {
 
   function extensionStatusPart(
     footerData: ReadonlyFooterDataProvider,
+    theme: Theme,
   ): string | undefined {
     const statuses = [...footerData.getExtensionStatuses().entries()]
       .filter(([key]) => key !== "better-statusline")
-      .map(([, text]) => text)
+      .map(([key, text]) => {
+        if (key !== "ponytail") return text;
+        const match = /^([●○]) 🐴 ponytail: (.+)$/.exec(stripRenderedControl(text));
+        if (!match) return text;
+        const color = match[1] === "●" ? "accent" : "dim";
+        return `${theme.fg(color, match[1])} ${theme.fg("muted", "ponytail")} ${theme.fg("text", match[2])}`;
+      })
       .filter(Boolean);
     return statuses.length > 0 ? statuses.join(" ") : undefined;
   }
@@ -1321,7 +1328,7 @@ export default function (pi: ExtensionAPI) {
         codexQuotaPart(theme),
         gitPart(theme, footerData),
         phasePart(theme),
-        extensionStatusPart(footerData),
+        extensionStatusPart(footerData, theme),
       ],
       theme,
     );
