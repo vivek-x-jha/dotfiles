@@ -500,13 +500,15 @@ local arrange_3_monitors = function()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-  with_app_windows({ 'Messages', 'Spotify', 'VLC', 'Photos', 'WezTerm', 'Arc' }, function()
+  with_app_windows({ 'Messages', 'Spotify', 'ChatGPT', 'VLC', 'Photos', 'WezTerm', 'Arc' }, function()
     screens = screens_left_to_right()
     if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
     positionApp('Messages', screens[1])
     moveApp 'maximize'
     positionApp('Spotify', screens[1])
+    moveApp 'maximize'
+    positionApp('ChatGPT', screens[1])
     moveApp 'maximize'
     fullscreen_app('VLC', screens[1])
 
