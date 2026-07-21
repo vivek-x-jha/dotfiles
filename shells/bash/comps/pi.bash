@@ -48,14 +48,14 @@ _pi() {
   prev=${COMP_WORDS[COMP_CWORD - 1]}
 
   commands='install remove uninstall update list config'
-  provider_values='anthropic ant-ling openai azure-openai deepseek nvidia google google-vertex amazon-bedrock mistral groq cerebras cloudflare-ai-gateway cloudflare-workers-ai xai openrouter vercel zai zai-cn opencode opencode-go huggingface fireworks together kimi minimax xiaomi xiaomi-cn xiaomi-ams xiaomi-sgp github-copilot'
-  thinking_values='off minimal low medium high xhigh'
+  provider_values='amazon-bedrock ant-ling anthropic azure-openai-responses cerebras cloudflare-ai-gateway cloudflare-workers-ai deepseek fireworks github-copilot google google-vertex groq huggingface kimi-coding minimax minimax-cn mistral moonshotai moonshotai-cn nvidia ollama openai openai-codex opencode opencode-go openrouter qwen-token-plan qwen-token-plan-cn together vercel-ai-gateway xai xiaomi xiaomi-token-plan-ams xiaomi-token-plan-cn xiaomi-token-plan-sgp zai zai-coding-cn'
+  thinking_values='off minimal low medium high xhigh max'
   mode_values='text json rpc'
   tool_values='read bash edit write grep find ls'
   update_targets='pi self'
   trust_opts='-a --approve -na --no-approve -h --help'
   package_opts='-l --local -a --approve -na --no-approve -h --help'
-  update_opts='--self --extensions --all --extension -a --approve -na --no-approve --force -h --help'
+  update_opts='--self --extensions --models --all --extension -a --approve -na --no-approve --force -h --help'
   global_opts='--provider --model --api-key --system-prompt --append-system-prompt --mode -p --print -c --continue -r --resume --session --session-id --fork --session-dir --no-session -n --name --models -nt --no-tools -nbt --no-builtin-tools -t --tools -xt --exclude-tools --thinking -e --extension -ne --no-extensions --skill -ns --no-skills --prompt-template -np --no-prompt-templates --theme --no-themes -nc --no-context-files --export --list-models --verbose -a --approve -na --no-approve --offline -h --help -v --version'
 
   case $prev in
@@ -84,10 +84,6 @@ _pi() {
       return 0
       ;;
     --api-key|--system-prompt|--model|--session-id|--name|-n|--models|--list-models)
-      return 0
-      ;;
-    --extension)
-      _pi_comp_files
       return 0
       ;;
   esac
@@ -128,8 +124,11 @@ _pi() {
         COMPREPLY+=("${file_matches[@]}")
       fi
       ;;
-    list|config)
+    list)
       [[ $cur == -* ]] && _pi_comp_words "$trust_opts"
+      ;;
+    config)
+      [[ $cur == -* ]] && _pi_comp_words "-l --local $trust_opts"
       ;;
     *)
       if [[ $cur == -* ]]; then

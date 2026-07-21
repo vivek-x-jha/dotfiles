@@ -58,6 +58,7 @@ __eva() {
         --total-size"[Show recursive directory size (unix only)]" \
         --no-permissions"[Suppress the permissions field]" \
         {-o,--octal-permissions}"[List each file's permission in octal format]" \
+        {-O,--flags}"[List file flags]" \
         --no-filesize"[Suppress the filesize field]" \
         --no-user"[Suppress the user field]" \
         --no-time"[Suppress the time field]" \

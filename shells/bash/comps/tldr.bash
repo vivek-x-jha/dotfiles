@@ -7,15 +7,18 @@ _tealdeer()
 	_init_completion || return
 
 	case $prev in
-		-h|--help|-v|--version|-l|--list|-u|--update|--no-auto-update|-c|--clear-cache|--pager|-r|--raw|--show-paths|--seed-config|-q|--quiet)
+		-h|--help|-v|--version|-l|--list|--edit-page|--edit-patch|-u|--update|--no-auto-update|-c|--clear-cache|--pager|-r|--raw|--show-paths|--seed-config|-q|--quiet)
 			return
 			;;
-		-f|--render)
+		-f|--render|--config-path)
 			_filedir
 			return
 			;;
 		-p|--platform)
-			COMPREPLY=( $(compgen -W 'linux macos sunos windows android freebsd netbsd openbsd' -- "${cur}") )
+			COMPREPLY=( $(compgen -W 'linux macos sunos windows android freebsd netbsd openbsd common' -- "${cur}") )
+			return
+			;;
+		-L|--language)
 			return
 			;;
 		--color)

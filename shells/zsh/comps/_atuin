@@ -1517,8 +1517,16 @@ esac
     ;;
 esac
 ;;
+(mcp)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (pty-proxy)
 _arguments "${_arguments_options[@]}" : \
+'--shell=[Path to the shell binary that atuin pty-proxy should spawn. Defaults to the system login shell. Only valid when no subcommand is given]:PATH:_files' \
+'--debug-osc133[Highlight OSC 133 prompt, input, output, and exit-code regions]' \
 '-h[Print help]' \
 '--help[Print help]' \
 ":: :_atuin__subcmd__pty-proxy_commands" \
@@ -2111,6 +2119,10 @@ _arguments "${_arguments_options[@]}" : \
     ;;
 esac
 ;;
+(mcp)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (pty-proxy)
 _arguments "${_arguments_options[@]}" : \
 ":: :_atuin__subcmd__help__subcmd__pty-proxy_commands" \
@@ -2184,6 +2196,7 @@ _atuin_commands() {
 'default-config:Print the default atuin configuration (config.toml)' \
 'config:' \
 'ai:Run the AI assistant' \
+'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
 'contributors:' \
@@ -2695,6 +2708,7 @@ _atuin__subcmd__help_commands() {
 'default-config:Print the default atuin configuration (config.toml)' \
 'config:' \
 'ai:Run the AI assistant' \
+'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
 'contributors:' \
@@ -3108,6 +3122,11 @@ _atuin__subcmd__help__subcmd__login_commands() {
 _atuin__subcmd__help__subcmd__logout_commands() {
     local commands; commands=()
     _describe -t commands 'atuin help logout commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__mcp_commands] )) ||
+_atuin__subcmd__help__subcmd__mcp_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help mcp commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__pty-proxy_commands] )) ||
 _atuin__subcmd__help__subcmd__pty-proxy_commands() {
@@ -3663,6 +3682,11 @@ _atuin__subcmd__login_commands() {
 _atuin__subcmd__logout_commands() {
     local commands; commands=()
     _describe -t commands 'atuin logout commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__mcp_commands] )) ||
+_atuin__subcmd__mcp_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin mcp commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__pty-proxy_commands] )) ||
 _atuin__subcmd__pty-proxy_commands() {

@@ -1,4 +1,4 @@
-# shellcheck shell=bash disable=SC2034,SC2207
+# shellcheck disable=SC2207
 
 # Requires https://github.com/scop/bash-completion
 

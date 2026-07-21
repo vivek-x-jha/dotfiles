@@ -15,6 +15,8 @@ _tealdeer() {
 
     args+=(
         "($I -l --list)"{-l,--list}"[List all commands in the cache]"
+        "($I)--edit-page[Edit a custom page with EDITOR]"
+        "($I)--edit-patch[Edit a custom patch with EDITOR]"
         "($I -f --render)"{-f,--render}"[Render a specific markdown file]:file:_files"
         "($I -p --platform)"{-p,--platform}'[Override the operating system]:platform:((
             linux
@@ -25,11 +27,13 @@ _tealdeer() {
             freebsd
             netbsd
             openbsd
+            common
         ))'
         "($I -L --language)"{-L,--language}"[Override the language settings]:lang"
         "($I -u --update)"{-u,--update}"[Update the local cache]"
         "($I)--no-auto-update[If auto update is configured, disable it for this run]"
         "($I -c --clear-cache)"{-c,--clear-cache}"[Clear the local cache]"
+        "($I)--config-path[Override the configuration file]:file:_files"
         "($I)--pager[Use a pager to page output]"
         "($I -r --raw)"{-r,--raw}"[Display the raw markdown instead of rendering it]"
         "($I -q --quiet)"{-q,--quiet}"[Suppress informational messages]"

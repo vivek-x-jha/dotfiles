@@ -75,6 +75,9 @@ _atuin() {
             atuin,logout)
                 cmd="atuin__subcmd__logout"
                 ;;
+            atuin,mcp)
+                cmd="atuin__subcmd__mcp"
+                ;;
             atuin,pty-proxy)
                 cmd="atuin__subcmd__pty__subcmd__proxy"
                 ;;
@@ -371,6 +374,9 @@ _atuin() {
                 ;;
             atuin__subcmd__help,logout)
                 cmd="atuin__subcmd__help__subcmd__logout"
+                ;;
+            atuin__subcmd__help,mcp)
+                cmd="atuin__subcmd__help__subcmd__mcp"
                 ;;
             atuin__subcmd__help,pty-proxy)
                 cmd="atuin__subcmd__help__subcmd__pty__subcmd__proxy"
@@ -886,7 +892,7 @@ _atuin() {
 
     case "${cmd}" in
         atuin)
-            opts="-h -V --help --version setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai pty-proxy uuid contributors gen-completions help"
+            opts="-h -V --help --version setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp pty-proxy uuid contributors gen-completions help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1276,7 +1282,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__ai__subcmd__init)
-            opts="-h --help [SHELL]"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1290,7 +1296,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__ai__subcmd__inline)
-            opts="-v -h --verbose --api-endpoint --api-token --hook --help [COMMAND]"
+            opts="-v -h --verbose --api-endpoint --api-token --hook --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1326,7 +1332,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__config__subcmd__get)
-            opts="-r -v -h --resolved --verbose --help <KEY>"
+            opts="-r -v -h --resolved --verbose --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1410,7 +1416,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__config__subcmd__print)
-            opts="-h --help [KEY]"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1424,7 +1430,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__config__subcmd__set)
-            opts="-t -h --type --help <KEY> <VALUE>"
+            opts="-t -h --type --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1684,7 +1690,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__alias__subcmd__delete)
-            opts="-h --help <NAME>"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1816,7 +1822,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__alias__subcmd__set)
-            opts="-h --help <NAME> <VALUE>"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1998,7 +2004,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__var__subcmd__delete)
-            opts="-h --help <NAME>"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2116,7 +2122,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__var__subcmd__set)
-            opts="-n -h --no-export --help <NAME> <VALUE>"
+            opts="-n -h --no-export --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2160,7 +2166,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help)
-            opts="setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai pty-proxy uuid contributors gen-completions help"
+            opts="setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp pty-proxy uuid contributors gen-completions help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3139,6 +3145,20 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
+        atuin__subcmd__help__subcmd__mcp)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
         atuin__subcmd__help__subcmd__pty__subcmd__proxy)
             opts="init"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
@@ -3530,7 +3550,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__history__subcmd__end)
-            opts="-e -d -h --exit --duration --help <ID>"
+            opts="-e -d -h --exit --duration --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3796,7 +3816,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__history__subcmd__start)
-            opts="-h --command-from-env --author --intent --help [COMMAND]..."
+            opts="-h --command-from-env --author --intent --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3832,7 +3852,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__hook)
-            opts="-h --help [AGENT] install help"
+            opts="-h --help install help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3888,7 +3908,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__hook__subcmd__install)
-            opts="-h --help <AGENT>"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4336,7 +4356,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__kv__subcmd__delete)
-            opts="-n -h --namespace --help <KEYS>..."
+            opts="-n -h --namespace --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4358,7 +4378,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__kv__subcmd__get)
-            opts="-n -h --namespace --help <KEY>"
+            opts="-n -h --namespace --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4514,7 +4534,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__kv__subcmd__set)
-            opts="-k -n -h --key --namespace --help [VALUE]"
+            opts="-k -n -h --key --namespace --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4603,13 +4623,31 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__pty__subcmd__proxy)
-            opts="-h --help init help"
+        atuin__subcmd__mcp)
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__pty__subcmd__proxy)
+            opts="-h --debug-osc133 --shell --help init help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --shell)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;
@@ -4726,7 +4764,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__scripts__subcmd__delete)
-            opts="-f -h --force --help <NAME>"
+            opts="-f -h --force --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4740,7 +4778,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__scripts__subcmd__edit)
-            opts="-d -t -s -h --description --tags --no-tags --rename --shebang --script --no-edit --help <NAME>"
+            opts="-d -t -s -h --description --tags --no-tags --rename --shebang --script --no-edit --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4786,7 +4824,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__scripts__subcmd__get)
-            opts="-s -h --script --help <NAME>"
+            opts="-s -h --script --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4926,7 +4964,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__scripts__subcmd__new)
-            opts="-d -t -s -h --description --tags --shebang --script --last --no-edit --help <NAME>"
+            opts="-d -t -s -h --description --tags --shebang --script --last --no-edit --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4972,7 +5010,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__scripts__subcmd__run)
-            opts="-v -h --var --help <NAME>"
+            opts="-v -h --var --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -4994,7 +5032,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__search)
-            opts="-c -e -b -i -r -f -h --cwd --exclude-cwd --exit --exclude-exit --before --after --limit --offset --interactive --filter-mode --search-mode --shell-up-key-binding --keymap-mode --human --cmd-only --print0 --delete --delete-it-all --reverse --tz --timezone --format --inline-height --author --include-duplicates --result-file --help [QUERY]..."
+            opts="-c -e -b -i -r -f -h --cwd --exclude-cwd --exit --exclude-exit --before --after --limit --offset --interactive --filter-mode --search-mode --shell-up-key-binding --keymap-mode --human --cmd-only --print0 --delete --delete-it-all --reverse --tz --timezone --format --inline-height --author --include-duplicates --result-file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5106,7 +5144,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__stats)
-            opts="-c -n -h --count --ngram-size --help [PERIOD]..."
+            opts="-c -n -h --count --ngram-size --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5360,7 +5398,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__store__subcmd__rebuild)
-            opts="-h --help <TAG>"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5374,7 +5412,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__store__subcmd__rekey)
-            opts="-h --help [KEY]"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5444,7 +5482,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__wrapped)
-            opts="-h --help [YEAR]"
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

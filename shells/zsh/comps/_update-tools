@@ -5,7 +5,7 @@ _update_tools() {
   local -a opts
 
   opts=(
-    '(-a --all)'{-a,--all}'[run every step, including TeX]'
+    '(-a --all)'{-a,--all}'[run every step, including TeX and Herdr]'
     '(-d --ds-store)'{-d,--ds-store}'[prune .DS_Store artifacts]'
     '(-z --zsh)'{-z,--zsh}'[update Zsh plugins]'
     '--herdr[update Herdr and regenerate Herdr completions]'

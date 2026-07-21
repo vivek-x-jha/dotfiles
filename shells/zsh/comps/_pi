@@ -6,17 +6,20 @@
 _pi_providers() {
   local -a providers
   providers=(
-    anthropic ant-ling openai azure-openai deepseek nvidia google google-vertex
-    amazon-bedrock mistral groq cerebras cloudflare-ai-gateway cloudflare-workers-ai
-    xai openrouter vercel zai zai-cn opencode opencode-go huggingface fireworks
-    together kimi minimax xiaomi xiaomi-cn xiaomi-ams xiaomi-sgp github-copilot
+    amazon-bedrock ant-ling anthropic azure-openai-responses cerebras
+    cloudflare-ai-gateway cloudflare-workers-ai deepseek fireworks github-copilot
+    google google-vertex groq huggingface kimi-coding minimax minimax-cn mistral
+    moonshotai moonshotai-cn nvidia ollama openai openai-codex opencode opencode-go
+    openrouter qwen-token-plan qwen-token-plan-cn together vercel-ai-gateway xai
+    xiaomi xiaomi-token-plan-ams
+    xiaomi-token-plan-cn xiaomi-token-plan-sgp zai zai-coding-cn
   )
   _describe -t providers 'provider' providers
 }
 
 _pi_thinking_levels() {
   local -a levels
-  levels=(off minimal low medium high xhigh)
+  levels=(off minimal low medium high xhigh max)
   _describe -t thinking-levels 'thinking level' levels
 }
 
@@ -143,6 +146,7 @@ _pi() {
       _arguments -s -S \
         '--self[update pi only]' \
         '--extensions[update installed packages only]' \
+        '--models[refresh model catalogs only]' \
         '--all[update pi and installed packages]' \
         '--extension[update one package only]:source:_pi_package_source' \
         '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
@@ -151,8 +155,15 @@ _pi() {
         '(-h --help)'{-h,--help}'[show help]' \
         '1:update target or source:_pi_update_targets'
       ;;
-    list|config)
+    list)
       _arguments -s -S \
+        '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
+        '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this command]' \
+        '(-h --help)'{-h,--help}'[show help]'
+      ;;
+    config)
+      _arguments -s -S \
+        '(-l --local)'{-l,--local}'[edit project overrides (.pi/settings.json)]' \
         '(-a --approve)'{-a,--approve}'[trust project-local files for this command]' \
         '(-na --no-approve)'{-na,--no-approve}'[ignore project-local files for this command]' \
         '(-h --help)'{-h,--help}'[show help]'

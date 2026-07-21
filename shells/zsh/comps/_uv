@@ -814,11 +814,11 @@ never\:"Disables colored output"))' \
 '--no-refresh[]' \
 '--workspace[Add the dependency as a workspace member]' \
 '--no-workspace[Don'\''t add the dependency as a workspace member]' \
-'(--frozen --no-sync --only-install-project)--no-install-project[Do not install the current project]' \
+'(--frozen --no-sync --only-install-project)--no-install-project[Do not install the current project \[env\: UV_NO_INSTALL_PROJECT=\]]' \
 '(--frozen --no-sync --no-install-project)--only-install-project[Only install the current project]' \
-'(--frozen --no-sync --only-install-workspace)--no-install-workspace[Do not install any workspace members, including the current project]' \
+'(--frozen --no-sync --only-install-workspace)--no-install-workspace[Do not install any workspace members, including the current project \[env\: UV_NO_INSTALL_WORKSPACE=\]]' \
 '(--frozen --no-sync --no-install-workspace)--only-install-workspace[Only install workspace members, including the current project]' \
-'(--frozen --no-sync --only-install-local)--no-install-local[Do not install local path dependencies]' \
+'(--frozen --no-sync --only-install-local)--no-install-local[Do not install local path dependencies \[env\: UV_NO_INSTALL_LOCAL=\]]' \
 '(--frozen --no-sync --no-install-local)--only-install-local[Only install local path dependencies]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -913,7 +913,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files -/' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
-'(--optional --group)--dev[Remove the packages from the development dependency group \[env\: UV_DEV=\]]' \
+'(--optional --group --script)--dev[Remove the packages from the development dependency group \[env\: UV_DEV=\]]' \
 '--no-sync[Avoid syncing the virtual environment after re-locking the project \[env\: UV_NO_SYNC=\]]' \
 '--active[Prefer the active virtual environment over the project'\''s virtual environment]' \
 '--no-active[Prefer project'\''s virtual environment over an active environment]' \
@@ -1223,11 +1223,11 @@ never\:"Disables colored output"))' \
 '--exact[Perform an exact sync, removing extraneous packages]' \
 '--active[Sync dependencies to the active virtual environment]' \
 '--no-active[Prefer project'\''s virtual environment over an active environment]' \
-'(--only-install-project)--no-install-project[Do not install the current project]' \
+'(--only-install-project)--no-install-project[Do not install the current project \[env\: UV_NO_INSTALL_PROJECT=\]]' \
 '(--no-install-project)--only-install-project[Only install the current project]' \
-'(--only-install-workspace)--no-install-workspace[Do not install any workspace members, including the root project]' \
+'(--only-install-workspace)--no-install-workspace[Do not install any workspace members, including the root project \[env\: UV_NO_INSTALL_WORKSPACE=\]]' \
 '(--no-install-workspace)--only-install-workspace[Only install workspace members, including the root project]' \
-'(--only-install-local)--no-install-local[Do not install local path dependencies]' \
+'(--only-install-local)--no-install-local[Do not install local path dependencies \[env\: UV_NO_INSTALL_LOCAL=\]]' \
 '(--no-install-local)--only-install-local[Only install local path dependencies]' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged \[env\: UV_LOCKED=\]]' \
 '(--locked -U --upgrade --no-sources)--frozen[Sync without updating the \`uv.lock\` file \[env\: UV_FROZEN=\]]' \
@@ -1387,6 +1387,53 @@ never\:"Disables colored output"))' \
 '--help[Display the concise help for this command]' \
 && ret=0
 ;;
+(upgrade)
+_arguments "${_arguments_options[@]}" : \
+'--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
+'--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
+managed\:"Prefer managed Python installations over system Python installations"
+system\:"Prefer system Python installations over managed Python installations"
+only-system\:"Only use system Python installations; never use managed Python installations"))' \
+'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+manual\:"Do not automatically download managed Python installations; require explicit installation"
+never\:"Do not ever allow Python downloads"))' \
+'(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
+always\:"Enables colored output regardless of the detected environment"
+never\:"Disables colored output"))' \
+'*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_urls' \
+'*--preview-features=[Enable experimental preview features]:PREVIEW_FEATURES:_default' \
+'--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files -/' \
+'--project=[Discover a project in the given directory]:PROJECT:_files -/' \
+'--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
+'--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
+'--no-managed-python[Disable use of uv-managed Python versions \[env\: UV_NO_MANAGED_PYTHON=\]]' \
+'--allow-python-downloads[Allow automatically downloading Python when required. \[env\: "UV_PYTHON_DOWNLOADS=auto"\]]' \
+'--no-python-downloads[Disable automatic downloads of Python. \[env\: "UV_PYTHON_DOWNLOADS=never"\]]' \
+'(-v --verbose)*-q[Use quiet output]' \
+'(-v --verbose)*--quiet[Use quiet output]' \
+'(-q --quiet)*-v[Use verbose output]' \
+'(-q --quiet)*--verbose[Use verbose output]' \
+'(--color)--no-color[Disable colors]' \
+'--native-tls[(Deprecated\: use \`--system-certs\` instead.) Whether to load TLS certificates from the platform'\''s native certificate store \[env\: UV_NATIVE_TLS=\]]' \
+'--no-native-tls[]' \
+'--system-certs[Whether to load TLS certificates from the platform'\''s native certificate store \[env\: UV_SYSTEM_CERTS=\]]' \
+'--no-system-certs[]' \
+'--offline[Disable network access \[env\: UV_OFFLINE=\]]' \
+'--no-offline[]' \
+'--preview[Whether to enable all experimental preview features \[env\: UV_PREVIEW=\]]' \
+'--no-preview[]' \
+'--isolated[Avoid discovering a \`pyproject.toml\` or \`uv.toml\` file \[env\: UV_ISOLATED=\]]' \
+'--show-settings[Show the resolved settings for the current command]' \
+'--no-progress[Hide all progress outputs \[env\: UV_NO_PROGRESS=\]]' \
+'--no-installer-metadata[Skip writing \`uv\` installer metadata files (e.g., \`INSTALLER\`, \`REQUESTED\`, and \`direct_url.json\`) to site-packages \`.dist-info\` directories \[env\: UV_NO_INSTALLER_METADATA=\]]' \
+'--no-config[Avoid discovering configuration files (\`pyproject.toml\`, \`uv.toml\`)]' \
+'-h[Display the concise help for this command]' \
+'--help[Display the concise help for this command]' \
+':package -- The package to upgrade:' \
+&& ret=0
+;;
 (export)
 _arguments "${_arguments_options[@]}" : \
 '--format=[The format to which \`uv.lock\` should be exported]:FORMAT:((requirements.txt\:"Export in \`requirements.txt\` format"
@@ -1474,6 +1521,10 @@ never\:"Disables colored output"))' \
 '--annotate[]' \
 '--no-header[Exclude the comment header at the top of the generated output file]' \
 '--header[]' \
+'--emit-index-url[Include \`--index-url\` and \`--extra-index-url\` entries in the generated output file]' \
+'--no-emit-index-url[]' \
+'--emit-find-links[Include \`--find-links\` entries in the generated output file]' \
+'--no-emit-find-links[]' \
 '--editable[Export any non-editable dependencies, including the project and any workspace members, as editable]' \
 '--no-editable[Export any editable dependencies, including the project and any workspace members, as non-editable \[env\: UV_NO_EDITABLE=\]]' \
 '--hashes[Include hashes for all dependencies]' \
@@ -1530,6 +1581,8 @@ never\:"Disables colored output"))' \
 ;;
 (tree)
 _arguments "${_arguments_options[@]}" : \
+'--format=[The format in which to display the dependency graph]:FORMAT:((text\:"Display the dependency graph as a human-readable tree"
+json\:"Display the dependency graph as JSON"))' \
 '-d+[Maximum display depth of the dependency tree]:DEPTH:_default' \
 '--depth=[Maximum display depth of the dependency tree]:DEPTH:_default' \
 '*--prune=[Prune the given package from the display of the dependency tree]:PRUNE:' \
@@ -1748,6 +1801,7 @@ never\:"Disables colored output"))' \
 ;;
 (check)
 _arguments "${_arguments_options[@]}" : \
+'(--extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --no-project)--script=[Run checks for the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
@@ -1823,6 +1877,7 @@ never\:"Disables colored output"))' \
 '(--locked -U --upgrade --no-sources)--frozen[Sync without updating the \`uv.lock\` file \[env\: UV_FROZEN=\]]' \
 '--no-sync[Avoid syncing the virtual environment \[env\: UV_NO_SYNC=\]]' \
 '--isolated[Run checks without mutating project state \[env\: UV_ISOLATED=\]]' \
+'--show-version[Display the version of ty that will be used for type checking]' \
 '--no-project[Avoid discovering a project or workspace]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -1875,7 +1930,8 @@ _arguments "${_arguments_options[@]}" : \
 '*--no-group=[Don'\''t audit the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
 '*--only-group=[Only audit dependencies from the specified dependency group]:ONLY_GROUP:' \
 '--output-format=[Select the output format]:OUTPUT_FORMAT:((text\:"Display the result in a human-readable format"
-json\:"Display the result in JSON format"))' \
+json\:"Display the result in JSON format"
+sarif\:"Display the result in SARIF format"))' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -2184,6 +2240,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2401,6 +2458,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -2621,6 +2679,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -3731,6 +3790,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '*--no-emit-package=[Specify a package to omit from the output resolution. Its dependencies will still be included in the resolution. Equivalent to pip-compile'\''s \`--unsafe-package\` option]:NO_EMIT_PACKAGE:' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -3965,6 +4025,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -4201,6 +4262,7 @@ arm64-apple-ios-simulator\:"An ARM64 target for iOS simulator"
 x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 '--torch-backend=[The backend to use when fetching packages in the PyTorch ecosystem (e.g., \`cpu\`, \`cu126\`, or \`auto\`)]:TORCH_BACKEND:((auto\:"Select the appropriate PyTorch index based on the operating system and CUDA driver version"
 cpu\:"Use the CPU-only PyTorch index"
+cu132\:"Use the PyTorch index for CUDA 13.2"
 cu130\:"Use the PyTorch index for CUDA 13.0"
 cu129\:"Use the PyTorch index for CUDA 12.9"
 cu128\:"Use the PyTorch index for CUDA 12.8"
@@ -5147,6 +5209,7 @@ never\:"Disables colored output"))' \
         case $line[1] in
             (metadata)
 _arguments "${_arguments_options[@]}" : \
+'--script=[View metadata for the specified PEP 723 Python script, rather than the current workspace]:SCRIPT:_files' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The URL of the default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -5222,6 +5285,7 @@ never\:"Disables colored output"))' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '--sync[Sync the environment to include module ownership metadata in the output]' \
+'--active[Sync dependencies to the active virtual environment]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -5316,6 +5380,7 @@ never\:"Disables colored output"))' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--paths[Show paths instead of names]' \
+'--scripts[List all standalone scripts with inline metadata in the workspace]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -6346,6 +6411,7 @@ _uv_commands() {
 'version:Read or update the project'\''s version' \
 'sync:Update the project'\''s environment' \
 'lock:Update the project'\''s lockfile' \
+'upgrade:Upgrade a dependency in the project' \
 'export:Export the project'\''s lockfile to an alternate format' \
 'tree:Display the project'\''s dependency tree' \
 'format:Format Python code in the project' \
@@ -6483,7 +6549,7 @@ _uv__subcmd__build-backend__subcmd__prepare-metadata-for-build-wheel_commands() 
 _uv__subcmd__cache_commands() {
     local commands; commands=(
 'clean:Clear the cache, removing all entries or those linked to specific packages' \
-'prune:Prune all unreachable objects from the cache' \
+'prune:Prune dangling cache entries and cached environments' \
 'dir:Show the cache directory' \
 'size:Show the cache size' \
     )
@@ -6765,6 +6831,11 @@ _uv__subcmd__tool__subcmd__uvx_commands() {
 _uv__subcmd__tree_commands() {
     local commands; commands=()
     _describe -t commands 'uv tree commands' commands "$@"
+}
+(( $+functions[_uv__subcmd__upgrade_commands] )) ||
+_uv__subcmd__upgrade_commands() {
+    local commands; commands=()
+    _describe -t commands 'uv upgrade commands' commands "$@"
 }
 (( $+functions[_uv__subcmd__venv_commands] )) ||
 _uv__subcmd__venv_commands() {

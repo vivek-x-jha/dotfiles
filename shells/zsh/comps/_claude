@@ -12,7 +12,7 @@ _claude_sessions() {
 
 _claude_models() {
   local -a models
-  models=(default sonnet opus haiku gpt-5.6-sol)
+  models=(default sonnet opus haiku fable gpt-5.6-sol)
   _describe -t models 'model' models
 }
 
@@ -71,11 +71,15 @@ _claude() {
     '*--disallowedTools[comma or space-separated denied tools]:tools:' \
     '*--disallowed-tools[comma or space-separated denied tools]:tools:' \
     '--effort[set effort level]:level:(low medium high xhigh max)' \
+    '--exclude-dynamic-system-prompt-sections[move dynamic prompt sections into the first user message]' \
     '--fallback-model[set fallback models]:model:_claude_models' \
     '*--file[download a file resource at startup]:resource spec:' \
     '--fork-session[create a new session ID when resuming]' \
+    '--forward-subagent-text[forward subagent messages in stream-json mode]' \
     '--from-pr[resume a session linked to a pull request]::PR:' \
     '--ide[connect to an IDE]' \
+    '--include-hook-events[include hook lifecycle events]' \
+    '--include-partial-messages[include partial streaming messages]' \
     '--input-format[set print-mode input format]:format:(text stream-json)' \
     '--json-schema[set structured-output JSON schema]:schema:' \
     '--max-budget-usd[set print-mode spending limit]:amount:' \
@@ -88,6 +92,8 @@ _claude() {
     '*--plugin-url[load a plugin URL]:URL:_urls' \
     '--prompt-suggestions[enable prompt suggestions]::enabled:(true false)' \
     '--remote-control[start with Remote Control]::name:' \
+    '--remote-control-session-name-prefix[set the Remote Control session name prefix]:prefix:' \
+    '--replay-user-messages[replay streamed user messages on standard output]' \
     '--safe-mode[disable customizations for troubleshooting]' \
     '--session-id[use a specific session UUID]:session:_claude_sessions' \
     '--setting-sources[select setting sources]:sources:(user project local)' \

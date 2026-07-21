@@ -109,6 +109,8 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 '(-l --list)-o+[Output the preset to a file instead of stdout]:OUTPUT:_files' \
 '(-l --list)--output=[Output the preset to a file instead of stdout]:OUTPUT:_files' \
+'-f[Forcibly overwrite the output file if it already exists]' \
+'--force[Forcibly overwrite the output file if it already exists]' \
 '-l[List out all preset names]' \
 '--list[List out all preset names]' \
 '-h[Print help]' \

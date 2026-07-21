@@ -154,6 +154,24 @@ notify() {
   printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
 }
 
+write_bash_completion() {
+  local output=$1 shellcheck_rules=$2 completion
+  shift 2
+  completion=$("$@") || return 1
+  if [[ $completion == '# shellcheck '* ]]; then
+    printf '%s\n' "$completion" >"$output"
+  else
+    printf '# shellcheck shell=bash disable=%s\n\n%s\n' "$shellcheck_rules" "$completion" >"$output"
+  fi
+}
+
+write_zsh_completion() {
+  local output=$1 completion
+  shift
+  completion=$("$@") || return 1
+  printf '%s\n' "$completion" | awk 'NR == 1 { print; print "# shellcheck disable=all"; next } 1' >"$output"
+}
+
 refresh_herdr_completions() {
   local bash_completion="$DOTFILES_DIR/shells/bash/comps/herdr.bash"
   local zsh_completion="$DOTFILES_DIR/shells/zsh/comps/_herdr"
@@ -168,6 +186,42 @@ refresh_herdr_completions() {
   herdr completion bash >"$bash_completion" || return 1
   herdr completion zsh >"$zsh_completion" || return 1
   rm -f "$zsh_cache_dir"/compdump*(N) "$HOME"/.zcompdump*(N) 2>/dev/null || true
+}
+
+refresh_managed_completions() {
+  local failed=0
+
+  if command -v atuin &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/atuin.bash" SC2207 atuin gen-completions --shell bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_atuin" atuin gen-completions --shell zsh || failed=1
+  fi
+  if command -v bat &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/bat.bash" SC2034,SC2207 bat --completion bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_bat" bat --completion zsh || failed=1
+  fi
+  if command -v bob &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/bob.bash" SC2207 bob complete bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_bob" bob complete zsh || failed=1
+  fi
+  if command -v fd &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/fd.bash" SC2207 fd --gen-completions bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_fd" fd --gen-completions zsh || failed=1
+  fi
+  refresh_herdr_completions || failed=1
+  if command -v rg &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/rg.bash" SC2034,SC2068,SC2207 rg --generate complete-bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_rg" rg --generate complete-zsh || failed=1
+  fi
+  if command -v starship &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/starship.bash" SC2207 starship completions bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_starship" starship completions zsh || failed=1
+  fi
+  if command -v uv &>/dev/null; then
+    write_bash_completion "$DOTFILES_DIR/shells/bash/comps/uv.bash" SC2207 uv generate-shell-completion bash || failed=1
+    write_zsh_completion "$DOTFILES_DIR/shells/zsh/comps/_uv" uv generate-shell-completion zsh || failed=1
+  fi
+
+  return "$failed"
 }
 
 ((delete_ds_store)) && {
@@ -231,7 +285,7 @@ refresh_herdr_completions() {
 
 ((update_completions)) && {
   notify 'REGENERATE SHELL COMPLETIONS'
-  refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
+  refresh_managed_completions || logg -w 'ONE OR MORE COMPLETION UPDATES FAILED'
 }
 
 ((update_brew)) && {
