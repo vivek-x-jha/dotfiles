@@ -64,9 +64,6 @@ _herdr() {
             herdr,update)
                 cmd="herdr__subcmd__update"
                 ;;
-            herdr,wait)
-                cmd="herdr__subcmd__wait"
-                ;;
             herdr,workspace)
                 cmd="herdr__subcmd__workspace"
                 ;;
@@ -88,14 +85,17 @@ _herdr() {
             herdr__subcmd__agent,list)
                 cmd="herdr__subcmd__agent__subcmd__list"
                 ;;
+            herdr__subcmd__agent,prompt)
+                cmd="herdr__subcmd__agent__subcmd__prompt"
+                ;;
             herdr__subcmd__agent,read)
                 cmd="herdr__subcmd__agent__subcmd__read"
                 ;;
             herdr__subcmd__agent,rename)
                 cmd="herdr__subcmd__agent__subcmd__rename"
                 ;;
-            herdr__subcmd__agent,send)
-                cmd="herdr__subcmd__agent__subcmd__send"
+            herdr__subcmd__agent,send-keys)
+                cmd="herdr__subcmd__agent__subcmd__send__subcmd__keys"
                 ;;
             herdr__subcmd__agent,start)
                 cmd="herdr__subcmd__agent__subcmd__start"
@@ -198,6 +198,9 @@ _herdr() {
                 ;;
             herdr__subcmd__pane,swap)
                 cmd="herdr__subcmd__pane__subcmd__swap"
+                ;;
+            herdr__subcmd__pane,wait-output)
+                cmd="herdr__subcmd__pane__subcmd__wait__subcmd__output"
                 ;;
             herdr__subcmd__pane,zoom)
                 cmd="herdr__subcmd__pane__subcmd__zoom"
@@ -316,6 +319,9 @@ _herdr() {
             herdr__subcmd__terminal,title)
                 cmd="herdr__subcmd__terminal__subcmd__title"
                 ;;
+            herdr__subcmd__terminal__subcmd__session,control)
+                cmd="herdr__subcmd__terminal__subcmd__session__subcmd__control"
+                ;;
             herdr__subcmd__terminal__subcmd__session,observe)
                 cmd="herdr__subcmd__terminal__subcmd__session__subcmd__observe"
                 ;;
@@ -324,12 +330,6 @@ _herdr() {
                 ;;
             herdr__subcmd__terminal__subcmd__title,set)
                 cmd="herdr__subcmd__terminal__subcmd__title__subcmd__set"
-                ;;
-            herdr__subcmd__wait,agent-status)
-                cmd="herdr__subcmd__wait__subcmd__agent__subcmd__status"
-                ;;
-            herdr__subcmd__wait,output)
-                cmd="herdr__subcmd__wait__subcmd__output"
                 ;;
             herdr__subcmd__workspace,close)
                 cmd="herdr__subcmd__workspace__subcmd__close"
@@ -371,7 +371,7 @@ _herdr() {
 
     case "${cmd}" in
         herdr)
-            opts="-h -V --help --no-session --session --remote --remote-keybindings --handoff --default-config --version completion completions update status config channel server api workspace worktree tab notification agent pane wait terminal session integration plugin"
+            opts="-h -V --help --no-session --session --remote --remote-keybindings --handoff --default-config --version completion completions update status config channel server api workspace worktree tab notification agent pane terminal session integration plugin"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -397,7 +397,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__agent)
-            opts="list get read send rename focus wait attach start explain"
+            opts="list get read send-keys prompt rename focus wait attach start explain"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -492,6 +492,28 @@ _herdr() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
+        herdr__subcmd__agent__subcmd__prompt)
+            opts="--wait --until --timeout <TARGET> <TEXT>"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --until)
+                    COMPREPLY=($(compgen -W "idle working blocked done unknown" -- "${cur}"))
+                    return 0
+                    ;;
+                --timeout)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
         herdr__subcmd__agent__subcmd__read)
             opts="--source --lines --format --ansi <TARGET>"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
@@ -532,8 +554,8 @@ _herdr() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        herdr__subcmd__agent__subcmd__send)
-            opts="<TARGET> <TEXT>"
+        herdr__subcmd__agent__subcmd__send__subcmd__keys)
+            opts="<TARGET> <KEY>..."
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -547,29 +569,21 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__agent__subcmd__start)
-            opts="--cwd --workspace --tab --split --env --focus --no-focus <NAME>"
+            opts="--kind --pane --timeout <NAME> [AGENT_ARG]..."
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
-                --cwd)
+                --kind)
+                    COMPREPLY=($(compgen -W "pi claude codex gemini cursor devin agy cline omp mastracode opencode copilot kimi kiro droid amp grok hermes kilo qodercli maki" -- "${cur}"))
+                    return 0
+                    ;;
+                --pane)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
-                --workspace)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --tab)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --split)
-                    COMPREPLY=($(compgen -W "right down" -- "${cur}"))
-                    return 0
-                    ;;
-                --env)
+                --timeout)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
@@ -581,14 +595,14 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__agent__subcmd__wait)
-            opts="--status --timeout <TARGET>"
+            opts="--until --timeout <TARGET>"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
-                --status)
-                    COMPREPLY=($(compgen -W "idle working blocked unknown" -- "${cur}"))
+                --until)
+                    COMPREPLY=($(compgen -W "idle working blocked done unknown" -- "${cur}"))
                     return 0
                     ;;
                 --timeout)
@@ -761,7 +775,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__integration__subcmd__install)
-            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor"
+            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -789,7 +803,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__integration__subcmd__uninstall)
-            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor"
+            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -843,7 +857,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__pane)
-            opts="list current get layout process-info neighbor edges focus resize zoom read rename split swap move close send-text send-keys run report-agent report-agent-session release-agent report-metadata"
+            opts="list current get layout process-info neighbor edges focus resize zoom read rename split swap move close send-text send-keys wait-output run report-agent report-agent-session release-agent report-metadata"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1382,6 +1396,40 @@ _herdr() {
                     return 0
                     ;;
                 --target-pane)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        herdr__subcmd__pane__subcmd__wait__subcmd__output)
+            opts="--match --regex --source --lines --timeout --raw <PANE_ID>"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --match)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --regex)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --source)
+                    COMPREPLY=($(compgen -W "visible recent recent-unwrapped" -- "${cur}"))
+                    return 0
+                    ;;
+                --lines)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --timeout)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
@@ -2061,12 +2109,34 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__terminal__subcmd__session)
-            opts="observe"
+            opts="control observe"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        herdr__subcmd__terminal__subcmd__session__subcmd__control)
+            opts="--takeover --cols --rows <TARGET>"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --cols)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --rows)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;
@@ -2145,72 +2215,6 @@ _herdr() {
                 return 0
             fi
             case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        herdr__subcmd__wait)
-            opts="output agent-status"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        herdr__subcmd__wait__subcmd__agent__subcmd__status)
-            opts="--status --timeout <PANE_ID>"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                --status)
-                    COMPREPLY=($(compgen -W "idle working blocked done unknown" -- "${cur}"))
-                    return 0
-                    ;;
-                --timeout)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        herdr__subcmd__wait__subcmd__output)
-            opts="--match --source --lines --timeout --regex --raw <PANE_ID>"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                --match)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --source)
-                    COMPREPLY=($(compgen -W "visible recent recent-unwrapped" -- "${cur}"))
-                    return 0
-                    ;;
-                --lines)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --timeout)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
                 *)
                     COMPREPLY=()
                     ;;
