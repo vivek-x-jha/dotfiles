@@ -17,8 +17,8 @@ red = "#f096b7"
 green = "#d2fd9d"
 yellow = "#f3b175"
 blue = "#80d7fe"
-magenta = "#c9ccfb"
-cyan = "#47e7b1"
+mauve = "#c9ccfb"
+teal = "#47e7b1"
 
 [ui]
 mouse_capture = true
