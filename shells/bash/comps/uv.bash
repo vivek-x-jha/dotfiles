@@ -2765,12 +2765,19 @@ _uv() {
             return 0
             ;;
         uv__subcmd__check)
-            opts="-p -i -f -U -P -C -n -q -v -h --script --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --locked --frozen --no-sync --isolated --python --ty-version --show-version --no-project --index --default-index --index-url --extra-index-url --find-links --no-index --upgrade --no-upgrade --upgrade-package --upgrade-group --reinstall --no-reinstall --reinstall-package --index-strategy --keyring-provider --resolution --prerelease --pre --fork-strategy --config-setting --config-settings-package --no-build-isolation --no-build-isolation-package --build-isolation --exclude-newer --exclude-newer-package --link-mode --compile-bytecode --no-compile-bytecode --no-sources --no-sources-package --no-build --build --no-build-package --no-binary --binary --no-binary-package --refresh --no-refresh --refresh-package --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
+            opts="-p -i -f -U -P -C -n -q -v -h --all-packages --package --script --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --locked --frozen --no-sync --isolated --python --ty-version --show-version --no-project --index --default-index --index-url --extra-index-url --find-links --no-index --upgrade --no-upgrade --upgrade-package --upgrade-group --reinstall --no-reinstall --reinstall-package --index-strategy --keyring-provider --resolution --prerelease --pre --fork-strategy --config-setting --config-settings-package --no-build-isolation --no-build-isolation-package --build-isolation --exclude-newer --exclude-newer-package --link-mode --compile-bytecode --no-compile-bytecode --no-sources --no-sources-package --no-build --build --no-build-package --no-binary --binary --no-binary-package --refresh --no-refresh --refresh-package --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
+                --package)
+                    COMPREPLY=("${cur}")
+                    if [[ "${BASH_VERSINFO[0]}" -ge 4 ]]; then
+                        compopt -o nospace
+                    fi
+                    return 0
+                    ;;
                 --script)
                     local oldifs
                     if [ -n "${IFS+x}" ]; then

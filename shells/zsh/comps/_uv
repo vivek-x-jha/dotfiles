@@ -1801,7 +1801,8 @@ never\:"Disables colored output"))' \
 ;;
 (check)
 _arguments "${_arguments_options[@]}" : \
-'(--extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --no-project)--script=[Run checks for the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
+'(--all-packages --script --no-project)*--package=[Check specific packages in the workspace]:PACKAGE:' \
+'(--extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --no-project --all-packages --package)--script=[Run checks for the specified PEP 723 Python script, rather than the current project]:SCRIPT:_files' \
 '(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:' \
 '(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
@@ -1866,6 +1867,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files -/' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'(--package --script --no-project)--all-packages[Check all packages in the workspace]' \
 '(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group \[env\: UV_DEV=\]]' \
