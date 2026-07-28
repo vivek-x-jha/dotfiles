@@ -54,6 +54,7 @@ _arguments "${_arguments_options[@]}" : \
 '--author=[Author of this command, eg \`ellie\`, \`claude\`, or \`copilot\`]:AUTHOR:_default' \
 '--intent=[Optional intent/rationale for running this command]:INTENT:_default' \
 '--command-from-env[Collects the command from the \`ATUIN_COMMAND_LINE\` environment variable, which does not need escaping and is more compatible between OS and shells]' \
+'--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
 '-h[Print help]' \
 '--help[Print help]' \
 '*::command:_default' \
@@ -65,6 +66,7 @@ _arguments "${_arguments_options[@]}" : \
 '--exit=[]:EXIT:_default' \
 '-d+[]:DURATION:_default' \
 '--duration=[]:DURATION:_default' \
+'--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
 '-h[Print help]' \
 '--help[Print help]' \
 ':id:_default' \
@@ -80,10 +82,10 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 '-r+[]::REVERSE:(true false)' \
 '--reverse=[]::REVERSE:(true false)' \
-'--timezone=[Display the command time in another timezone other than the configured default]:TIMEZONE:_default' \
-'--tz=[Display the command time in another timezone other than the configured default]:TIMEZONE:_default' \
-'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid} Example\: --format "{time} - \[{duration}\] - {directory}\$\\t{command}"]:FORMAT:_default' \
-'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid} Example\: --format "{time} - \[{duration}\] - {directory}\$\\t{command}"]:FORMAT:_default' \
+'--timezone=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'--tz=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid}]:FORMAT:_default' \
+'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid}]:FORMAT:_default' \
 '-c[]' \
 '--cwd[]' \
 '-s[]' \
@@ -97,10 +99,10 @@ _arguments "${_arguments_options[@]}" : \
 ;;
 (last)
 _arguments "${_arguments_options[@]}" : \
-'--timezone=[Display the command time in another timezone other than the configured default]:TIMEZONE:_default' \
-'--tz=[Display the command time in another timezone other than the configured default]:TIMEZONE:_default' \
-'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}. Example\: --format "{time} - \[{duration}\] - {directory}\$\\t{command}"]:FORMAT:_default' \
-'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}. Example\: --format "{time} - \[{duration}\] - {directory}\$\\t{command}"]:FORMAT:_default' \
+'--timezone=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'--tz=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}]:FORMAT:_default' \
+'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}]:FORMAT:_default' \
 '--human[]' \
 '--cmd-only[Show only the text of the command]' \
 '-h[Print help (see more with '\''--help'\'')]' \
@@ -402,9 +404,10 @@ _arguments "${_arguments_options[@]}" : \
 '--count=[How many top commands to list]:COUNT:_default' \
 '-n+[The number of consecutive commands to consider]:NGRAM_SIZE:_default' \
 '--ngram-size=[The number of consecutive commands to consider]:NGRAM_SIZE:_default' \
-'-h[Print help]' \
-'--help[Print help]' \
-'*::period -- Compute statistics for the specified period, leave blank for statistics since the beginning. See \[this\](https\://docs.atuin.sh/reference/stats/) for more details:_default' \
+'--filter-mode=[Filter commands by scope \[global, host, session, directory, workspace\]]:FILTER_MODE:(global host session directory workspace session-preload)' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::period -- Compute statistics for the specified period, leave blank for statistics since the beginning:_default' \
 && ret=0
 ;;
 (search)
@@ -423,13 +426,14 @@ _arguments "${_arguments_options[@]}" : \
 '--filter-mode=[Allow overriding filter mode over config]:FILTER_MODE:(global host session directory workspace session-preload)' \
 '--search-mode=[Allow overriding search mode over config]:SEARCH_MODE:(prefix full-text fuzzy skim daemon-fuzzy)' \
 '--keymap-mode=[Notify the keymap at the shell'\''s side]:KEYMAP_MODE:(emacs vim-normal vim-insert auto)' \
-'--timezone=[Display the command time in another timezone other than the configured default]::TIMEZONE:_default' \
-'--tz=[Display the command time in another timezone other than the configured default]::TIMEZONE:_default' \
-'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {time}, {exit} and {relativetime}. Example\: --format "{time} - \[{duration}\] - {directory}\$\\t{command}"]:FORMAT:_default' \
-'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {time}, {exit} and {relativetime}. Example\: --format "{time} - \[{duration}\] - {directory}\$\\t{command}"]:FORMAT:_default' \
+'--timezone=[Display the command time in another timezone other than the configured default.]::TIMEZONE:_default' \
+'--tz=[Display the command time in another timezone other than the configured default.]::TIMEZONE:_default' \
+'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {time}, {exit} and {relativetime}]:FORMAT:_default' \
+'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {time}, {exit} and {relativetime}]:FORMAT:_default' \
 '--inline-height=[Set the maximum number of lines Atuin'\''s interface should take up]:INLINE_HEIGHT:_default' \
-'*--author=[Filter by author. Supports \$all-user (non-agents), \$all-agent, or literal names. Can be specified multiple times]:AUTHOR:_default' \
+'*--author=[Filter by author. Supports \$all-user (non-agents), \$all-agent, or literal names]:AUTHOR:_default' \
 '--result-file=[File name to write the result to (hidden from help as this is meant to be used from a script)]:RESULT_FILE:_default' \
+'*--shell=[Filter by the shell that was used to run the command]:SHELL:_default' \
 '-i[Open interactive search UI]' \
 '--interactive[Open interactive search UI]' \
 '--shell-up-key-binding[Marker argument used to inform atuin that it was invoked from a shell up-key binding (hidden from help to avoid confusion)]' \
@@ -777,20 +781,20 @@ _arguments "${_arguments_options[@]}" : \
 '-t+[The tag to push (eg, '\''history'\''). Defaults to all tags]:TAG:_default' \
 '--tag=[The tag to push (eg, '\''history'\''). Defaults to all tags]:TAG:_default' \
 '--host=[The host to push, in the form of a UUID host ID. Defaults to the current host]:HOST:_default' \
-'--page=[Page Size How many records to upload at once. Defaults to 100]:PAGE:_default' \
-'--force[Force push records This will override both host and tag, to be all hosts and all tags. First clear the remote store, then upload all of the local store]' \
-'-h[Print help]' \
-'--help[Print help]' \
+'--page=[Page Size]:PAGE:_default' \
+'--force[Force push records]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
 && ret=0
 ;;
 (pull)
 _arguments "${_arguments_options[@]}" : \
 '-t+[The tag to push (eg, '\''history'\''). Defaults to all tags]:TAG:_default' \
 '--tag=[The tag to push (eg, '\''history'\''). Defaults to all tags]:TAG:_default' \
-'--page=[Page Size How many records to download at once. Defaults to 100]:PAGE:_default' \
-'--force[Force push records This will first wipe the local store, and then download all records from the remote]' \
-'-h[Print help]' \
-'--help[Print help]' \
+'--page=[Page Size]:PAGE:_default' \
+'--force[Force push records]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
 && ret=0
 ;;
 (help)
@@ -1138,19 +1142,19 @@ _arguments "${_arguments_options[@]}" : \
 '-s+[]:SHEBANG:_default' \
 '--shebang=[]:SHEBANG:_default' \
 '--script=[]:SCRIPT:_files' \
-'--last=[Use the last command as the script content Optionally specify a number to use the last N commands]::LAST:_default' \
+'--last=[Use the last command as the script content]::LAST:_default' \
 '--no-edit[Skip opening editor when using --last]' \
-'-h[Print help]' \
-'--help[Print help]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
 ':name:_default' \
 && ret=0
 ;;
 (run)
 _arguments "${_arguments_options[@]}" : \
-'*-v+[Specify template variables in the format KEY=VALUE Example\: -v name=John -v greeting="Hello there"]:VAR:_default' \
-'*--var=[Specify template variables in the format KEY=VALUE Example\: -v name=John -v greeting="Hello there"]:VAR:_default' \
-'-h[Print help]' \
-'--help[Print help]' \
+'*-v+[Specify template variables in the format KEY=VALUE]:VAR:_default' \
+'*--var=[Specify template variables in the format KEY=VALUE]:VAR:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
 ':name:_default' \
 && ret=0
 ;;
@@ -2925,7 +2929,7 @@ _atuin__subcmd__help__subcmd__history_commands() {
 'end:Finishes a new command in the history (adds time, exit code)' \
 'tail:Stream history events from the daemon as they are received' \
 'list:List all items in history' \
-'last:Get the last command ran' \
+'last:Get the last command that was run' \
 'init-store:' \
 'prune:Delete history entries matching the configured exclusion filters' \
 'dedup:Delete duplicate history entries (that have the same command, cwd and hostname)' \
@@ -3277,7 +3281,7 @@ _atuin__subcmd__history_commands() {
 'end:Finishes a new command in the history (adds time, exit code)' \
 'tail:Stream history events from the daemon as they are received' \
 'list:List all items in history' \
-'last:Get the last command ran' \
+'last:Get the last command that was run' \
 'init-store:' \
 'prune:Delete history entries matching the configured exclusion filters' \
 'dedup:Delete duplicate history entries (that have the same command, cwd and hostname)' \
@@ -3302,7 +3306,7 @@ _atuin__subcmd__history__subcmd__help_commands() {
 'end:Finishes a new command in the history (adds time, exit code)' \
 'tail:Stream history events from the daemon as they are received' \
 'list:List all items in history' \
-'last:Get the last command ran' \
+'last:Get the last command that was run' \
 'init-store:' \
 'prune:Delete history entries matching the configured exclusion filters' \
 'dedup:Delete duplicate history entries (that have the same command, cwd and hostname)' \

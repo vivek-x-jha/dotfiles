@@ -3550,7 +3550,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__history__subcmd__end)
-            opts="-e -d -h --exit --duration --help"
+            opts="-e -d -h --exit --duration --hook --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3816,7 +3816,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__history__subcmd__start)
-            opts="-h --command-from-env --author --intent --help"
+            opts="-h --command-from-env --author --intent --hook --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5032,7 +5032,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__search)
-            opts="-c -e -b -i -r -f -h --cwd --exclude-cwd --exit --exclude-exit --before --after --limit --offset --interactive --filter-mode --search-mode --shell-up-key-binding --keymap-mode --human --cmd-only --print0 --delete --delete-it-all --reverse --tz --timezone --format --inline-height --author --include-duplicates --result-file --help"
+            opts="-c -e -b -i -r -f -h --cwd --exclude-cwd --exit --exclude-exit --before --after --limit --offset --interactive --filter-mode --search-mode --shell-up-key-binding --keymap-mode --human --cmd-only --print0 --delete --delete-it-all --reverse --tz --timezone --format --inline-height --author --include-duplicates --result-file --shell --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5122,6 +5122,10 @@ _atuin() {
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
+                --shell)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;
@@ -5144,7 +5148,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__stats)
-            opts="-c -n -h --count --ngram-size --help"
+            opts="-c -n -h --count --ngram-size --filter-mode --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -5164,6 +5168,10 @@ _atuin() {
                     ;;
                 -n)
                     COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --filter-mode)
+                    COMPREPLY=($(compgen -W "global host session directory workspace session-preload" -- "${cur}"))
                     return 0
                     ;;
                 *)
