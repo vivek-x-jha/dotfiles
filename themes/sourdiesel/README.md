@@ -115,21 +115,21 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 | Color | Codex | Pi coding agent | Hammerspoon | btop | Atuin | mycli |
 | --- | --- | --- | --- | --- | --- | --- |
-| `black` | 1 · ink | 2 · black, BLACK_HEX | — | — | 1 · Title | — |
-| `red` | 1 · diffRemoved | 1 · red | 1 · consoleResultColor | 5 · graph_text, proc_misc | 1 · AlertInfo | — |
-| `green` | 1 · diffAdded | 1 · green | 2 · consoleCommandColor, textColor | 4 · mem_box, temp_start | 1 · AlertError | — |
+| `black` | 1 · ink | 2 · black, BLACK_HEX | — | — | 2 · Title, SyntaxOperator | — |
+| `red` | 1 · diffRemoved | 1 · red | 1 · consoleResultColor | 5 · graph_text, proc_misc | 2 · AlertInfo, SyntaxVariable | — |
+| `green` | 1 · diffAdded | 1 · green | 2 · consoleCommandColor, textColor | 4 · mem_box, temp_start | 2 · AlertError, SyntaxCommand | — |
 | `yellow` | — | 1 · yellow | — | — | 1 · Annotation | — |
 | `blue` | — | 1 · blue | — | — | 1 · Guidance | — |
 | `magenta` | 1 · accent | 1 · magenta | — | — | — | — |
 | `cyan` | — | 1 · cyan | — | — | — | — |
-| `white` | — | 1 · white | — | 2 · main_fg, title | — | 3 · sql.operator, sql.punctuation |
-| `brightblack` | — | 1 · brightblack | — | 2 · inactive_fg, div_line | 1 · Base | 1 · completion-menu.completion |
+| `white` | — | 1 · white | — | 2 · main_fg, title | 1 · SyntaxString | 3 · sql.operator, sql.punctuation |
+| `brightblack` | — | 1 · brightblack | — | 2 · inactive_fg, div_line | 2 · Base, SyntaxComment | 1 · completion-menu.completion |
 | `brightred` | — | 1 · brightred | — | 3 · net_box, available_end | — | — |
 | `brightgreen` | — | 1 · brightgreen | — | — | 1 · Important | — |
-| `brightyellow` | — | 1 · brightyellow | — | 4 · hi_fg, temp_mid | 1 · AlertWarn | — |
+| `brightyellow` | — | 1 · brightyellow | — | 4 · hi_fg, temp_mid | 1 · SyntaxFlag | — |
 | `brightblue` | — | 1 · brightblue | — | 6 · selected_fg, proc_box | — | 1 · output.header |
 | `brightmagenta` | 1 · skill | 1 · brightmagenta | 2 · consolePrintColor, strokeColor | 5 · cpu_box, cpu_end | — | — |
-| `brightcyan` | — | 1 · brightcyan | — | 8 · cpu_start, free_end | — | — |
+| `brightcyan` | — | 1 · brightcyan | — | 8 · cpu_start, free_end | 1 · AlertWarn | — |
 | `brightwhite` | — | 1 · brightwhite | — | — | — | 5 · completion-menu.meta.completion, selected |
 | `dark` | — | 1 · DARK_HEX | 4 · inputBackgroundColor, outputBackgroundColor | — | — | — |
 | `grey` | — | 1 · grey | — | 2 · selected_bg, meter_bg | — | — |
