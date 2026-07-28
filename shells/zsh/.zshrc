@@ -72,10 +72,7 @@ plug zsh-users/zsh-autosuggestions
 source "$SHELL_CONFIG/aliases"
 
 # Command history
-eval "$(atuin init zsh --disable-ai)" && {
-  source "$ZDOTDIR/patches/atuin-zsh-tty-capture.zsh"
-  export ATUIN_TMUX_POPUP=false
-}
+eval "$(atuin init zsh --disable-ai)"
 
 # Directory jumper
 eval "$(zoxide init zsh)"

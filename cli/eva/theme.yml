@@ -520,14 +520,6 @@ filenames:
       style:
         foreground: white
 
-  atuin-zsh-tty-capture.zsh:
-    filename:
-      foreground: brightred
-    icon:
-      glyph: ""
-      style:
-        foreground: brightred
-
   atuin.bash:
     filename:
       foreground: brightcyan

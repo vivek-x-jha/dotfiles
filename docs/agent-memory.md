@@ -12,3 +12,4 @@ Durable facts for future coding-agent sessions in this dotfiles repo.
 - Global cross-harness agent policy lives in `ai/AGENTS.md`; bootstrap links each harness directly to it with relative symlinks (`AGENTS.md` for Codex/Pi, `CLAUDE.md` for Claude Code).
 - `ai/templates/` holds reusable project-memory starter templates that can be copied into new repos or scratch workspaces when needed.
 - Long-lived bugs and workarounds belong in `docs/known-issues.md` with status, last verified date, workaround, reproduction, and exit criteria.
+- Atuin 18.18.1 native Zsh search was verified on 2026-07-27 after a shell restart: Tab and Enter selections work both inside and outside Herdr. The former tty/temp-file capture patch was removed; keep the native integration unless this behavior regresses.

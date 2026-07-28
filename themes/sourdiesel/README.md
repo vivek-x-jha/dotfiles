@@ -74,7 +74,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `cyan` | 22 · filekinds.socket, size.number_kilo | 32 · sourdiesel, sourdiesel.json |
 | `white` | 14 · filenames.allowed_signers.filename, filenames.allow… | 41 · sh, js |
 | `brightblack` | 70 · users.user_you, users.group_yours | 37 · .gitkeep, .hushlogin |
-| `brightred` | 10 · users.user_root, users.group_root | 6 · patch, atuin-zsh-tty-capture.zsh |
+| `brightred` | 8 · users.user_root, users.group_root | 5 · patch, .env |
 | `brightgreen` | — | — |
 | `brightyellow` | — | 7 · md, AGENTS.md |
 | `brightblue` | 6 · filenames.sh.vim.filename, filenames.sh.vim.icon.style | 11 · sh.vim, zsh.vim |
@@ -138,7 +138,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## File and icon mappings
 
-<details><summary>eva: 136 colored mappings</summary>
+<details><summary>eva: 135 colored mappings</summary>
 
 - `black` (7): `filenames:.luarc.json`, `filenames:.state.itermexport`, `filenames:.vale.ini`, `filenames:_update-notifier-last-checked`, `filenames:CODEOWNERS`, `filenames:id_ed25519.pub`, `filenames:session_index.jsonl`
 - `red` (15): `filenames:.histfile`, `filenames:.history`, `filenames:.mycli_history`, `filenames:.mysql_history`, `filenames:.zlua`, `filenames:hist`, `filenames:histfile`, `filenames:history`, `filenames:history.jsonl`, `filenames:log`, `filenames:metadata.yaml`, `filenames:p10k-dump-mubuntu.zsh`, `filenames:p10k-instant-prompt-mubuntu.zsh`, `filenames:prompt-21`, `filenames:prompt-29`
@@ -146,14 +146,14 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 - `cyan` (10): `filenames:.sqlite`, `filenames:.sqlite-shm`, `filenames:.sqlite-wal`, `filenames:secrets`, `filenames:sourdiesel`, `filenames:sourdiesel.json`, `filenames:sourdiesel.lua`, `filenames:sourdiesel.terminal`, `filenames:sourdiesel.toml`, `filenames:theme.yml`
 - `white` (7): `filenames:aliases`, `filenames:allowed_signers`, `filenames:auth.key.pub`, `filenames:bootstrap.sh`, `filenames:known_hosts`, `filenames:profile`, `filenames:signing.key.pub`
 - `brightblack` (34): `filenames:.file`, `filenames:.gitkeep`, `filenames:.netrwhist`, `filenames:Icon\r`, `filenames:icon\r`, `filenames:main.shada`, `filenames:main.shada.tmp.a`, `filenames:main.shada.tmp.b`, `filenames:main.shada.tmp.c`, `filenames:main.shada.tmp.d`, `filenames:main.shada.tmp.e`, `filenames:main.shada.tmp.f`, `filenames:main.shada.tmp.g`, `filenames:main.shada.tmp.h`, `filenames:main.shada.tmp.i`, `filenames:main.shada.tmp.j`, `filenames:main.shada.tmp.k`, `filenames:main.shada.tmp.l`, `filenames:main.shada.tmp.m`, `filenames:main.shada.tmp.n`, `filenames:main.shada.tmp.o`, `filenames:main.shada.tmp.p`, `filenames:main.shada.tmp.q`, `filenames:main.shada.tmp.r`, `filenames:main.shada.tmp.s`, `filenames:main.shada.tmp.t`, `filenames:main.shada.tmp.u`, `filenames:main.shada.tmp.v`, `filenames:main.shada.tmp.w`, `filenames:main.shada.tmp.x`, `filenames:main.shada.tmp.y`, `filenames:main.shada.tmp.z`, `filenames:revision-hash`, `filenames:Session.vim`
-- `brightred` (4): `filenames:atuin-zsh-tty-capture.zsh`, `filenames:auth.key`, `filenames:id_ed25519`, `filenames:signing.key`
+- `brightred` (3): `filenames:auth.key`, `filenames:id_ed25519`, `filenames:signing.key`
 - `brightblue` (3): `filenames:sh.vim`, `filenames:typescriptreact.vim`, `filenames:zsh.vim`
 - `brightmagenta` (7): `filenames:Brewfile`, `filenames:Brewfile.1password`, `filenames:Brewfile.developer`, `filenames:Brewfile.lock.json`, `filenames:Brewfile.personal`, `filenames:Brewfile.rust`, `filenames:package.lock`
 - `brightcyan` (34): `filenames:_atuin`, `filenames:_bat`, `filenames:_bob`, `filenames:_cargo`, `filenames:_claude`, `filenames:_cmp-compat.bash`, `filenames:_dust`, `filenames:_eva`, `filenames:_fd`, `filenames:_herdr`, `filenames:_hs`, `filenames:_pi`, `filenames:_rg`, `filenames:_starship`, `filenames:_tldr`, `filenames:_update-tools`, `filenames:_uv`, `filenames:_work`, `filenames:atuin.bash`, `filenames:bat.bash`, `filenames:bob.bash`, `filenames:cargo.bash`, `filenames:claude.bash`, `filenames:dust.bash`, `filenames:eva.bash`, `filenames:fd.bash`, `filenames:herdr.bash`, `filenames:hs.bash`, `filenames:pi.bash`, `filenames:rg.bash`, `filenames:starship.bash`, `filenames:tldr.bash`, `filenames:update-tools.bash`, `filenames:uv.bash`
 
 </details>
 
-<details><summary>web-devicons: 280 colored mappings</summary>
+<details><summary>web-devicons: 279 colored mappings</summary>
 
 - `black` (26): `.editorconfig`, `.gitattributes`, `.gitignore`, `.luarc.json`, `.python-version`, `.shellcheckrc`, `.state.itermexport`, `.vale.ini`, `_update-notifier-last-checked`, `CODEOWNERS`, `conf`, `id_ed25519.pub`, `ini`, `json`, `jsonc`, `jsonl`, `session_index.jsonl`, `toml`, `tsconfig.app.json`, `tsconfig.json`, `tsconfig.node.json`, `txt`, `vercel.json`, `xml`, `yaml`, `yml`
 - `red` (15): `.bash_history`, `.histfile`, `.history`, `.mycli_history`, `.mysql_history`, `.python_history`, `.zsh_history`, `btop.log`, `CACHEDIR.TAG`, `hist`, `histfile`, `history`, `history.jsonl`, `lesshst`, `log`
@@ -161,7 +161,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 - `cyan` (32): `.sock`, `.socket`, `.sqlite`, `.sqlite-shm`, `.sqlite-wal`, `avif`, `csv`, `gif`, `heic`, `heif`, `icns`, `jpeg`, `jpg`, `png`, `secrets`, `sock`, `socket`, `sourdiesel`, `sourdiesel.json`, `sourdiesel.lua`, `sourdiesel.terminal`, `sourdiesel.toml`, `sqlite`, `sqlite-shm`, `sqlite-wal`, `sqlite3`, `svg`, `terminal`, `theme`, `theme.yml`, `tmtheme`, `webp`
 - `white` (41): `.zstyle`, `1password`, `aliases`, `allowed_signers`, `auth.key.pub`, `cheatsheet`, `config.sh`, `css`, `edit-all`, `eslint.config.js`, `fix-tmux-remotes`, `glg`, `html`, `identity`, `interactive`, `js`, `known_hosts`, `l`, `list-256`, `list-colors`, `patch-zsh-autocomplete`, `profile`, `rs`, `scpt`, `sh`, `signing.key.pub`, `ssh-agent`, `t`, `take`, `test.js`, `test.ts`, `test.tsx`, `toggle-tmux-client`, `ts`, `tsx`, `update-icons`, `update-tools`, `uvi`, `vim`, `vite.config.js`, `vite.config.ts`
 - `brightblack` (37): `.DS_Store`, `.file`, `.gitkeep`, `.hushlogin`, `.localized`, `.netrwhist`, `dat`, `icon\r`, `main.shada`, `main.shada.tmp.a`, `main.shada.tmp.b`, `main.shada.tmp.c`, `main.shada.tmp.d`, `main.shada.tmp.e`, `main.shada.tmp.f`, `main.shada.tmp.g`, `main.shada.tmp.h`, `main.shada.tmp.i`, `main.shada.tmp.j`, `main.shada.tmp.k`, `main.shada.tmp.l`, `main.shada.tmp.m`, `main.shada.tmp.n`, `main.shada.tmp.o`, `main.shada.tmp.p`, `main.shada.tmp.q`, `main.shada.tmp.r`, `main.shada.tmp.s`, `main.shada.tmp.t`, `main.shada.tmp.u`, `main.shada.tmp.v`, `main.shada.tmp.w`, `main.shada.tmp.x`, `main.shada.tmp.y`, `main.shada.tmp.z`, `session.vim`, `shada`
-- `brightred` (6): `.env`, `atuin-zsh-tty-capture.zsh`, `auth.key`, `id_ed25519`, `patch`, `signing.key`
+- `brightred` (5): `.env`, `auth.key`, `id_ed25519`, `patch`, `signing.key`
 - `brightyellow` (7): `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `LICENSE`, `md`, `README.md`, `SECURITY.md`
 - `brightblue` (11): `.dockerignore`, `compose.yaml`, `compose.yml`, `Containerfile`, `docker-compose.yaml`, `docker-compose.yml`, `Dockerfile`, `sh.vim`, `sublime-syntax`, `typescriptreact.vim`, `zsh.vim`
 - `brightmagenta` (44): `apt-packages.txt`, `Brewfile`, `Brewfile.1password`, `Brewfile.developer`, `Brewfile.lock.json`, `Brewfile.personal`, `Brewfile.rust`, `build.gradle`, `build.gradle.kts`, `bun.lockb`, `cabal.project`, `cabal.project.freeze`, `Cargo.lock`, `Cargo.toml`, `composer.json`, `composer.lock`, `dnf-packages.txt`, `Gemfile`, `Gemfile.lock`, `go.mod`, `go.sum`, `gradle.lockfile`, `mix.exs`, `mix.lock`, `nvim-pack-lock.json`, `package-lock.json`, `package.json`, `package.lock`, `Package.resolved`, `Package.swift`, `packages.config`, `Pipfile`, `Pipfile.lock`, `pnpm-lock.yaml`, `poetry.lock`, `pom.xml`, `project.assets.json`, `pubspec.lock`, `pubspec.yaml`, `pyproject.toml`, `requirements.txt`, `stack.yaml`, `uv.lock`, `yarn.lock`
