@@ -16,27 +16,17 @@ table_width=60
 
 # Directory - Icons
 dir_icons=(
-  "/Applications/1Password.app" "$icon_dir/1password.png"
   "/Applications/Anki.app" "$icon_dir/anki.png"
-  "/Applications/ChatGPT.app" "$icon_dir/chatgpt.png"
   "/Applications/Discord.app" "$icon_dir/discord.png"
-  "/Applications/Figma.app" "$icon_dir/figma.png"
-  "/Applications/Firefox.app" "$icon_dir/firefox.png"
   "/Applications/Hammerspoon.app" "$icon_dir/hammerspoon.png"
-  "/Applications/iTerm.app" "$icon_dir/iterm2.png"
   "/Applications/iTermAI.app" "$icon_dir/ai-brain.png"
   "/Applications/KeyCastr.app" "$icon_dir/keycastr.png"
   "/Applications/Neovim-iTerm.app" "$icon_dir/neovim-iterm.png"
   "/Applications/Neovim-Wezterm.app" "$icon_dir/neovim-wezterm.png"
-  "/Applications/Notion Calendar.app" "$icon_dir/notion-calendar.png"
   "/Applications/Postman.app" "$icon_dir/postman.png"
   "/Applications/Skim.app" "$icon_dir/skim.png"
-  "/Applications/Slack.app" "$icon_dir/slack.png"
-  "/Applications/Spotify.app" "$icon_dir/spotify.png"
-  "/Applications/Visual Studio Code.app" "$icon_dir/vscode.png"
   "/Applications/WeChat.app" "$icon_dir/wechat.png"
   "/Applications/WezTerm.app" "$icon_dir/wezterm.png"
-  "/Applications/WhatsApp.app" "$icon_dir/whatsapp.png"
 
   "$HOME/Developer" "$icon_dir/developer.png"
   "$HOME/Downloads" "$icon_dir/download.png"
