@@ -30,7 +30,7 @@ prefix.
 Herdr persists spaces, tabs, panes, cwd, and pane history, but OS processes do not survive a machine reboot. `herdr-resurrect` is a small tmux-resurrect-style helper for the first-priority interactive processes:
 
 ```sh
-herdr-resurrect save     # record foreground nvim/pi/claude/codex commands in panes
+herdr-resurrect save     # record foreground nvim/btop/pi/claude/codex commands in panes
 herdr-resurrect restore  # rerun them in the same panes if those panes are idle
 herdr-resurrect list     # inspect saved commands
 herdr-resurrect clear-idle # run clear in idle panes
@@ -39,12 +39,13 @@ herdr-resurrect clear-idle # run clear in idle panes
 Current restore support:
 
 - `nvim` foreground commands, including `nvim -S Session.vim`
+- `btop` foreground commands
 - `pi` panes, using `pi --session <session-file>` when Herdr reports a session path
 - Claude Code panes, using `claude --resume <session-id>`; `claudex` sessions retain the local proxy/model launcher
 - `codex` panes, using `codex resume <session-id>` from Herdr metadata or the live Codex session file, otherwise `codex resume --last`
 
 Claude Code and Codex restore start their title watcher in the saved working directory.
 
-State is local runtime data at `$XDG_STATE_HOME/herdr/resurrect.json` and is intentionally not tracked.
+State is local runtime data at `$XDG_STATE_HOME/herdr/sessions/<session>/resurrect.json` and is intentionally not tracked. Per-session files keep saves from the main and floating Herdr sessions from overwriting each other. Existing single-file state is still accepted when it belongs to the active session.
 
 `restore` also runs `clear` in idle panes that did not get a restored process. This avoids stale shell/pane-history artifacts such as zsh's `%` partial-line marker after reboot. Disable that behavior with `HERDR_RESURRECT_CLEAR_IDLE=0 herdr-resurrect restore`.

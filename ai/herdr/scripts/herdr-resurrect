@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-state_file="${HERDR_RESURRECT_FILE:-${XDG_STATE_HOME:-$HOME/.local/state}/herdr/resurrect.json}"
+state_root="${XDG_STATE_HOME:-$HOME/.local/state}/herdr"
+if [[ -n "${HERDR_RESURRECT_FILE:-}" ]]; then
+  state_file="$HERDR_RESURRECT_FILE"
+elif [[ -n "${HERDR_SESSION:-}" ]]; then
+  state_file="$state_root/sessions/$HERDR_SESSION/resurrect.json"
+else
+  state_file="$state_root/resurrect.json"
+fi
+legacy_state_file="$state_root/resurrect.json"
 herdr_bin="${HERDR_BIN:-herdr}"
 codex_title_watch="${HERDR_CODEX_TITLE_WATCH:-$HOME/.dotfiles/ai/herdr/scripts/herdr-codex-title-watch}"
 claude_title_watch="${HERDR_CLAUDE_TITLE_WATCH:-$HOME/.dotfiles/ai/herdr/scripts/herdr-claude-title-watch}"
@@ -14,11 +22,13 @@ Usage: herdr-resurrect <save|restore|list|clear-idle>
 Save and restore selected foreground commands in Herdr panes.
 Currently records:
   - nvim foreground commands, e.g. nvim -S Session.vim
+  - btop foreground commands
   - pi foreground agents, restored with pi --session <session-file> when Herdr reports one
   - codex foreground agents, restored with codex resume <session-id> when Herdr reports one
   - Claude Code foreground agents, including claudex, restored by session ID
 
-State defaults to: $XDG_STATE_HOME/herdr/resurrect.json
+State defaults to one file per Herdr session under:
+  $XDG_STATE_HOME/herdr/sessions/<session>/resurrect.json
 Override with HERDR_RESURRECT_FILE=/path/to/file.
 
 Restore clears idle panes that did not get a process restored, to avoid stale
@@ -32,6 +42,15 @@ require_jq() {
 
 json_quote() {
   jq -Rn --arg v "$1" '$v'
+}
+
+use_legacy_state_if_current() {
+  local pane_id
+  [[ ! -f "$state_file" && -f "$legacy_state_file" ]] || return 0
+  pane_id="$(jq -r '.commands[0].pane_id // empty' "$legacy_state_file" 2>/dev/null)"
+  if [[ -n "$pane_id" ]] && $herdr_bin pane get "$pane_id" >/dev/null 2>&1; then
+    state_file="$legacy_state_file"
+  fi
 }
 
 claude_session_from_pid() {
@@ -100,6 +119,9 @@ save_state() {
       if jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim"))' <<<"$pinfo" >/dev/null; then
         kind="nvim"
         cmd="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim")) | if (.argv | type) == "array" then (.argv | @sh) else (.cmdline // "nvim") end' <<<"$pinfo" | head -1)"
+      elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "btop") or (.name == "btop"))' <<<"$pinfo" >/dev/null; then
+        kind="btop"
+        cmd="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "btop") or (.name == "btop")) | if (.argv | type) == "array" then (.argv | @sh) else (.cmdline // "btop") end' <<<"$pinfo" | head -1)"
       elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "claude") or (.cmdline // "" | test("(^|/)claude( |$)")))' <<<"$pinfo" >/dev/null; then
         kind="claude"
         agent_pid="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "claude") or (.cmdline // "" | test("(^|/)claude( |$)"))) | .pid' <<<"$pinfo" | head -1)"
@@ -175,6 +197,7 @@ clear_idle_panes() {
 
 restore_state() {
   require_jq
+  use_legacy_state_if_current
   [[ -f "$state_file" ]] || { echo "herdr-resurrect: no state file: $state_file" >&2; exit 1; }
 
   local pane_id cmd kind cwd launch_cmd run_cmd exists restored=0 skipped=0 missing=0 restored_file
@@ -233,6 +256,7 @@ restore_state() {
 
 list_state() {
   require_jq
+  use_legacy_state_if_current
   [[ -f "$state_file" ]] || { echo "herdr-resurrect: no state file: $state_file" >&2; exit 1; }
   jq -r '.commands[] | [.pane_id, .kind, .cwd, .command] | @tsv' "$state_file"
 }
