@@ -371,6 +371,7 @@ create_symlinks() {
     "$BOOTSTRAP_ROOT/ai/pi/extensions/statusline.ts" "$XDG_STATE_HOME/pi/agent/extensions/statusline.ts"
     "$BOOTSTRAP_ROOT/ai/pi/extensions/thread-title.ts" "$XDG_STATE_HOME/pi/agent/extensions/thread-title.ts"
     "$BOOTSTRAP_ROOT/ai/pi/extensions/tsconfig.json" "$XDG_STATE_HOME/pi/agent/extensions/tsconfig.json"
+    "$BOOTSTRAP_ROOT/ai/pi/extensions/web-search.ts" "$XDG_STATE_HOME/pi/agent/extensions/web-search.ts"
     "$BOOTSTRAP_ROOT/ai/pi/prompts/ship.md" "$XDG_STATE_HOME/pi/agent/prompts/ship.md"
     "$BOOTSTRAP_ROOT/ai/pi/skills/handoff" "$XDG_STATE_HOME/pi/agent/skills/handoff"
     "$BOOTSTRAP_ROOT/ai/pi/themes/sourdiesel.json" "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json"

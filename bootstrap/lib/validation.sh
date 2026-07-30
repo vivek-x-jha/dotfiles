@@ -120,6 +120,7 @@ check_bootstrap() {
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/statusline.ts"
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/thread-title.ts"
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/tsconfig.json"
+  check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/web-search.ts"
   check_path "$BOOTSTRAP_ROOT/ai/pi/prompts/ship.md"
   check_path "$BOOTSTRAP_ROOT/ai/pi/skills/handoff/SKILL.md"
   check_path "$BOOTSTRAP_ROOT/ai/pi/themes/sourdiesel.json"
@@ -345,6 +346,7 @@ doctor_bootstrap() {
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/statusline.ts" ../../../../../.dotfiles/ai/pi/extensions/statusline.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/thread-title.ts" ../../../../../.dotfiles/ai/pi/extensions/thread-title.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/tsconfig.json" ../../../../../.dotfiles/ai/pi/extensions/tsconfig.json
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/web-search.ts" ../../../../../.dotfiles/ai/pi/extensions/web-search.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/prompts/ship.md" ../../../../../.dotfiles/ai/pi/prompts/ship.md
   doctor_symlink "$XDG_STATE_HOME/pi/agent/skills/handoff" ../../../../../.dotfiles/ai/pi/skills/handoff
   doctor_symlink "$XDG_STATE_HOME/pi/agent/themes/sourdiesel.json" ../../../../../.dotfiles/ai/pi/themes/sourdiesel.json

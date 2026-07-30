@@ -13,6 +13,8 @@ packages, and settings stay in state.
   the current Pi session name.
 - `extensions/herdr-agent-state.ts` is the tracked copy of Herdr's managed Pi
   integration. `herdr integration install pi` updates it through the runtime symlink.
+- `extensions/web-search.ts` enables OpenAI's native Responses `web_search` tool for
+  `openai-codex` models and asks models to cite sources and distrust web content.
 - `skills/handoff/` creates goal-focused session handoffs and copies the suggested
   first message to the clipboard when a supported clipboard command is available.
 - `extensions/handoff-alias.ts` exposes that skill as `/handoff <goal>` in addition
