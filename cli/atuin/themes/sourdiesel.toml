@@ -5,7 +5,7 @@ parent = "default"    # Inherit unspecified colors from Atuin's default theme
 [colors]
 AlertInfo       = "#ffc7c7" # Informational alerts
 AlertWarn       = "#47e7b1" # Warnings and matches in the selected row
-AlertError      = "#ceffc9" # Errors and the selected command row
+AlertError      = "#47e7b1" # Errors and the selected command row
 Annotation      = "#fdf7cd" # Less-critical supporting text
 Base            = "#5c617d" # Default foreground color
 Guidance        = "#c4effa" # Instructions, help, and context
