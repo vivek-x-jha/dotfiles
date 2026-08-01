@@ -472,6 +472,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -558,11 +559,11 @@ never\:"Disables colored output"))' \
 '--no-all-extras[]' \
 '--dev[Include the development dependency group \[env\: UV_DEV=\]]' \
 '--no-dev[Disable the development dependency group \[env\: UV_NO_DEV=\]]' \
+'(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
 '--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
 '(-s --script --gui-script)-m[Run a Python module]' \
 '(-s --script --gui-script)--module[Run a Python module]' \
-'(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
 '--editable[Install any non-editable dependencies, including the project and any workspace members, as editable]' \
 '--no-editable[Install any editable dependencies, including the project and any workspace members, as non-editable \[env\: UV_NO_EDITABLE=\]]' \
 '--inexact[Do not remove extraneous packages present in the environment]' \
@@ -746,6 +747,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -877,6 +879,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -1003,6 +1006,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -1128,6 +1132,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -1307,6 +1312,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -1444,9 +1450,9 @@ cyclonedx1.5\:"Export in \`CycloneDX\` v1.5 JSON format"))' \
 '(--all-packages)*--prune=[Prune the given package from the dependency tree]:PACKAGE:_default' \
 '(--all-extras --only-group)*--extra=[Include optional dependencies from the specified extra name]:EXTRA:_default' \
 '*--no-extra=[Exclude the specified optional dependencies, if \`--all-extras\` is supplied]:NO_EXTRA:_default' \
-'(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:_default' \
-'(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
+'(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
+'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
+'(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:' \
 '*--no-editable-package=[Export the specified editable packages as non-editable]:NO_EDITABLE_PACKAGE:' \
 '-o+[Write the exported requirements to the given file]:OUTPUT_FILE:_files' \
 '--output-file=[Write the exported requirements to the given file]:OUTPUT_FILE:_files' \
@@ -1475,6 +1481,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -1588,9 +1595,9 @@ json\:"Display the dependency graph as JSON"))' \
 '--depth=[Maximum display depth of the dependency tree]:DEPTH:_default' \
 '*--prune=[Prune the given package from the display of the dependency tree]:PRUNE:' \
 '*--package=[Display only the specified packages]:PACKAGE:' \
-'(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:_default' \
-'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:_default' \
-'(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:_default' \
+'(--only-group --only-dev)*--group=[Include dependencies from the specified dependency group]:GROUP:' \
+'*--no-group=[Disable the specified dependency group \[env\: \`UV_NO_GROUP\`=\]]:NO_GROUP:' \
+'(--group --dev --all-groups)*--only-group=[Only include dependencies from the specified dependency group]:ONLY_GROUP:' \
 '*--no-build-package=[Don'\''t build source distributions for a specific package \[env\: \`UV_NO_BUILD_PACKAGE\`=\]]:NO_BUILD_PACKAGE:' \
 '*--no-binary-package=[Don'\''t install pre-built wheels for a specific package \[env\: \`UV_NO_BINARY_PACKAGE\`=\]]:NO_BINARY_PACKAGE:' \
 '*--index=[The URLs to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -1616,6 +1623,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -1701,8 +1709,8 @@ never\:"Disables colored output"))' \
 '--outdated[Show the latest available version of each package in the tree]' \
 '--show-sizes[Show compressed wheel sizes for packages in the tree]' \
 '--dev[Include the development dependency group \[env\: UV_DEV=\]]' \
-'(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
 '--no-dev[Disable the development dependency group \[env\: UV_NO_DEV=\]]' \
+'(--group --all-groups --no-dev)--only-dev[Only include the development dependency group]' \
 '--no-default-groups[Ignore the default dependency groups]' \
 '(--only-group --only-dev)--all-groups[Include dependencies from all dependency groups]' \
 '(--frozen -U --upgrade)--locked[Assert that the \`uv.lock\` will remain unchanged \[env\: UV_LOCKED=\]]' \
@@ -1836,6 +1844,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -1868,6 +1877,7 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files -/' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--fix[Apply safe fixes to resolve type-checking errors]' \
 '(--package --script --no-project)--all-packages[Check all packages in the workspace]' \
 '(--extra --only-group)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
@@ -1960,6 +1970,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -2177,6 +2188,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -2395,6 +2407,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -2616,6 +2629,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -2871,6 +2885,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -3720,6 +3735,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -4197,6 +4213,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:' \
@@ -5014,6 +5031,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
@@ -5248,6 +5266,7 @@ allow\:"Allow all pre-release versions"
 if-necessary\:"Prefer stable versions, falling back to pre-release versions when necessary"
 explicit\:"Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. Disallow pre-release versions for all other packages"
 if-necessary-or-explicit\:"Deprecated alias for \`if-necessary\`"))' \
+'*--prerelease-package=[The strategy to use when considering pre-release versions for a specific package]:PRERELEASE_PACKAGE:' \
 '--fork-strategy=[The strategy to use when selecting multiple versions of a given package across Python versions and platforms]:FORK_STRATEGY:((fewest\:"Optimize for selecting the fewest number of versions for each package. Older versions may be preferred if they are compatible with a wider range of supported Python versions or platforms"
 requires-python\:"Optimize for selecting latest supported version of each package, for each supported Python version"))' \
 '*-C+[Settings to pass to the PEP 517 build backend, specified as \`KEY=VALUE\` pairs]:CONFIG_SETTING:_default' \
