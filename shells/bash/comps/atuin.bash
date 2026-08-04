@@ -69,6 +69,9 @@ _atuin() {
             atuin,kv)
                 cmd="atuin__subcmd__kv"
                 ;;
+            atuin,lab)
+                cmd="atuin__subcmd__lab"
+                ;;
             atuin,login)
                 cmd="atuin__subcmd__login"
                 ;;
@@ -369,6 +372,9 @@ _atuin() {
             atuin__subcmd__help,kv)
                 cmd="atuin__subcmd__help__subcmd__kv"
                 ;;
+            atuin__subcmd__help,lab)
+                cmd="atuin__subcmd__help__subcmd__lab"
+                ;;
             atuin__subcmd__help,login)
                 cmd="atuin__subcmd__help__subcmd__login"
                 ;;
@@ -560,6 +566,9 @@ _atuin() {
                 ;;
             atuin__subcmd__help__subcmd__kv,set)
                 cmd="atuin__subcmd__help__subcmd__kv__subcmd__set"
+                ;;
+            atuin__subcmd__help__subcmd__lab,share)
+                cmd="atuin__subcmd__help__subcmd__lab__subcmd__share"
                 ;;
             atuin__subcmd__help__subcmd__pty__subcmd__proxy,init)
                 cmd="atuin__subcmd__help__subcmd__pty__subcmd__proxy__subcmd__init"
@@ -783,6 +792,18 @@ _atuin() {
             atuin__subcmd__kv__subcmd__help,set)
                 cmd="atuin__subcmd__kv__subcmd__help__subcmd__set"
                 ;;
+            atuin__subcmd__lab,help)
+                cmd="atuin__subcmd__lab__subcmd__help"
+                ;;
+            atuin__subcmd__lab,share)
+                cmd="atuin__subcmd__lab__subcmd__share"
+                ;;
+            atuin__subcmd__lab__subcmd__help,help)
+                cmd="atuin__subcmd__lab__subcmd__help__subcmd__help"
+                ;;
+            atuin__subcmd__lab__subcmd__help,share)
+                cmd="atuin__subcmd__lab__subcmd__help__subcmd__share"
+                ;;
             atuin__subcmd__pty__subcmd__proxy,help)
                 cmd="atuin__subcmd__pty__subcmd__proxy__subcmd__help"
                 ;;
@@ -892,7 +913,7 @@ _atuin() {
 
     case "${cmd}" in
         atuin)
-            opts="-h -V --help --version setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp pty-proxy uuid contributors gen-completions help"
+            opts="-h -V --help --version setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp lab pty-proxy uuid contributors gen-completions help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2166,7 +2187,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help)
-            opts="setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp pty-proxy uuid contributors gen-completions help"
+            opts="setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp lab pty-proxy uuid contributors gen-completions help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3104,6 +3125,34 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help__subcmd__kv__subcmd__set)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd__lab)
+            opts="share"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd__lab__subcmd__share)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -4563,6 +4612,76 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
+        atuin__subcmd__lab)
+            opts="-h --help share help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__lab__subcmd__help)
+            opts="share help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__lab__subcmd__help__subcmd__help)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__lab__subcmd__help__subcmd__share)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__lab__subcmd__share)
+            opts="-h --write --yes --active --foreground --stop --url --internal-daemon --help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
         atuin__subcmd__login)
             opts="-u -p -k -t -h --username --password --key --totp-code --from-registration --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
@@ -5087,7 +5206,7 @@ _atuin() {
                     return 0
                     ;;
                 --search-mode)
-                    COMPREPLY=($(compgen -W "prefix full-text fuzzy skim daemon-fuzzy" -- "${cur}"))
+                    COMPREPLY=($(compgen -W "prefix fulltext fuzzy daemon-fuzzy" -- "${cur}"))
                     return 0
                     ;;
                 --keymap-mode)

@@ -424,7 +424,7 @@ _arguments "${_arguments_options[@]}" : \
 '--limit=[How many entries to return at most]:LIMIT:_default' \
 '--offset=[Offset from the start of the results]:OFFSET:_default' \
 '--filter-mode=[Allow overriding filter mode over config]:FILTER_MODE:(global host session directory workspace session-preload)' \
-'--search-mode=[Allow overriding search mode over config]:SEARCH_MODE:(prefix full-text fuzzy skim daemon-fuzzy)' \
+'--search-mode=[Allow overriding search mode over config]:SEARCH_MODE:(prefix fulltext fuzzy daemon-fuzzy)' \
 '--keymap-mode=[Notify the keymap at the shell'\''s side]:KEYMAP_MODE:(emacs vim-normal vim-insert auto)' \
 '--timezone=[Display the command time in another timezone other than the configured default.]::TIMEZONE:_default' \
 '--tz=[Display the command time in another timezone other than the configured default.]::TIMEZONE:_default' \
@@ -1527,6 +1527,61 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(lab)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_atuin__subcmd__lab_commands" \
+"*::: :->lab" \
+&& ret=0
+
+    case $state in
+    (lab)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-lab-command-$line[1]:"
+        case $line[1] in
+            (share)
+_arguments "${_arguments_options[@]}" : \
+'--write[Allow anyone with the link to send keystrokes to your shell]' \
+'--yes[Skip the confirmation prompt (the warning is still printed)]' \
+'--active[Share the session already running in this terminal (requires an atuin pty-proxy owning it; see \`atuin pty-proxy init\`)]' \
+'--foreground[Run --active attached to this terminal instead of in the background (debug)\: the URL prints to stderr, Ctrl-C stops]' \
+'(--write --yes --active --foreground --url --internal-daemon)--stop[Stop the background --active share session]' \
+'(--write --yes --active --foreground --stop --internal-daemon)--url[Print the join URL of the running background --active share]' \
+'(--foreground)--internal-daemon[Run as the re-exec'\''d daemonized child of --active (internal\: the process forks into the background before the runtime is built)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__lab__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-lab-help-command-$line[1]:"
+        case $line[1] in
+            (share)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
 (pty-proxy)
 _arguments "${_arguments_options[@]}" : \
 '--shell=[Path to the shell binary that atuin pty-proxy should spawn. Defaults to the system login shell. Only valid when no subcommand is given]:PATH:_files' \
@@ -2127,6 +2182,26 @@ esac
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(lab)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__help__subcmd__lab_commands" \
+"*::: :->lab" \
+&& ret=0
+
+    case $state in
+    (lab)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-help-lab-command-$line[1]:"
+        case $line[1] in
+            (share)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
 (pty-proxy)
 _arguments "${_arguments_options[@]}" : \
 ":: :_atuin__subcmd__help__subcmd__pty-proxy_commands" \
@@ -2201,6 +2276,7 @@ _atuin_commands() {
 'config:' \
 'ai:Run the AI assistant' \
 'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
+'lab:Experimental laboratory features' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
 'contributors:' \
@@ -2713,6 +2789,7 @@ _atuin__subcmd__help_commands() {
 'config:' \
 'ai:Run the AI assistant' \
 'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
+'lab:Experimental laboratory features' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
 'contributors:' \
@@ -3116,6 +3193,18 @@ _atuin__subcmd__help__subcmd__kv__subcmd__rebuild_commands() {
 _atuin__subcmd__help__subcmd__kv__subcmd__set_commands() {
     local commands; commands=()
     _describe -t commands 'atuin help kv set commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__lab_commands] )) ||
+_atuin__subcmd__help__subcmd__lab_commands() {
+    local commands; commands=(
+'share:Share your terminal with others (experimental)' \
+    )
+    _describe -t commands 'atuin help lab commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__lab__subcmd__share_commands] )) ||
+_atuin__subcmd__help__subcmd__lab__subcmd__share_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help lab share commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__login_commands] )) ||
 _atuin__subcmd__help__subcmd__login_commands() {
@@ -3676,6 +3765,37 @@ _atuin__subcmd__kv__subcmd__rebuild_commands() {
 _atuin__subcmd__kv__subcmd__set_commands() {
     local commands; commands=()
     _describe -t commands 'atuin kv set commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__lab_commands] )) ||
+_atuin__subcmd__lab_commands() {
+    local commands; commands=(
+'share:Share your terminal with others (experimental)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'atuin lab commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__lab__subcmd__help_commands] )) ||
+_atuin__subcmd__lab__subcmd__help_commands() {
+    local commands; commands=(
+'share:Share your terminal with others (experimental)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'atuin lab help commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__lab__subcmd__help__subcmd__help_commands] )) ||
+_atuin__subcmd__lab__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin lab help help commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__lab__subcmd__help__subcmd__share_commands] )) ||
+_atuin__subcmd__lab__subcmd__help__subcmd__share_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin lab help share commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__lab__subcmd__share_commands] )) ||
+_atuin__subcmd__lab__subcmd__share_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin lab share commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__login_commands] )) ||
 _atuin__subcmd__login_commands() {
