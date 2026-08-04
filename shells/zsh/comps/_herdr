@@ -23,6 +23,7 @@ _herdr() {
 '--no-session[Run monolithically without server/client session mode]' \
 '--handoff[Opt into live handoff for update or remote attach]' \
 '--default-config[Print default configuration and exit]' \
+'--skill[Print the agent skill file and exit]' \
 '-V[Print version and exit]' \
 '--version[Print version and exit]' \
 ":: :_herdr_commands" \
@@ -265,7 +266,6 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 '--workspace[]:ID:_default' \
 '--cwd[]:PATH:_files' \
-'--json[]' \
 && ret=0
 ;;
 (create)
@@ -278,7 +278,6 @@ _arguments "${_arguments_options[@]}" : \
 '--label[]:TEXT:_default' \
 '--focus[]' \
 '--no-focus[]' \
-'--json[]' \
 && ret=0
 ;;
 (open)
@@ -290,14 +289,12 @@ _arguments "${_arguments_options[@]}" : \
 '--label[]:TEXT:_default' \
 '--focus[]' \
 '--no-focus[]' \
-'--json[]' \
 && ret=0
 ;;
 (remove)
 _arguments "${_arguments_options[@]}" : \
 '--workspace[]:ID:_default' \
 '--force[]' \
-'--json[]' \
 && ret=0
 ;;
         esac
@@ -824,12 +821,12 @@ _arguments "${_arguments_options[@]}" : \
         case $line[1] in
             (install)
 _arguments "${_arguments_options[@]}" : \
-':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode)' \
+':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok)' \
 && ret=0
 ;;
 (uninstall)
 _arguments "${_arguments_options[@]}" : \
-':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode)' \
+':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok)' \
 && ret=0
 ;;
 (status)

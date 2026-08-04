@@ -371,7 +371,7 @@ _herdr() {
 
     case "${cmd}" in
         herdr)
-            opts="-h -V --help --no-session --session --remote --remote-keybindings --handoff --default-config --version completion completions update status config channel server api workspace worktree tab notification agent pane terminal session integration plugin"
+            opts="-h -V --help --no-session --session --remote --remote-keybindings --handoff --default-config --skill --version completion completions update status config channel server api workspace worktree tab notification agent pane terminal session integration plugin"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -775,7 +775,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__integration__subcmd__install)
-            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode"
+            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -803,7 +803,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__integration__subcmd__uninstall)
-            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode"
+            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2381,7 +2381,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__worktree__subcmd__create)
-            opts="--workspace --cwd --branch --base --path --label --focus --no-focus --json"
+            opts="--workspace --cwd --branch --base --path --label --focus --no-focus"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2419,7 +2419,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__worktree__subcmd__list)
-            opts="--workspace --cwd --json"
+            opts="--workspace --cwd"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2441,7 +2441,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__worktree__subcmd__open)
-            opts="--workspace --cwd --path --branch --label --focus --no-focus --json"
+            opts="--workspace --cwd --path --branch --label --focus --no-focus"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2475,7 +2475,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__worktree__subcmd__remove)
-            opts="--workspace --force --json"
+            opts="--workspace --force"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
