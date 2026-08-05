@@ -37,10 +37,10 @@ position = "top-right"
 
 [keys]
 prefix = "ctrl+a"
-focus_pane_left = "ctrl+h"
-focus_pane_down = "ctrl+j"
-focus_pane_up = "ctrl+k"
-focus_pane_right = "ctrl+l"
+focus_pane_left = ""
+focus_pane_down = ""
+focus_pane_up = ""
+focus_pane_right = ""
 settings = "prefix+comma"
 split_horizontal = "prefix+s"
 close_pane = "prefix+c"
@@ -54,6 +54,30 @@ previous_tab = "prefix+ctrl+p"
 last_pane = "prefix+ctrl+b"
 toggle_sidebar = "prefix+h"
 detach = "prefix+ctrl+d"
+
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "Navigate left (Neovim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "Navigate down (Neovim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "Navigate up (Neovim/Herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "Navigate right (Neovim/Herdr)"
 
 [[keys.command]]
 key = "prefix+ctrl+s"

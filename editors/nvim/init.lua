@@ -109,7 +109,7 @@ vim.pack.add {
   { src = 'https://github.com/MunifTanjim/nui.nvim' }, -- noice dependency
   { src = 'https://github.com/folke/noice.nvim' },
   { src = 'https://github.com/rcarriga/nvim-notify' },
-  { src = 'https://github.com/christoomey/vim-tmux-navigator' },
+  { src = 'https://github.com/paulbkim-dev/vim-herdr-navigation' },
 
   -- gitsigns
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
@@ -183,6 +183,9 @@ require 'plugins.tree'
 
 -- Configure Pickers
 require 'plugins.fzf'
+
+-- Configure Neovim/Herdr pane navigation after other plugins set their mappings
+require 'plugins.herdr-navigation'
 
 ------------------- Workspace hooks -------------------
 -- Register autocommands

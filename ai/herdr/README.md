@@ -2,6 +2,20 @@
 
 Repo-managed Herdr config and helpers.
 
+## Neovim pane navigation
+
+[`vim-herdr-navigation`](https://github.com/paulbkim-dev/vim-herdr-navigation)
+provides seamless `<C-h/j/k/l>` navigation between Neovim splits and Herdr
+panes. Install its Herdr side once with:
+
+```sh
+herdr plugin install paulbkim-dev/vim-herdr-navigation -y
+```
+
+The Neovim side is registered through native `vim.pack` and configured in
+`editors/nvim/lua/plugins/herdr-navigation.lua`. The plugin owns the direct
+`<C-h/j/k/l>` bindings; the built-in pane-focus bindings are disabled.
+
 ## Agent pane titles
 
 `herdr-claude-title-watch` labels Claude Code panes with the generated session

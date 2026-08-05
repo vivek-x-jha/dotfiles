@@ -65,9 +65,9 @@
       "rev": "f422cb5c6855f150e2ddcfaf44e7157b98b34f6a",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
-    "vim-tmux-navigator": {
-      "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
-      "src": "https://github.com/christoomey/vim-tmux-navigator"
+    "vim-herdr-navigation": {
+      "rev": "820d48f5d9c9a7dece6a4bebfa3982ec30bbfbb7",
+      "src": "https://github.com/paulbkim-dev/vim-herdr-navigation"
     }
   }
 }
