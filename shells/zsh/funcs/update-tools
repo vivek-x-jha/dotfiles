@@ -233,11 +233,11 @@ refresh_managed_completions() {
 ((update_zsh)) && {
   notify 'UPDATE ZSH PLUGINS'
   logg -c 'patch-zsh-autocomplete reverse' 2>/dev/null ||
-    logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH REVERSE FAILED'
+    logg -w 'ZSH-AUTOCOMPLETE LOCAL OVERRIDES REVERSE FAILED'
   logg -c 'zap update all' 2>/dev/null ||
-    logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
+    logg -w 'ZSH PLUGINS UPDATE FAILED'
   logg -c 'patch-zsh-autocomplete apply' 2>/dev/null ||
-    logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
+    logg -w 'ZSH-AUTOCOMPLETE LOCAL OVERRIDES FAILED'
 }
 
 ((update_herdr)) && {

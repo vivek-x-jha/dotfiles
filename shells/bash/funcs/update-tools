@@ -255,11 +255,11 @@ EOF
     )
 
     logg -c "$zsh_autocomplete_reverse_cmd" 2>/dev/null ||
-      logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH REVERSE FAILED'
+      logg -w 'ZSH-AUTOCOMPLETE LOCAL OVERRIDES REVERSE FAILED'
     logg -c 'zap update all' 2>/dev/null ||
-      logg -w "ZAP NOT FOUND ON \$PATH; SKIPPING ZSH PLUGINS UPDATE"
+      logg -w 'ZSH PLUGINS UPDATE FAILED'
     logg -c "$zsh_autocomplete_apply_cmd" 2>/dev/null ||
-      logg -w 'ZSH-AUTOCOMPLETE FD CLEANUP PATCH FAILED'
+      logg -w 'ZSH-AUTOCOMPLETE LOCAL OVERRIDES FAILED'
   }
 
   ((update_herdr)) && {

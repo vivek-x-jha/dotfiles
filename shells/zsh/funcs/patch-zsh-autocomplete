@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 local plugin_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zap/plugins/zsh-autocomplete"
-local patch_file="$DOTFILES_DIR/shells/zsh/patches/zsh-autocomplete-fd-cleanup.patch"
+local patch_file="$DOTFILES_DIR/shells/zsh/patches/zsh-autocomplete-local-overrides.patch"
 local mode="${1:-apply}"
 
 case "$mode" in
@@ -29,7 +29,7 @@ esac
 
 [[ "$mode" == apply ]] && {
   git -C "$plugin_dir" apply --reverse --check "$patch_file" 2>/dev/null && {
-    printf 'zsh-autocomplete fd cleanup patch already applied\n'
+    printf 'zsh-autocomplete local overrides already applied\n'
     return
   }
 
@@ -39,7 +39,7 @@ esac
 }
 
 git -C "$plugin_dir" apply --check "$patch_file" 2>/dev/null && {
-  printf 'zsh-autocomplete fd cleanup patch already reversed\n'
+  printf 'zsh-autocomplete local overrides already reversed\n'
   return
 }
 

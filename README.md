@@ -298,7 +298,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Zsh](https://zsh.sourceforge.io/) is the primary interactive shell.
 - [Zap](https://www.zapzsh.com/) manages source-only Zsh plugins.
 - [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Cargo-installed executable and repo-managed SourDiesel config under [`cli/zsh-patina`](./cli/zsh-patina). Its Zsh completion script is generated with `zsh-patina completion`, and it reads `~/.config/zsh-patina/config.toml` by default.
-- `zsh-autocomplete` carries a repo-managed FD cleanup patch under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses it before `zap update all` and reapplies it afterward.
+- `zsh-autocomplete` carries repo-managed completion styling and terminfo fallbacks under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses those local overrides before `zap update all` and reapplies them afterward.
 - [ble.sh](https://github.com/akinomyoga/ble.sh) provides Bash line editing and completion.
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.
@@ -414,7 +414,7 @@ Rust setup is disabled in the core profile unless `BOOTSTRAP_INSTALL_RUST_TOOLIN
 
 IDE setup selects stable Neovim by default. `BOOTSTRAP_INSTALL_NVIM_NIGHTLY=1` installs and selects nightly as well. Existing uv and npm tools are not reinstalled on every rerun.
 
-`update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` FD cleanup patch so Zap can still pull upstream changes.
+`update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` local overrides so Zap can still pull upstream changes.
 The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested helpers before the recursive quarantine pass completes. Restart upgraded apps manually to use their new versions. The quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
 
 ## 📦 Package Management

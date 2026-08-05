@@ -1,0 +1,39 @@
+diff --git a/Functions/Init/.autocomplete__async b/Functions/Init/.autocomplete__async
+index d74c1b1..95e6ec8 100644
+--- a/Functions/Init/.autocomplete__async
++++ b/Functions/Init/.autocomplete__async
+@@ -409,7 +409,7 @@ ${0}:precmd() {
+   compstate[pattern_insert]=
+   _lastcomp[pattern_insert]=
+   if [[ -v _autocomplete__partial_list ]]; then
+-    builtin compadd -J -last- -x '%F{0}%K{12}(MORE)%f%k'
++    builtin compadd -J -last- -x '%k%F{11}(MORE)%f'
+     _lastcomp[list_lines]=$compstate[list_lines]
+   fi
+ 
+diff --git a/Functions/Init/.autocomplete__key-bindings b/Functions/Init/.autocomplete__key-bindings
+index d6abdbf..80e3eb6 100644
+--- a/Functions/Init/.autocomplete__key-bindings
++++ b/Functions/Init/.autocomplete__key-bindings
+@@ -36,7 +36,9 @@ ${0}:bind menu-select             vi-forward-blank-word  '\en' '^N' $key_alt_dow
+ ${0}:bind history-incremental-search-backward history-incremental-search-backward '^R' '/'
+ ${0}:bind                         menu-search history-incremental-search-forward  '^S' '?'
+ 
+-local backtab=$terminfo[kcbt]
++local backtab=${terminfo[kcbt]-$'\e[Z'}
++local page_up=${terminfo[kpp]-$'\e[5~'}
++local page_down=${terminfo[knp]-$'\e[6~'}
+ 
+ menukeys+=(
+                 '\t' menu-complete
+@@ -45,8 +47,8 @@ menukeys+=(
+                '^[v' accept-and-hold
+                 '^_' undo
+                '^[u' undo
+-    "$terminfo[kpp]" backward-word
+-    "$terminfo[knp]"  forward-word
++    "$page_up" backward-word
++    "$page_down" forward-word
+ )
+ main+=(
+           '\t' complete-word
