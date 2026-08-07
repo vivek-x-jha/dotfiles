@@ -671,7 +671,6 @@ EOF"
 
   install_deb_package google-chrome-stable 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb' 'Google Chrome'
   install_deb_package slack-desktop 'https://downloads.slack-edge.com/desktop-releases/linux/x64/latest/slack-desktop-latest-amd64.deb' 'Slack'
-  install_deb_package discord 'https://discord.com/api/download?platform=linux&format=deb' 'Discord'
 
   if ! command -v postman &>/dev/null; then
     if command -v flatpak &>/dev/null; then
@@ -783,7 +782,6 @@ EOF"
 
   install_rpm_package google-chrome-stable 'https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm' 'Google Chrome'
   install_rpm_package slack 'https://downloads.slack-edge.com/desktop-releases/linux/x64/latest/slack-desktop-latest-x86_64.rpm' 'Slack' 'slack-desktop'
-  install_rpm_package discord 'https://discord.com/api/download?platform=linux&format=rpm' 'Discord'
 
   if ! command -v spotify &>/dev/null; then
     if command -v flatpak &>/dev/null; then
