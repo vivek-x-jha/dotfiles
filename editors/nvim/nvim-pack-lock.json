@@ -10,7 +10,7 @@
       "version": "'cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16'"
     },
     "blink.lib": {
-      "rev": "8b04d0e0acc8565cfa4dd291a89a9212b7262633",
+      "rev": "c8fdc12c8a2fab6cf786dd7141a283f8079f902b",
       "src": "https://github.com/saghen/blink.lib"
     },
     "conform.nvim": {
