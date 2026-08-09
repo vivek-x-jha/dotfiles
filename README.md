@@ -580,7 +580,6 @@ nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'
 pi update --all
 rustup update stable
 cargo install-update -a --git --locked
-cargo install --locked --git https://github.com/vivek-x-jha/eva eva
 uv tool upgrade --all
 bat cache --build
 ```
