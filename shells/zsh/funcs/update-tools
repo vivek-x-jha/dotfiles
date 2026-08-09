@@ -280,7 +280,7 @@ refresh_managed_completions() {
   notify 'UPDATE RUST TOOLCHAIN AND TOOLS'
   logg -c 'rustup update stable' || logg -w 'UPDATE RUST TOOLCHAIN FAILED'
   notify -s 'UPDATE RUST TOOLS'
-  logg -c 'cargo install-update -a --git' || logg -w 'UPDATE RUST TOOLS FAILED'
+  logg -c 'cargo install-update -a --git --locked' || logg -w 'UPDATE RUST TOOLS FAILED'
   logg -c 'cargo install --locked --git https://github.com/vivek-x-jha/eva eva' || logg -w 'UPDATE EVA FAILED'
 }
 
