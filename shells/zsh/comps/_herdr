@@ -449,7 +449,7 @@ _arguments "${_arguments_options[@]}" : \
 ;;
 (start)
 _arguments "${_arguments_options[@]}" : \
-'--kind[Supported agent kind and canonical executable]:KIND:(pi claude codex gemini cursor devin agy cline omp mastracode opencode copilot kimi kiro droid amp grok hermes kilo qodercli maki)' \
+'--kind[Supported agent kind and canonical executable]:KIND:(pi claude codex gemini cursor devin agy cline omp mastracode opencode copilot kimi kiro droid amp grok hermes kilo qodercli qwen maki)' \
 '--pane[Existing pane at an interactive shell prompt]:ID:_default' \
 '--timeout[Wait for interactive readiness (default\: 30000; max\: 300000)]:MS:_default' \
 ':name:_default' \
@@ -566,6 +566,14 @@ _arguments "${_arguments_options[@]}" : \
 '*::label:_default' \
 && ret=0
 ;;
+(input)
+_arguments "${_arguments_options[@]}" : \
+'--pane[]:ID:_default' \
+'--right-click[]:TARGET:(herdr pane)' \
+'--current[]' \
+'::pane_id:_default' \
+&& ret=0
+;;
 (split)
 _arguments "${_arguments_options[@]}" : \
 '--pane[]:ID:_default' \
@@ -573,6 +581,7 @@ _arguments "${_arguments_options[@]}" : \
 '--ratio[]:FLOAT:_default' \
 '--cwd[]:PATH:_files' \
 '*--env[Set an environment variable for the launched process]:KEY=VALUE:_default' \
+'--right-click[]:TARGET:(herdr pane)' \
 '--current[]' \
 '--focus[]' \
 '--no-focus[]' \
@@ -821,12 +830,12 @@ _arguments "${_arguments_options[@]}" : \
         case $line[1] in
             (install)
 _arguments "${_arguments_options[@]}" : \
-':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok)' \
+':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli qwen cursor mastracode antigravity-cli grok)' \
 && ret=0
 ;;
 (uninstall)
 _arguments "${_arguments_options[@]}" : \
-':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok)' \
+':target:(pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli qwen cursor mastracode antigravity-cli grok)' \
 && ret=0
 ;;
 (status)
@@ -1222,6 +1231,7 @@ _herdr__subcmd__pane_commands() {
 'zoom:Toggle or set pane zoom' \
 'read:Read pane terminal output' \
 'rename:Rename a pane' \
+'input:Set pane input routing' \
 'split:Split a pane' \
 'swap:Swap panes' \
 'move:Move a pane' \
@@ -1261,6 +1271,11 @@ _herdr__subcmd__pane__subcmd__focus_commands() {
 _herdr__subcmd__pane__subcmd__get_commands() {
     local commands; commands=()
     _describe -t commands 'herdr pane get commands' commands "$@"
+}
+(( $+functions[_herdr__subcmd__pane__subcmd__input_commands] )) ||
+_herdr__subcmd__pane__subcmd__input_commands() {
+    local commands; commands=()
+    _describe -t commands 'herdr pane input commands' commands "$@"
 }
 (( $+functions[_herdr__subcmd__pane__subcmd__layout_commands] )) ||
 _herdr__subcmd__pane__subcmd__layout_commands() {

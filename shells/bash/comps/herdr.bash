@@ -148,6 +148,9 @@ _herdr() {
             herdr__subcmd__pane,get)
                 cmd="herdr__subcmd__pane__subcmd__get"
                 ;;
+            herdr__subcmd__pane,input)
+                cmd="herdr__subcmd__pane__subcmd__input"
+                ;;
             herdr__subcmd__pane,layout)
                 cmd="herdr__subcmd__pane__subcmd__layout"
                 ;;
@@ -576,7 +579,7 @@ _herdr() {
             fi
             case "${prev}" in
                 --kind)
-                    COMPREPLY=($(compgen -W "pi claude codex gemini cursor devin agy cline omp mastracode opencode copilot kimi kiro droid amp grok hermes kilo qodercli maki" -- "${cur}"))
+                    COMPREPLY=($(compgen -W "pi claude codex gemini cursor devin agy cline omp mastracode opencode copilot kimi kiro droid amp grok hermes kilo qodercli qwen maki" -- "${cur}"))
                     return 0
                     ;;
                 --pane)
@@ -775,7 +778,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__integration__subcmd__install)
-            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok"
+            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli qwen cursor mastracode antigravity-cli grok"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -803,7 +806,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__integration__subcmd__uninstall)
-            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli cursor mastracode antigravity-cli grok"
+            opts="pi omp claude codex copilot devin droid kimi opencode kilo hermes qodercli qwen cursor mastracode antigravity-cli grok"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -857,7 +860,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__pane)
-            opts="list current get layout process-info neighbor edges focus resize zoom read rename split swap move close send-text send-keys wait-output run report-agent report-agent-session release-agent report-metadata"
+            opts="list current get layout process-info neighbor edges focus resize zoom read rename input split swap move close send-text send-keys wait-output run report-agent report-agent-session release-agent report-metadata"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -949,6 +952,28 @@ _herdr() {
                 return 0
             fi
             case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        herdr__subcmd__pane__subcmd__input)
+            opts="--pane --current --right-click [PANE_ID]"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --pane)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --right-click)
+                    COMPREPLY=($(compgen -W "herdr pane" -- "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;
@@ -1343,7 +1368,7 @@ _herdr() {
             return 0
             ;;
         herdr__subcmd__pane__subcmd__split)
-            opts="--pane --current --direction --ratio --cwd --env --focus --no-focus [PANE_ID]"
+            opts="--pane --current --direction --ratio --cwd --env --right-click --focus --no-focus [PANE_ID]"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1367,6 +1392,10 @@ _herdr() {
                     ;;
                 --env)
                     COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --right-click)
+                    COMPREPLY=($(compgen -W "herdr pane" -- "${cur}"))
                     return 0
                     ;;
                 *)
