@@ -204,7 +204,7 @@ local clamp = function(value, min_value, max_value)
 end
 
 --- Move the focused window to a unit rect, but keep it at least a terminal grid size.
---- Used by ctrl-alt-c so centered terminals do not shrink below 120 columns x 30 rows.
+--- Used by ctrl-alt-c; reserve five extra rows so Herdr retains a 36-row grid.
 --- @param app_pos WindowRect
 --- @param min_cols number
 --- @param min_rows number
@@ -236,6 +236,25 @@ local moveAppMinTerminalGrid = function(app_pos, min_cols, min_rows)
     w = width,
     h = height,
   }
+
+  if win:application():name() == 'iTerm2' then
+    local ok = hs.osascript.applescript(string.format([[
+      tell application "iTerm2"
+        tell current session of current window
+          if columns < %d then set columns to %d
+          if rows < %d then set rows to %d
+        end tell
+      end tell
+    ]], min_cols, min_cols, min_rows, min_rows))
+
+    if not ok then return hs.alert.show 'Unable to enforce iTerm grid size' end
+
+    local frame = win:frame()
+    win:setTopLeft {
+      x = clamp(centerX - (frame.w / 2), screenFrame.x, screenFrame.x + screenFrame.w - frame.w),
+      y = clamp(centerY - (frame.h / 2), screenFrame.y, screenFrame.y + screenFrame.h - frame.h),
+    }
+  end
 end
 
 --- Almost maximize the focused window with a uniform margin around border
@@ -476,7 +495,7 @@ local remaps = {
   -- Window sizing and placement
   { mods = ctrl_alt, key = 'Left', message = 'Left Half', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 1 } end },
   { mods = ctrl_alt, key = 'Right', message = 'Right Half', pressedfn = function() moveApp { x = 0.5, y = 0, w = 0.5, h = 1 } end },
-  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveAppMinTerminalGrid({ x = 0.25, y = 0.25, w = 0.5, h = 0.5 }, 120, 30) end },
+  { mods = ctrl_alt, key = 'C', message = 'Center Half', pressedfn = function() moveAppMinTerminalGrid({ x = 0.25, y = 0.25, w = 0.5, h = 0.5 }, 120, 41) end },
   { mods = ctrl_alt, key = 'Up', message = 'Top Half', pressedfn = function() moveApp { x = 0, y = 0, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'Down', message = 'Bottom Half', pressedfn = function() moveApp { x = 0, y = 0.5, w = 1, h = 0.5 } end },
   { mods = ctrl_alt, key = 'U', message = 'Top Left', pressedfn = function() moveApp { x = 0, y = 0, w = 0.5, h = 0.5 } end },
