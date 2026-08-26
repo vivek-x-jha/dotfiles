@@ -21,8 +21,8 @@ _fd() {
 '--max-depth=[Set maximum search depth (default\: none)]:depth:_default' \
 '--min-depth=[Only show search results starting at the given depth.]:depth:_default' \
 '(-d --max-depth --min-depth)--exact-depth=[Only show search results at the exact given depth]:depth:_default' \
-'*-E+[Exclude entries that match the given glob pattern]:pattern:_default' \
-'*--exclude=[Exclude entries that match the given glob pattern]:pattern:_default' \
+'*-E+[Exclude entries that match the given glob pattern]:glob:_default' \
+'*--exclude=[Exclude entries that match the given glob pattern]:glob:_default' \
 '*-t+[Filter by type\: file (f), directory (d/dir), symlink (l), executable (x), empty (e), socket (s), pipe (p), char-device (c), block-device (b)]:filetype:((file\:""
 directory\:""
 symlink\:""
@@ -41,8 +41,8 @@ executable\:"A file which is executable by the current effective user"
 empty\:""
 socket\:""
 pipe\:""))' \
-'*-e+[Filter by file extension]:ext:_default' \
-'*--extension=[Filter by file extension]:ext:_default' \
+'*-e+[Filter by extension]:ext:_default' \
+'*--extension=[Filter by extension]:ext:_default' \
 '*-S+[Limit results based on the size of files]:size:_default' \
 '*--size=[Limit results based on the size of files]:size:_default' \
 '--changed-within=[Filter by file modification time (newer than)]:date|dur:_default' \
@@ -89,6 +89,7 @@ never\:"Never strip the ./"))' \
 '--no-require-git[Do not require a git repository to respect gitignores. By default, fd will only respect global gitignore rules, .gitignore rules, and local exclude rules if fd detects that you are searching inside a git repository. This flag allows you to relax this restriction such that fd will respect all git related ignore rules regardless of whether you'\''re searching in a git repository or not]' \
 '--require-git[Overrides --no-require-git]' \
 '--no-ignore-parent[Do not respect .(git|fd)ignore files in parent directories]' \
+'--ignore-parent[Overrides --no-ignore-parent]' \
 '--no-global-ignore-file[Do not respect the global ignore file]' \
 '*-u[Unrestricted search, alias for '\''--no-ignore --hidden'\'']' \
 '*--unrestricted[Unrestricted search, alias for '\''--no-ignore --hidden'\'']' \
@@ -99,8 +100,9 @@ never\:"Never strip the ./"))' \
 '(-F --fixed-strings)-g[Glob-based search (default\: regular expression)]' \
 '(-F --fixed-strings)--glob[Glob-based search (default\: regular expression)]' \
 '--regex[Regular-expression based search (default)]' \
-'-F[Treat pattern as literal string stead of regex]' \
-'--fixed-strings[Treat pattern as literal string stead of regex]' \
+'-F[Treat pattern as literal string instead of regex]' \
+'--fixed-strings[Treat pattern as literal string instead of regex]' \
+'(-g --glob -F --fixed-strings)--exact[Match the entire filename exactly (literal, non-substring)]' \
 '-a[Show absolute instead of relative paths]' \
 '--absolute-path[Show absolute instead of relative paths]' \
 '--relative-path[Overrides --absolute-path]' \
