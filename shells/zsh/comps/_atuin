@@ -52,11 +52,13 @@ _arguments "${_arguments_options[@]}" : \
             (start)
 _arguments "${_arguments_options[@]}" : \
 '--author=[Author of this command, eg \`ellie\`, \`claude\`, or \`copilot\`]:AUTHOR:_default' \
+'--author-kind=[Whether a human or an AI agent ran this command]:AUTHOR_KIND:((user\:"A human ran this command"
+agent\:"An AI agent ran this command"))' \
 '--intent=[Optional intent/rationale for running this command]:INTENT:_default' \
 '--command-from-env[Collects the command from the \`ATUIN_COMMAND_LINE\` environment variable, which does not need escaping and is more compatible between OS and shells]' \
 '--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
-'-h[Print help]' \
-'--help[Print help]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
 '*::command:_default' \
 && ret=0
 ;;
@@ -1470,14 +1472,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-ai-command-$line[1]:"
         case $line[1] in
-            (init)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-'::shell -- Shell to generate integration for; defaults to "auto":_default' \
-&& ret=0
-;;
-(inline)
+            (inline)
 _arguments "${_arguments_options[@]}" : \
 '--api-endpoint=[Custom API endpoint; defaults to reading from the \`ai.endpoint\` setting]:API_ENDPOINT:_default' \
 '--api-token=[Custom API token; defaults to reading from the \`ai.api_token\` setting]:API_TOKEN:_default' \
@@ -1501,11 +1496,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-ai-help-command-$line[1]:"
         case $line[1] in
-            (init)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(inline)
+            (inline)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1545,11 +1536,6 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 '--write[Allow anyone with the link to send keystrokes to your shell]' \
 '--yes[Skip the confirmation prompt (the warning is still printed)]' \
-'--active[Share the session already running in this terminal (requires an atuin pty-proxy owning it; see \`atuin pty-proxy init\`)]' \
-'--foreground[Run --active attached to this terminal instead of in the background (debug)\: the URL prints to stderr, Ctrl-C stops]' \
-'(--write --yes --active --foreground --url --internal-daemon)--stop[Stop the background --active share session]' \
-'(--write --yes --active --foreground --stop --internal-daemon)--url[Print the join URL of the running background --active share]' \
-'(--foreground)--internal-daemon[Run as the re-exec'\''d daemonized child of --active (internal\: the process forks into the background before the runtime is built)]' \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
@@ -1581,6 +1567,30 @@ esac
         esac
     ;;
 esac
+;;
+(__internal)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd____internal_commands" \
+"*::: :->__internal" \
+&& ret=0
+
+    case $state in
+    (__internal)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-__internal-command-$line[1]:"
+        case $line[1] in
+            (prepare-search-index)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(__internal_)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
 ;;
 (pty-proxy)
 _arguments "${_arguments_options[@]}" : \
@@ -2166,11 +2176,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-help-ai-command-$line[1]:"
         case $line[1] in
-            (init)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(inline)
+            (inline)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2201,6 +2207,30 @@ _arguments "${_arguments_options[@]}" : \
         esac
     ;;
 esac
+;;
+(__internal)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__help__subcmd____internal_commands" \
+"*::: :->__internal" \
+&& ret=0
+
+    case $state in
+    (__internal)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-help-__internal-command-$line[1]:"
+        case $line[1] in
+            (prepare-search-index)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(__internal_)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
 ;;
 (pty-proxy)
 _arguments "${_arguments_options[@]}" : \
@@ -2277,6 +2307,8 @@ _atuin_commands() {
 'ai:Run the AI assistant' \
 'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
 'lab:Experimental laboratory features' \
+'__internal:Internal subcommands, not for direct use by users' \
+'__internal_:We want to exclude the \`__internal\` subcommand from Clap'\''s \`infer_subcommands\`; otherwise, a user could access it simply by typing \`atuin _\`. However, Clap has no way to disable \`infer_subcommands\` for a single command. As a workaround, we define a dummy command with the same name but with an extra understore, which forces \`__internal\` to be typed out in entirety, since any prefix of the name would be ambiguous' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
 'contributors:' \
@@ -2284,6 +2316,23 @@ _atuin_commands() {
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd____internal_commands] )) ||
+_atuin__subcmd____internal_commands() {
+    local commands; commands=(
+'prepare-search-index:' \
+    )
+    _describe -t commands 'atuin __internal commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd____internal__subcmd__prepare-search-index_commands] )) ||
+_atuin__subcmd____internal__subcmd__prepare-search-index_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin __internal prepare-search-index commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd____internal__commands] )) ||
+_atuin__subcmd____internal__commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin __internal_ commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__account_commands] )) ||
 _atuin__subcmd__account_commands() {
@@ -2379,7 +2428,6 @@ _atuin__subcmd__account__subcmd__register_commands() {
 (( $+functions[_atuin__subcmd__ai_commands] )) ||
 _atuin__subcmd__ai_commands() {
     local commands; commands=(
-'init:Initialize shell integration' \
 'inline:Inline completion mode with small TUI overlay' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -2388,7 +2436,6 @@ _atuin__subcmd__ai_commands() {
 (( $+functions[_atuin__subcmd__ai__subcmd__help_commands] )) ||
 _atuin__subcmd__ai__subcmd__help_commands() {
     local commands; commands=(
-'init:Initialize shell integration' \
 'inline:Inline completion mode with small TUI overlay' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -2399,20 +2446,10 @@ _atuin__subcmd__ai__subcmd__help__subcmd__help_commands() {
     local commands; commands=()
     _describe -t commands 'atuin ai help help commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__ai__subcmd__help__subcmd__init_commands] )) ||
-_atuin__subcmd__ai__subcmd__help__subcmd__init_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin ai help init commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__ai__subcmd__help__subcmd__inline_commands] )) ||
 _atuin__subcmd__ai__subcmd__help__subcmd__inline_commands() {
     local commands; commands=()
     _describe -t commands 'atuin ai help inline commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__ai__subcmd__init_commands] )) ||
-_atuin__subcmd__ai__subcmd__init_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin ai init commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__ai__subcmd__inline_commands] )) ||
 _atuin__subcmd__ai__subcmd__inline_commands() {
@@ -2790,6 +2827,8 @@ _atuin__subcmd__help_commands() {
 'ai:Run the AI assistant' \
 'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
 'lab:Experimental laboratory features' \
+'__internal:Internal subcommands, not for direct use by users' \
+'__internal_:We want to exclude the \`__internal\` subcommand from Clap'\''s \`infer_subcommands\`; otherwise, a user could access it simply by typing \`atuin _\`. However, Clap has no way to disable \`infer_subcommands\` for a single command. As a workaround, we define a dummy command with the same name but with an extra understore, which forces \`__internal\` to be typed out in entirety, since any prefix of the name would be ambiguous' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
 'contributors:' \
@@ -2797,6 +2836,23 @@ _atuin__subcmd__help_commands() {
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin help commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd____internal_commands] )) ||
+_atuin__subcmd__help__subcmd____internal_commands() {
+    local commands; commands=(
+'prepare-search-index:' \
+    )
+    _describe -t commands 'atuin help __internal commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd____internal__subcmd__prepare-search-index_commands] )) ||
+_atuin__subcmd__help__subcmd____internal__subcmd__prepare-search-index_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help __internal prepare-search-index commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd____internal__commands] )) ||
+_atuin__subcmd__help__subcmd____internal__commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help __internal_ commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__account_commands] )) ||
 _atuin__subcmd__help__subcmd__account_commands() {
@@ -2843,15 +2899,9 @@ _atuin__subcmd__help__subcmd__account__subcmd__register_commands() {
 (( $+functions[_atuin__subcmd__help__subcmd__ai_commands] )) ||
 _atuin__subcmd__help__subcmd__ai_commands() {
     local commands; commands=(
-'init:Initialize shell integration' \
 'inline:Inline completion mode with small TUI overlay' \
     )
     _describe -t commands 'atuin help ai commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__help__subcmd__ai__subcmd__init_commands] )) ||
-_atuin__subcmd__help__subcmd__ai__subcmd__init_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin help ai init commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__ai__subcmd__inline_commands] )) ||
 _atuin__subcmd__help__subcmd__ai__subcmd__inline_commands() {
