@@ -1050,7 +1050,7 @@ _uv() {
             return 0
             ;;
         uv__auth__dir)
-            opts="-n -q -v -h --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [SERVICE]"
+            opts="-n -q -v -h --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -6227,7 +6227,7 @@ _uv() {
             return 0
             ;;
         uv__publish)
-            opts="-u -p -t -n -q -v -h --index --username --password --token --trusted-publishing --keyring-provider --publish-url --check-url --skip-existing --dry-run --no-attestations --direct --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [FILES]..."
+            opts="-u -p -t -n -q -v -h --index --username --password --token --trusted-publishing --keyring-provider --publish-url --check-url --skip-existing --dry-run --no-attestations --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [FILES]..."
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
