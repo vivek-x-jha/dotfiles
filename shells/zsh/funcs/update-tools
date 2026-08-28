@@ -292,7 +292,7 @@ refresh_managed_completions() {
   notify 'RUN HOMEBREW MAINTENANCE'
   notify -s 'UPGRADE FORMULAE AND CASKS'
   logg -c 'brew upgrade --formula -y' || logg -w 'UPDATE HOMEBREW FORMULAE FAILED'
-  logg -c 'brew upgrade --cask --greedy --no-quit -y' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
+  logg -c 'brew upgrade --cask --no-quit -y' || logg -w 'UPDATE HOMEBREW CASKS FAILED'
 
   notify -s 'RUN QUARANTINE CHECKS'
   local apps=('Arc' 'ChatGPT' 'Claude' 'Notion Calendar' 'Slack' 'Spotify' 'WhatsApp')

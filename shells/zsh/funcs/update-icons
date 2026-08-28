@@ -17,6 +17,7 @@ table_width=60
 # Directory - Icons
 dir_icons=(
   "/Applications/Anki.app" "$icon_dir/anki.png"
+  "/Applications/CapCut.app" "$icon_dir/capcut.png"
   "/Applications/Hammerspoon.app" "$icon_dir/hammerspoon.png"
   "/Applications/KeyCastr.app" "$icon_dir/keycastr.png"
   "/Applications/Neovim-iTerm.app" "$icon_dir/neovim-iterm.png"

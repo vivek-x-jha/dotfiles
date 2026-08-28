@@ -572,7 +572,7 @@ Typical manual update checks:
 ```sh
 brew update
 brew upgrade --formula -y
-brew upgrade --cask --greedy --no-quit -y
+brew upgrade --cask --no-quit -y
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
 git -C "$XDG_DATA_HOME/fzf" pull --ff-only
