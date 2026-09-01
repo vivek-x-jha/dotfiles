@@ -243,7 +243,7 @@ refresh_managed_completions() {
 ((update_herdr)) && {
   notify 'UPDATE HERDR'
   if [[ ${HERDR_ENV:-} == 1 ]]; then
-    logg -w 'RUNNING INSIDE HERDR; SKIPPING HERDR UPDATE. RUN `update-tools --herdr` OUTSIDE HERDR.'
+    logg -w 'RUNNING INSIDE HERDR; SKIPPING HERDR UPDATE. RUN <update-tools --herdr> OUTSIDE HERDR.'
   elif command -v herdr &>/dev/null; then
     logg -c 'herdr update --handoff' || logg -w 'UPDATE HERDR FAILED'
     refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
@@ -292,7 +292,6 @@ refresh_managed_completions() {
   notify 'RUN HOMEBREW MAINTENANCE'
   notify -s 'UPGRADE FORMULAE AND CASKS'
   logg -c 'brew upgrade -y' || logg -w 'HOMEBREW UPGRADE FAILED'
-
   logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
   logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR REPORTED WARNINGS'
 

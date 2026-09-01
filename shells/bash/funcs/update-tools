@@ -68,19 +68,59 @@ EOF
 
   while (($#)); do
     case "$1" in
-    -a|--all) run_all=1; selected_steps=1 ;;
-    -d|--ds-store) delete_ds_store=1; selected_steps=1 ;;
-    -z|--zsh) update_zsh=1; selected_steps=1 ;;
-    --herdr) update_herdr=1; selected_steps=1 ;;
-    -l|--tldr) update_tldr=1; selected_steps=1 ;;
-    -f|--fzf) update_fzf=1; selected_steps=1 ;;
-    -n|--nvim) update_nvim=1; selected_steps=1 ;;
-    --pi) update_pi=1; selected_steps=1 ;;
-    -r|--rust) update_rust=1; update_completions=1; selected_steps=1 ;;
-    --completions) update_completions=1; selected_steps=1 ;;
-    -b|--brew) update_brew=1; selected_steps=1 ;;
-    -i|--icons) update_icons=1; selected_steps=1 ;;
-    -e|--tex) update_tex=1; selected_steps=1 ;;
+    -a | --all)
+      run_all=1
+      selected_steps=1
+      ;;
+    -d | --ds-store)
+      delete_ds_store=1
+      selected_steps=1
+      ;;
+    -z | --zsh)
+      update_zsh=1
+      selected_steps=1
+      ;;
+    --herdr)
+      update_herdr=1
+      selected_steps=1
+      ;;
+    -l | --tldr)
+      update_tldr=1
+      selected_steps=1
+      ;;
+    -f | --fzf)
+      update_fzf=1
+      selected_steps=1
+      ;;
+    -n | --nvim)
+      update_nvim=1
+      selected_steps=1
+      ;;
+    --pi)
+      update_pi=1
+      selected_steps=1
+      ;;
+    -r | --rust)
+      update_rust=1
+      update_completions=1
+      selected_steps=1
+      ;;
+    --completions)
+      update_completions=1
+      selected_steps=1
+      ;;
+    -b | --brew)
+      update_brew=1
+      selected_steps=1
+      ;;
+    -i | --icons)
+      update_icons=1
+      selected_steps=1
+      ;;
+    -e | --tex)
+      update_tex=1
+      selected_steps=1
+      ;;
     --icons-dir)
       [[ -n ${2-} ]] || {
         printf 'update-tools: --icons-dir requires a path\n' >&2
@@ -90,7 +130,7 @@ EOF
       icons_dir="$2"
       shift
       ;;
-    -h|--help)
+    -h | --help)
       usage
       return
       ;;
@@ -105,23 +145,25 @@ EOF
   done
 
   # Explicit --all includes TeX and Herdr; no step flags select the standard set without them.
-  ((run_all)) && { select_all_steps 1; update_herdr=1; }
+  ((run_all)) && {
+    select_all_steps 1
+    update_herdr=1
+  }
   ((selected_steps)) || select_all_steps 0
 
-  TOTAL_STEPS=$((
-    delete_ds_store +
-    update_zsh +
-    update_herdr +
-    update_tldr +
-    update_fzf +
-    update_nvim +
-    update_pi +
-    update_rust +
-    update_completions +
-    update_brew +
-    update_icons +
-    update_tex
-  ))
+  TOTAL_STEPS=$((\
+    delete_ds_store + \
+    update_zsh + \
+    update_herdr + \
+    update_tldr + \
+    update_fzf + \
+    update_nvim + \
+    update_pi + \
+    update_rust + \
+    update_completions + \
+    update_brew + \
+    update_icons + \
+    update_tex))
 
   # Usage:
   #   logg "message"
@@ -132,9 +174,20 @@ EOF
     local level=INFO color="$BLACK" cmd=''
 
     case "${1-}" in
-    -w) level=WARN; color="$YELLOW"; shift ;;
-    -e) level=ERROR; color="$MAGENTA"; shift ;;
-    -c) cmd="$2"; shift 2 ;;
+    -w)
+      level=WARN
+      color="$YELLOW"
+      shift
+      ;;
+    -e)
+      level=ERROR
+      color="$MAGENTA"
+      shift
+      ;;
+    -c)
+      cmd="$2"
+      shift 2
+      ;;
     esac
 
     local message="$*"
@@ -152,8 +205,15 @@ EOF
   notify() {
     local minor=''
     case "$1" in
-    -s) SUBSTEP=$((SUBSTEP + 1)); minor=".$SUBSTEP"; shift ;;
-    *) STEP=$((STEP + 1)); SUBSTEP=0 ;;
+    -s)
+      SUBSTEP=$((SUBSTEP + 1))
+      minor=".$SUBSTEP"
+      shift
+      ;;
+    *)
+      STEP=$((STEP + 1))
+      SUBSTEP=0
+      ;;
     esac
     printf '\n%b%s [%d%s/%d] %s %s%b\n' "$BLUE" "$ICON" "$STEP" "$minor" "$TOTAL_STEPS" "$*" "$ICON" "$RESET"
   }
@@ -265,7 +325,7 @@ EOF
   ((update_herdr)) && {
     notify 'UPDATE HERDR'
     if [[ ${HERDR_ENV:-} == 1 ]]; then
-      logg -w 'RUNNING INSIDE HERDR; SKIPPING HERDR UPDATE. RUN `update-tools --herdr` OUTSIDE HERDR.'
+      logg -w 'RUNNING INSIDE HERDR; SKIPPING HERDR UPDATE. RUN <update-tools --herdr> OUTSIDE HERDR.'
     elif command -v herdr &>/dev/null; then
       logg -c 'herdr update --handoff' || logg -w 'UPDATE HERDR FAILED'
       refresh_herdr_completions || logg -w 'UPDATE HERDR COMPLETIONS FAILED'
@@ -314,15 +374,14 @@ EOF
     notify 'RUN HOMEBREW MAINTENANCE'
     notify -s 'UPGRADE FORMULAE AND CASKS'
     logg -c 'brew upgrade -y' || logg -w 'HOMEBREW UPGRADE FAILED'
-
     logg -c 'brew cleanup' || logg -w 'HOMEBREW CLEANUP FAILED'
     logg -c 'brew doctor' || logg -w 'HOMEBREW DOCTOR REPORTED WARNINGS'
 
     notify -s 'EXPORT BREWFILE'
     if [[ -z ${HOMEBREW_BUNDLE_FILE:-} ]]; then
       logg -w 'HOMEBREW_BUNDLE_FILE unset; skipping Brewfile export'
-    elif mkdir -p "$(dirname "$HOMEBREW_BUNDLE_FILE")" \
-      && logg -c 'brew bundle dump --force --no-npm'; then
+    elif mkdir -p "$(dirname "$HOMEBREW_BUNDLE_FILE")" &&
+      logg -c 'brew bundle dump --force --no-npm'; then
       :
     else
       logg -w 'UPDATE BREWFILE FAILED'
