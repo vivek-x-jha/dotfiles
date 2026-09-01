@@ -415,7 +415,7 @@ Rust setup is disabled in the core profile unless `BOOTSTRAP_INSTALL_RUST_TOOLIN
 IDE setup selects stable Neovim by default. `BOOTSTRAP_INSTALL_NVIM_NIGHTLY=1` installs and selects nightly as well. Existing uv and npm tools are not reinstalled on every rerun.
 
 `update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` local overrides so Zap can still pull upstream changes.
-The macOS cask upgrade uses `--no-quit` so running apps cannot relaunch nested helpers before the recursive quarantine pass completes. Restart upgraded apps manually to use their new versions. The quarantine pass only targets apps that are actually installed under `/Applications`, so missing apps are skipped with a warning instead of failing the whole run.
+Homebrew handles running application restarts and preserves valid Gatekeeper approval during cask upgrades; `update-tools` does not strip quarantine metadata.
 
 ## 📦 Package Management
 
@@ -571,8 +571,7 @@ Typical manual update checks:
 
 ```sh
 brew update
-brew upgrade --formula -y
-brew upgrade --cask --no-quit -y
+brew upgrade -y
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
 git -C "$XDG_DATA_HOME/fzf" pull --ff-only
