@@ -18,6 +18,9 @@ The Neovim side is registered through native `vim.pack` and configured in
 
 ## Agent pane titles
 
+Pi pane labels and agent display titles follow the current chat name. The Pi
+extension restores display metadata when a Herdr live handoff replaces its socket.
+
 `herdr-claude-title-watch` labels Claude Code panes with the generated session
 name and the Nerd Font star icon (``). This also applies to `claudex`, since
 that alias launches the wrapped `claude` command. Until Claude writes an
