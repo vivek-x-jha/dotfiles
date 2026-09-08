@@ -475,7 +475,7 @@ Then verify:
 - 🐚 Open Bash and confirm ble.sh, aliases, functions, Atuin, fzf, and Starship load.
 - 🧭 Open Herdr and confirm pane/workspace behavior, including the dedicated `float` session when changing the floating-terminal launcher.
 - 🧠 Open Neovim and run `:checkhealth`.
-- 📦 Run `vim.pack.update()` and confirm the `blink.cmp` Rust build hook runs when needed.
+- 📦 Run `vim.pack.update()` and confirm Neovim starts with native LSP completion.
 - 🎨 Run `bat cache --build` after changing bat themes or syntaxes.
 - 🔐 Run `ssh -T git@github.com` and `git log --show-signature -1` when changing auth config.
 

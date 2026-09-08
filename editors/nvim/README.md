@@ -12,7 +12,7 @@ integration, and XDG state paths.
 
 1. Read the inherited `NVIM_LOG_FILE` from the launch environment.
 2. Select `vim.g.ui_theme`.
-3. Configure core options, diagnostics, and language servers inline.
+3. Configure core options, native completion, diagnostics, and language servers.
 4. Register plugin sources with `vim.pack.add`.
 5. Configure plugins inline and through `lua/plugins/`.
 6. Register autocommands from `lua/autocmds.lua`.
@@ -29,6 +29,7 @@ integration, and XDG state paths.
 | `lsp/*.lua` | Per-server LSP settings; `tsgo.lua` uses TypeScript 7's native LSP and `eslint.lua` uses `vscode-eslint-language-server` for JS/TS/React files |
 | `after/syntax/{sh,zsh}.vim` | Shell syntax extensions for commands, control keywords, config builtins, and paths |
 | `lua/autocmds.lua` | Autocommands |
+| `lua/completion.lua` | Native LSP completion setup |
 | `lua/usercmds.lua` | Custom user commands |
 | `lua/keymaps.lua` | Keymaps |
 | `lua/workspace.lua` | Project-buffer discovery and root `Session.vim` synchronization |
@@ -82,21 +83,11 @@ The JS/TS stack is:
 
 ## Completion
 
-Completion is handled by `blink.cmp` in `lua/plugins/blink.lua`.
-
-`blink.cmp` v2 requires both:
-
-- `saghen/blink.cmp`
-- `saghen/blink.lib`
-
-The config calls:
-
-```lua
-blink.build():wait(60000)
-```
-
-and `lua/autocmds.lua` includes a `PackChanged` hook that rebuilds the native
-fuzzy matcher after `blink.cmp` or `blink.lib` installs/updates.
+`lua/completion.lua` uses Neovim's native LSP completion with automatic
+server-defined triggers and fuzzy matching. Use `<C-Space>` to request
+completion manually, `<C-n>/<C-p>` to move through results, `<C-y>` to accept,
+and `<C-e>` to dismiss. Accepted LSP snippets use Neovim's native snippet
+support and `<Tab>/<S-Tab>` placeholder navigation.
 
 ## Workspace And Sessions
 
@@ -184,12 +175,6 @@ stay under `$XDG_STATE_HOME/nvim/nvim.log`.
 Other plugin logs may also exist under `~/.local/state/nvim/`.
 
 ## Troubleshooting
-
-If `blink.cmp` warns that the Rust fuzzy matcher is unavailable:
-
-```vim
-:lua require('blink.cmp').build():wait(60000)
-```
 
 If a removed plugin still exists on disk:
 

@@ -79,17 +79,16 @@ for name, type in vim.fs.dir(server_path) do
   if is_lua_file then table.insert(servers, name:sub(1, -5)) end
 end
 
+-- Configure native completion before language servers attach
+require 'completion'
+
 -- Initialize language servers
 vim.lsp.enable(servers)
 
 ----------------------- Plugins -----------------------
 -- Register plugin sources
 vim.pack.add {
-  -- autocomplete
-  { src = 'https://github.com/saghen/blink.lib' },
-  -- Later revisions call the changed vim.Pos API with the old 0.12 signature.
-  { src = 'https://github.com/saghen/blink.cmp', version = 'cfe100ccac24b0a622d7b9f04aa8c9f3e7624a16' },
-  { src = 'https://github.com/L3MON4D3/LuaSnip' }, -- blink snippets
+  -- colors
   { src = 'https://github.com/brenoprata10/nvim-highlight-colors' },
 
   -- editing
@@ -131,7 +130,6 @@ require('noice').setup {
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
       ['vim.lsp.util.stylize_markdown'] = true,
-      ['cmp.entry.get_documentation'] = true,
     },
   },
 }
@@ -172,8 +170,8 @@ require 'plugins.render-markdown'
 -- Configure Git Info
 require 'plugins.gitsigns'
 
--- Configure Autocomplete
-require 'plugins.blink'
+-- Configure inline color previews
+require 'plugins.highlight-colors'
 
 -- Configure icons
 require 'plugins.webdevicons'
