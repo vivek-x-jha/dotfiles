@@ -120,6 +120,9 @@ _atuin() {
             atuin__subcmd____internal,prepare-search-index)
                 cmd="atuin__subcmd____internal__subcmd__prepare__subcmd__search__subcmd__index"
                 ;;
+            atuin__subcmd____internal,pty-proxy-active)
+                cmd="atuin__subcmd____internal__subcmd__pty__subcmd__proxy__subcmd__active"
+                ;;
             atuin__subcmd__account,change-password)
                 cmd="atuin__subcmd__account__subcmd__change__subcmd__password"
                 ;;
@@ -165,11 +168,17 @@ _atuin() {
             atuin__subcmd__ai,help)
                 cmd="atuin__subcmd__ai__subcmd__help"
                 ;;
+            atuin__subcmd__ai,init)
+                cmd="atuin__subcmd__ai__subcmd__init"
+                ;;
             atuin__subcmd__ai,inline)
                 cmd="atuin__subcmd__ai__subcmd__inline"
                 ;;
             atuin__subcmd__ai__subcmd__help,help)
                 cmd="atuin__subcmd__ai__subcmd__help__subcmd__help"
+                ;;
+            atuin__subcmd__ai__subcmd__help,init)
+                cmd="atuin__subcmd__ai__subcmd__help__subcmd__init"
                 ;;
             atuin__subcmd__ai__subcmd__help,inline)
                 cmd="atuin__subcmd__ai__subcmd__help__subcmd__inline"
@@ -423,6 +432,9 @@ _atuin() {
             atuin__subcmd__help__subcmd____internal,prepare-search-index)
                 cmd="atuin__subcmd__help__subcmd____internal__subcmd__prepare__subcmd__search__subcmd__index"
                 ;;
+            atuin__subcmd__help__subcmd____internal,pty-proxy-active)
+                cmd="atuin__subcmd__help__subcmd____internal__subcmd__pty__subcmd__proxy__subcmd__active"
+                ;;
             atuin__subcmd__help__subcmd__account,change-password)
                 cmd="atuin__subcmd__help__subcmd__account__subcmd__change__subcmd__password"
                 ;;
@@ -440,6 +452,9 @@ _atuin() {
                 ;;
             atuin__subcmd__help__subcmd__account,register)
                 cmd="atuin__subcmd__help__subcmd__account__subcmd__register"
+                ;;
+            atuin__subcmd__help__subcmd__ai,init)
+                cmd="atuin__subcmd__help__subcmd__ai__subcmd__init"
                 ;;
             atuin__subcmd__help__subcmd__ai,inline)
                 cmd="atuin__subcmd__help__subcmd__ai__subcmd__inline"
@@ -915,7 +930,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd____internal)
-            opts="prepare-search-index"
+            opts="prepare-search-index pty-proxy-active"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -943,6 +958,20 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd____internal__subcmd__prepare__subcmd__search__subcmd__index)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd____internal__subcmd__pty__subcmd__proxy__subcmd__active)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -1263,7 +1292,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__ai)
-            opts="-h --help inline help"
+            opts="-h --help inline init help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1277,7 +1306,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__ai__subcmd__help)
-            opts="inline help"
+            opts="inline init help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1304,9 +1333,37 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
+        atuin__subcmd__ai__subcmd__help__subcmd__init)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
         atuin__subcmd__ai__subcmd__help__subcmd__inline)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__ai__subcmd__init)
+            opts="-h --help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -2203,7 +2260,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help__subcmd____internal)
-            opts="prepare-search-index"
+            opts="prepare-search-index pty-proxy-active"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2231,6 +2288,20 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help__subcmd____internal__subcmd__prepare__subcmd__search__subcmd__index)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd____internal__subcmd__pty__subcmd__proxy__subcmd__active)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -2343,8 +2414,22 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help__subcmd__ai)
-            opts="inline"
+            opts="inline init"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd__ai__subcmd__init)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi

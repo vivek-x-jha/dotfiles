@@ -1484,6 +1484,13 @@ _arguments "${_arguments_options[@]}" : \
 '::command -- Current command line to complete:_default' \
 && ret=0
 ;;
+(init)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'::_shell:_default' \
+&& ret=0
+;;
 (help)
 _arguments "${_arguments_options[@]}" : \
 ":: :_atuin__subcmd__ai__subcmd__help_commands" \
@@ -1497,6 +1504,10 @@ _arguments "${_arguments_options[@]}" : \
         curcontext="${curcontext%:*:*}:atuin-ai-help-command-$line[1]:"
         case $line[1] in
             (inline)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(init)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1531,6 +1542,10 @@ _arguments "${_arguments_options[@]}" : \
         curcontext="${curcontext%:*:*}:atuin-__internal-command-$line[1]:"
         case $line[1] in
             (prepare-search-index)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(pty-proxy-active)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2130,6 +2145,10 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(init)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
         esac
     ;;
 esac
@@ -2151,6 +2170,10 @@ _arguments "${_arguments_options[@]}" : \
         curcontext="${curcontext%:*:*}:atuin-help-__internal-command-$line[1]:"
         case $line[1] in
             (prepare-search-index)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(pty-proxy-active)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2250,6 +2273,7 @@ _atuin_commands() {
 _atuin__subcmd____internal_commands() {
     local commands; commands=(
 'prepare-search-index:' \
+'pty-proxy-active:Check whether the current terminal belongs to a live PTY proxy' \
     )
     _describe -t commands 'atuin __internal commands' commands "$@"
 }
@@ -2257,6 +2281,11 @@ _atuin__subcmd____internal_commands() {
 _atuin__subcmd____internal__subcmd__prepare-search-index_commands() {
     local commands; commands=()
     _describe -t commands 'atuin __internal prepare-search-index commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd____internal__subcmd__pty-proxy-active_commands] )) ||
+_atuin__subcmd____internal__subcmd__pty-proxy-active_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin __internal pty-proxy-active commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd____internal__commands] )) ||
 _atuin__subcmd____internal__commands() {
@@ -2358,6 +2387,7 @@ _atuin__subcmd__account__subcmd__register_commands() {
 _atuin__subcmd__ai_commands() {
     local commands; commands=(
 'inline:Inline completion mode with small TUI overlay' \
+'init:This command is no longer necessary. If you have it in your shell init file, feel free to remove it' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin ai commands' commands "$@"
@@ -2366,6 +2396,7 @@ _atuin__subcmd__ai_commands() {
 _atuin__subcmd__ai__subcmd__help_commands() {
     local commands; commands=(
 'inline:Inline completion mode with small TUI overlay' \
+'init:This command is no longer necessary. If you have it in your shell init file, feel free to remove it' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin ai help commands' commands "$@"
@@ -2375,10 +2406,20 @@ _atuin__subcmd__ai__subcmd__help__subcmd__help_commands() {
     local commands; commands=()
     _describe -t commands 'atuin ai help help commands' commands "$@"
 }
+(( $+functions[_atuin__subcmd__ai__subcmd__help__subcmd__init_commands] )) ||
+_atuin__subcmd__ai__subcmd__help__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin ai help init commands' commands "$@"
+}
 (( $+functions[_atuin__subcmd__ai__subcmd__help__subcmd__inline_commands] )) ||
 _atuin__subcmd__ai__subcmd__help__subcmd__inline_commands() {
     local commands; commands=()
     _describe -t commands 'atuin ai help inline commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__ai__subcmd__init_commands] )) ||
+_atuin__subcmd__ai__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin ai init commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__ai__subcmd__inline_commands] )) ||
 _atuin__subcmd__ai__subcmd__inline_commands() {
@@ -2769,6 +2810,7 @@ _atuin__subcmd__help_commands() {
 _atuin__subcmd__help__subcmd____internal_commands() {
     local commands; commands=(
 'prepare-search-index:' \
+'pty-proxy-active:Check whether the current terminal belongs to a live PTY proxy' \
     )
     _describe -t commands 'atuin help __internal commands' commands "$@"
 }
@@ -2776,6 +2818,11 @@ _atuin__subcmd__help__subcmd____internal_commands() {
 _atuin__subcmd__help__subcmd____internal__subcmd__prepare-search-index_commands() {
     local commands; commands=()
     _describe -t commands 'atuin help __internal prepare-search-index commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd____internal__subcmd__pty-proxy-active_commands] )) ||
+_atuin__subcmd__help__subcmd____internal__subcmd__pty-proxy-active_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help __internal pty-proxy-active commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd____internal__commands] )) ||
 _atuin__subcmd__help__subcmd____internal__commands() {
@@ -2828,8 +2875,14 @@ _atuin__subcmd__help__subcmd__account__subcmd__register_commands() {
 _atuin__subcmd__help__subcmd__ai_commands() {
     local commands; commands=(
 'inline:Inline completion mode with small TUI overlay' \
+'init:This command is no longer necessary. If you have it in your shell init file, feel free to remove it' \
     )
     _describe -t commands 'atuin help ai commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__ai__subcmd__init_commands] )) ||
+_atuin__subcmd__help__subcmd__ai__subcmd__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help ai init commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__ai__subcmd__inline_commands] )) ||
 _atuin__subcmd__help__subcmd__ai__subcmd__inline_commands() {
