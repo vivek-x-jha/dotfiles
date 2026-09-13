@@ -49,7 +49,7 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "render-markdown.nvim": {
-      "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
+      "rev": "1c88406fac56809eef03b1132aca90eca55a9b89",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "vim-herdr-navigation": {
