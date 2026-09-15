@@ -3174,7 +3174,7 @@ _uv() {
             return 0
             ;;
         uv__export)
-            opts="-o -i -f -U -P -C -p -n -q -v -h --format --all-packages --package --prune --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --no-annotate --annotate --no-header --header --emit-index-url --no-emit-index-url --emit-find-links --no-emit-find-links --editable --no-editable --no-editable-package --hashes --no-hashes --output-file --no-emit-project --only-emit-project --no-emit-workspace --only-emit-workspace --no-emit-local --only-emit-local --no-emit-package --only-emit-package --locked --no-locked --frozen --no-frozen --index --default-index --index-url --extra-index-url --find-links --no-index --upgrade --no-upgrade --upgrade-package --upgrade-group --index-strategy --keyring-provider --resolution --prerelease --prerelease-package --pre --fork-strategy --config-setting --config-settings-package --no-build-isolation --build-isolation --no-build-isolation-package --exclude-newer --exclude-newer-package --link-mode --no-sources --no-sources-package --no-build --build --no-build-package --no-binary --binary --no-binary-package --refresh --no-refresh --refresh-package --script --python --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
+            opts="-o -i -f -U -P -C -p -n -q -v -h --format --all-packages --package --prune --extra --all-extras --no-extra --no-all-extras --dev --no-dev --only-dev --group --no-group --no-default-groups --only-group --all-groups --no-annotate --annotate --no-header --header --emit-index-url --no-emit-index-url --emit-find-links --no-emit-find-links --editable --no-editable --no-editable-package --hashes --no-hashes --output-file --batch --no-emit-project --only-emit-project --no-emit-workspace --only-emit-workspace --no-emit-local --only-emit-local --no-emit-package --only-emit-package --locked --no-locked --frozen --no-frozen --index --default-index --index-url --extra-index-url --find-links --no-index --upgrade --no-upgrade --upgrade-package --upgrade-group --index-strategy --keyring-provider --resolution --prerelease --prerelease-package --pre --fork-strategy --config-setting --config-settings-package --no-build-isolation --build-isolation --no-build-isolation-package --exclude-newer --exclude-newer-package --link-mode --no-sources --no-sources-package --no-build --build --no-build-package --no-binary --binary --no-binary-package --refresh --no-refresh --refresh-package --script --python --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -3247,6 +3247,21 @@ _uv() {
                     return 0
                     ;;
                 -o)
+                    local oldifs
+                    if [ -n "${IFS+x}" ]; then
+                        oldifs="$IFS"
+                    fi
+                    IFS=$'\n'
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    if [ -n "${oldifs+x}" ]; then
+                        IFS="$oldifs"
+                    fi
+                    if [[ "${BASH_VERSINFO[0]}" -ge 4 ]]; then
+                        compopt -o filenames
+                    fi
+                    return 0
+                    ;;
+                --batch)
                     local oldifs
                     if [ -n "${IFS+x}" ]; then
                         oldifs="$IFS"
