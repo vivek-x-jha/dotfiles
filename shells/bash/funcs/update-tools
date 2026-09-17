@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-update-tools() {
+update-tools() (
   # Run the standard steps by default, or only explicitly selected steps when flags are provided.
   local icons_dir="$HOME/Pictures/icons"
   local run_all=0
@@ -21,6 +21,12 @@ update-tools() {
   local STEP=0
   local SUBSTEP=0
   local TOTAL_STEPS=0
+  local manage_nvim_git=0
+  local manage_completions_git=0
+  local dotfiles_git=0
+  local dotfiles_stash=''
+  local nvim_was_dirty=0
+  local completions_were_dirty=0
 
   usage() {
     cat <<'EOF'
@@ -149,7 +155,15 @@ EOF
     select_all_steps 1
     update_herdr=1
   }
-  ((selected_steps)) || select_all_steps 0
+  if ((selected_steps)); then
+    :
+  else
+    select_all_steps 0
+    update_icons=0
+  fi
+
+  manage_nvim_git=$update_nvim
+  manage_completions_git=$((update_completions || update_herdr))
 
   TOTAL_STEPS=$((\
     delete_ds_store + \
@@ -288,6 +302,94 @@ EOF
     return "$failed"
   }
 
+  discard_generated_paths() {
+    git -C "$DOTFILES_DIR" restore --source=HEAD --staged --worktree -- "$@" 2>/dev/null || true
+    git -C "$DOTFILES_DIR" clean -fd -- "$@" &>/dev/null || true
+  }
+
+  prepare_dotfiles_git() {
+    local changes
+
+    ((manage_nvim_git || manage_completions_git)) || return 0
+    if [[ -z ${DOTFILES_DIR:-} ]] || ! git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
+      logg -w 'DOTFILES_DIR IS NOT A GIT WORKTREE; SKIPPING AUTOMATIC MAINTENANCE COMMITS'
+      return 0
+    fi
+
+    dotfiles_git=1
+    [[ -n $(git -C "$DOTFILES_DIR" status --porcelain --untracked-files=all -- editors/nvim/nvim-pack-lock.json) ]] &&
+      nvim_was_dirty=1
+    [[ -n $(git -C "$DOTFILES_DIR" status --porcelain --untracked-files=all -- shells/bash/comps shells/zsh/comps) ]] &&
+      completions_were_dirty=1
+
+    changes=$(git -C "$DOTFILES_DIR" status --porcelain --untracked-files=all) || return 1
+    [[ -n $changes ]] || return 0
+
+    logg 'STASHING CURRENT DOTFILES CHANGES'
+    git -C "$DOTFILES_DIR" stash push --include-untracked -m 'update-tools: preserve working tree' >/dev/null || {
+      logg -e 'FAILED TO STASH CURRENT DOTFILES CHANGES; ABORTING UPDATE'
+      return 1
+    }
+    dotfiles_stash=refs/stash
+    dotfiles_stash=$(git -C "$DOTFILES_DIR" rev-parse --verify "$dotfiles_stash") || {
+      logg -e 'FAILED TO RECORD DOTFILES STASH; CURRENT CHANGES REMAIN STASHED'
+      return 1
+    }
+  }
+
+  commit_generated_changes() {
+    local label=$1 message=$2 was_dirty=$3
+    shift 3
+
+    ((dotfiles_git)) || return 0
+    if ((was_dirty)); then
+      logg -w "$label HAD CHANGES BEFORE UPDATE; SKIPPING AUTOMATIC COMMIT"
+      return 0
+    fi
+    [[ -n $(git -C "$DOTFILES_DIR" status --porcelain --untracked-files=all -- "$@") ]] || return 0
+
+    logg "COMMITTING $label"
+    if git -C "$DOTFILES_DIR" add -- "$@" &&
+      git -C "$DOTFILES_DIR" commit -m "$message" -- "$@" &&
+      git -C "$DOTFILES_DIR" push; then
+      :
+    else
+      logg -w "FAILED TO COMMIT OR PUSH $label"
+    fi
+  }
+
+  restore_dotfiles_changes() {
+    local oid stash_ref
+
+    [[ -n $dotfiles_stash ]] || return 0
+    ((nvim_was_dirty)) && discard_generated_paths editors/nvim/nvim-pack-lock.json
+    ((completions_were_dirty)) && discard_generated_paths shells/bash/comps shells/zsh/comps
+
+    oid=$(git -C "$DOTFILES_DIR" rev-parse --verify "$dotfiles_stash") || {
+      logg -e 'FAILED TO FIND SAVED DOTFILES CHANGES'
+      return 1
+    }
+    logg 'RESTORING CURRENT DOTFILES CHANGES'
+    git -C "$DOTFILES_DIR" stash apply --index "$oid" || {
+      logg -e "FAILED TO RESTORE DOTFILES CHANGES; STASH RETAINED AS $oid"
+      return 1
+    }
+    dotfiles_stash=''
+
+    stash_ref=$(git -C "$DOTFILES_DIR" stash list --format='%gd %H' | awk -v oid="$oid" '$2 == oid { print $1; exit }')
+    if [[ -n $stash_ref ]]; then
+      git -C "$DOTFILES_DIR" stash drop "$stash_ref" >/dev/null ||
+        logg -w "RESTORED DOTFILES CHANGES BUT COULD NOT DROP $stash_ref"
+    fi
+  }
+
+  trap restore_dotfiles_changes EXIT
+  if ! prepare_dotfiles_git; then
+    trap - EXIT
+    restore_dotfiles_changes || true
+    return 1
+  fi
+
   ((delete_ds_store)) && {
     notify 'PRUNE .DS_STORE ARTIFACTS'
     logg -c "nohup fd -HI .DS_Store / -x rm -f {} &>/dev/null & disown" 2>/dev/null ||
@@ -398,5 +500,14 @@ EOF
     logg -c 'sudo tlmgr update --self --all' || logg -w 'UPDATE TEX LIVE FAILED'
   }
 
+  ((manage_nvim_git)) &&
+    commit_generated_changes 'NEOVIM PLUGIN LOCKFILE' 'chore(nvim): update plugin lockfile' "$nvim_was_dirty" \
+      editors/nvim/nvim-pack-lock.json
+  ((manage_completions_git)) &&
+    commit_generated_changes 'SHELL COMPLETIONS' 'chore(comps): update shell completions' "$completions_were_dirty" \
+      shells/bash/comps shells/zsh/comps
+
+  trap - EXIT
+  restore_dotfiles_changes || return 1
   return 0
-}
+)

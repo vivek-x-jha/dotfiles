@@ -109,7 +109,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `dark` | 3 · Pmenu, PmenuSbar | — | — | — | — | 14 · activityBarBadge.foreground, badge.foreground |
 | `grey` | 35 · Cursor, CursorColumn | — | — | — | 1 · background_color | 28 · titleBar.border, statusBar.border |
 | `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | — | 3 · statusBar.background, statusBar.debuggingBackground |
-| `terminal_surface` | 1 · line 123 | — | — | — | — | 11 · activityBar.background, titleBar.activeBackground |
+| `terminal_surface` | 1 · line 122 | — | — | — | — | 11 · activityBar.background, titleBar.activeBackground |
 
 ## Application UI
 

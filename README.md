@@ -414,7 +414,7 @@ Rust setup is disabled in the core profile unless `BOOTSTRAP_INSTALL_RUST_TOOLIN
 
 IDE setup selects stable Neovim by default. `BOOTSTRAP_INSTALL_NVIM_NIGHTLY=1` installs and selects nightly as well. Existing uv and npm tools are not reinstalled on every rerun.
 
-`update-tools` runs the standard maintenance set without TeX Live. `update-tools --all` also updates TeX Live, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--tmux`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` local overrides so Zap can still pull upstream changes.
+`update-tools` runs the standard maintenance set without TeX Live or icon refreshes. `update-tools --all` includes both, while individual flags select only the requested steps, such as `--nvim`, `--pi`, `--rust`, `--brew`, `--zsh`, `--icons`, or `--tex`. Zsh plugin updates reverse and reapply the repo-managed `zsh-autocomplete` local overrides so Zap can still pull upstream changes.
 Homebrew handles running application restarts and preserves valid Gatekeeper approval during cask upgrades; `update-tools` does not strip quarantine metadata.
 
 ## 📦 Package Management
@@ -565,7 +565,7 @@ Update only TeX Live:
 update-tools --tex
 ```
 
-Use `update-tools --help` for all step flags and the `--icons-dir PATH` override.
+Use `update-tools --help` for all step flags and the `--icons-dir PATH` override. Neovim lockfile and managed completion changes are committed and pushed with their standard `chore` messages. Existing dotfiles changes are stashed and restored; a generated-file group that was already dirty is left uncommitted and restored unchanged.
 
 Typical manual update checks:
 
