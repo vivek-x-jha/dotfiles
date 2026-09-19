@@ -15,5 +15,5 @@
   "enabledPlugins": {
     "ponytail@ponytail": true
   },
-  "hooks": {"SessionStart":[{"matcher":"*","hooks":[{"type":"command","command":"bash '/Users/mubuntu/.config/claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]}
+  "hooks": {"SessionStart":[{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/Users/mubuntu/.config/claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]}
 }
