@@ -10365,7 +10365,7 @@ _uv() {
             return 0
             ;;
         uv__upgrade)
-            opts="-n -q -v -h --exclude --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [PACKAGES]..."
+            opts="-i -f -n -q -v -h --exclude --index --default-index --index-url --extra-index-url --find-links --no-index --index-strategy --keyring-provider --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [PACKAGES]..."
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -10376,6 +10376,42 @@ _uv() {
                     if [[ "${BASH_VERSINFO[0]}" -ge 4 ]]; then
                         compopt -o nospace
                     fi
+                    return 0
+                    ;;
+                --index)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --default-index)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --index-url)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                -i)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --extra-index-url)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --find-links)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                -f)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --index-strategy)
+                    COMPREPLY=($(compgen -W "first-index unsafe-first-match unsafe-best-match" -- "${cur}"))
+                    return 0
+                    ;;
+                --keyring-provider)
+                    COMPREPLY=($(compgen -W "disabled subprocess" -- "${cur}"))
                     return 0
                     ;;
                 --cache-dir)
@@ -11061,7 +11097,7 @@ _uv() {
             return 0
             ;;
         uv__workspace__metadata)
-            opts="-i -f -U -P -C -p -n -q -v -h --script --locked --no-locked --frozen --no-frozen --dry-run --index --default-index --index-url --extra-index-url --find-links --no-index --upgrade --no-upgrade --upgrade-package --upgrade-group --index-strategy --keyring-provider --resolution --prerelease --prerelease-package --pre --fork-strategy --config-setting --config-settings-package --no-build-isolation --build-isolation --no-build-isolation-package --exclude-newer --exclude-newer-package --link-mode --no-sources --no-sources-package --no-build --build --no-build-package --no-binary --binary --no-binary-package --refresh --no-refresh --refresh-package --sync --exact --active --python --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
+            opts="-i -f -U -P -C -p -n -q -v -h --script --locked --no-locked --frozen --no-frozen --index --default-index --index-url --extra-index-url --find-links --no-index --upgrade --no-upgrade --upgrade-package --upgrade-group --index-strategy --keyring-provider --resolution --prerelease --prerelease-package --pre --fork-strategy --config-setting --config-settings-package --no-build-isolation --build-isolation --no-build-isolation-package --exclude-newer --exclude-newer-package --link-mode --no-sources --no-sources-package --no-build --build --no-build-package --no-binary --binary --no-binary-package --refresh --no-refresh --refresh-package --sync --exact --active --python --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
