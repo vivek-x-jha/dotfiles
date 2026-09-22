@@ -330,7 +330,7 @@ _bob() {
             return 0
             ;;
         bob__subcmd__install)
-            opts="-v -h --verbose --help <VERSION>"
+            opts="-v -h --verbose --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -386,7 +386,7 @@ _bob() {
             return 0
             ;;
         bob__subcmd__run)
-            opts="-v -h --verbose --help <VERSION> [ARGS]..."
+            opts="-v -h --verbose --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -414,7 +414,7 @@ _bob() {
             return 0
             ;;
         bob__subcmd__uninstall)
-            opts="-v -h --verbose --help [VERSION]"
+            opts="-v -h --verbose --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -428,7 +428,7 @@ _bob() {
             return 0
             ;;
         bob__subcmd__update)
-            opts="-a -v -h --all --verbose --help [VERSION]"
+            opts="-a -v -h --all --verbose --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -442,7 +442,7 @@ _bob() {
             return 0
             ;;
         bob__subcmd__use)
-            opts="-n -v -h --no-install --verbose --help <VERSION>"
+            opts="-n -v -h --no-install --verbose --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

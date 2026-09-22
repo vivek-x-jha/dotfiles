@@ -29,397 +29,14 @@ _atuin() {
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-command-$line[1]:"
         case $line[1] in
-            (setup)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(history)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-":: :_atuin__subcmd__history_commands" \
-"*::: :->history" \
-&& ret=0
-
-    case $state in
-    (history)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-history-command-$line[1]:"
-        case $line[1] in
-            (start)
-_arguments "${_arguments_options[@]}" : \
-'--author=[Author of this command, eg \`ellie\`, \`claude\`, or \`copilot\`]:AUTHOR:_default' \
-'--author-kind=[Whether a human or an AI agent ran this command]:AUTHOR_KIND:((user\:"A human ran this command"
-agent\:"An AI agent ran this command"))' \
-'--intent=[Optional intent/rationale for running this command]:INTENT:_default' \
-'--command-from-env[Collects the command from the \`ATUIN_COMMAND_LINE\` environment variable, which does not need escaping and is more compatible between OS and shells]' \
-'--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-'*::command:_default' \
-&& ret=0
-;;
-(end)
-_arguments "${_arguments_options[@]}" : \
-'-e+[]:EXIT:_default' \
-'--exit=[]:EXIT:_default' \
-'-d+[]:DURATION:_default' \
-'--duration=[]:DURATION:_default' \
-'--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
-'-h[Print help]' \
-'--help[Print help]' \
-':id:_default' \
-&& ret=0
-;;
-(tail)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(list)
-_arguments "${_arguments_options[@]}" : \
-'-r+[]::REVERSE:(true false)' \
-'--reverse=[]::REVERSE:(true false)' \
-'--timezone=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
-'--tz=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
-'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid}]:FORMAT:_default' \
-'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid}]:FORMAT:_default' \
-'-c[]' \
-'--cwd[]' \
-'-s[]' \
-'--session[]' \
-'--human[]' \
-'--cmd-only[Show only the text of the command]' \
-'--print0[Terminate the output with a null, for better multiline support]' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-&& ret=0
-;;
-(last)
-_arguments "${_arguments_options[@]}" : \
-'--timezone=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
-'--tz=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
-'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}]:FORMAT:_default' \
-'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}]:FORMAT:_default' \
-'--human[]' \
-'--cmd-only[Show only the text of the command]' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-&& ret=0
-;;
-(init-store)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(prune)
-_arguments "${_arguments_options[@]}" : \
-'-n[List matching history lines without performing the actual deletion]' \
-'--dry-run[List matching history lines without performing the actual deletion]' \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(dedup)
-_arguments "${_arguments_options[@]}" : \
-'-b+[Only delete results added before this date]:BEFORE:_default' \
-'--before=[Only delete results added before this date]:BEFORE:_default' \
-'--dupkeep=[How many recent duplicates to keep]:DUPKEEP:_default' \
-'-n[List matching history lines without performing the actual deletion]' \
-'--dry-run[List matching history lines without performing the actual deletion]' \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__history__subcmd__help_commands" \
-"*::: :->help" \
-&& ret=0
-
-    case $state in
-    (help)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-history-help-command-$line[1]:"
-        case $line[1] in
-            (start)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(end)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(tail)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(last)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(init-store)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(prune)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(dedup)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-        esac
-    ;;
-esac
-;;
-(hook)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-'::agent -- Which agent'\''s hook format to parse (e.g., "claude-code"):_default' \
-":: :_atuin__subcmd__hook_commands" \
-"*::: :->hook" \
-&& ret=0
-
-    case $state in
-    (hook)
-        words=($line[2] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-hook-command-$line[2]:"
-        case $line[2] in
-            (install)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-':agent -- Agent to install hooks for (e.g., "claude-code"):_default' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__hook__subcmd__help_commands" \
-"*::: :->help" \
-&& ret=0
-
-    case $state in
-    (help)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-hook-help-command-$line[1]:"
-        case $line[1] in
-            (install)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-        esac
-    ;;
-esac
-;;
-(import)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-":: :_atuin__subcmd__import_commands" \
-"*::: :->import" \
-&& ret=0
-
-    case $state in
-    (import)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-import-command-$line[1]:"
-        case $line[1] in
-            (auto)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(zsh)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(zsh-hist-db)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(bash)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(replxx)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(resh)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(fish)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(nu)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(nu-hist-db)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(xonsh)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(xonsh-sqlite)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(powershell)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__import__subcmd__help_commands" \
-"*::: :->help" \
-&& ret=0
-
-    case $state in
-    (help)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-import-help-command-$line[1]:"
-        case $line[1] in
-            (auto)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(zsh)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(zsh-hist-db)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(bash)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(replxx)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(resh)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(fish)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(nu)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(nu-hist-db)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(xonsh)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(xonsh-sqlite)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(powershell)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-        esac
-    ;;
-esac
-;;
-(stats)
-_arguments "${_arguments_options[@]}" : \
-'-c+[How many top commands to list]:COUNT:_default' \
-'--count=[How many top commands to list]:COUNT:_default' \
-'-n+[The number of consecutive commands to consider]:NGRAM_SIZE:_default' \
-'--ngram-size=[The number of consecutive commands to consider]:NGRAM_SIZE:_default' \
-'--filter-mode=[Filter commands by scope \[global, host, session, directory, workspace\]]:FILTER_MODE:(global host session directory workspace session-preload)' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-'*::period -- Compute statistics for the specified period, leave blank for statistics since the beginning:_default' \
-&& ret=0
-;;
-(search)
+            (search)
 _arguments "${_arguments_options[@]}" : \
 '-c+[Filter search result by directory]:CWD:_default' \
 '--cwd=[Filter search result by directory]:CWD:_default' \
 '--exclude-cwd=[Exclude directory from results]:EXCLUDE_CWD:_default' \
-'-e+[Filter search result by exit code]:EXIT:_default' \
-'--exit=[Filter search result by exit code]:EXIT:_default' \
-'--exclude-exit=[Exclude results with this exit code]:EXCLUDE_EXIT:_default' \
+'*-e+[Filter by exit code; repeat to include any of the given codes]:EXIT:_default' \
+'*--exit=[Filter by exit code; repeat to include any of the given codes]:EXIT:_default' \
+'*--exclude-exit=[Exclude results with this exit code; repeat to exclude multiple codes]:EXCLUDE_EXIT:_default' \
 '-b+[Only include results added before this date]:BEFORE:_default' \
 '--before=[Only include results added before this date]:BEFORE:_default' \
 '--after=[Only include results after this date]:AFTER:_default' \
@@ -450,6 +67,75 @@ _arguments "${_arguments_options[@]}" : \
 '-h[Print help (see more with '\''--help'\'')]' \
 '--help[Print help (see more with '\''--help'\'')]' \
 '*::query:_default' \
+&& ret=0
+;;
+(output)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_atuin__subcmd__output_commands" \
+"*::: :->output" \
+&& ret=0
+
+    case $state in
+    (output)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-output-command-$line[1]:"
+        case $line[1] in
+            (search)
+_arguments "${_arguments_options[@]}" : \
+'--limit=[Maximum number of matches to return]:LIMIT:_default' \
+'-C+[Show only the matching lines, with this many lines of context on either side; without it, each match'\''s whole output]:CONTEXT:_default' \
+'--context=[Show only the matching lines, with this many lines of context on either side; without it, each match'\''s whole output]:CONTEXT:_default' \
+'--style=[How matches are rendered]:STYLE:((auto\:""
+plain\:""
+pretty\:""
+json\:"A single JSON array of match objects"
+ndjson\:"Newline-delimited JSON\: one match object per line"))' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::query -- Words to search for; all must appear. Use `--` before a query that starts with `-`:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__output__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-output-help-command-$line[1]:"
+        case $line[1] in
+            (search)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(stats)
+_arguments "${_arguments_options[@]}" : \
+'-c+[How many top commands to list]:COUNT:_default' \
+'--count=[How many top commands to list]:COUNT:_default' \
+'-n+[The number of consecutive commands to consider]:NGRAM_SIZE:_default' \
+'--ngram-size=[The number of consecutive commands to consider]:NGRAM_SIZE:_default' \
+'--filter-mode=[Filter commands by scope \[global, host, session, directory, workspace\]]:FILTER_MODE:(global host session directory workspace session-preload)' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::period -- Compute statistics for the specified period, leave blank for statistics since the beginning:_default' \
 && ret=0
 ;;
 (sync)
@@ -628,6 +314,348 @@ esac
         esac
     ;;
 esac
+;;
+(history)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_atuin__subcmd__history_commands" \
+"*::: :->history" \
+&& ret=0
+
+    case $state in
+    (history)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-history-command-$line[1]:"
+        case $line[1] in
+            (start)
+_arguments "${_arguments_options[@]}" : \
+'--author=[Author of this command, eg \`ellie\`, \`claude\`, or \`copilot\`]:AUTHOR:_default' \
+'--author-kind=[Whether a human or an AI agent ran this command]:AUTHOR_KIND:((user\:"A human ran this command"
+agent\:"An AI agent ran this command"))' \
+'--intent=[Optional intent/rationale for running this command]:INTENT:_default' \
+'--command-from-env[Collects the command from the \`ATUIN_COMMAND_LINE\` environment variable, which does not need escaping and is more compatible between OS and shells]' \
+'--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::command:_default' \
+&& ret=0
+;;
+(end)
+_arguments "${_arguments_options[@]}" : \
+'-e+[]:EXIT:_default' \
+'--exit=[]:EXIT:_default' \
+'-d+[]:DURATION:_default' \
+'--duration=[]:DURATION:_default' \
+'--hook[Passed by shell hooks; this flag disables logging to avoid corrupting the terminal and to minimize the amount of time the command takes to run]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id:_default' \
+&& ret=0
+;;
+(tail)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'-r+[]::REVERSE:(true false)' \
+'--reverse=[]::REVERSE:(true false)' \
+'--timezone=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'--tz=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid}]:FORMAT:_default' \
+'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {exit}, {time}, {session}, and {uuid}]:FORMAT:_default' \
+'-c[]' \
+'--cwd[]' \
+'-s[]' \
+'--session[]' \
+'--human[]' \
+'--cmd-only[Show only the text of the command]' \
+'--print0[Terminate the output with a null, for better multiline support]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(last)
+_arguments "${_arguments_options[@]}" : \
+'--timezone=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'--tz=[Display the command time in another timezone other than the configured default.]:TIMEZONE:_default' \
+'-f+[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}]:FORMAT:_default' \
+'--format=[Available variables\: {command}, {directory}, {duration}, {user}, {host}, {author}, {intent}, {time}, {session}, {uuid} and {relativetime}]:FORMAT:_default' \
+'--human[]' \
+'--cmd-only[Show only the text of the command]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(init-store)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(prune)
+_arguments "${_arguments_options[@]}" : \
+'-n[List matching history lines without performing the actual deletion]' \
+'--dry-run[List matching history lines without performing the actual deletion]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(dedup)
+_arguments "${_arguments_options[@]}" : \
+'-b+[Only delete results added before this date]:BEFORE:_default' \
+'--before=[Only delete results added before this date]:BEFORE:_default' \
+'--dupkeep=[How many recent duplicates to keep]:DUPKEEP:_default' \
+'-n[List matching history lines without performing the actual deletion]' \
+'--dry-run[List matching history lines without performing the actual deletion]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__history__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-history-help-command-$line[1]:"
+        case $line[1] in
+            (start)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(end)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(tail)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(last)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(init-store)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(prune)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(dedup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(setup)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(init)
+_arguments "${_arguments_options[@]}" : \
+'--disable-ctrl-r[Disable the binding of CTRL-R to atuin]' \
+'--disable-up-arrow[Disable the binding of the Up Arrow key to atuin]' \
+'--disable-ai[Disable the binding of ? to Atuin AI]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':shell:((zsh\:"Zsh setup"
+bash\:"Bash setup"
+fish\:"Fish setup"
+nu\:"Nu setup"
+xonsh\:"Xonsh setup"
+powershell\:"PowerShell setup"))' \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_atuin__subcmd__import_commands" \
+"*::: :->import" \
+&& ret=0
+
+    case $state in
+    (import)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-import-command-$line[1]:"
+        case $line[1] in
+            (auto)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(zsh)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(zsh-hist-db)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(bash)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(replxx)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(resh)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(fish)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(nu)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(nu-hist-db)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(xonsh)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(xonsh-sqlite)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(powershell)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__import__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-import-help-command-$line[1]:"
+        case $line[1] in
+            (auto)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(zsh)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(zsh-hist-db)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(bash)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(replxx)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(resh)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(fish)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(nu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(nu-hist-db)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(xonsh)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(xonsh-sqlite)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(powershell)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(doctor)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
 ;;
 (kv)
 _arguments "${_arguments_options[@]}" : \
@@ -879,22 +907,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-dotfiles-alias-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-':name:_default' \
-':value:_default' \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-':name:_default' \
-&& ret=0
-;;
-(list)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 '--sort-by=[Sort results by field]:SORT_BY:((name\:"Sort by alias name"
 value\:"Sort by alias value"))' \
@@ -906,12 +919,6 @@ value\:"Sort by alias value"))' \
 '--reverse[Sort in reverse (descending) order]' \
 '-h[Print help (see more with '\''--help'\'')]' \
 '--help[Print help (see more with '\''--help'\'')]' \
-&& ret=0
-;;
-(clear)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
 && ret=0
 ;;
 (help)
@@ -926,19 +933,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-dotfiles-alias-help-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(clear)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -968,24 +963,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-dotfiles-var-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-'-n[]' \
-'--no-export[]' \
-'-h[Print help]' \
-'--help[Print help]' \
-':name:_default' \
-':value:_default' \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-':name:_default' \
-&& ret=0
-;;
-(list)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 '--sort-by=[Sort results by field]:SORT_BY:((name\:"Sort by variable name"
 value\:"Sort by variable value"))' \
@@ -1013,15 +991,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-dotfiles-var-help-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1061,19 +1031,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-dotfiles-help-alias-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(clear)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1093,15 +1051,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-dotfiles-help-var-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1249,86 +1199,31 @@ esac
     ;;
 esac
 ;;
-(init)
-_arguments "${_arguments_options[@]}" : \
-'--disable-ctrl-r[Disable the binding of CTRL-R to atuin]' \
-'--disable-up-arrow[Disable the binding of the Up Arrow key to atuin]' \
-'--disable-ai[Disable the binding of ? to Atuin AI]' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-':shell:((zsh\:"Zsh setup"
-bash\:"Bash setup"
-fish\:"Fish setup"
-nu\:"Nu setup"
-xonsh\:"Xonsh setup"
-powershell\:"PowerShell setup"))' \
-&& ret=0
-;;
-(info)
+(hook)
 _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
-&& ret=0
-;;
-(doctor)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(wrapped)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-'::year:_default' \
-&& ret=0
-;;
-(daemon)
-_arguments "${_arguments_options[@]}" : \
-'--daemonize[Internal flag for daemonization]' \
-'--show-logs[Also write daemon logs to the console (useful for debugging)]' \
-'-h[Print help]' \
-'--help[Print help]' \
-":: :_atuin__subcmd__daemon_commands" \
-"*::: :->daemon" \
+'::agent -- Which agent'\''s hook format to parse (e.g., "claude-code"):_default' \
+":: :_atuin__subcmd__hook_commands" \
+"*::: :->hook" \
 && ret=0
 
     case $state in
-    (daemon)
-        words=($line[1] "${words[@]}")
+    (hook)
+        words=($line[2] "${words[@]}")
         (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-daemon-command-$line[1]:"
-        case $line[1] in
-            (start)
-_arguments "${_arguments_options[@]}" : \
-'--daemonize[]' \
-'--show-logs[Also write daemon logs to the console (useful for debugging)]' \
-'--force[Force start\: kill existing daemon process and reset the socket]' \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(status)
+        curcontext="${curcontext%:*:*}:atuin-hook-command-$line[2]:"
+        case $line[2] in
+            (install)
 _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
-&& ret=0
-;;
-(stop)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(restart)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
+':agent -- Agent to install hooks for (e.g., "claude-code"):_default' \
 && ret=0
 ;;
 (help)
 _arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__daemon__subcmd__help_commands" \
+":: :_atuin__subcmd__hook__subcmd__help_commands" \
 "*::: :->help" \
 && ret=0
 
@@ -1336,113 +1231,9 @@ _arguments "${_arguments_options[@]}" : \
     (help)
         words=($line[1] "${words[@]}")
         (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-daemon-help-command-$line[1]:"
+        curcontext="${curcontext%:*:*}:atuin-hook-help-command-$line[1]:"
         case $line[1] in
-            (start)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(status)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(stop)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(restart)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-        esac
-    ;;
-esac
-;;
-(default-config)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-&& ret=0
-;;
-(config)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help]' \
-'--help[Print help]' \
-":: :_atuin__subcmd__config_commands" \
-"*::: :->config" \
-&& ret=0
-
-    case $state in
-    (config)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-config-command-$line[1]:"
-        case $line[1] in
-            (get)
-_arguments "${_arguments_options[@]}" : \
-'-r[Print the value after defaults and overrides are applied]' \
-'--resolved[Print the value after defaults and overrides are applied]' \
-'-v[Print both the config file value and the resolved value]' \
-'--verbose[Print both the config file value and the resolved value]' \
-'-h[Print help]' \
-'--help[Print help]' \
-':key -- The configuration key to get:_default' \
-&& ret=0
-;;
-(set)
-_arguments "${_arguments_options[@]}" : \
-'-t+[Store value as an explicit type]:TYPE:((auto\:"Automatically determine the type of the value"
-string\:"Store value as a string"
-boolean\:"Store value as a boolean"
-integer\:"Store value as an integer"
-float\:"Store the value as a float"))' \
-'--type=[Store value as an explicit type]:TYPE:((auto\:"Automatically determine the type of the value"
-string\:"Store value as a string"
-boolean\:"Store value as a boolean"
-integer\:"Store value as an integer"
-float\:"Store the value as a float"))' \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-':key -- The configuration key to set:_default' \
-':value -- The value to set:_default' \
-&& ret=0
-;;
-(print)
-_arguments "${_arguments_options[@]}" : \
-'-h[Print help (see more with '\''--help'\'')]' \
-'--help[Print help (see more with '\''--help'\'')]' \
-'::key -- Print the value of a specific key and all its children:_default' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__config__subcmd__help_commands" \
-"*::: :->help" \
-&& ret=0
-
-    case $state in
-    (help)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-config-help-command-$line[1]:"
-        case $line[1] in
-            (get)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(print)
+            (install)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1528,6 +1319,206 @@ _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
+;;
+(wrapped)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'::year -- Year to recap (defaults to last year):_default' \
+&& ret=0
+;;
+(default-config)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_atuin__subcmd__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-config-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+'-r[Print the value after defaults and overrides are applied]' \
+'--resolved[Print the value after defaults and overrides are applied]' \
+'-v[Print both the config file value and the resolved value]' \
+'--verbose[Print both the config file value and the resolved value]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':key -- The configuration key to get:_default' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Store value as an explicit type]:TYPE:((auto\:"Automatically determine the type of the value"
+string\:"Store value as a string"
+boolean\:"Store value as a boolean"
+integer\:"Store value as an integer"
+float\:"Store the value as a float"))' \
+'--type=[Store value as an explicit type]:TYPE:((auto\:"Automatically determine the type of the value"
+string\:"Store value as a string"
+boolean\:"Store value as a boolean"
+integer\:"Store value as an integer"
+float\:"Store the value as a float"))' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':key -- The configuration key to set:_default' \
+':value -- The value to set:_default' \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':feature -- The feature to enable:((daemon\:"Run the daemon, autostart it, and use it for search"
+output-capture\:"Capture command output, via the daemon and the pty proxy"))' \
+&& ret=0
+;;
+(print)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'::key -- Print the value of a specific key and all its children:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__config__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-config-help-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(print)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(info)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(daemon)
+_arguments "${_arguments_options[@]}" : \
+'--daemonize[Internal flag for daemonization]' \
+'--show-logs[Also write daemon logs to the console (useful for debugging)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_atuin__subcmd__daemon_commands" \
+"*::: :->daemon" \
+&& ret=0
+
+    case $state in
+    (daemon)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-daemon-command-$line[1]:"
+        case $line[1] in
+            (start)
+_arguments "${_arguments_options[@]}" : \
+'--daemonize[]' \
+'--show-logs[Also write daemon logs to the console (useful for debugging)]' \
+'--force[Force start\: kill existing daemon process and reset the socket]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(stop)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__daemon__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-daemon-help-command-$line[1]:"
+        case $line[1] in
+            (start)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(stop)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
 ;;
 (__internal)
 _arguments "${_arguments_options[@]}" : \
@@ -1645,135 +1636,23 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-help-command-$line[1]:"
         case $line[1] in
-            (setup)
+            (search)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
-(history)
+(output)
 _arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__help__subcmd__history_commands" \
-"*::: :->history" \
+":: :_atuin__subcmd__help__subcmd__output_commands" \
+"*::: :->output" \
 && ret=0
 
     case $state in
-    (history)
+    (output)
         words=($line[1] "${words[@]}")
         (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-help-history-command-$line[1]:"
+        curcontext="${curcontext%:*:*}:atuin-help-output-command-$line[1]:"
         case $line[1] in
-            (start)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(end)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(tail)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(last)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(init-store)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(prune)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(dedup)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-(hook)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__help__subcmd__hook_commands" \
-"*::: :->hook" \
-&& ret=0
-
-    case $state in
-    (hook)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-help-hook-command-$line[1]:"
-        case $line[1] in
-            (install)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-(import)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__help__subcmd__import_commands" \
-"*::: :->import" \
-&& ret=0
-
-    case $state in
-    (import)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-help-import-command-$line[1]:"
-        case $line[1] in
-            (auto)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(zsh)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(zsh-hist-db)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(bash)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(replxx)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(resh)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(fish)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(nu)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(nu-hist-db)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(xonsh)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(xonsh-sqlite)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(powershell)
+            (search)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1782,10 +1661,6 @@ _arguments "${_arguments_options[@]}" : \
 esac
 ;;
 (stats)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(search)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1852,6 +1727,130 @@ _arguments "${_arguments_options[@]}" : \
         esac
     ;;
 esac
+;;
+(history)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__help__subcmd__history_commands" \
+"*::: :->history" \
+&& ret=0
+
+    case $state in
+    (history)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-help-history-command-$line[1]:"
+        case $line[1] in
+            (start)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(end)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(tail)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(last)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(init-store)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(prune)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(dedup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(setup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(init)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__help__subcmd__import_commands" \
+"*::: :->import" \
+&& ret=0
+
+    case $state in
+    (import)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-help-import-command-$line[1]:"
+        case $line[1] in
+            (auto)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(zsh)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(zsh-hist-db)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(bash)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(replxx)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(resh)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(fish)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(nu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(nu-hist-db)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(xonsh)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(xonsh-sqlite)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(powershell)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(doctor)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
 ;;
 (kv)
 _arguments "${_arguments_options[@]}" : \
@@ -1957,19 +1956,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-help-dotfiles-alias-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(clear)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1989,15 +1976,7 @@ _arguments "${_arguments_options[@]}" : \
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:atuin-help-dotfiles-var-command-$line[1]:"
         case $line[1] in
-            (set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(delete)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(list)
+            (list)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2049,79 +2028,19 @@ _arguments "${_arguments_options[@]}" : \
     ;;
 esac
 ;;
-(init)
+(hook)
 _arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(info)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(doctor)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(wrapped)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(daemon)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__help__subcmd__daemon_commands" \
-"*::: :->daemon" \
+":: :_atuin__subcmd__help__subcmd__hook_commands" \
+"*::: :->hook" \
 && ret=0
 
     case $state in
-    (daemon)
+    (hook)
         words=($line[1] "${words[@]}")
         (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-help-daemon-command-$line[1]:"
+        curcontext="${curcontext%:*:*}:atuin-help-hook-command-$line[1]:"
         case $line[1] in
-            (start)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(status)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(stop)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(restart)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-(default-config)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(config)
-_arguments "${_arguments_options[@]}" : \
-":: :_atuin__subcmd__help__subcmd__config_commands" \
-"*::: :->config" \
-&& ret=0
-
-    case $state in
-    (config)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:atuin-help-config-command-$line[1]:"
-        case $line[1] in
-            (get)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(set)
-_arguments "${_arguments_options[@]}" : \
-&& ret=0
-;;
-(print)
+            (install)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2156,6 +2075,82 @@ esac
 (mcp)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
+;;
+(wrapped)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(default-config)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__help__subcmd__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-help-config-command-$line[1]:"
+        case $line[1] in
+            (get)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(print)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(info)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(daemon)
+_arguments "${_arguments_options[@]}" : \
+":: :_atuin__subcmd__help__subcmd__daemon_commands" \
+"*::: :->daemon" \
+&& ret=0
+
+    case $state in
+    (daemon)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:atuin-help-daemon-command-$line[1]:"
+        case $line[1] in
+            (start)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(stop)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
 ;;
 (__internal)
 _arguments "${_arguments_options[@]}" : \
@@ -2233,12 +2228,9 @@ esac
 (( $+functions[_atuin_commands] )) ||
 _atuin_commands() {
     local commands; commands=(
-'setup:Setup Atuin features' \
-'history:Manipulate shell history' \
-'hook:Manage AI-agent shell hooks' \
-'import:Import shell history from file' \
-'stats:Calculate statistics for your history' \
 'search:Interactive history search' \
+'output:Work with captured command output' \
+'stats:Calculate statistics for your history' \
 'sync:Sync with the configured server' \
 'login:Login to the configured server' \
 'logout:Log out' \
@@ -2246,24 +2238,28 @@ _atuin_commands() {
 'key:Print the encryption key for transfer to another machine' \
 'status:Display the sync status' \
 'account:Manage your sync account' \
+'history:Manipulate shell history' \
+'setup:Setup Atuin features' \
+'init:Print Atuin'\''s shell init script' \
+'import:Import shell history from file' \
+'doctor:Run the doctor to check for common issues' \
 'kv:Get or set small key-value pairs' \
 'store:Manage the atuin data store' \
-'dotfiles:Manage your dotfiles with Atuin' \
+'dotfiles:List legacy synced dotfiles data' \
 'scripts:Manage your scripts with Atuin' \
-'init:Print Atuin'\''s shell init script' \
-'info:Information about dotfiles locations and ENV vars' \
-'doctor:Run the doctor to check for common issues' \
-'wrapped:' \
-'daemon:*Experimental* Manage the background daemon' \
-'default-config:Print the default atuin configuration (config.toml)' \
-'config:' \
+'hook:Manage AI-agent shell hooks' \
 'ai:Run the AI assistant' \
 'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
+'wrapped:Show a fun, year-in-review recap of your shell history' \
+'default-config:Print the default atuin configuration (config.toml)' \
+'config:Get, set, or print values in your atuin config file' \
+'info:Information about Atuin data locations and ENV vars' \
+'daemon:*Experimental* Manage the background daemon' \
 '__internal:Internal subcommands, not for direct use by users' \
 '__internal_:We want to exclude the \`__internal\` subcommand from Clap'\''s \`infer_subcommands\`; otherwise, a user could access it simply by typing \`atuin _\`. However, Clap has no way to disable \`infer_subcommands\` for a single command. As a workaround, we define a dummy command with the same name but with an extra understore, which forces \`__internal\` to be typed out in entirety, since any prefix of the name would be ambiguous' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
-'contributors:' \
+'contributors:List the people who have contributed to Atuin' \
 'gen-completions:Generate shell completions' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -2431,10 +2427,16 @@ _atuin__subcmd__config_commands() {
     local commands; commands=(
 'get:Get a configuration value from your config.toml file or after defaults and overrides are applied' \
 'set:Set a configuration value in your config.toml file' \
+'enable:Enable a feature, along with everything it depends on' \
 'print:Print all configuration values from your config.toml file in TOML format' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin config commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__config__subcmd__enable_commands] )) ||
+_atuin__subcmd__config__subcmd__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin config enable commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__config__subcmd__get_commands] )) ||
 _atuin__subcmd__config__subcmd__get_commands() {
@@ -2446,10 +2448,16 @@ _atuin__subcmd__config__subcmd__help_commands() {
     local commands; commands=(
 'get:Get a configuration value from your config.toml file or after defaults and overrides are applied' \
 'set:Set a configuration value in your config.toml file' \
+'enable:Enable a feature, along with everything it depends on' \
 'print:Print all configuration values from your config.toml file in TOML format' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin config help commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__config__subcmd__help__subcmd__enable_commands] )) ||
+_atuin__subcmd__config__subcmd__help__subcmd__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin config help enable commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__config__subcmd__help__subcmd__get_commands] )) ||
 _atuin__subcmd__config__subcmd__help__subcmd__get_commands() {
@@ -2566,8 +2574,8 @@ _atuin__subcmd__doctor_commands() {
 (( $+functions[_atuin__subcmd__dotfiles_commands] )) ||
 _atuin__subcmd__dotfiles_commands() {
     local commands; commands=(
-'alias:Manage shell aliases with Atuin' \
-'var:Manage shell and environment variables with Atuin' \
+'alias:List legacy shell aliases synced with Atuin' \
+'var:List legacy shell and environment variables synced with Atuin' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin dotfiles commands' commands "$@"
@@ -2575,44 +2583,18 @@ _atuin__subcmd__dotfiles_commands() {
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__alias_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__alias_commands() {
     local commands; commands=(
-'set:Set an alias' \
-'delete:Delete an alias' \
 'list:List all aliases' \
-'clear:Delete all aliases' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin dotfiles alias commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__clear_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__alias__subcmd__clear_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles alias clear commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__delete_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__alias__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles alias delete commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__alias__subcmd__help_commands() {
     local commands; commands=(
-'set:Set an alias' \
-'delete:Delete an alias' \
 'list:List all aliases' \
-'clear:Delete all aliases' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin dotfiles alias help commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__clear_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__clear_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles alias help clear commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__delete_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles alias help delete commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__help_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__help_commands() {
@@ -2624,26 +2606,16 @@ _atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin dotfiles alias help list commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__set_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles alias help set commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__list_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__alias__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin dotfiles alias list commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__alias__subcmd__set_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__alias__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles alias set commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__help_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__help_commands() {
     local commands; commands=(
-'alias:Manage shell aliases with Atuin' \
-'var:Manage shell and environment variables with Atuin' \
+'alias:List legacy shell aliases synced with Atuin' \
+'var:List legacy shell and environment variables synced with Atuin' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin dotfiles help commands' commands "$@"
@@ -2651,32 +2623,14 @@ _atuin__subcmd__dotfiles__subcmd__help_commands() {
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__help__subcmd__alias_commands() {
     local commands; commands=(
-'set:Set an alias' \
-'delete:Delete an alias' \
 'list:List all aliases' \
-'clear:Delete all aliases' \
     )
     _describe -t commands 'atuin dotfiles help alias commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__clear_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__clear_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles help alias clear commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__delete_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles help alias delete commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__list_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin dotfiles help alias list commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__set_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles help alias set commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__help_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__help__subcmd__help_commands() {
@@ -2686,56 +2640,30 @@ _atuin__subcmd__dotfiles__subcmd__help__subcmd__help_commands() {
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__var_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__help__subcmd__var_commands() {
     local commands; commands=(
-'set:Set a variable' \
-'delete:Delete a variable' \
 'list:List all variables' \
     )
     _describe -t commands 'atuin dotfiles help var commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__delete_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles help var delete commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__list_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin dotfiles help var list commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__set_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles help var set commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__var_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__var_commands() {
     local commands; commands=(
-'set:Set a variable' \
-'delete:Delete a variable' \
 'list:List all variables' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin dotfiles var commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__delete_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__var__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles var delete commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__help_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__var__subcmd__help_commands() {
     local commands; commands=(
-'set:Set a variable' \
-'delete:Delete a variable' \
 'list:List all variables' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'atuin dotfiles var help commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__delete_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles var help delete commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__help_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__help_commands() {
@@ -2747,20 +2675,10 @@ _atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin dotfiles var help list commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__set_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles var help set commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__list_commands] )) ||
 _atuin__subcmd__dotfiles__subcmd__var__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin dotfiles var list commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__dotfiles__subcmd__var__subcmd__set_commands] )) ||
-_atuin__subcmd__dotfiles__subcmd__var__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin dotfiles var set commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__gen-completions_commands] )) ||
 _atuin__subcmd__gen-completions_commands() {
@@ -2770,12 +2688,9 @@ _atuin__subcmd__gen-completions_commands() {
 (( $+functions[_atuin__subcmd__help_commands] )) ||
 _atuin__subcmd__help_commands() {
     local commands; commands=(
-'setup:Setup Atuin features' \
-'history:Manipulate shell history' \
-'hook:Manage AI-agent shell hooks' \
-'import:Import shell history from file' \
-'stats:Calculate statistics for your history' \
 'search:Interactive history search' \
+'output:Work with captured command output' \
+'stats:Calculate statistics for your history' \
 'sync:Sync with the configured server' \
 'login:Login to the configured server' \
 'logout:Log out' \
@@ -2783,24 +2698,28 @@ _atuin__subcmd__help_commands() {
 'key:Print the encryption key for transfer to another machine' \
 'status:Display the sync status' \
 'account:Manage your sync account' \
+'history:Manipulate shell history' \
+'setup:Setup Atuin features' \
+'init:Print Atuin'\''s shell init script' \
+'import:Import shell history from file' \
+'doctor:Run the doctor to check for common issues' \
 'kv:Get or set small key-value pairs' \
 'store:Manage the atuin data store' \
-'dotfiles:Manage your dotfiles with Atuin' \
+'dotfiles:List legacy synced dotfiles data' \
 'scripts:Manage your scripts with Atuin' \
-'init:Print Atuin'\''s shell init script' \
-'info:Information about dotfiles locations and ENV vars' \
-'doctor:Run the doctor to check for common issues' \
-'wrapped:' \
-'daemon:*Experimental* Manage the background daemon' \
-'default-config:Print the default atuin configuration (config.toml)' \
-'config:' \
+'hook:Manage AI-agent shell hooks' \
 'ai:Run the AI assistant' \
 'mcp:Start an MCP server exposing history search to AI tools (stdio)' \
+'wrapped:Show a fun, year-in-review recap of your shell history' \
+'default-config:Print the default atuin configuration (config.toml)' \
+'config:Get, set, or print values in your atuin config file' \
+'info:Information about Atuin data locations and ENV vars' \
+'daemon:*Experimental* Manage the background daemon' \
 '__internal:Internal subcommands, not for direct use by users' \
 '__internal_:We want to exclude the \`__internal\` subcommand from Clap'\''s \`infer_subcommands\`; otherwise, a user could access it simply by typing \`atuin _\`. However, Clap has no way to disable \`infer_subcommands\` for a single command. As a workaround, we define a dummy command with the same name but with an extra understore, which forces \`__internal\` to be typed out in entirety, since any prefix of the name would be ambiguous' \
 'pty-proxy:PTY proxy for atuin' \
 'uuid:Generate a UUID' \
-'contributors:' \
+'contributors:List the people who have contributed to Atuin' \
 'gen-completions:Generate shell completions' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -2894,9 +2813,15 @@ _atuin__subcmd__help__subcmd__config_commands() {
     local commands; commands=(
 'get:Get a configuration value from your config.toml file or after defaults and overrides are applied' \
 'set:Set a configuration value in your config.toml file' \
+'enable:Enable a feature, along with everything it depends on' \
 'print:Print all configuration values from your config.toml file in TOML format' \
     )
     _describe -t commands 'atuin help config commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__config__subcmd__enable_commands] )) ||
+_atuin__subcmd__help__subcmd__config__subcmd__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help config enable commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__config__subcmd__get_commands] )) ||
 _atuin__subcmd__help__subcmd__config__subcmd__get_commands() {
@@ -2961,64 +2886,34 @@ _atuin__subcmd__help__subcmd__doctor_commands() {
 (( $+functions[_atuin__subcmd__help__subcmd__dotfiles_commands] )) ||
 _atuin__subcmd__help__subcmd__dotfiles_commands() {
     local commands; commands=(
-'alias:Manage shell aliases with Atuin' \
-'var:Manage shell and environment variables with Atuin' \
+'alias:List legacy shell aliases synced with Atuin' \
+'var:List legacy shell and environment variables synced with Atuin' \
     )
     _describe -t commands 'atuin help dotfiles commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias_commands] )) ||
 _atuin__subcmd__help__subcmd__dotfiles__subcmd__alias_commands() {
     local commands; commands=(
-'set:Set an alias' \
-'delete:Delete an alias' \
 'list:List all aliases' \
-'clear:Delete all aliases' \
     )
     _describe -t commands 'atuin help dotfiles alias commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__clear_commands] )) ||
-_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__clear_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin help dotfiles alias clear commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__delete_commands] )) ||
-_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin help dotfiles alias delete commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__list_commands] )) ||
 _atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin help dotfiles alias list commands' commands "$@"
 }
-(( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__set_commands] )) ||
-_atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin help dotfiles alias set commands' commands "$@"
-}
 (( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__var_commands] )) ||
 _atuin__subcmd__help__subcmd__dotfiles__subcmd__var_commands() {
     local commands; commands=(
-'set:Set a variable' \
-'delete:Delete a variable' \
 'list:List all variables' \
     )
     _describe -t commands 'atuin help dotfiles var commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__delete_commands] )) ||
-_atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__delete_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin help dotfiles var delete commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__list_commands] )) ||
 _atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__list_commands() {
     local commands; commands=()
     _describe -t commands 'atuin help dotfiles var list commands' commands "$@"
-}
-(( $+functions[_atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__set_commands] )) ||
-_atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__set_commands() {
-    local commands; commands=()
-    _describe -t commands 'atuin help dotfiles var set commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__gen-completions_commands] )) ||
 _atuin__subcmd__help__subcmd__gen-completions_commands() {
@@ -3239,6 +3134,18 @@ _atuin__subcmd__help__subcmd__logout_commands() {
 _atuin__subcmd__help__subcmd__mcp_commands() {
     local commands; commands=()
     _describe -t commands 'atuin help mcp commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__output_commands] )) ||
+_atuin__subcmd__help__subcmd__output_commands() {
+    local commands; commands=(
+'search:Full-text search over captured command output' \
+    )
+    _describe -t commands 'atuin help output commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__help__subcmd__output__subcmd__search_commands] )) ||
+_atuin__subcmd__help__subcmd__output__subcmd__search_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin help output search commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__help__subcmd__pty-proxy_commands] )) ||
 _atuin__subcmd__help__subcmd__pty-proxy_commands() {
@@ -3799,6 +3706,37 @@ _atuin__subcmd__logout_commands() {
 _atuin__subcmd__mcp_commands() {
     local commands; commands=()
     _describe -t commands 'atuin mcp commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__output_commands] )) ||
+_atuin__subcmd__output_commands() {
+    local commands; commands=(
+'search:Full-text search over captured command output' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'atuin output commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__output__subcmd__help_commands] )) ||
+_atuin__subcmd__output__subcmd__help_commands() {
+    local commands; commands=(
+'search:Full-text search over captured command output' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'atuin output help commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__output__subcmd__help__subcmd__help_commands] )) ||
+_atuin__subcmd__output__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin output help help commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__output__subcmd__help__subcmd__search_commands] )) ||
+_atuin__subcmd__output__subcmd__help__subcmd__search_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin output help search commands' commands "$@"
+}
+(( $+functions[_atuin__subcmd__output__subcmd__search_commands] )) ||
+_atuin__subcmd__output__subcmd__search_commands() {
+    local commands; commands=()
+    _describe -t commands 'atuin output search commands' commands "$@"
 }
 (( $+functions[_atuin__subcmd__pty-proxy_commands] )) ||
 _atuin__subcmd__pty-proxy_commands() {

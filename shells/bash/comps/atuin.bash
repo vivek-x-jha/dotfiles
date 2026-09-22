@@ -84,6 +84,9 @@ _atuin() {
             atuin,mcp)
                 cmd="atuin__subcmd__mcp"
                 ;;
+            atuin,output)
+                cmd="atuin__subcmd__output"
+                ;;
             atuin,pty-proxy)
                 cmd="atuin__subcmd__pty__subcmd__proxy"
                 ;;
@@ -183,6 +186,9 @@ _atuin() {
             atuin__subcmd__ai__subcmd__help,inline)
                 cmd="atuin__subcmd__ai__subcmd__help__subcmd__inline"
                 ;;
+            atuin__subcmd__config,enable)
+                cmd="atuin__subcmd__config__subcmd__enable"
+                ;;
             atuin__subcmd__config,get)
                 cmd="atuin__subcmd__config__subcmd__get"
                 ;;
@@ -194,6 +200,9 @@ _atuin() {
                 ;;
             atuin__subcmd__config,set)
                 cmd="atuin__subcmd__config__subcmd__set"
+                ;;
+            atuin__subcmd__config__subcmd__help,enable)
+                cmd="atuin__subcmd__config__subcmd__help__subcmd__enable"
                 ;;
             atuin__subcmd__config__subcmd__help,get)
                 cmd="atuin__subcmd__config__subcmd__help__subcmd__get"
@@ -246,35 +255,17 @@ _atuin() {
             atuin__subcmd__dotfiles,var)
                 cmd="atuin__subcmd__dotfiles__subcmd__var"
                 ;;
-            atuin__subcmd__dotfiles__subcmd__alias,clear)
-                cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__clear"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__alias,delete)
-                cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__delete"
-                ;;
             atuin__subcmd__dotfiles__subcmd__alias,help)
                 cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__help"
                 ;;
             atuin__subcmd__dotfiles__subcmd__alias,list)
                 cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__list"
                 ;;
-            atuin__subcmd__dotfiles__subcmd__alias,set)
-                cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__set"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__alias__subcmd__help,clear)
-                cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__clear"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__alias__subcmd__help,delete)
-                cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__delete"
-                ;;
             atuin__subcmd__dotfiles__subcmd__alias__subcmd__help,help)
                 cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__help"
                 ;;
             atuin__subcmd__dotfiles__subcmd__alias__subcmd__help,list)
                 cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__list"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__alias__subcmd__help,set)
-                cmd="atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__set"
                 ;;
             atuin__subcmd__dotfiles__subcmd__help,alias)
                 cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__alias"
@@ -285,29 +276,11 @@ _atuin() {
             atuin__subcmd__dotfiles__subcmd__help,var)
                 cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__var"
                 ;;
-            atuin__subcmd__dotfiles__subcmd__help__subcmd__alias,clear)
-                cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__clear"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__help__subcmd__alias,delete)
-                cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__delete"
-                ;;
             atuin__subcmd__dotfiles__subcmd__help__subcmd__alias,list)
                 cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__list"
                 ;;
-            atuin__subcmd__dotfiles__subcmd__help__subcmd__alias,set)
-                cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__set"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__help__subcmd__var,delete)
-                cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__delete"
-                ;;
             atuin__subcmd__dotfiles__subcmd__help__subcmd__var,list)
                 cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__list"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__help__subcmd__var,set)
-                cmd="atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__set"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__var,delete)
-                cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__delete"
                 ;;
             atuin__subcmd__dotfiles__subcmd__var,help)
                 cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__help"
@@ -315,20 +288,11 @@ _atuin() {
             atuin__subcmd__dotfiles__subcmd__var,list)
                 cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__list"
                 ;;
-            atuin__subcmd__dotfiles__subcmd__var,set)
-                cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__set"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__var__subcmd__help,delete)
-                cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__delete"
-                ;;
             atuin__subcmd__dotfiles__subcmd__var__subcmd__help,help)
                 cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__help"
                 ;;
             atuin__subcmd__dotfiles__subcmd__var__subcmd__help,list)
                 cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__list"
-                ;;
-            atuin__subcmd__dotfiles__subcmd__var__subcmd__help,set)
-                cmd="atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__set"
                 ;;
             atuin__subcmd__help,__internal)
                 cmd="atuin__subcmd__help__subcmd____internal"
@@ -396,6 +360,9 @@ _atuin() {
             atuin__subcmd__help,mcp)
                 cmd="atuin__subcmd__help__subcmd__mcp"
                 ;;
+            atuin__subcmd__help,output)
+                cmd="atuin__subcmd__help__subcmd__output"
+                ;;
             atuin__subcmd__help,pty-proxy)
                 cmd="atuin__subcmd__help__subcmd__pty__subcmd__proxy"
                 ;;
@@ -459,6 +426,9 @@ _atuin() {
             atuin__subcmd__help__subcmd__ai,inline)
                 cmd="atuin__subcmd__help__subcmd__ai__subcmd__inline"
                 ;;
+            atuin__subcmd__help__subcmd__config,enable)
+                cmd="atuin__subcmd__help__subcmd__config__subcmd__enable"
+                ;;
             atuin__subcmd__help__subcmd__config,get)
                 cmd="atuin__subcmd__help__subcmd__config__subcmd__get"
                 ;;
@@ -486,26 +456,11 @@ _atuin() {
             atuin__subcmd__help__subcmd__dotfiles,var)
                 cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__var"
                 ;;
-            atuin__subcmd__help__subcmd__dotfiles__subcmd__alias,clear)
-                cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__clear"
-                ;;
-            atuin__subcmd__help__subcmd__dotfiles__subcmd__alias,delete)
-                cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__delete"
-                ;;
             atuin__subcmd__help__subcmd__dotfiles__subcmd__alias,list)
                 cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__list"
                 ;;
-            atuin__subcmd__help__subcmd__dotfiles__subcmd__alias,set)
-                cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__set"
-                ;;
-            atuin__subcmd__help__subcmd__dotfiles__subcmd__var,delete)
-                cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__delete"
-                ;;
             atuin__subcmd__help__subcmd__dotfiles__subcmd__var,list)
                 cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__list"
-                ;;
-            atuin__subcmd__help__subcmd__dotfiles__subcmd__var,set)
-                cmd="atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__set"
                 ;;
             atuin__subcmd__help__subcmd__history,dedup)
                 cmd="atuin__subcmd__help__subcmd__history__subcmd__dedup"
@@ -584,6 +539,9 @@ _atuin() {
                 ;;
             atuin__subcmd__help__subcmd__kv,set)
                 cmd="atuin__subcmd__help__subcmd__kv__subcmd__set"
+                ;;
+            atuin__subcmd__help__subcmd__output,search)
+                cmd="atuin__subcmd__help__subcmd__output__subcmd__search"
                 ;;
             atuin__subcmd__help__subcmd__pty__subcmd__proxy,init)
                 cmd="atuin__subcmd__help__subcmd__pty__subcmd__proxy__subcmd__init"
@@ -807,6 +765,18 @@ _atuin() {
             atuin__subcmd__kv__subcmd__help,set)
                 cmd="atuin__subcmd__kv__subcmd__help__subcmd__set"
                 ;;
+            atuin__subcmd__output,help)
+                cmd="atuin__subcmd__output__subcmd__help"
+                ;;
+            atuin__subcmd__output,search)
+                cmd="atuin__subcmd__output__subcmd__search"
+                ;;
+            atuin__subcmd__output__subcmd__help,help)
+                cmd="atuin__subcmd__output__subcmd__help__subcmd__help"
+                ;;
+            atuin__subcmd__output__subcmd__help,search)
+                cmd="atuin__subcmd__output__subcmd__help__subcmd__search"
+                ;;
             atuin__subcmd__pty__subcmd__proxy,help)
                 cmd="atuin__subcmd__pty__subcmd__proxy__subcmd__help"
                 ;;
@@ -916,7 +886,7 @@ _atuin() {
 
     case "${cmd}" in
         atuin)
-            opts="-h -V --help --version setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp __internal __internal_ pty-proxy uuid contributors gen-completions help"
+            opts="-h -V --help --version search output stats sync login logout register key status account history setup init import doctor kv store dotfiles scripts hook ai mcp wrapped default-config config info daemon __internal __internal_ pty-proxy uuid contributors gen-completions help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1398,8 +1368,22 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__config)
-            opts="-h --help get set print help"
+            opts="-h --help get set enable print help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__config__subcmd__enable)
+            opts="-h --help daemon output-capture"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -1426,8 +1410,22 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__config__subcmd__help)
-            opts="get set print help"
+            opts="get set enable print help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__config__subcmd__help__subcmd__enable)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -1742,7 +1740,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__alias)
-            opts="-h --help set delete list clear help"
+            opts="-h --help list help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1755,65 +1753,9 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__dotfiles__subcmd__alias__subcmd__clear)
-            opts="-h --help"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__alias__subcmd__delete)
-            opts="-h --help"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__dotfiles__subcmd__alias__subcmd__help)
-            opts="set delete list clear help"
+            opts="list help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__clear)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__delete)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -1840,20 +1782,6 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__list)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__alias__subcmd__help__subcmd__set)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -1901,20 +1829,6 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__dotfiles__subcmd__alias__subcmd__set)
-            opts="-h --help"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__dotfiles__subcmd__help)
             opts="alias var help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
@@ -1930,7 +1844,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__help__subcmd__alias)
-            opts="set delete list clear"
+            opts="list"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -1943,49 +1857,7 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__clear)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__delete)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__list)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__help__subcmd__alias__subcmd__set)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -2014,22 +1886,8 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__help__subcmd__var)
-            opts="set delete list"
+            opts="list"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__delete)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -2055,22 +1913,8 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__dotfiles__subcmd__help__subcmd__var__subcmd__set)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__dotfiles__subcmd__var)
-            opts="-h --help set delete list help"
+            opts="-h --help list help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2083,37 +1927,9 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__dotfiles__subcmd__var__subcmd__delete)
-            opts="-h --help"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__dotfiles__subcmd__var__subcmd__help)
-            opts="set delete list help"
+            opts="list help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__delete)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -2140,20 +1956,6 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__list)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__dotfiles__subcmd__var__subcmd__help__subcmd__set)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -2201,20 +2003,6 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__dotfiles__subcmd__var__subcmd__set)
-            opts="-n -h --no-export --help"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__gen__subcmd__completions)
             opts="-s -o -h --shell --out-dir --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
@@ -2246,7 +2034,7 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help)
-            opts="setup history hook import stats search sync login logout register key status account kv store dotfiles scripts init info doctor wrapped daemon default-config config ai mcp __internal __internal_ pty-proxy uuid contributors gen-completions help"
+            opts="search output stats sync login logout register key status account history setup init import doctor kv store dotfiles scripts hook ai mcp wrapped default-config config info daemon __internal __internal_ pty-proxy uuid contributors gen-completions help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2456,8 +2244,22 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help__subcmd__config)
-            opts="get set print"
+            opts="get set enable print"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd__config__subcmd__enable)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -2638,36 +2440,8 @@ _atuin() {
             return 0
             ;;
         atuin__subcmd__help__subcmd__dotfiles__subcmd__alias)
-            opts="set delete list clear"
+            opts="list"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__clear)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__delete)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -2693,22 +2467,8 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__help__subcmd__dotfiles__subcmd__alias__subcmd__set)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__help__subcmd__dotfiles__subcmd__var)
-            opts="set delete list"
+            opts="list"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -2721,35 +2481,7 @@ _atuin() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__delete)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
         atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__list)
-            opts=""
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        atuin__subcmd__help__subcmd__dotfiles__subcmd__var__subcmd__set)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 5 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -3284,6 +3016,34 @@ _atuin() {
         atuin__subcmd__help__subcmd__mcp)
             opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd__output)
+            opts="search"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__help__subcmd__output__subcmd__search)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
@@ -4770,6 +4530,92 @@ _atuin() {
                 return 0
             fi
             case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__output)
+            opts="-h --help search help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__output__subcmd__help)
+            opts="search help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__output__subcmd__help__subcmd__help)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__output__subcmd__help__subcmd__search)
+            opts=""
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 4 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        atuin__subcmd__output__subcmd__search)
+            opts="-C -h --limit --context --style --help"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                --limit)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --context)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                -C)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --style)
+                    COMPREPLY=($(compgen -W "auto plain pretty json ndjson" -- "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;
