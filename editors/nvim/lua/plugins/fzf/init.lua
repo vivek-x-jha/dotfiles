@@ -1,3 +1,7 @@
+-- Keep fzf-lua's socket below macOS's Unix-domain path limit.
+local fzf_state = vim.fn.stdpath 'state' .. '/fzf-lua'
+vim.uv.fs_mkdir(fzf_state, 0x1c0)
+vim.g.fzf_lua_server = vim.fn.serverstart(fzf_state .. '/fzf-lua-' .. vim.fn.getpid())
 ---@type table<string, string> Custom icons
 local icons = require 'ui.icons'
 local previewers = require 'fzf-lua.previewer'
