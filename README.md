@@ -321,7 +321,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 - [Neovim](https://neovim.io/) config lives in [`editors/nvim`](./editors/nvim).
 - Neovim plugins are managed with native [`vim.pack`](https://neovim.io/doc/user/pack.html).
-- [bob](https://github.com/MordechaiHadad/bob) manages Neovim stable/nightly installs.
+- [bob](https://github.com/MordechaiHadad/bob) manages Neovim stable/nightly installs under `$XDG_DATA_HOME/bob`; the shell owns its PATH entry.
 - [uv](https://docs.astral.sh/uv/) installs Python tools such as `basedpyright` and `ruff`.
 - VS Code settings live in [`editors/vscode`](./editors/vscode).
 

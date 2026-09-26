@@ -1,0 +1,5 @@
+{
+  "downloads_location": "$XDG_DATA_HOME/bob",
+  "installation_location": "$XDG_DATA_HOME/bob/nvim-bin",
+  "add_neovim_binary_to_path": false
+}

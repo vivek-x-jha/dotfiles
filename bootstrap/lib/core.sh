@@ -320,6 +320,7 @@ init_xdg() {
 init_tool_environment() {
   export CARGO_HOME="${CARGO_HOME:-$XDG_DATA_HOME/cargo}"
   export RUSTUP_HOME="${RUSTUP_HOME:-$XDG_DATA_HOME/rustup}"
+  export BOB_CONFIG="${BOB_CONFIG:-$BOOTSTRAP_ROOT/cli/bob/config.json}"
   export PATH="$HOME/.local/bin:$XDG_DATA_HOME/fzf/bin:$CARGO_HOME/bin:$XDG_DATA_HOME/bob/nvim-bin:$PATH"
 }
 

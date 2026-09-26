@@ -108,6 +108,7 @@ check_bootstrap() {
   check_path "$BOOTSTRAP_ROOT/shells/starship.toml"
   check_path "$BOOTSTRAP_ROOT/launchd/com.mubuntu.xdg-environment.plist"
   check_path "$BOOTSTRAP_ROOT/launchd/set-xdg-environment.sh"
+  check_path "$BOOTSTRAP_ROOT/cli/bob/config.json"
   check_path "$BOOTSTRAP_ROOT/cli/fzf/config"
   check_path "$BOOTSTRAP_ROOT/ai/herdr/config.toml"
   check_path "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-claude-title-watch"

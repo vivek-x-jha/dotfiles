@@ -16,6 +16,7 @@ if [[ -z ${DOTFILES_DIR:-} && -r $XDG_STATE_HOME/dotfiles/root ]]; then
   IFS= read -r DOTFILES_DIR <"$XDG_STATE_HOME/dotfiles/root"
 fi
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+export BOB_CONFIG="$DOTFILES_DIR/cli/bob/config.json"
 
 # Homebrew (MacOS only)
 [[ $(uname) == Darwin ]] && {
