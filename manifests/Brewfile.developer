@@ -19,7 +19,6 @@ brew "pandoc"
 brew "perl"
 brew "pkgconf"
 brew "protobuf"
-brew "rainfrog"
 brew "stylua"
 brew "switchaudio-osx"
 
