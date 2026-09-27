@@ -70,7 +70,7 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | `green` | 5 · filekinds.executable, perms.user_execute_file | — |
 | `yellow` | 8 · filekinds.symlink, perms.user_read | — |
 | `blue` | 2 · filekinds.directory, size.number_huge | — |
-| `magenta` | 30 · filenames..blerc.filename, filenames..blerc.icon.style | 25 · config, index.html |
+| `magenta` | 28 · filenames..blerc.filename, filenames..blerc.icon.style | 24 · config, index.html |
 | `cyan` | 22 · filekinds.socket, size.number_kilo | 32 · sourdiesel, sourdiesel.json |
 | `white` | 14 · filenames.allowed_signers.filename, filenames.allow… | 41 · sh, js |
 | `brightblack` | 70 · users.user_you, users.group_yours | 37 · .gitkeep, .hushlogin |
@@ -88,28 +88,28 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## Syntax and editors
 
-| Color | Neovim | zsh-patina | ble.sh | bat | Glow | VS Code |
-| --- | --- | --- | --- | --- | --- | --- |
-| `black` | 37 · ColorColumn, Error | 4 · line 95, line 96 | — | 2 · line 110, line 879 | 2 · color | 7 · variable, operator |
-| `red` | 32 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 6 · line 97, line 669 | 2 · color | 10 · enum, number |
-| `green` | 32 · Added, ModeMsg | 11 · line 9, line 10 | 7 · command_alias, command_builtin | 5 · line 31, line 71 | 1 · color | 8 · string, settings |
-| `yellow` | 44 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 9 · line 84, line 136 | 3 · color | 10 · type, typeParameter |
-| `blue` | 43 · Directory, Question | 7 · line 32, line 33 | 3 · command_directory, filename_directory | 11 · line 175, line 422 | 6 · color | 13 · function, method |
-| `magenta` | 69 · Exception, FloatTitle | 18 · line 11, line 12 | 2 · command_keyword, syntax_history_expansion | 20 · line 149, line 162 | 4 · color | 8 · keyword, modifier |
-| `cyan` | 24 · Character, Delimiter | — | — | — | 1 · color | 9 · regexp, settings |
-| `white` | 75 · Debug, Macro | 20 · line 63, line 68 | 12 · syntax_document, syntax_document_begin | 14 · line 21, line 45 | 2 · color | 26 · variable.readonly, parameter |
-| `brightblack` | 39 · Comment, TabLine | 3 · line 4, line 5 | 18 · auto_complete, cmdinfo_cd_cdpath | 3 · line 35, line 58 | 5 · color | 20 · foreground, settings |
-| `brightred` | 25 · MatchWord, Substitute | — | — | 2 · line 253, line 1156 | 1 · color | 4 · list.errorForeground, editorError.foreground |
-| `brightgreen` | 13 · PmenuSel, SpectreReplace | — | 2 · filename_directory_sticky, filename_executable | — | 3 · color | 2 · terminal.ansiBrightGreen, gitDecoration.untrackedRe… |
-| `brightyellow` | 23 · qfLineNr, YankFlash | 6 · line 65, line 66 | 5 · argument_option, filename_setgid | — | — | 4 · settings, list.warningForeground |
-| `brightblue` | 16 · FoldColumn, @comment.todo | — | 1 · cmdinfo_cd_cdpath | — | — | 3 · editorInfo.foreground, terminal.ansiBrightBlue |
-| `brightmagenta` | 17 · CursorLineNr, CursorLineFold | — | 1 · region_target | 2 · line 695, line 1091 | — | 9 · focusBorder, statusBarItem.remoteForeground |
-| `brightcyan` | 12 · TabLineSel, @comment.note | — | 2 · filename_orphan, overwrite_mode | — | — | 1 · terminal.ansiBrightCyan |
-| `brightwhite` | 7 · @markup.heading.4.markdown, RenderMarkdownH4 | — | — | — | 1 · color | 8 · list.activeSelectionForeground, list.hoverForeground |
-| `dark` | 3 · Pmenu, PmenuSbar | — | — | — | — | 14 · activityBarBadge.foreground, badge.foreground |
-| `grey` | 35 · Cursor, CursorColumn | — | — | — | 1 · background_color | 28 · titleBar.border, statusBar.border |
-| `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | — | 3 · statusBar.background, statusBar.debuggingBackground |
-| `terminal_surface` | 1 · line 122 | — | — | — | — | 11 · activityBar.background, titleBar.activeBackground |
+| Color | Neovim | zsh-patina | ble.sh | bat | VS Code |
+| --- | --- | --- | --- | --- | --- |
+| `black` | 37 · ColorColumn, Error | 4 · line 95, line 96 | — | 2 · line 110, line 879 | 7 · variable, operator |
+| `red` | 32 · DevIconDefault, ErrorMsg | 7 · line 18, line 19 | 4 · argument_error, syntax_error | 6 · line 97, line 669 | 10 · enum, number |
+| `green` | 32 · Added, ModeMsg | 11 · line 9, line 10 | 7 · command_alias, command_builtin | 5 · line 31, line 71 | 8 · string, settings |
+| `yellow` | 44 · Changed, WildMenu | 5 · line 53, line 54 | 2 · syntax_escape, syntax_expr | 9 · line 84, line 136 | 10 · type, typeParameter |
+| `blue` | 43 · Directory, Question | 7 · line 32, line 33 | 3 · command_directory, filename_directory | 11 · line 175, line 422 | 13 · function, method |
+| `magenta` | 69 · Exception, FloatTitle | 18 · line 11, line 12 | 2 · command_keyword, syntax_history_expansion | 20 · line 149, line 162 | 8 · keyword, modifier |
+| `cyan` | 24 · Character, Delimiter | — | — | — | 9 · regexp, settings |
+| `white` | 75 · Debug, Macro | 20 · line 63, line 68 | 12 · syntax_document, syntax_document_begin | 14 · line 21, line 45 | 26 · variable.readonly, parameter |
+| `brightblack` | 39 · Comment, TabLine | 3 · line 4, line 5 | 18 · auto_complete, cmdinfo_cd_cdpath | 3 · line 35, line 58 | 20 · foreground, settings |
+| `brightred` | 25 · MatchWord, Substitute | — | — | 2 · line 253, line 1156 | 4 · list.errorForeground, editorError.foreground |
+| `brightgreen` | 13 · PmenuSel, SpectreReplace | — | 2 · filename_directory_sticky, filename_executable | — | 2 · terminal.ansiBrightGreen, gitDecoration.untrackedRe… |
+| `brightyellow` | 23 · qfLineNr, YankFlash | 6 · line 65, line 66 | 5 · argument_option, filename_setgid | — | 4 · settings, list.warningForeground |
+| `brightblue` | 16 · FoldColumn, @comment.todo | — | 1 · cmdinfo_cd_cdpath | — | 3 · editorInfo.foreground, terminal.ansiBrightBlue |
+| `brightmagenta` | 17 · CursorLineNr, CursorLineFold | — | 1 · region_target | 2 · line 695, line 1091 | 9 · focusBorder, statusBarItem.remoteForeground |
+| `brightcyan` | 12 · TabLineSel, @comment.note | — | 2 · filename_orphan, overwrite_mode | — | 1 · terminal.ansiBrightCyan |
+| `brightwhite` | 7 · @markup.heading.4.markdown, RenderMarkdownH4 | — | — | — | 8 · list.activeSelectionForeground, list.hoverForeground |
+| `dark` | 3 · Pmenu, PmenuSbar | — | — | — | 14 · activityBarBadge.foreground, badge.foreground |
+| `grey` | 35 · Cursor, CursorColumn | — | — | — | 28 · titleBar.border, statusBar.border |
+| `nvim_statusline` | 32 · StatusLine, StatusLineNC | — | — | — | 3 · statusBar.background, statusBar.debuggingBackground |
+| `terminal_surface` | 1 · line 122 | — | — | — | 11 · activityBar.background, titleBar.activeBackground |
 
 ## Application UI
 
@@ -138,11 +138,11 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 ## File and icon mappings
 
-<details><summary>eva: 135 colored mappings</summary>
+<details><summary>eva: 134 colored mappings</summary>
 
 - `black` (7): `filenames:.luarc.json`, `filenames:.state.itermexport`, `filenames:.vale.ini`, `filenames:_update-notifier-last-checked`, `filenames:CODEOWNERS`, `filenames:id_ed25519.pub`, `filenames:session_index.jsonl`
 - `red` (15): `filenames:.histfile`, `filenames:.history`, `filenames:.mycli_history`, `filenames:.mysql_history`, `filenames:.zlua`, `filenames:hist`, `filenames:histfile`, `filenames:history`, `filenames:history.jsonl`, `filenames:log`, `filenames:metadata.yaml`, `filenames:p10k-dump-mubuntu.zsh`, `filenames:p10k-instant-prompt-mubuntu.zsh`, `filenames:prompt-21`, `filenames:prompt-29`
-- `magenta` (15): `filenames:.blerc`, `filenames:agent.toml`, `filenames:btop.conf`, `filenames:env`, `filenames:extensions.json`, `filenames:glow.yml`, `filenames:index.html`, `filenames:init.lua`, `filenames:karabiner.json`, `filenames:main.py`, `filenames:matplotlibrc`, `filenames:npmrc`, `filenames:starship.toml`, `filenames:tmux.conf`, `filenames:wezterm.lua`
+- `magenta` (14): `filenames:.blerc`, `filenames:agent.toml`, `filenames:btop.conf`, `filenames:env`, `filenames:extensions.json`, `filenames:index.html`, `filenames:init.lua`, `filenames:karabiner.json`, `filenames:main.py`, `filenames:matplotlibrc`, `filenames:npmrc`, `filenames:starship.toml`, `filenames:tmux.conf`, `filenames:wezterm.lua`
 - `cyan` (10): `filenames:.sqlite`, `filenames:.sqlite-shm`, `filenames:.sqlite-wal`, `filenames:secrets`, `filenames:sourdiesel`, `filenames:sourdiesel.json`, `filenames:sourdiesel.lua`, `filenames:sourdiesel.terminal`, `filenames:sourdiesel.toml`, `filenames:theme.yml`
 - `white` (7): `filenames:aliases`, `filenames:allowed_signers`, `filenames:auth.key.pub`, `filenames:bootstrap.sh`, `filenames:known_hosts`, `filenames:profile`, `filenames:signing.key.pub`
 - `brightblack` (34): `filenames:.file`, `filenames:.gitkeep`, `filenames:.netrwhist`, `filenames:Icon\r`, `filenames:icon\r`, `filenames:main.shada`, `filenames:main.shada.tmp.a`, `filenames:main.shada.tmp.b`, `filenames:main.shada.tmp.c`, `filenames:main.shada.tmp.d`, `filenames:main.shada.tmp.e`, `filenames:main.shada.tmp.f`, `filenames:main.shada.tmp.g`, `filenames:main.shada.tmp.h`, `filenames:main.shada.tmp.i`, `filenames:main.shada.tmp.j`, `filenames:main.shada.tmp.k`, `filenames:main.shada.tmp.l`, `filenames:main.shada.tmp.m`, `filenames:main.shada.tmp.n`, `filenames:main.shada.tmp.o`, `filenames:main.shada.tmp.p`, `filenames:main.shada.tmp.q`, `filenames:main.shada.tmp.r`, `filenames:main.shada.tmp.s`, `filenames:main.shada.tmp.t`, `filenames:main.shada.tmp.u`, `filenames:main.shada.tmp.v`, `filenames:main.shada.tmp.w`, `filenames:main.shada.tmp.x`, `filenames:main.shada.tmp.y`, `filenames:main.shada.tmp.z`, `filenames:revision-hash`, `filenames:Session.vim`
@@ -153,11 +153,11 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 
 </details>
 
-<details><summary>web-devicons: 279 colored mappings</summary>
+<details><summary>web-devicons: 278 colored mappings</summary>
 
 - `black` (26): `.editorconfig`, `.gitattributes`, `.gitignore`, `.luarc.json`, `.python-version`, `.shellcheckrc`, `.state.itermexport`, `.vale.ini`, `_update-notifier-last-checked`, `CODEOWNERS`, `conf`, `id_ed25519.pub`, `ini`, `json`, `jsonc`, `jsonl`, `session_index.jsonl`, `toml`, `tsconfig.app.json`, `tsconfig.json`, `tsconfig.node.json`, `txt`, `vercel.json`, `xml`, `yaml`, `yml`
 - `red` (15): `.bash_history`, `.histfile`, `.history`, `.mycli_history`, `.mysql_history`, `.python_history`, `.zsh_history`, `btop.log`, `CACHEDIR.TAG`, `hist`, `histfile`, `history`, `history.jsonl`, `lesshst`, `log`
-- `magenta` (25): `.bash_profile`, `.bashrc`, `.blerc`, `.p10k.zsh`, `.zprofile`, `.zshenv`, `.zshrc`, `agent.toml`, `btop.conf`, `config`, `config.toml`, `config.yml`, `env`, `extensions.json`, `glow.yml`, `index.html`, `init.lua`, `karabiner.json`, `main.py`, `matplotlibrc`, `npmrc`, `settings.json`, `starship.toml`, `tmux.conf`, `wezterm.lua`
+- `magenta` (24): `.bash_profile`, `.bashrc`, `.blerc`, `.p10k.zsh`, `.zprofile`, `.zshenv`, `.zshrc`, `agent.toml`, `btop.conf`, `config`, `config.toml`, `config.yml`, `env`, `extensions.json`, `index.html`, `init.lua`, `karabiner.json`, `main.py`, `matplotlibrc`, `npmrc`, `settings.json`, `starship.toml`, `tmux.conf`, `wezterm.lua`
 - `cyan` (32): `.sock`, `.socket`, `.sqlite`, `.sqlite-shm`, `.sqlite-wal`, `avif`, `csv`, `gif`, `heic`, `heif`, `icns`, `jpeg`, `jpg`, `png`, `secrets`, `sock`, `socket`, `sourdiesel`, `sourdiesel.json`, `sourdiesel.lua`, `sourdiesel.terminal`, `sourdiesel.toml`, `sqlite`, `sqlite-shm`, `sqlite-wal`, `sqlite3`, `svg`, `terminal`, `theme`, `theme.yml`, `tmtheme`, `webp`
 - `white` (41): `.zstyle`, `1password`, `aliases`, `allowed_signers`, `auth.key.pub`, `cheatsheet`, `config.sh`, `css`, `edit-all`, `eslint.config.js`, `fix-tmux-remotes`, `glg`, `html`, `identity`, `interactive`, `js`, `known_hosts`, `l`, `list-256`, `list-colors`, `patch-zsh-autocomplete`, `profile`, `rs`, `scpt`, `sh`, `signing.key.pub`, `ssh-agent`, `t`, `take`, `test.js`, `test.ts`, `test.tsx`, `toggle-tmux-client`, `ts`, `tsx`, `update-icons`, `update-tools`, `uvi`, `vim`, `vite.config.js`, `vite.config.ts`
 - `brightblack` (37): `.DS_Store`, `.file`, `.gitkeep`, `.hushlogin`, `.localized`, `.netrwhist`, `dat`, `icon\r`, `main.shada`, `main.shada.tmp.a`, `main.shada.tmp.b`, `main.shada.tmp.c`, `main.shada.tmp.d`, `main.shada.tmp.e`, `main.shada.tmp.f`, `main.shada.tmp.g`, `main.shada.tmp.h`, `main.shada.tmp.i`, `main.shada.tmp.j`, `main.shada.tmp.k`, `main.shada.tmp.l`, `main.shada.tmp.m`, `main.shada.tmp.n`, `main.shada.tmp.o`, `main.shada.tmp.p`, `main.shada.tmp.q`, `main.shada.tmp.r`, `main.shada.tmp.s`, `main.shada.tmp.t`, `main.shada.tmp.u`, `main.shada.tmp.v`, `main.shada.tmp.w`, `main.shada.tmp.x`, `main.shada.tmp.y`, `main.shada.tmp.z`, `session.vim`, `shada`
@@ -175,7 +175,6 @@ hand-authored and are checked against this inventory by `./bootstrap.sh --check`
 | Consumer | Allowed colors | Reason |
 | --- | --- | --- |
 | bat | `#1e1d2c`, `#1e2030`, `#24273a`, `#3d3f47`, `#5b6078`, `#676e95`, `#8bd5ca`, `#939ab7`, `#a5adcb`, `#b7bdf8`, `#b8c0e0`, `#c6cff0`, `#cad3f5`, `#ee99a0`, `#f0c6c6`, `#f4dbd6`, `#f5a97f`, `#fdf9bb` | Inherited TextMate theme colors retained for syntax compatibility |
-| Glow | `#1a1b26`, `#2ac3de`, `#565f89`, `#a9b1d6`, `#bb9af7`, `#f7768e`, `#ff9e64` | Inherited Glamour syntax colors retained pending theme normalization |
 | mycli | `#000000`, `#0000ff`, `#003333`, `#00ff5f`, `#222222`, `#282c34`, `#4444aa`, `#448888`, `#44aa44`, `#44aaaa`, `#6666aa`, `#676e95`, `#808080`, `#880000`, `#888888`, `#aaaaaa`, `#aaffff`, `#bef9be`, `#c6cff0`, `#f2cdf3`, `#fdf9bb`, `#ff005f` | Existing prompt-toolkit style colors retained pending normalization |
 
 ## Manual consumers

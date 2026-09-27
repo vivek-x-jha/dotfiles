@@ -167,7 +167,6 @@ local devicons_config = {
     ['config.yml'] = { icon = icons.gear, name = 'config.yml', color = thm.magenta },
     ['config.toml'] = { icon = icons.gear, name = 'config.toml', color = thm.magenta },
     ['extensions.json'] = { icon = icons.gear, name = 'extensions.json', color = thm.magenta },
-    ['glow.yml'] = { icon = icons.gear, name = 'glow.yml', color = thm.magenta },
     ['hist'] = { icon = icons.log, name = 'hist', color = thm.red },
     ['histfile'] = { icon = icons.log, name = 'histfile', color = thm.red },
     ['history'] = { icon = icons.log, name = 'history', color = thm.red },

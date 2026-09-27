@@ -523,51 +523,6 @@ install_gh() {
   logg -w "No GitHub CLI installer defined for package manager: $PKG_MGR"
 }
 
-install_glow() {
-  [[ $OS_TYPE == linux ]] || return 0
-  command -v glow &>/dev/null && return
-
-  notify -s 'Installing Glow'
-
-  if [[ $PKG_MGR == apt ]]; then
-    local charm_key='/etc/apt/keyrings/charm.gpg'
-    local charm_list='/etc/apt/sources.list.d/charm.list'
-
-    ensure_apt_keyring_repo \
-      "$charm_key" \
-      "curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o \"$charm_key\"" \
-      "$charm_list" \
-      "deb [signed-by=$charm_key] https://repo.charm.sh/apt/ * *" || return
-
-    run 'sudo apt update'
-    run 'sudo apt install -y glow'
-    return
-  fi
-
-  if [[ $PKG_MGR == dnf ]]; then
-    local charm_repo='/etc/yum.repos.d/charm.repo'
-    local dnf_exec="${DNF_CMD:-$(command -v dnf 2>/dev/null || command -v dnf5 2>/dev/null)}"
-
-    [[ -n $dnf_exec ]] || {
-      logg -w 'dnf command not found. Skipping Glow install.'
-      return
-    }
-
-    ensure_dnf_repo_file "$charm_repo" \
-"[charm]
-name=Charm
-baseurl=https://repo.charm.sh/yum/
-enabled=1
-gpgcheck=1
-gpgkey=https://repo.charm.sh/yum/gpg.key"
-
-    run "sudo $dnf_exec install -y glow"
-    return
-  fi
-
-  logg -w "No Glow installer defined for package manager: $PKG_MGR"
-}
-
 install_linux_gui_apps() {
   [[ $OS_TYPE == linux ]] || return 0
 

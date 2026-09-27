@@ -1,4 +1,4 @@
--- Render Markdown in-buffer with Glow-aligned structure and SourDiesel colors
+-- Render Markdown in-buffer with SourDiesel structure and colors
 require('render-markdown').setup {
   html = { enabled = false },
   latex = { enabled = false },

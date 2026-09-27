@@ -113,7 +113,7 @@ Useful commands:
 
 ```sh
 cargo install --list
-command -v atuin bat btop eva fd fzf gh glow herdr rg starship tldr uv zoxide
+command -v atuin bat btop eva fd fzf gh herdr rg starship tldr uv zoxide
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 ```
 

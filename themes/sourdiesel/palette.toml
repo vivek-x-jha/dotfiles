@@ -246,23 +246,6 @@ allowed_hex = [
 legacy_reason = "Inherited TextMate theme colors retained for syntax compatibility"
 
 [[consumers]]
-id = "glow"
-label = "Glow"
-group = "Syntax and editors"
-paths = ["cli/glow/styles/sourdiesel.json"]
-parser = "hex"
-allowed_hex = [
-  "#1a1b26",
-  "#2ac3de",
-  "#565f89",
-  "#a9b1d6",
-  "#bb9af7",
-  "#f7768e",
-  "#ff9e64",
-]
-legacy_reason = "Inherited Glamour syntax colors retained pending theme normalization"
-
-[[consumers]]
 id = "vscode"
 label = "VS Code"
 group = "Syntax and editors"

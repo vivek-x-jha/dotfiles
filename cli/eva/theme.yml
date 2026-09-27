@@ -1020,14 +1020,6 @@ filenames:
       style:
         foreground: magenta
 
-  glow.yml:
-    filename:
-      foreground: magenta
-    icon:
-      glyph: ""
-      style:
-        foreground: magenta
-
   init.lua:
     filename:
       foreground: magenta

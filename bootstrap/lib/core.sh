@@ -564,7 +564,6 @@ bootstrap_target_var() {
   packages) printf 'BOOTSTRAP_INSTALL_PACKAGES' ;;
   fzf) printf 'BOOTSTRAP_INSTALL_FZF' ;;
   gh) printf 'BOOTSTRAP_INSTALL_GH' ;;
-  glow) printf 'BOOTSTRAP_INSTALL_GLOW' ;;
   env | environment) printf 'BOOTSTRAP_COLLECT_ENVIRONMENT' ;;
   symlinks | links) printf 'BOOTSTRAP_CREATE_SYMLINKS' ;;
   codex) printf 'BOOTSTRAP_CONFIGURE_CODEX' ;;
@@ -589,7 +588,6 @@ list_bootstrap_targets() {
 packages
 fzf
 gh
-glow
 env
 symlinks
 codex

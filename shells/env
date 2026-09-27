@@ -48,9 +48,6 @@ export NVIM_LOG_FILE="$XDG_STATE_HOME/nvim/nvim.log"
 export PAGER='less -R'
 export MANPAGER="$PAGER"
 
-# Glow: https://github.com/charmbracelet/glow/discussions/799#discussioncomment-14866750
-export GLAMOUR_STYLE="$XDG_CONFIG_HOME/glow/styles/sourdiesel.json"
-
 # Matplotlib: https://matplotlib.org/stable/install/environment_variables_faq.html
 export MPLCONFIGDIR="$XDG_CONFIG_HOME/matplotlib"
 

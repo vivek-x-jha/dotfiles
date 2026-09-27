@@ -37,7 +37,7 @@ bootstrap_target_dependencies() {
   hammerspoon) printf '%s\n' packages symlinks ;;
   rust) printf '%s\n' packages ;;
   ide) printf '%s\n' packages rust symlinks ;;
-  gh | glow) printf '%s\n' packages ;;
+  gh) printf '%s\n' packages ;;
   esac
 }
 
@@ -174,7 +174,6 @@ run_bootstrap_target() {
     ;;
   fzf) install_fzf ;;
   gh) install_gh ;;
-  glow) install_glow ;;
   env | environment) collect_environment ;;
   symlinks | links) create_symlinks ;;
   codex) configure_codex_phase ;;

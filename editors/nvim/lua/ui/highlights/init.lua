@@ -193,7 +193,7 @@ local highlights = {
   ['@markup.strikethrough'] = { strikethrough = true },
   ['@markup.quote'] = { bg = thm.red },
 
-  -- Markdown follows the heading, link, quote, and code colors used by Glow.
+  -- Markdown uses shared SourDiesel heading, link, quote, and code colors.
   ['@markup.heading.1.markdown'] = { fg = thm.cyan, bold = true },
   ['@markup.heading.2.markdown'] = { fg = thm.magenta, bold = true },
   ['@markup.heading.3.markdown'] = { fg = thm.blue, bold = true },

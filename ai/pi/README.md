@@ -33,10 +33,8 @@ Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` directly to
 The Pi theme keeps Markdown headings and fenced command/code blocks aligned with the
 terminal palette:
 
-- Markdown heading colors mirror Neovim `render-markdown.nvim` and Glow's SourDiesel
-  style: H1 `cyan`, H2 `magenta`, H3 `blue`, H4 `brightwhite`, H5 `BLACK_HEX`,
-  and H6 `brightblack`. If render-markdown and Glow ever diverge, prefer
-  render-markdown.
+- Markdown heading colors mirror Neovim `render-markdown.nvim`: H1 `cyan`, H2
+  `magenta`, H3 `blue`, H4 `brightwhite`, H5 `BLACK_HEX`, and H6 `brightblack`.
 - `mdCodeBlock` uses `BLACK_HEX` (`#cccccc`) so unclassified shell text is neutral,
   not static green.
 - Syntax tokens reuse the shared SourDiesel roles (`magenta` keywords, `blue`

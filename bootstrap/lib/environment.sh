@@ -359,7 +359,6 @@ create_symlinks() {
     "$BOOTSTRAP_ROOT/cli/zsh-patina" "$XDG_CONFIG_HOME/zsh-patina"
     "$BOOTSTRAP_ROOT/ai/AGENTS.md" "$XDG_CONFIG_HOME/claude/CLAUDE.md"
     "$BOOTSTRAP_ROOT/ai/claude-code/settings.json" "$XDG_CONFIG_HOME/claude/settings.json"
-    "$BOOTSTRAP_ROOT/cli/glow" "$XDG_CONFIG_HOME/glow"
     "$BOOTSTRAP_ROOT/cli/matplotlib" "$XDG_CONFIG_HOME/matplotlib"
     "$BOOTSTRAP_ROOT/cli/mycli" "$XDG_CONFIG_HOME/mycli"
     "$BOOTSTRAP_ROOT/cli/npm" "$XDG_CONFIG_HOME/npm"

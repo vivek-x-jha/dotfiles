@@ -212,7 +212,7 @@ Validate the installed workstation state any time after setup:
 | [`bootstrap`](./bootstrap) | Bootstrap defaults and sourced implementation modules |
 | [`ai`](./ai) | AI assistant global policy, project memory templates, and managed harness configs for Claude Code, Codex, Pi, and Herdr |
 | [`shells`](./shells) | Shared shell env/profile, aliases, Bash, Zsh, Starship, ble.sh, and SourDiesel shell colors |
-| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eva, fzf, gh, glow, Matplotlib, mycli, npm, and ripgrep |
+| [`cli`](./cli) | CLI tool configs for Atuin, bat, btop, dust, eva, fzf, gh, Matplotlib, mycli, npm, and ripgrep |
 | [`editors`](./editors) | Neovim and VS Code configuration |
 | [`terminals`](./terminals) | WezTerm, Terminal.app, iTerm-related assets, and terminal launch scripts |
 | [`auth`](./auth) | Git, SSH, 1Password SSH agent config, and signing config |
@@ -246,7 +246,6 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [GitHub CLI](https://cli.github.com/manual/) | `~/.config/gh/config.yml` | gh stores CLI config under XDG config. |
 | Herdr | `~/.config/herdr/config.toml` | Repo-managed terminal workspace config links from `ai/herdr`. |
 | [Git](https://git-scm.com/docs/git-config) | `~/.config/git/config` | Bootstrap keeps this user-owned file and adds an include for portable defaults in `auth/git/base`; identity, signing, and remotes are not stored in the portable defaults. SourDiesel styling links from `auth/git/themes/sourdiesel`. |
-| [Glow](https://github.com/charmbracelet/glow) | `~/.config/glow/glow.yml` | Used with `GLAMOUR_STYLE` for the SourDiesel style. |
 | [Karabiner-Elements](https://karabiner-elements.pqrs.org/docs/manual/) | `~/.config/karabiner/karabiner.json` | Native user config path. |
 | [Neovim](https://neovim.io/doc/user/starting/#standard-path) | `~/.config/nvim` | Neovim uses `stdpath()` and XDG base dirs. |
 | [1Password SSH agent](https://developer.1password.com/docs/ssh/agent/config) | `~/.config/1Password/ssh/agent.toml` | 1Password documents this config and supports `XDG_CONFIG_HOME`. |
@@ -444,7 +443,7 @@ Linux packages are split by package manager:
 - [`manifests/apt-packages.txt`](./manifests/apt-packages.txt)
 - [`manifests/dnf-packages.txt`](./manifests/dnf-packages.txt)
 
-GitHub CLI and Glow are installed from their official Linux repositories because Debian/Ubuntu and Fedora need vendor repos before those packages can be installed reliably.
+GitHub CLI is installed from its official Linux repository because Debian/Ubuntu needs the vendor repository for a current package.
 
 GUI apps are installed through distro repos, vendor repos, direct packages, or Flatpak where available.
 
