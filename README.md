@@ -296,7 +296,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 
 - [Zsh](https://zsh.sourceforge.io/) is the primary interactive shell.
 - [Zap](https://www.zapzsh.com/) manages source-only Zsh plugins.
-- [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Cargo-installed executable and repo-managed SourDiesel config under [`cli/zsh-patina`](./cli/zsh-patina). Its Zsh completion script is generated with `zsh-patina completion`, and it reads `~/.config/zsh-patina/config.toml` by default.
+- [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Homebrew-managed executable on macOS (Cargo fallback elsewhere) and repo-managed SourDiesel config under [`cli/zsh-patina`](./cli/zsh-patina). Its Zsh completion script is generated with `zsh-patina completion`, and it reads `~/.config/zsh-patina/config.toml` by default.
 - `zsh-autocomplete` carries repo-managed completion styling and terminfo fallbacks under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses those local overrides before `zap update all` and reapplies them afterward.
 - [ble.sh](https://github.com/akinomyoga/ble.sh) provides Bash line editing and completion.
 - [Starship](https://starship.rs/) renders the prompt.
@@ -410,6 +410,10 @@ Rust setup is disabled in the core profile unless `BOOTSTRAP_INSTALL_RUST_TOOLIN
 2. Reuses commands supplied as prebuilt Homebrew formulae.
 3. Uses `cargo-binstall` for missing tools when available.
 4. Compiles with `cargo install --locked` only as a fallback; already available commands are skipped.
+
+On macOS, the core Homebrew profile owns Atuin, bat, dust, fd, ripgrep, Starship, tealdeer, uv/uvx, zoxide, and zsh-patina. The optional Rust/IDE addition owns bob, cargo-binstall, and cargo-update. Rustup continues to own the Rust toolchain and editor components. The personal [Eva fork](https://github.com/vivek-x-jha/eva) remains Git-installed through Cargo; Homebrew's `eva` formula is an unrelated calculator.
+
+`update-tools --brew` updates Homebrew-managed tools; `update-tools --rust` updates Rustup and remaining Cargo packages, including Eva. Update uv itself through Homebrew, not `uv self update`; `uv tool upgrade --all` still updates its Python tools. The Cargo fallback remains available for Linux and installations without matching package-manager tools.
 
 IDE setup selects stable Neovim by default. `BOOTSTRAP_INSTALL_NVIM_NIGHTLY=1` installs and selects nightly as well. Existing uv and npm tools are not reinstalled on every rerun.
 
@@ -582,7 +586,7 @@ uv tool upgrade --all
 bat cache --build
 ```
 
-Use `cargo install --list` to inspect cargo-managed tools. Use `cargo uninstall <tool>` for tools that should no longer be managed by cargo.
+Use `cargo install --list` to inspect Cargo-managed tools. When migrating an existing Cargo tool to Homebrew, install and verify the Homebrew binary by its absolute path first, then use `cargo uninstall <crate>` to remove the old copy. Cargo precedes Homebrew on PATH, so installing a formula alone does not switch ownership. Keep Cargo's PATH entry for Rustup and Eva; preserve existing tool configs and data. Restart zsh-patina and open fresh shells after migrating it.
 
 ## 🛠️ Common Tasks
 

@@ -37,13 +37,19 @@ build_profile() {
 
 core_file="$(build_profile core)"
 assert_contains "$core_file" 'brew "bat"'
+assert_contains "$core_file" 'brew "zsh-patina"'
+assert_not_contains "$core_file" 'brew "bob"'
+assert_not_contains "$core_file" 'brew "cargo-update"'
+assert_not_contains "$core_file" 'brew "eva"'
 assert_contains "$core_file" 'cask "wezterm"'
 assert_not_contains "$core_file" 'brew "node"'
 assert_not_contains "$core_file" 'cask "visual-studio-code"'
 
 developer_file="$(build_profile developer)"
 assert_contains "$developer_file" 'brew "node"'
+assert_not_contains "$developer_file" 'brew "bob"'
 assert_not_contains "$developer_file" 'brew "cargo-binstall"'
+assert_not_contains "$developer_file" 'brew "cargo-update"'
 assert_contains "$developer_file" 'cask "visual-studio-code"'
 assert_not_contains "$developer_file" 'cask "spotify"'
 
@@ -53,7 +59,10 @@ assert_contains "$personal_file" 'brew "node"'
 
 BOOTSTRAP_ONLY_TARGETS=ide
 rust_file="$(build_profile developer)"
+assert_contains "$rust_file" 'brew "bob"'
 assert_contains "$rust_file" 'brew "cargo-binstall"'
+assert_contains "$rust_file" 'brew "cargo-update"'
+assert_not_contains "$rust_file" 'brew "eva"'
 BOOTSTRAP_ONLY_TARGETS=''
 
 FORCE_1PASSWORD=1

@@ -34,7 +34,7 @@ install_rust_tooling() {
   run_retry "${BOOTSTRAP_RETRY_ATTEMPTS:-3}" "${BOOTSTRAP_RETRY_DELAY:-3}" \
     'rustup component add rust-analyzer rustfmt clippy' || logg -w 'Rust editor components not installed'
 
-  # Prefer commands supplied by the developer Homebrew profile. Missing tools use
+  # Prefer commands supplied by the Homebrew profiles. Missing tools use
   # cargo-binstall when available and compile from source only as a fallback.
   local tools=(
     'atuin:atuin'

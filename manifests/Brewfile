@@ -20,6 +20,7 @@ brew "uv"
 brew "wget"
 brew "zoxide"
 brew "zsh"
+brew "zsh-patina"
 
 cask "font-jetbrains-mono-nerd-font"
 cask "hammerspoon"

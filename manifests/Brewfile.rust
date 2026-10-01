@@ -1,3 +1,5 @@
 # Optional Rust tooling bootstrap addition.
 
+brew "bob"
 brew "cargo-binstall"
+brew "cargo-update"
