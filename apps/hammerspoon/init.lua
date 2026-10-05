@@ -102,6 +102,7 @@ local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
 local applications = {
   a = 'Anki',
   b = 'Arc',
+  d = 'Muse',
   e = 'Notion Calendar',
   f = 'iPhone Mirroring',
   g = 'Google Chrome',
