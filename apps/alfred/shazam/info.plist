@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>bundleid</key><string>local.mubuntu.shazam</string>
+    <key>name</key><string>Shazam</string>
+    <key>description</key><string>Identify music and find it in Spotify.</string>
+    <key>createdby</key><string>mubuntu</string>
+    <key>disabled</key><false/>
+    <key>version</key><string>1.1</string>
+    <key>connections</key>
+    <dict>
+        <key>shazam-keyword</key>
+        <array>
+            <dict>
+                <key>destinationuid</key><string>shazam-shortcut</string>
+                <key>modifiers</key><integer>0</integer>
+                <key>modifiersubtext</key><string></string>
+                <key>vitoclose</key><false/>
+            </dict>
+        </array>
+    </dict>
+    <key>objects</key>
+    <array>
+        <dict>
+            <key>uid</key><string>shazam-keyword</string>
+            <key>type</key><string>alfred.workflow.input.keyword</string>
+            <key>version</key><integer>1</integer>
+            <key>config</key>
+            <dict>
+                <key>keyword</key><string>shazam</string>
+                <key>argumenttype</key><integer>2</integer>
+                <key>withspace</key><false/>
+                <key>text</key><string>Recognize Music</string>
+                <key>subtext</key><string>Identify a song with Shazam, then search Spotify</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>uid</key><string>shazam-shortcut</string>
+            <key>type</key><string>alfred.workflow.automation.runshortcut</string>
+            <key>version</key><integer>1</integer>
+            <key>config</key>
+            <dict>
+                <key>inputmode</key><integer>0</integer>
+                <key>outputmode</key><integer>0</integer>
+                <key>shortcut</key><string>Shazam to Spotify</string>
+            </dict>
+        </dict>
+    </array>
+    <key>uidata</key>
+    <dict>
+        <key>shazam-keyword</key>
+        <dict><key>xpos</key><integer>50</integer><key>ypos</key><integer>50</integer></dict>
+        <key>shazam-shortcut</key>
+        <dict><key>xpos</key><integer>300</integer><key>ypos</key><integer>50</integer></dict>
+    </dict>
+    <key>readme</key><string>Type shazam and press Return. Requires the macOS shortcut “Shazam to Spotify” and the Spotify app. After recognition, choose Search in Spotify (search by song and artist) or Copy song and artist. No Apple Music actions or Spotify API credentials.</string>
+</dict>
+</plist>
