@@ -13,10 +13,6 @@ bindkey -s '^b' 'btop\n'
 # History
 bindkey -s '^g' 'glg -5\n'
 
-# Widgets
-(( ${+functions[toggle-tmux-client]} )) && zle -N toggle-tmux-client
-(( ${+widgets[toggle-tmux-client]} )) && bindkey '^w' toggle-tmux-client
-
 # Suggestions
 (( ${+widgets[autosuggest-accept]} )) && bindkey '^e' autosuggest-accept
 (( ${+widgets[autosuggest-execute]} )) && bindkey '^y' autosuggest-execute

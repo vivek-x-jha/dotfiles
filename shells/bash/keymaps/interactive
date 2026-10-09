@@ -13,9 +13,6 @@ bind '"\C-b": "btop\n"'
 # History
 bind '"\C-g": "glg -5\n"'
 
-# Functions
-declare -F toggle-tmux-client &>/dev/null && bind -x '"\C-w": toggle-tmux-client'
-
 # Atuin
 declare -F __atuin_history &>/dev/null && {
   bind -m vi-command '"\C-r": "i__atuin_history\n"'

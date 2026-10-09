@@ -15,25 +15,27 @@ print_separator
 printf "${YELLOW}%-6s ${BLUE}%-35s ${GREEN}%-40s${RESET}\n" 'Key' 'Desc' 'Cmd'
 print_separator
 
-# Flat array of bindings in the format 'KEY>:Description:Command'
+# Shell editing bindings below use vi insert mode; Ctrl-A is Herdr-only.
 local bindings=(
   '<A-L>:clear terminal screen:clear'
-  '<A-C>:jump to subdirectory:builtin cd --'
-  '<C-E>:select autosuggestion:autosuggest-accept'
+  '<A-C>:fuzzy change directory:fzf-cd-widget'
+  '<C-B>:open system monitor:btop'
+  '<C-E>:accept autosuggestion:autosuggest-accept'
   '<C-G>:show recent git log:glg -5'
-  '<C-R>:search shell command history:atuin-search'
-  '<C-T>:fuzzy search files/directories:fzf'
+  '<C-R>:search shell command history:atuin-search-viins'
+  '<C-T>:insert files/directories:fzf-file-widget'
   '<C-Y>:run autosuggestion:autosuggest-execute'
-  '<C-U>:delete chars left of cursor:unix-line-discard'
-  '<C-I>:accept autocomplete:fzf-completion'
-  '<C-O>:reload shell:exec '"${SHELL:t}"
-  '<C-P>:search frequent directories:zoxide query --interactive'
-  '<C-A>:invoke tmux hotkey:tmux prefix'
-  '<C-D>:end input:logout'
+  '<C-U>:delete chars left of cursor:vi-kill-line'
+  '<C-I>:complete command or argument (Tab):fzf-completion'
+  '<C-O>:reload login shell:exec zsh -l'
+  '<C-P>:jump to a frequent directory:zi || true'
+  '<C-W>:delete previous word:vi-backward-kill-word'
+  '<C-A>:Herdr prefix (inside Herdr):Herdr prefix ctrl+a'
+  '<C-D>:list choices / exit empty prompt:list-choices'
   '<C-Z>:suspend process (restart with fg):kill -TSTP <pid>'
   '<C-C>:interrupt process:kill -INT <pid>'
-  '<C-N>:open previous neovim session:nvim -S'
-  '<Up>:search shell last command history:atuin-up-search'
+  '<C-N>:open saved editor session:$EDITOR -S Session.vim'
+  '<Up>:search history matching input:atuin-up-search-viins'
 )
 
 # Color names mapped to base16 (you must have these env vars)

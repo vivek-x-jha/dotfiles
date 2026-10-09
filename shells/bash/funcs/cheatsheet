@@ -10,24 +10,26 @@ cheatsheet() {
     printf "%b%-${table_width}s%b\n" "$BRIGHTBLACK" '' "$RESET" | tr ' ' '-'
   }
 
+  # Shell editing bindings below use vi insert mode; Ctrl-A is Herdr-only.
   local bindings=(
     '<A-L>:clear terminal screen:clear'
-    '<A-C>:jump to subdirectory:builtin cd --'
-    '<C-E>:select autosuggestion:autosuggest-accept'
+    '<A-C>:fuzzy change directory:__fzf_cd__'
+    '<C-B>:open system monitor:btop'
     '<C-G>:show recent git log:glg -5'
-    '<C-R>:search shell command history:atuin-search'
-    '<C-T>:fuzzy search files/directories:fzf'
-    '<C-Y>:run autosuggestion:autosuggest-execute'
+    '<C-R>:search shell command history:__atuin_history'
+    '<C-T>:insert files/directories:fzf-file-widget'
+    '<C-Y>:paste killed text:yank'
     '<C-U>:delete chars left of cursor:unix-line-discard'
-    '<C-I>:accept autocomplete:fzf-completion'
+    '<C-I>:complete command or argument (Tab):complete (fzf on ** trigger)'
     '<C-O>:reload shell:exec bash'
-    '<C-P>:search frequent directories:zoxide query --interactive'
-    '<C-A>:invoke tmux hotkey:tmux prefix'
-    '<C-D>:end input:logout'
+    '<C-P>:jump to a frequent directory:zi || true'
+    '<C-W>:delete previous word:vi-unix-word-rubout'
+    '<C-A>:Herdr prefix (inside Herdr):Herdr prefix ctrl+a'
+    '<C-D>:exit on empty prompt:vi-eof-maybe'
     '<C-Z>:suspend process (restart with fg):kill -TSTP <pid>'
     '<C-C>:interrupt process:kill -INT <pid>'
-    '<C-N>:open previous neovim session:nvim -S'
-    '<Up>:search shell last command history:atuin-up-search'
+    '<C-N>:open saved editor session:$EDITOR -S Session.vim'
+    '<Up>:search history matching input:__atuin_history --shell-up-key-binding'
   )
 
   local colornames=(
