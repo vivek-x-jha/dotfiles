@@ -6617,7 +6617,7 @@ _uv() {
             return 0
             ;;
         uv__python__install)
-            opts="-i -r -f -U -n -q -v -h --install-dir --bin --no-bin --registry --no-registry --mirror --pypy-mirror --python-downloads-json-url --reinstall --force --upgrade --default --compile-bytecode --no-compile-bytecode --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [TARGETS]..."
+            opts="-i -r -f -U -n -q -v -h --install-dir --bin --no-bin --registry --no-registry --mirror --pypy-mirror --graalpy-mirror --pyodide-mirror --python-downloads-json-url --reinstall --force --upgrade --default --compile-bytecode --no-compile-bytecode --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [TARGETS]..."
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -6642,6 +6642,14 @@ _uv() {
                     return 0
                     ;;
                 --pypy-mirror)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --graalpy-mirror)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --pyodide-mirror)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;
@@ -7028,7 +7036,7 @@ _uv() {
             return 0
             ;;
         uv__python__upgrade)
-            opts="-i -r -n -q -v -h --install-dir --mirror --pypy-mirror --reinstall --python-downloads-json-url --compile-bytecode --no-compile-bytecode --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [TARGETS]..."
+            opts="-i -r -n -q -v -h --install-dir --mirror --pypy-mirror --graalpy-mirror --pyodide-mirror --reinstall --python-downloads-json-url --compile-bytecode --no-compile-bytecode --no-cache --cache-dir --python-preference --managed-python --no-managed-python --allow-python-downloads --no-python-downloads --python-fetch --quiet --verbose --no-color --color --native-tls --no-native-tls --system-certs --no-system-certs --offline --no-offline --allow-insecure-host --preview --no-preview --preview-features --isolated --show-settings --no-progress --no-installer-metadata --directory --project --config-file --no-config --help [TARGETS]..."
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -7053,6 +7061,14 @@ _uv() {
                     return 0
                     ;;
                 --pypy-mirror)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --graalpy-mirror)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                --pyodide-mirror)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
                     ;;

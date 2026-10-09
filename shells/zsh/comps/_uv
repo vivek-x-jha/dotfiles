@@ -21,7 +21,7 @@ _uv() {
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -76,7 +76,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -130,14 +130,14 @@ _arguments "${_arguments_options[@]}" : \
 '(-t --token)--password=[The password to use for the service]:PASSWORD:' \
 '(-u --username --password)-t+[The token to use for the service]:TOKEN:' \
 '(-u --username --password)--token=[The token to use for the service]:TOKEN:' \
-'--keyring-provider=[The keyring provider to use for storage of credentials]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
+'--keyring-provider=[]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
 subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -181,14 +181,14 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '-u+[The username to logout]:USERNAME:' \
 '--username=[The username to logout]:USERNAME:' \
-'--keyring-provider=[The keyring provider to use for storage of credentials]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
+'--keyring-provider=[]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
 subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -232,14 +232,14 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '-u+[The username to lookup]:USERNAME:' \
 '--username=[The username to lookup]:USERNAME:' \
-'--keyring-provider=[The keyring provider to use for reading credentials]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
+'--keyring-provider=[]:KEYRING_PROVIDER:((disabled\:"Do not use keyring for credential lookup"
 subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -286,7 +286,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -333,7 +333,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -387,7 +387,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -543,7 +543,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -652,7 +652,7 @@ none\:"Do not infer the author information"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -776,7 +776,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -908,7 +908,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1036,7 +1036,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1211,7 +1211,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1345,7 +1345,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1425,7 +1425,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1532,7 +1532,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1720,7 +1720,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1794,7 +1794,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -1896,7 +1896,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -2075,7 +2075,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -2140,7 +2140,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -2345,7 +2345,7 @@ xpu\:"Use the PyTorch index for Intel XPU"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -2564,7 +2564,7 @@ xpu\:"Use the PyTorch index for Intel XPU"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -2785,7 +2785,7 @@ xpu\:"Use the PyTorch index for Intel XPU"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -2942,7 +2942,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3007,7 +3007,7 @@ managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3067,7 +3067,7 @@ sarif\:"Display the result in SARIF format"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3115,7 +3115,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3163,7 +3163,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3209,7 +3209,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3260,7 +3260,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3317,7 +3317,7 @@ json\:"JSON (for computers)"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3369,13 +3369,15 @@ _arguments "${_arguments_options[@]}" : \
 '--install-dir=[The directory to store the Python installation in]:INSTALL_DIR:_files -/' \
 '--mirror=[Set the URL to use as the source for downloading Python installations]:MIRROR:_urls' \
 '--pypy-mirror=[Set the URL to use as the source for downloading PyPy installations]:PYPY_MIRROR:_urls' \
+'--graalpy-mirror=[Set the URL to use as the source for downloading GraalPy installations]:GRAALPY_MIRROR:_urls' \
+'--pyodide-mirror=[Set the URL to use as the source for downloading Pyodide installations]:PYODIDE_MIRROR:_urls' \
 '--python-downloads-json-url=[URL pointing to JSON of custom Python installations]:PYTHON_DOWNLOADS_JSON_URL:' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3434,13 +3436,15 @@ _arguments "${_arguments_options[@]}" : \
 '--install-dir=[The directory Python installations are stored in]:INSTALL_DIR:_files -/' \
 '--mirror=[Set the URL to use as the source for downloading Python installations]:MIRROR:_urls' \
 '--pypy-mirror=[Set the URL to use as the source for downloading PyPy installations]:PYPY_MIRROR:_urls' \
+'--graalpy-mirror=[Set the URL to use as the source for downloading GraalPy installations]:GRAALPY_MIRROR:_urls' \
+'--pyodide-mirror=[Set the URL to use as the source for downloading Pyodide installations]:PYODIDE_MIRROR:_urls' \
 '--python-downloads-json-url=[URL pointing to JSON of custom Python installations]:PYTHON_DOWNLOADS_JSON_URL:' \
 '--cache-dir=[Path to the cache directory]:CACHE_DIR:_files -/' \
 '--python-preference=[]:PYTHON_PREFERENCE:((only-managed\:"Only use managed Python installations; never use system Python installations"
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3493,7 +3497,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3546,7 +3550,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3598,7 +3602,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3647,7 +3651,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3695,7 +3699,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3746,7 +3750,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -3961,7 +3965,7 @@ xpu\:"Use the PyTorch index for Intel XPU"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4197,7 +4201,7 @@ xpu\:"Use the PyTorch index for Intel XPU"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4434,7 +4438,7 @@ xpu\:"Use the PyTorch index for Intel XPU"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4528,7 +4532,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4591,7 +4595,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4667,7 +4671,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4730,7 +4734,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4805,7 +4809,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4912,7 +4916,7 @@ x86_64-apple-ios-simulator\:"An \`x86_64\` target for iOS simulator"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -4965,7 +4969,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5037,7 +5041,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5150,7 +5154,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5240,7 +5244,7 @@ subprocess\:"Use the \`keyring\` command for credential lookup"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5290,7 +5294,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5387,7 +5391,7 @@ symlink\:"Symbolically link packages from the source into the destination"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5455,7 +5459,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5501,7 +5505,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5553,7 +5557,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5607,7 +5611,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5655,7 +5659,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5703,7 +5707,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5750,7 +5754,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5796,7 +5800,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5842,7 +5846,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5889,7 +5893,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5935,7 +5939,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -5986,7 +5990,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6040,7 +6044,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6088,7 +6092,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6136,7 +6140,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6185,7 +6189,7 @@ machine\:"Display the cache size in raw bytes"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6237,7 +6241,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6292,7 +6296,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6342,7 +6346,7 @@ json\:"Display the version as JSON"))' \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6393,7 +6397,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
@@ -6445,7 +6449,7 @@ only-system\:"Only use system Python installations; never use managed Python ins
 always\:"Enables colored output regardless of the detected environment"
 never\:"Disables colored output"))' \
 '--config-file=[]:CONFIG_FILE:_files' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '*--allow-insecure-host=[Allow insecure connections to a host]:ALLOW_INSECURE_HOST:_urls' \
@@ -6490,7 +6494,7 @@ _arguments "${_arguments_options[@]}" : \
 managed\:"Prefer managed Python installations over system Python installations"
 system\:"Prefer system Python installations over managed Python installations"
 only-system\:"Only use system Python installations; never use managed Python installations"))' \
-'--python-fetch=[Deprecated version of \[\`Self\:\:python_downloads\`\]]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
+'--python-fetch=[Deprecated option for configuring automatic Python downloads]:PYTHON_FETCH:((automatic\:"Automatically download managed Python installations when needed"
 manual\:"Do not automatically download managed Python installations; require explicit installation"
 never\:"Do not ever allow Python downloads"))' \
 '(--no-color)--color=[Control the use of color in output]:COLOR_CHOICE:((auto\:"Enables colored output only when the output is going to a terminal or TTY with support"
