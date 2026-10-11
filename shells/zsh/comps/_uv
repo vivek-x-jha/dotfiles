@@ -595,6 +595,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '(--package)--all-packages[Run the command with all workspace members installed]' \
@@ -709,8 +711,8 @@ never\:"Disables colored output"))' \
 _arguments "${_arguments_options[@]}" : \
 '*-r+[Add the packages listed in the given files]:REQUIREMENTS:_files' \
 '*--requirements=[Add the packages listed in the given files]:REQUIREMENTS:_files' \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
 '-m+[Apply this marker to all added packages]:MARKER:' \
 '--marker=[Apply this marker to all added packages]:MARKER:' \
 '(--dev --group)--optional=[Add the requirements to the package'\''s optional dependencies for the specified extra]:OPTIONAL:' \
@@ -815,6 +817,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '--workspace[Add the dependency as a workspace member]' \
@@ -943,6 +947,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1072,6 +1078,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1262,6 +1270,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '(--package)--all-packages[Sync all packages in the workspace]' \
@@ -1375,6 +1385,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1437,6 +1449,8 @@ never\:"Disables colored output"))' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -1585,6 +1599,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -1749,6 +1765,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -1942,6 +1960,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -2098,6 +2118,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
 '-U[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
 '--upgrade[Allow package upgrades, ignoring pinned versions in any existing output file. Implies \`--refresh\`]' \
@@ -2194,11 +2216,11 @@ _arguments "${_arguments_options[@]}" : \
 '*--with=[Run with the given packages installed]:WITH:' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_files -/' \
 '*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_files' \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--overrides=[Override versions using the given requirements files \[env\: \`UV_OVERRIDE\`=\]]:OVERRIDES:_files' \
 '*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
@@ -2374,6 +2396,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
@@ -2413,11 +2437,11 @@ _arguments "${_arguments_options[@]}" : \
 '*--with=[Run with the given packages installed]:WITH:' \
 '*--with-editable=[Run with the given packages installed in editable mode]:WITH_EDITABLE:_files -/' \
 '*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_files' \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--overrides=[Override versions using the given requirements files \[env\: \`UV_OVERRIDE\`=\]]:OVERRIDES:_files' \
 '*--env-file=[Load environment variables from a \`.env\` file]:ENV_FILE:_files' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
@@ -2593,6 +2617,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '--lfs[Whether to use Git LFS when adding a dependency from Git]' \
@@ -2635,12 +2661,12 @@ _arguments "${_arguments_options[@]}" : \
 '*--with-requirements=[Run with the packages listed in the given files]:WITH_REQUIREMENTS:_files' \
 '*--with-editable=[Include the given packages in editable mode]:WITH_EDITABLE:_files -/' \
 '*--with-executables-from=[Install executables from the following packages]:WITH_EXECUTABLES_FROM:' \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_files' \
-'*--excludes=[Exclude packages from resolution using the given requirements files]:EXCLUDES:_files' \
-'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--overrides=[Override versions using the given requirements files \[env\: \`UV_OVERRIDE\`=\]]:OVERRIDES:_files' \
+'*--excludes=[Exclude packages from resolution using the given requirements files \[env\: \`UV_EXCLUDE\`=\]]:EXCLUDES:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
 '--default-index=[The default package index (by default\: <https\://pypi.org/simple>)]:DEFAULT_INDEX:_default' \
 '-i+[(Deprecated\: use \`--default-index\` instead) The URL of the Python package index (by default\: <https\://pypi.org/simple>)]:INDEX_URL:_default' \
@@ -2814,6 +2840,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '--force[Force installation of the tool]' \
@@ -2969,6 +2997,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--no-cache[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
 '--managed-python[Require use of uv-managed Python versions \[env\: UV_MANAGED_PYTHON=\]]' \
@@ -3799,12 +3829,12 @@ never\:"Disables colored output"))' \
         case $line[1] in
             (compile)
 _arguments "${_arguments_options[@]}" : \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_files' \
-'*--excludes=[Exclude packages from resolution using the given requirements files]:EXCLUDES:_files' \
-'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--overrides=[Override versions using the given requirements files \[env\: \`UV_OVERRIDE\`=\]]:OVERRIDES:_files' \
+'*--excludes=[Exclude packages from resolution using the given requirements files \[env\: \`UV_EXCLUDE\`=\]]:EXCLUDES:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name; may be provided more than once]:EXTRA:_default' \
 '*--group=[Install the specified dependency group from a \`pyproject.toml\`]:GROUP:_default' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -3976,6 +4006,8 @@ never\:"Disables colored output"))' \
 '--directory=[Change to the given directory prior to running the command]:DIRECTORY:_files -/' \
 '--project=[Discover a project in the given directory]:PROJECT:_files -/' \
 '--config-file=[The path to a \`uv.toml\` file to use for configuration]:CONFIG_FILE:_files' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[]' \
 '(--extra)--all-extras[Include all optional dependencies]' \
 '--no-all-extras[]' \
 '--no-index[Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and those provided via \`--find-links\`]' \
@@ -4055,10 +4087,10 @@ never\:"Disables colored output"))' \
 ;;
 (sync)
 _arguments "${_arguments_options[@]}" : \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name; may be provided more than once]:EXTRA:_default' \
 '*--group=[Install the specified dependency group from a \`pylock.toml\` or \`pyproject.toml\`]:GROUP:_default' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -4228,6 +4260,8 @@ never\:"Disables colored output"))' \
 '--no-require-hashes[]' \
 '--verify-hashes[]' \
 '--no-verify-hashes[Disable validation of hashes in the requirements file]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[]' \
 '--system[Install packages into the system Python environment]' \
 '--no-system[]' \
 '--break-system-packages[Allow uv to modify an \`EXTERNALLY-MANAGED\` Python installation]' \
@@ -4279,12 +4313,12 @@ _arguments "${_arguments_options[@]}" : \
 '*-e+[Install the editable package based on the provided local file path]:EDITABLE:_default' \
 '*--editable=[Install the editable package based on the provided local file path]:EDITABLE:_default' \
 '*--no-editable-package=[Install the specified editable packages as non-editable]:NO_EDITABLE_PACKAGE:' \
-'*-c+[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--constraints=[Constrain versions using the given requirements files]:CONSTRAINTS:_files' \
-'*--overrides=[Override versions using the given requirements files]:OVERRIDES:_files' \
-'*--excludes=[Exclude packages from resolution using the given requirements files]:EXCLUDES:_files' \
-'*-b+[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions]:BUILD_CONSTRAINTS:_files' \
+'*-c+[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--constraints=[Constrain versions using the given requirements files \[env\: \`UV_CONSTRAINT\`=\]]:CONSTRAINTS:_files' \
+'*--overrides=[Override versions using the given requirements files \[env\: \`UV_OVERRIDE\`=\]]:OVERRIDES:_files' \
+'*--excludes=[Exclude packages from resolution using the given requirements files \[env\: \`UV_EXCLUDE\`=\]]:EXCLUDES:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building source distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
 '(--all-extras)*--extra=[Include optional dependencies from the specified extra name; may be provided more than once]:EXTRA:_default' \
 '*--group=[Install the specified dependency group from a \`pylock.toml\` or \`pyproject.toml\`]:GROUP:_default' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -4472,6 +4506,8 @@ never\:"Disables colored output"))' \
 '--no-require-hashes[]' \
 '--verify-hashes[]' \
 '--no-verify-hashes[Disable validation of hashes in the requirements file]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[]' \
 '--system[Install packages into the system Python environment]' \
 '--no-system[]' \
 '--break-system-packages[Allow uv to modify an \`EXTERNALLY-MANAGED\` Python installation]' \
@@ -5105,8 +5141,8 @@ _arguments "${_arguments_options[@]}" : \
 '(--all-packages)--package=[Build a specific package in the workspace]:PACKAGE:' \
 '-o+[The output directory to which distributions should be written]:OUT_DIR:_files -/' \
 '--out-dir=[The output directory to which distributions should be written]:OUT_DIR:_files -/' \
-'*-b+[Constrain build dependencies using the given requirements files when building distributions]:BUILD_CONSTRAINTS:_files' \
-'*--build-constraints=[Constrain build dependencies using the given requirements files when building distributions]:BUILD_CONSTRAINTS:_files' \
+'*-b+[Constrain build dependencies using the given requirements files when building distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
+'*--build-constraints=[Constrain build dependencies using the given requirements files when building distributions \[env\: \`UV_BUILD_CONSTRAINT\`=\]]:BUILD_CONSTRAINTS:_files' \
 '-p+[The Python interpreter to use for the build environment.]:PYTHON:' \
 '--python=[The Python interpreter to use for the build environment.]:PYTHON:' \
 '*--index=[The indexes to use when resolving dependencies, in addition to the default index]:INDEX:_default' \
@@ -5192,6 +5228,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '-n[Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation]' \
@@ -5418,6 +5456,8 @@ never\:"Disables colored output"))' \
 '--build[]' \
 '--no-binary[Don'\''t install pre-built wheels]' \
 '--binary[]' \
+'--require-build-hashes[Require hashes for all build dependencies]' \
+'--no-require-build-hashes[Do not require hashes for every build dependency]' \
 '--refresh[Refresh all cached data]' \
 '--no-refresh[]' \
 '--sync[Sync the environment to include module ownership metadata in the output]' \
