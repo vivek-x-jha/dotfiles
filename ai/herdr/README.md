@@ -16,6 +16,22 @@ The Neovim side is registered through native `vim.pack` and configured in
 `editors/nvim/lua/plugins/herdr-navigation.lua`. The plugin owns the direct
 `<C-h/j/k/l>` bindings; the built-in pane-focus bindings are disabled.
 
+## Smart pane swap
+
+Press `Ctrl+A`, release, then `x` to exchange the current pane with a neighbor
+in either a side-by-side or stacked layout. `herdr-smart-swap` tries down,
+right, up, then left and stops after one swap. A single-pane tab is a no-op.
+Mixed layouts use that same direction priority. This exchanges pane positions;
+it does not rotate the split or restart any processes.
+
+A direct down-only swap remains available with `Ctrl+A`, then `Shift+X`.
+
+Check the helper without changing live panes:
+
+```sh
+python3 ai/herdr/tests/test_smart_swap.py
+```
+
 ## Agent pane titles
 
 Pi pane labels and agent display titles follow the current chat name. The Pi

@@ -44,7 +44,7 @@ focus_pane_right = ""
 settings = "prefix+comma"
 split_horizontal = "prefix+s"
 close_pane = "prefix+c"
-swap_pane_down = "prefix+x"
+swap_pane_down = "prefix+shift+x"
 new_tab = "prefix+ctrl+c"
 rename_pane = "prefix+n"
 rename_tab = "prefix+shift+n"
@@ -88,6 +88,11 @@ description = "Save Herdr process restore state"
 key = "prefix+ctrl+r"
 command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" restore 2>&1); status=$?; "$HOME/.local/bin/herdr" notification show "Resurrect restored" --body "$out"; exit $status' '''
 description = "Restore Herdr processes"
+
+[[keys.command]]
+key = "prefix+x"
+command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-smart-swap" 2>&1) || { "$HOME/.local/bin/herdr" notification show "Pane swap failed" --body "$out"; exit 1; }' '''
+description = "Swap panes in either split orientation"
 
 [[keys.command]]
 key = "prefix+="

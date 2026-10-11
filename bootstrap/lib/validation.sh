@@ -111,6 +111,7 @@ check_bootstrap() {
   check_path "$BOOTSTRAP_ROOT/cli/bob/config.json"
   check_path "$BOOTSTRAP_ROOT/cli/fzf/config"
   check_path "$BOOTSTRAP_ROOT/ai/herdr/config.toml"
+  check_path "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-smart-swap"
   check_path "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-claude-title-watch"
   check_path "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-codex-title-watch"
   check_path "$BOOTSTRAP_ROOT/ai/cliproxyapi/config.yaml"
