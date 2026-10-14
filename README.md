@@ -297,7 +297,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Zsh](https://zsh.sourceforge.io/) is the primary interactive shell.
 - [Zap](https://www.zapzsh.com/) manages source-only Zsh plugins.
 - [zsh-patina](https://github.com/michel-kraemer/zsh-patina) provides Zsh syntax highlighting from a Homebrew-managed executable on macOS (Cargo fallback elsewhere) and repo-managed SourDiesel config under [`cli/zsh-patina`](./cli/zsh-patina). Its Zsh completion script is generated with `zsh-patina completion`, and it reads `~/.config/zsh-patina/config.toml` by default.
-- `zsh-autocomplete` carries repo-managed completion styling and terminfo fallbacks under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses those local overrides before `zap update all` and reapplies them afterward.
+- `zsh-autocomplete` carries repo-managed completion styling, terminfo fallbacks, and a `zasync` loader fix for automatic menus under [`shells/zsh/patches`](./shells/zsh/patches); `update-tools` reverses those local overrides before `zap update all` and reapplies them afterward. See [`docs/known-issues.md`](./docs/known-issues.md#ki-2026-10-13-zsh-autocomplete-zasync-loader) for the loader workaround and removal criteria.
 - [ble.sh](https://github.com/akinomyoga/ble.sh) provides Bash line editing and completion.
 - [Starship](https://starship.rs/) renders the prompt.
 - [Atuin](https://atuin.sh/) replaces shell history with searchable SQLite-backed history and optional encrypted sync.

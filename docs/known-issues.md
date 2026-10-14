@@ -34,6 +34,24 @@ Managed ledger for recurring bugs, regressions, environment quirks, and active w
 
 ## Active Issues
 
+## KI-2026-10-13-zsh-autocomplete-zasync-loader
+
+**Status:** Workaround active.
+**Last verified:** 2026-10-13 (zsh-autocomplete `77706d4`; Homebrew Zsh 5.9.2).
+**Area:** Zsh automatic completion menus
+
+**Observed:** Menus below the prompt never appear while typing, although autocomplete hooks and inline autosuggestions load. `zasync help` silently returns success without initializing the helper.
+
+**Likely cause:** The plugin's failed initial `autoload +X` leaves an unresolved `zasync` registration; the fallback absolute-path autoload does not repair it. Upstream issue #907 describes the same failure.
+
+**Workaround:** The managed patch temporarily adds the cached dependency directory to a local `fpath` and force-loads `zasync` by name, matching the loader hunk in upstream PR #903. Existing styling and terminfo overrides are independent. Apply with `patch-zsh-autocomplete apply`, then restart existing shells; `update-tools` preserves the patch across plugin updates.
+
+**Reproduce/retest:** In a fresh interactive Zsh, run `zasync help`, then type `git che` without pressing Tab. Before the fix, help prints nothing and no menu appears; after the fix, help prints usage and the menu includes checkout/cherry-pick. Verify apply/reverse idempotence as well.
+
+**Exit criteria:** An upstream release initializes `zasync` and renders automatic menus without this loader hunk. Remove only that hunk after testing a fresh shell; retain the independent styling and key fallbacks if still wanted.
+
+**References:** `shells/zsh/patches/zsh-autocomplete-local-overrides.patch`, `shells/zsh/funcs/patch-zsh-autocomplete`, [upstream issue #907](https://github.com/marlonrichert/zsh-autocomplete/issues/907), [upstream PR #903](https://github.com/marlonrichert/zsh-autocomplete/pull/903).
+
 ## KI-2026-07-16-vscode-shared-home-directory
 
 **Status:** Workaround active.

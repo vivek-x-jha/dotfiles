@@ -2,7 +2,14 @@ diff --git a/Functions/Init/.autocomplete__async b/Functions/Init/.autocomplete_
 index d74c1b1..95e6ec8 100644
 --- a/Functions/Init/.autocomplete__async
 +++ b/Functions/Init/.autocomplete__async
-@@ -409,7 +409,7 @@ ${0}:precmd() {
+@@ -23,3 +23,5 @@ ${0}:precmd() {
+     fi
+-    builtin autoload -Uz $zasync_dir/zasync
++
++    local -aU fpath=( "$zasync_dir" "${fpath[@]}" )
++    builtin autoload -Uz +X zasync
+   fi
+@@ -409,7 +411,7 @@ ${0}:precmd() {
    compstate[pattern_insert]=
    _lastcomp[pattern_insert]=
    if [[ -v _autocomplete__partial_list ]]; then
