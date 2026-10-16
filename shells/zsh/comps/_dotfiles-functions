@@ -1,4 +1,4 @@
-#compdef cheatsheet edit-all fix-tmux-remotes glg=git-log l=eva list-256 list-colors patch-zsh-autocomplete t take toggle-tmux-client update-icons uvi
+#compdef cheatsheet edit-all glg=git-log l=eva list-256 list-colors patch-zsh-autocomplete t take update-icons
 
 case $service in
   eva)
@@ -23,11 +23,6 @@ case $service in
     else
       _message 'tree depth (use -1 through -99)'
     fi
-    ;;
-  uvi)
-    _arguments \
-      '(-d --desc)'{-d,--desc}'[set project description]:description:_message "project description"' \
-      '1:project directory:_directories'
     ;;
   patch-zsh-autocomplete)
     _arguments '1:mode:(apply --apply reverse --reverse -R -h --help)'

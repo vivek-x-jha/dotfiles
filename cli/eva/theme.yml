@@ -408,6 +408,14 @@ filenames:
       style:
         foreground: brightcyan
 
+  _dotfiles-functions:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
   _dust:
     filename:
       foreground: brightcyan
@@ -564,6 +572,14 @@ filenames:
     icon:
       glyph: "󰊕"
 
+  completions.bash:
+    filename:
+      foreground: brightcyan
+    icon:
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
+
   config.sh:
     icon:
       glyph: ""
@@ -620,9 +636,13 @@ filenames:
       style:
         foreground: brightcyan
 
-  fix-tmux-remotes:
+  functions.bash:
+    filename:
+      foreground: brightcyan
     icon:
-      glyph: "󰊕"
+      glyph: "󰌶"
+      style:
+        foreground: brightcyan
 
   glg:
     icon:
@@ -712,10 +732,6 @@ filenames:
       style:
         foreground: brightcyan
 
-  toggle-tmux-client:
-    icon:
-      glyph: "󰊕"
-
   update-icons:
     icon:
       glyph: "󰊕"
@@ -739,10 +755,6 @@ filenames:
       glyph: "󰌶"
       style:
         foreground: brightcyan
-
-  uvi:
-    icon:
-      glyph: "󰊕"
 
 
   # Editor files

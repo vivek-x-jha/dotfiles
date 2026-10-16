@@ -29,9 +29,9 @@ SHELL_CONFIG="$ROOT/shells" HOMEBREW_PREFIX="$FIXTURE/brew" source "$ROOT/shells
 for cmd in atuin bat bob dust fd rg starship tldr uv; do
   [[ $(complete -p "$cmd") == *packaged* ]]
 done
-for fn in prepend_path append_path remove_path; do
+for fn in prepend_path append_path remove_path fix-tmux-remotes toggle-tmux-client uvi; do
   if complete -p "$fn" &>/dev/null; then
-    printf 'unexpected completion for startup-only helper: %s\n' "$fn" >&2
+    printf 'unexpected completion for unavailable helper: %s\n' "$fn" >&2
     exit 1
   fi
 done
@@ -66,7 +66,7 @@ for fn in "$ROOT"/shells/bash/funcs/*; do
   complete -p "${fn##*/}" >/dev/null
 done
 
-for fn in cheatsheet edit-all fix-tmux-remotes list-256 list-colors toggle-tmux-client; do
+for fn in cheatsheet edit-all list-256 list-colors; do
   complete_function "$fn" ''
   [[ ${#COMPREPLY[@]} == 0 ]]
 done
@@ -91,19 +91,6 @@ complete_function t --
 assert_match --help
 complete_function t project -2 ''
 [[ ${#COMPREPLY[@]} == 0 ]]
-
-complete_function uvi --
-assert_match --desc
-assert_absent --help
-complete_function uvi -d pro
-[[ ${#COMPREPLY[@]} == 0 ]]
-complete_function uvi --desc 'project description' pro
-assert_match project
-assert_match 'project space'
-complete_function uvi project ''
-[[ ${#COMPREPLY[@]} == 0 ]]
-complete_function uvi project --
-assert_match --desc
 
 # Wrappers delegate instead of maintaining duplicate Eva/Git option lists.
 _eva() { COMPREPLY=(eva-option); }
@@ -181,7 +168,7 @@ for fn in "$ROOT"/shells/zsh/funcs/*; do
   [[ -n ${_comps[${fn:t}]-} ]] || { print -ru2 "missing completion: ${fn:t}"; exit 1; }
 done
 [[ ${_services[l]} == eva && ${_services[glg]} == git-log ]]
-for fn in prepend_path append_path remove_path; do
+for fn in prepend_path append_path remove_path fix-tmux-remotes toggle-tmux-client uvi; do
   [[ -z ${_comps[$fn]-} ]]
 done
 
@@ -202,7 +189,7 @@ for service in eva git-log; do
   _dotfiles-functions
   [[ $delegated == ${service%-log} ]]
 done
-for service in cheatsheet edit-all fix-tmux-remotes list-256 list-colors toggle-tmux-client; do
+for service in cheatsheet edit-all list-256 list-colors; do
   _dotfiles-functions
   [[ $message == 'no arguments' ]]
 done
@@ -219,10 +206,6 @@ CURRENT=2 PREFIX=pro
 _dotfiles-functions
 [[ $delegated == directories ]]
 
-service=uvi
-_dotfiles-functions
-[[ ${(j: :)specs} == *--desc* && ${(j: :)specs} == *'description:_message'* ]]
-[[ ${specs[-1]} == '1:project directory:_directories' ]]
 service=patch-zsh-autocomplete
 _dotfiles-functions
 [[ ${specs[1]} == *'apply --apply reverse --reverse -R -h --help'* ]]

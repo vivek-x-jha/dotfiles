@@ -1,14 +1,14 @@
 # shellcheck shell=bash
 
 _dotfiles_functions() {
-  local cur=${COMP_WORDS[COMP_CWORD]} prev=${COMP_WORDS[COMP_CWORD - 1]}
-  local levels i target=0
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  local levels
   COMPREPLY=()
 
   case ${COMP_WORDS[0]} in
   l)
     # shellcheck disable=SC2034 # Dynamically scoped scratch variables used by Eva.
-    local completions parse_help
+    local completions parse_help prev
     _eva
     ;;
   glg)
@@ -27,25 +27,11 @@ _dotfiles_functions() {
       mapfile -t COMPREPLY < <(compgen -d -- "$cur")
     fi
     ;;
-  uvi)
-    [[ $prev == -d || $prev == --desc ]] && return 0
-    if [[ $cur == -* ]]; then
-      mapfile -t COMPREPLY < <(compgen -W '-d --desc' -- "$cur")
-    else
-      for ((i = 1; i < COMP_CWORD; i++)); do
-        case ${COMP_WORDS[i]} in
-        -d|--desc) ((i += 1)) ;;
-        *) target=1 ;;
-        esac
-      done
-      ((target)) || mapfile -t COMPREPLY < <(compgen -d -- "$cur")
-    fi
-    ;;
   esac
   return 0
 }
 
-complete -F _dotfiles_functions cheatsheet edit-all fix-tmux-remotes list-256 list-colors toggle-tmux-client
-complete -o filenames -F _dotfiles_functions take update-icons t uvi
+complete -F _dotfiles_functions cheatsheet edit-all list-256 list-colors
+complete -o filenames -F _dotfiles_functions take update-icons t
 complete -o filenames -o bashdefault -F _dotfiles_functions l
 complete -o bashdefault -o default -o nospace -F _dotfiles_functions glg
