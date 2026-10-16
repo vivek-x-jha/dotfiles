@@ -163,6 +163,7 @@ check_bootstrap() {
   check_cmd 'Homebrew profile fixtures' "$BOOTSTRAP_ROOT/bootstrap/tests/profiles.sh"
   check_cmd 'dependency and checkpoint fixtures' "$BOOTSTRAP_ROOT/bootstrap/tests/dependencies.sh"
   check_cmd 'update-tools fixtures' "$BOOTSTRAP_ROOT/bootstrap/tests/update-tools.sh"
+  check_cmd 'custom shell completion fixtures' "$BOOTSTRAP_ROOT/bootstrap/tests/shell-completions.sh"
   check_cmd 'one-shot installer fixtures' "$BOOTSTRAP_ROOT/bootstrap/tests/install.sh"
   check_path "$BOOTSTRAP_ROOT/bootstrap/tests/macos-vm.sh"
   check_path "$BOOTSTRAP_ROOT/bootstrap/tests/macos-vm.env"

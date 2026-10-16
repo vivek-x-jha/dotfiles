@@ -22,9 +22,7 @@ _update_tools() {
     return 0
   }
 
-  if [[ $cur == */* || -z $cur ]]; then
-    mapfile -t COMPREPLY < <(compgen -d -- "$cur")
-  fi
+  mapfile -t COMPREPLY < <(compgen -d -- "$cur")
 }
 
-complete -F _update_tools -o bashdefault -o default update-tools
+complete -F _update_tools -o filenames update-tools

@@ -14,17 +14,17 @@ _update_tools() {
     '(-n --nvim)'{-n,--nvim}'[update Neovim plugins]'
     '--pi[update Pi coding agent]'
     '(-r --rust)'{-r,--rust}'[update Rust and cargo-installed tools]'
-    '--completions[regenerate managed shell completions]'
+    '--completions[regenerate Herdr shell completions]'
     '(-b --brew)'{-b,--brew}'[run Homebrew maintenance]'
     '(-i --icons)'{-i,--icons}'[refresh macOS icons]'
     '(-e --tex)'{-e,--tex}'[update TeX Live]'
-    '--icons-dir=[set the icons source directory]:path:_files -/'
+    '--icons-dir[set the icons source directory]:icons directory:_directories'
     '-h[show this help]'
     '--help[show this help]'
-    '1:icons directory:_files -/'
+    '1:icons directory:_directories'
   )
 
-  _arguments -s -S : $opts
+  _arguments : $opts
 }
 
 _update_tools "$@"

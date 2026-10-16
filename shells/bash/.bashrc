@@ -41,13 +41,8 @@ source "$SHELL_CONFIG/aliases"
 source "$XDG_CONFIG_HOME/fzf/config"
 eval "$(fzf --bash)"
 
-# Compatibility for scripts that expect the bash-completion pkg
-source "$SHELL_CONFIG/bash/comps/_cmp-compat.bash"
-
-# Completions
-# shellcheck disable=SC1090
-for cmp in "$SHELL_CONFIG"/bash/comps/*.bash; do source "$cmp"; done
-unset cmp
+# Packaged completions and repo-only commands/functions
+source "$SHELL_CONFIG/bash/completions.bash"
 
 # Command history
 eval "$(atuin init bash --disable-ai)"

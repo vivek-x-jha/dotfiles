@@ -33,6 +33,7 @@ fpath=(
   "$ZDOTDIR/comps"
   "$ZDOTDIR/funcs"
   /opt/homebrew/share/zsh/functions(N/)
+  "${HOMEBREW_PREFIX:-/opt/homebrew}"/share/zsh/site-functions(N/)
   "${fpath[@]}"
 )
 typeset -U fpath
