@@ -5,7 +5,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "fzf-lua": {
-      "rev": "9405672f62767695d5f20db171336f7f4911ce86",
+      "rev": "c67fadd9a24230417267e4f9068227e093c0be2b",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
