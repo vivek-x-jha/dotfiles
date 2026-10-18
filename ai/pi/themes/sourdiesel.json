@@ -40,7 +40,7 @@
 
     "selectedBg": "grey",
     "userMessageBg": "",
-    "userMessageText": "white",
+    "userMessageText": "BLACK_HEX",
     "customMessageBg": "",
     "customMessageText": "white",
     "customMessageLabel": "magenta",

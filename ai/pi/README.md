@@ -44,7 +44,26 @@ terminal palette:
   separator line.
 - Turn sections and code blocks are intended to render with straight separator
   lines and no dark fill/background.
+- Submitted user messages use a brightblue `>>>` prompt and neutral black text;
+  continuation lines align under the message, without a rail or user icon.
+- Bash calls use Pi's renderer API so multiline commands are fully styled, without
+  leftover copies of the native command preview. Python heredocs and literal
+  `python -c` / `python3 -c` bodies use the active theme's Python syntax colors.
+  Ordinary shell text keeps its shell/path colors; stdout/stderr and execution are
+  unchanged. Complex heredoc redirects, concatenated shell quotes, and inline code
+  with shell expansions fall back to shell styling rather than guessing.
 
 After Pi package updates, re-test fenced `bash`, `zsh`, `python`, unknown-language,
 and no-language blocks because Markdown renderer behavior is package-owned while the
 colors are repo-managed here.
+
+Run these rendering checks from the dotfiles root against the globally installed Pi:
+
+```sh
+node ai/pi/tests/user-message.mjs
+node ai/pi/tests/bash-python.mjs
+```
+
+They cover wrapping, colors, narrow widths, shell-integration markers, reload safety,
+Python heredocs/inline code, fallback cases, unchanged output, and theme changes.
+Fixtures are rendered only; Python and shell fixture commands are never executed.

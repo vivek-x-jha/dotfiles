@@ -3,12 +3,13 @@ import {
   CompactionSummaryMessageComponent,
   ToolExecutionComponent,
   UserMessageComponent,
+  highlightCode,
   type ExtensionAPI,
   type ExtensionContext,
   type ReadonlyFooterDataProvider,
   type Theme,
 } from "@earendil-works/pi-coding-agent";
-import { Container, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { Container, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { existsSync } from "node:fs";
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { basename, isAbsolute, join as pathJoin } from "node:path";
@@ -34,7 +35,7 @@ const TOOL_SPECS: Record<
   ToolKey,
   { icon: string; color: string; fallback: string }
 > = {
-  read: { icon: "", color: "BRIGHTMAGENTA_HEX", fallback: "#c9ccfb" },
+  read: { icon: "", color: "BRIGHTMAGENTA_HEX", fallback: "#c9ccfb" },
   bash: { icon: SHELL_ICON, color: "BRIGHTGREEN_HEX", fallback: "#d2fd9d" },
   edit: { icon: "", color: "BRIGHTYELLOW_HEX", fallback: "#f3b175" },
   write: { icon: "", color: "BRIGHTRED_HEX", fallback: "#f096b7" },
@@ -257,7 +258,7 @@ export default function (pi: ExtensionAPI) {
     return brightBlackText("─".repeat(Math.max(1, width)));
   }
 
-  const OSC_SEQUENCE_PATTERN = /\x1b\][^\x07]*(?:\x07|\x1b\\)/g;
+  const OSC_SEQUENCE_PATTERN = /\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/g;
 
   function extractOscSequences(line: string): string {
     return [...line.matchAll(OSC_SEQUENCE_PATTERN)].map((match) => match[0]).join("");
@@ -304,22 +305,7 @@ export default function (pi: ExtensionAPI) {
     return fgHex(envHex("BRIGHTBLUE_HEX", "#80d7fe"), text);
   }
 
-  function splitLeadingOsc(line: string): [string, string] {
-    let rest = line;
-    let leading = "";
-    while (rest.startsWith("\x1b]")) {
-      const belIndex = rest.indexOf("\x07");
-      const stIndex = rest.indexOf("\x1b\\");
-      const endIndex = belIndex >= 0 && (stIndex < 0 || belIndex < stIndex) ? belIndex + 1 : stIndex >= 0 ? stIndex + 2 : -1;
-      if (endIndex < 0) break;
-      leading += rest.slice(0, endIndex);
-      rest = rest.slice(endIndex);
-    }
-    return [leading, rest];
-  }
-
-  const RENDERED_CONTROL_PATTERN = /(?:\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07]*(?:\x07|\x1b\\)|\x1b_[^\x07]*(?:\x07|\x1b\\))/y;
-  const TRAILING_RENDERED_CONTROL_PATTERN = /(?:\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07]*(?:\x07|\x1b\\)|\x1b_[^\x07]*(?:\x07|\x1b\\))$/;
+  const TRAILING_RENDERED_CONTROL_PATTERN = /(?:\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)|\x1b_[^\x07\x1b]*(?:\x07|\x1b\\))$/;
 
   function trimRenderedTrailingSpaces(line: string): string {
     const suffixes: string[] = [];
@@ -333,51 +319,11 @@ export default function (pi: ExtensionAPI) {
     return `${rest.replace(/[ \t]+$/g, "")}${suffixes.join("")}`;
   }
 
-  function skipRenderedControls(line: string, start: number): number {
-    let index = start;
-    while (index < line.length) {
-      RENDERED_CONTROL_PATTERN.lastIndex = index;
-      const match = RENDERED_CONTROL_PATTERN.exec(line);
-      if (!match || match.index !== index) break;
-      index += match[0].length;
-    }
-    return index;
-  }
-
-  function stripOneUserMessagePrefix(line: string): string {
-    let index = skipRenderedControls(line, 0);
-    if (!line.startsWith("▌ ", index)) return line;
-    index += "▌ ".length;
-    index = skipRenderedControls(line, index);
-    if (!line.startsWith(" ", index)) return line;
-    index += " ".length;
-    index = skipRenderedControls(line, index);
-    return line.slice(index);
-  }
-
-  function stripUserMessagePrefixes(line: string): string {
-    let rest = line;
-    for (let i = 0; i < 4; i++) {
-      const stripped = stripOneUserMessagePrefix(rest);
-      if (stripped === rest) return rest;
-      rest = stripped;
-    }
-    return rest;
-  }
-
   function styleUserMessageLines(lines: string[], width: number): string[] {
-    const firstContentIndex = lines.findIndex((line) => !isBlankRenderedLine(line));
-    if (firstContentIndex < 0) return lines;
-    const prefix = `${brightBlueText("▌ ")}${blueText(" ")}`;
-    const prefixWidth = visibleWidth(prefix);
-    const [leadingOsc, rest] = splitLeadingOsc(lines[firstContentIndex]);
-    const bodyWidth = Math.max(0, width - prefixWidth);
-    const body = truncateToWidth(trimRenderedTrailingSpaces(stripUserMessagePrefixes(rest)), bodyWidth, "…");
-    return lines.map((line, index) =>
-      index === firstContentIndex
-        ? truncateToWidth(`${leadingOsc}${prefix}${body}`, width, "…")
-        : line,
-    );
+    return lines.map((line, index) => {
+      const prefix = index === 0 ? brightBlueText(">>> ") : "    ";
+      return truncateToWidth(`${prefix}${trimRenderedTrailingSpaces(line)}`, width, "…");
+    });
   }
 
   function isItalicRenderedLine(line: string): boolean {
@@ -489,6 +435,84 @@ export default function (pi: ExtensionAPI) {
     }).join("");
   }
 
+  function highlightPythonInBash(command: string): string {
+    const tokens = /\s+|&&|\|\||<<-|[|;()<>]+|"(?:\\.|[^"\\])*"|'[^']*'|[^\s|;&()<>]+/g;
+    const nextArgument = () => {
+      let token = tokens.exec(command);
+      if (token && /^[ \t]+$/.test(token[0])) token = tokens.exec(command);
+      return token;
+    };
+    const parts: string[] = [];
+    let shellStart = 0;
+    let commandPosition = true;
+    let python = false;
+    let match: RegExpExecArray | null;
+
+    while ((match = tokens.exec(command)) !== null) {
+      const token = match[0];
+      if (/^\s+$/.test(token)) {
+        if (token.includes("\n")) { commandPosition = true; python = false; }
+        continue;
+      }
+      if (token === "<<" || token === "<<-") {
+        const delimiterToken = nextArgument();
+        const delimiter = delimiterToken && /^(['"]?)([A-Za-z_][A-Za-z0-9_]*)\1$/.exec(delimiterToken[0]);
+        // shortcut: complex/multiple heredoc redirects stay shell-styled; use a shell parser if needed.
+        if (!delimiter || !python) break;
+        const headerEnd = command.indexOf("\n", tokens.lastIndex);
+        if (headerEnd < 0 || command.slice(tokens.lastIndex, headerEnd).includes("<<")) break;
+        const bodyStart = headerEnd + 1;
+        const closingPattern = new RegExp(`^${token === "<<-" ? "\\t*" : ""}${delimiter[2]}\\r?$`, "gm");
+        closingPattern.lastIndex = bodyStart;
+        const closing = closingPattern.exec(command);
+        const bodyEnd = closing?.index ?? command.length;
+        parts.push(styleBashCommand(command.slice(shellStart, bodyStart)));
+        parts.push(highlightCode(command.slice(bodyStart, bodyEnd), "python").join("\n"));
+        shellStart = bodyEnd;
+        tokens.lastIndex = closing ? bodyEnd + closing[0].length : command.length;
+        python = false;
+        commandPosition = true;
+        continue;
+      }
+      if (/^(?:&&|\|\||[|;()])$/.test(token)) {
+        commandPosition = true;
+        python = false;
+        continue;
+      }
+      if (commandPosition) {
+        if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(token) || /^(?:env|sudo|time|command|builtin|exec)$/.test(token)) continue;
+        if (token === "uv") {
+          const savedPosition = tokens.lastIndex;
+          if (nextArgument()?.[0] === "run") continue;
+          tokens.lastIndex = savedPosition;
+        }
+        python = /^(?:[^\s'"]*\/)?python(?:[23](?:\.\d+)*)?$/.test(token);
+        commandPosition = false;
+        continue;
+      }
+      if (!python) continue;
+      if (token === "-c") {
+        const literal = nextArgument();
+        if (!literal || !/^(?:'[^']*'|"(?:\\.|[^"\\])*")$/.test(literal[0])) break;
+        if (!/[\s;&|<>)]/.test(command[tokens.lastIndex] ?? " ")) break;
+        let code = literal[0].slice(1, -1);
+        // Do not evaluate shell expansions just to color a command preview.
+        if (literal[0][0] === '"') {
+          if (/[$`]/.test(code)) break;
+          code = code.replace(/\\(["\\\n])/g, (_match, char: string) => char === "\n" ? "" : char);
+        }
+        parts.push(styleBashCommand(command.slice(shellStart, literal.index + 1)));
+        parts.push(highlightCode(code, "python").join("\n"));
+        shellStart = literal.index + literal[0].length - 1;
+        python = false;
+      } else if (token === "-m" || (!token.startsWith("-") && !/^[<>]+$/.test(token))) {
+        python = false;
+      }
+    }
+    parts.push(styleBashCommand(command.slice(shellStart)));
+    return parts.join("");
+  }
+
   function toolPathArg(record: Record<string, unknown>): string {
     return stylePath(stringArg(record.path) ?? stringArg(record.file_path) ?? "…");
   }
@@ -522,15 +546,7 @@ export default function (pi: ExtensionAPI) {
   function toolCallLines(name: string, args: unknown, width: number): string[] {
     const key = toolKey(name);
     const title = toolOwnBoldStyle(key)(`${TOOL_SPECS[key].icon} ${toolCallLabel(name)}`);
-    if (key !== "bash") return [truncateToWidth(` ${title} ${toolCallSummary(name, args)}`, width, "…")];
-
-    const record = args && typeof args === "object" ? args as Record<string, unknown> : {};
-    const timeout = typeof record.timeout === "number" ? brightBlackText(` (timeout ${record.timeout}s)`) : "";
-    const command = `${styleBashCommand(stringArg(record.command) ?? "…")}${timeout}`;
-    return [
-      truncateToWidth(` ${title}`, width, "…"),
-      truncateToWidth(` ${shellPromptText("")} ${command}`, width, "…"),
-    ];
+    return [truncateToWidth(` ${title} ${toolCallSummary(name, args)}`, width, "…")];
   }
 
   function clampRenderedLines(lines: string[], width: number): string[] {
@@ -538,7 +554,7 @@ export default function (pi: ExtensionAPI) {
   }
 
   function replaceToolCallLine(lines: string[], toolName: string | undefined, args: unknown, width: number): string[] {
-    if (!toolName || lines.length === 0) return clampRenderedLines(lines, width);
+    if (!toolName || toolName === "bash" || lines.length === 0) return clampRenderedLines(lines, width);
     const firstContentIndex = lines.findIndex((line) => !isBlankRenderedLine(line));
     if (firstContentIndex < 0) return clampRenderedLines(lines, width);
     return clampRenderedLines([
@@ -599,17 +615,23 @@ export default function (pi: ExtensionAPI) {
   }
 
   function patchSectionSeparators(): void {
-    const patchVersion = 17;
+    const patchVersion = 19;
 
     const userPrototype = UserMessageComponent.prototype as SectionPrototype;
     if (userPrototype.__sourdieselSectionSeparatorPatchVersion !== patchVersion) {
-      const originalRender = userPrototype.render;
       userPrototype.render = function (this: unknown, width: number): string[] {
+        const self = this as { outputPad: number; setOutputPad: (padding: number) => void };
+        if (self.outputPad !== 0) self.setOutputPad(0);
+        // Reserve the prompt before Markdown wraps; bypass old wrappers after /reload.
         const lines = styleUserMessageLines(
-          stripExistingLeadingSeparator(trimOuterBlankLines(originalRender.call(this, width))),
+          trimOuterBlankLines(Container.prototype.render.call(this, Math.max(1, width - 4))),
           width,
         );
-        return lines.length > 0 ? [sectionSeparator(width), ...lines] : lines;
+        if (lines.length === 0) return lines;
+        // Preserve Pi's shell-integration zones when bypassing its user-message renderer.
+        lines[0] = "\x1b]133;A\x07" + lines[0];
+        lines[lines.length - 1] = "\x1b]133;B\x07\x1b]133;C\x07" + lines[lines.length - 1];
+        return [sectionSeparator(width), ...lines];
       };
       userPrototype.__sourdieselSectionSeparatorPatchVersion = patchVersion;
     }
@@ -1367,6 +1389,31 @@ export default function (pi: ExtensionAPI) {
   }
 
   patchSectionSeparators();
+
+  pi.registerToolRenderer((name, next) => {
+    if (name !== "bash") return next();
+    const original = next();
+    return {
+      ...original,
+      renderCall(args, theme, context) {
+        // Keep the native call renderer's timing state and the native result renderer.
+        const previous = original?.renderCall?.(args, theme, context);
+        const component = previous instanceof Text ? previous : new Text("", 0, 0);
+        const record = args && typeof args === "object" ? args as Record<string, unknown> : {};
+        const command = stringArg(record.command) ?? "…";
+        // Pi's theme proxy is stable across switches; its current palette is not.
+        let cached = context.state.sourdieselBashSource as { command: string; colors: Theme["colors"]; text: string } | undefined;
+        if (!cached || cached.command !== command || cached.colors !== theme.colors) {
+          cached = { command, colors: theme.colors, text: highlightPythonInBash(command) };
+          context.state.sourdieselBashSource = cached;
+        }
+        const title = toolOwnBoldStyle("bash")(`${SHELL_ICON} bash`);
+        const timeout = typeof record.timeout === "number" ? brightBlackText(` (timeout ${record.timeout}s)`) : "";
+        component.setText(`${title}\n${shellPromptText("")} ${cached.text}${timeout}`);
+        return component;
+      },
+    };
+  });
 
   pi.registerCommand("statusline", {
     description:
