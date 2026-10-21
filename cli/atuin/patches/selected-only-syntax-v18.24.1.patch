@@ -1,0 +1,132 @@
+diff --git a/crates/atuin/src/command/client/search/history_list.rs b/crates/atuin/src/command/client/search/history_list.rs
+index 13a6098..6a99050 100644
+--- a/crates/atuin/src/command/client/search/history_list.rs
++++ b/crates/atuin/src/command/client/search/history_list.rs
+@@ -299,12 +299,10 @@ impl DrawState<'_> {
+
+     fn command(&mut self, h: &History, _width: u16) {
+         let mut style = self.theme.as_style(Meaning::Base);
+-        let mut row_highlighted = false;
+-        if !self.alternate_highlight
+-            && (usize::conv(self.y) + self.state.offset == self.state.selected)
+-        {
+-            row_highlighted = true;
+-            // if not applying alternative highlighting to the whole row, color the command
++        let is_selected = usize::conv(self.y) + self.state.offset == self.state.selected;
++        let row_highlighted = is_selected && !self.alternate_highlight && !self.syntax_highlight;
++        if row_highlighted {
++            // Keep the legacy selection style when syntax highlighting is disabled.
+             style = self.theme.as_style(Meaning::AlertError);
+             style.attributes.set(style::Attribute::Bold);
+         }
+@@ -315,8 +313,8 @@ impl DrawState<'_> {
+
+         let highlight_indices = self.history_highlighter.get_highlight_indices(&normalized);
+
+-        // The selected row keeps its single highlight color.
+-        let syntax = if self.syntax_highlight && !row_highlighted {
++        // Keep other commands muted; only the selection gets syntax colors.
++        let syntax = if self.syntax_highlight && is_selected {
+             syntax::classify(&normalized, h.shell.as_deref())
+         } else {
+             Vec::new()
+@@ -439,3 +437,99 @@ impl DrawState<'_> {
+         self.x += self.buf.set_stringn(cx, cy, s, w, style).0 - cx;
+     }
+ }
++
++#[cfg(all(
++    test,
++    any(target_os = "linux", target_os = "macos", target_os = "windows", target_os = "illumos")
++))]
++mod tests {
++    use std::collections::HashMap;
++
++    use atuin_client::database::DbSearchMode;
++    use rstest::rstest;
++
++    use super::super::engines::db;
++    use super::*;
++
++    #[rstest]
++    fn selected_only_syntax_colors(
++        #[values(false, true)] inverted: bool,
++        #[values(0, 1)] selected: usize,
++        #[values(false, true)] syntax_highlight: bool,
++        #[values(false, true)] alternate_highlight: bool,
++        #[values("", "git", "--flag")] query: &str,
++    ) {
++        let theme = Theme::from_foreground_colors(
++            "test".into(),
++            None,
++            &HashMap::from([(Meaning::Base, "#5c617d".into())]),
++            false,
++        );
++        let entry: History = History::capture()
++            .timestamp(OffsetDateTime::UNIX_EPOCH)
++            .command("git --flag 'hello'")
++            .shell("bash")
++            .cwd("/test")
++            .build()
++            .into();
++        let history = [entry.clone(), entry];
++        let engine: AnySearchEngine = db::Search(DbSearchMode::FullText).into();
++        let columns = [UiColumn::new(UiColumnType::Command)];
++        let area = Rect::new(0, 0, 40, 2);
++        let mut buf = Buffer::empty(area);
++        let mut state = ListState::default();
++        state.select(selected);
++        let now = || OffsetDateTime::UNIX_EPOCH;
++        let list = HistoryList::new(
++            &history,
++            inverted,
++            alternate_highlight,
++            &now,
++            UtcOffset::UTC,
++            " > ",
++            &theme,
++            HistoryHighlighter {
++                engine: &engine,
++                search_input: query,
++            },
++            false,
++            syntax_highlight,
++            &columns,
++        );
++        StatefulWidget::render(list, area, &mut buf, &mut state);
++
++        for row in 0..2_u16 {
++            let selected_row = usize::from(row) == selected;
++            let y = if inverted {
++                row
++            } else {
++                1 - row
++            };
++            let legacy = selected_row && !syntax_highlight && !alternate_highlight;
++            for (byte, syntax_meaning) in [
++                (0_u16, Meaning::SyntaxCommand),
++                (4, Meaning::SyntaxFlag),
++                (11, Meaning::SyntaxString),
++            ] {
++                let matched = (byte == 0 && query == "git") || (byte == 4 && query == "--flag");
++                let meaning = if selected_row && syntax_highlight {
++                    syntax_meaning
++                } else if legacy && matched {
++                    Meaning::AlertWarn
++                } else if legacy {
++                    Meaning::AlertError
++                } else {
++                    Meaning::Base
++                };
++                let cell = &buf[(3 + byte, y)];
++                let expected = Style::from_crossterm(theme.as_style(meaning));
++                assert_eq!(Some(cell.fg), expected.fg);
++                assert_eq!(cell.modifier.contains(Modifier::BOLD), legacy || matched);
++                assert_eq!(
++                    cell.modifier.contains(Modifier::REVERSED),
++                    selected_row && alternate_highlight,
++                );
++            }
++        }
++    }
++}

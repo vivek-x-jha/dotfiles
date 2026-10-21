@@ -46,5 +46,8 @@ dir = "~/.local/state/atuin/logs"
 [theme]
 name = "sourdiesel"
 
+[ui]
+syntax_highlight = true
+
 [ai]
 enabled = true
