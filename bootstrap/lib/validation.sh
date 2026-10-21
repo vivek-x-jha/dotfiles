@@ -116,6 +116,7 @@ check_bootstrap() {
   check_path "$BOOTSTRAP_ROOT/ai/herdr/scripts/herdr-codex-title-watch"
   check_path "$BOOTSTRAP_ROOT/ai/cliproxyapi/config.yaml"
   check_path "$BOOTSTRAP_ROOT/ai/pi/README.md"
+  check_path "$BOOTSTRAP_ROOT/ai/pi/keybindings.json"
   check_path "$BOOTSTRAP_ROOT/ai/pi/models.json"
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/handoff-alias.ts"
   check_path "$BOOTSTRAP_ROOT/ai/pi/extensions/herdr-agent-state.ts"
@@ -343,6 +344,7 @@ doctor_bootstrap() {
   fi
   doctor_symlink "$XDG_CONFIG_HOME/mycli" ../.dotfiles/cli/mycli
   doctor_file "$XDG_CONFIG_HOME/ponytail/config.json"
+  doctor_symlink "$XDG_STATE_HOME/pi/agent/keybindings.json" ../../../../.dotfiles/ai/pi/keybindings.json
   doctor_symlink "$XDG_STATE_HOME/pi/agent/models.json" ../../../../.dotfiles/ai/pi/models.json
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/handoff-alias.ts" ../../../../../.dotfiles/ai/pi/extensions/handoff-alias.ts
   doctor_symlink "$XDG_STATE_HOME/pi/agent/extensions/herdr-agent-state.ts" ../../../../../.dotfiles/ai/pi/extensions/herdr-agent-state.ts

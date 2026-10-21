@@ -365,6 +365,7 @@ create_symlinks() {
     "$BOOTSTRAP_ROOT/cli/npm" "$XDG_CONFIG_HOME/npm"
     "$BOOTSTRAP_ROOT/ai/AGENTS.md" "$XDG_STATE_HOME/codex/AGENTS.md"
     "$BOOTSTRAP_ROOT/ai/AGENTS.md" "$XDG_STATE_HOME/pi/agent/AGENTS.md"
+    "$BOOTSTRAP_ROOT/ai/pi/keybindings.json" "$XDG_STATE_HOME/pi/agent/keybindings.json"
     "$BOOTSTRAP_ROOT/ai/pi/models.json" "$XDG_STATE_HOME/pi/agent/models.json"
     "$BOOTSTRAP_ROOT/ai/pi/extensions/handoff-alias.ts" "$XDG_STATE_HOME/pi/agent/extensions/handoff-alias.ts"
     "$BOOTSTRAP_ROOT/ai/pi/extensions/herdr-agent-state.ts" "$XDG_STATE_HOME/pi/agent/extensions/herdr-agent-state.ts"

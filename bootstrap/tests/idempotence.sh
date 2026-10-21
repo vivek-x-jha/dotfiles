@@ -37,6 +37,7 @@ fi
 
 [[ $(readlink "$FIXTURE/home/.bashrc") == "$ROOT/shells/bash/.bashrc" ]]
 [[ $(readlink "$FIXTURE/home/.config/nvim") == "$ROOT/editors/nvim" ]]
+[[ $(readlink "$FIXTURE/home/.local/state/pi/agent/keybindings.json") == "$ROOT/ai/pi/keybindings.json" ]]
 [[ -d $FIXTURE/home/.config/git && ! -L $FIXTURE/home/.config/git ]]
 [[ -d $FIXTURE/home/.config/ssh && ! -L $FIXTURE/home/.config/ssh ]]
 [[ -f $FIXTURE/home/.config/ssh/config && ! -L $FIXTURE/home/.config/ssh/config ]]

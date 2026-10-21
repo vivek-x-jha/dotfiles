@@ -6,6 +6,7 @@ packages, and settings stay in state.
 
 ## Files
 
+- `keybindings.json` adds Ctrl+N/P menu navigation and Ctrl+Alt session-picker toggles.
 - `models.json` registers the local OpenAI-compatible Ollama provider.
 - `themes/sourdiesel.json` is the SourDiesel Pi theme used by interactive TUI sessions.
 - `extensions/statusline.ts` is the custom SourDiesel statusline/turn-UI extension.
@@ -27,6 +28,23 @@ packages, and settings stay in state.
 
 Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` directly to
 `../../../../.dotfiles/ai/AGENTS.md` from the agent dir; no harness-specific copy lives here.
+
+## Menu keybindings
+
+| Shortcut | Action |
+| --- | --- |
+| Ctrl+N / Down | Move selection down |
+| Ctrl+P / Up | Move selection up |
+| Ctrl+Alt+P | Toggle paths in the session picker |
+| Ctrl+Alt+N | Toggle named-only sessions in the session picker |
+
+These also apply to the startup `pi -r` picker. Navigation uses Pi's shared menu
+selection actions; existing editor/model shortcuts are otherwise unchanged.
+Run `/reload` for an active session, or reopen `pi -r`. On macOS, Alt is Option.
+These toggle shortcuts avoid Ctrl+Shift+N/P, which WezTerm intercepts. Control+Option
+is also VoiceOver's default modifier, so choose other toggle keys if using VoiceOver.
+
+Check the bindings with `node ai/pi/tests/keybindings.mjs` from the dotfiles root.
 
 ## SourDiesel Markdown/code rendering v1
 
