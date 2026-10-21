@@ -12,7 +12,6 @@ cask "dropbox"
 cask "figma"
 cask "firefox"
 cask "google-chrome"
-cask "image2icon"
 cask "iterm2"
 cask "keycastr"
 cask "logi-options+"
@@ -26,3 +25,6 @@ cask "spotify"
 cask "thinkorswim"
 cask "vlc"
 cask "whatsapp"
+
+# Keep the App Store build for purchased Pro features.
+mas "Image2icon", id: 992115977

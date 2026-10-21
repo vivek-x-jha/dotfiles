@@ -430,7 +430,9 @@ Homebrew setup assembles cumulative `core`, `developer`, or `personal` manifests
 
 fzf is installed from upstream git into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc` instead of through Homebrew, apt, or dnf.
 
-Profile manifests contain Homebrew formulae, casks, and—under the developer profile—VS Code extensions. Cargo and uv tools are handled by their dedicated opt-in phases.
+Profile manifests contain Homebrew formulae, casks, developer-profile VS Code extensions, and personal-profile Mac App Store apps. Cargo and uv tools are handled by their dedicated opt-in phases.
+
+Image2icon uses a Mac App Store (`mas`) entry instead of a cask to keep the App Store build for purchased Pro features. Homebrew Bundle installs `mas` when needed; App Store installation and updates require signing in to the appropriate Apple Account. Restore Pro purchases inside Image2icon if needed. Cask selection does not filter `mas` entries. `update-tools --brew` updates formulae/casks only; update Image2icon through the App Store or `mas update 992115977`.
 
 Useful core checks:
 
