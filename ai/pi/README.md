@@ -60,8 +60,18 @@ terminal palette:
   functions/commands, `green` strings, `brightblack` comments, etc.).
 - `mdCodeBlockBorder` uses `brightblack` so fenced code renders as a single muted
   separator line.
-- Turn sections and code blocks are intended to render with straight separator
-  lines and no dark fill/background.
+- Turn sections remain unfilled with muted separators.
+- Fenced code blocks use the SourDiesel `nvim_statusline` surface (`#27283a`, from
+  `NVIM_STATUSLINE_HEX` when set). The background fills the code area, including
+  fence borders, wrapped lines, blank code lines, and right padding; surrounding
+  prose and message margins remain transparent. Syntax foreground colors are
+  unchanged. This is a Markdown token-renderer patch, not an unsupported theme key.
+- The same surface shades write-file previews, expanded read-file contents, edit
+  diffs, and the entire command/script preview in Bash calls, regardless of language.
+  Native components retain their syntax/diff colors, preview limits, expansion
+  controls, and caches. Tool headers, truncation hints, errors, image captions, and
+  Bash stdout/stderr stay unfilled. These decorators depend on Pi's native preview
+  layout, so rerun the tool-surface tests after Pi package updates.
 - Submitted user messages use a brightblue `>>>` prompt and neutral black text;
   continuation lines align under the message, without a rail or user icon.
 - Bash calls use Pi's renderer API so multiline commands are fully styled, without
@@ -80,8 +90,11 @@ Run these rendering checks from the dotfiles root against the globally installed
 ```sh
 node ai/pi/tests/user-message.mjs
 node ai/pi/tests/bash-python.mjs
+node ai/pi/tests/code-blocks.mjs
+node ai/pi/tests/tool-code-surfaces.mjs
 ```
 
 They cover wrapping, colors, narrow widths, shell-integration markers, reload safety,
-Python heredocs/inline code, fallback cases, unchanged output, and theme changes.
+Python heredocs/inline code, fallback cases, unchanged output, code-block backgrounds,
+nested/streamed fences, tool preview backgrounds, ANSI resets, and theme changes.
 Fixtures are rendered only; Python and shell fixture commands are never executed.

@@ -65,7 +65,7 @@ assert.equal(lines.slice(1).map((line) => plain(line).slice(4).trim()).join(" ")
 const color = (hex) => `\x1b[38;2;${hex.match(/../g).map((part) => parseInt(part, 16)).join(";")}m`;
 assert.ok(lines[1].includes(color((process.env.BRIGHTBLUE_HEX ?? "#80d7fe").slice(1))));
 assert.ok(lines[1].includes(color("cccccc")));
-assert.ok(!lines.join("").includes("\x1b[48;"), "User messages must have no background fill");
+assert.ok(!lines.join("").includes("\x1b[48;"), "Plain user messages must have no background fill");
 const linked = new UserMessageComponent("[A standalone link](https://example.com)").render(80)[1];
 assert.ok(plain(linked).includes("A standalone link"));
 assert.ok(linked.indexOf(">>> ") < linked.indexOf("\x1b]8;"), "Prompt must stay outside hyperlinks");

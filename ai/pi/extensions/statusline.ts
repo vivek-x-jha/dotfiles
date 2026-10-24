@@ -9,7 +9,7 @@ import {
   type ReadonlyFooterDataProvider,
   type Theme,
 } from "@earendil-works/pi-coding-agent";
-import { Container, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { Container, Markdown, Text, truncateToWidth, visibleWidth, wrapTextWithAnsi, type Component } from "@earendil-works/pi-tui";
 import { existsSync } from "node:fs";
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { basename, isAbsolute, join as pathJoin } from "node:path";
@@ -322,7 +322,8 @@ export default function (pi: ExtensionAPI) {
   function styleUserMessageLines(lines: string[], width: number): string[] {
     return lines.map((line, index) => {
       const prefix = index === 0 ? brightBlueText(">>> ") : "    ";
-      return truncateToWidth(`${prefix}${trimRenderedTrailingSpaces(line)}`, width, "…");
+      const body = line.includes("\x1b[48;") ? line : trimRenderedTrailingSpaces(line);
+      return truncateToWidth(`${prefix}${body}`, width, "…");
     });
   }
 
@@ -434,6 +435,8 @@ export default function (pi: ExtensionAPI) {
       return styled;
     }).join("");
   }
+
+  type CodeRange = { start: number; end: number };
 
   function highlightPythonInBash(command: string): string {
     const tokens = /\s+|&&|\|\||<<-|[|;()<>]+|"(?:\\.|[^"\\])*"|'[^']*'|[^\s|;&()<>]+/g;
@@ -614,8 +617,82 @@ export default function (pi: ExtensionAPI) {
     });
   }
 
+  function codeSurfaceLine(line: string, width: number): string {
+    const background = fgHexPrefix(envHex("NVIM_STATUSLINE_HEX", "#27283a")).replace("[38;", "[48;");
+    const content = truncateToWidth(line, width, "…");
+    const padded = content + " ".repeat(Math.max(0, width - visibleWidth(content)));
+    return `${background}${padded.replace(/\x1b\[(?:0|49)m/g, `$&${background}`)}\x1b[49m`;
+  }
+
+  type PreviewText = Component & {
+    text?: string;
+    paddingX?: number;
+    paddingY?: number;
+    __sourdieselCodeRanges?: CodeRange[];
+    __sourdieselCodeSurfacePatched?: boolean;
+  };
+
+  function codePreview(component: Component, ranges: CodeRange[]): Component {
+    if (!(component instanceof Text)) return component;
+    const preview = component as unknown as PreviewText;
+    preview.__sourdieselCodeRanges = ranges;
+    if (preview.__sourdieselCodeSurfacePatched) return component;
+    const original = component.render;
+    let cachedBase: string[] | undefined;
+    let cachedRanges: CodeRange[] | undefined;
+    let cachedLines: string[] = [];
+    preview.render = function (width): string[] {
+      const lines = original.call(this, width);
+      const ranges = this.__sourdieselCodeRanges ?? [];
+      if (typeof this.text !== "string" || ranges.length === 0) return lines;
+      if (cachedBase === lines && cachedRanges === ranges) return cachedLines;
+      const padding = Math.min(this.paddingX ?? 0, Math.max(0, Math.floor((width - 1) / 2)));
+      const contentWidth = Math.max(1, width - 2 * padding);
+      const source = this.text.replace(/\t/g, "   ").split("\n");
+      const lineOffset = (index: number) => index <= 0 ? 0 : wrapTextWithAnsi(source.slice(0, index).join("\n"), contentWidth).length;
+      const physicalRanges = ranges.map(({ start, end }) => ({
+        start: (this.paddingY ?? 0) + lineOffset(start),
+        end: (this.paddingY ?? 0) + lineOffset(end),
+      }));
+      cachedBase = lines;
+      cachedRanges = ranges;
+      cachedLines = lines.map((line, index) => physicalRanges.some(({ start, end }) => index >= start && index < end)
+        ? codeSurfaceLine(line, width) : line);
+      return cachedLines;
+    };
+    preview.__sourdieselCodeSurfacePatched = true;
+    return component;
+  }
+
+  function shadeEditPreview(state: { callComponent?: unknown }): void {
+    const call = state.callComponent as { preview?: { diff?: string }; children?: Component[] } | undefined;
+    const body = call?.children?.[2];
+    if (body && typeof call?.preview?.diff === "string") codePreview(body, [{ start: 0, end: Infinity }]);
+  }
+
+  function patchCodeBlockBackground(): void {
+    type MarkdownPrototype = {
+      renderToken: (token: { type: string }, width: number, ...args: unknown[]) => string[];
+      __sourdieselCodeBlockBackgroundPatched?: boolean;
+    };
+    const prototype = Markdown.prototype as unknown as MarkdownPrototype;
+    if (prototype.__sourdieselCodeBlockBackgroundPatched) return;
+    const original = prototype.renderToken;
+    prototype.renderToken = function (token, width, ...args): string[] {
+      const lines = original.call(this, token, width, ...args);
+      if (token.type !== "code" || width < 1) return lines;
+      const hasTrailingSpacer = args[0] && args[0] !== "space" && lines.at(-1) === "";
+      return lines.flatMap((line, index) => {
+        if (hasTrailingSpacer && index === lines.length - 1) return [line];
+        // Fill after wrapping so every physical code line has a complete background.
+        return wrapTextWithAnsi(line, width).map((wrapped) => codeSurfaceLine(wrapped, width));
+      });
+    };
+    prototype.__sourdieselCodeBlockBackgroundPatched = true;
+  }
+
   function patchSectionSeparators(): void {
-    const patchVersion = 19;
+    const patchVersion = 20;
 
     const userPrototype = UserMessageComponent.prototype as SectionPrototype;
     if (userPrototype.__sourdieselSectionSeparatorPatchVersion !== patchVersion) {
@@ -1388,11 +1465,59 @@ export default function (pi: ExtensionAPI) {
     rerender(ctx);
   }
 
+  patchCodeBlockBackground();
   patchSectionSeparators();
 
   pi.registerToolRenderer((name, next) => {
-    if (name !== "bash") return next();
     const original = next();
+    if (name === "write" && original?.renderCall) {
+      return {
+        ...original,
+        renderCall(args, theme, context) {
+          const component = original.renderCall!(args, theme, context);
+          const record = args && typeof args === "object" ? args as Record<string, unknown> : {};
+          const lines = ((component as PreviewText).text ?? "").split("\n");
+          // Native collapsed writes have a header, spacer, ten preview rows, then the hint.
+          const footer = !context.expanded && lines.length === 13
+            && /^\.\.\. \(\d+ more lines, \d+ total,/.test(stripRenderedControl(lines.at(-1) ?? "").trim());
+          return codePreview(component, typeof record.content === "string" && record.content.length > 0 && lines.length > 2
+            ? [{ start: 2, end: lines.length - (footer ? 1 : 0) }] : []);
+        },
+      };
+    }
+    if (name === "read" && original?.renderResult) {
+      return {
+        ...original,
+        renderResult(result, options, theme, context) {
+          const component = original.renderResult!(result, options, theme, context);
+          const lines = ((component as PreviewText).text ?? "").split("\n");
+          const showCode = options.expanded && !context.isError && !result.content.some((item) => item.type === "image");
+          return codePreview(component, showCode
+            ? [{ start: 1, end: lines.length - (result.details?.truncation?.truncated ? 1 : 0) }] : []);
+        },
+      };
+    }
+    if (name === "edit" && original?.renderCall && original.renderResult) {
+      return {
+        ...original,
+        renderCall(args, theme, context) {
+          const component = original.renderCall!(args, theme, context);
+          shadeEditPreview(context.state);
+          return component;
+        },
+        renderResult(result, options, theme, context) {
+          const component = original.renderResult!(result, options, theme, context);
+          shadeEditPreview(context.state);
+          if (!context.isError && typeof result.details?.diff === "string") {
+            for (const child of (component as Component & { children?: Component[] }).children ?? []) {
+              if (child instanceof Text) codePreview(child, [{ start: 0, end: Infinity }]);
+            }
+          }
+          return component;
+        },
+      };
+    }
+    if (name !== "bash") return original;
     return {
       ...original,
       renderCall(args, theme, context) {
@@ -1403,14 +1528,14 @@ export default function (pi: ExtensionAPI) {
         const command = stringArg(record.command) ?? "…";
         // Pi's theme proxy is stable across switches; its current palette is not.
         let cached = context.state.sourdieselBashSource as { command: string; colors: Theme["colors"]; text: string } | undefined;
-        if (!cached || cached.command !== command || cached.colors !== theme.colors) {
+        if (typeof cached?.text !== "string" || cached.command !== command || cached.colors !== theme.colors) {
           cached = { command, colors: theme.colors, text: highlightPythonInBash(command) };
           context.state.sourdieselBashSource = cached;
         }
         const title = toolOwnBoldStyle("bash")(`${SHELL_ICON} bash`);
         const timeout = typeof record.timeout === "number" ? brightBlackText(` (timeout ${record.timeout}s)`) : "";
         component.setText(`${title}\n${shellPromptText("")} ${cached.text}${timeout}`);
-        return component;
+        return codePreview(component, [{ start: 1, end: Infinity }]);
       },
     };
   });

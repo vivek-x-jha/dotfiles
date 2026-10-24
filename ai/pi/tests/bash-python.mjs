@@ -27,7 +27,7 @@ extension({ on() {}, registerCommand() {}, registerToolRenderer(value) { resolve
 const native = createShellRenderers("$");
 const renderers = resolver("bash", () => native);
 assert.equal(renderers.renderResult, native.renderResult, "Keep native stdout/stderr rendering");
-assert.equal(resolver("read", () => native), native, "Leave other tool renderers alone");
+assert.equal(resolver("ls", () => native), native, "Leave unrelated tool renderers alone");
 
 const plain = (line) => line.replace(/\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/g, "").replace(/\x1b\[[0-?]*[ -/]*[@-~]/g, "");
 const color = (hex) => `\x1b[38;2;${hex.match(/../g).map((part) => parseInt(part, 16)).join(";")}m`;
