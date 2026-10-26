@@ -80,6 +80,15 @@ terminal palette:
   Ordinary shell text keeps its shell/path colors; stdout/stderr and execution are
   unchanged. Complex heredoc redirects, concatenated shell quotes, and inline code
   with shell expansions fall back to shell styling rather than guessing.
+- Bash tool previews and fenced `bash`, `sh`, and `shell` blocks break after parsed
+  `&&`, `||`, `|`, and `|&` operators, with two-space continuation indentation.
+  This changes display only: execution arguments, Markdown source/cached tokens,
+  file previews, stdout/stderr, quoted text, substitutions, and heredoc contents
+  are preserved. Existing line breaks/continuations and pending heredoc headers
+  retain their layout. The formatter uses the already-managed `shfmt` parser, not
+  shell execution or regex replacement. Results are cached and parsing is bounded;
+  missing `shfmt`, incomplete/invalid syntax, or oversized input keeps the original
+  preview rather than blocking or guessing.
 
 After Pi package updates, re-test fenced `bash`, `zsh`, `python`, unknown-language,
 and no-language blocks because Markdown renderer behavior is package-owned while the
@@ -92,9 +101,12 @@ node ai/pi/tests/user-message.mjs
 node ai/pi/tests/bash-python.mjs
 node ai/pi/tests/code-blocks.mjs
 node ai/pi/tests/tool-code-surfaces.mjs
+node ai/pi/tests/shell-preview.mjs
 ```
 
 They cover wrapping, colors, narrow widths, shell-integration markers, reload safety,
 Python heredocs/inline code, fallback cases, unchanged output, code-block backgrounds,
 nested/streamed fences, tool preview backgrounds, ANSI resets, and theme changes.
-Fixtures are rendered only; Python and shell fixture commands are never executed.
+The shell-preview suite also checks unchanged shell syntax trees, UTF-8 offsets,
+protected syntax, fallback/caching, and display-only formatting; it requires `shfmt`.
+Fixtures are rendered/parsed only; Python and shell fixture commands are never executed.

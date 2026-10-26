@@ -11,7 +11,7 @@ import {
 } from "@earendil-works/pi-coding-agent";
 import { Container, Markdown, Text, truncateToWidth, visibleWidth, wrapTextWithAnsi, type Component } from "@earendil-works/pi-tui";
 import { existsSync } from "node:fs";
-import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
+import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { basename, isAbsolute, join as pathJoin } from "node:path";
 
 const PI_ICON = "π";
@@ -182,6 +182,70 @@ interface StatuslineState {
   codexQuota?: CodexQuotaSnapshot;
   gitStatus?: GitSnapshot;
   pendingMessages: boolean;
+}
+
+const shellPreviewCache = new Map<string, string>();
+
+/** Display-only line breaks at parsed shell operators; never evaluates the source. */
+export function formatShellPreview(source: string): string {
+  if (!/[|]|&&/.test(source) || Buffer.byteLength(source) > 16_384) return source;
+  const cached = shellPreviewCache.get(source);
+  if (cached !== undefined) return cached;
+  let formatted = source;
+  try {
+    const parsed = spawnSync("shfmt", ["-ln", "bash", "--to-json"], {
+      input: source, encoding: "utf8", timeout: 100, maxBuffer: 4 * 1024 * 1024,
+    });
+    if (parsed.status === 0) {
+      type Node = {
+        Type?: string; Op?: string; Hdoc?: { Pos?: { Line: number } };
+        OpPos?: { Offset: number; Line: number };
+        Y?: { Pos?: { Offset: number } };
+      };
+      const operators: Node[] = [];
+      const heredocLines = new Set<number>();
+      const visit = (value: unknown, protectedSyntax = false): void => {
+        if (!value || typeof value !== "object") return;
+        if (Array.isArray(value)) { for (const child of value) visit(child, protectedSyntax); return; }
+        const node = value as Node;
+        if (node.Hdoc && node.OpPos) {
+          // A continued heredoc header cannot gain a newline before its pending body.
+          const bodyLine = Math.max(node.OpPos.Line + 1, node.Hdoc.Pos?.Line ?? 0);
+          for (let line = node.OpPos.Line; line < bodyLine; line++) heredocLines.add(line);
+        }
+        const protectedChild = protectedSyntax || ["CmdSubst", "ProcSubst", "ParamExp", "ArithmExp", "DblQuoted", "SglQuoted"].includes(node.Type ?? "");
+        if (!protectedChild && node.Type === "BinaryCmd") operators.push(node);
+        for (const child of Object.values(value)) visit(child, protectedChild);
+      };
+      visit(JSON.parse(parsed.stdout));
+      // shfmt offsets are UTF-8 bytes, not JavaScript character indices.
+      const bytes = Buffer.from(source);
+      const edits: Array<{ start: number; end: number; text: Buffer }> = [];
+      for (const node of operators) {
+        const op = node.Op;
+        const pos = node.OpPos;
+        const end = node.Y?.Pos?.Offset;
+        if (!op || !["&&", "||", "|", "|&"].includes(op) || !pos || end === undefined || heredocLines.has(pos.Line)) continue;
+        const start = pos.Offset + Buffer.byteLength(op);
+        if (start > end || end > bytes.length || bytes.toString("utf8", pos.Offset, start) !== op) continue;
+        // Existing newlines, comments, and explicit continuations retain their exact layout.
+        if (!/^[ \t]*$/.test(bytes.toString("utf8", start, end))) continue;
+        const lineStart = bytes.lastIndexOf(10, pos.Offset) + 1;
+        const indent = /^[ \t]*/.exec(bytes.toString("utf8", lineStart, pos.Offset))?.[0] ?? "";
+        edits.push({ start, end, text: Buffer.from(`\n${indent}  `) });
+      }
+      let output = bytes;
+      for (const edit of edits.sort((a, b) => b.start - a.start)) {
+        output = Buffer.concat([output.subarray(0, edit.start), edit.text, output.subarray(edit.end)]);
+      }
+      formatted = output.toString("utf8");
+    }
+  } catch {
+    // shortcut: missing/slow shfmt, oversized ASTs, or incomplete syntax keep the original preview.
+  }
+  if (shellPreviewCache.size >= 64) shellPreviewCache.delete(shellPreviewCache.keys().next().value!);
+  shellPreviewCache.set(source, formatted);
+  return formatted;
 }
 
 export default function (pi: ExtensionAPI) {
@@ -689,6 +753,23 @@ export default function (pi: ExtensionAPI) {
       });
     };
     prototype.__sourdieselCodeBlockBackgroundPatched = true;
+  }
+
+  function patchShellCodeBlocks(): void {
+    type ShellMarkdownPrototype = {
+      renderToken: (token: { type: string; text?: string; lang?: string }, width: number, ...args: unknown[]) => string[];
+      __sourdieselShellPreviewPatched?: boolean;
+    };
+    const prototype = Markdown.prototype as unknown as ShellMarkdownPrototype;
+    if (prototype.__sourdieselShellPreviewPatched) return;
+    const original = prototype.renderToken;
+    prototype.renderToken = function (token, width, ...args): string[] {
+      const language = token.lang?.trim().split(/\s+/, 1)[0].toLowerCase();
+      const displayToken = token.type === "code" && typeof token.text === "string" && ["bash", "sh", "shell"].includes(language ?? "")
+        ? { ...token, text: formatShellPreview(token.text) } : token;
+      return original.call(this, displayToken, width, ...args);
+    };
+    prototype.__sourdieselShellPreviewPatched = true;
   }
 
   function patchSectionSeparators(): void {
@@ -1466,6 +1547,7 @@ export default function (pi: ExtensionAPI) {
   }
 
   patchCodeBlockBackground();
+  patchShellCodeBlocks();
   patchSectionSeparators();
 
   pi.registerToolRenderer((name, next) => {
@@ -1527,9 +1609,9 @@ export default function (pi: ExtensionAPI) {
         const record = args && typeof args === "object" ? args as Record<string, unknown> : {};
         const command = stringArg(record.command) ?? "…";
         // Pi's theme proxy is stable across switches; its current palette is not.
-        let cached = context.state.sourdieselBashSource as { command: string; colors: Theme["colors"]; text: string } | undefined;
-        if (typeof cached?.text !== "string" || cached.command !== command || cached.colors !== theme.colors) {
-          cached = { command, colors: theme.colors, text: highlightPythonInBash(command) };
+        let cached = context.state.sourdieselBashSource as { command: string; colors: Theme["colors"]; text: string; vertical?: boolean } | undefined;
+        if (!cached?.vertical || cached.command !== command || cached.colors !== theme.colors) {
+          cached = { command, colors: theme.colors, text: highlightPythonInBash(formatShellPreview(command)), vertical: true };
           context.state.sourdieselBashSource = cached;
         }
         const title = toolOwnBoldStyle("bash")(`${SHELL_ICON} bash`);
