@@ -29,6 +29,22 @@ packages, and settings stay in state.
 Bootstrap links Pi's runtime `$PI_CODING_AGENT_DIR/AGENTS.md` directly to
 `../../../../.dotfiles/ai/AGENTS.md` from the agent dir; no harness-specific copy lives here.
 
+## Chat navigation
+
+The statusline/turn-UI extension selects one jump-to-latest shortcut by Pi's host
+platform, and Pi's jump label shows only that shortcut:
+
+| Platform | Shortcut |
+| --- | --- |
+| macOS | Ctrl+Option+G |
+| Windows / Linux (including WSL) | Ctrl+End |
+
+This jumps to the latest message and follows new output in fullscreen mode.
+Clicking the label also works. Run `/reload` to apply changes to an active session.
+The extension updates the action's default, so JSON reloads retain the platform
+choice without writing platform-specific values into the shared `keybindings.json`.
+Platform means where Pi runs: an SSH session on Linux uses Ctrl+End even from a Mac.
+
 ## Menu keybindings
 
 | Shortcut | Action |

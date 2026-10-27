@@ -9,7 +9,7 @@ import {
   type ReadonlyFooterDataProvider,
   type Theme,
 } from "@earendil-works/pi-coding-agent";
-import { Container, Markdown, Text, truncateToWidth, visibleWidth, wrapTextWithAnsi, type Component } from "@earendil-works/pi-tui";
+import { Container, Markdown, Text, getKeybindings, truncateToWidth, visibleWidth, wrapTextWithAnsi, type Component } from "@earendil-works/pi-tui";
 import { existsSync } from "node:fs";
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { basename, isAbsolute, join as pathJoin } from "node:path";
@@ -182,6 +182,13 @@ interface StatuslineState {
   codexQuota?: CodexQuotaSnapshot;
   gitStatus?: GitSnapshot;
   pendingMessages: boolean;
+}
+
+export function configurePlatformChatNavigation(): void {
+  const bindings = getKeybindings();
+  // Change the default: /reload reapplies JSON bindings after session_start.
+  bindings.getDefinition("tui.altScreen.bottom").defaultKeys = process.platform === "darwin" ? "ctrl+alt+g" : "ctrl+end";
+  bindings.setUserBindings(bindings.getUserBindings());
 }
 
 const shellPreviewCache = new Map<string, string>();
@@ -1643,6 +1650,7 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("session_start", async (_event, ctx) => {
+    if (ctx.mode === "tui") configurePlatformChatNavigation();
     state.phase = ctx.isIdle() ? "idle" : "thinking";
     state.activeTools.clear();
     state.lastTool = undefined;

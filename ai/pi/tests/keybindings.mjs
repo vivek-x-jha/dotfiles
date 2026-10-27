@@ -11,11 +11,52 @@ const { KeybindingsManager } = await import(join(packageRoot, "dist/core/keybind
 const { setKeybindings, stripTerminalSequences } = await import(require.resolve("@earendil-works/pi-tui"));
 const { initTheme } = await import(join(packageRoot, "dist/modes/interactive/theme/theme.js"));
 const { SessionSelectorComponent } = await import(join(packageRoot, "dist/modes/interactive/components/session-selector.js"));
-const config = KeybindingsManager.loadFromFile(fileURLToPath(new URL("../keybindings.json", import.meta.url)));
-const bindings = new KeybindingsManager(config);
+const { keyDisplayText } = await import(join(packageRoot, "dist/modes/interactive/components/keybinding-hints.js"));
+const { createJiti } = require("jiti");
+const jiti = createJiti(import.meta.url, { alias: {
+  "@earendil-works/pi-coding-agent": join(packageRoot, "dist/index.js"),
+  "@earendil-works/pi-tui": require.resolve("@earendil-works/pi-tui"),
+} });
+const { configurePlatformChatNavigation } = await jiti.import(fileURLToPath(new URL("../extensions/statusline.ts", import.meta.url)));
+const configPath = fileURLToPath(new URL("../keybindings.json", import.meta.url));
+const config = KeybindingsManager.loadFromFile(configPath);
+const bindings = new KeybindingsManager(config, configPath);
 setKeybindings(bindings);
 initTheme("dark");
 
+assert.equal(config["tui.altScreen.bottom"], undefined, "Keep platform-specific navigation out of shared JSON");
+const platformDescriptor = Object.getOwnPropertyDescriptor(process, "platform");
+const withoutChatBottom = () => Object.fromEntries(Object.entries(bindings.getResolvedBindings()).filter(([key]) => key !== "tui.altScreen.bottom"));
+const unchangedBindings = withoutChatBottom();
+try {
+  for (const [platform, key, label] of [
+    ["darwin", "ctrl+alt+g", "Ctrl+Option+G"],
+    ["win32", "ctrl+end", "Ctrl+End"],
+    ["linux", "ctrl+end", "Ctrl+End"],
+  ]) {
+    Object.defineProperty(process, "platform", { value: platform });
+    configurePlatformChatNavigation();
+    configurePlatformChatNavigation();
+    for (let reload = 0; reload < 2; reload++) {
+      // Pi reloads JSON after session_start; the platform default must survive.
+      bindings.reload();
+      assert.deepEqual(bindings.getKeys("tui.altScreen.bottom"), [key]);
+      assert.equal(keyDisplayText("tui.altScreen.bottom"), label);
+      assert.deepEqual(bindings.getUserBindings(), config, "Do not rewrite user bindings");
+      assert.deepEqual(withoutChatBottom(), unchangedBindings, "Preserve every other action");
+      for (const input of ["\x1b[103;7u", "\x1b[27;7;103~", "\x1b\x07"]) {
+        assert.equal(bindings.matches(input, "tui.altScreen.bottom"), platform === "darwin");
+        assert.ok(!bindings.matches(input, "app.editor.external"));
+      }
+      assert.equal(bindings.matches("\x1b[1;5F", "tui.altScreen.bottom"), platform !== "darwin");
+      assert.ok(bindings.matches("\x07", "app.editor.external"), "Keep Ctrl+G for the external editor");
+      assert.ok(!bindings.matches("\x07", "tui.altScreen.bottom"));
+    }
+  }
+} finally {
+  Object.defineProperty(process, "platform", platformDescriptor);
+  configurePlatformChatNavigation();
+}
 assert.deepEqual(bindings.getKeys("tui.select.down"), ["down", "ctrl+n"]);
 assert.deepEqual(bindings.getKeys("tui.select.up"), ["up", "ctrl+p"]);
 assert.deepEqual(bindings.getKeys("app.session.togglePath"), ["ctrl+alt+p"]);
@@ -78,4 +119,4 @@ assert.ok(!rendered().includes("unnamed message"));
 selector.handleInput(toggleNamed);
 assert.ok(rendered().includes("Name: All"));
 assert.ok(rendered().includes("unnamed message"));
-console.log("Menu keybindings passed: config, legacy/CSI-u navigation, arrows, path toggle, named filter, and unchanged editor shortcuts.");
+console.log("Pi keybindings passed: macOS/Windows/Linux chat keys and labels, reloads, legacy/CSI-u navigation, menu toggles, and unchanged editor shortcuts.");
