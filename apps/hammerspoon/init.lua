@@ -101,7 +101,7 @@ local ctrl_alt_cmd = { 'ctrl', 'alt', 'cmd' }
 ---@type table<string, string>
 local applications = {
   a = 'Anki',
-  b = 'Arc',
+  b = 'Dia',
   d = 'Muse',
   e = 'Notion Calendar',
   f = 'iPhone Mirroring',
@@ -388,12 +388,12 @@ local screens_left_to_right = function()
 end
 
 local browser_apps = {
-  { name = 'Arc', bundle_id = 'company.thebrowser.Browser' },
+  { name = 'Dia', bundle_id = 'company.thebrowser.dia' },
   { name = 'Google Chrome', bundle_id = 'com.google.Chrome' },
   { name = 'Safari', bundle_id = 'com.apple.Safari' },
 }
 
---- Pick the preferred available browser: Arc, then Google Chrome, then Safari.
+--- Pick the preferred available browser: Dia, then Google Chrome, then Safari.
 --- @return string
 local select_browser_app = function()
   for _, browser in ipairs(browser_apps) do
@@ -457,7 +457,7 @@ local arrange_3_monitors = function()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-  with_app_windows({ 'Messages', 'Spotify', 'ChatGPT', 'VLC', 'Photos', 'WezTerm', 'Arc' }, function()
+  with_app_windows({ 'Messages', 'Spotify', 'ChatGPT', 'VLC', 'Photos', 'WezTerm', 'Dia' }, function()
     screens = screens_left_to_right()
     if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
@@ -469,7 +469,7 @@ local arrange_3_monitors = function()
     moveApp 'maximize'
     fullscreen_app('VLC', screens[1])
 
-    positionApp('Arc', screens[3])
+    positionApp('Dia', screens[3])
     moveApp 'maximize'
     fullscreen_app('Photos', screens[2])
 
