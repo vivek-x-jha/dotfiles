@@ -3,7 +3,7 @@
 cask "alfred"
 cask "alt-tab"
 cask "anki"
-cask "arc"
+cask "thebrowsercompany-dia"
 cask "chatgpt"
 cask "claude"
 cask "cleanshot"
