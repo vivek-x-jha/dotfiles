@@ -9,7 +9,7 @@ import {
   type ReadonlyFooterDataProvider,
   type Theme,
 } from "@earendil-works/pi-coding-agent";
-import { Container, Markdown, Text, getKeybindings, truncateToWidth, visibleWidth, wrapTextWithAnsi, type Component } from "@earendil-works/pi-tui";
+import { Box, Container, Markdown, Text, getKeybindings, truncateToWidth, visibleWidth, wrapTextWithAnsi, type Component, type MarkdownTheme } from "@earendil-works/pi-tui";
 import { existsSync } from "node:fs";
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { basename, isAbsolute, join as pathJoin } from "node:path";
@@ -688,8 +688,8 @@ export default function (pi: ExtensionAPI) {
     });
   }
 
-  function codeSurfaceLine(line: string, width: number): string {
-    const background = fgHexPrefix(envHex("NVIM_STATUSLINE_HEX", "#27283a")).replace("[38;", "[48;");
+  function codeSurfaceLine(line: string, width: number, color = envHex("NVIM_STATUSLINE_HEX", "#27283a")): string {
+    const background = fgHexPrefix(color).replace("[38;", "[48;");
     const content = truncateToWidth(line, width, "…");
     const padded = content + " ".repeat(Math.max(0, width - visibleWidth(content)));
     return `${background}${padded.replace(/\x1b\[(?:0|49)m/g, `$&${background}`)}\x1b[49m`;
@@ -777,6 +777,131 @@ export default function (pi: ExtensionAPI) {
       return original.call(this, displayToken, width, ...args);
     };
     prototype.__sourdieselShellPreviewPatched = true;
+  }
+
+  function patchMarkdownPresentation(): void {
+    type Token = {
+      type: string; depth?: number; tokens?: Token[]; raw?: string;
+      ordered?: boolean; start?: number; loose?: boolean;
+      items?: Array<{ task?: boolean; checked?: boolean; tokens: Token[] }>;
+      header?: Array<{ tokens?: Token[] }>; rows?: Array<Array<{ tokens?: Token[] }>>;
+    };
+    type StyleContext = { applyText: (text: string) => string; stylePrefix: string };
+    type Renderer = {
+      theme: MarkdownTheme;
+      options: { preserveOrderedListMarkers?: boolean };
+      renderToken: (token: Token, width: number, next?: string, style?: StyleContext) => string[];
+      renderList: (token: Token, depth: number, width: number, style?: StyleContext) => string[];
+      renderInlineTokens: (tokens: Token[], style?: StyleContext) => string;
+      __sourdieselMarkdownPresentation?: { version: number; renderToken: Renderer["renderToken"]; renderList: Renderer["renderList"] };
+    };
+    // shortcut: Pi has no assistant-renderer API; keep this in-memory patch with the
+    // existing code-surface patches and rerun rendering tests after Pi upgrades.
+    const prototype = Markdown.prototype as unknown as Renderer;
+    if (prototype.__sourdieselMarkdownPresentation?.version === 1) return;
+    if (typeof prototype.renderToken !== "function" || typeof prototype.renderList !== "function") return;
+    const original = prototype.__sourdieselMarkdownPresentation ?? {
+      renderToken: prototype.renderToken, renderList: prototype.renderList,
+    };
+    prototype.renderToken = function (token, width, next, style): string[] {
+      if (token.type === "heading" && (token.depth ?? 0) >= 3) {
+        // Reuse native heading/inline styling without mutating the parsed token.
+        return original.renderToken.call(this, { ...token, depth: 2 }, width, next, style);
+      }
+      if (token.type === "code") {
+        // Decorate only fence chrome, not rendered lines: literal Markdown in code
+        // must survive. A local receiver avoids mutating a shared theme/component.
+        const renderer: Renderer = Object.create(this);
+        renderer.theme = {
+          ...this.theme,
+          codeBlockBorder: (text) => this.theme.codeBlockBorder(text.startsWith("```") ? text.slice(3) : text),
+        };
+        return original.renderToken.call(renderer, token, width, next, style);
+      }
+      if (token.type === "table" && token.header?.length && width < 4 * token.header.length + 1) {
+        // Native tables fall back to raw pipes at narrow widths. Stack cells instead.
+        const headings = token.header.map((cell) => this.theme.bold(this.renderInlineTokens(cell.tokens ?? [], style)));
+        const rows = token.rows ?? [];
+        const lines = rows.length ? rows.flatMap((row, index) => [
+          ...(index ? [""] : []),
+          ...headings.map((heading, column) => `${heading}: ${this.renderInlineTokens(row[column]?.tokens ?? [], style)}`),
+        ]) : headings;
+        if (next && next !== "space") lines.push("");
+        return lines;
+      }
+      return original.renderToken.call(this, token, width, next, style);
+    };
+    prototype.renderList = function (token, depth, width, style): string[] {
+      // User messages explicitly request their original numbering and markers.
+      if (this.options.preserveOrderedListMarkers) return original.renderList.call(this, token, depth, width, style);
+      const lines: string[] = [];
+      const items = token.items ?? [];
+      for (const [index, item] of items.entries()) {
+        const bullet = token.ordered ? `${(token.start ?? 1) + index}. ` : item.task ? "" : "• ";
+        const checkbox = item.task ? `${item.checked ? "☑" : "☐"} ` : "";
+        const prefix = truncateToWidth("    ".repeat(depth) + bullet + checkbox, Math.max(0, width - 1), "");
+        const continuation = " ".repeat(visibleWidth(prefix));
+        const contentWidth = Math.max(1, width - visibleWidth(prefix));
+        let rendered = false;
+        for (const child of item.tokens) {
+          if (child.type === "list") {
+            lines.push(...this.renderList(child, depth + 1, width, style));
+            rendered = true;
+            continue;
+          }
+          for (const line of this.renderToken(child, contentWidth, undefined, style)) {
+            for (const wrapped of wrapTextWithAnsi(line, contentWidth)) {
+              lines.push((rendered ? continuation : this.theme.listBullet(prefix)) + wrapped);
+              rendered = true;
+            }
+          }
+        }
+        if (!rendered) lines.push(this.theme.listBullet(prefix));
+        if (token.loose && index < items.length - 1) lines.push("");
+      }
+      return lines;
+    };
+    prototype.__sourdieselMarkdownPresentation = { ...original, version: 1 };
+  }
+
+  function patchFinalAnswerSurface(): void {
+    type AssistantSurface = {
+      updateContent: AssistantMessageComponent["updateContent"];
+      isStreaming: boolean;
+      hasToolCalls: boolean;
+      contentContainer: Container;
+      __sourdieselFinalAnswerSurface?: { version: number; original: AssistantMessageComponent["updateContent"] };
+    };
+    const prototype = AssistantMessageComponent.prototype as unknown as AssistantSurface;
+    if (prototype.__sourdieselFinalAnswerSurface?.version === 2) return;
+    const original = prototype.__sourdieselFinalAnswerSurface?.original ?? prototype.updateContent;
+    const answerBackground = (line: string) => codeSurfaceLine(line, visibleWidth(line), "#2e3045");
+    prototype.updateContent = function (message, isStreaming): void {
+      original.call(this, message, isStreaming);
+      // Only a successful, completed, tool-free response is a final conclusion.
+      if (this.isStreaming || this.hasToolCalls || message.stopReason !== "stop") return;
+      let first = true;
+      this.contentContainer.children = this.contentContainer.children.flatMap((child): Component[] => {
+        // A /reload from v1 leaves its old wrapper installed. Recolor its panels
+        // rather than nesting another panel or duplicating its separator.
+        if (child instanceof Box && child.children.length === 1 && child.children[0] instanceof Markdown) {
+          child.setBgFn(answerBackground);
+          first = false;
+          return [child];
+        }
+        // Thinking lives inside MouseRegion; shade only the answer's Markdown.
+        if (!(child instanceof Markdown)) return [child];
+        const panel = new Box(0, 0, answerBackground);
+        panel.addChild(child);
+        const children: Component[] = first ? [{
+          render: (width) => [sectionSeparator(width)],
+          invalidate() {},
+        }, panel] : [panel];
+        first = false;
+        return children;
+      });
+    };
+    prototype.__sourdieselFinalAnswerSurface = { version: 2, original };
   }
 
   function patchSectionSeparators(): void {
@@ -1555,6 +1680,8 @@ export default function (pi: ExtensionAPI) {
 
   patchCodeBlockBackground();
   patchShellCodeBlocks();
+  patchMarkdownPresentation();
+  patchFinalAnswerSurface();
   patchSectionSeparators();
 
   pi.registerToolRenderer((name, next) => {

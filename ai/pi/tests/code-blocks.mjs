@@ -32,7 +32,9 @@ const fixtures = [
 ];
 const widths = [1, 2, 4, 8, 20, 40, 80, 140];
 const plain = (lines) => lines.map(stripTerminalSequences).map((line) => line.trimEnd());
-const baseline = fixtures.map((text) => widths.map((width) => plain(markdown(text).render(width))));
+// Expected native layout with fence chrome removed, before our surface patch.
+const borderlessTheme = { ...getMarkdownTheme(), codeBlockBorder: (text) => text.slice(3) || " ", listBullet: (text) => text === "- " ? "• " : text };
+const baseline = fixtures.map((text) => widths.map((width) => plain(new Markdown(text, 0, 0, borderlessTheme).render(width))));
 const { default: extension } = await jiti.import(fileURLToPath(new URL("../extensions/statusline.ts", import.meta.url)));
 const pi = { on() {}, registerCommand() {}, registerToolRenderer() {} };
 extension(pi);
@@ -48,7 +50,7 @@ for (const [fixtureIndex, text] of fixtures.entries()) {
     const previous = baseline[fixtureIndex][widthIndex];
     // At tiny widths native nested blocks/glyphs already overflow; only require safe output.
     if (width >= 8 && previous.every((line) => visibleWidth(line) <= width)) {
-      assert.deepEqual(plain(lines), previous, `Do not change Markdown text/layout: ${width}, ${text}`);
+      assert.deepEqual(plain(lines), previous, `Only remove fence chrome, not code text/layout: ${width}, ${text}`);
     }
     assert.ok(lines.some((line) => line.includes(bg)), "Every code block gets the requested background");
     for (const line of lines) {

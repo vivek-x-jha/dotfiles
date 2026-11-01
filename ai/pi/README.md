@@ -62,9 +62,44 @@ is also VoiceOver's default modifier, so choose other toggle keys if using Voice
 
 Check the bindings with `node ai/pi/tests/keybindings.mjs` from the dotfiles root.
 
-## SourDiesel Markdown/code rendering v1
+## SourDiesel Markdown/code rendering v2
 
-The Pi theme keeps Markdown headings and fenced command/code blocks aligned with the
+Markdown presentation is automatic and inline, while replies stream and after they
+finish. Run `/reload` once in an existing session to pick up changes; no reader
+command, pager, Glow dependency, or Pi package-file patch is needed. The existing
+`extensions/statusline.ts` extension owns the rendering changes:
+
+- All six heading levels render without source `#` markers; H1 remains underlined.
+- Code panels show a muted language caption and blank footer instead of backtick
+  fences. Literal backticks, hashes, and Markdown examples **inside** code stay intact.
+- Assistant lists use bullets and task checkboxes with aligned continuation lines.
+  Submitted user lists retain their explicitly typed numbering/markers.
+- Tables keep Pi's grid when it fits; very narrow panes show stacked labeled fields
+  instead of falling back to raw Markdown pipes.
+- Completed final answers get the same muted horizontal separator as tool calls,
+  followed by a subtly lighter `#2e3045` background across the answer's full width,
+  including blank lines and margins. Code/tool surfaces retain `#27283a` (or the
+  existing `NVIM_STATUSLINE_HEX` override), including code nested inside the answer.
+  Thinking stays outside the panel. The panel appears only
+  after a successful, tool-free response completes; streaming commentary, tool turns,
+  aborted/error/truncated replies, and empty answers do not get a final-answer panel.
+- Native emphasis, inline code, links, quotes, rules, syntax highlighting, and
+  supported math remain intact. Resizing, theme changes, and resumed messages use
+  the same renderer; no final-answer duplication or extra model call occurs.
+
+Only the display changes: message text, session history, model context, and cached
+Markdown tokens remain original. Selecting terminal text copies the rendered view,
+not necessarily the source Markdown. This is still terminal rendering, not a browser:
+fonts stay fixed-size and arbitrary HTML/CSS or unsupported math keep Pi's native
+fallback behavior.
+
+The extension decorates Pi's internal token/list renderer **in memory**, alongside
+its existing UI patches, because Pi has no supported assistant-renderer replacement
+API. Reloads do not stack these decorators. Re-test after Pi upgrades (last verified
+with Pi 1.4.0 on 2026-11-01); disabling/removing the extension requires restarting Pi
+to clear its prototype patches. `/statusline off` toggles only the footer.
+
+The Pi theme keeps Markdown headings and command/code blocks aligned with the
 terminal palette:
 
 - Markdown headings use `mdHeading: cyan`. Pi 1.2.0 rejects unsupported color
@@ -74,13 +109,14 @@ terminal palette:
   not static green.
 - Syntax tokens reuse the shared SourDiesel roles (`magenta` keywords, `blue`
   functions/commands, `green` strings, `brightblack` comments, etc.).
-- `mdCodeBlockBorder` uses `brightblack` so fenced code renders as a single muted
-  separator line.
-- Turn sections remain unfilled with muted separators.
+- `mdCodeBlockBorder` uses `brightblack` for the code panel's language caption.
+- Tool headers and intermediate turn sections remain unfilled with muted separators;
+  completed final-answer text uses its distinct, lighter surface.
 - Fenced code blocks use the SourDiesel `nvim_statusline` surface (`#27283a`, from
   `NVIM_STATUSLINE_HEX` when set). The background fills the code area, including
-  fence borders, wrapped lines, blank code lines, and right padding; surrounding
-  prose and message margins remain transparent. Syntax foreground colors are
+  language captions, wrapped lines, blank code lines, and right padding; surrounding
+  prose and message margins remain transparent except in completed final-answer
+  panels. Syntax foreground colors are
   unchanged. This is a Markdown token-renderer patch, not an unsupported theme key.
 - The same surface shades write-file previews, expanded read-file contents, edit
   diffs, and the entire command/script preview in Bash calls, regardless of language.
@@ -116,13 +152,18 @@ Run these rendering checks from the dotfiles root against the globally installed
 node ai/pi/tests/user-message.mjs
 node ai/pi/tests/bash-python.mjs
 node ai/pi/tests/code-blocks.mjs
+node ai/pi/tests/markdown-presentation.mjs
 node ai/pi/tests/tool-code-surfaces.mjs
 node ai/pi/tests/shell-preview.mjs
 ```
 
 They cover wrapping, colors, narrow widths, shell-integration markers, reload safety,
 Python heredocs/inline code, fallback cases, unchanged output, code-block backgrounds,
-nested/streamed fences, tool preview backgrounds, ANSI resets, and theme changes.
+nested/streamed fences, literal Markdown in code, all heading levels, task-list
+indentation, narrow tables, complete streamed responses, source preservation,
+tool preview backgrounds, final-answer separators/surfaces, unchanged thinking click
+targets, distinct answer/code colors, migration from the original panel on `/reload`,
+ANSI resets, and theme changes.
 The shell-preview suite also checks unchanged shell syntax trees, UTF-8 offsets,
 protected syntax, fallback/caching, and display-only formatting; it requires `shfmt`.
 Fixtures are rendered/parsed only; Python and shell fixture commands are never executed.
