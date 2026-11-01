@@ -411,14 +411,66 @@ local hide_app = function(appName)
   if app then app:hide() end
 end
 
---- Move an app to a screen and enter native macOS fullscreen.
---- @param appName string
---- @param screen ScreenLike
---- @return nil
-local fullscreen_app = function(appName, screen)
-  positionApp(appName, screen)
-  local win = hs.window.focusedWindow()
-  if win and not win:isFullScreen() then win:setFullScreen(true) end
+-- Fullscreen/Space changes are asynchronous. Require a settled state and cancel
+-- old callbacks when another workspace hotkey is pressed.
+local wait_for_workspace = function(token, ready, callback, description)
+  local attempts, stable = 0, 0
+  local check
+  check = function()
+    if token ~= workspace_request_token then return end
+    attempts = attempts + 1
+    stable = ready() and (stable + 1) or 0
+    if stable >= 3 then
+      callback()
+    elseif attempts < 50 then
+      hs.timer.doAfter(0.2, check)
+    else
+      print('Workspace timed out: ' .. description)
+      hs.alert.show('Workspace timed out: ' .. description)
+    end
+  end
+  check()
+end
+
+local focus_workspace_window = function(win, token, callback, description)
+  wait_for_workspace(token, function()
+    local active = hs.spaces.activeSpaceOnScreen(win:screen())
+    local on_active_space = hs.fnutils.contains(hs.spaces.windowSpaces(win) or {}, active)
+    local focused = hs.window.focusedWindow()
+    if on_active_space and focused and focused:id() == win:id() then return true end
+    win:application():activate()
+    win:raise()
+    win:focus()
+    return false
+  end, callback, description)
+end
+
+local place_workspace_window = function(appName, screen, fullscreen, token, callback)
+  local app = hs.application.get(appName)
+  local win = app and app:mainWindow()
+  if not win then return hs.alert.show(appName .. ' has no open window') end
+
+  local place = function()
+    if token ~= workspace_request_token then return end
+    if win:screen():id() ~= screen:id() then win:moveToScreen(screen, false, true, 0) end
+    if fullscreen then
+      if win:isFullScreen() then return callback() end
+      focus_workspace_window(win, token, function()
+        win:setFullScreen(true)
+        wait_for_workspace(token, function() return win:isFullScreen() end, callback, appName .. ' entering fullscreen')
+      end, appName .. ' fullscreen focus')
+    else
+      win:maximize(0)
+      callback()
+    end
+  end
+
+  if win:isFullScreen() and (not fullscreen or win:screen():id() ~= screen:id()) then
+    win:setFullScreen(false)
+    wait_for_workspace(token, function() return not win:isFullScreen() end, place, appName .. ' leaving fullscreen')
+  else
+    place()
+  end
 end
 
 --- Arrange single monitor workspace
@@ -457,28 +509,64 @@ local arrange_3_monitors = function()
 
   if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-  with_app_windows({ 'Messages', 'Spotify', 'ChatGPT', 'VLC', 'Photos', 'WezTerm', 'Dia' }, function()
+  with_app_windows({ 'Messages', 'Spotify', 'ChatGPT', 'VLC', 'Muse', 'Photos', 'WezTerm', 'Skim', 'Dia' }, function()
     screens = screens_left_to_right()
     if #screens < 3 then return hs.alert.show 'Requires 3 displays!' end
 
-    positionApp('Messages', screens[1])
-    moveApp 'maximize'
-    positionApp('Spotify', screens[1])
-    moveApp 'maximize'
-    positionApp('ChatGPT', screens[1])
-    moveApp 'maximize'
-    fullscreen_app('VLC', screens[1])
+    local token = workspace_request_token
+    local layout = {
+      { 'Messages', screens[1] },
+      { 'Spotify', screens[1] },
+      { 'ChatGPT', screens[1] },
+      { 'VLC', screens[1], true },
+      { 'Photos', screens[2], true },
+      { 'Skim', screens[3] },
+      { 'Muse', screens[1] },
+      { 'Dia', screens[3] },
+      { 'WezTerm', screens[2] },
+    }
+    local foreground = { 'Muse', 'Dia', 'WezTerm' }
+    local focus_next, place_next
 
-    positionApp('Dia', screens[3])
-    moveApp 'maximize'
-    fullscreen_app('Photos', screens[2])
+    focus_next = function(index)
+      if token ~= workspace_request_token then return end
+      if not foreground[index] then
+        -- Space switches can restack windows on other displays; restore their
+        -- stacking order only after the final keyboard-focus change settles.
+        wait_for_workspace(token, function()
+          local top = {}
+          for _, win in ipairs(hs.window.orderedWindows()) do
+            local screen = win:screen():id()
+            if win:isStandard() and not top[screen] then top[screen] = win:id() end
+          end
+          local settled = true
+          for _, name in ipairs(foreground) do
+            local app = hs.application.get(name)
+            local win = app and app:mainWindow()
+            if not win then return false end
+            if top[win:screen():id()] ~= win:id() then
+              win:raise()
+              settled = false
+            end
+          end
+          return settled
+        end, function() end, 'foreground ordering')
+        return
+      end
+      local name = foreground[index]
+      local app = hs.application.get(name)
+      local win = app and app:mainWindow()
+      if not win then return hs.alert.show(name .. ' has no open window') end
+      focus_workspace_window(win, token, function() focus_next(index + 1) end, name .. ' focus')
+    end
 
-    positionApp('WezTerm', screens[2])
-    moveApp 'maximize'
-    hs.timer.doAfter(1, function()
-      positionApp('WezTerm', screens[2])
-      moveApp 'maximize'
-    end)
+    place_next = function(index)
+      if token ~= workspace_request_token then return end
+      local row = layout[index]
+      if not row then return focus_next(1) end
+      place_workspace_window(row[1], row[2], row[3] == true, token, function() place_next(index + 1) end)
+    end
+    place_next(1)
   end)
 end
 
