@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+"""Clear drafts and submit /reload to idle Pi panes in running local sessions."""
+
+import argparse
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+ERRORS = (OSError, ValueError, KeyError, subprocess.SubprocessError, RuntimeError)
+
+
+def request(*args):
+    binary = os.environ.get("HERDR_BIN", os.environ.get("HERDR_BIN_PATH", "herdr"))
+    # Never let the caller's socket, machine, or pane context override our target.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("HERDR_")}
+    output = subprocess.check_output(
+        [binary, *args], env=env, text=True, timeout=15,
+    )
+    # Input commands (send-keys/run) return exit 0 with no stdout on success.
+    reply = json.loads(output) if output.strip() else {}
+    if "error" in reply:
+        raise RuntimeError(str(reply["error"]))
+    return reply.get("result", reply)
+
+
+def ready(session, original):
+    panes = request("--session", session, "pane", "list")["panes"]
+    pane = next((p for p in panes if p["pane_id"] == original["pane_id"]), None)
+    if not pane or pane.get("agent") != "pi":
+        return False
+    if pane.get("agent_status") not in ("idle", "done"):
+        return False
+    if (pane.get("terminal_id"), pane.get("agent_session")) != (
+        original.get("terminal_id"), original.get("agent_session"),
+    ):
+        return False
+    info = request("--session", session, "pane", "process-info", "--pane", pane["pane_id"])
+    processes = info["process_info"]["foreground_processes"]
+    # A suspended Pi can retain its metadata while a shell/editor is foreground.
+    return bool(processes) and all(
+        Path(p.get("argv0") or p.get("name") or "").name == "pi" for p in processes
+    )
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--session", action="append", help="only this running session (repeatable)")
+    parser.add_argument("--dry-run", action="store_true", help="list targets without sending input")
+    parser.add_argument("--confirm", action="store_true", help="interactive confirmation and results popup")
+    args = parser.parse_args(argv)
+    if args.confirm and not sys.stdin.isatty():
+        parser.error("--confirm requires an interactive terminal")
+    sessions = request("session", "list", "--json")["sessions"]
+    running = [s["name"] for s in sessions if s["running"]]
+    if args.session:
+        missing = set(args.session) - set(running)
+        if missing:
+            parser.error("sessions not running: " + ", ".join(sorted(missing)))
+        running = [s for s in running if s in args.session]
+
+    if args.confirm and not args.dry_run:
+        print("Reload idle Pi chats in: " + (", ".join(running) or "(no running sessions)"))
+        print("WARNING: Entire drafts, including multiline text, will be discarded.")
+        print("Close Pi dialogs/pickers first; leave normal prompts with the default Ctrl+C binding.")
+        print("Busy chats are skipped. Do not type into target chats during the reload.\n")
+        try:
+            approved = input("Discard drafts and send /reload? [y/N] ").strip().lower() in ("y", "yes")
+        except (EOFError, KeyboardInterrupt):
+            approved = False
+        if not approved:
+            print("\nCancelled. No input sent.")
+            return 0
+
+    sent = skipped = failed = 0
+    for session in running:
+        try:
+            panes = request("--session", session, "pane", "list")["panes"]
+        except ERRORS as error:
+            print(f"ERROR {session}: {error}", file=sys.stderr)
+            failed += 1
+            continue
+        for pane in panes:
+            if pane.get("agent") != "pi":
+                continue
+            target = f"{session}/{pane['pane_id']}"
+            try:
+                if not ready(session, pane):
+                    print(f"SKIP {target}: not idle foreground Pi, or identity changed")
+                    skipped += 1
+                    continue
+                if args.dry_run:
+                    print(f"WOULD SEND {target}: clear entire draft, then /reload")
+                else:
+                    # Pi exits on two Ctrl+C presses within 500ms. Leave a quiet
+                    # interval, then recheck the target before sending one clear.
+                    time.sleep(0.6)
+                    if not ready(session, pane):
+                        print(f"SKIP {target}: state changed")
+                        skipped += 1
+                        continue
+                    # Pi's app.clear clears the entire editor, not just one line.
+                    # shortcut: assumes the normal prompt and Ctrl+C binding;
+                    # custom dialogs/keybindings need an in-Pi control extension.
+                    request("--session", session, "pane", "send-keys", pane["pane_id"], "ctrl+c")
+                    time.sleep(0.15)
+                    if not ready(session, pane):
+                        raise RuntimeError("state changed after clearing; /reload not sent")
+                    request("--session", session, "pane", "run", pane["pane_id"], "/reload")
+                    print(f"SENT {target}: /reload (draft discarded)")
+                sent += 1
+            except ERRORS as error:
+                print(f"ERROR {target}: {error}", file=sys.stderr)
+                failed += 1
+    summary = f"{'eligible' if args.dry_run else 'sent'}={sent} skipped={skipped} failed={failed}"
+    print(summary)
+    if args.confirm:
+        if not args.dry_run:
+            try:
+                request("--session", os.environ.get("HERDR_SESSION") or "default",
+                        "notification", "show", "Pi reload: input sent" if not failed else "Pi reload: errors",
+                        "--body", summary)
+            except ERRORS as error:
+                print(f"Notification unavailable: {error}", file=sys.stderr)
+        try:
+            input("\nPress Enter to close.")
+        except (EOFError, KeyboardInterrupt):
+            pass
+    return int(failed > 0)
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except ERRORS as error:
+        sys.exit(f"herdr-pi-reload: {error}")

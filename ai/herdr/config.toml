@@ -91,6 +91,14 @@ command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-resurrect" restore 2>&1); sta
 description = "Restore Herdr processes"
 
 [[keys.command]]
+key = "prefix+alt+r"
+type = "popup"
+command = '''exec python3 "$HOME/.dotfiles/ai/herdr/scripts/herdr-pi-reload" --confirm'''
+width = "85%"
+height = "70%"
+description = "Reload idle Pi chats across all sessions (confirm)"
+
+[[keys.command]]
 key = "prefix+x"
 command = '''sh -lc 'out=$("$HOME/.local/bin/herdr-smart-swap" 2>&1) || { "$HOME/.local/bin/herdr" notification show "Pane swap failed" --body "$out"; exit 1; }' '''
 description = "Swap panes in either split orientation"

@@ -32,6 +32,50 @@ Check the helper without changing live panes:
 python3 ai/herdr/tests/test_smart_swap.py
 ```
 
+## Reload Pi chats across sessions
+
+Press **Ctrl+A**, release, then **Alt+R** (Option+R on macOS) to open a
+confirmation popup. Type `y` and Enter to discard drafts and send `/reload` to
+idle Pi chats across **all running local sessions**. Enter alone cancels.
+The popup shows per-pane results and sends a summary notification; press Enter
+again to close it. Busy chats are skipped. Close Pi dialogs/pickers first.
+
+The shortcut calls the repo helper directly with `--confirm`, so it does not
+require a new `~/.local/bin` symlink. It leaves the existing Ctrl+A then Ctrl+R
+(process restore) and Ctrl+A then Shift+R (Herdr config reload) bindings alone.
+
+`herdr-pi-reload` discovers **all running local Herdr sessions**, including the
+unnamed/default session and `float`; it is not tied to any workspace or session name.
+Bootstrap links the helper into `~/.local/bin`. Before that, use
+`~/.dotfiles/ai/herdr/scripts/herdr-pi-reload` directly.
+
+```sh
+herdr-pi-reload --dry-run                 # preview eligible Pi panes; no input sent
+herdr-pi-reload                           # clear drafts and send /reload everywhere
+herdr-pi-reload --session my-session      # restrict to one session
+herdr-pi-reload --session one --session two
+```
+
+**Drafts are discarded**, including multiline prompts. Leave chats at their normal
+prompt, close dialogs/pickers, and do not type into them while the helper runs.
+The helper sends Pi's default `Ctrl+C` clear-editor action once, then `/reload`
+and Enter. It pauses before clearing to avoid Pi's double-Ctrl+C exit shortcut.
+This assumes the default `app.clear` binding and normal prompt focus; terminal
+injection cannot verify a custom editor or dialog's input state. Do not use this
+helper with a remapped/intercepted clear action.
+
+Only idle/done foreground Pi processes are eligible. Busy, blocked, unknown, and
+suspended chats are skipped; other agents and stopped sessions are untouched.
+Targets are rechecked before clearing and before submitting. `SENT` means input
+was delivered, not that Pi confirmed a successful reload. Rerun for skipped chats
+once they are idle. Errors produce a nonzero exit status.
+
+Check without changing live panes:
+
+```sh
+python3 ai/herdr/tests/test_pi_reload.py
+```
+
 ## Agent pane titles
 
 Pi pane labels and agent display titles follow the current chat name. The Pi
