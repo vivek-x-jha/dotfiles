@@ -335,7 +335,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 - [Ponytail](https://github.com/DietrichGebert/ponytail) runs in `full` mode by default across Claude Code, Codex, Pi, and Hermes. Bootstrap seeds [`ai/ponytail/config.json`](./ai/ponytail/config.json) to `$XDG_CONFIG_HOME/ponytail/config.json` only when absent, so `/ponytail default <mode>` remains user-owned. Harness plugin/package installs are runtime state; [`ai/ponytail/README.md`](./ai/ponytail/README.md) records their native install commands.
 - The iTerm floating profile should launch a dedicated Herdr session with `/bin/bash -lc 'exec "$HOME/.dotfiles/terminals/iterm2/scripts/float-herdr.sh"'` so it does not perturb the main WezTerm client. The helper at [`terminals/iterm2/scripts/float-herdr.sh`](./terminals/iterm2/scripts/float-herdr.sh) clears inherited `HERDR_*` variables and starts `$HOME/.local/bin/herdr --session float`.
 - macOS Terminal and iTerm-related profile assets live under [`terminals`](./terminals).
-- Hammerspoon automates floating terminal behavior, window management, and app hotkeys.
+- Hammerspoon automates floating terminal behavior, window management, and app hotkeys. [Workspace layouts and checks](./docs/hammerspoon-workspaces.md) document `Ctrl+Option+Command+1` (single display) and `Ctrl+Option+Command+2` (three displays).
 
 ### 🎨 SourDiesel palette
 
