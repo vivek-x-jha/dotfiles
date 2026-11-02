@@ -124,6 +124,7 @@ local applications = {
   w = 'WezTerm',
   x = 'System Settings',
   y = 'ChatGPT',
+  z = 'Wispr Flow',
   ['/'] = 'Hotkeys',
 }
 
