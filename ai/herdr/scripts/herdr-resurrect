@@ -21,7 +21,7 @@ Usage: herdr-resurrect <save|restore|list|clear-idle>
 
 Save and restore selected foreground commands in Herdr panes.
 Currently records:
-  - nvim foreground commands, e.g. nvim -S Session.vim
+  - nvim panes, restored with "${EDITOR:-nvim}" -S Session.vim
   - btop foreground commands
   - pi foreground agents, restored with pi --session <session-file> when Herdr reports one
   - codex foreground agents, restored with codex resume <session-id> when Herdr reports one
@@ -118,7 +118,7 @@ save_state() {
 
       if jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim"))' <<<"$pinfo" >/dev/null; then
         kind="nvim"
-        cmd="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "nvim") or (.name == "nvim")) | if (.argv | type) == "array" then (.argv | @sh) else (.cmdline // "nvim") end' <<<"$pinfo" | head -1)"
+        cmd='"${EDITOR:-nvim}" -S Session.vim'
       elif jq -e '.result.process_info.foreground_processes[]? | select((.argv0 == "btop") or (.name == "btop"))' <<<"$pinfo" >/dev/null; then
         kind="btop"
         cmd="$(jq -r '.result.process_info.foreground_processes[]? | select((.argv0 == "btop") or (.name == "btop")) | if (.argv | type) == "array" then (.argv | @sh) else (.cmdline // "btop") end' <<<"$pinfo" | head -1)"
@@ -208,6 +208,9 @@ restore_state() {
     kind="$(jq -r '.kind' <<<"$row")"
     cwd="$(jq -r '.cwd // empty' <<<"$row")"
     cmd="$(jq -r '.command' <<<"$row")"
+    if [[ "$kind" == "nvim" ]]; then
+      cmd='"${EDITOR:-nvim}" -S Session.vim'
+    fi
     if [[ "$kind" == "codex" && "$cmd" == *herdr-codex-title-watch* ]]; then
       cmd="${cmd#* & }"
     fi

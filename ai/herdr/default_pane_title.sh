@@ -1,13 +1,25 @@
 # shellcheck shell=bash
 
-# Give new plain Herdr panes an initial manual label without forcing it later.
-# This intentionally runs once at shell startup and only when the pane has no
-# title yet, so normal Herdr pane rename remains user-controlled.
+# Restore editor panes and give new plain panes an initial manual label.
+# This runs once at shell startup; existing pane labels remain user-controlled.
 [[ ${HERDR_ENV:-} == 1 && -n ${HERDR_PANE_ID:-} ]] && {
   _herdr_default_pane_title_worker() {
     command -v herdr &>/dev/null && command -v jq &>/dev/null || return 0
 
-    local info title pane_status resurrect_file
+    local info title pane_status resurrect_file pinfo
+    info=$(herdr pane get "$HERDR_PANE_ID" 2>/dev/null) || return 0
+    if [[ $(printf '%s' "$info" | jq -r '.result.pane.label // empty') == editor ]]; then
+      # Only the pane's original idle shell may restart its editor, not a nested shell.
+      pinfo=$(herdr pane process-info --pane "$HERDR_PANE_ID" 2>/dev/null) || return 0
+      if printf '%s' "$pinfo" | jq -e --argjson pid "$$" '
+        .result.process_info | .shell_pid == $pid and
+        (.foreground_processes | length == 1 and .[0].pid == $pid)
+      ' >/dev/null; then
+        herdr pane run "$HERDR_PANE_ID" '"${EDITOR:-nvim}" -S Session.vim' >/dev/null
+      fi
+      return 0
+    fi
+
     resurrect_file="${HERDR_RESURRECT_FILE:-${XDG_STATE_HOME:-$HOME/.local/state}/herdr/resurrect.json}"
 
     # Panes recorded for process restore will briefly start as shells after a
@@ -17,7 +29,6 @@
       return 0
     fi
 
-    info=$(herdr pane get "$HERDR_PANE_ID" 2>/dev/null) || return 0
     title=$(printf '%s' "$info" | jq -r '.result.pane.title // empty')
     pane_status=$(printf '%s' "$info" | jq -r '.result.pane.agent_status // empty')
     [[ -z $title && $pane_status == unknown ]] && herdr pane rename "$HERDR_PANE_ID" terminal &>/dev/null
@@ -32,7 +43,16 @@
     fi
   }
 
-  _herdr_default_pane_title
+  if [[ -n ${ZSH_VERSION:-} ]]; then
+    _herdr_first_prompt() {
+      precmd_functions=("${precmd_functions[@]:#_herdr_first_prompt}")
+      _herdr_default_pane_title
+    }
+    # During .zshrc, foreground initialization commands can look like a busy pane.
+    precmd_functions+=(_herdr_first_prompt)
+  else
+    _herdr_default_pane_title
+  fi
 
   _herdr_agent_title_watch() {
     local agent="$1"

@@ -115,11 +115,13 @@ herdr-resurrect clear-idle # run clear in idle panes
 
 Current restore support:
 
-- `nvim` foreground commands, including `nvim -S Session.vim`
+- `nvim` panes, always using `"${EDITOR:-nvim}" -S Session.vim` (including older saved commands)
 - `btop` foreground commands
 - `pi` panes, using `pi --session <session-file>` when Herdr reports a session path
 - Claude Code panes, using `claude --resume <session-id>`; `claudex` sessions retain the local proxy/model launcher
 - `codex` panes, using `codex resume <session-id>` from Herdr metadata or the live Codex session file, otherwise `codex resume --last`
+
+Panes labeled `editor` automatically run `"${EDITOR:-nvim}" -S Session.vim` when their original shell starts after a session restart, independently of saved resurrect state. Zsh defers this check until its first prompt, so foreground startup commands do not cause a false busy-pane skip. Busy panes and nested shells are left alone. Other panes are not automatically opened in an editor. Keep `Session.vim` in each editor pane's working directory; `EDITOR` must name a Vim-compatible executable (not a command with flags).
 
 Claude Code and Codex restore start their title watcher in the saved working directory.
 
