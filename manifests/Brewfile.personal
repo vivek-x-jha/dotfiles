@@ -1,4 +1,6 @@
-# Personal workstation GUI additions. Installed after the developer profile.
+# Personal workstation additions. Installed after the developer profile.
+
+npm "yoinks"
 
 cask "alfred"
 cask "alt-tab"

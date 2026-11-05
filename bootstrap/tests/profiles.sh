@@ -45,6 +45,7 @@ assert_contains "$core_file" 'cask "wezterm"'
 assert_not_contains "$core_file" 'brew "node"'
 assert_not_contains "$core_file" 'cask "visual-studio-code"'
 assert_not_contains "$core_file" 'mas "Image2icon"'
+assert_not_contains "$core_file" 'npm "yoinks"'
 
 developer_file="$(build_profile developer)"
 assert_contains "$developer_file" 'brew "node"'
@@ -54,9 +55,11 @@ assert_not_contains "$developer_file" 'brew "cargo-update"'
 assert_contains "$developer_file" 'cask "visual-studio-code"'
 assert_not_contains "$developer_file" 'cask "spotify"'
 assert_not_contains "$developer_file" 'mas "Image2icon"'
+assert_not_contains "$developer_file" 'npm "yoinks"'
 
 personal_file="$(build_profile personal)"
 assert_contains "$personal_file" 'cask "spotify"'
+assert_contains "$personal_file" 'npm "yoinks"'
 assert_contains "$personal_file" 'brew "node"'
 assert_contains "$personal_file" 'mas "Image2icon", id: 992115977'
 assert_not_contains "$personal_file" 'cask "image2icon"'

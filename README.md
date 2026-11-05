@@ -430,7 +430,9 @@ Homebrew setup assembles cumulative `core`, `developer`, or `personal` manifests
 
 fzf is installed from upstream git into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc` instead of through Homebrew, apt, or dnf.
 
-Profile manifests contain Homebrew formulae, casks, developer-profile VS Code extensions, and personal-profile Mac App Store apps. Cargo and uv tools are handled by their dedicated opt-in phases.
+Profile manifests contain Homebrew formulae, casks, developer-profile VS Code extensions, and personal-profile Mac App Store apps and npm packages. Cargo and uv tools are handled by their dedicated opt-in phases.
+
+The personal profile installs the `yoinks` terminal video downloader through Homebrew Bundle's `npm` support (not the unrelated Yoink macOS shelf app). Run `yoinks [url]`; it reuses the profile's `ffmpeg` and uses `yt-dlp` from PATH or downloads its own copy into `~/.yoinks/bin`. Version 0.3.1 saves media to `~/Downloads`: its output directory is hardcoded, with no supported flag or environment override (`-o` remains on the upstream roadmap). Do not relocate `HOME`, symlink the entire Downloads folder, or patch the installed package just for this. Update with `npm install -g yoinks` or the personal Bundle profile; `update-tools --brew` does not upgrade npm packages.
 
 Image2icon uses a Mac App Store (`mas`) entry instead of a cask to keep the App Store build for purchased Pro features. Homebrew Bundle installs `mas` when needed; App Store installation and updates require signing in to the appropriate Apple Account. Restore Pro purchases inside Image2icon if needed. Cask selection does not filter `mas` entries. `update-tools --brew` updates formulae/casks only; update Image2icon through the App Store or `mas update 992115977`.
 
