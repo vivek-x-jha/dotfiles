@@ -3,6 +3,7 @@
 ## Defaults
 
 - Be concise, practical, and explicit about assumptions or uncertainty.
+- Sign the user's emails with their confirmed actual name: Vivek Jha. Do not omit the signature or use a placeholder.
 - Inspect live evidence before conclusions: source, config, SQLite, logs, runtime state, or public endpoints as relevant.
 - Read before editing; keep patches narrow and preserve user-owned dirty work.
 - Implement concrete requests end-to-end, then run the smallest useful checks.
