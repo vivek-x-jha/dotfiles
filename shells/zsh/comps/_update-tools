@@ -10,7 +10,7 @@ _update_tools() {
     '(-z --zsh)'{-z,--zsh}'[update Zsh plugins]'
     '--herdr[update Herdr and regenerate Herdr completions]'
     '(-l --tldr)'{-l,--tldr}'[update the TLDR cache]'
-    '(-f --fzf)'{-f,--fzf}'[update the fzf checkout]'
+    '(-f --fzf)'{-f,--fzf}'[update fzf]'
     '(-n --nvim)'{-n,--nvim}'[update Neovim plugins]'
     '--pi[update Pi coding agent]'
     '(-r --rust)'{-r,--rust}'[update Rust and cargo-installed tools]'

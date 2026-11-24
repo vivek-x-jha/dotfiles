@@ -430,6 +430,17 @@ install_package_sets() {
 install_fzf() {
   notify -s 'Installing fzf'
 
+  if [[ $PKG_MGR == brew ]]; then
+    # The core Brewfile normally installed it; also support --only fzf.
+    local brew_prefix
+    if brew_prefix=$(brew --prefix 2>/dev/null) && [[ -x $brew_prefix/opt/fzf/bin/fzf ]]; then
+      [[ $brew_prefix/bin/fzf -ef $brew_prefix/opt/fzf/bin/fzf ]] || run 'brew link fzf'
+    else
+      run 'brew install fzf'
+    fi
+    return
+  fi
+
   local fzf_dir="$XDG_DATA_HOME/fzf"
   run "mkdir -p \"$XDG_DATA_HOME\""
 

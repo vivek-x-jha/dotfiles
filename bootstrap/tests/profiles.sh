@@ -37,6 +37,7 @@ build_profile() {
 
 core_file="$(build_profile core)"
 assert_contains "$core_file" 'brew "bat"'
+assert_contains "$core_file" 'brew "fzf"'
 assert_contains "$core_file" 'brew "zsh-patina"'
 assert_not_contains "$core_file" 'brew "bob"'
 assert_not_contains "$core_file" 'brew "cargo-update"'

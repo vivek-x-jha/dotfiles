@@ -14,7 +14,7 @@ Options:
   -z, --zsh            update Zsh plugins
       --herdr          update Herdr and regenerate Herdr completions
   -l, --tldr           update the TLDR cache
-  -f, --fzf            update the fzf checkout
+  -f, --fzf            update fzf
   -n, --nvim           update Neovim plugins
       --pi             update Pi coding agent
   -r, --rust           update Rust and cargo-installed tools
@@ -114,6 +114,8 @@ else
   update_icons=0
 fi
 
+# The full Homebrew upgrade already includes fzf.
+((update_brew)) && [[ $OSTYPE == darwin* ]] && update_fzf=0
 manage_nvim_git=$update_nvim
 manage_completions_git=$((update_completions || update_herdr))
 
@@ -309,7 +311,11 @@ fi
 
 ((update_fzf)) && {
   notify 'UPDATE FZF'
-  logg -c "git -C \"$XDG_DATA_HOME/fzf\" pull --ff-only" || logg -w 'UPDATE FZF CHECKOUT FAILED'
+  if [[ $OSTYPE == darwin* ]]; then
+    logg -c 'brew upgrade fzf' || return 1
+  else
+    logg -c 'git -C "$XDG_DATA_HOME/fzf" pull --ff-only && "$XDG_DATA_HOME/fzf/install" --bin --no-update-rc' || return 1
+  fi
 }
 
 ((update_nvim)) && {

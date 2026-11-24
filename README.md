@@ -264,7 +264,7 @@ Bootstrap links repo-managed config into XDG paths where the tool supports it di
 | [mycli](https://www.mycli.net/connect) | `--myclirc` | 1Password-backed aliases pass `--myclirc "$XDG_CONFIG_HOME/mycli/config"` |
 | [Hammerspoon](https://www.hammerspoon.org/docs/hs.html#configdir) | macOS defaults override | `MJConfigFile="$XDG_CONFIG_HOME/hammerspoon/init.lua"` |
 | [OpenSSH](https://man.openbsd.org/ssh_config) | explicit config in Git | Git uses `ssh -F ~/.config/ssh/config` |
-| [fzf](https://junegunn.github.io/fzf/shell-integration/) | shell integration source | Bootstrap installs upstream fzf to `$XDG_DATA_HOME/fzf`; shell startup prepends `$XDG_DATA_HOME/fzf/bin` when present, then uses `fzf --zsh`/`fzf --bash` and `~/.config/fzf/config` |
+| [fzf](https://junegunn.github.io/fzf/shell-integration/) | shell integration source | Homebrew provides fzf on macOS; Linux uses `$XDG_DATA_HOME/fzf/bin`. Both use `fzf --zsh`/`fzf --bash` and `~/.config/fzf/config` |
 | [eva colors](https://github.com/vivek-x-jha/eva) | `LS_COLORS`/`EVA_COLORS` | shell startup exports the colors directly from `shells/colors/sourdiesel` |
 
 ### 📦 XDG Data and State Moves
@@ -428,7 +428,7 @@ Homebrew handles running application restarts and preserves valid Gatekeeper app
 
 Homebrew setup assembles cumulative `core`, `developer`, or `personal` manifests before running [`brew bundle`](https://docs.brew.sh/Brew-Bundle-and-Brewfile). Cask selection supports `BOOTSTRAP_BREW_CASK_MODE=all`, `skip`, or `only` with `BOOTSTRAP_BREW_CASKS`. The core profile contains portable prebuilt CLI tools and a small terminal/automation cask baseline; developer adds language tooling and VS Code; personal adds the larger GUI inventory. A non-empty `BOOTSTRAP_BREWFILE` replaces profile assembly with a custom local path or URL.
 
-fzf is installed from upstream git into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc` instead of through Homebrew, apt, or dnf.
+On macOS, the core Brewfile provides fzf. Open a new shell after migrating: `fzf --version` should report the Homebrew build. The old checkout is left untouched. On Linux, bootstrap installs upstream fzf into `$XDG_DATA_HOME/fzf` with `install --bin --no-update-rc`.
 
 Profile manifests contain Homebrew formulae, casks, developer-profile VS Code extensions, and personal-profile Mac App Store apps and npm packages. Cargo and uv tools are handled by their dedicated opt-in phases.
 
@@ -583,7 +583,7 @@ brew update
 brew upgrade -y
 brew bundle check --file "$HOME/.dotfiles/manifests/Brewfile"
 tldr --update
-git -C "$XDG_DATA_HOME/fzf" pull --ff-only
+fzf --version
 nvim --headless '+lua vim.pack.update(nil, { force = true })' '+qa'
 pi update --all
 rustup update stable

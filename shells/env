@@ -136,7 +136,11 @@ append_path() { remove_path "$1" && PATH="${PATH:+$PATH:}$1"; }
 
 # Add user-managed tool directories needed by editors, agents, and non-login zsh.
 prepend_path "$HOME/.local/bin"
-prepend_path "$XDG_DATA_HOME/fzf/bin"
+if [[ $(uname -s) == Darwin ]]; then
+  remove_path "$XDG_DATA_HOME/fzf/bin"  # Older sessions may still export the checkout.
+else
+  prepend_path "$XDG_DATA_HOME/fzf/bin"
+fi
 prepend_path "$CARGO_HOME/bin"
 prepend_path "$XDG_DATA_HOME/bob/nvim-bin"
 
