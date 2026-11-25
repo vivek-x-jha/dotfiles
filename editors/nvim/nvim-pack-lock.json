@@ -9,11 +9,11 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "ea38d317af34f8ffcfbaf0f0dcc1471736661a4c",
+      "rev": "166c03131e6a3528f692dd89f37668d991f17baa",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "indent-blankline.nvim": {
-      "rev": "f1e186e44d3b7f9ae918008e2c28ce37c6023d2d",
+      "rev": "fbc6d88222b5f75613cb95a22e89aa2f4e318a81",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
     },
     "noice.nvim": {
@@ -41,7 +41,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-tree.lua": {
-      "rev": "6e539e91302d2e201b078a45d214177140134523",
+      "rev": "ba85443ca5fe92290dcc073e0100c1908ddde634",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-web-devicons": {
