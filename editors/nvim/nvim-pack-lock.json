@@ -41,7 +41,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-tree.lua": {
-      "rev": "ba85443ca5fe92290dcc073e0100c1908ddde634",
+      "rev": "d0b8d652d3a776a29b09f9c14f87717e455c52f6",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-web-devicons": {
